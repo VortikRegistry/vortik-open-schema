@@ -1,0 +1,11 @@
+{
+  "protocol": "ePBS",
+  "version": "1.0-draft",
+  "identifier": "epbs.eth",
+  "capabilities": [
+    "inclusion-proofs",
+    "bid-standardization",
+    "stewardship-metadata"
+  ],
+  "stewardship_status": "alignment_pending"
+}
