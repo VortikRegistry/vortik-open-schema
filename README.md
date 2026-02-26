@@ -27,18 +27,19 @@ Our objective is the eventual transfer (or stewardship alignment) of critical na
 - This is **not** a production implementation, standard, or client specification.
 - This repository does **not** represent protocol endorsement, official roadmaps, or binding commitments.
 
+## Status
+
+Active research artefacts. No production claims.
+
 ## Repository contents
 
-- `epbs-schema-v1.json` — initial schema artefact for ePBS-aligned terminology
-
-## Planned artefacts
-
-- `inclusionlist-schema-v0.1.json` — *(in progress)*
-- `commitmentlayer-schema-v0.1.json` — *(in progress)*
+- `epbs-schema-v1.json` — semantic anchor schema for EIP-7732 / ePBS
+- `inclusionlist-schema-v0.1.json` — semantic anchor schema for FOCIL / Inclusion Lists
+- `commitmentlayer-schema-v0.1.json` — semantic anchor schema for commitment / preconfirmation layer
 
 ## Contact / Stewardship inquiries
 
 For research discussion, coordination, or stewardship conversations:
 
-- Email: `contact.preconf@gmail.com`
+- Preferred email for institutional inquiry: `contact.preconf@gmail.com`
 - X: https://x.com/VortikRegistry
