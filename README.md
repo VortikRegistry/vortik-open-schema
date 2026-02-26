@@ -1,10 +1,44 @@
 # Vortik Open Schema (v0.1-alpha)
 
-### Overview
-Vortik is a research-oriented initiative focused on **semantic stabilization** and namespace coordination for emerging Ethereum L1 primitives.
+## Overview
 
-### The Approach: Semantic Anchors
-We leverage **ENS (Ethereum Name Service)** as root pointers for a decentralized metadata layer. Vortik provides the scaffolding to transform static names into functional protocol interfaces for AI-agents and infrastructure solvers.
+Vortik is a research-oriented initiative focused on **semantic stabilization** and **namespace coordination** for emerging Ethereum L1 primitives.
 
-### Stewardship Model
-Vortik is committed to a **stewardship-first** model. Our objective is the eventual transfer of critical namespace assets to protocol-aligned entities to ensure the long-term integrity of the Ethereum L1 identity layer.
+This repository contains early-stage, **public artefacts** intended to support clearer terminology mapping across protocol discussions, documentation, and coordination layers.
+
+## The Approach: Semantic Anchors
+
+Vortik explores the use of **ENS (Ethereum Name Service)** identifiers as *root pointers* for a decentralized metadata layer.
+
+The goal is to reduce interpretative drift in decentralized protocol ecosystems by:
+- mapping high-signal protocol primitives to stable identifiers,
+- expressing those identifiers with minimal, machine-readable schema artefacts,
+- and keeping the posture **research-grade** (no claims of official authority).
+
+## Stewardship Model
+
+Vortik operates under a **stewardship-first** model.
+
+Our objective is the eventual transfer (or stewardship alignment) of critical namespace anchors to **protocol-aligned entities** where appropriate, to support long-term integrity of Ethereum’s L1 identity layer and reduce fragmentation.
+
+## Non-goals (Important)
+
+- This repository does **not** claim governance authority or official affiliation with the Ethereum Foundation, client teams, Flashbots, or any protocol organization.
+- This is **not** a production implementation, standard, or client specification.
+- This repository does **not** represent protocol endorsement, official roadmaps, or binding commitments.
+
+## Repository contents
+
+- `epbs-schema-v1.json` — initial schema artefact for ePBS-aligned terminology
+
+## Planned artefacts
+
+- `inclusionlist-schema-v0.1.json` — *(in progress)*
+- `commitmentlayer-schema-v0.1.json` — *(in progress)*
+
+## Contact / Stewardship inquiries
+
+For research discussion, coordination, or stewardship conversations:
+
+- Email: `contact.preconf@gmail.com`
+- X: https://x.com/VortikRegistry
