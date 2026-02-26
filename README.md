@@ -4,6 +4,17 @@
 - `inclusionlist-schema-v0.1.json` — Semantic anchor schema for Inclusion Enforcement / Inclusion Lists (FOCIL).
 - `commitmentlayer-schema-v0.1.json` — Semantic anchor schema for commitment & preconfirmation coordination.
 
+## Strawmap Alignment (Concept-level Mapping)
+
+> Note: roadmap names and proposal identifiers can evolve. Vortik tracks **concepts and terminology** first, and links to primary sources via each schema file under `references`.
+
+| Roadmap area (2026+) | Concept / primitive | Vortik anchor | Repo artefact | Status |
+|---|---|---|---|---|
+| Glamsterdam | Enshrined PBS (ePBS) | `epbs.eth` | `epbs-schema-v1.json` | Active research |
+| Glamsterdam | Block-Level Access Lists (BALs) | *(TBD)* | `bals-schema-v0.1.json` *(planned)* | Pending |
+| Hegotá | Inclusion Enforcement / Inclusion Lists (FOCIL) | `inclusionlist.eth` | `inclusionlist-schema-v0.1.json` | Active research |
+| Fast L1 / Preconfirmations | Commitment & preconfirmation coordination | `commitmentlayer.eth` | `commitmentlayer-schema-v0.1.json` | Active research |
+
 ## Active Monitoring & Alignment
 
 ### [Feb 26, 2026] — Post-ACDE #231 observations
