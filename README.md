@@ -1,28 +1,28 @@
 ## Repository contents
 
-- `epbs-schema-v1.json` — Semantic anchor schema for Enshrined PBS (ePBS / EIP-7732).
-- `inclusionlist-schema-v0.1.json` — Semantic anchor schema for Inclusion Enforcement Frameworks (FOCIL / EIP-7805).
-- `commitmentlayer-schema-v0.1.json` — Semantic anchor schema for Commitment & Preconfirmation coordination.
+- `epbs-schema-v1.json` — Semantic anchor schema for Enshrined PBS (ePBS).
+- `inclusionlist-schema-v0.1.json` — Semantic anchor schema for Inclusion Enforcement / Inclusion Lists (FOCIL).
+- `commitmentlayer-schema-v0.1.json` — Semantic anchor schema for commitment & preconfirmation coordination.
 
 ## Active Monitoring & Alignment
 
-### [Feb 26, 2026] — Post-ACDE #231 Observations
-Vortik is currently calibrating its schema artefacts based on today's call:
-* **Glamsterdam Update:** Aligning ePBS schemas with payload attribute discussions in `epbs-devnet-0`.
-* **Heka/Bogotá Update:** Monitoring FOCIL (EIP-7805) status as a headliner candidate for censorship resistance.
-* **Hegotá Upgrade (FOCIL):** Following the headliner candidacy of **EIP-7805 (FOCIL)** for the Hegotá upgrade, we are prioritizing the stabilization of `inclusionlist.eth`. Our research tracks the semantic boundary between mandatory inclusion and proposer duties.
-* **Encrypted Mempools:** Observing technical presentations on **LUCID**. We are evaluating the necessity of a dedicated namespace for privacy-preserving mempool primitives.
+### [Feb 26, 2026] — Post-ACDE #231 observations
 
-## Repository contents
-* `epbs-schema-v1.json` — Semantic anchor schema for EIP-7732 / ePBS.
-* `inclusionlist-schema-v0.1.json` — Semantic anchor schema for FOCIL / Inclusion Lists.
-* `commitmentlayer-schema-v0.1.json` — Semantic anchor schema for commitment / preconfirmation layer.
+Vortik is calibrating its schema artefacts based on current consensus & execution-layer discussions:
+
+- **Glamsterdam (ePBS):** Monitoring design convergence and terminology stability for ePBS-related primitives (including payload-related attributes).
+- **Hegotá (Inclusion Enforcement / Inclusion Lists):** Tracking the semantic boundary between mandatory inclusion mechanisms and proposer/builder duties.
+- **Encrypted mempools:** Observing emerging confidentiality primitives (e.g., LUCID) to assess whether a dedicated namespace category is warranted.
+
+> Primary-source links and detailed references are maintained inside each schema file under `references`.
 
 ## Contact / Stewardship inquiries
+
 For research discussion, coordination, or stewardship conversations:
 
-* **X (Twitter):** [https://x.com/VortikRegistry](https://x.com/VortikRegistry)
-* **Institutional Inquiry:** contact.preconf@gmail.com
+- **X (Twitter):** https://x.com/VortikRegistry  
+- **Stewardship inquiry:** contact.preconf@gmail.com
 
 ---
+
 *© 2026 Vortik Semantic Registry.*
