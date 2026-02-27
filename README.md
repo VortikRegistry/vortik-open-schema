@@ -1,101 +1,71 @@
+# Vortik Semantic Registry
 
-Repository contents
-
-epbs-schema-v1.json — Semantic anchor schema for Enshrined PBS (ePBS).
-
-inclusionlist-schema-v0.1.json — Semantic anchor schema for Inclusion Enforcement / Inclusion Lists (FOCIL).
-
-commitmentlayer-schema-v0.1.json — Semantic anchor schema for commitment & preconfirmation coordination.
-
-fastfinality-schema-v0.1.json — Semantic anchor schema for fast finality primitives (sub-16s L1 finalization track).
-
-
+Independent research initiative tracking semantic stabilization  
+across emerging Ethereum L1 primitives.
 
 ---
 
-Strawmap Alignment (Concept-level Mapping)
+## Core Anchors
 
-> Note: roadmap names and proposal identifiers can evolve. Vortik tracks concepts and terminology first, and links to primary sources via each schema file under references.
+- `epbs.eth` — Enshrined PBS (ePBS)
+- `inclusionlist.eth` — Inclusion Enforcement / FOCIL
+- `commitmentlayer.eth` — Commitment & preconfirmation coordination
+- `fastfinality.eth` — Fast L1 finality (sub-16s research track)
 
-
-
-Roadmap area (2026+)	Concept / primitive	Vortik anchor	Repo artefact	Status
-
-Glamsterdam	Enshrined PBS (ePBS)	epbs.eth	epbs-schema-v1.json	Active research
-Glamsterdam	Block-Level Access Lists (BALs)	(TBD)	bals-schema-v0.1.json (planned)	Pending
-Hegotá	Inclusion Enforcement / Inclusion Lists (FOCIL)	inclusionlist.eth	inclusionlist-schema-v0.1.json	Active research
-Fast L1 / Preconfirmations	Commitment & preconfirmation coordination	commitmentlayer.eth	commitmentlayer-schema-v0.1.json	Active research
-Fast L1 / Finality	Fast finality (sub-16s L1 finalization)	fastfinality.eth	fastfinality-schema-v0.1.json (planned)	Pending
-
-
-> BALs are referenced as “Block-Level Access Lists” in primary EIP discussions that connect execution-layer constraints with ePBS-era block production; see EIP-7862 (Motivation) for a direct reference chain to EIP-7928.
-
-
-
+Each anchor is accompanied by a JSON schema artefact containing
+terminology scope and primary-source references.
 
 ---
 
-Active Monitoring & Alignment
+## Alignment Scope (2026+)
 
-[Feb 26, 2026] — Post-ACDE #231 observations
+Vortik monitors conceptual convergence across:
 
-Vortik is calibrating its schema artefacts based on current consensus & execution-layer discussions:
+- Glamsterdam upgrade primitives (ePBS)
+- Execution co-primitives (Block-Level Access Lists)
+- Inclusion enforcement boundaries
+- Fast L1 finality research
+- Emerging encrypted mempool models
 
-Glamsterdam (ePBS): Monitoring design convergence and terminology stability for ePBS-related primitives (including payload-related attributes).
-
-Glamsterdam (Execution primitives / BALs): Tracking BALs as an execution-side co-primitive referenced alongside ePBS-era constraints in primary EIP discussions (see EIP-7862 → EIP-7928 reference chain).
-
-Hegotá (Inclusion Enforcement / Inclusion Lists): Tracking the semantic boundary between mandatory inclusion mechanisms and proposer/builder duties.
-
-Fast L1 (Finality track): Tracking semantic convergence for L1 fast finality primitives targeting sub-16-second mainnet finalization, as discussed in current research analyses (Feb 2026).
-
-Encrypted mempools: Observing emerging confidentiality primitives (e.g., LUCID) to assess whether a dedicated namespace category is warranted.
-
-
+Roadmap identifiers may evolve.  
+Vortik tracks **conceptual anchors first, implementation references second.**
 
 ---
 
-[Feb 27, 2026] — Glamsterdam scaling clarification
+## Active Monitoring — Feb 2026
 
-Following recent Ethereum research updates:
+Recent research discussions indicate increasing coordination surface between:
 
-Glamsterdam confirmation: ePBS + Block-Level Access Lists
+- Execution layer constraints
+- State growth separation (multidimensional gas models)
+- Verification layer assumptions
+- Finality compression targets
 
-Multidimensional gas (state creation separation + reservoir dimension)
+Vortik continues observing terminology stabilization  
+as Ethereum’s scaling architecture becomes multi-layered.
 
-Expanded coordination surface between execution, state growth and verification layers
-
-
-Vortik continues monitoring terminology stabilization across these primitives as scaling architecture becomes multi-layered.
-
-> Primary-source links and detailed references are maintained inside each schema file under references.
-
-
-
+Primary references are embedded inside each schema file under `references`.
 
 ---
 
-Non-Governance Position
+## Position
 
-Vortik operates as an independent research registry.
-No protocol authority, governance mandate, or official affiliation with client teams, Flashbots, or the Ethereum Foundation is implied.
+Vortik operates as an independent registry.
 
-Identifiers are maintained under a stewardship-first posture and may be aligned with protocol-aligned entities when appropriate.
+No governance mandate.  
+No protocol authority.  
+No formal affiliation with client teams or the Ethereum Foundation.
 
-
----
-
-Contact / Stewardship inquiries
-
-For research discussion, coordination, or stewardship conversations:
-
-X (Twitter): https://x.com/VortikRegistry
-
-Stewardship inquiry: contact.preconf@gmail.com
-
-
+Identifiers are stewarded under a research-first posture and may align
+with protocol-aligned entities when appropriate.
 
 ---
 
-© 2026 Vortik Semantic Registry.
+## Contact
 
+X: https://x.com/VortikRegistry  
+Stewardship inquiries: contact.preconf@gmail.com  
+
+---
+
+© 2026 Vortik Semantic Registry
