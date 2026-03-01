@@ -1,1 +1,49 @@
-
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/VortikRegistry/vortik-open-schema/blob/main/inclusionlist-schema-v0.1.json",
+  "title": "Vortik Open Schema — Inclusion Lists (FOCIL) Semantic Anchor",
+  "description": "Minimal metadata schema for an inclusionlist-aligned semantic anchor. Research artefact; not an official specification.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["protocol", "version", "identifier", "capabilities", "stewardship_status"],
+  "properties": {
+    "protocol": {
+      "type": "string",
+      "const": "InclusionLists",
+      "description": "Protocol primitive label (semantic)."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+(-[a-z0-9.-]+)?$",
+      "default": "0.1-draft",
+      "description": "Schema version (semver-ish)."
+    },
+    "identifier": {
+      "type": "string",
+      "const": "inclusionlist.eth",
+      "description": "ENS identifier mapped to this semantic anchor."
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": ["inclusion-enforcement", "censorship-resistance", "stewardship-metadata"]
+      },
+      "description": "Declared semantic capability tags (non-normative)."
+    },
+    "stewardship_status": {
+      "type": "string",
+      "enum": ["protocol_unanchored", "alignment_pending", "institutionally_reserved", "transferred"],
+      "default": "alignment_pending",
+      "description": "Institutional status label used by the registry (non-commercial)."
+    },
+    "references": {
+      "type": "array",
+      "items": { "type": "string", "format": "uri" },
+      "default": [],
+      "description": "Primary-source references (optional for early drafts)."
+    }
+  }
+}
