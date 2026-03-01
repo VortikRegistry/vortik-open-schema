@@ -1,70 +1,135 @@
 # Vortik Semantic Registry
 
-Independent research initiative tracking semantic stabilization  
-across emerging Ethereum L1 primitives.
+An independent semantic registry tracking terminology stabilization across emerging Ethereum Layer 1 protocol primitives.
+
+Vortik provides structured, versioned JSON schemas referencing primary sources (EIPs, research threads, and public implementation discussions) in order to reduce naming ambiguity and documentation drift.
+
+> Vortik is not affiliated with the Ethereum Foundation, any client team, or any protocol governance body.
+
+---
+
+## Purpose
+
+Ethereum protocol research evolves rapidly. Terminology often fragments across:
+
+- EIPs  
+- Research threads  
+- Client implementations  
+- Community discussions  
+
+Vortik exists to:
+
+- Provide canonical terminology mapping (canonical vs aliases)  
+- Offer versioned machine-readable schemas (JSON Schema 2020-12)  
+- Reference primary sources for traceability  
+- Anchor conceptual primitives via ENS namespaces  
+
+This registry is documentation-oriented and coordination-focused.  
+It does not define protocol standards.
 
 ---
 
 ## Core Anchors
 
-- `epbs.eth` — Enshrined PBS (ePBS)
-- `inclusionlist.eth` — Inclusion Enforcement / FOCIL
-- `commitmentlayer.eth` — Commitment & preconfirmation coordination
-- `fastfinality.eth` — Fast L1 finality (sub-16s research track)
+| ENS Anchor | Canonical Primitive | Status |
+|------------|--------------------|--------|
+| `epbs.eth` | Enshrined Proposer-Builder Separation (ePBS) | EIP-7732 (Draft) |
+| `inclusionlist.eth` | Fork-Choice Enforced Inclusion Lists (FOCIL) | EIP-7805 (Draft) |
+| `commitmentlayer.eth` | Proposer Commitments / Preconfirmations | Research |
+| `fastfinality.eth` | Single Slot Finality (SSF) | Research |
 
-Each anchor is accompanied by a JSON schema artefact containing
-terminology scope and primary-source references.
+Note: “Fast finality” is commonly used descriptively.  
+The canonical research term currently used in primary discussions is “Single Slot Finality (SSF)”.
 
 ---
 
-## Alignment Scope (2026+)
+## Scope
 
 Vortik monitors conceptual convergence across:
 
-- Glamsterdam upgrade primitives (ePBS)
-- Execution co-primitives (Block-Level Access Lists)
-- Inclusion enforcement boundaries
-- Fast L1 finality research
-- Emerging encrypted mempool models
+- Enshrined PBS research and implementation attempts  
+- Inclusion enforcement mechanisms (FOCIL / Inclusion Lists)  
+- Preconfirmation coordination models  
+- L1 finality compression research (SSF and related proposals)  
+- Execution-layer constraint primitives  
 
-Roadmap identifiers may evolve.  
-Vortik tracks **conceptual anchors first, implementation references second.**
-
----
-
-## Active Monitoring — Feb 2026
-
-Recent research discussions indicate increasing coordination surface between:
-
-- Execution layer constraints
-- State growth separation (multidimensional gas models)
-- Verification layer assumptions
-- Finality compression targets
-
-Vortik continues observing terminology stabilization  
-as Ethereum’s scaling architecture becomes multi-layered.
-
-Primary references are embedded inside each schema file under `references`.
+Hard fork names and roadmap identifiers may change over time.  
+Vortik tracks conceptual primitives first, fork branding second.
 
 ---
 
-## Position
+## Design Principles
 
-Vortik operates as an independent registry.
+1. Canonical terminology first  
+   If the ecosystem converges on an acronym (e.g., FOCIL, SSF), that becomes canonical. Longer descriptive terms are treated as aliases.
 
-No governance mandate.  
-No protocol authority.  
-No formal affiliation with client teams or the Ethereum Foundation.
+2. No speculative assertions  
+   All meaningful fields must reference:
+   - An EIP, or  
+   - A research thread, or  
+   - A public implementation source  
 
-Identifiers are stewarded under a research-first posture and may align
-with protocol-aligned entities when appropriate.
+3. Explicit versioning  
+   Changes create new versions. No silent overwrites.
+
+4. Machine validation  
+   Schemas follow JSON Schema 2020-12 and include validation examples.
+
+---
+
+## Repository Structure
+
+schemas/  
+  epbs/  
+    1.0-draft/  
+      schema.json  
+      sources.md  
+
+  focil/  
+    0.1-draft/  
+      schema.json  
+      sources.md  
+
+  preconfirmations/  
+    0.1-research/  
+      schema.json  
+      sources.md  
+
+  ssf/  
+    0.1-research/  
+      schema.json  
+      sources.md  
+
+examples/  
+  epbs/  
+    valid.example.json  
+
+  focil/  
+    valid.example.json  
+
+---
+
+## Stewardship Policy
+
+Vortik does not claim ownership over protocol terminology.
+
+If EIP authors, client teams, or implementation groups request:
+
+- Namespace coordination  
+- Redirection  
+- Co-maintenance  
+- Stewardship transfer  
+
+Vortik is open to technical discussion under a research-first posture.
+
+The objective is semantic clarity and documentation integrity.
 
 ---
 
 ## Contact
 
 X: https://x.com/VortikRegistry  
-Stewardship inquiries: contact.preconf@gmail.com  
+Stewardship: contact.preconf@gmail.com  
 
 ---
 
