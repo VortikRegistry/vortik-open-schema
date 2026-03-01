@@ -126,11 +126,15 @@ The objective is semantic clarity and documentation integrity.
 
 ---
 
-## Contact
+## Contact & Contribution
 
-X: https://x.com/VortikRegistry  
-Stewardship: contact.preconf@gmail.com  
+Primary coordination occurs via GitHub:
 
----
+- Issues and Pull Requests are the preferred channel for technical discussion.
+- All terminology updates should reference primary sources (EIP, research thread, or implementation repository).
 
-© 2026 Vortik Semantic Registry
+X (public updates):  
+https://x.com/VortikRegistry  
+
+Direct stewardship inquiries (secondary channel):  
+contact.preconf@gmail.com
