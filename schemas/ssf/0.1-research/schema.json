@@ -1,1 +1,59 @@
-
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "schema_version": "0.1.0",
+  "primitive": "Fast Finality",
+  "layer": "Consensus (CL)",
+  "eip_references": [
+    {
+      "eip": "EIP-7251",
+      "description": "Increase the MAX_EFFECTIVE_BALANCE — prerequisite for leaner validator set"
+    }
+  ],
+  "semantic_anchors": {
+    "canonical_name": "fastfinality.eth",
+    "primary_terms": ["fast finality", "single-slot finality", "SSF"],
+    "secondary_terms": ["sub-16s finality", "Minimmit", "one-round BFT"],
+    "status": "Active Research"
+  },
+  "technical_attributes": {
+    "target_finality_time": "sub-16 seconds",
+    "current_finality_time": "~16 minutes",
+    "mechanism": "Single-round BFT finalization (Minimmit variant)",
+    "finality_trajectory": [
+      "16 min (today)",
+      "10m40s (8s slots)",
+      "6m24s (one-epoch finality)",
+      "1m12s (8-slot epochs, 6s slots)",
+      "48s (4s slots)",
+      "16s (Minimmit)",
+      "8s (Minimmit aggressive)"
+    ],
+    "dependencies": [
+      "Lean consensus",
+      "Hash-based signatures (Winternitz variant)",
+      "STARK aggregation"
+    ]
+  },
+  "strawmap_alignment": {
+    "north_star": "fast L1",
+    "upgrade_track": "Consensus Layer (CL)",
+    "source": "strawmap.org",
+    "last_sync": "2026-02-26"
+  },
+  "references": [
+    {
+      "type": "analysis",
+      "author": "Vitalik Buterin",
+      "title": "Fast slots and fast finality — Strawmap walkthrough",
+      "date": "2026-02-26",
+      "url": "https://x.com/VitalikButerin"
+    },
+    {
+      "type": "roadmap",
+      "title": "Ethereum L1 Strawmap",
+      "url": "https://strawmap.org"
+    }
+  ],
+  "stewardship_status": "Active Research / Coordination",
+  "non_affiliation_notice": "This schema is an independent research artefact. No official affiliation with the Ethereum Foundation or protocol teams is implied."
+}
