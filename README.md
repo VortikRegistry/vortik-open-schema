@@ -3,6 +3,9 @@
 Independent research initiative tracking semantic stabilization  
 across emerging Ethereum L1 coordination primitives.
 
+A semantic registry maps evolving protocol terminology  
+to stable coordination identifiers.
+
 ---
 
 ## Core Anchors
@@ -56,8 +59,7 @@ Vortik operates as an independent registry.
 - No governance mandate  
 - No protocol authority  
 - No formal affiliation with client teams or the Ethereum Foundation  
-- No commercial claim over protocol primitives
-
+- No commercial claim over protocol primitives  
 
 Identifiers are stewarded under a research-first posture.  
 Alignment with protocol-aligned entities may occur when appropriate.
@@ -65,7 +67,6 @@ Alignment with protocol-aligned entities may occur when appropriate.
 ---
 
 ## Repository Structure
-
 Each schema directory includes:
 
 - `schema.json`
@@ -78,6 +79,9 @@ Each schema directory includes:
 
 Most tracked primitives remain under research or draft EIP status.  
 No hard fork inclusion is assumed unless explicitly referenced in primary sources.
+
+Status classifications are descriptive and may change  
+as primary sources evolve.
 
 ---
 
