@@ -1,28 +1,48 @@
-
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/VortikRegistry/vortik-open-schema/blob/main/commitmentlayer-schema-v0.1.json",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/commitmentlayer-schema-v0.1.json",
   "title": "Vortik Open Schema — Commitment Layer Semantic Anchor",
   "description": "Minimal metadata schema for L1 commitment / preconfirmation coordination terminology. Research artefact; not an official specification.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["protocol", "version", "identifier", "capabilities", "stewardship_status"],
+  "required": [
+    "protocol",
+    "version",
+    "identifier",
+    "capabilities",
+    "stewardship_status",
+    "primitive_scope",
+    "canonical_terms",
+    "last_reviewed"
+  ],
   "properties": {
     "protocol": {
       "type": "string",
       "const": "CommitmentLayer",
-      "description": "Protocol primitive label (semantic)."
+      "description": "Semantic anchor label used by Vortik for the commitment + preconfirmation coordination surface (non-normative)."
     },
     "version": {
       "type": "string",
-      "pattern": "^[0-9]+\\.[0-9]+(-[a-z0-9.-]+)?$",
-      "default": "0.1-draft",
-      "description": "Schema version (semver-ish)."
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+      "default": "0.1.0-draft",
+      "description": "Schema version (SemVer)."
     },
     "identifier": {
       "type": "string",
       "const": "commitmentlayer.eth",
       "description": "ENS identifier mapped to this semantic anchor."
+    },
+    "primitive_scope": {
+      "type": "string",
+      "minLength": 20,
+      "description": "Human-readable scope definition: what this anchor covers and what it explicitly does not cover."
+    },
+    "canonical_terms": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 2 },
+      "description": "Terms observed in primary sources and community usage for this concept surface (e.g., 'proposer commitments', 'preconfirmations')."
     },
     "capabilities": {
       "type": "array",
@@ -30,21 +50,46 @@
       "uniqueItems": true,
       "items": {
         "type": "string",
-        "enum": ["commitment-signals", "preconfirmation-coordination", "stewardship-metadata"]
+        "enum": [
+          "commitment-signals",
+          "preconfirmation-coordination",
+          "stewardship-metadata"
+        ]
       },
       "description": "Declared semantic capability tags (non-normative)."
     },
     "stewardship_status": {
       "type": "string",
-      "enum": ["protocol_unanchored", "alignment_pending", "institutionally_reserved", "transferred"],
+      "enum": [
+        "protocol_unanchored",
+        "alignment_pending",
+        "institutionally_reserved",
+        "transferred"
+      ],
       "default": "alignment_pending",
-      "description": "Institutional status label used by the registry (non-commercial)."
+      "description": "Registry stewardship status label (non-commercial)."
+    },
+    "last_reviewed": {
+      "type": "string",
+      "format": "date",
+      "description": "Last review date for this schema artefact (YYYY-MM-DD)."
+    },
+    "sources_md": {
+      "type": "string",
+      "format": "uri",
+      "default": "https://github.com/VortikRegistry/vortik-open-schema/blob/main/sources.md",
+      "description": "Optional pointer to a curated sources file (Markdown)."
     },
     "references": {
       "type": "array",
-      "items": { "type": "string", "format": "uri" },
       "default": [],
-      "description": "Primary-source references (optional for early drafts)."
+      "items": { "type": "string", "format": "uri" },
+      "description": "Primary-source references (URIs). Keep minimal here if sources.md is used."
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 800,
+      "description": "Optional short notes for ambiguity, naming collisions, or interpretation caveats."
     }
   }
 }
