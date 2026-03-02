@@ -1,45 +1,35 @@
 # Vortik Semantic Registry
 
-An independent semantic registry tracking terminology stabilization across emerging Ethereum Layer 1 protocol primitives.
-
-Vortik provides structured, versioned JSON schemas referencing primary sources (EIPs, research threads, and public implementation discussions) in order to reduce naming ambiguity and documentation drift.
-
-> Vortik is not affiliated with the Ethereum Foundation, any client team, or any protocol governance body.
-
----
-
-## Purpose
-
-Ethereum protocol research evolves rapidly. Terminology often fragments across:
-
-- EIPs  
-- Research threads  
-- Client implementations  
-- Community discussions  
-
-Vortik exists to:
-
-- Provide canonical terminology mapping (canonical vs aliases)  
-- Offer versioned machine-readable schemas (JSON Schema 2020-12)  
-- Reference primary sources for traceability  
-- Anchor conceptual primitives via ENS namespaces  
-
-This registry is documentation-oriented and coordination-focused.  
-It does not define protocol standards.
+Independent research initiative tracking semantic stabilization  
+across emerging Ethereum L1 coordination primitives.
 
 ---
 
 ## Core Anchors
 
-| ENS Anchor | Canonical Primitive | Status |
-|------------|--------------------|--------|
-| `epbs.eth` | Enshrined Proposer-Builder Separation (ePBS) | EIP-7732 (Draft) |
-| `inclusionlist.eth` | Fork-Choice Enforced Inclusion Lists (FOCIL) | EIP-7805 (Draft) |
-| `commitmentlayer.eth` | Proposer Commitments / Preconfirmations | Research |
-| `fastfinality.eth` | Single Slot Finality (SSF) | Research |
+| Anchor | Primitive Surface | Status |
+|--------|-------------------|--------|
+| `epbs.eth` | Enshrined Proposer-Builder Separation (EIP-7732) | Draft EIP |
+| `inclusionlist.eth` | Inclusion Enforcement / FOCIL (EIP-7805) | Draft EIP |
+| `commitmentlayer.eth` | Commitment & L1 preconfirmation coordination | Active Research |
+| `preconflayer.eth` | Based preconfirmations & latency networks | Active Research |
+| `fastfinality.eth` | Single Slot Finality (SSF research track) | Research |
 
-Note: “Fast finality” is commonly used descriptively.  
-The canonical research term currently used in primary discussions is “Single Slot Finality (SSF)”.
+Each anchor is accompanied by a versioned JSON schema artefact under `/schemas/`.
+
+---
+
+## Purpose
+
+Vortik exists to:
+
+- Track terminology stabilization across Ethereum L1 primitives  
+- Separate canonical primitives from naming drift  
+- Provide minimal semantic metadata schemas  
+- Document conceptual boundaries across coordination layers  
+
+This registry does not define protocol rules.  
+It documents naming surfaces and research convergence.
 
 ---
 
@@ -47,94 +37,55 @@ The canonical research term currently used in primary discussions is “Single S
 
 Vortik monitors conceptual convergence across:
 
-- Enshrined PBS research and implementation attempts  
-- Inclusion enforcement mechanisms (FOCIL / Inclusion Lists)  
-- Preconfirmation coordination models  
-- L1 finality compression research (SSF and related proposals)  
-- Execution-layer constraint primitives  
+- Enshrined PBS (Glamsterdam upgrade path)
+- Inclusion enforcement models (FOCIL and alternatives)
+- Commitment signaling & preconfirmation layers
+- Based sequencing research
+- Single-slot finality research
+- Emerging encrypted mempool models
 
-Hard fork names and roadmap identifiers may change over time.  
-Vortik tracks conceptual primitives first, fork branding second.
-
----
-
-## Design Principles
-
-1. Canonical terminology first  
-   If the ecosystem converges on an acronym (e.g., FOCIL, SSF), that becomes canonical. Longer descriptive terms are treated as aliases.
-
-2. No speculative assertions  
-   All meaningful fields must reference:
-   - An EIP, or  
-   - A research thread, or  
-   - A public implementation source  
-
-3. Explicit versioning  
-   Changes create new versions. No silent overwrites.
-
-4. Machine validation  
-   Schemas follow JSON Schema 2020-12 and include validation examples.
-
----
-
-## Repository Structure
-
-schemas/  
-  epbs/  
-    1.0-draft/  
-      schema.json  
-      sources.md  
-
-  focil/  
-    0.1-draft/  
-      schema.json  
-      sources.md  
-
-  preconfirmations/  
-    0.1-research/  
-      schema.json  
-      sources.md  
-
-  ssf/  
-    0.1-research/  
-      schema.json  
-      sources.md  
-
-examples/  
-  epbs/  
-    valid.example.json  
-
-  focil/  
-    valid.example.json  
+Roadmap identifiers may evolve.  
+Vortik tracks conceptual anchors first, implementation references second.
 
 ---
 
 ## Stewardship Policy
 
-Vortik does not claim ownership over protocol terminology.
+Vortik operates as an independent registry.
 
-If EIP authors, client teams, or implementation groups request:
+- No governance mandate  
+- No protocol authority  
+- No formal affiliation with client teams or the Ethereum Foundation  
+- No commercial claim over protocol primitives
 
-- Namespace coordination  
-- Redirection  
-- Co-maintenance  
-- Stewardship transfer  
 
-Vortik is open to technical discussion under a research-first posture.
-
-The objective is semantic clarity and documentation integrity.
+Identifiers are stewarded under a research-first posture.  
+Alignment with protocol-aligned entities may occur when appropriate.
 
 ---
 
-## Contact & Contribution
+## Repository Structure
 
-Primary coordination occurs via GitHub:
+Each schema directory includes:
 
-- Issues and Pull Requests are the preferred channel for technical discussion.
-- All terminology updates should reference primary sources (EIP, research thread, or implementation repository).
+- `schema.json`
+- `sources.md`
+- (optional) terminology and status documentation
 
-X (public updates):  
-https://x.com/VortikRegistry  
+---
 
-Direct stewardship inquiries (secondary channel):  
-contact.preconf@gmail.com
+## Status (March 2026)
+
+Most tracked primitives remain under research or draft EIP status.  
+No hard fork inclusion is assumed unless explicitly referenced in primary sources.
+
+---
+
+## Contact
+
+Primary contact: GitHub Issues / Discussions  
+Stewardship inquiries: contact.preconf@gmail.com  
+
+---
+
+© 2026 Vortik Semantic Registry
