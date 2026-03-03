@@ -1,11 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/VortikRegistry/vortik-open-schema/blob/main/inclusionlist-schema-v0.1.json",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/inclusionlist/0.1-draft/schema.json",
   "title": "Vortik Open Schema — Inclusion Lists (FOCIL) Semantic Anchor",
   "description": "Minimal metadata schema for an inclusionlist-aligned semantic anchor. Research artefact; not an official specification.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["protocol", "version", "identifier", "capabilities", "stewardship_status"],
+  "required": ["protocol", "version", "identifier", "capabilities", "stewardship_status", "references"],
   "properties": {
     "protocol": {
       "type": "string",
@@ -41,9 +41,12 @@
     },
     "references": {
       "type": "array",
+      "minItems": 2,
       "items": { "type": "string", "format": "uri" },
-      "default": [],
-      "description": "Primary-source references (optional for early drafts)."
+      "default": [
+        "https://eips.ethereum.org/EIPS/eip-7805"
+      ],
+      "description": "Primary-source references."
     }
   }
 }
