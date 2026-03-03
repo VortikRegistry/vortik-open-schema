@@ -1,13 +1,16 @@
 # SSF — Primary Sources
 
-## Research Threads
+## Related EIPs (context / prerequisites)
 
-- Single Slot Finality Core Discussion  
-  https://ethresear.ch/t/single-slot-finality/16700
+- EIP-7251: Increase the MAX_EFFECTIVE_BALANCE  
+  https://eips.ethereum.org/EIPS/eip-7251
 
-- SSF vs 3SF Exploration  
-  https://ethresear.ch/t/3-slot-finality-ssf-is-not-about-single-slot/20927
+## Research Index (EthResearch)
+
+- EthResearch (SSF discussions and related threads)  
+  https://ethresear.ch/
 
 ## Status
 
-Active research; nomenclature may evolve.
+Research track (2026).  
+Terminology in the ecosystem strongly converges on “SSF” as the canonical shorthand.
