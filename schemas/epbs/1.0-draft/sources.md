@@ -17,3 +17,6 @@
 
 Draft EIP (2026).  
 Subject to interoperability validation and fork inclusion decisions.
+### Roadmap Confirmation (Glamsterdam context)
+- Vitalik Buterin — Block Building Pipeline Post (2026)
+  [link]
