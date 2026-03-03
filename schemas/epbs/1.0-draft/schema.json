@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/VortikRegistry/vortik-open-schema/blob/main/epbs-schema-v1.json",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/epbs/1.0-draft/schema.json",
   "title": "Vortik Open Schema — ePBS (EIP-7732) Semantic Anchor",
   "description": "Minimal metadata schema for an ePBS-aligned semantic anchor. Research artefact; not an official specification.",
   "type": "object",
