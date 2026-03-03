@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/commitmentlayer-schema-v0.1.json",
-  "title": "Vortik Open Schema — Commitment Layer Semantic Anchor",
-  "description": "Minimal metadata schema for L1 commitment / preconfirmation coordination terminology. Research artefact; not an official specification.",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/preconfirmations/0.1-draft/schema.json",
+  "title": "Vortik Open Schema — Preconfirmations (Commitment Layer) Semantic Anchor",
+  "description": "Minimal metadata schema for L1 preconfirmation / proposer commitment coordination terminology. Research artefact; not an official specification.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -13,19 +13,20 @@
     "stewardship_status",
     "primitive_scope",
     "canonical_terms",
-    "last_reviewed"
+    "last_reviewed",
+    "references"
   ],
   "properties": {
     "protocol": {
       "type": "string",
-      "const": "CommitmentLayer",
-      "description": "Semantic anchor label used by Vortik for the commitment + preconfirmation coordination surface (non-normative)."
+      "const": "Preconfirmations",
+      "description": "Semantic anchor label for the preconfirmation / proposer commitment coordination surface (non-normative)."
     },
     "version": {
       "type": "string",
-      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
-      "default": "0.1.0-draft",
-      "description": "Schema version (SemVer)."
+      "pattern": "^[0-9]+\\.[0-9]+(-[a-z0-9.-]+)?$",
+      "default": "0.1-draft",
+      "description": "Schema version (semver-ish)."
     },
     "identifier": {
       "type": "string",
@@ -35,14 +36,14 @@
     "primitive_scope": {
       "type": "string",
       "minLength": 20,
-      "description": "Human-readable scope definition: what this anchor covers and what it explicitly does not cover."
+      "description": "Scope definition: what this anchor covers and what it explicitly does not cover."
     },
     "canonical_terms": {
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,
       "items": { "type": "string", "minLength": 2 },
-      "description": "Terms observed in primary sources and community usage for this concept surface (e.g., 'proposer commitments', 'preconfirmations')."
+      "description": "Terms observed in primary sources for this surface (e.g., 'preconfirmations', 'proposer commitments')."
     },
     "capabilities": {
       "type": "array",
@@ -77,14 +78,18 @@
     "sources_md": {
       "type": "string",
       "format": "uri",
-      "default": "https://github.com/VortikRegistry/vortik-open-schema/blob/main/sources.md",
-      "description": "Optional pointer to a curated sources file (Markdown)."
+      "default": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/preconfirmations/0.1-draft/sources.md",
+      "description": "Pointer to curated sources file (Markdown)."
     },
     "references": {
       "type": "array",
-      "default": [],
+      "minItems": 2,
       "items": { "type": "string", "format": "uri" },
-      "description": "Primary-source references (URIs). Keep minimal here if sources.md is used."
+      "default": [
+        "https://ethresear.ch/t/uncrowdable-inclusion-lists-the-tension-between-chain-neutrality-preconfirmations-and-proposer-commitments/19372",
+        "https://ethresear.ch/t/becoming-based-a-path-towards-decentralised-sequencing/21733"
+      ],
+      "description": "Primary-source references (URIs)."
     },
     "notes": {
       "type": "string",
