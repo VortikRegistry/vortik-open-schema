@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/preconflayer/0.1-draft/schema.json",
+  "title": "Vortik Open Schema — Preconfirmation Layer Semantic Anchor",
+  "description": "Minimal metadata schema for preconfirmations as a latency-reduction coordination surface. Research artefact; not an official specification.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol",
+    "version",
+    "identifier",
+    "capabilities",
+    "stewardship_status",
+    "primitive_scope",
+    "canonical_terms",
+    "last_reviewed",
+    "references",
+    "related_anchors"
+  ],
+  "properties": {
+    "protocol": {
+      "type": "string",
+      "const": "PreconfirmationLayer",
+      "description": "Semantic anchor label for the preconfirmation layer surface (non-normative)."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+(-[a-z0-9.-]+)?$",
+      "default": "0.1-draft",
+      "description": "Schema version (semver-ish)."
+    },
+    "identifier": {
+      "type": "string",
+      "const": "preconflayer.eth",
+      "description": "ENS identifier mapped to this semantic anchor."
+    },
+    "primitive_scope": {
+      "type": "string",
+      "minLength": 20,
+      "description": "Scope definition: preconfirmations primarily as latency reduction; excludes unrelated sequencing/general intents."
+    },
+    "canonical_terms": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 2 },
+      "description": "Observed terms for this surface (e.g., 'preconfirmations', 'based preconfirmations')."
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "preconfirmation-coordination",
+          "latency-reduction",
+          "stewardship-metadata"
+        ]
+      },
+      "description": "Declared semantic capability tags (non-normative)."
+    },
+    "stewardship_status": {
+      "type": "string",
+      "enum": [
+        "protocol_unanchored",
+        "alignment_pending",
+        "institutionally_reserved",
+        "transferred"
+      ],
+      "default": "alignment_pending",
+      "description": "Registry stewardship status label (non-commercial)."
+    },
+    "last_reviewed": {
+      "type": "string",
+      "format": "date",
+      "description": "Last review date for this schema artefact (YYYY-MM-DD)."
+    },
+    "sources_md": {
+      "type": "string",
+      "format": "uri",
+      "default": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/preconflayer/0.1-draft/sources.md",
+      "description": "Pointer to curated sources file (Markdown)."
+    },
+    "references": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "type": "string", "format": "uri" },
+      "default": [
+        "https://ethresear.ch/t/becoming-based-a-path-towards-decentralised-sequencing/21733",
+        "https://ethresear.ch/t/uncrowdable-inclusion-lists-the-tension-between-chain-neutrality-preconfirmations-and-proposer-commitments/19372"
+      ],
+      "description": "Primary-source references (URIs)."
+    },
+    "related_anchors": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "format": "uri" },
+      "default": [
+        "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/commitmentlayer/0.1-draft/schema.json"
+      ],
+      "description": "Pointers to adjacent anchors that share the same surface (e.g., commitmentlayer)."
+    }
+  }
+}
