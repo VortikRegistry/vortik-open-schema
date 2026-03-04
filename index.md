@@ -19,4 +19,5 @@ Schemas define machine-readable metadata while anchors describe conceptual surfa
 
 ## Repository
 
-https://github.com/vortikregistry/Vortik-Semantic-Registry
+
+https://github.com/VortikRegistry/vortik-open-schema
