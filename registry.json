@@ -1,0 +1,47 @@
+{
+  "registry": "vortik-semantic-registry",
+  "version": "0.1",
+  "description": "Independent registry tracking semantic stabilization across emerging Ethereum L1 coordination primitives.",
+  "anchors": [
+    {
+      "id": "epbs",
+      "ens": "epbs.eth",
+      "layer": "proposer-builder separation",
+      "status": "draft-eip",
+      "schema": "schemas/epbs/schema.json",
+      "anchor_doc": "anchors/epbs.md"
+    },
+    {
+      "id": "inclusionlist",
+      "ens": "inclusionlist.eth",
+      "layer": "inclusion enforcement",
+      "status": "draft-eip",
+      "schema": "schemas/inclusionlist/schema.json",
+      "anchor_doc": "anchors/inclusionlist.md"
+    },
+    {
+      "id": "commitmentlayer",
+      "ens": "commitmentlayer.eth",
+      "layer": "commitment signaling",
+      "status": "research",
+      "schema": "schemas/commitmentlayer/schema.json",
+      "anchor_doc": "anchors/commitmentlayer.md"
+    },
+    {
+      "id": "preconflayer",
+      "ens": "preconflayer.eth",
+      "layer": "preconfirmations",
+      "status": "research",
+      "schema": "schemas/preconflayer/schema.json",
+      "anchor_doc": "anchors/preconflayer.md"
+    },
+    {
+      "id": "fastfinality",
+      "ens": "fastfinality.eth",
+      "layer": "single slot finality",
+      "status": "research",
+      "schema": "schemas/fastfinality/schema.json",
+      "anchor_doc": "anchors/fastfinality.md"
+    }
+  ]
+}
