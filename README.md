@@ -7,14 +7,29 @@ Independent research registry tracking semantic stabilization across emerging Et
 ## Core Anchors
 
 | Anchor | Primitive Surface | Status |
-|--------|-------------------|--------|
+|------|-----------------|------|
 | `epbs.eth` | Enshrined Proposer-Builder Separation (EIP-7732) | Draft EIP |
 | `inclusionlist.eth` | Inclusion Enforcement / FOCIL (EIP-7805) | Draft EIP |
 | `commitmentlayer.eth` | Commitment signaling & L1 preconfirmation coordination | Active Research |
-| `preconflayer.eth` | Based preconfirmations & latency networks | Active Research |
+| `preconflayer.eth` | Based preconfirmations & latency coordination networks | Active Research |
 | `fastfinality.eth` | Single Slot Finality (SSF research track) | Active Research |
 
-Each anchor is accompanied by a versioned JSON schema artefact under `/schemas/`.
+Each anchor is accompanied by a versioned JSON schema artifact under `/schemas/`.
+
+---
+
+## Associated ENS Anchors
+
+The following ENS names correspond to conceptual anchors for primitives referenced in this registry:
+
+- epbs.eth  
+- inclusionlist.eth  
+- commitmentlayer.eth  
+- preconflayer.eth  
+- buildermarket.eth  
+- solverlayer.eth  
+
+These identifiers are referenced as semantic anchors for emerging Ethereum infrastructure primitives and research areas.
 
 ---
 
@@ -27,23 +42,23 @@ Vortik exists to:
 - Provide minimal semantic metadata schemas
 - Document conceptual boundaries across coordination layers
 
-This registry does not define protocol rules.  
-It documents naming surfaces and research convergence.
+This registry does **not** define protocol rules.  
+It documents naming surfaces and research convergence across primitives.
 
 ---
 
 ## Scope
 
-Vortik monitors conceptual convergence across:
+Vortik monitors conceptual convergence across research areas including:
 
 - Enshrined proposer-builder separation
-- Inclusion enforcement models (FOCIL and alternatives)
-- Commitment signaling & preconfirmation layers
+- Inclusion enforcement models (FOCIL and related proposals)
+- Commitment signaling and preconfirmation coordination
 - Based sequencing research
-- Single-slot finality research (SSF / variants)
-- Emerging encrypted mempool models
+- Single-slot finality research (SSF and variants)
+- Emerging encrypted mempool designs
 
-Roadmap identifiers may evolve.  
+Roadmap identifiers may evolve as research progresses.  
 Vortik prioritizes conceptual anchors over implementation-era naming.
 
 ---
@@ -52,31 +67,38 @@ Vortik prioritizes conceptual anchors over implementation-era naming.
 
 Each schema directory includes:
 
-- `schema.json`
-- `sources.md`
-- (optional) terminology and status documentation
+- `schema.json` — minimal semantic metadata structure
+- `sources.md` — primary research references
+- optional documentation describing terminology and status
 
-Schemas are versioned (e.g. `0.1-draft`, `1.0-draft`, `0.1-research`) to reflect maturity and change history.
+Schemas are versioned (for example `0.1-draft`, `1.0-draft`, `0.1-research`) to reflect maturity and revision history.
 
 ---
 
 ## How to Use
 
-- Reference schema files as lightweight semantic metadata for documentation, tooling, or coordination discussions.
-- If you want to propose improvements or report naming drift, open a GitHub Issue with primary sources.
+Schemas in this registry can be referenced for:
+
+- documentation metadata
+- research coordination
+- tooling experiments
+- terminology alignment discussions
+
+To suggest improvements or report terminology drift, open a GitHub Issue and include primary research sources.
 
 ---
 
 ## Stewardship Policy
 
-Vortik operates as an independent registry.
+Vortik operates as an independent research registry.
 
-- No governance mandate
-- No protocol authority
-- No formal affiliation with client teams or the Ethereum Foundation
-- No commercial claim over protocol primitives
+- No governance mandate  
+- No protocol authority  
+- No formal affiliation with client teams or the Ethereum Foundation  
+- No commercial claim over protocol primitives  
 
-Identifiers are stewarded under a research-first and neutrality-preserving posture.  
+Identifiers are stewarded under a research-first, neutrality-preserving posture.
+
 Alignment discussions may occur when appropriate.
 
 ---
@@ -84,7 +106,7 @@ Alignment discussions may occur when appropriate.
 ## Status (March 2026)
 
 Most tracked primitives remain under research or draft EIP status.  
-No hard fork inclusion is assumed unless explicitly referenced in primary sources.
+No hard-fork inclusion is assumed unless explicitly referenced in primary sources.
 
 ---
 
