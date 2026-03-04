@@ -17,8 +17,6 @@ This registry documents conceptual infrastructure primitives emerging in Ethereu
 
 Schemas define machine-readable metadata while anchors describe conceptual surfaces.
 
-## Repository
-
 
 ## Repository
 
