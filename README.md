@@ -63,12 +63,6 @@ Vortik prioritizes conceptual anchors over implementation-era naming.
 
 ---
 
-## Repository
-
-https://github.com/VortikRegistry/vortik-open-schema
-
----
-
 ## Repository Structure
 
 Each schema directory includes:
@@ -78,6 +72,26 @@ Each schema directory includes:
 - optional documentation describing terminology and status
 
 Schemas are versioned (for example `0.1-draft`, `1.0-draft`, `0.1-research`) to reflect maturity and revision history.
+
+---
+
+## Anchors Directory
+
+The `/anchors/` directory contains minimal orientation documents for each semantic anchor tracked by the registry.
+
+Each anchor file describes:
+
+- the conceptual primitive
+- its research context
+- the coordination surface it represents
+
+Detailed machine-readable metadata is defined in the corresponding schemas under `/schemas/`.
+
+---
+
+## Repository
+
+[View the repository on GitHub](https://github.com/VortikRegistry/vortik-open-schema)
 
 ---
 
