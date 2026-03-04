@@ -63,6 +63,12 @@ Vortik prioritizes conceptual anchors over implementation-era naming.
 
 ---
 
+## Repository
+
+https://github.com/VortikRegistry/vortik-open-schema
+
+---
+
 ## Repository Structure
 
 Each schema directory includes:
