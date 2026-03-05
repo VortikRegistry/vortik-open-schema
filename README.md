@@ -147,6 +147,16 @@ To suggest improvements or report terminology drift, open a GitHub Issue and inc
 
 ---
 
+## Registry Index (Machine-readable)
+
+- Canonical index: `registry.json`
+- Index schema: `registry.schema.json` (JSON Schema, Draft 2020-12)
+- Anchor catalogue: `anchors.index.json`
+- Anchor docs: `/anchors/*.md`
+- Schemas: `/schemas/<anchor>/<version>/schema.json`
+
+---
+
 ## Stewardship Policy
 
 Vortik operates as an independent research registry.
