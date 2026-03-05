@@ -65,10 +65,27 @@
       "default": ["single-slot finality", "SSF"],
       "description": "Terms observed in primary sources for this research surface."
     },
+    "terminology_evolution": {
+      "type": "array",
+      "description": "Non-normative timeline documenting terminology drift for this primitive.",
+      "default": [],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["term", "status"],
+        "properties": {
+          "term": { "type": "string", "minLength": 2 },
+          "status": { "type": "string", "enum": ["canonical", "alias", "deprecated"] },
+          "notes": { "type": "string", "maxLength": 280 },
+          "first_seen": { "type": "string", "format": "date" },
+          "last_seen": { "type": "string", "format": "date" }
+        }
+      }
+    },
     "last_reviewed": {
       "type": "string",
       "format": "date",
-      "default": "2026-03-03",
+      "default": "2026-03-05",
       "description": "Last review date for this schema artefact (YYYY-MM-DD)."
     },
     "sources_md": {
