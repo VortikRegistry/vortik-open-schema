@@ -1,5 +1,8 @@
 # Vortik Semantic Registry
 
+🌐 Registry site:
+https://vortikregistry.github.io/vortik-open-schema/
+
 Independent research registry tracking semantic stabilization across emerging Ethereum L1 coordination primitives.
 
 ---
