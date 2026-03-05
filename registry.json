@@ -43,6 +43,7 @@
       "schema": "schemas/ssf/0.1-research/schema.json",
       "anchor_doc": "anchors/fastfinality.md"
     },
+
     {
       "id": "buildermarket",
       "ens": "buildermarket.eth",
