@@ -1,0 +1,41 @@
+{
+  "registry": "vortik-semantic-registry",
+  "index_version": "0.1",
+  "anchors": [
+    {
+      "id": "epbs",
+      "ens": "epbs.eth",
+      "doc": "anchors/epbs.md"
+    },
+    {
+      "id": "inclusionlist",
+      "ens": "inclusionlist.eth",
+      "doc": "anchors/inclusionlist.md"
+    },
+    {
+      "id": "commitmentlayer",
+      "ens": "commitmentlayer.eth",
+      "doc": "anchors/commitmentlayer.md"
+    },
+    {
+      "id": "preconflayer",
+      "ens": "preconflayer.eth",
+      "doc": "anchors/preconflayer.md"
+    },
+    {
+      "id": "ssf",
+      "ens": "fastfinality.eth",
+      "doc": "anchors/ssf.md"
+    },
+    {
+      "id": "buildermarket",
+      "ens": "buildermarket.eth",
+      "doc": "anchors/buildermarket.md"
+    },
+    {
+      "id": "solverlayer",
+      "ens": "solverlayer.eth",
+      "doc": "anchors/solverlayer.md"
+    }
+  ]
+}
