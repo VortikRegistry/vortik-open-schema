@@ -1,0 +1,16 @@
+{
+  "project": "Vortik Open Semantic Registry",
+  "description": "Machine-readable semantic registry of emerging Ethereum protocol primitives mapped to ENS identifiers.",
+  "network": "ethereum",
+  "maintainer": "VortikRegistry",
+  "repository": "https://github.com/VortikRegistry/vortik-open-schema",
+  "registry_file": "registry.json",
+  "anchors_index": "anchors.index.json",
+  "schemas_directory": "schemas/",
+  "license": "MIT",
+  "purpose": [
+    "semantic indexing of Ethereum research primitives",
+    "terminology stabilization across research threads",
+    "machine-readable metadata for protocol concepts"
+  ]
+}
