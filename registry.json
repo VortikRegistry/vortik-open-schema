@@ -42,6 +42,22 @@
       "status": "research",
       "schema": "schemas/ssf/0.1-research/schema.json",
       "anchor_doc": "anchors/fastfinality.md"
+    },
+    {
+      "id": "buildermarket",
+      "ens": "buildermarket.eth",
+      "layer": "block building markets",
+      "status": "research",
+      "schema": null,
+      "anchor_doc": "anchors/buildermarket.md"
+    },
+    {
+      "id": "solverlayer",
+      "ens": "solverlayer.eth",
+      "layer": "intent solver markets",
+      "status": "research",
+      "schema": null,
+      "anchor_doc": "anchors/solverlayer.md"
     }
   ]
 }
