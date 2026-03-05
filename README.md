@@ -1,6 +1,6 @@
 # Vortik Semantic Registry
 
-🌐 Registry site:
+🌐 Registry site:  
 https://vortikregistry.github.io/vortik-open-schema/
 
 Independent research registry tracking semantic stabilization across emerging Ethereum L1 coordination primitives.
@@ -18,6 +18,36 @@ Independent research registry tracking semantic stabilization across emerging Et
 | `fastfinality.eth` | Single Slot Finality (SSF research track) | Active Research |
 
 Each anchor is accompanied by a versioned JSON schema artifact under `/schemas/`.
+
+---
+
+## ENS Anchor Model
+
+The Vortik registry uses **ENS identifiers as semantic anchors** for emerging Ethereum coordination primitives.
+
+Each anchor connects four layers:
+
+ENS identifier  
+↓  
+registry entry (`registry.json`)  
+↓  
+machine-readable schema  
+↓  
+human-readable anchor documentation
+
+Example structure:
+
+epbs.eth  
+↓  
+registry.json entry  
+↓  
+schemas/epbs/1.0-draft/schema.json  
+↓  
+anchors/epbs.md
+
+This architecture separates **stable conceptual naming (ENS)** from **evolving research metadata (schemas and registry entries)**.
+
+ENS identifiers therefore act as **neutral conceptual anchors**, while the registry documents terminology convergence and research evolution across coordination primitives.
 
 ---
 
@@ -106,6 +136,12 @@ Schemas in this registry can be referenced for:
 - research coordination
 - tooling experiments
 - terminology alignment discussions
+
+Tools and documentation systems may reference registry entries through:
+
+`registry.json`
+
+or by directly linking to specific schema versions under `/schemas/`.
 
 To suggest improvements or report terminology drift, open a GitHub Issue and include primary research sources.
 
