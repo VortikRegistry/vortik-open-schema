@@ -185,5 +185,24 @@ Primary contact: GitHub Issues / Discussions
 Stewardship inquiries (secondary): contact.preconf@gmail.com  
 
 ---
+## Tracked Ethereum Primitives
+
+The registry currently tracks several coordination primitives discussed across Ethereum protocol research.
+
+These primitives appear across research threads related to proposer-builder separation, censorship resistance, transaction ordering guarantees and block construction markets.
+
+### Primitives
+
+- epbs – Enshrined Proposer-Builder Separation  
+- inclusionlist – Inclusion enforcement mechanisms  
+- preconflayer – Preconfirmation coordination models  
+- commitmentlayer – Commitment signaling systems  
+- buildermarket – Block builder market structures  
+- solverlayer – Intent solver coordination networks  
+- fastfinality – Single slot finality research
+
+These anchors are documented through schemas and reference sources in the registry.
+
+---
 
 © 2026 Vortik Semantic Registry
