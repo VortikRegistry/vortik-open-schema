@@ -8,7 +8,7 @@
       "ens": "epbs.eth",
       "layer": "proposer-builder separation",
       "status": "draft-eip",
-      "schema": "schemas/epbs/schema.json",
+      "schema": "schemas/epbs/1.0-draft/schema.json",
       "anchor_doc": "anchors/epbs.md"
     },
     {
@@ -16,7 +16,7 @@
       "ens": "inclusionlist.eth",
       "layer": "inclusion enforcement",
       "status": "draft-eip",
-      "schema": "schemas/inclusionlist/schema.json",
+      "schema": "schemas/inclusionlist/0.1-draft/schema.json",
       "anchor_doc": "anchors/inclusionlist.md"
     },
     {
@@ -24,7 +24,7 @@
       "ens": "commitmentlayer.eth",
       "layer": "commitment signaling",
       "status": "research",
-      "schema": "schemas/commitmentlayer/schema.json",
+      "schema": "schemas/commitmentlayer/0.1-draft/schema.json",
       "anchor_doc": "anchors/commitmentlayer.md"
     },
     {
@@ -32,16 +32,16 @@
       "ens": "preconflayer.eth",
       "layer": "preconfirmations",
       "status": "research",
-      "schema": "schemas/preconflayer/schema.json",
+      "schema": "schemas/preconflayer/0.1-draft/schema.json",
       "anchor_doc": "anchors/preconflayer.md"
     },
     {
-      "id": "fastfinality",
+      "id": "ssf",
       "ens": "fastfinality.eth",
       "layer": "single slot finality",
       "status": "research",
-      "schema": "schemas/fastfinality/schema.json",
-      "anchor_doc": "anchors/fastfinality.md"
+      "schema": "schemas/ssf/0.1-research/schema.json",
+      "anchor_doc": "anchors/ssf.md"
     }
   ]
 }
