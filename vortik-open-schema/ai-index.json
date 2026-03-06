@@ -8,6 +8,17 @@
   "anchors_index": "anchors.index.json",
   "schemas_directory": "schemas/",
   "license": "MIT",
+  "anchors_tracked": [
+    "epbs.eth",
+    "inclusionlist.eth",
+    "commitmentlayer.eth",
+    "preconflayer.eth",
+    "fastfinality.eth",
+    "buildermarket.eth",
+    "solverlayer.eth",
+    "executionmarket.eth",
+    "orderflowauction.eth"
+  ],
   "purpose": [
     "semantic indexing of Ethereum research primitives",
     "terminology stabilization across research threads",
