@@ -92,6 +92,42 @@ These systems coordinate:
 
 ---
 
+## Execution Markets
+
+Anchor: executionmarket.eth
+
+Execution markets refer to coordination environments where transaction execution rights are routed or allocated across competing actors.
+
+These systems may involve:
+
+- execution routing markets
+- competitive blockspace allocation
+- solver-based execution environments
+- cross-domain execution coordination
+
+Execution markets sit between solver networks and builder markets, determining where and how transactions are executed before block construction.
+
+---
+
+## Order Flow Auctions
+
+Anchor: orderflowauction.eth
+
+Order flow auctions refer to mechanisms where transaction flow is auctioned before reaching block builders.
+
+These mechanisms attempt to optimize execution outcomes by routing user transactions through competitive bidding environments.
+
+Research areas include:
+
+- order flow auctions (OFAs)
+- RFQ-style execution markets
+- intent routing systems
+- flow internalization mechanisms
+
+Order flow auctions interact closely with solver networks and execution markets.
+
+---
+
 ## Single Slot Finality
 
 Anchor: fastfinality.eth
@@ -102,7 +138,7 @@ This primitive affects:
 
 - validator coordination
 - fork choice rules
-- protocol safety assumptions.
+- protocol safety assumptions
 
 ---
 
