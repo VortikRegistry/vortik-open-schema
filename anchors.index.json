@@ -36,6 +36,16 @@
       "id": "solverlayer",
       "ens": "solverlayer.eth",
       "doc": "anchors/solverlayer.md"
+    },
+    {
+      "id": "executionmarket",
+      "ens": "executionmarket.eth",
+      "doc": "anchors/executionmarket.md"
+    },
+    {
+      "id": "orderflowauction",
+      "ens": "orderflowauction.eth",
+      "doc": "anchors/orderflowauction.md"
     }
   ]
 }
