@@ -4,6 +4,19 @@ All notable changes to this registry are documented in this file.
 
 This project follows a lightweight versioning approach aligned with registry maturity (not protocol standardization).
 
+## [0.2] — 2026-03-06
+
+### Added
+- New semantic anchors documenting execution coordination layers:
+  - `executionmarket.eth` (execution market coordination surface)
+  - `orderflowauction.eth` (order flow auction routing surface)
+
+### Updated
+- Conceptual registry map expanded to include execution-layer coordination primitives.
+- Index and navigation pages updated to reflect the extended anchor set.
+
+---
+
 ## [0.1] — 2026-03-05
 
 ### Added
