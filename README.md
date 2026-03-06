@@ -61,6 +61,8 @@ The following ENS names correspond to conceptual anchors for primitives referenc
 - preconflayer.eth  
 - buildermarket.eth  
 - solverlayer.eth  
+- executionmarket.eth  
+- orderflowauction.eth  
 
 These identifiers are referenced as semantic anchors for emerging Ethereum infrastructure primitives and research areas.
 
@@ -88,6 +90,9 @@ Vortik monitors conceptual convergence across research areas including:
 - Inclusion enforcement models (FOCIL and related proposals)
 - Commitment signaling and preconfirmation coordination
 - Based sequencing research
+- Solver networks and intent-based execution systems
+- Execution markets and block construction coordination
+- Order flow auctions and transaction routing infrastructure
 - Single-slot finality research (SSF and variants)
 - Emerging encrypted mempool designs
 
@@ -185,11 +190,12 @@ Primary contact: GitHub Issues / Discussions
 Stewardship inquiries (secondary): contact.preconf@gmail.com  
 
 ---
+
 ## Tracked Ethereum Primitives
 
 The registry currently tracks several coordination primitives discussed across Ethereum protocol research.
 
-These primitives appear across research threads related to proposer-builder separation, censorship resistance, transaction ordering guarantees and block construction markets.
+These primitives appear across research threads related to proposer-builder separation, censorship resistance, transaction ordering guarantees, execution markets and block construction infrastructure.
 
 ### Primitives
 
@@ -199,7 +205,9 @@ These primitives appear across research threads related to proposer-builder sepa
 - commitmentlayer – Commitment signaling systems  
 - buildermarket – Block builder market structures  
 - solverlayer – Intent solver coordination networks  
-- fastfinality – Single slot finality research
+- executionmarket – Execution market coordination layer  
+- orderflowauction – Order flow auction routing infrastructure  
+- fastfinality – Single slot finality research  
 
 These anchors are documented through schemas and reference sources in the registry.
 
