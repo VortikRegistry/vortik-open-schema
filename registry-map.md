@@ -8,18 +8,24 @@ These primitives form a layered conceptual structure.
 
 ## Conceptual Layers
 
-User Transactions
-↓
-Builder Market
-↓
-Proposer / Builder Separation (ePBS)
-↓
-Inclusion Enforcement (FOCIL / Inclusion Lists)
-↓
-Preconfirmation Networks
-↓
-Commitment Signaling Layers
-↓
+User Intents / Transactions  
+↓  
+Order Flow Routing (Order Flow Auctions)  
+↓  
+Solver Coordination Networks  
+↓  
+Execution Markets  
+↓  
+Builder Markets  
+↓  
+Proposer / Builder Separation (ePBS)  
+↓  
+Inclusion Enforcement (FOCIL / Inclusion Lists)  
+↓  
+Preconfirmation Networks  
+↓  
+Commitment Signaling Layers  
+↓  
 Finality Systems (SSF research)
 
 ---
@@ -30,6 +36,10 @@ The registry currently tracks the following anchors:
 
 | Anchor | Conceptual Layer |
 |------|------|
+| orderflowauction.eth | Order Flow Routing |
+| solverlayer.eth | Solver Coordination Networks |
+| executionmarket.eth | Execution Markets |
+| buildermarket.eth | Builder Market Structures |
 | epbs.eth | Proposer-Builder Separation |
 | inclusionlist.eth | Inclusion Enforcement |
 | preconflayer.eth | Preconfirmation Networks |
