@@ -127,9 +127,28 @@ Detailed machine-readable metadata is defined in the corresponding schemas under
 
 ---
 
+## Machine-Readable Registry
+
+The canonical machine-readable index is available at:
+
+https://vortikregistry.github.io/vortik-open-schema/registry.json
+
+Supporting registry artifacts:
+
+- `registry.json` — canonical registry index  
+- `anchors.index.json` — anchor catalogue  
+- `schemas/<anchor>/<version>/schema.json` — semantic metadata  
+- `anchors/<anchor>.md` — conceptual documentation  
+
+These files allow tools and documentation systems to reference the registry programmatically.
+
+---
+
 ## Repository
 
-[View the repository on GitHub](https://github.com/VortikRegistry/vortik-open-schema)
+GitHub repository:
+
+https://github.com/VortikRegistry/vortik-open-schema
 
 ---
 
@@ -146,19 +165,22 @@ Tools and documentation systems may reference registry entries through:
 
 `registry.json`
 
-or by directly linking to specific schema versions under `/schemas/`.
+or by directly linking to schema versions under:
+
+`/schemas/<anchor>/<version>/schema.json`
 
 To suggest improvements or report terminology drift, open a GitHub Issue and include primary research sources.
 
 ---
 
-## Registry Index (Machine-readable)
+## How to Cite
 
-- Canonical index: `registry.json`
-- Index schema: `registry.schema.json` (JSON Schema, Draft 2020-12)
-- Anchor catalogue: `anchors.index.json`
-- Anchor docs: `/anchors/*.md`
-- Schemas: `/schemas/<anchor>/<version>/schema.json`
+If you reference this registry in research or documentation:
+
+Vortik Semantic Registry  
+https://vortikregistry.github.io/vortik-open-schema/
+
+Citation metadata is also available through the repository's `CITATION.cff` file.
 
 ---
 
@@ -187,7 +209,9 @@ No hard-fork inclusion is assumed unless explicitly referenced in primary source
 ## Contact
 
 Primary contact: GitHub Issues / Discussions  
-Stewardship inquiries (secondary): contact.preconf@gmail.com  
+
+Stewardship inquiries (secondary):  
+contact.preconf@gmail.com  
 
 ---
 
@@ -199,15 +223,15 @@ These primitives appear across research threads related to proposer-builder sepa
 
 ### Primitives
 
-- epbs – Enshrined Proposer-Builder Separation  
-- inclusionlist – Inclusion enforcement mechanisms  
-- preconflayer – Preconfirmation coordination models  
-- commitmentlayer – Commitment signaling systems  
-- buildermarket – Block builder market structures  
-- solverlayer – Intent solver coordination networks  
-- executionmarket – Execution market coordination layer  
-- orderflowauction – Order flow auction routing infrastructure  
-- fastfinality – Single slot finality research  
+- epbs — Enshrined Proposer-Builder Separation  
+- inclusionlist — Inclusion enforcement mechanisms  
+- preconflayer — Preconfirmation coordination models  
+- commitmentlayer — Commitment signaling systems  
+- buildermarket — Block builder market structures  
+- solverlayer — Intent solver coordination networks  
+- executionmarket — Execution market coordination layer  
+- orderflowauction — Order flow auction routing infrastructure  
+- fastfinality — Single slot finality research  
 
 These anchors are documented through schemas and reference sources in the registry.
 
