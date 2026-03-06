@@ -12,6 +12,8 @@ Anchors correspond to ENS identifiers used as semantic references for research a
 - Commitment signaling layers
 - Builder markets
 - Solver layers
+- Execution markets
+- Order flow auctions
 
 These files are intentionally minimal and serve as orientation documents for each anchor.
 
@@ -28,6 +30,10 @@ The following anchors are currently documented:
 - `commitmentlayer.eth` — Commitment signaling infrastructure
 - `preconflayer.eth` — Preconfirmation coordination layers
 - `fastfinality.eth` — Single-slot finality research track
+- `buildermarket.eth` — Block builder market structures
+- `solverlayer.eth` — Intent solver coordination networks
+- `executionmarket.eth` — Execution market coordination layer
+- `orderflowauction.eth` — Order flow auction routing infrastructure
 
 Each anchor document provides a short explanation of the research area and the terminology surface tracked by the registry.
 
