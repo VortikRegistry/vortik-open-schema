@@ -32,6 +32,8 @@ Examples include:
 - inclusion enforcement models
 - commitment signaling
 - preconfirmation coordination
+- execution markets
+- order flow auctions
 - single-slot finality research
 
 Anchors are intentionally minimal and serve as orientation documents rather than full specifications.
@@ -48,6 +50,8 @@ epbs.eth → proposer-builder separation
 inclusionlist.eth → inclusion enforcement models  
 preconflayer.eth → preconfirmation coordination  
 commitmentlayer.eth → commitment signaling primitives  
+executionmarket.eth → execution market coordination  
+orderflowauction.eth → order flow auction mechanisms  
 
 These identifiers provide a stable conceptual surface independent of implementation changes or naming drift.
 
@@ -60,9 +64,11 @@ The registry currently tracks primitives related to:
 - proposer-builder separation (PBS / ePBS)
 - inclusion enforcement (FOCIL and related models)
 - commitment signaling layers
+- preconfirmation coordination
+- execution markets
+- order flow auction systems
 - based sequencing research
 - single-slot finality research
-- emerging coordination primitives
 
 New anchors may be added when research areas converge around stable terminology.
 
