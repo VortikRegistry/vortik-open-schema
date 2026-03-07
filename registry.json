@@ -69,4 +69,11 @@
     },
     {
       "id": "orderflowauction",
-      "ens": "orderflowauction.eth
+      "ens": "orderflowauction.eth",
+      "layer": "order flow auctions",
+      "status": "research",
+      "schema": null,
+      "anchor_doc": "anchors/orderflowauction.md"
+    }
+  ]
+}
