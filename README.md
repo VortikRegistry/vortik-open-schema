@@ -15,7 +15,7 @@ Independent research registry tracking semantic stabilization across emerging Et
 | `inclusionlist.eth` | Inclusion Enforcement / FOCIL (EIP-7805) | Draft EIP |
 | `commitmentlayer.eth` | Commitment signaling & L1 preconfirmation coordination | Active Research |
 | `preconflayer.eth` | Based preconfirmations & latency coordination networks | Active Research |
-| `fastfinality.eth` | Single Slot Finality (SSF research track) | Active Research |
+| `fastfinality.eth` | Single Slot Finality (SSF) research track | Active Research |
 
 Each anchor is accompanied by a versioned JSON schema artifact under `/schemas/`.
 
@@ -77,7 +77,7 @@ Vortik exists to:
 - Provide minimal semantic metadata schemas
 - Document conceptual boundaries across coordination layers
 
-This registry does **not** define protocol rules.  
+This registry **does not define protocol rules**.  
 It documents naming surfaces and terminology convergence across coordination primitives discussed in Ethereum research.
 
 ---
@@ -93,7 +93,7 @@ Vortik monitors conceptual convergence across research areas including:
 - Solver networks and intent-based execution systems
 - Execution markets and block construction coordination
 - Order flow auctions and transaction routing infrastructure
-- Single-slot finality research (SSF and variants)
+- Single-slot finality research (SSF and related proposals)
 - Emerging encrypted mempool designs
 
 Roadmap identifiers may evolve as research progresses.  
@@ -231,7 +231,7 @@ These primitives appear across research threads related to proposer-builder sepa
 - solverlayer — Intent solver coordination networks  
 - executionmarket — Execution market coordination layer  
 - orderflowauction — Order flow auction routing infrastructure  
-- fastfinality — Single slot finality research  
+- fastfinality — Single slot finality research (SSF)
 
 These anchors are documented through schemas and reference sources in the registry.
 
