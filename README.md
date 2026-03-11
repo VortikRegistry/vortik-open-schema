@@ -1,5 +1,7 @@
 # Vortik Semantic Registry
 
+A minimal semantic registry documenting conceptual anchors across emerging Ethereum coordination primitives.
+
 🌐 Registry site:  
 https://vortikregistry.github.io/vortik-open-schema/
 
