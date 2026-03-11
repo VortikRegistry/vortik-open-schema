@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Builder Market Coordination Schema",
+  "description": "Schema describing builder market coordination primitives in Ethereum PBS ecosystems.",
+  "type": "object",
+  "properties": {
+    "builder_id": {
+      "type": "string"
+    },
+    "relay": {
+      "type": "string"
+    },
+    "bid_value": {
+      "type": "number"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["builder_id", "relay", "bid_value"]
+}
