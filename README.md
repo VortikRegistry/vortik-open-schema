@@ -3,7 +3,7 @@
 🌐 Registry site:  
 https://vortikregistry.github.io/vortik-open-schema/
 
-Independent research registry tracking semantic stabilization across emerging Ethereum L1 coordination primitives.
+Independent research registry tracking semantic stabilization across emerging Ethereum coordination primitives.
 
 ---
 
@@ -72,13 +72,13 @@ These identifiers are referenced as semantic anchors for emerging Ethereum infra
 
 Vortik exists to:
 
-- Track terminology stabilization across Ethereum L1 primitives
+- Track terminology stabilization across Ethereum coordination primitives
 - Separate canonical primitives from naming drift
 - Provide minimal semantic metadata schemas
 - Document conceptual boundaries across coordination layers
 
 This registry does **not** define protocol rules.  
-It documents naming surfaces and research convergence across primitives.
+It documents naming surfaces and terminology convergence across coordination primitives discussed in Ethereum research.
 
 ---
 
