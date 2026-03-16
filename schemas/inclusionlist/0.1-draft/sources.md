@@ -34,5 +34,6 @@ Common terms used in the research surface:
 
 ## Status
 
-Draft EIP (March 2026).  
-Positioned as a censorship-resistance primitive under active research and implementation testing.
+Draft EIP (March 2026).
+
+Inclusion lists are currently discussed as a censorship-resistance mechanism within the Ethereum protocol roadmap. The proposal is under active research and implementation exploration.
