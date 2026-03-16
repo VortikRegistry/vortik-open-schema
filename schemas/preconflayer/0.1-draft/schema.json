@@ -74,7 +74,26 @@
     "terminology_evolution": {
       "type": "array",
       "description": "Non-normative timeline documenting terminology drift for this primitive.",
-      "default": [],
+      "default": [
+        {
+          "term": "soft confirmations",
+          "status": "alias",
+          "notes": "Earlier shorthand used when preconfirmation-like guarantees were described informally as softer execution assurances before the term preconfirmations became more common.",
+          "first_seen": "2023-06-01"
+        },
+        {
+          "term": "preconfirmations",
+          "status": "canonical",
+          "notes": "Primary coordination-surface term used to describe latency-reduction guarantees or early execution assurances prior to final inclusion.",
+          "first_seen": "2024-01-01"
+        },
+        {
+          "term": "based preconfirmations",
+          "status": "alias",
+          "notes": "Variant used when the preconfirmation surface is framed specifically through based sequencing or proposer-driven coordination models.",
+          "first_seen": "2024-06-01"
+        }
+      ],
       "items": {
         "type": "object",
         "additionalProperties": false,
