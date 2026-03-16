@@ -1,26 +1,24 @@
-# executionmarket
+# executionmarket.eth
 
-## ENS
-`executionmarket.eth`
-
-## Summary
-Semantic anchor for Ethereum execution markets and auction-based transaction execution infrastructure.
+Semantic anchor representing **execution markets** within Ethereum transaction execution infrastructure.
 
 ## Context
-The term "execution market" refers to the emerging economic coordination layer where transaction execution, solver competition, routing logic and block construction incentives interact.
 
-This concept appears across research discussions related to:
+Execution markets describe coordination environments where transactions, intents, liquidity and routing logic interact to determine how execution outcomes are produced before block construction.
 
-- intent-based execution
+This concept appears across research discussions involving:
+
+- intent-based execution architectures
 - solver competition
 - order flow auctions
-- MEV-aware routing
+- MEV-aware routing systems
 - builder coordination
 
-## Coordination Surface
-Execution markets sit between transaction routing and block construction.
+Execution markets represent an intermediate coordination layer between transaction routing and block construction.
 
-Conceptually:
+## Coordination Surface
+
+Conceptually the execution pipeline can be described as:
 
 order flow auctions  
 ↓  
@@ -32,7 +30,30 @@ builder markets
 ↓  
 ePBS
 
+Execution markets therefore sit between **solver competition** and **block construction markets**.
+
+## Registry Role
+
+- Document terminology convergence around execution market structures
+- Track boundaries between solver coordination and block building infrastructure
+- Provide a neutral semantic anchor for execution-layer research discussions
+
+## Associated ENS Anchor
+
+`executionmarket.eth`
+
+## Status
+
+Research coordination surface (not a canonical L1 primitive today)
+
+## Sources
+
+Primary research sources and terminology references are documented in:
+
+`schemas/executionmarket/`
+
 ## Notes
-This anchor is used as part of the Vortik Semantic Registry to document terminology convergence across Ethereum execution infrastructure research.
+
+This anchor documents terminology used across Ethereum execution infrastructure research and ecosystem discussions.
 
 It does not imply protocol standardization or formal adoption.
