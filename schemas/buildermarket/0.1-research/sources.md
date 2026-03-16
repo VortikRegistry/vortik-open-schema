@@ -1,6 +1,21 @@
 # Builder Market — Sources
 
-## Primary Research Threads
+## Research Context
+
+Builder markets describe the competitive environment where block builders construct execution payloads and compete to supply blocks to proposers.
+
+These markets emerged from the proposer-builder separation (PBS) architecture and became operational through external PBS implementations such as MEV-Boost.
+
+Research discussions around builder markets typically focus on:
+
+- competition among builders
+- bid markets for block production
+- transparency and decentralization of block construction
+- interaction with proposer-builder separation mechanisms
+
+## Related Research
+
+Primary discussions touching builder market structure:
 
 - ePBS Design Constraints  
   https://ethresear.ch/t/epbs-design-constraints/18728
@@ -19,5 +34,6 @@ Common terms used in this research surface:
 
 ## Status
 
-Research coordination surface (2026).  
-Not currently a canonical protocol primitive, but strongly adjacent to proposer-builder separation and block production market structure.
+Research coordination surface (2026).
+
+Builder markets represent an ecosystem coordination layer around block construction and bidding markets. They are adjacent to proposer-builder separation but are not themselves a canonical Ethereum protocol primitive.
