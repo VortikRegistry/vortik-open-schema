@@ -2,16 +2,21 @@ cff-version: 1.2.0
 title: Vortik Semantic Registry
 message: "If you use this registry in research or documentation, please cite it using the metadata below."
 type: software
+
 authors:
   - name: Vortik Registry
+    affiliation: Independent research registry
+
 repository-code: https://github.com/VortikRegistry/vortik-open-schema
 url: https://vortikregistry.github.io/vortik-open-schema/
 license: MIT
+
 abstract: >
   Independent registry tracking semantic stabilization across emerging
   Ethereum coordination primitives such as proposer-builder separation,
   inclusion enforcement models, preconfirmations, execution markets,
   solver networks and builder markets.
+
 keywords:
   - ethereum
   - protocol research
@@ -22,4 +27,15 @@ keywords:
   - order flow auctions
   - mev
   - block building
+
 version: 0.2
+date-released: 2026-03-06
+
+preferred-citation:
+  type: software
+  title: Vortik Semantic Registry
+  authors:
+    - name: Vortik Registry
+  year: 2026
+  url: https://vortikregistry.github.io/vortik-open-schema/
+  repository-code: https://github.com/VortikRegistry/vortik-open-schema
