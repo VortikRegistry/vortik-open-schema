@@ -13,6 +13,10 @@ Schemas define minimal metadata structures describing conceptual primitives and 
 - commitmentlayer — Commitment signaling coordination
 - preconflayer — Preconfirmation coordination networks
 - ssf — Single Slot Finality research
+- buildermarket — Block builder market structures
+- solverlayer — Intent solver coordination networks
+- executionmarket — Execution market coordination layer
+- orderflowauction — Order flow auction routing infrastructure
 
 Schemas are versioned and located under:
 
@@ -22,11 +26,6 @@ Schemas are versioned and located under:
 
 ## Notes
 
-Some anchors tracked by the registry currently do not have schemas yet, including:
+Schemas are added when sufficient primary research sources allow defining a stable semantic surface for the primitive.
 
-- buildermarket.eth
-- solverlayer.eth
-- executionmarket.eth
-- orderflowauction.eth
-
-Schemas may be added only when sufficient primary research sources justify a stable semantic model.
+Many primitives tracked by the registry remain under active research and their schemas may evolve as terminology and architecture stabilize.
