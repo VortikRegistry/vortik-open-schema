@@ -4,7 +4,7 @@ This directory contains minimal documentation for each semantic anchor tracked b
 
 Each anchor represents a conceptual surface within emerging Ethereum coordination primitives.
 
-Anchors correspond to ENS identifiers used as semantic references for research areas such as:
+Anchors correspond to ENS identifiers used as stable semantic references for research areas such as:
 
 - ePBS (EIP-7732)
 - Inclusion Lists / FOCIL
@@ -51,18 +51,29 @@ Formal metadata is defined in the `/schemas/` directory, where each primitive ha
 - research sources
 - last reviewed date
 
-The anchor documents therefore act as human-readable orientation, while schemas act as machine-readable metadata.
+---
+
+## Relationship With the Registry
+
+All anchors listed here are indexed in `registry.json`, which provides the canonical machine-readable mapping between:
+
+ENS identifier → anchor document → schema location.
+
+This allows tooling and research datasets to discover anchors programmatically.
 
 ---
 
 ## Design Philosophy
 
-The registry intentionally separates:
+The registry intentionally separates three layers:
 
-**Conceptual anchors**  
-Human-readable identifiers describing emerging coordination primitives.
+**ENS Anchors**  
+Stable identifiers used to reference coordination primitives.
+
+**Anchor Documents**  
+Minimal human-readable explanations of the research surface.
 
 **Schemas**  
-Structured metadata artifacts that allow tooling and research references.
+Machine-readable metadata describing scope, terminology and references.
 
-This separation helps reduce naming drift as Ethereum research evolves.
+This layered model helps reduce naming drift as Ethereum research evolves.
