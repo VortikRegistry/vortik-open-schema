@@ -6,7 +6,7 @@ Its goal is not to define protocol rules, but to track **semantic stabilization*
 
 ---
 
-## Conceptual Model
+# Conceptual Model
 
 Each tracked primitive is represented through four layers:
 
@@ -22,9 +22,9 @@ This separation allows stable naming through ENS while allowing the semantic mod
 
 ---
 
-## Anchors
+# Anchors
 
-Anchors represent conceptual surfaces in Ethereum protocol research.
+Anchors represent conceptual coordination surfaces appearing across Ethereum protocol research and execution infrastructure discussions.
 
 Examples include:
 
@@ -32,6 +32,8 @@ Examples include:
 - inclusion enforcement models
 - commitment signaling
 - preconfirmation coordination
+- builder markets
+- solver networks
 - execution markets
 - order flow auctions
 - single-slot finality research
@@ -40,41 +42,46 @@ Anchors are intentionally minimal and serve as orientation documents rather than
 
 ---
 
-## ENS as Semantic Anchors
+# ENS as Semantic Anchors
 
-ENS identifiers are used as neutral naming anchors for conceptual primitives.
+ENS identifiers are used as neutral conceptual anchors for primitives tracked by the registry.
 
-Example mapping:
+Example mappings include:
 
 epbs.eth → proposer-builder separation  
 inclusionlist.eth → inclusion enforcement models  
 preconflayer.eth → preconfirmation coordination  
 commitmentlayer.eth → commitment signaling primitives  
+buildermarket.eth → block builder market structures  
+solverlayer.eth → solver coordination networks  
 executionmarket.eth → execution market coordination  
 orderflowauction.eth → order flow auction mechanisms  
+fastfinality.eth → single-slot finality research  
 
-These identifiers provide a stable conceptual surface independent of implementation changes or naming drift.
+These identifiers provide stable conceptual anchors independent of implementation changes or terminology drift.
 
 ---
 
-## Registry Scope
+# Registry Scope
 
 The registry currently tracks primitives related to:
 
 - proposer-builder separation (PBS / ePBS)
+- builder markets and block construction coordination
 - inclusion enforcement (FOCIL and related models)
 - commitment signaling layers
 - preconfirmation coordination
+- solver coordination networks
 - execution markets
 - order flow auction systems
-- based sequencing research
+- intent-based execution architectures
 - single-slot finality research
 
 New anchors may be added when research areas converge around stable terminology.
 
 ---
 
-## Neutrality
+# Neutrality
 
 The Vortik registry is not a governance body and does not define protocol standards.
 
