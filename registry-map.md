@@ -1,8 +1,8 @@
-# Vortik Semantic Registry — Conceptual Map
+# Vortik Semantic Registry — Conceptual Coordination Map
 
 The Vortik registry tracks terminology convergence across several emerging Ethereum coordination primitives.
 
-These primitives form a layered conceptual structure.
+These primitives form a layered conceptual structure representing how transaction flow, execution coordination, and protocol guarantees interact in the Ethereum ecosystem.
 
 ---
 
@@ -52,4 +52,4 @@ The registry currently tracks the following anchors:
 
 Vortik does not implement protocol logic.
 
-Instead it documents semantic convergence across research areas and provides lightweight metadata schemas to track terminology stabilization.
+Instead, the registry documents semantic convergence across Ethereum research discussions and provides lightweight metadata schemas to track terminology stabilization across coordination primitives.
