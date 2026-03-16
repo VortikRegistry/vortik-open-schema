@@ -73,7 +73,26 @@
     "terminology_evolution": {
       "type": "array",
       "description": "Non-normative timeline documenting terminology drift for this primitive surface.",
-      "default": [],
+      "default": [
+        {
+          "term": "proposer commitments",
+          "status": "alias",
+          "notes": "Early research terminology emphasizing proposer-side commitment mechanisms in preconfirmation and neutrality discussions.",
+          "first_seen": "2024-01-01"
+        },
+        {
+          "term": "commitment layer",
+          "status": "canonical",
+          "notes": "Broader coordination-surface term used to describe commitment signaling and related preconfirmation infrastructure.",
+          "first_seen": "2024-06-01"
+        },
+        {
+          "term": "preconfirmation commitments",
+          "status": "alias",
+          "notes": "Used when the commitment surface is described specifically through preconfirmation guarantees or commitment flows.",
+          "first_seen": "2024-06-01"
+        }
+      ],
       "items": {
         "type": "object",
         "additionalProperties": false,
