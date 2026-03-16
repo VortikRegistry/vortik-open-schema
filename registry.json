@@ -1,12 +1,12 @@
 {
   "registry": "vortik-semantic-registry",
-  "version": "0.2",
+  "registry_version": "0.2",
   "description": "Independent registry tracking semantic stabilization across emerging Ethereum coordination primitives.",
   "anchors": [
     {
       "id": "epbs",
       "ens": "epbs.eth",
-      "layer": "proposer-builder separation",
+      "layer": "proposer-builder separation (ePBS)",
       "status": "draft-eip",
       "schema": "schemas/epbs/1.0-draft/schema.json",
       "anchor_doc": "anchors/epbs.md"
@@ -14,7 +14,7 @@
     {
       "id": "inclusionlist",
       "ens": "inclusionlist.eth",
-      "layer": "inclusion enforcement",
+      "layer": "inclusion enforcement (FOCIL)",
       "status": "draft-eip",
       "schema": "schemas/inclusionlist/0.1-draft/schema.json",
       "anchor_doc": "anchors/inclusionlist.md"
@@ -22,7 +22,7 @@
     {
       "id": "commitmentlayer",
       "ens": "commitmentlayer.eth",
-      "layer": "commitment signaling",
+      "layer": "commitment signaling layer",
       "status": "research",
       "schema": "schemas/commitmentlayer/0.1-draft/schema.json",
       "anchor_doc": "anchors/commitmentlayer.md"
@@ -30,7 +30,7 @@
     {
       "id": "preconflayer",
       "ens": "preconflayer.eth",
-      "layer": "preconfirmations",
+      "layer": "preconfirmation coordination",
       "status": "research",
       "schema": "schemas/preconflayer/0.1-draft/schema.json",
       "anchor_doc": "anchors/preconflayer.md"
@@ -38,7 +38,7 @@
     {
       "id": "ssf",
       "ens": "fastfinality.eth",
-      "layer": "single slot finality",
+      "layer": "finality research",
       "status": "research",
       "schema": "schemas/ssf/0.1-research/schema.json",
       "anchor_doc": "anchors/fastfinality.md"
@@ -46,7 +46,7 @@
     {
       "id": "buildermarket",
       "ens": "buildermarket.eth",
-      "layer": "block building markets",
+      "layer": "builder markets",
       "status": "research",
       "schema": "schemas/buildermarket/0.1-research/schema.json",
       "anchor_doc": "anchors/buildermarket.md"
@@ -54,7 +54,7 @@
     {
       "id": "solverlayer",
       "ens": "solverlayer.eth",
-      "layer": "intent solver networks",
+      "layer": "solver coordination",
       "status": "research",
       "schema": "schemas/solverlayer/0.1-research/schema.json",
       "anchor_doc": "anchors/solverlayer.md"
@@ -62,7 +62,7 @@
     {
       "id": "executionmarket",
       "ens": "executionmarket.eth",
-      "layer": "execution markets",
+      "layer": "execution coordination",
       "status": "research",
       "schema": "schemas/executionmarket/0.1-research/schema.json",
       "anchor_doc": "anchors/executionmarket.md"
@@ -70,7 +70,7 @@
     {
       "id": "orderflowauction",
       "ens": "orderflowauction.eth",
-      "layer": "order flow auctions",
+      "layer": "order flow routing",
       "status": "research",
       "schema": "schemas/orderflowauction/0.1-research/schema.json",
       "anchor_doc": "anchors/orderflowauction.md"
