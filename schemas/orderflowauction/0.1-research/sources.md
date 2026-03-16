@@ -28,6 +28,7 @@ Ethereum research discussions touching order flow auctions and routing markets:
 Common terms appearing in research and ecosystem discussions:
 
 - order flow auction
+- orderflow auction
 - OFA
 - private order flow
 - transaction routing auction
@@ -37,4 +38,4 @@ Common terms appearing in research and ecosystem discussions:
 
 Research coordination surface (2026).
 
-Order flow auctions exist across infrastructure providers and execution routing systems but are not currently a canonical Ethereum L1 protocol primitive.
+Order flow auctions describe coordination mechanisms used by infrastructure providers and routing systems to allocate transaction order flow among competing execution participants. The concept appears across MEV infrastructure and execution routing systems but is not currently a canonical Ethereum L1 protocol primitive.
