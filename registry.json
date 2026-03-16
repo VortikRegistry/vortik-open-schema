@@ -1,6 +1,6 @@
 {
   "registry": "vortik-semantic-registry",
-  "registry_version": "0.2",
+  "version": "0.2",
   "description": "Independent registry tracking semantic stabilization across emerging Ethereum coordination primitives.",
   "anchors": [
     {
