@@ -1,6 +1,8 @@
 # Vortik Semantic Registry
 
-Independent registry tracking semantic stabilization across emerging Ethereum coordination primitives.
+Independent registry tracking semantic stabilization across emerging Ethereum coordination primitives and research coordination surfaces.
+
+The registry maps conceptual primitives discussed in Ethereum research to stable ENS identifiers and machine-readable schemas.
 
 ## Navigation
 
@@ -9,20 +11,26 @@ Independent registry tracking semantic stabilization across emerging Ethereum co
 - [Registry index (registry.json)](registry.json)
 - [Repository on GitHub](https://github.com/VortikRegistry/vortik-open-schema)
 
-## Core Anchors
+---
+
+# Core Anchors
 
 - [epbs.eth](anchors/epbs.md) — ePBS (EIP-7732)
 - [inclusionlist.eth](anchors/inclusionlist.md) — FOCIL / Inclusion Lists (EIP-7805)
 - [commitmentlayer.eth](anchors/commitmentlayer.md) — commitment signaling & L1 preconfirmations
 - [preconflayer.eth](anchors/preconflayer.md) — based preconfirmations & latency networks
-- [fastfinality.eth](anchors/ssf.md) — SSF (Single Slot Finality)
+- [fastfinality.eth](anchors/fastfinality.md) — SSF (Single Slot Finality)
 
-## Execution Infrastructure Anchors
+---
+
+# Execution Infrastructure Anchors
 
 - [buildermarket.eth](anchors/buildermarket.md) — block builder market structures
 - [solverlayer.eth](anchors/solverlayer.md) — intent solver coordination networks
 - [executionmarket.eth](anchors/executionmarket.md) — execution market coordination layer
 
-## Order Flow Layer
+---
+
+# Order Flow Layer
 
 - [orderflowauction.eth](anchors/orderflowauction.md) — order flow auction routing infrastructure
