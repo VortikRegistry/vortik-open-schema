@@ -19,11 +19,11 @@ Independent research registry tracking semantic stabilization across emerging Et
 | `preconflayer.eth` | Based preconfirmations & latency coordination networks | Active Research |
 | `fastfinality.eth` | Single Slot Finality (SSF) research track | Active Research |
 
-Each anchor is accompanied by a versioned JSON schema artifact under `/schemas/`.
+Core anchors include versioned JSON schema artifacts located under `/schemas/`.
 
 ---
 
-## ENS Anchor Model
+# ENS Anchor Model
 
 The Vortik registry uses **ENS identifiers as semantic anchors** for emerging Ethereum coordination primitives.
 
@@ -39,13 +39,15 @@ human-readable anchor documentation
 
 Example structure:
 
-epbs.eth  
-↓  
-registry.json entry  
-↓  
-schemas/epbs/1.0-draft/schema.json  
-↓  
+```
+epbs.eth
+↓
+registry.json entry
+↓
+schemas/epbs/1.0-draft/schema.json
+↓
 anchors/epbs.md
+```
 
 This architecture separates **stable conceptual naming (ENS)** from **evolving research metadata (schemas and registry entries)**.
 
@@ -53,7 +55,7 @@ ENS identifiers therefore act as **neutral conceptual anchors**, while the regis
 
 ---
 
-## Associated ENS Anchors
+# Associated ENS Anchors
 
 The following ENS names correspond to conceptual anchors for primitives referenced in this registry:
 
@@ -61,6 +63,7 @@ The following ENS names correspond to conceptual anchors for primitives referenc
 - inclusionlist.eth  
 - commitmentlayer.eth  
 - preconflayer.eth  
+- fastfinality.eth  
 - buildermarket.eth  
 - solverlayer.eth  
 - executionmarket.eth  
@@ -70,21 +73,22 @@ These identifiers are referenced as semantic anchors for emerging Ethereum infra
 
 ---
 
-## Purpose
+# Purpose
 
 Vortik exists to:
 
-- Track terminology stabilization across Ethereum coordination primitives
-- Separate canonical primitives from naming drift
-- Provide minimal semantic metadata schemas
-- Document conceptual boundaries across coordination layers
+- track terminology stabilization across Ethereum coordination primitives
+- separate canonical primitives from naming drift
+- provide minimal semantic metadata schemas
+- document conceptual boundaries across coordination layers
 
-This registry **does not define protocol rules**.  
+This registry **does not define protocol rules**.
+
 It documents naming surfaces and terminology convergence across coordination primitives discussed in Ethereum research.
 
 ---
 
-## Scope
+# Scope
 
 Vortik monitors conceptual convergence across research areas including:
 
@@ -103,19 +107,32 @@ Vortik prioritizes conceptual anchors over implementation-era naming.
 
 ---
 
-## Repository Structure
+# Repository Structure
 
-Each schema directory includes:
+The repository is organized around anchors and schemas.
+
+Each schema directory typically contains:
 
 - `schema.json` — minimal semantic metadata structure
 - `sources.md` — primary research references
-- optional documentation describing terminology and status
 
-Schemas are versioned (for example `0.1-draft`, `1.0-draft`, `0.1-research`) to reflect maturity and revision history.
+Schemas are versioned using directories such as:
+
+```
+schemas/<anchor>/<version>/schema.json
+```
+
+Examples:
+
+```
+schemas/epbs/1.0-draft/
+schemas/preconflayer/0.1-draft/
+schemas/ssf/0.1-research/
+```
 
 ---
 
-## Anchors Directory
+# Anchors Directory
 
 The `/anchors/` directory contains minimal orientation documents for each semantic anchor tracked by the registry.
 
@@ -129,13 +146,13 @@ Detailed machine-readable metadata is defined in the corresponding schemas under
 
 ---
 
-## Machine-Readable Registry
+# Machine-Readable Registry
 
 The canonical machine-readable index is available at:
 
 https://vortikregistry.github.io/vortik-open-schema/registry.json
 
-Supporting registry artifacts:
+Supporting registry artifacts include:
 
 - `registry.json` — canonical registry index  
 - `anchors.index.json` — anchor catalogue  
@@ -146,7 +163,7 @@ These files allow tools and documentation systems to reference the registry prog
 
 ---
 
-## Repository
+# Repository
 
 GitHub repository:
 
@@ -154,7 +171,7 @@ https://github.com/VortikRegistry/vortik-open-schema
 
 ---
 
-## How to Use
+# How to Use
 
 Schemas in this registry can be referenced for:
 
@@ -165,28 +182,32 @@ Schemas in this registry can be referenced for:
 
 Tools and documentation systems may reference registry entries through:
 
-`registry.json`
+```
+registry.json
+```
 
 or by directly linking to schema versions under:
 
-`/schemas/<anchor>/<version>/schema.json`
+```
+/schemas/<anchor>/<version>/schema.json
+```
 
 To suggest improvements or report terminology drift, open a GitHub Issue and include primary research sources.
 
 ---
 
-## How to Cite
+# How to Cite
 
 If you reference this registry in research or documentation:
 
 Vortik Semantic Registry  
 https://vortikregistry.github.io/vortik-open-schema/
 
-Citation metadata is also available through the repository's `CITATION.cff` file.
+Citation metadata is available through the repository's `CITATION.cff` file.
 
 ---
 
-## Stewardship Policy
+# Stewardship Policy
 
 Vortik operates as an independent research registry.
 
@@ -201,14 +222,14 @@ Alignment discussions may occur when appropriate.
 
 ---
 
-## Status (March 2026)
+# Status (March 2026)
 
 Most tracked primitives remain under research or draft EIP status.  
 No hard-fork inclusion is assumed unless explicitly referenced in primary sources.
 
 ---
 
-## Contact
+# Contact
 
 Primary contact: GitHub Issues / Discussions  
 
@@ -217,9 +238,9 @@ contact.preconf@gmail.com
 
 ---
 
-## Tracked Ethereum Primitives
+# Tracked Ethereum Primitives
 
-The registry currently tracks several coordination primitives discussed across Ethereum protocol research.
+The registry currently tracks coordination primitives discussed across Ethereum protocol research.
 
 These primitives appear across research threads related to proposer-builder separation, censorship resistance, transaction ordering guarantees, execution markets and block construction infrastructure.
 
@@ -227,8 +248,8 @@ These primitives appear across research threads related to proposer-builder sepa
 
 - epbs — Enshrined Proposer-Builder Separation  
 - inclusionlist — Inclusion enforcement mechanisms  
-- preconflayer — Preconfirmation coordination models  
 - commitmentlayer — Commitment signaling systems  
+- preconflayer — Preconfirmation coordination models  
 - buildermarket — Block builder market structures  
 - solverlayer — Intent solver coordination networks  
 - executionmarket — Execution market coordination layer  
