@@ -1,7 +1,7 @@
 {
   "registry": "vortik-semantic-registry",
-  "version": "0.2",
-  "description": "Independent registry tracking semantic stabilization across emerging Ethereum coordination primitives.",
+  "version": "0.3",
+  "description": "Independent registry tracking semantic stabilization across emerging Ethereum coordination primitives, markets, and critical external infrastructure concepts.",
   "anchors": [
     {
       "id": "epbs",
@@ -74,6 +74,50 @@
       "status": "research",
       "schema": "schemas/orderflowauction/0.1-research/schema.json",
       "anchor_doc": "anchors/orderflowauction.md"
+    }
+  ],
+  "external_primitives": [
+    {
+      "id": "peerdas",
+      "name": "PeerDAS",
+      "canonical_term": "Peer Data Availability Sampling",
+      "category": "primitive",
+      "abstraction_level": "data availability",
+      "coverage_status": "external",
+      "ens_status": "unowned",
+      "desired_ens": "peerdas.eth",
+      "status": "mainnet_relevant",
+      "term_risk": "low",
+      "summary": "Peer-to-peer data availability sampling mechanism enabling scalable blob verification without full data download.",
+      "naming_note": "Canonical research term. ENS not owned."
+    },
+    {
+      "id": "blobfeemarket",
+      "name": "Blob Fee Market",
+      "canonical_term": "blob fee market",
+      "category": "market",
+      "abstraction_level": "blob economics",
+      "coverage_status": "external",
+      "ens_status": "unowned",
+      "desired_ens": "blobfeemarket.eth",
+      "status": "emerging",
+      "term_risk": "medium",
+      "summary": "Economic layer governing blob fee pricing and blob resource allocation.",
+      "naming_note": "Critical missing market family in the current registry."
+    },
+    {
+      "id": "crosschainintents",
+      "name": "Cross-Chain Intents",
+      "canonical_term": "cross-chain intents",
+      "category": "standard",
+      "abstraction_level": "interop coordination",
+      "coverage_status": "external",
+      "ens_status": "unowned",
+      "desired_ens": null,
+      "status": "active",
+      "term_risk": "medium",
+      "summary": "Standardized intent-based coordination across chains and rollups.",
+      "naming_note": "Important interop surface not currently represented in owned ENS anchors."
     }
   ]
 }
