@@ -3,7 +3,13 @@
   "type": "object",
   "required": ["version", "anchors"],
   "properties": {
+    "registry": {
+      "type": "string"
+    },
     "version": {
+      "type": "string"
+    },
+    "description": {
       "type": "string"
     },
     "anchors": {
@@ -36,16 +42,43 @@
           },
           "type": {
             "type": "string",
-            "enum": ["primitive", "role", "market", "research"]
+            "enum": ["primitive", "role", "market", "research", "mechanism"]
           },
           "role": { "type": "string" },
           "status": { "type": "string" },
           "schema": { "type": "string" },
-          "anchor_doc": { "type": "string" },
-          "external_primitives": {
-            "type": "array",
-            "items": { "type": "string" }
-          }
+          "anchor_doc": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "external_primitives": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "canonical_term",
+          "category",
+          "coverage_status",
+          "ens_status",
+          "status",
+          "summary"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "canonical_term": { "type": "string" },
+          "category": { "type": "string" },
+          "abstraction_level": { "type": ["string", "null"] },
+          "coverage_status": { "type": "string" },
+          "ens_status": { "type": "string" },
+          "desired_ens": { "type": ["string", "null"] },
+          "status": { "type": "string" },
+          "term_risk": { "type": "string" },
+          "summary": { "type": "string" },
+          "naming_note": { "type": "string" }
         },
         "additionalProperties": false
       }
