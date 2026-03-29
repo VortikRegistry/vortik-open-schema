@@ -1,36 +1,57 @@
-# Solver Layer — Sources
+# Solver Networks — Sources
+
+## Overview
+
+This document compiles primary references and terminology associated with **solver networks** within Ethereum execution infrastructure.
+
+It supports the semantic anchoring of `solverlayer.eth` within the Vortik Semantic Registry.
+
+---
 
 ## Research Context
 
-The solver layer refers to coordination mechanisms where specialised actors (solvers) compete to determine optimal transaction execution outcomes.
+Solver networks refer to coordination mechanisms where specialised actors (solvers) compete to determine optimal execution outcomes for user intents.
 
-These systems are commonly discussed within intent-based architectures, where users express desired outcomes rather than explicit transactions.
+These systems emerge primarily within intent-based architectures, where users express desired outcomes rather than explicit transactions.
 
-Solver networks often interact with:
+Solver networks interact with multiple coordination surfaces, including:
 
-- execution markets
-- order flow routing systems
-- builder markets
-- intent-based transaction systems
+- order flow routing systems  
+- execution markets  
+- builder markets  
+- intent-based transaction frameworks  
 
-## Related Research
+---
 
-Research discussions touching solver coordination surfaces:
+## Research Surface
 
-- Intent-based architectures and solver coordination discussions  
+Discussion around solver networks appears across Ethereum research and ecosystem exploration of:
+
+- intent-based execution  
+- solver competition models  
+- execution routing  
+- off-chain coordination layers  
+
+Representative discussions can be found across:
+
+- Ethereum Research forum  
   https://ethresear.ch/
 
-## Terminology
+---
 
-Common terms used in this research surface:
+## Terminology Surface
 
-- solver layer
-- solver networks
-- intent solvers
-- execution solvers
+Common terminology associated with this coordination surface includes:
+
+- solver networks  
+- solver layer (non-canonical)  
+- intent solvers  
+- execution solvers  
+
+---
 
 ## Status
 
 Research coordination surface (2026).
 
-Solver networks appear primarily in intent-based architectures and execution routing systems. The concept is actively discussed in Ethereum infrastructure research but is not currently a canonical Ethereum protocol primitive.
+Solver networks are actively explored in Ethereum execution infrastructure but are not currently defined as a canonical L1 protocol primitive.
