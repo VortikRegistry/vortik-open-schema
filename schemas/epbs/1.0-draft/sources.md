@@ -1,51 +1,81 @@
 # ePBS — Sources
 
-## Research Context
+## Overview
 
-Enshrined Proposer-Builder Separation (ePBS) refers to protocol-level integration of the proposer-builder separation architecture within Ethereum consensus.
+This document compiles primary references and terminology associated with **Enshrined Proposer-Builder Separation (ePBS)**.
 
-The goal of ePBS is to formalize the block building pipeline and remove reliance on external relay infrastructure by integrating builder selection and payload commitments directly into the protocol.
+It supports the semantic anchoring of `epbs.eth` within the Vortik Semantic Registry.
 
-Research discussions typically focus on:
-
-- protocol integration of builder markets
-- proposer-builder coordination
-- payload commitment mechanisms
-- block production market structure
+---
 
 ## Canonical Specification
 
-- EIP-7732: Enshrined Proposer-Builder Separation  
-  https://eips.ethereum.org/EIPS/eip-7732
+- EIP-7732 — Enshrined Proposer-Builder Separation  
+  https://eips.ethereum.org/EIPS/eip-7732  
 
-## Related Research
+---
 
-Primary research discussions around ePBS:
+## Research Context
+
+ePBS represents the protocol-level integration of proposer-builder separation within Ethereum consensus.
+
+It formalizes the separation between:
+
+- block proposal  
+- execution payload construction  
+
+and aims to reduce reliance on external relay infrastructure.
+
+---
+
+## Core Research Themes
+
+Research discussions around ePBS focus on:
+
+- protocol-level builder selection  
+- payload commitment mechanisms  
+- proposer-builder coordination  
+- block production market structure  
+- MEV supply chain redesign  
+
+---
+
+## Primary Research Threads
 
 - Why Enshrine Proposer-Builder Separation — A viable path to ePBS  
-  https://ethresear.ch/t/why-enshrine-proposer-builder-separation-a-viable-path-to-epbs/15710
+  https://ethresear.ch/t/why-enshrine-proposer-builder-separation-a-viable-path-to-epbs/15710  
 
 - ePBS Design Constraints  
-  https://ethresear.ch/t/epbs-design-constraints/18728
+  https://ethresear.ch/t/epbs-design-constraints/18728  
+
+---
 
 ## Roadmap Context
 
-Discussion related to Ethereum roadmap evolution and the block building pipeline:
+ePBS is associated with Ethereum roadmap evolution toward a structured block building pipeline.
 
-- Vitalik Buterin — “Finally, the block building pipeline” (Glamsterdam roadmap context, March 2026)  
-  https://firefly.social/post/x/2027405
+- Vitalik Buterin — “Finally, the block building pipeline”  
+  https://firefly.social/post/x/2027405  
 
-## Terminology
+---
 
-Common terms used in the research surface:
+## Terminology Surface
 
-- enshrined PBS
-- proposer-builder separation
-- block builder market
-- payload commitment
+Common terminology associated with this primitive includes:
+
+- enshrined PBS  
+- proposer-builder separation  
+- builder selection  
+- payload commitment  
+- block construction pipeline  
+
+---
 
 ## Status
 
-Draft EIP (March 2026).
+Draft EIP (active research and specification phase).
 
-ePBS is currently under active specification and discussion. Final inclusion in the Ethereum protocol depends on client implementation readiness and consensus among core developers.
+Inclusion in Ethereum depends on:
+
+- client implementation readiness  
+- consensus among core developers
