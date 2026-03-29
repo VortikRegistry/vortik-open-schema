@@ -2,28 +2,39 @@
 
 ## Overview
 
-Vortik is a semantic registry designed to map and stabilize emerging terminology across Ethereum's coordination stack.
+Vortik is a semantic registry designed to map, structure, and stabilize terminology emerging across Ethereum’s coordination architecture.
 
-The system focuses on identifying, structuring and documenting:
+The system operates as a **semantic infrastructure layer**, positioned between:
 
-- protocol primitives
-- coordination roles
-- pipeline stages
-- technical surfaces
-
-It is not a branding layer and not a speculative domain portfolio.
-
-It is intended to function as a **semantic infrastructure layer** between:
-
-- research
+- protocol research
 - implementation
 - human interpretation
+
+It does not define protocol rules and does not introduce new primitives.
+
+Its function is to **track and organize semantic convergence** as it emerges.
 
 ---
 
 ## Core Objective
 
-To create a structured, machine-readable layer that captures **semantic convergence before formal standardization**.
+To establish a structured, machine-readable layer that captures:
+
+→ **canonical terminology surfaces**  
+→ **before formal standardization occurs**
+
+---
+
+## System Scope
+
+The registry focuses on identifying and structuring:
+
+- protocol primitives  
+- coordination roles  
+- pipeline stages  
+- technically grounded surfaces  
+
+All entries must map to real or actively researched components within Ethereum.
 
 ---
 
@@ -33,17 +44,20 @@ To create a structured, machine-readable layer that captures **semantic converge
 
 Location: `/registry.json`
 
-The registry acts as the canonical index of all semantic anchors.
+The registry is the canonical index of all tracked primitives and surfaces.
 
 Each entry includes:
 
-- ENS identifier
-- canonical technical term
-- classification
-- role
-- status
-- associated schema
-- anchor document
+- ENS identifier  
+- canonical technical term  
+- classification  
+- coordination role  
+- pipeline position  
+- status  
+- schema reference  
+- anchor document  
+
+The registry defines the **authoritative mapping layer** of the system.
 
 ---
 
@@ -51,19 +65,17 @@ Each entry includes:
 
 Location: `/anchors/`
 
-Each anchor represents one of:
+Anchors are minimal human-readable representations of each tracked primitive or surface.
 
-- a protocol primitive
-- a coordination mechanism
-- a structural role
-- a relevant economic or technical surface
+Each anchor must:
 
-Each anchor document provides:
+- describe a real coordination element  
+- position the concept within the pipeline  
+- clarify naming alignment vs canonical terminology  
 
-- human-readable explanation
-- semantic positioning
-- naming justification
-- contextual interpretation
+Anchors do not define the primitive.
+
+They expose its **semantic interpretation layer**.
 
 ---
 
@@ -71,13 +83,25 @@ Each anchor document provides:
 
 Location: `/schemas/{anchor}/`
 
-Schemas define the structure of each primitive or surface.
+Schemas define the machine-readable structure of each primitive or surface.
 
 They are:
 
-- versioned
-- machine-readable
-- designed for future standardization
+- versioned  
+- explicit  
+- non-interpretative  
+
+Each schema specifies:
+
+- identifier  
+- canonical naming  
+- semantic classification  
+- conceptual scope  
+- status  
+- references  
+- last reviewed  
+
+Schemas represent the **formal semantic layer** of the registry.
 
 ---
 
@@ -85,12 +109,14 @@ They are:
 
 Located within each anchor directory.
 
-Sources are categorized into:
+Sources are strictly tied to observable signals:
 
-- EIP references
-- research threads
-- technical discussions
-- implementation signals
+- EIP specifications  
+- research discussions  
+- implementation references  
+- coordination mechanisms in development  
+
+Sources are used to validate semantic positioning, not to interpret it.
 
 ---
 
@@ -98,13 +124,13 @@ Sources are categorized into:
 
 Location: `registry.json → external_primitives`
 
-Tracks important primitives and concepts not currently represented by owned ENS domains.
+Tracks relevant primitives not currently mapped to owned ENS identifiers.
 
 Purpose:
 
-- identify semantic gaps
-- track naming convergence outside the registry
-- monitor potential expansion areas
+- identify missing canonical surfaces  
+- monitor terminology convergence outside the registry  
+- guide future expansion  
 
 ---
 
@@ -113,69 +139,83 @@ Purpose:
 Ethereum is modeled as a coordination pipeline:
 
 1. Order Flow  
-2. Visibility (Mempool / Encryption)  
+2. Visibility (mempool / encrypted propagation)  
 3. Builder Coordination  
 4. Inclusion  
 5. Execution  
 6. Finality  
 
-The registry maps terminology to specific stages within this pipeline.
+Each primitive or surface must map to one or more stages of this pipeline.
 
 ---
 
 ## Primitive vs Market
 
-The system prioritizes:
+The registry prioritizes:
 
-👉 primitives and roles
+→ protocol primitives  
+→ coordination roles  
 
 over:
 
-👉 broad market abstractions
+→ market abstractions  
 
-Markets are treated as secondary semantic surfaces.
+Market-related concepts are treated as secondary and only included when technically grounded.
 
 ---
 
 ## Naming Principles
 
-- Canonical technical naming takes priority over ENS wording
-- Semantic precision is favored over narrative convenience
-- Early terminology is tracked, but not assumed to be stable
-- Naming mismatches are explicitly documented
+- Canonical technical terminology overrides ENS naming  
+- Semantic precision is prioritized over readability  
+- Early terminology is tracked but not assumed stable  
+- Naming mismatches are explicitly classified and documented  
 
 ---
 
 ## Classification System
 
-Each anchor is classified as one of:
+Each entry is classified as:
 
-- **core** — aligned with protocol-level primitives
-- **valid** — real surface, not canonically fixed
-- **premature** — unstable or emerging naming
-- **speculative** — dependent on future evolution
-- **repairable** — concept valid, naming misaligned
-- **external** — not owned, tracked separately
+- **core** — aligned with protocol-level primitives  
+- **valid** — real surface, not canonically fixed  
+- **premature** — unstable or evolving terminology  
+- **speculative** — dependent on future protocol direction  
+- **repairable** — valid concept, misaligned naming  
+- **external** — tracked outside ENS ownership  
 
 ---
 
 ## Design Philosophy
 
-- Semantic structure precedes adoption
-- Naming clarity reduces interpretative fragmentation
-- Infrastructure value comes from precision, not coverage
-- Early mapping is only valuable if it remains technically grounded
+- Semantic structure precedes standardization  
+- Naming clarity reduces coordination friction  
+- Infrastructure value derives from precision, not coverage  
+- Mapping is only valid when grounded in real protocol surfaces  
+
+---
+
+## System Constraints
+
+- No speculative primitives without technical basis  
+- No reliance on branding or narrative framing  
+- No assumption of future standardization  
+- No abstraction without identifiable coordination relevance  
 
 ---
 
 ## System Status
 
-Vortik is currently transitioning from:
+The registry is transitioning from:
 
-- conceptual semantic mapping
+→ conceptual semantic mapping  
 
 to:
 
-- structured registry infrastructure
+→ structured semantic infrastructure  
 
-The focus is on consolidating high-quality primitive documents before expanding coverage.
+Current focus:
+
+- consolidation of high-confidence primitives  
+- elimination of ambiguous surfaces  
+- alignment with observable protocol evolution
