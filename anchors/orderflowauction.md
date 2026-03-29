@@ -1,59 +1,95 @@
-# orderflowauction.eth
+# Order Flow Auctions
 
-Semantic anchor representing **order flow auctions (OFA)** and auction-based transaction routing infrastructure in Ethereum.
+**Associated ENS:** `orderflowauction.eth`  
+**Canonical term:** Order Flow Auctions (OFA)  
+**Registry ID:** `orderflowauction`  
+**Status:** Research  
+**Classification:** Semi-stable
+
+---
+
+## Summary
+
+This anchor tracks **order flow auctions (OFA)** as a coordination mechanism for transaction routing within Ethereum’s execution pipeline.
+
+Order flow auctions represent a structured environment where transaction flow is competitively allocated before execution and block construction.
+
+---
 
 ## Context
 
-Order flow auctions refer to mechanisms where transaction flow is auctioned among competing execution agents before inclusion in a block.
+Order flow auctions are mechanisms in which transaction flow is auctioned among competing execution agents.
 
-This concept appears across multiple Ethereum research discussions related to:
+They are used to:
 
-- MEV mitigation
-- private order flow routing
-- solver competition
-- intent-based transaction execution
-- block builder coordination
+- route transactions efficiently  
+- reduce harmful MEV extraction  
+- enable competition between solvers and execution strategies  
 
-Order flow auctions are often proposed as mechanisms to improve execution efficiency while reducing harmful MEV extraction.
+This concept appears across research discussions involving:
 
-## Coordination Surface
+- MEV mitigation  
+- private order flow  
+- intent-based execution  
+- solver competition  
 
-Order flow auctions operate at the **transaction routing layer**, before solver execution and block construction.
+---
 
-Conceptually:
+## Pipeline Position
 
-order flow auctions  
-↓  
-solver networks  
-↓  
-execution markets  
-↓  
-builder markets  
-↓  
-ePBS
+Order Flow → Solver Networks → Builder Markets → ePBS
+
+---
+
+## Coordination Role
+
+Order flow auctions coordinate:
+
+- transaction routing  
+- access to user order flow  
+- competition between execution agents  
+
+They define how transactions enter the execution pipeline.
+
+---
+
+## Protocol Grounding
+
+This surface is grounded in:
+
+- Ethereum research on MEV mitigation  
+- private mempool designs  
+- intent-based execution systems  
+- auction-based routing mechanisms  
+
+---
+
+## Naming Alignment
+
+- **ENS anchor:** `orderflowauction.eth`  
+- **Canonical term:** Order Flow Auctions (OFA)  
+
+The term is widely used across research and ecosystem discussions and shows strong semantic convergence.
+
+---
 
 ## Registry Role
 
-- Track terminology convergence around order flow auction infrastructure
-- Document routing-layer coordination mechanisms in Ethereum execution infrastructure
-- Distinguish order flow auctions from solver competition and block construction markets
+- Track stabilization of order flow auction terminology  
+- Document routing-layer coordination mechanisms  
+- Distinguish transaction routing from execution and block construction  
+- Map entry points into Ethereum’s coordination pipeline  
 
-## Associated ENS Anchor
-
-`orderflowauction.eth`
+---
 
 ## Status
 
-Research coordination surface (not a canonical L1 primitive today)
+Research-aligned surface with strong ecosystem relevance.
+
+---
 
 ## Sources
 
-Primary research sources and terminology references are documented in:
+Primary research references are documented in:
 
 `schemas/orderflowauction/`
-
-## Notes
-
-This anchor documents terminology used across Ethereum execution infrastructure research and ecosystem discussions.
-
-It does not imply protocol standardization or formal adoption.
