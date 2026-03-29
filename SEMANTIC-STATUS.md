@@ -17,13 +17,13 @@ These primitives have an active Ethereum Improvement Proposal but may still evol
 
 ## Active Research Surfaces
 
-These primitives appear frequently in Ethereum research discussions but are not currently standardized through a canonical EIP.
+These coordination surfaces appear frequently in Ethereum research discussions but are not currently standardized through a canonical EIP.
 
 - commitmentlayer — proposer commitments / coordination signals
 - preconflayer — preconfirmation coordination systems
 - buildermarket — block builder market structures
 - solverlayer — solver coordination networks
-- executionmarket — execution routing and coordination markets
+- executionmarket — execution coordination surfaces (terminology remains fluid across research discussions)
 - orderflowauction — order flow auction systems
 
 ---
