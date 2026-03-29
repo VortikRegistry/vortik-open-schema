@@ -2,7 +2,7 @@
 
 Thank you for your interest in improving the Vortik Semantic Registry.
 
-This repository tracks terminology stabilization and semantic anchors across emerging Ethereum coordination primitives.
+This repository tracks terminology stabilization and semantic anchors across Ethereum coordination primitives.
 
 The registry is a **documentation and research tool**, not a governance process.
 
@@ -108,4 +108,4 @@ When possible, include links to relevant research discussions.
 
 Vortik documents **semantic surfaces**, not implementations.
 
-The registry exists to track conceptual convergence across Ethereum coordination layers and research discussions.
+The registry exists to track terminology convergence across Ethereum coordination primitives and research discussions.
