@@ -1,143 +1,130 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/solverlayer/0.1-research/schema.json",
-  "title": "Vortik Open Schema — Solver Layer Semantic Anchor",
-  "description": "Minimal metadata schema describing intent solver coordination layers emerging across Ethereum execution infrastructure.",
+  "title": "Vortik Open Schema — Solver Networks",
+  "description": "Machine-readable schema for the Solver Networks semantic anchor within the Vortik Semantic Registry. Research artefact; not an official protocol specification.",
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "protocol",
+    "id",
     "version",
-    "identifier",
-    "primitive_scope",
-    "canonical_terms",
-    "capabilities",
-    "stewardship_status",
-    "last_reviewed",
-    "references"
+    "canonical_term",
+    "classification",
+    "status",
+    "type",
+    "summary",
+    "pipeline_position",
+    "coordination_role",
+    "protocol_grounding",
+    "naming",
+    "sources"
   ],
   "properties": {
-    "protocol": {
+    "id": {
       "type": "string",
-      "const": "SolverLayer",
-      "description": "Semantic anchor label representing intent solver coordination networks."
+      "const": "solverlayer",
+      "description": "Registry identifier for this semantic anchor."
     },
     "version": {
       "type": "string",
-      "pattern": "^[0-9]+\\.[0-9]+(-[a-z0-9.-]+)?$",
-      "default": "0.1-research",
-      "description": "Schema version identifier."
+      "const": "0.1-research",
+      "description": "Schema version for this anchor."
     },
-    "identifier": {
+    "canonical_term": {
       "type": "string",
-      "const": "solverlayer.eth",
-      "description": "ENS identifier mapped to this semantic anchor."
+      "const": "solver networks",
+      "description": "Canonical technical term tracked by this anchor."
     },
-    "primitive_scope": {
+    "classification": {
       "type": "string",
-      "minLength": 20,
-      "description": "Coordination layer where solver agents compute optimal execution paths for user intents across execution infrastructure and liquidity sources."
+      "const": "repairable",
+      "description": "Semantic classification within the Vortik registry."
     },
-    "canonical_terms": {
-      "type": "array",
-      "minItems": 1,
-      "uniqueItems": true,
-      "items": {
-        "type": "string",
-        "minLength": 2
-      },
-      "description": "Terms observed in research describing solver coordination layers."
+    "status": {
+      "type": "string",
+      "const": "research",
+      "description": "Current maturity/status of the tracked surface."
     },
-    "capabilities": {
+    "type": {
+      "type": "string",
+      "const": "market",
+      "description": "Structural type of this tracked surface."
+    },
+    "summary": {
+      "type": "string",
+      "description": "Short description of the surface.",
+      "minLength": 20
+    },
+    "pipeline_position": {
       "type": "array",
+      "description": "Pipeline stages where this surface is most relevant.",
       "minItems": 1,
-      "uniqueItems": true,
       "items": {
         "type": "string",
         "enum": [
-          "intent-resolution",
-          "execution-routing",
-          "liquidity-discovery",
-          "auction-participation",
-          "stewardship-metadata"
+          "order flow",
+          "visibility",
+          "builder coordination",
+          "inclusion",
+          "execution",
+          "finality"
         ]
-      },
-      "description": "Declared semantic capability tags."
+      }
     },
-    "stewardship_status": {
-      "type": "string",
-      "enum": [
-        "protocol_unanchored",
-        "alignment_pending",
-        "institutionally_reserved",
-        "transferred"
-      ],
-      "default": "alignment_pending",
-      "description": "Registry stewardship lifecycle state."
-    },
-    "terminology_evolution": {
+    "coordination_role": {
       "type": "array",
-      "description": "Timeline describing terminology drift around solver networks.",
-      "default": [],
+      "description": "Key coordination functions performed by solver networks.",
+      "minItems": 1,
       "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "term",
-          "status"
-        ],
-        "properties": {
-          "term": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "canonical",
-              "alias",
-              "deprecated"
-            ]
-          },
-          "notes": {
-            "type": "string",
-            "maxLength": 280
-          },
-          "first_seen": {
-            "type": "string",
-            "format": "date"
-          },
-          "last_seen": {
-            "type": "string",
-            "format": "date"
-          }
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "protocol_grounding": {
+      "type": "array",
+      "description": "Primary protocol or research references grounding this surface.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "naming": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ens",
+        "canonical",
+        "mismatch",
+        "notes"
+      ],
+      "properties": {
+        "ens": {
+          "type": "string",
+          "const": "solverlayer.eth"
+        },
+        "canonical": {
+          "type": "string",
+          "const": "solver networks"
+        },
+        "mismatch": {
+          "type": "boolean",
+          "const": true
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 5
         }
       }
     },
-    "last_reviewed": {
-      "type": "string",
-      "format": "date",
-      "default": "2026-03-15",
-      "description": "Last review date for this schema."
-    },
-    "sources_md": {
-      "type": "string",
-      "format": "uri",
-      "default": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/solverlayer/0.1-research/sources.md",
-      "description": "Pointer to curated source references."
-    },
-    "references": {
+    "sources": {
       "type": "array",
+      "description": "Primary source references for this anchor.",
       "minItems": 1,
       "items": {
         "type": "string",
         "format": "uri"
-      },
-      "description": "Primary research references."
-    },
-    "notes": {
-      "type": "string",
-      "maxLength": 800,
-      "description": "Optional notes describing semantic boundaries or overlaps."
+      }
     }
   }
 }
