@@ -1,6 +1,6 @@
 # Vortik Semantic Registry Model
 
-The Vortik Semantic Registry documents conceptual primitives emerging in the Ethereum protocol research ecosystem.
+The Vortik Semantic Registry documents conceptual primitives across the Ethereum protocol research ecosystem.
 
 Its goal is not to define protocol rules, but to track **semantic stabilization** across research areas and coordination primitives.
 
@@ -24,7 +24,7 @@ This separation allows stable naming through ENS while allowing the semantic mod
 
 # Anchors
 
-Anchors represent conceptual coordination surfaces appearing across Ethereum protocol research and execution infrastructure discussions.
+Anchors represent **semantic coordination surfaces** appearing across Ethereum protocol research and execution infrastructure discussions.
 
 Examples include:
 
@@ -34,7 +34,7 @@ Examples include:
 - preconfirmation coordination
 - builder markets
 - solver networks
-- execution markets
+- execution coordination surfaces
 - order flow auctions
 - single-slot finality research
 
@@ -54,7 +54,7 @@ preconflayer.eth → preconfirmation coordination
 commitmentlayer.eth → commitment signaling primitives  
 buildermarket.eth → block builder market structures  
 solverlayer.eth → solver coordination networks  
-executionmarket.eth → execution market coordination  
+executionmarket.eth → execution coordination surfaces  
 orderflowauction.eth → order flow auction mechanisms  
 fastfinality.eth → single-slot finality research  
 
@@ -72,7 +72,7 @@ The registry currently tracks primitives related to:
 - commitment signaling layers
 - preconfirmation coordination
 - solver coordination networks
-- execution markets
+- execution coordination surfaces
 - order flow auction systems
 - intent-based execution architectures
 - single-slot finality research
@@ -85,4 +85,4 @@ New anchors may be added when research areas converge around stable terminology.
 
 The Vortik registry is not a governance body and does not define protocol standards.
 
-It exists purely as a documentation and semantic alignment layer for emerging Ethereum coordination primitives.
+It exists purely as a documentation and semantic alignment layer for Ethereum coordination primitives.
