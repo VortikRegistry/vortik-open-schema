@@ -1,6 +1,6 @@
 {
   "project": "Vortik Semantic Registry",
-  "description": "Machine-readable semantic registry of emerging Ethereum coordination primitives mapped to ENS identifiers.",
+  "description": "Machine-readable semantic registry of Ethereum coordination primitives anchored to ENS identifiers.",
   "network": "ethereum",
   "maintainer": "VortikRegistry",
   "repository": "https://github.com/VortikRegistry/vortik-open-schema",
@@ -23,6 +23,6 @@
     "semantic indexing of Ethereum coordination primitives",
     "terminology stabilization across research threads",
     "machine-readable metadata for protocol and execution infrastructure concepts",
-    "semantic anchoring of emerging Ethereum research surfaces"
+    "semantic anchoring of coordination primitives across Ethereum research surfaces"
   ]
 }
