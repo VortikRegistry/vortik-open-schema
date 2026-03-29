@@ -1,30 +1,87 @@
-# inclusionlist.eth
+# Inclusion Lists (FOCIL)
 
-Semantic anchor representing **inclusion enforcement primitives** in Ethereum block production.
+**Associated ENS:** `inclusionlist.eth`  
+**Canonical term:** Inclusion Lists / Fork-Choice Enforced Inclusion Lists (FOCIL)  
+**Registry ID:** `inclusionlist`  
+**Status:** Draft EIP  
+**Classification:** Core
+
+---
+
+## Summary
+
+This anchor tracks **Inclusion Lists**, including **Fork-Choice Enforced Inclusion Lists (FOCIL)**, as a protocol-level mechanism for enforcing transaction inclusion guarantees within Ethereum.
+
+This surface represents a coordination mechanism focused on censorship resistance and inclusion enforcement.
+
+---
 
 ## Context
 
 Inclusion lists are mechanisms designed to mitigate transaction censorship in block construction.
 
-These mechanisms allow certain transactions to be forced into the block production pipeline, typically requiring proposers or builders to include them within a bounded number of slots.
+They introduce constraints that ensure certain transactions cannot be indefinitely excluded from the block production pipeline.
 
-The primary research direction associated with this concept is **Fork-Choice Enforced Inclusion Lists (FOCIL)**, described in **EIP-7805**.
+FOCIL extends this concept by integrating inclusion enforcement directly into fork choice rules.
 
-Inclusion lists aim to strengthen censorship resistance while preserving the security properties of Ethereum’s consensus protocol.
+The primary specification associated with this surface is **EIP-7805**.
+
+Inclusion lists aim to strengthen censorship resistance while preserving Ethereum’s consensus properties.
+
+---
+
+## Pipeline Position
+
+Inclusion
+
+---
+
+## Coordination Role
+
+Inclusion lists introduce constraints on proposer behavior by requiring the inclusion of specific transactions.
+
+They affect coordination between:
+
+- proposers  
+- transaction selection logic  
+- mempool visibility mechanisms  
+
+---
+
+## Protocol Grounding
+
+This mechanism is grounded in:
+
+- EIP-7805  
+- Ethereum research discussions on inclusion enforcement  
+- fork-choice rule modifications  
+- censorship resistance design work  
+
+---
+
+## Naming Alignment
+
+- **ENS anchor:** `inclusionlist.eth`  
+- **Canonical terms:** Inclusion Lists / FOCIL  
+
+Naming is partially stabilized, with ongoing convergence between generic terminology and specific mechanism naming.
+
+---
 
 ## Registry Role
 
-- Track terminology convergence around inclusion enforcement mechanisms
-- Document research discussions related to censorship resistance
-- Distinguish protocol-level inclusion guarantees from off-chain coordination mechanisms
+- Track semantic convergence between inclusion lists and FOCIL  
+- Document inclusion enforcement mechanisms  
+- Provide a stable semantic reference for inclusion-related primitives  
+- Map inclusion guarantees within Ethereum’s coordination pipeline  
 
-## Associated ENS Anchor
-
-`inclusionlist.eth`
+---
 
 ## Status
 
-Draft EIP (EIP-7805)
+Draft EIP with active research and specification development.
+
+---
 
 ## Sources
 
