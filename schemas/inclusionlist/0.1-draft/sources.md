@@ -1,39 +1,60 @@
-# Inclusion Lists (FOCIL) — Sources
+# Inclusion Lists / FOCIL — Sources
+
+## Overview
+
+This document compiles primary references and terminology associated with **Inclusion Lists**, including **Fork-Choice Enforced Inclusion Lists (FOCIL)**.
+
+It supports the semantic anchoring of `inclusionlist.eth` within the Vortik Semantic Registry.
+
+---
 
 ## Canonical Specification
 
-- EIP-7805: Fork-Choice Enforced Inclusion Lists (FOCIL)  
+- EIP-7805 — Fork-Choice Enforced Inclusion Lists (FOCIL)  
   https://eips.ethereum.org/EIPS/eip-7805
+
+---
+
+## Research Context
+
+Inclusion lists are mechanisms designed to mitigate transaction censorship in Ethereum block production.
+
+FOCIL extends this concept by integrating inclusion enforcement directly into fork choice rules.
+
+This research surface focuses on:
+
+- censorship resistance  
+- proposer constraints  
+- transaction inclusion guarantees  
+- fork-choice enforced inclusion mechanisms  
+
+---
 
 ## Primary Research Threads
 
 - FOCIL: A simple committee-based inclusion list proposal  
   https://ethresear.ch/t/fork-choice-enforced-inclusion-lists-focil-a-simple-committee-based-inclusion-list-proposal/19870
 
-## Terminology
+---
 
-Common terms used in the research surface:
+## Terminology Surface
 
-- inclusion lists
-- FOCIL
-- fork-choice enforced inclusion lists
+Common terminology associated with this mechanism includes:
 
-## Capability Mapping (non-normative)
+- inclusion lists  
+- FOCIL  
+- fork-choice enforced inclusion lists  
+- inclusion enforcement  
+- censorship resistance  
 
-- inclusion-enforcement  
-  Primary: EIP-7805  
-  https://eips.ethereum.org/EIPS/eip-7805
-
-- censorship-resistance  
-  Primary: EIP-7805 + FOCIL research thread  
-  https://eips.ethereum.org/EIPS/eip-7805  
-  https://ethresear.ch/t/fork-choice-enforced-inclusion-lists-focil-a-simple-committee-based-inclusion-list-proposal/19870
-
-- stewardship-metadata  
-  Registry-internal capability tag used for cataloging and stewardship workflows.
+---
 
 ## Status
 
-Draft EIP (March 2026).
+Draft EIP (active research and specification phase).
 
-Inclusion lists are currently discussed as a censorship-resistance mechanism within the Ethereum protocol roadmap. The proposal is under active research and implementation exploration.
+Inclusion in Ethereum depends on:
+
+- protocol refinement  
+- implementation readiness  
+- consensus among core developers
