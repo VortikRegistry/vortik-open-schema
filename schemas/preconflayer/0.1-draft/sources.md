@@ -1,16 +1,27 @@
-# Preconfirmation Layer — Sources
+# Preconfirmation Systems — Sources
+
+## Overview
+
+This document compiles primary references and terminology associated with **preconfirmation systems** within Ethereum execution and sequencing research.
+
+It supports the semantic anchoring of `preconflayer.eth` within the Vortik Semantic Registry.
+
+---
 
 ## Research Context
 
-The preconfirmation layer describes coordination mechanisms that allow transactions to receive early execution assurances before final block inclusion.
+Preconfirmation systems refer to coordination mechanisms that allow transactions to receive early execution assurances prior to final block inclusion.
 
-These mechanisms aim to reduce latency and improve user experience by allowing proposers or sequencing actors to provide commitments about transaction inclusion.
+These mechanisms aim to reduce latency and improve execution certainty by enabling proposers or sequencing actors to provide early inclusion or ordering guarantees.
 
-Preconfirmations often interact with:
+Preconfirmation systems interact with multiple coordination surfaces, including:
 
-- proposer commitments
-- inclusion enforcement mechanisms
-- based sequencing architectures
+- commitment signaling mechanisms  
+- proposer commitments  
+- inclusion enforcement systems  
+- based sequencing architectures  
+
+---
 
 ## Primary Research Threads
 
@@ -20,17 +31,24 @@ Preconfirmations often interact with:
 - Uncrowdable inclusion lists: the tension between chain neutrality, preconfirmations and proposer commitments  
   https://ethresear.ch/t/uncrowdable-inclusion-lists-the-tension-between-chain-neutrality-preconfirmations-and-proposer-commitments/19372
 
-## Terminology
+---
 
-Common terms used in the research surface:
+## Terminology Surface
 
-- preconfirmations
-- based preconfirmations
-- L1 preconfirmations
-- proposer commitments
+Common terminology associated with this coordination surface includes:
+
+- preconfirmation systems  
+- preconfirmations  
+- based preconfirmations  
+- L1 preconfirmations  
+- proposer commitments  
+
+---
 
 ## Status
 
 Active research coordination surface (2026).
 
-Preconfirmations are discussed as latency-reduction coordination mechanisms within emerging Ethereum sequencing architectures. The concept remains under active research and is not currently standardised through a formal EIP.
+Preconfirmation systems are actively explored in Ethereum sequencing and execution research, particularly in relation to latency reduction, early execution guarantees, and coordination with proposer commitment mechanisms.
+
+They are not currently defined as a canonical L1 protocol primitive.
