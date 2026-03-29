@@ -29,6 +29,6 @@ jobs:
       - name: Validate registry.json
         run: |
           ajv validate \
-            --spec=draft2020 \
+            --spec=draft7 \
             -s registry.schema.json \
             -d registry.json
