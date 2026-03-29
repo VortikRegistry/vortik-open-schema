@@ -1,35 +1,97 @@
-# commitmentlayer.eth
+# Commitment Signaling (Preconfirmations)
 
-Semantic anchor representing commitment signaling layers used in preconfirmation coordination.
+**Associated ENS:** `commitmentlayer.eth`  
+**Canonical term:** Commitment Signaling / Preconfirmation Commitments  
+**Registry ID:** `commitmentlayer`  
+**Status:** Research  
+**Classification:** Repairable
+
+---
+
+## Summary
+
+This anchor tracks **commitment signaling mechanisms**, particularly **preconfirmation commitments**, within Ethereum’s emerging coordination stack.
+
+The ENS identifier (`commitmentlayer.eth`) introduces a non-canonical abstraction and is classified as a naming mismatch.
+
+---
 
 ## Context
 
-Commitment layers describe mechanisms through which block producers signal inclusion commitments before final block publication on Ethereum L1.
+Commitment signaling refers to mechanisms through which block producers (or related actors) provide early signals about transaction inclusion or ordering before final block publication.
 
-These commitments may provide early guarantees about transaction ordering or inclusion while maintaining compatibility with the protocol’s security model.
+These commitments are used to:
 
-Research in this area explores how proposers, builders, relays and sequencing infrastructure communicate commitments without undermining censorship resistance or fork-choice safety.
+- provide early execution guarantees  
+- reduce latency uncertainty  
+- enable coordination in preconfirmation systems  
+
+This surface is closely related to:
+
+- preconfirmation networks  
+- proposer commitments  
+- execution coordination systems  
+
+---
+
+## Pipeline Position
+
+Preconfirmation / Commitment Signaling
+
+---
+
+## Coordination Role
+
+Commitment signaling enables coordination between:
+
+- proposers  
+- builders  
+- relays  
+- external coordination systems  
+
+It introduces early signals that influence execution expectations before final inclusion on L1.
+
+---
+
+## Protocol Grounding
+
+This surface is grounded in:
+
+- Ethereum research on preconfirmations  
+- proposer commitment mechanisms  
+- latency reduction strategies  
+- coordination protocols for early inclusion guarantees  
+
+---
+
+## Naming Alignment
+
+- **ENS anchor:** `commitmentlayer.eth`  
+- **Canonical term:** Commitment Signaling / Preconfirmation Commitments  
+
+The ENS naming introduces a non-canonical abstraction ("layer").
+
+This entry is classified as **repairable** due to naming misalignment.
+
+---
 
 ## Registry Role
 
-- Track terminology describing commitment signaling surfaces
-- Distinguish commitment mechanisms from latency networks and execution routing layers
-- Document naming convergence around proposer commitments and preconfirmation coordination
+- Track semantic stabilization of commitment signaling  
+- Document preconfirmation commitment mechanisms  
+- Distinguish signaling from execution and inclusion layers  
+- Map commitment behavior within Ethereum’s coordination pipeline  
 
-## Associated ENS Anchor
-
-`commitmentlayer.eth`
+---
 
 ## Status
 
-Active research surface (not a canonical L1 primitive today)
+Active research surface with increasing importance in coordination design.
 
-## Notes
-
-Commitment layers are closely related to preconfirmation networks but represent the signaling layer rather than the latency infrastructure itself.
+---
 
 ## Sources
 
-Primary research sources and terminology references are documented in:
+Primary research references are documented in:
 
 `schemas/commitmentlayer/`
