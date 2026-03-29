@@ -1,59 +1,99 @@
-# executionmarket.eth
+# Execution Coordination Markets
 
-Semantic anchor representing **execution markets** within Ethereum transaction execution infrastructure.
+**Associated ENS:** `executionmarket.eth`  
+**Canonical term:** Execution Coordination (Experimental)  
+**Registry ID:** `executionmarket`  
+**Status:** Research  
+**Classification:** Experimental
+
+---
+
+## Summary
+
+This anchor tracks **execution coordination markets** as an emerging and non-stabilized conceptual surface within Ethereum’s execution pipeline.
+
+The term does not currently represent a canonical primitive and is classified as experimental.
+
+---
 
 ## Context
 
-Execution markets describe coordination environments where transactions, intents, liquidity and routing logic interact to determine how execution outcomes are produced before block construction.
+Execution coordination describes the environment in which:
 
-This concept appears across research discussions involving:
+- order flow is routed  
+- solvers compete  
+- execution strategies are constructed  
 
-- intent-based execution architectures
-- solver competition
-- order flow auctions
-- MEV-aware routing systems
-- builder coordination
+before final block construction.
 
-Execution markets represent an intermediate coordination layer between transaction routing and block construction.
+The notion of an "execution market" appears in research and ecosystem discussions, but does not yet have a stable or widely accepted definition.
 
-## Coordination Surface
+This surface overlaps with:
 
-Conceptually the execution pipeline can be described as:
+- order flow auctions  
+- solver networks  
+- builder markets  
 
-order flow auctions  
-↓  
-solver networks  
-↓  
-execution markets  
-↓  
-builder markets  
-↓  
-ePBS
+---
 
-Execution markets therefore sit between **solver competition** and **block construction markets**.
+## Pipeline Position
+
+Order Flow → Solver Coordination → Execution Coordination → Builder Markets
+
+---
+
+## Coordination Role
+
+This surface attempts to describe coordination between:
+
+- transaction routing  
+- solver competition  
+- execution strategy formation  
+
+However, its boundaries are not clearly defined and may collapse into adjacent primitives as terminology stabilizes.
+
+---
+
+## Protocol Grounding
+
+There is no formal protocol specification for execution markets.
+
+The concept is derived from:
+
+- Ethereum research discussions  
+- intent-based execution systems  
+- MEV-aware coordination models  
+
+---
+
+## Naming Alignment
+
+- **ENS anchor:** `executionmarket.eth`  
+- **Canonical term:** Not stabilized  
+
+The term "execution market" is not canonical and remains under exploration.
+
+This entry is classified as **experimental**.
+
+---
 
 ## Registry Role
 
-- Document terminology convergence around execution market structures
-- Track boundaries between solver coordination and block building infrastructure
-- Provide a neutral semantic anchor for execution-layer research discussions
+- Track emergence of execution coordination terminology  
+- Observe whether "execution markets" stabilizes or dissolves  
+- Map relationships between solver networks and builder markets  
+- Prevent premature semantic solidification  
 
-## Associated ENS Anchor
-
-`executionmarket.eth`
+---
 
 ## Status
 
-Research coordination surface (not a canonical L1 primitive today)
+Experimental research surface with uncertain long-term stability.
+
+---
 
 ## Sources
 
-Primary research sources and terminology references are documented in:
+Primary research references are documented in:
 
 `schemas/executionmarket/`
-
-## Notes
-
-This anchor documents terminology used across Ethereum execution infrastructure research and ecosystem discussions.
-
-It does not imply protocol standardization or formal adoption.
