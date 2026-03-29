@@ -1,43 +1,73 @@
-# SSF — Sources
+# Single-Slot Finality (SSF) — Sources
+
+## Overview
+
+This document compiles primary references and terminology associated with **Single-Slot Finality (SSF)** within Ethereum consensus research.
+
+It supports the semantic anchoring of `fastfinality.eth` within the Vortik Semantic Registry.
+
+---
 
 ## Research Context
 
-Single Slot Finality (SSF) refers to research efforts aimed at reducing Ethereum’s finality time so that blocks become final within a single slot.
+Single-Slot Finality (SSF) refers to research aimed at reducing Ethereum finality latency so that blocks can become final within a single slot or near-single-slot timeframes.
 
-Achieving SSF would significantly improve transaction confirmation guarantees and reduce the delay between block proposal and irreversible finality.
+This surface is associated with research into:
 
-The concept is closely tied to ongoing work on validator economics, committee structures and consensus design.
+- faster consensus finality  
+- validator coordination  
+- committee structure  
+- signature aggregation  
+- consensus-path latency constraints  
 
-## Related EIPs (context / prerequisites)
+SSF is one of the major research directions in Ethereum consensus evolution.
 
-- EIP-7251: Increase the MAX_EFFECTIVE_BALANCE  
+---
+
+## Related EIPs (Context / Prerequisites)
+
+- EIP-7251 — Increase the MAX_EFFECTIVE_BALANCE  
   https://eips.ethereum.org/EIPS/eip-7251
 
-## Related Research
+---
 
-- Ethereum Research — SSF discussions and related threads  
+## Research Surface
+
+Primary discussion of this surface appears across Ethereum consensus research, including work on:
+
+- single-slot finality  
+- near-single-slot finality  
+- validator set scaling  
+- consensus performance constraints  
+
+Representative research discussions can be found across:
+
+- Ethereum Research  
   https://ethresear.ch/
 
-## Terminology
+---
 
-Common terms used in the research surface:
+## Terminology Surface
 
-- single-slot finality
-- SSF
-- fast finality
+Common terminology associated with this surface includes:
+
+- single-slot finality  
+- SSF  
+- near-single-slot finality  
+- fast finality (non-canonical / adjacent)  
+
+---
 
 ## Status
 
 Research track (2026).
 
-Terminology in the ecosystem strongly converges on **“SSF”** as the canonical shorthand.
+Terminology across the ecosystem strongly converges on **SSF** as the canonical shorthand.
 
-## Roadmap Context (Ethereum Strawmap)
+---
 
-Under the Ethereum Strawmap framework (Justin Drake / Vitalik Buterin), fast finality becomes one of the protocol’s five strategic **North Star** goals.
+## Roadmap Context
 
-Current research targets aim to reduce finality from roughly **15 minutes** to approximately **6–16 seconds**.
+Within Ethereum roadmap discussions, faster finality is treated as a major long-term consensus objective.
 
-The mechanism most commonly associated with this transition is **Single Slot Finality (SSF)**.
-
-This positions SSF as a major consensus evolution surface rather than a simple latency improvement.
+SSF is the research surface most commonly associated with this transition and should be understood as a major consensus evolution vector rather than a simple latency improvement.
