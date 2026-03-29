@@ -1,41 +1,77 @@
 # Anchors
 
-This directory contains minimal documentation for each semantic anchor tracked by the Vortik Semantic Registry.
+This directory contains the human-readable layer of the **Vortik Semantic Registry**.
 
-Each anchor represents a conceptual surface within emerging Ethereum coordination primitives.
+Each file corresponds to a semantic anchor representing a **protocol primitive, coordination mechanism, structural role, or technical surface** within Ethereum’s evolving architecture.
 
-Anchors correspond to ENS identifiers used as stable semantic references for research areas such as:
+---
 
-- ePBS (EIP-7732)
-- Inclusion Lists / FOCIL
-- Preconfirmations
-- Commitment signaling layers
-- Builder markets
-- Solver layers
-- Execution markets
-- Order flow auctions
+## Purpose
 
-These files are intentionally minimal and serve as orientation documents for each anchor.
+Anchors provide minimal, structured descriptions of each tracked concept.
 
-Detailed metadata is defined in the corresponding JSON schemas under `/schemas/`.
+They are not intended to define the protocol, but to:
+
+- document emerging terminology
+- track semantic convergence
+- distinguish canonical naming from approximate or ENS-based representations
+
+---
+
+## Canonical vs ENS Naming
+
+Each anchor is associated with an ENS domain.
+
+However:
+
+👉 **the ENS does not define the primitive**  
+👉 **the canonical technical term defines the primitive**
+
+When mismatches exist, they are explicitly documented and classified (e.g. *repairable*).
+
+---
+
+## Anchor Scope
+
+Anchors correspond to real surfaces within Ethereum’s coordination pipeline, including:
+
+- proposer-builder separation (ePBS)
+- inclusion enforcement (FOCIL)
+- proposer commitments
+- preconfirmations
+- builder competition
+- solver-based execution systems
+- order flow auctions
+- finality research (SSF)
+
+Each anchor must map to:
+
+- a real protocol primitive  
+- a coordination role  
+- or a technically grounded research surface  
 
 ---
 
 ## Anchor Index
 
-The following anchors are currently documented:
+The following anchors are currently tracked:
 
-- `epbs.eth` — Enshrined Proposer-Builder Separation research
-- `inclusionlist.eth` — Inclusion enforcement primitives (FOCIL and related models)
-- `commitmentlayer.eth` — Commitment signaling infrastructure
+### Core (protocol-aligned)
+- `epbs.eth` — Enshrined Proposer-Builder Separation
+- `inclusionlist.eth` — Inclusion enforcement primitives (FOCIL)
+
+### Valid (non-canonical but real surfaces)
+- `buildermarket.eth` — Builder competition and auction dynamics
+- `orderflowauction.eth` — Order flow auction routing systems
+
+### Premature (unstable naming)
+- `commitmentlayer.eth` — Proposer commitment signaling
 - `preconflayer.eth` — Preconfirmation coordination layers
-- `fastfinality.eth` — Single-slot finality research track
-- `buildermarket.eth` — Block builder market structures
-- `solverlayer.eth` — Intent solver coordination networks
-- `executionmarket.eth` — Execution market coordination layer
-- `orderflowauction.eth` — Order flow auction routing infrastructure
+- `executionmarket.eth` — Ambiguous execution coordination surface
 
-Each anchor document provides a short explanation of the research area and the terminology surface tracked by the registry.
+### Repairable (valid concept, naming mismatch)
+- `fastfinality.eth` — Single-Slot Finality (SSF)
+- `solverlayer.eth` — Solver networks / intent execution systems
 
 ---
 
@@ -43,37 +79,77 @@ Each anchor document provides a short explanation of the research area and the t
 
 Anchor documents are descriptive.
 
-Formal metadata is defined in the `/schemas/` directory, where each primitive has a versioned JSON schema describing:
+Formal metadata is defined in `/schemas/`, where each anchor has a versioned JSON schema specifying:
 
 - identifier
 - conceptual scope
-- status
+- semantic classification
 - research sources
-- last reviewed date
+- status
+- last reviewed
+
+Schemas represent the **machine-readable layer of the registry**.
 
 ---
 
 ## Relationship With the Registry
 
-All anchors listed here are indexed in `registry.json`, which provides the canonical machine-readable mapping between:
+All anchors are indexed in `registry.json`, which provides the canonical mapping:
 
-ENS identifier → anchor document → schema location.
+ENS → canonical term → schema → anchor document
 
-This allows tooling and research datasets to discover anchors programmatically.
+This enables:
+
+- programmatic discovery
+- structured analysis
+- future interoperability with tooling
+
+---
+
+## Design Model
+
+The system is composed of three layers:
+
+### ENS Anchors
+Stable identifiers used as semantic entry points.
+
+### Anchor Documents
+Minimal human-readable interpretation of each primitive or surface.
+
+### Schemas
+Structured, versioned, machine-readable definitions.
+
+---
+
+## Conceptual Model
+
+Ethereum is interpreted as a coordination pipeline:
+
+1. Order Flow  
+2. Visibility  
+3. Builder Coordination  
+4. Inclusion  
+5. Execution  
+6. Finality  
+
+Each anchor maps to one or more stages of this pipeline.
 
 ---
 
 ## Design Philosophy
 
-The registry intentionally separates three layers:
+- Semantic structure precedes standardization  
+- Canonical naming overrides ENS wording  
+- Precision is prioritized over coverage  
+- Early mapping is only valuable if technically grounded  
 
-**ENS Anchors**  
-Stable identifiers used to reference coordination primitives.
+---
 
-**Anchor Documents**  
-Minimal human-readable explanations of the research surface.
+## System Status
 
-**Schemas**  
-Machine-readable metadata describing scope, terminology and references.
+The registry is transitioning from:
 
-This layered model helps reduce naming drift as Ethereum research evolves.
+conceptual semantic mapping  
+→ structured semantic infrastructure
+
+The current focus is consolidating high-quality primitive representations before expanding coverage.
