@@ -2,7 +2,7 @@
 
 This directory contains the human-readable layer of the **Vortik Semantic Registry**.
 
-Each file corresponds to a semantic anchor representing a **protocol primitive, coordination mechanism, structural role, or technical surface** within Ethereum’s evolving architecture.
+Each file corresponds to a semantic anchor representing a **protocol primitive, coordination mechanism, structural role, or technically grounded research surface** within Ethereum’s evolving coordination architecture.
 
 ---
 
@@ -24,10 +24,10 @@ Each anchor is associated with an ENS domain.
 
 However:
 
-👉 **the ENS does not define the primitive**  
-👉 **the canonical technical term defines the primitive**
+**the ENS does not define the primitive**  
+**the canonical technical term defines the primitive**
 
-When mismatches exist, they are explicitly documented and classified (e.g. *repairable*).
+When mismatches exist, they are explicitly documented and classified.
 
 ---
 
@@ -38,17 +38,17 @@ Anchors correspond to real surfaces within Ethereum’s coordination pipeline, i
 - proposer-builder separation (ePBS)
 - inclusion enforcement (FOCIL)
 - proposer commitments
-- preconfirmations
+- preconfirmation systems
 - builder competition
-- solver-based execution systems
+- solver networks
 - order flow auctions
 - finality research (SSF)
 
 Each anchor must map to:
 
-- a real protocol primitive  
-- a coordination role  
-- or a technically grounded research surface  
+- a real protocol primitive
+- a coordination role
+- or a technically grounded research surface
 
 ---
 
@@ -58,20 +58,20 @@ The following anchors are currently tracked:
 
 ### Core (protocol-aligned)
 - `epbs.eth` — Enshrined Proposer-Builder Separation
-- `inclusionlist.eth` — Inclusion enforcement primitives (FOCIL)
+- `inclusionlist.eth` — Inclusion Lists / FOCIL
 
-### Valid (non-canonical but real surfaces)
-- `buildermarket.eth` — Builder competition and auction dynamics
-- `orderflowauction.eth` — Order flow auction routing systems
+### Valid (real but non-canonical surfaces)
+- `buildermarket.eth` — Builder markets
+- `orderflowauction.eth` — Order Flow Auctions (OFA)
 
-### Premature (unstable naming)
-- `commitmentlayer.eth` — Proposer commitment signaling
-- `preconflayer.eth` — Preconfirmation coordination layers
-- `executionmarket.eth` — Ambiguous execution coordination surface
+### Premature (unstable or evolving terminology)
+- `commitmentlayer.eth` — Commitment signaling / preconfirmation commitments
+- `preconflayer.eth` — Preconfirmation systems
+- `executionmarket.eth` — Execution coordination surface (ambiguous term)
 
 ### Repairable (valid concept, naming mismatch)
 - `fastfinality.eth` — Single-Slot Finality (SSF)
-- `solverlayer.eth` — Solver networks / intent execution systems
+- `solverlayer.eth` — Solver networks
 
 ---
 
@@ -125,12 +125,12 @@ Structured, versioned, machine-readable definitions.
 
 Ethereum is interpreted as a coordination pipeline:
 
-1. Order Flow  
-2. Visibility  
-3. Builder Coordination  
-4. Inclusion  
-5. Execution  
-6. Finality  
+1. Order Flow
+2. Visibility
+3. Builder Coordination
+4. Inclusion
+5. Execution
+6. Finality
 
 Each anchor maps to one or more stages of this pipeline.
 
@@ -138,10 +138,10 @@ Each anchor maps to one or more stages of this pipeline.
 
 ## Design Philosophy
 
-- Semantic structure precedes standardization  
-- Canonical naming overrides ENS wording  
-- Precision is prioritized over coverage  
-- Early mapping is only valuable if technically grounded  
+- Semantic structure precedes standardization
+- Canonical naming overrides ENS wording
+- Precision is prioritized over coverage
+- Early mapping is only valuable if technically grounded
 
 ---
 
