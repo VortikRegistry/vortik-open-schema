@@ -4,6 +4,26 @@ Independent machine-readable registry tracking terminology convergence and seman
 
 The registry maps conceptual primitives discussed in Ethereum research to stable ENS identifiers and versioned schemas.
 
+---
+
+## Why this registry exists
+
+Terminology in Ethereum research often stabilizes before formal standardization.
+
+Different teams may refer to similar coordination mechanisms using different terms, creating fragmentation across discussions.
+
+The Vortik Semantic Registry exists to:
+
+- track terminology convergence across research threads  
+- provide stable semantic anchors through ENS identifiers  
+- enable machine-readable referencing of coordination primitives  
+
+This registry does not define standards.
+
+It documents how terminology stabilizes across the Ethereum research ecosystem.
+
+---
+
 ## Navigation
 
 - [Anchors](anchors/)
