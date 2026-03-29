@@ -1,21 +1,29 @@
-# Commitment Layer — Sources
+# Commitment Signaling / Preconfirmation Commitments — Sources
+
+## Overview
+
+This document compiles primary references and terminology associated with **commitment signaling** and **preconfirmation commitments** within Ethereum execution and sequencing research.
+
+It supports the semantic anchoring of `commitmentlayer.eth` within the Vortik Semantic Registry.
+
+---
 
 ## Research Context
 
-The commitment layer describes coordination mechanisms where block proposers or sequencing actors issue commitments about future transaction inclusion or ordering.
+Commitment signaling refers to coordination mechanisms where proposers or sequencing actors issue commitments regarding future transaction inclusion, ordering, or execution guarantees.
 
-These commitments are closely related to preconfirmation systems and neutrality discussions in Ethereum research.
+These mechanisms are closely associated with:
 
-The surface typically appears in discussions about:
+- preconfirmation systems  
+- proposer commitments  
+- transaction inclusion assurances  
+- neutrality constraints in sequencing systems  
 
-- proposer commitments
-- preconfirmation guarantees
-- transaction inclusion assurances
-- neutrality constraints in sequencing systems
+This surface emerges in discussions about improving execution reliability, reducing uncertainty, and coordinating transaction flow before final block inclusion.
 
-## Related Research
+---
 
-Primary discussions touching the commitment surface:
+## Primary Research Threads
 
 - Uncrowdable inclusion lists: the tension between chain neutrality, preconfirmations and proposer commitments  
   https://ethresear.ch/t/uncrowdable-inclusion-lists-the-tension-between-chain-neutrality-preconfirmations-and-proposer-commitments/19372
@@ -23,16 +31,24 @@ Primary discussions touching the commitment surface:
 - Becoming based: a path towards decentralised sequencing  
   https://ethresear.ch/t/becoming-based-a-path-towards-decentralised-sequencing/21733
 
-## Terminology
+---
 
-Common terms used in the research surface:
+## Terminology Surface
 
-- proposer commitments
-- preconfirmations
-- commitment signals
+Common terminology associated with this coordination surface includes:
+
+- commitment signaling  
+- preconfirmation commitments  
+- proposer commitments  
+- preconfirmations  
+- commitment layer (non-canonical)  
+
+---
 
 ## Status
 
 Active research coordination surface (2026).
 
-The commitment layer represents a coordination interface around proposer commitments and early transaction assurances. It is currently an active research topic and has not yet been standardised through a formal EIP.
+Commitment signaling mechanisms are actively explored in Ethereum execution and sequencing research, particularly in relation to preconfirmations and neutrality.
+
+They are not currently defined as a canonical L1 protocol primitive.
