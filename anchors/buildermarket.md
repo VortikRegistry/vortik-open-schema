@@ -1,37 +1,91 @@
-# buildermarket.eth
+# Builder Markets
 
-Semantic anchor representing the research surface around **external block-building markets** and related coordination terminology.
+**Associated ENS:** `buildermarket.eth`  
+**Canonical term:** Builder Markets  
+**Registry ID:** `buildermarket`  
+**Status:** Research  
+**Classification:** Semi-stable
+
+---
+
+## Summary
+
+This anchor tracks **builder markets** as a coordination surface within Ethereum’s block construction ecosystem.
+
+While not a formal protocol primitive, builder markets are a well-established component of the MEV supply chain and remain relevant across both PBS and ePBS designs.
+
+---
 
 ## Context
 
-Ethereum block production involves a supply chain of orderflow, builders, relays, and proposers.
+Ethereum block production involves a multi-stage coordination pipeline including:
 
-Builder markets emerged alongside proposer-builder separation (PBS) and remain relevant even as protocol designs move toward enshrined PBS (ePBS).
+- order flow routing  
+- solver participation  
+- builder competition  
+- proposer selection  
 
-Even with protocol-level changes (e.g. ePBS), the ecosystem still discusses *market structure* around building services, including transparency, competition, and operational roles.
+Builder markets emerged alongside proposer-builder separation (PBS) and continue to play a role as designs evolve toward enshrined PBS (ePBS).
 
-This anchor tracks the terminology surface commonly described as a **builder market** in research and ecosystem discussions.
+They represent the competitive environment in which block builders construct execution payloads.
+
+---
+
+## Pipeline Position
+
+Execution Coordination → Builder Markets → ePBS
+
+---
+
+## Coordination Role
+
+Builder markets coordinate:
+
+- block construction competition  
+- access to order flow  
+- relationships with relays and proposers  
+
+They define how execution payloads are assembled before being proposed to the network.
+
+---
+
+## Protocol Grounding
+
+This surface is grounded in:
+
+- PBS (Proposer-Builder Separation)  
+- ePBS (EIP-7732)  
+- MEV supply chain architecture  
+- relay-based block construction systems  
+
+---
+
+## Naming Alignment
+
+- **ENS anchor:** `buildermarket.eth`  
+- **Canonical term:** Builder Markets  
+
+The term is widely used across research and ecosystem discussions, though not formalized as a protocol primitive.
+
+---
 
 ## Registry Role
 
-- Document naming convergence around builder market structures and roles
-- Track term boundaries (what counts as L1-relevant vs app-layer / offchain market detail)
-- Avoid conflating intents/solvers with builder-market primitives unless primary sources do
+- Track semantic stabilization of builder market terminology  
+- Document the role of builders in block construction  
+- Distinguish builder coordination from solver and execution layers  
+- Map builder participation within Ethereum’s coordination pipeline  
 
-## Associated ENS Anchor
-
-`buildermarket.eth`
+---
 
 ## Status
 
-Research (ecosystem terminology; not a canonical L1 primitive today)
+Research-aligned surface with strong ecosystem adoption.
 
-## Notes
-
-This anchor is intentionally conservative: it documents a market-surface term used in ecosystem coordination, not a finalized protocol specification.
+---
 
 ## Sources
 
-Primary research sources and terminology references are documented in the corresponding schema directory:
+Primary research references are documented in:
 
 `schemas/buildermarket/`
