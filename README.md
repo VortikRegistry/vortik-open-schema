@@ -81,8 +81,8 @@ This architecture separates:
 The registry follows a semantic-first approach:
 
 - terminology is tracked before standardization  
-- primitives are classified by stability and grounding  
-- ambiguous terms are explicitly marked  
+- primitives are classified by stability and protocol grounding  
+- ambiguous terms are explicitly marked and not prematurely canonized  
 
 Each primitive is documented through:
 
@@ -103,7 +103,7 @@ Schemas describe coordination surfaces using:
 - protocol_grounding  
 - naming (ENS mapping)  
 
-This allows consistent comparison across different layers of the Ethereum stack.
+This enables consistent comparison across layers of the Ethereum stack.
 
 ---
 
