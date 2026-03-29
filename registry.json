@@ -31,7 +31,7 @@
       "status": "research",
       "type": "mechanism",
       "role": "proposer commitment signaling and enforcement",
-      "classification": "contested",
+      "classification": "premature",
       "canonical_term": "proposer commitments",
       "schema": "schemas/commitmentlayer/0.1-draft/schema.json",
       "anchor_doc": "anchors/commitmentlayer.md"
@@ -42,7 +42,7 @@
       "status": "research",
       "type": "mechanism",
       "role": "preconfirmation signaling and coordination",
-      "classification": "contested",
+      "classification": "premature",
       "canonical_term": "preconfirmations",
       "schema": "schemas/preconflayer/0.1-draft/schema.json",
       "anchor_doc": "anchors/preconflayer.md"
@@ -64,7 +64,7 @@
       "status": "research",
       "type": "market",
       "role": "auction and competition between block builders",
-      "classification": "core",
+      "classification": "valid",
       "canonical_term": "builder market",
       "schema": "schemas/buildermarket/0.1-research/schema.json",
       "anchor_doc": "anchors/buildermarket.md"
@@ -86,7 +86,7 @@
       "status": "research",
       "type": "market",
       "role": "ambiguous execution coordination concept",
-      "classification": "contested",
+      "classification": "premature",
       "canonical_term": "execution markets (ambiguous term)",
       "schema": "schemas/executionmarket/0.1-research/schema.json",
       "anchor_doc": "anchors/executionmarket.md"
@@ -97,7 +97,7 @@
       "status": "research",
       "type": "market",
       "role": "auction of transaction ordering rights",
-      "classification": "core",
+      "classification": "valid",
       "canonical_term": "order flow auctions (OFA)",
       "schema": "schemas/orderflowauction/0.1-research/schema.json",
       "anchor_doc": "anchors/orderflowauction.md"
