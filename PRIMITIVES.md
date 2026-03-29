@@ -1,8 +1,8 @@
 # Ethereum Coordination Primitives
 
-The Vortik Semantic Registry tracks conceptual primitives emerging across Ethereum protocol research.
+The Vortik Semantic Registry tracks conceptual primitives across Ethereum protocol research.
 
-These primitives represent coordination surfaces that repeatedly appear across research discussions, EIP proposals and infrastructure architecture debates.
+These primitives represent coordination mechanisms that repeatedly appear across research discussions, EIP proposals and infrastructure architecture debates.
 
 The registry documents terminology convergence across these primitives without defining protocol rules.
 
@@ -21,11 +21,11 @@ Order flow auctions refer to mechanisms where transaction flow is auctioned or r
 Research areas include:
 
 - order flow auctions (OFAs)
-- RFQ-style execution markets
+- RFQ-style execution environments
 - private order flow routing
 - intent routing systems
 
-Order flow auctions interact closely with solver networks and execution markets.
+Order flow auctions interact closely with solver networks and execution coordination surfaces.
 
 ---
 
@@ -45,20 +45,20 @@ Solvers determine optimal execution outcomes before block construction.
 
 ---
 
-## Execution Markets
+## Execution Coordination Surfaces
 
 Anchor: executionmarket.eth
 
-Execution markets refer to coordination environments where transaction execution rights are routed or allocated across competing actors.
+Execution coordination surfaces refer to conceptual environments where transaction execution rights are routed or allocated across competing actors.
 
-These systems may involve:
+These surfaces may involve:
 
-- execution routing markets
+- execution routing environments
 - competitive blockspace allocation
 - solver-driven execution systems
 - cross-domain execution coordination
 
-Execution markets sit between solver networks and builder markets, determining where and how transactions are executed before block construction.
+Terminology in this area remains fluid across research discussions and has not yet stabilized around a single canonical term.
 
 ---
 
