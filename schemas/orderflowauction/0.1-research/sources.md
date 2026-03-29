@@ -1,41 +1,62 @@
-# Order Flow Auction — Sources
+# Order Flow Auctions (OFA) — Sources
+
+## Overview
+
+This document compiles primary references and terminology associated with **order flow auctions (OFA)** within Ethereum transaction routing and execution infrastructure.
+
+It supports the semantic anchoring of `orderflowauction.eth` within the Vortik Semantic Registry.
+
+---
 
 ## Research Context
 
-Order flow auctions describe coordination mechanisms where transaction order flow is auctioned or routed among competing execution participants.
+Order flow auctions refer to coordination mechanisms where transaction order flow is auctioned or routed among competing execution participants prior to block construction.
 
-These mechanisms appear across MEV infrastructure, private order flow routing systems and emerging execution markets.
+These mechanisms operate at the transaction routing stage of the execution pipeline and are closely associated with:
 
-Order flow auctions often interact with:
+- private order flow routing  
+- solver competition  
+- execution markets  
+- builder market interactions  
 
-- solver networks
-- builder markets
-- execution routing systems
-- private transaction relays
+Order flow auctions play a key role in determining how transactions are distributed across execution participants before inclusion in a block.
 
-## Related Research
+---
 
-Ethereum research discussions touching order flow auctions and routing markets:
+## Research Surface
 
-- MEV supply chain discussions  
+Discussion of order flow auctions appears across Ethereum research and ecosystem exploration of:
+
+- MEV supply chain structures  
+- transaction routing mechanisms  
+- private order flow systems  
+- execution market design  
+
+Representative discussions can be found across:
+
+- Ethereum Research  
   https://ethresear.ch/
 
-- Transaction routing and execution market discussions  
-  https://ethresear.ch/
+---
 
-## Terminology
+## Terminology Surface
 
-Common terms appearing in research and ecosystem discussions:
+Common terminology associated with this coordination surface includes:
 
-- order flow auction
-- orderflow auction
-- OFA
-- private order flow
-- transaction routing auction
-- order flow routing
+- order flow auctions (OFA)  
+- order flow auction  
+- orderflow auction  
+- OFA  
+- private order flow  
+- transaction routing auction  
+- order flow routing  
+
+---
 
 ## Status
 
 Research coordination surface (2026).
 
-Order flow auctions describe coordination mechanisms used by infrastructure providers and routing systems to allocate transaction order flow among competing execution participants. The concept appears across MEV infrastructure and execution routing systems but is not currently a canonical Ethereum L1 protocol primitive.
+Order flow auctions are actively explored within Ethereum execution infrastructure, particularly in relation to routing efficiency, MEV mitigation, and coordination across execution participants.
+
+They are not currently defined as a canonical L1 protocol primitive.
