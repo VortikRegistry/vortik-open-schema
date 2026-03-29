@@ -1,8 +1,8 @@
 # Vortik Semantic Registry
 
-Independent registry tracking semantic stabilization across emerging Ethereum coordination primitives and research coordination surfaces.
+Independent machine-readable registry tracking terminology convergence and semantic stabilization across Ethereum coordination primitives and coordination surfaces.
 
-The registry maps conceptual primitives discussed in Ethereum research to stable ENS identifiers and machine-readable schemas.
+The registry maps conceptual primitives discussed in Ethereum research to stable ENS identifiers and versioned schemas.
 
 ## Navigation
 
@@ -27,7 +27,7 @@ The registry maps conceptual primitives discussed in Ethereum research to stable
 
 - [buildermarket.eth](anchors/buildermarket.md) — block builder market structures
 - [solverlayer.eth](anchors/solverlayer.md) — intent solver coordination networks
-- [executionmarket.eth](anchors/executionmarket.md) — execution market coordination layer
+- [executionmarket.eth](anchors/executionmarket.md) — execution coordination surface
 
 ---
 
