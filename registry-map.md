@@ -1,6 +1,6 @@
 # Vortik Semantic Registry — Conceptual Coordination Map
 
-The Vortik registry tracks terminology convergence across several emerging Ethereum coordination primitives.
+The Vortik registry tracks terminology convergence across Ethereum coordination primitives.
 
 These primitives form a layered conceptual structure representing how transaction flow, execution coordination, and protocol guarantees interact in the Ethereum ecosystem.
 
@@ -14,7 +14,7 @@ Order Flow Routing (Order Flow Auctions)
 ↓  
 Solver Coordination Networks  
 ↓  
-Execution Markets  
+Execution Coordination Surfaces  
 ↓  
 Builder Markets  
 ↓  
@@ -22,9 +22,9 @@ Proposer / Builder Separation (ePBS)
 ↓  
 Inclusion Enforcement (FOCIL / Inclusion Lists)  
 ↓  
-Preconfirmation Networks  
-↓  
 Commitment Signaling Layers  
+↓  
+Preconfirmation Networks  
 ↓  
 Finality Systems (SSF research)
 
@@ -38,12 +38,12 @@ The registry currently tracks the following anchors:
 |------|------|
 | orderflowauction.eth | Order Flow Routing |
 | solverlayer.eth | Solver Coordination Networks |
-| executionmarket.eth | Execution Markets |
+| executionmarket.eth | Execution Coordination Surface |
 | buildermarket.eth | Builder Market Structures |
 | epbs.eth | Proposer-Builder Separation |
 | inclusionlist.eth | Inclusion Enforcement |
-| preconflayer.eth | Preconfirmation Networks |
 | commitmentlayer.eth | Commitment Signaling |
+| preconflayer.eth | Preconfirmation Networks |
 | fastfinality.eth | Finality Research |
 
 ---
