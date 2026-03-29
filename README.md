@@ -1,6 +1,6 @@
 # Vortik Semantic Registry
 
-Independent research registry tracking semantic stabilization across emerging Ethereum coordination primitives.
+Independent research registry tracking semantic stabilization across Ethereum coordination primitives.
 
 🌐 Registry site:  
 https://vortikregistry.github.io/vortik-open-schema/
@@ -45,7 +45,7 @@ Order Flow Auctions
 ↓  
 Solver Coordination  
 ↓  
-Execution Coordination (ambiguous)  
+Execution Coordination (ambiguous term)  
 ↓  
 Builder Coordination  
 ↓  
@@ -67,7 +67,13 @@ The registry uses ENS identifiers as semantic anchors for coordination primitive
 
 Each anchor connects four layers:
 
-ENS identifier ↓ registry.json entry ↓ machine-readable schema ↓ human-readable anchor
+ENS identifier  
+↓  
+registry.json entry  
+↓  
+machine-readable schema  
+↓  
+human-readable anchor  
 
 This architecture separates:
 
