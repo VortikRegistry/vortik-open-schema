@@ -1,93 +1,130 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/epbs/1.0-draft/schema.json",
-  "title": "Vortik Open Schema — ePBS (EIP-7732) Semantic Anchor",
-  "description": "Minimal metadata schema for an ePBS-aligned semantic anchor. Research artefact; not an official specification.",
+  "title": "Vortik Open Schema — Enshrined Proposer-Builder Separation (ePBS)",
+  "description": "Machine-readable schema for the ePBS semantic anchor within the Vortik Semantic Registry. Research artefact; not an official protocol specification.",
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "protocol",
+    "id",
     "version",
-    "identifier",
-    "capabilities",
-    "stewardship_status",
-    "last_reviewed",
-    "references"
+    "canonical_term",
+    "classification",
+    "status",
+    "type",
+    "summary",
+    "pipeline_position",
+    "coordination_role",
+    "protocol_grounding",
+    "naming",
+    "sources"
   ],
   "properties": {
-    "protocol": {
+    "id": {
       "type": "string",
-      "const": "ePBS",
-      "description": "Protocol primitive label (semantic)."
+      "const": "epbs",
+      "description": "Registry identifier for this semantic anchor."
     },
     "version": {
       "type": "string",
-      "pattern": "^[0-9]+\\.[0-9]+(-[a-z0-9.-]+)?$",
-      "default": "1.0-draft",
-      "description": "Schema version (semver-ish)."
+      "const": "1.0-draft",
+      "description": "Schema version for this anchor."
     },
-    "identifier": {
+    "canonical_term": {
       "type": "string",
-      "const": "epbs.eth",
-      "description": "ENS identifier mapped to this semantic anchor."
+      "const": "enshrined proposer-builder separation (ePBS)",
+      "description": "Canonical technical term tracked by this anchor."
     },
-    "capabilities": {
+    "classification": {
+      "type": "string",
+      "const": "core",
+      "description": "Semantic classification within the Vortik registry."
+    },
+    "status": {
+      "type": "string",
+      "const": "draft-eip",
+      "description": "Current maturity/status of the tracked primitive."
+    },
+    "type": {
+      "type": "string",
+      "const": "primitive",
+      "description": "Structural type of this tracked surface."
+    },
+    "summary": {
+      "type": "string",
+      "description": "Short description of the primitive.",
+      "minLength": 20
+    },
+    "pipeline_position": {
       "type": "array",
+      "description": "Pipeline stages where this primitive is most relevant.",
       "minItems": 1,
-      "uniqueItems": true,
       "items": {
         "type": "string",
         "enum": [
-          "payload-commitment",
-          "bid-standardization",
-          "stewardship-metadata"
+          "order flow",
+          "visibility",
+          "builder coordination",
+          "inclusion",
+          "execution",
+          "finality"
         ]
-      },
-      "description": "Declared semantic capability tags (non-normative)."
+      }
     },
-    "stewardship_status": {
-      "type": "string",
-      "enum": [
-        "protocol_unanchored",
-        "alignment_pending",
-        "institutionally_reserved",
-        "transferred"
-      ],
-      "default": "alignment_pending",
-      "description": "Institutional status label used by the registry (non-commercial)."
-    },
-    "terminology_evolution": {
+    "coordination_role": {
       "type": "array",
-      "description": "Non-normative timeline documenting terminology drift for this primitive.",
-      "default": [],
+      "description": "Key coordination functions performed by this primitive.",
+      "minItems": 1,
       "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": ["term", "status"],
-        "properties": {
-          "term": { "type": "string", "minLength": 2 },
-          "status": { "type": "string", "enum": ["canonical", "alias", "deprecated"] },
-          "notes": { "type": "string", "maxLength": 280 },
-          "first_seen": { "type": "string", "format": "date" },
-          "last_seen": { "type": "string", "format": "date" }
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "protocol_grounding": {
+      "type": "array",
+      "description": "Primary protocol or research references grounding this primitive.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "naming": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ens",
+        "canonical",
+        "mismatch",
+        "notes"
+      ],
+      "properties": {
+        "ens": {
+          "type": "string",
+          "const": "epbs.eth"
+        },
+        "canonical": {
+          "type": "string",
+          "const": "enshrined proposer-builder separation (ePBS)"
+        },
+        "mismatch": {
+          "type": "boolean",
+          "const": false
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 3
         }
       }
     },
-    "last_reviewed": {
-      "type": "string",
-      "format": "date",
-      "default": "2026-03-05",
-      "description": "Last review date for this schema artefact (YYYY-MM-DD)."
-    },
-    "references": {
+    "sources": {
       "type": "array",
-      "minItems": 2,
-      "items": { "type": "string", "format": "uri" },
-      "default": [
-        "https://eips.ethereum.org/EIPS/eip-7732",
-        "https://ethresear.ch/t/epbs-design-constraints/18728"
-      ],
-      "description": "Primary-source references."
+      "description": "Primary source references for this anchor.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
     }
   }
 }
