@@ -6,9 +6,9 @@ Vortik is a semantic registry designed to map, structure, and stabilize terminol
 
 The system operates as a **semantic infrastructure layer**, positioned between:
 
-- protocol research
-- implementation
-- human interpretation
+- protocol research  
+- implementation  
+- human interpretation  
 
 It does not define protocol rules and does not introduce new primitives.
 
@@ -29,7 +29,7 @@ To establish a structured, machine-readable layer that captures:
 
 The registry focuses on identifying and structuring:
 
-- protocol primitives  
+- coordination primitives  
 - coordination roles  
 - pipeline stages  
 - technically grounded surfaces  
@@ -44,20 +44,18 @@ All entries must map to real or actively researched components within Ethereum.
 
 Location: `/registry.json`
 
-The registry is the canonical index of all tracked primitives and surfaces.
+The registry is a **lightweight index of semantic anchors**.
 
 Each entry includes:
 
-- ENS identifier  
-- canonical technical term  
-- classification  
-- coordination role  
-- pipeline position  
-- status  
-- schema reference  
-- anchor document  
+- identifier (id)  
+- ENS mapping  
+- reference to a versioned schema  
+- reference to a human-readable anchor document  
 
-The registry defines the **authoritative mapping layer** of the system.
+The registry does not encode full semantic descriptions.
+
+Instead, it acts as a **stable reference layer**, delegating detailed metadata to schemas.
 
 ---
 
@@ -67,11 +65,11 @@ Location: `/anchors/`
 
 Anchors are minimal human-readable representations of each tracked primitive or surface.
 
-Each anchor must:
+Each anchor:
 
-- describe a real coordination element  
-- position the concept within the pipeline  
-- clarify naming alignment vs canonical terminology  
+- describes a real coordination element  
+- positions the concept within the pipeline  
+- clarifies naming alignment vs canonical terminology  
 
 Anchors do not define the primitive.
 
@@ -81,7 +79,7 @@ They expose its **semantic interpretation layer**.
 
 ### 3. Schemas
 
-Location: `/schemas/{anchor}/`
+Location: `/schemas/{anchor}/{version}/schema.json`
 
 Schemas define the machine-readable structure of each primitive or surface.
 
@@ -91,17 +89,18 @@ They are:
 - explicit  
 - non-interpretative  
 
-Each schema specifies:
+Schemas may include:
 
-- identifier  
-- canonical naming  
-- semantic classification  
-- conceptual scope  
-- status  
+- canonical_term  
+- classification (core / valid / repairable / premature)  
+- pipeline_position  
+- coordination_role  
+- protocol_grounding  
+- related_terms  
 - references  
-- last reviewed  
+- last_reviewed  
 
-Schemas represent the **formal semantic layer** of the registry.
+Schemas represent the **semantic layer** of the registry.
 
 ---
 
@@ -109,14 +108,14 @@ Schemas represent the **formal semantic layer** of the registry.
 
 Located within each anchor directory.
 
-Sources are strictly tied to observable signals:
+Sources are tied to observable signals:
 
 - EIP specifications  
 - research discussions  
 - implementation references  
 - coordination mechanisms in development  
 
-Sources are used to validate semantic positioning, not to interpret it.
+Sources validate semantic positioning, not interpret it.
 
 ---
 
@@ -139,13 +138,18 @@ Purpose:
 Ethereum is modeled as a coordination pipeline:
 
 1. Order Flow  
-2. Visibility (mempool / encrypted propagation)  
-3. Builder Coordination  
-4. Inclusion  
-5. Execution  
-6. Finality  
+2. Order Flow Routing  
+3. Solver Coordination  
+4. Execution Coordination  
+5. Builder Coordination  
+6. Inclusion  
+7. Commitment Signaling  
+8. Preconfirmation  
+9. Finality  
 
-Each primitive or surface must map to one or more stages of this pipeline.
+Each primitive may map to one or more stages.
+
+The model is conceptual and does not represent a strict protocol specification.
 
 ---
 
@@ -160,7 +164,7 @@ over:
 
 → market abstractions  
 
-Market-related concepts are treated as secondary and only included when technically grounded.
+Market-related concepts are included only when technically grounded in coordination mechanisms.
 
 ---
 
@@ -168,8 +172,8 @@ Market-related concepts are treated as secondary and only included when technica
 
 - Canonical technical terminology overrides ENS naming  
 - Semantic precision is prioritized over readability  
-- Early terminology is tracked but not assumed stable  
-- Naming mismatches are explicitly classified and documented  
+- Early terminology is tracked without assuming stability  
+- Naming mismatches are explicitly classified  
 
 ---
 
@@ -177,12 +181,12 @@ Market-related concepts are treated as secondary and only included when technica
 
 Each entry is classified as:
 
-- **core** — aligned with protocol-level primitives  
-- **valid** — real surface, not canonically fixed  
-- **premature** — unstable or evolving terminology  
-- **speculative** — dependent on future protocol direction  
-- **repairable** — valid concept, misaligned naming  
-- **external** — tracked outside ENS ownership  
+- **core** — protocol-aligned primitive  
+- **valid** — real coordination surface, not canonical  
+- **repairable** — valid concept with naming misalignment  
+- **premature** — unstable or ambiguous terminology  
+
+Classification is applied at the schema level and may evolve over time.
 
 ---
 
