@@ -11,49 +11,49 @@
     {
       "id": "inclusionlist",
       "ens": "inclusionlist.eth",
-      "schema": "schemas/inclusionlist/1.0-draft/schema.json",
+      "schema": "schemas/inclusionlist/0.1-draft/schema.json",
       "doc": "anchors/inclusionlist.md"
     },
     {
       "id": "commitmentlayer",
       "ens": "commitmentlayer.eth",
-      "schema": "schemas/commitmentlayer/1.0-draft/schema.json",
+      "schema": "schemas/commitmentlayer/0.1-draft/schema.json",
       "doc": "anchors/commitmentlayer.md"
     },
     {
       "id": "preconflayer",
       "ens": "preconflayer.eth",
-      "schema": "schemas/preconflayer/1.0-draft/schema.json",
+      "schema": "schemas/preconflayer/0.1-draft/schema.json",
       "doc": "anchors/preconflayer.md"
     },
     {
       "id": "ssf",
       "ens": "fastfinality.eth",
-      "schema": "schemas/ssf/1.0-draft/schema.json",
+      "schema": "schemas/ssf/0.1-research/schema.json",
       "doc": "anchors/fastfinality.md"
     },
     {
       "id": "buildermarket",
       "ens": "buildermarket.eth",
-      "schema": "schemas/buildermarket/1.0-draft/schema.json",
+      "schema": "schemas/buildermarket/0.1-research/schema.json",
       "doc": "anchors/buildermarket.md"
     },
     {
       "id": "solverlayer",
       "ens": "solverlayer.eth",
-      "schema": "schemas/solverlayer/1.0-draft/schema.json",
+      "schema": "schemas/solverlayer/0.1-research/schema.json",
       "doc": "anchors/solverlayer.md"
     },
     {
       "id": "executionmarket",
       "ens": "executionmarket.eth",
-      "schema": "schemas/executionmarket/1.0-draft/schema.json",
+      "schema": "schemas/executionmarket/0.1-research/schema.json",
       "doc": "anchors/executionmarket.md"
     },
     {
       "id": "orderflowauction",
       "ens": "orderflowauction.eth",
-      "schema": "schemas/orderflowauction/1.0-draft/schema.json",
+      "schema": "schemas/orderflowauction/0.1-research/schema.json",
       "doc": "anchors/orderflowauction.md"
     }
   ]
