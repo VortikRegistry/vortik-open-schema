@@ -1,6 +1,6 @@
 {
   "registry": "vortik-semantic-registry",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Independent semantic registry tracking terminology stabilization across Ethereum coordination primitives and execution pipeline surfaces.",
   "anchors": [
     {
@@ -109,6 +109,7 @@
       "name": "PeerDAS",
       "canonical_term": "peer data availability sampling",
       "category": "primitive",
+      "coverage_status": "external",
       "status": "mainnet-relevant",
       "ens_status": "unowned",
       "desired_ens": "peerdas.eth",
@@ -119,6 +120,7 @@
       "name": "Blob Fee Market",
       "canonical_term": "blob fee market",
       "category": "market",
+      "coverage_status": "external",
       "status": "active",
       "ens_status": "unowned",
       "desired_ens": "blobfeemarket.eth",
@@ -129,6 +131,7 @@
       "name": "Cross-Chain Intents",
       "canonical_term": "cross-chain intents",
       "category": "standard",
+      "coverage_status": "external",
       "status": "active",
       "ens_status": "unowned",
       "desired_ens": null,
