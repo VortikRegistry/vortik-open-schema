@@ -1,14 +1,14 @@
 {
   "registry": "vortik-semantic-registry",
-  "version": "0.4.2",
-  "description": "Independent registry tracking semantic stabilization across emerging Ethereum coordination primitives, mechanisms, markets, and critical external infrastructure concepts.",
+  "version": "0.5.0",
+  "description": "Independent semantic registry tracking terminology stabilization across Ethereum coordination primitives and execution pipeline surfaces.",
   "anchors": [
     {
       "id": "epbs",
       "ens": "epbs.eth",
       "status": "draft-eip",
       "type": "primitive",
-      "role": "block construction separation and auction mechanism",
+      "role": "block construction separation and proposer-builder auction mechanism",
       "classification": "core",
       "canonical_term": "enshrined proposer-builder separation (ePBS)",
       "schema": "schemas/epbs/1.0-draft/schema.json",
@@ -19,7 +19,7 @@
       "ens": "inclusionlist.eth",
       "status": "draft-eip",
       "type": "mechanism",
-      "role": "enforcement of transaction inclusion (FOCIL)",
+      "role": "fork-choice enforced transaction inclusion",
       "classification": "core",
       "canonical_term": "fork-choice enforced inclusion lists (FOCIL)",
       "schema": "schemas/inclusionlist/0.1-draft/schema.json",
@@ -32,7 +32,7 @@
       "type": "mechanism",
       "role": "commitment signaling for preconfirmation coordination",
       "classification": "repairable",
-      "canonical_term": "commitment signaling / preconfirmation commitments",
+      "canonical_term": "preconfirmation commitment signaling",
       "schema": "schemas/commitmentlayer/0.1-draft/schema.json",
       "anchor_doc": "anchors/commitmentlayer.md"
     },
@@ -53,7 +53,7 @@
       "status": "research",
       "type": "primitive",
       "role": "finality mechanism targeting single-slot confirmation",
-      "classification": "repairable",
+      "classification": "valid",
       "canonical_term": "single-slot finality (SSF)",
       "schema": "schemas/ssf/0.1-research/schema.json",
       "anchor_doc": "anchors/fastfinality.md"
@@ -62,7 +62,7 @@
       "id": "buildermarket",
       "ens": "buildermarket.eth",
       "status": "research",
-      "type": "market",
+      "type": "coordination_surface",
       "role": "competition and coordination between block builders",
       "classification": "valid",
       "canonical_term": "builder markets",
@@ -73,8 +73,8 @@
       "id": "solverlayer",
       "ens": "solverlayer.eth",
       "status": "research",
-      "type": "market",
-      "role": "coordination of solver networks within execution systems",
+      "type": "coordination_surface",
+      "role": "solver-based execution coordination and routing",
       "classification": "repairable",
       "canonical_term": "solver networks",
       "schema": "schemas/solverlayer/0.1-research/schema.json",
@@ -84,8 +84,8 @@
       "id": "executionmarket",
       "ens": "executionmarket.eth",
       "status": "research",
-      "type": "market",
-      "role": "emerging execution coordination surface between routing and block construction",
+      "type": "coordination_surface",
+      "role": "ambiguous execution coordination layer between routing and block construction",
       "classification": "premature",
       "canonical_term": "execution coordination (ambiguous term)",
       "schema": "schemas/executionmarket/0.1-research/schema.json",
@@ -95,7 +95,7 @@
       "id": "orderflowauction",
       "ens": "orderflowauction.eth",
       "status": "research",
-      "type": "market",
+      "type": "coordination_surface",
       "role": "auction-based routing of transaction order flow",
       "classification": "valid",
       "canonical_term": "order flow auctions (OFA)",
@@ -106,45 +106,30 @@
   "external_primitives": [
     {
       "id": "peerdas",
-      "name": "PeerDAS",
-      "canonical_term": "Peer Data Availability Sampling",
+      "canonical_term": "peer data availability sampling",
       "category": "primitive",
-      "abstraction_level": "data availability",
-      "coverage_status": "external",
+      "status": "mainnet-relevant",
       "ens_status": "unowned",
       "desired_ens": "peerdas.eth",
-      "status": "mainnet_relevant",
-      "term_risk": "low",
-      "summary": "Peer-to-peer data availability sampling mechanism enabling scalable blob verification without full data download.",
-      "naming_note": "Canonical research term. ENS not owned."
+      "summary": "Peer-to-peer data availability sampling mechanism enabling scalable blob verification without full data download."
     },
     {
       "id": "blobfeemarket",
-      "name": "Blob Fee Market",
       "canonical_term": "blob fee market",
-      "category": "market",
-      "abstraction_level": "blob economics",
-      "coverage_status": "external",
+      "category": "coordination_surface",
+      "status": "emerging",
       "ens_status": "unowned",
       "desired_ens": "blobfeemarket.eth",
-      "status": "emerging",
-      "term_risk": "medium",
-      "summary": "Economic layer governing blob fee pricing and blob resource allocation.",
-      "naming_note": "Critical missing market family in the current registry."
+      "summary": "Economic coordination layer governing blob fee pricing and allocation."
     },
     {
       "id": "crosschainintents",
-      "name": "Cross-Chain Intents",
       "canonical_term": "cross-chain intents",
       "category": "standard",
-      "abstraction_level": "interop coordination",
-      "coverage_status": "external",
+      "status": "active",
       "ens_status": "unowned",
       "desired_ens": null,
-      "status": "active",
-      "term_risk": "medium",
-      "summary": "Standardized intent-based coordination across chains and rollups.",
-      "naming_note": "Important interop surface not currently represented in owned ENS anchors."
+      "summary": "Intent-based coordination mechanisms across chains and rollups."
     }
   ]
 }
