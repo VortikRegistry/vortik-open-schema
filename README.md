@@ -1,6 +1,6 @@
 # Vortik Semantic Registry
 
-Independent research registry tracking semantic stabilization across Ethereum coordination primitives.
+Independent semantic registry mapping terminology stabilization across Ethereum coordination primitives and execution pipeline surfaces.
 
 🌐 Registry site:  
 https://vortikregistry.github.io/vortik-open-schema/
@@ -9,30 +9,30 @@ https://vortikregistry.github.io/vortik-open-schema/
 
 ## Overview
 
-The Vortik Semantic Registry documents how terminology evolves across Ethereum’s execution and consensus pipeline.
+The Vortik Semantic Registry documents how coordination terminology stabilizes across Ethereum’s execution and consensus architecture.
 
-Rather than defining protocol rules, the registry focuses on:
+Rather than defining protocol rules, the registry:
 
-- identifying coordination primitives  
-- tracking naming convergence  
-- mapping concepts to their position in the execution pipeline  
+- maps coordination primitives and surfaces  
+- tracks naming convergence across research and implementation  
+- positions each concept within the execution pipeline  
 
-The goal is to provide a consistent semantic reference layer across research, infrastructure and protocol discussions.
+Its purpose is to provide a **consistent semantic reference layer** across protocol research, infrastructure, and coordination discussions.
 
 ---
 
 ## Core Anchors
 
-| Anchor | Primitive Surface | Classification |
+| Anchor | Canonical Surface | Classification |
 |--------|------------------|---------------|
 | `epbs.eth` | Enshrined Proposer-Builder Separation (EIP-7732) | core |
-| `inclusionlist.eth` | Inclusion enforcement / FOCIL (EIP-7805) | core |
-| `commitmentlayer.eth` | Commitment signaling coordination | repairable |
-| `preconflayer.eth` | Preconfirmation coordination networks | repairable |
-| `fastfinality.eth` | Single Slot Finality (SSF) | repairable |
-| `buildermarket.eth` | Builder coordination environments | valid |
-| `solverlayer.eth` | Solver-based execution coordination | repairable |
-| `orderflowauction.eth` | Order flow auction routing systems | valid |
+| `inclusionlist.eth` | Fork-choice enforced inclusion (FOCIL) | core |
+| `commitmentlayer.eth` | Preconfirmation commitment signaling | repairable |
+| `preconflayer.eth` | Preconfirmation systems | repairable |
+| `fastfinality.eth` | Single Slot Finality (SSF) | valid |
+| `buildermarket.eth` | Builder coordination (builder markets) | valid |
+| `solverlayer.eth` | Solver networks | repairable |
+| `orderflowauction.eth` | Order flow auctions (OFA) | valid |
 | `executionmarket.eth` | Execution coordination (ambiguous term) | premature |
 
 ---
@@ -45,7 +45,7 @@ Order Flow Auctions
 ↓  
 Solver Coordination  
 ↓  
-Execution Coordination (ambiguous term)  
+Execution Coordination (ambiguous surface)  
 ↓  
 Builder Coordination  
 ↓  
@@ -63,7 +63,7 @@ Finality (SSF)
 
 ## ENS Anchor Model
 
-The registry uses ENS identifiers as semantic anchors for coordination primitives.
+The registry uses ENS identifiers as **semantic anchors** for coordination primitives.
 
 Each anchor connects four layers:
 
@@ -77,8 +77,8 @@ human-readable anchor
 
 This architecture separates:
 
-- stable conceptual naming (ENS)  
-- evolving research metadata (schemas + registry)
+- stable naming surfaces (ENS)  
+- evolving semantic structure (registry + schemas)
 
 ---
 
@@ -86,15 +86,15 @@ This architecture separates:
 
 The registry follows a semantic-first approach:
 
-- terminology is tracked before standardization  
-- primitives are classified by stability and protocol grounding  
-- ambiguous terms are explicitly marked and not prematurely canonized  
+- terminology is tracked before formal standardization  
+- primitives are classified by protocol grounding and stability  
+- ambiguous terminology is explicitly marked and not canonized prematurely  
 
-Each primitive is documented through:
+Each surface is documented through:
 
 - structured JSON schemas  
-- source mapping (EIPs, research threads)  
-- terminology surfaces  
+- protocol references (EIPs, research threads)  
+- canonical terminology mapping  
 
 ---
 
@@ -109,13 +109,13 @@ Schemas describe coordination surfaces using:
 - protocol_grounding  
 - naming (ENS mapping)  
 
-This enables consistent comparison across layers of the Ethereum stack.
+This enables consistent comparison across layers of the Ethereum coordination stack.
 
 ---
 
 ## Scope
 
-The registry tracks coordination primitives emerging from:
+The registry tracks coordination surfaces emerging from:
 
 - proposer-builder separation (ePBS)  
 - inclusion enforcement (FOCIL)  
@@ -125,7 +125,7 @@ The registry tracks coordination primitives emerging from:
 - order flow auctions  
 - finality research (SSF)  
 
-It does not aim to:
+It does not:
 
 - define protocol specifications  
 - replace EIPs  
@@ -148,17 +148,17 @@ Supporting artifacts:
 
 ## Status (March 2026)
 
-Most tracked primitives remain under active research.
+Most coordination surfaces tracked remain under active research.
 
-Terminology across coordination layers is still evolving and has not yet fully stabilized.
+Terminology across execution and coordination layers is still evolving and not yet fully stabilized.
 
 ---
 
 ## Notes
 
-- Independent research work  
+- Independent research artifact  
 - Not affiliated with Ethereum Foundation  
-- Terminology may evolve  
+- Terminology and classifications may evolve  
 
 ---
 
