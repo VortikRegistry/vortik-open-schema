@@ -1,6 +1,6 @@
 {
   "registry": "vortik-semantic-registry",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Independent semantic registry tracking terminology stabilization across Ethereum coordination primitives and execution pipeline surfaces.",
   "anchors": [
     {
@@ -62,7 +62,7 @@
       "id": "buildermarket",
       "ens": "buildermarket.eth",
       "status": "research",
-      "type": "coordination_surface",
+      "type": "market",
       "role": "competition and coordination between block builders",
       "classification": "valid",
       "canonical_term": "builder markets",
@@ -73,7 +73,7 @@
       "id": "solverlayer",
       "ens": "solverlayer.eth",
       "status": "research",
-      "type": "coordination_surface",
+      "type": "market",
       "role": "solver-based execution coordination and routing",
       "classification": "repairable",
       "canonical_term": "solver networks",
@@ -84,7 +84,7 @@
       "id": "executionmarket",
       "ens": "executionmarket.eth",
       "status": "research",
-      "type": "coordination_surface",
+      "type": "market",
       "role": "ambiguous execution coordination layer between routing and block construction",
       "classification": "premature",
       "canonical_term": "execution coordination (ambiguous term)",
@@ -95,7 +95,7 @@
       "id": "orderflowauction",
       "ens": "orderflowauction.eth",
       "status": "research",
-      "type": "coordination_surface",
+      "type": "market",
       "role": "auction-based routing of transaction order flow",
       "classification": "valid",
       "canonical_term": "order flow auctions (OFA)",
@@ -116,8 +116,8 @@
     {
       "id": "blobfeemarket",
       "canonical_term": "blob fee market",
-      "category": "coordination_surface",
-      "status": "emerging",
+      "category": "market",
+      "status": "active",
       "ens_status": "unowned",
       "desired_ens": "blobfeemarket.eth",
       "summary": "Economic coordination layer governing blob fee pricing and allocation."
