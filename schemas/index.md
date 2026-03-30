@@ -2,7 +2,7 @@
 
 This directory contains machine-readable semantic schemas for coordination primitives tracked by the Vortik Semantic Registry.
 
-Schemas define minimal, structured representations of emerging terminology across Ethereum’s execution and consensus pipeline.
+Schemas define minimal, structured representations of terminology across Ethereum’s execution and consensus pipeline.
 
 They are designed to track **semantic stabilization**, not to define protocol specifications.
 
@@ -31,7 +31,7 @@ Schemas are versioned and located under:
 Each schema captures a coordination surface using a consistent structure:
 
 - **canonical_term** → normalized terminology used by the registry  
-- **classification** → core / emerging / adjacent / premature  
+- **classification** → core / valid / repairable / premature  
 - **pipeline_position** → where the surface sits in the execution pipeline  
 - **coordination_role** → what function it performs  
 - **protocol_grounding** → links to EIPs or research threads  
@@ -40,7 +40,7 @@ Each schema captures a coordination surface using a consistent structure:
 This model allows the registry to distinguish between:
 
 - canonical protocol primitives  
-- emerging coordination layers  
+- coordination surfaces under active research  
 - ambiguous or unstable terminology  
 
 ---
