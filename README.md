@@ -26,13 +26,13 @@ The goal is to provide a consistent semantic reference layer across research, in
 | Anchor | Primitive Surface | Classification |
 |--------|------------------|---------------|
 | `epbs.eth` | Enshrined Proposer-Builder Separation (EIP-7732) | core |
-| `inclusionlist.eth` | Inclusion enforcement / FOCIL (EIP-7805) | emerging |
-| `commitmentlayer.eth` | Commitment signaling coordination | emerging |
-| `preconflayer.eth` | Preconfirmation coordination networks | emerging |
-| `fastfinality.eth` | Single Slot Finality (SSF) | emerging |
-| `buildermarket.eth` | Builder coordination environments | adjacent |
-| `solverlayer.eth` | Solver-based execution coordination | adjacent |
-| `orderflowauction.eth` | Order flow auction routing systems | adjacent |
+| `inclusionlist.eth` | Inclusion enforcement / FOCIL (EIP-7805) | core |
+| `commitmentlayer.eth` | Commitment signaling coordination | repairable |
+| `preconflayer.eth` | Preconfirmation coordination networks | repairable |
+| `fastfinality.eth` | Single Slot Finality (SSF) | repairable |
+| `buildermarket.eth` | Builder coordination environments | valid |
+| `solverlayer.eth` | Solver-based execution coordination | repairable |
+| `orderflowauction.eth` | Order flow auction routing systems | valid |
 | `executionmarket.eth` | Execution coordination (ambiguous term) | premature |
 
 ---
@@ -103,7 +103,7 @@ Each primitive is documented through:
 Schemas describe coordination surfaces using:
 
 - canonical_term  
-- classification (core / emerging / adjacent / premature)  
+- classification (core / valid / repairable / premature)  
 - pipeline_position  
 - coordination_role  
 - protocol_grounding  
