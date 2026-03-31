@@ -61,6 +61,28 @@ Finality (SSF)
 
 ---
 
+## Coordination Stack
+
+Ethereum is increasingly understood as a coordination system rather than only an execution engine.
+
+This repository maps how coordination is becoming explicit across the stack:
+
+Order Flow  
+→ Order Flow Auctions  
+→ Solver Networks  
+→ Builder Coordination  
+→ Inclusion  
+→ Commitments  
+→ Preconfirmations  
+→ Finality  
+
+Explore the structured map:
+
+→ [`maps/coordination-stack.json`](maps/coordination-stack.json)  
+→ [`maps/README.md`](maps/README.md)
+
+---
+
 ## ENS Anchor Model
 
 The registry uses ENS identifiers as **semantic anchors** for coordination primitives.
