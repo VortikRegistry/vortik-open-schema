@@ -1,1 +1,54 @@
-
+{
+  "name": "ethereum-coordination-stack",
+  "version": "0.1",
+  "layers": [
+    {
+      "id": "orderflow",
+      "label": "Order Flow",
+      "description": "Transaction intent generation and routing",
+      "related_anchors": ["orderflowauction.eth"]
+    },
+    {
+      "id": "ofa",
+      "label": "Order Flow Auctions",
+      "description": "Auction-based routing of order flow",
+      "related_anchors": ["orderflowauction.eth"]
+    },
+    {
+      "id": "solver",
+      "label": "Solver Networks",
+      "description": "Intent solving and execution optimization",
+      "related_anchors": ["solverlayer.eth"]
+    },
+    {
+      "id": "builder",
+      "label": "Builder Coordination",
+      "description": "Block construction and ordering markets",
+      "related_anchors": ["buildermarket.eth"]
+    },
+    {
+      "id": "inclusion",
+      "label": "Inclusion",
+      "description": "Censorship resistance and enforcement",
+      "related_anchors": ["inclusionlist.eth"]
+    },
+    {
+      "id": "commitment",
+      "label": "Commitments",
+      "description": "Preconfirmation signaling and coordination",
+      "related_anchors": ["commitmentlayer.eth"]
+    },
+    {
+      "id": "preconfirmations",
+      "label": "Preconfirmations",
+      "description": "Latency-sensitive execution assurances",
+      "related_anchors": ["preconflayer.eth"]
+    },
+    {
+      "id": "finality",
+      "label": "Finality",
+      "description": "Consensus settlement and final state",
+      "related_anchors": ["fastfinality.eth"]
+    }
+  ]
+}
