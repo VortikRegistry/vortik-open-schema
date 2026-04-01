@@ -30,7 +30,7 @@
     {
       "id": "commitmentlayer",
       "ens": "commitmentlayer.eth",
-      "canonical_term": "preconfirmation commitment signaling",
+      "canonical_term": "commitment signaling / preconfirmation commitments",
       "classification": "repairable",
       "status": "research",
       "type": "mechanism",
@@ -53,7 +53,7 @@
       "id": "ssf",
       "ens": "fastfinality.eth",
       "canonical_term": "single-slot finality (SSF)",
-      "classification": "valid",
+      "classification": "repairable",
       "status": "research",
       "type": "primitive",
       "role": "finality mechanism targeting single-slot confirmation",
