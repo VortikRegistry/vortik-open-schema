@@ -2,7 +2,7 @@
 
 This directory contains the human-readable layer of the **Vortik Semantic Registry**.
 
-Each file corresponds to a semantic anchor representing a **protocol primitive, coordination mechanism, structural role, or technically grounded research surface** within Ethereum’s evolving coordination architecture.
+Each file corresponds to a semantic anchor representing a **protocol primitive, coordination mechanism, market-adjacent structure, or technically grounded research surface** within Ethereum’s evolving architecture.
 
 ---
 
@@ -33,11 +33,11 @@ When mismatches exist, they are explicitly documented and classified.
 
 ## Anchor Scope
 
-Anchors correspond to real surfaces within Ethereum’s coordination pipeline, including:
+Anchors correspond to real surfaces discussed across Ethereum research, infrastructure, and implementation, including:
 
 - proposer-builder separation (ePBS)
 - inclusion enforcement (FOCIL)
-- proposer commitments
+- commitment signaling
 - preconfirmation systems
 - builder competition
 - solver networks
@@ -47,7 +47,7 @@ Anchors correspond to real surfaces within Ethereum’s coordination pipeline, i
 Each anchor must map to:
 
 - a real protocol primitive
-- a coordination role
+- a market or coordination structure
 - or a technically grounded research surface
 
 ---
@@ -60,18 +60,18 @@ The following anchors are currently tracked:
 - `epbs.eth` — Enshrined Proposer-Builder Separation
 - `inclusionlist.eth` — Inclusion Lists / FOCIL
 
-### Valid (real but non-canonical surfaces)
+### Valid (real but non-canonical or non-enshrined surfaces)
 - `buildermarket.eth` — Builder markets
 - `orderflowauction.eth` — Order Flow Auctions (OFA)
+- `fastfinality.eth` — Single Slot Finality (SSF)
 
-### Premature (unstable or evolving terminology)
+### Repairable (valid concept, naming mismatch or imperfect fit)
 - `commitmentlayer.eth` — Commitment signaling / preconfirmation commitments
 - `preconflayer.eth` — Preconfirmation systems
-- `executionmarket.eth` — Execution coordination surface (ambiguous term)
-
-### Repairable (valid concept, naming mismatch)
-- `fastfinality.eth` — Single-Slot Finality (SSF)
 - `solverlayer.eth` — Solver networks
+
+### Premature (unstable or ambiguous terminology)
+- `executionmarket.eth` — Execution coordination surface (ambiguous term)
 
 ---
 
@@ -121,18 +121,31 @@ Structured, versioned, machine-readable definitions.
 
 ---
 
-## Conceptual Model
+## Semantic Interpretation
 
-Ethereum is interpreted as a coordination pipeline:
+The registry may group anchors into recurring semantic clusters such as:
 
 1. Order Flow
-2. Visibility
+2. Routing / Auctions
 3. Builder Coordination
 4. Inclusion
-5. Execution
+5. Commitments / Preconfirmations
 6. Finality
 
-Each anchor maps to one or more stages of this pipeline.
+This grouping is interpretive.
+
+It does **not** imply a strict protocol architecture or a canonical execution sequence.
+
+---
+
+## Relation to Research Layer
+
+Some anchors also relate to the structural interpretation developed in:
+
+- `docs/security-hourglass/`
+
+That document should be read as a research layer complementing the registry,
+not as a replacement for protocol definitions.
 
 ---
 
