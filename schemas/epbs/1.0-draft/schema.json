@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/epbs/1.0-draft/schema.json",
   "title": "Vortik Open Schema — Enshrined Proposer-Builder Separation (ePBS)",
-  "description": "Machine-readable schema for the ePBS semantic anchor within the Vortik Semantic Registry. Research artefact; not an official protocol specification.",
+  "description": "Machine-readable schema for the ePBS semantic anchor within the Vortik Semantic Registry. Research artifact; not an official protocol specification.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -57,7 +57,7 @@
     },
     "pipeline_position": {
       "type": "array",
-      "description": "Pipeline stages where this primitive is most relevant.",
+      "description": "Interpretive position of this primitive within the coordination pipeline.",
       "minItems": 1,
       "items": {
         "type": "string",
