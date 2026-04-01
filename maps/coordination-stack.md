@@ -1,14 +1,12 @@
-# Ethereum Coordination Stack (Strawmap Era)
+# Coordination Stack (Semantic Interpretation)
 
-This document outlines the conceptual coordination layers referenced by the Vortik Semantic Registry.
+This document represents a semantic interpretation of how coordination-related concepts are commonly structured across Ethereum.
 
-The stack reflects terminology across Ethereum protocol research and execution infrastructure during the Strawmap era.
-
-It is not intended as a strict architectural specification, but rather as a conceptual map of coordination surfaces across the Ethereum transaction supply chain.
+It does not describe a canonical or enforced protocol architecture.
 
 ---
 
-## Coordination Stack
+## Conceptual Flow
 
 Order Flow  
 ↓  
@@ -16,50 +14,61 @@ Order Flow Auctions
 ↓  
 Solver Networks  
 ↓  
-Execution Coordination Surfaces  
+Builder Coordination  
 ↓  
-Builder Markets  
+Inclusion  
 ↓  
-ePBS (Proposer-Builder Separation)  
+Commitments  
 ↓  
-Inclusion Lists (FOCIL)  
+Preconfirmations  
 ↓  
-Commitment Layer  
-↓  
-Preconfirmation Layer  
-↓  
-Single Slot Finality (SSF)
+Finality  
 
 ---
 
-## Layer Overview
+## Interpretation
 
-### Order Flow
-User transactions originate from wallets, applications and routing systems.
+This sequence reflects how terminology is often grouped in research discussions, infrastructure design, and ecosystem narratives.
 
-### Order Flow Auctions
-Order flow auctions route transaction flow among competing execution participants.
+It should not be interpreted as:
 
-### Solver Networks
-Solvers compete to determine optimal execution outcomes, often within intent-based architectures.
+- a strict execution pipeline  
+- a protocol-enforced sequence  
+- or a deterministic architecture  
 
-### Execution Coordination Surfaces
-Execution coordination surfaces describe environments where routing, liquidity access and transaction execution strategies are coordinated across participants. Terminology in this area remains fluid across research discussions.
+Instead, it is a **semantic clustering of coordination surfaces**.
 
-### Builder Markets
-Builders compete to construct blocks and produce payloads for proposers.
+---
 
-### ePBS
-Enshrined proposer-builder separation formalizes the builder market at the protocol level.
+## Why this exists
 
-### Inclusion Lists (FOCIL)
-Inclusion lists introduce censorship-resistance constraints during block construction.
+Across Ethereum research and infrastructure:
 
-### Commitment Layer
-Commitment systems enable proposer signaling and coordination mechanisms prior to block publication.
+- similar concepts are repeatedly grouped  
+- terminology begins to stabilize  
+- surfaces become easier to compare  
 
-### Preconfirmation Layer
-Preconfirmations reduce latency by providing early transaction guarantees derived from commitment mechanisms.
+This document captures that convergence.
 
-### Single Slot Finality
-Single Slot Finality (SSF) represents a potential evolution of Ethereum consensus toward near-instant finality.
+---
+
+## Limits
+
+This model:
+
+- does not define protocol behavior  
+- does not imply ordering guarantees  
+- does not represent consensus rules  
+
+It is descriptive, not prescriptive.
+
+---
+
+## Relation to Vortik
+
+Each layer corresponds to semantic anchors tracked in the registry.
+
+See:
+
+- `coordination-stack.json`
+- `../anchors/`
