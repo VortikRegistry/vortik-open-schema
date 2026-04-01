@@ -1,9 +1,10 @@
-
 # Coordination Stack Map
 
-Ethereum is evolving from an execution engine into a coordination system.
+This map is a semantic abstraction used by the Vortik Semantic Registry.
 
-This map represents how coordination layers are becoming explicit across the stack.
+It does not describe a strict protocol architecture.
+
+Instead, it summarizes how terminology clusters across Ethereum research and execution infrastructure.
 
 ---
 
@@ -29,34 +30,29 @@ Finality
 
 ## What this shows
 
-What used to be implicit mechanisms in Ethereum are now emerging as explicit coordination surfaces.
+This map illustrates how coordination-related terminology is increasingly grouped into recurring semantic surfaces.
 
-Each layer represents a distinct stage in how transactions are:
+It is not a claim that Ethereum operates as a single linear stack.
 
-- created  
-- routed  
-- solved  
-- ordered  
-- included  
-- confirmed  
-- finalized  
+It is a semantic observation of how concepts are being named, discussed, and connected across the ecosystem.
 
 ---
 
 ## Why it matters
 
-Understanding Ethereum as a coordination stack changes how we:
+As terminology converges:
 
-- interpret protocol design  
-- analyze infrastructure  
-- reason about execution and inclusion  
-- map terminology across research and implementations  
+- interpretation becomes easier  
+- semantic fragmentation decreases  
+- naming becomes more structurally relevant  
+
+This helps researchers, infrastructure teams, and observers compare surfaces across research and implementation.
 
 ---
 
 ## Relation to Vortik
 
-Each layer in this stack is linked to semantic anchors in the Vortik registry.
+Each layer in this map relates to semantic anchors tracked in the Vortik registry.
 
 See:
 
