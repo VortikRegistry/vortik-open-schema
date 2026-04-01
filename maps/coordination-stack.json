@@ -1,6 +1,7 @@
 {
-  "name": "ethereum-coordination-stack",
-  "version": "0.1",
+  "name": "coordination-stack-semantic-map",
+  "version": "0.2",
+  "description": "Semantic abstraction of coordination-related terminology across Ethereum. This does not represent a canonical protocol architecture.",
   "layers": [
     {
       "id": "orderflow",
@@ -29,7 +30,7 @@
     {
       "id": "inclusion",
       "label": "Inclusion",
-      "description": "Censorship resistance and enforcement",
+      "description": "Censorship resistance and inclusion constraints",
       "related_anchors": ["inclusionlist.eth"]
     },
     {
