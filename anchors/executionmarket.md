@@ -1,18 +1,18 @@
-# Execution Coordination Markets
+# Execution Coordination
 
 **Associated ENS:** `executionmarket.eth`  
-**Canonical term:** Execution Coordination (Experimental)  
+**Canonical term:** execution coordination  
 **Registry ID:** `executionmarket`  
 **Status:** Research  
-**Classification:** Experimental
+**Classification:** Premature  
 
 ---
 
 ## Summary
 
-This anchor tracks **execution coordination markets** as an emerging and non-stabilized conceptual surface within Ethereum’s execution pipeline.
+This anchor tracks **execution coordination** as an emerging and non-stabilized conceptual surface within Ethereum’s execution pipeline.
 
-The term does not currently represent a canonical primitive and is classified as experimental.
+The term does not currently represent a canonical primitive and is classified as premature.
 
 It may not consolidate into a standalone category and could instead dissolve into adjacent coordination surfaces as terminology evolves.
 
@@ -34,13 +34,13 @@ This surface overlaps with:
 
 - order flow auctions  
 - solver networks  
-- builder markets  
+- builder coordination  
 
 ---
 
 ## Pipeline Position
 
-Order Flow → Solver Coordination → Execution Coordination → Builder Markets
+Order Flow → Solver Coordination → Execution Coordination → Block Construction
 
 ---
 
@@ -58,7 +58,7 @@ However, its boundaries are not clearly defined and may collapse into adjacent p
 
 ## Protocol Grounding
 
-There is no formal protocol specification for execution markets.
+There is no formal protocol specification for execution coordination.
 
 The concept is derived from:
 
@@ -70,9 +70,9 @@ The concept is derived from:
 
 ## Semantic Note
 
-Execution coordination markets should not be interpreted as a defined protocol layer or stable architectural component.
+Execution coordination should not be interpreted as a defined protocol layer or stable architectural component.
 
-They represent a provisional abstraction used to describe interactions between order flow, solvers, and execution strategy formation.
+It represents a provisional abstraction used to describe interactions between order flow, solvers, and execution strategy formation.
 
 The concept may fragment or disappear as clearer primitives (such as solver networks or order flow auctions) stabilize.
 
@@ -81,19 +81,19 @@ The concept may fragment or disappear as clearer primitives (such as solver netw
 ## Naming Alignment
 
 - **ENS anchor:** `executionmarket.eth`  
-- **Canonical term:** Not stabilized  
+- **Canonical term:** execution coordination  
 
-The term "execution market" is not canonical and remains under exploration.
+The ENS naming suggests a market structure that is not semantically stabilized.
 
-This entry is classified as **experimental**.
+This entry is classified as **premature** due to lack of canonical definition.
 
 ---
 
 ## Registry Role
 
 - Track emergence of execution coordination terminology  
-- Observe whether "execution markets" stabilizes or dissolves  
-- Map relationships between solver networks and builder markets  
+- Observe whether this surface stabilizes or dissolves  
+- Map relationships between solver networks and block construction  
 - Prevent premature semantic solidification  
 
 ---
