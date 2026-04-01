@@ -1,38 +1,33 @@
 # Vortik Semantic Registry
 
+📄 **Canonical Registry Document (PDF)**  
+A structured overview of the registry, coordination primitives, and semantic anchoring.
+
+→ [Download PDF](docs/vortik-semantic-registry.pdf)
+
+---
+
 Independent machine-readable registry tracking terminology convergence and semantic stabilization across Ethereum coordination primitives and coordination surfaces.
 
-The registry maps emerging protocol terminology to stable ENS-based semantic anchors and versioned schema artifacts.
+The registry maps conceptual primitives discussed in Ethereum research to stable ENS identifiers and versioned schemas.
 
 ---
 
 ## Why this registry exists
 
-Terminology in Ethereum research tends to stabilize before formal standardization.
+Terminology in Ethereum research often stabilizes before formal standardization.
 
-Different teams often refer to similar coordination mechanisms using divergent terms, leading to semantic fragmentation across research threads.
+Different teams may refer to similar coordination mechanisms using different terms, creating fragmentation across discussions.
 
 The Vortik Semantic Registry exists to:
 
-- track terminology convergence across Ethereum research discussions  
-- provide stable semantic anchors via ENS identifiers  
+- track terminology convergence across research threads  
+- provide stable semantic anchors through ENS identifiers  
 - enable machine-readable referencing of coordination primitives  
 
-This registry does not define protocol standards.
+This registry does not define standards.
 
 It documents how terminology stabilizes across the Ethereum research ecosystem.
-
----
-
-## Registry structure
-
-Each anchor consists of:
-
-- an ENS identifier (semantic anchor)  
-- a versioned JSON schema (machine-readable definition)  
-- a human-readable anchor document  
-
-The registry is designed as a lightweight semantic layer, not an implementation layer.
 
 ---
 
@@ -41,11 +36,11 @@ The registry is designed as a lightweight semantic layer, not an implementation 
 - [Anchors](anchors/)
 - [Schemas](schemas/)
 - [Registry index (registry.json)](registry.json)
-- [Repository](https://github.com/VortikRegistry/vortik-open-schema)
+- [Repository on GitHub](https://github.com/VortikRegistry/vortik-open-schema)
 
 ---
 
-## Core Coordination Anchors
+## Core Anchors
 
 - [epbs.eth](anchors/epbs.md) — Enshrined Proposer-Builder Separation (EIP-7732)  
 - [inclusionlist.eth](anchors/inclusionlist.md) — Inclusion enforcement (FOCIL / EIP-7805)  
@@ -55,34 +50,17 @@ The registry is designed as a lightweight semantic layer, not an implementation 
 
 ---
 
-## Execution & Coordination Infrastructure
+## Execution Infrastructure Anchors
 
 - [buildermarket.eth](anchors/buildermarket.md) — block builder market structures  
 - [solverlayer.eth](anchors/solverlayer.md) — intent solver coordination networks  
-- [executionmarket.eth](anchors/executionmarket.md) — execution coordination surfaces  
+- [executionmarket.eth](anchors/executionmarket.md) — execution coordination surface  
 
 ---
 
 ## Order Flow Layer
 
 - [orderflowauction.eth](anchors/orderflowauction.md) — order flow auction routing infrastructure  
-
----
-
-## Registry scope
-
-The registry focuses on:
-
-- coordination primitives  
-- execution pipeline components  
-- emerging research terminology  
-- semantic stabilization signals  
-
-It intentionally excludes:
-
-- finalized standards specifications  
-- implementation-specific logic  
-- non-coordination-related concepts  
 
 ---
 
