@@ -4,7 +4,7 @@
 **Canonical term:** Builder Markets  
 **Registry ID:** `buildermarket`  
 **Status:** Research  
-**Classification:** Semi-stable
+**Classification:** valid  
 
 ---
 
@@ -18,7 +18,7 @@ While not a formal protocol primitive, builder markets are a well-established co
 
 ## Context
 
-Ethereum block production involves a multi-stage coordination pipeline including:
+Ethereum block production involves multiple interacting surfaces including:
 
 - order flow routing  
 - solver participation  
@@ -31,9 +31,17 @@ They represent the competitive environment in which block builders construct exe
 
 ---
 
-## Pipeline Position
+## Semantic Position
 
-Execution Coordination → Builder Markets → ePBS
+This surface is typically associated with builder coordination and block construction.
+
+It may be grouped with adjacent surfaces such as:
+
+- solver networks  
+- order flow auctions  
+- proposer-builder interfaces  
+
+This positioning is interpretive and does not imply a strict protocol sequence.
 
 ---
 
@@ -74,13 +82,26 @@ The term is widely used across research and ecosystem discussions, though not fo
 - Track semantic stabilization of builder market terminology  
 - Document the role of builders in block construction  
 - Distinguish builder coordination from solver and execution layers  
-- Map builder participation within Ethereum’s coordination pipeline  
+- Map builder participation across coordination surfaces  
 
 ---
 
 ## Status
 
 Research-aligned surface with strong ecosystem adoption.
+
+---
+
+## Registry Context
+
+This anchor represents builder coordination and market-based block construction.
+
+It is tracked as a valid coordination surface and may be interpreted within broader structural models of execution and coordination dynamics.
+
+See:
+- `docs/security-hourglass/`
+
+These interpretations reflect observed ecosystem behavior and are not protocol-level definitions.
 
 ---
 
