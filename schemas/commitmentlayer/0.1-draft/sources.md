@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document compiles primary references and terminology associated with **commitment signaling** and **preconfirmation commitments** within Ethereum execution and sequencing research.
+This document compiles primary references and terminology associated with **commitment signaling** and **preconfirmation commitments** within Ethereum execution, sequencing, and latency-sensitive coordination research.
 
 It supports the semantic anchoring of `commitmentlayer.eth` within the Vortik Semantic Registry.
 
@@ -10,16 +10,55 @@ It supports the semantic anchoring of `commitmentlayer.eth` within the Vortik Se
 
 ## Research Context
 
-Commitment signaling refers to coordination mechanisms where proposers or sequencing actors issue commitments regarding future transaction inclusion, ordering, or execution guarantees.
+Commitment signaling refers to mechanisms through which proposers, builders, or related sequencing actors provide early signals regarding future transaction inclusion, ordering, or execution guarantees.
 
 These mechanisms are closely associated with:
 
 - preconfirmation systems  
 - proposer commitments  
 - transaction inclusion assurances  
-- neutrality constraints in sequencing systems  
+- sequencing neutrality constraints  
 
-This surface emerges in discussions about improving execution reliability, reducing uncertainty, and coordinating transaction flow before final block inclusion.
+This surface emerges in research focused on:
+
+- reducing execution uncertainty  
+- improving low-latency transaction experience  
+- coordinating transaction flow before final block inclusion  
+- separating economic guarantees from protocol guarantees  
+
+It should not be interpreted as a standalone protocol layer.
+
+Rather, it represents an emergent coordination surface spanning multiple execution and sequencing contexts.
+
+---
+
+## Structural Role
+
+Commitment signaling operates as a **guarantee-oriented coordination surface** between transaction initiation and final inclusion.
+
+It sits downstream from:
+
+- order flow access  
+- solver and routing systems  
+
+and upstream from:
+
+- builder coordination  
+- protocol-level inclusion  
+- finality  
+
+Its purpose is to shape execution expectations before on-chain confirmation.
+
+---
+
+## Guarantee Dynamics
+
+Commitment signaling introduces a separation between:
+
+- **economic guarantees** (early commitments, preconfirmations)  
+- **protocol guarantees** (actual inclusion and finality)  
+
+This distinction is critical, since execution may be perceived as confirmed before it is finalized on-chain.
 
 ---
 
@@ -43,12 +82,22 @@ Common terminology associated with this coordination surface includes:
 - preconfirmations  
 - commitment layer (non-canonical)  
 
+This terminology remains fluid and has not yet converged to a single canonical form.
+
 ---
 
 ## Status
 
 Active research coordination surface (2026).
 
-Commitment signaling mechanisms are actively explored in Ethereum execution and sequencing research, particularly in relation to preconfirmations and neutrality.
+Commitment signaling mechanisms are actively explored in Ethereum execution and sequencing research, particularly in relation to preconfirmations, neutrality, and latency-sensitive coordination.
 
 They are not currently defined as a canonical L1 protocol primitive.
+
+---
+
+## Notes
+
+This document reflects observed research discussion and terminology convergence.
+
+It does not define a protocol specification.
