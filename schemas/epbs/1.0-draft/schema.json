@@ -57,7 +57,7 @@
     },
     "pipeline_position": {
       "type": "array",
-      "description": "Interpretive position of this primitive within the coordination pipeline.",
+      "description": "Pipeline stages where this primitive is most relevant.",
       "minItems": 1,
       "items": {
         "type": "string",
