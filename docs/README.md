@@ -1,39 +1,38 @@
+# Vortik Research Documents
 
-# Security Hourglass — Coordination Compression
+This section contains extended research artifacts connected to the Vortik Semantic Registry.
 
-This document presents a structural model of coordination compression across Ethereum.
-
-It analyzes how emerging primitives:
-
-- ePBS (EIP-7732)
-- Inclusion Lists (FOCIL)
-- Preconfirmations
-- Builder and Solver coordination
-
-are converging into a constrained coordination system.
+These documents explore structural, semantic, and coordination-layer dynamics across Ethereum.
 
 ---
 
-## Why this matters
+## Available Models
 
-Ethereum is no longer only an execution environment.
+### Security Hourglass — Coordination Compression Model
 
-It is becoming a constrained coordination system where:
+A structural model describing how coordination pressure compresses across Ethereum primitives.
 
-- ordering is externalized  
-- inclusion is bounded  
-- guarantees emerge from economic coupling  
+📄 Full document:  
+[Open PDF](./security-hourglass/Security_Hourglass_Model_V5_1E_Final_Designed.pdf)
 
----
-
-## Relation to Vortik
-
-The Vortik Semantic Registry maps the terminology of this transformation.
-
-This document provides the structural interpretation behind that mapping.
+📂 Folder:  
+[View section](./security-hourglass/)
 
 ---
 
-## Full Document
+## Purpose
 
-[Download PDF](./security_hourglass_v5_1.pdf)
+These documents are not specifications.
+
+They are research artifacts designed to:
+
+- Map emerging coordination structures  
+- Track semantic stabilization  
+- Support alignment between naming and protocol evolution  
+
+---
+
+## Related Registry
+
+Main registry:  
+https://github.com/VortikRegistry/vortik-open-schema
