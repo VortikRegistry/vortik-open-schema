@@ -35,7 +35,7 @@
       "ens": "fastfinality.eth",
       "schema": "schemas/ssf/0.1-research/schema.json",
       "doc": "anchors/fastfinality.md",
-      "classification": "core"
+      "classification": "repairable"
     },
     {
       "id": "buildermarket",
