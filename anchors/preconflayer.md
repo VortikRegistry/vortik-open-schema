@@ -10,48 +10,86 @@
 
 ## Summary
 
-This anchor tracks **preconfirmation systems** as an emerging coordination architecture within Ethereum.
+This anchor tracks **preconfirmation systems** as an emergent coordination surface within Ethereum.
 
-These systems provide early guarantees about transaction inclusion or ordering prior to final block inclusion on L1.
+Rather than a single protocol primitive, preconfirmations represent a set of mechanisms providing **early execution guarantees** prior to final inclusion on L1.
 
-The ENS identifier (`preconflayer.eth`) introduces a non-canonical abstraction and is classified as a naming mismatch.
+The ENS identifier (`preconflayer.eth`) introduces a non-canonical architectural abstraction and is classified as a naming mismatch.
 
 ---
 
 ## Context
 
-Preconfirmations are mechanisms that reduce latency by providing early execution guarantees before transactions are finalized on Ethereum.
+Preconfirmations reduce latency by allowing actors to provide early guarantees about transaction inclusion or ordering before finalization.
 
-These systems combine:
+They typically combine:
 
 - commitment signaling (early inclusion promises)  
 - coordination networks (latency infrastructure)  
+- access to order flow and execution pathways  
 
-They are central to research exploring:
+This surface has emerged alongside:
 
-- low-latency execution  
-- high-frequency transaction environments  
-- proposer commitments  
-- sequencing infrastructure  
+- order flow auctions  
+- builder coordination  
+- intent-based execution  
+- latency-sensitive applications  
 
 ---
 
 ## Pipeline Position
 
-Preconfirmation / Execution Coordination
+Preconfirmation (Latency / Guarantee Surface)
 
 ---
 
 ## Coordination Role
 
-Preconfirmation systems coordinate:
+Preconfirmations do not directly enforce inclusion.
 
-- proposers  
-- builders  
-- relays  
-- external execution systems  
+They provide **early guarantees** that influence:
 
-They provide early guarantees that influence user experience and execution expectations before final inclusion.
+- user execution expectations  
+- transaction routing decisions  
+- coordination between upstream and execution-layer actors  
+
+They sit between transaction initiation and protocol-level inclusion.
+
+---
+
+## Guarantee Dynamics
+
+Preconfirmations introduce a separation between:
+
+- **economic guarantees** (early commitments)  
+- **protocol guarantees** (final inclusion / finality)  
+
+This creates a dual-layer system where transactions may be considered "effectively executed" before they are finalized on-chain.
+
+---
+
+## Dependency Structure
+
+Preconfirmation systems depend on:
+
+- access to order flow (OFA and routing layers)  
+- builder and proposer cooperation  
+- coordination infrastructure capable of low-latency signaling  
+
+This makes them tightly coupled to upstream control surfaces.
+
+---
+
+## Risk Surface
+
+Preconfirmations introduce new systemic risks:
+
+- guarantees may fail or be revoked  
+- commitments depend on actor credibility  
+- correlated failures can propagate across systems  
+- economic guarantees may collapse independently of protocol health  
+
+This creates a divergence between perceived execution and actual finality.
 
 ---
 
@@ -66,29 +104,49 @@ This surface is grounded in:
 
 ---
 
+## Structural Importance
+
+Preconfirmations redefine how users perceive execution:
+
+- transactions may be treated as "confirmed" before inclusion  
+- user experience becomes decoupled from finality  
+- execution expectations shift from protocol guarantees to economic assurances  
+
+This represents a fundamental shift in how execution is experienced in Ethereum.
+
+---
+
 ## Naming Alignment
 
 - **ENS anchor:** `preconflayer.eth`  
 - **Canonical term:** Preconfirmation Systems  
 
-The ENS naming introduces a non-canonical abstraction ("layer").
+The ENS naming introduces a non-canonical abstraction ("layer"), while the underlying phenomenon spans multiple coordination surfaces.
 
 This entry is classified as **repairable** due to naming misalignment.
+
+---
+
+## Semantic Stability
+
+Terminology around preconfirmations is still evolving and has not fully converged.
+
+The concept is widely discussed but not yet canonically defined.
 
 ---
 
 ## Registry Role
 
 - Track semantic stabilization of preconfirmation systems  
-- Document interaction between signaling and coordination  
-- Distinguish preconfirmation systems from inclusion and finality  
-- Map latency reduction mechanisms within Ethereum’s coordination pipeline  
+- Document separation between economic and protocol guarantees  
+- Distinguish latency guarantees from inclusion and finality  
+- Map emergent coordination behavior within Ethereum’s execution pipeline  
 
 ---
 
 ## Status
 
-Active research surface with growing importance in execution design.
+Active research surface with high impact on execution design and user experience.
 
 ---
 
