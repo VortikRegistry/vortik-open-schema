@@ -11,13 +11,34 @@ https://vortikregistry.github.io/vortik-open-schema/
 
 The Vortik Semantic Registry documents how coordination terminology stabilizes across Ethereum’s execution and consensus architecture.
 
-Rather than defining protocol rules, the registry:
+Rather than defining protocol rules, the registry operates as a semantic coordination layer:
 
 - maps coordination primitives and surfaces  
 - tracks naming convergence across research and implementation  
 - positions each concept within the execution pipeline  
 
 Its purpose is to provide a **consistent semantic reference layer** across protocol research, infrastructure, and coordination discussions.
+
+---
+
+## Research Layer
+
+### Security Hourglass — Coordination Compression
+
+This registry is complemented by a structural model describing coordination compression across Ethereum:
+
+→ ./docs/security-hourglass/
+
+The document explores how:
+
+- ePBS  
+- Inclusion Lists  
+- Preconfirmations  
+- Builder and Solver coordination  
+
+are converging into a constrained coordination system.
+
+It provides the conceptual framing behind this registry.
 
 ---
 
@@ -34,6 +55,10 @@ Its purpose is to provide a **consistent semantic reference layer** across proto
 | `solverlayer.eth` | Solver networks | repairable |
 | `orderflowauction.eth` | Order flow auctions (OFA) | valid |
 | `executionmarket.eth` | Execution coordination (ambiguous term) | premature |
+
+These anchors are not arbitrary labels.
+
+They reflect emerging semantic convergence across Ethereum coordination architecture.
 
 ---
 
@@ -173,6 +198,20 @@ Supporting artifacts:
 Most coordination surfaces tracked remain under active research.
 
 Terminology across execution and coordination layers is still evolving and not yet fully stabilized.
+
+---
+
+## Positioning
+
+Vortik acts as a semantic interface between:
+
+- emerging coordination primitives  
+- infrastructure-level implementation  
+- naming stabilization across the ecosystem  
+
+It does not define the protocol.
+
+It maps how the protocol is becoming structured.
 
 ---
 
