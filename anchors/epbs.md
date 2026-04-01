@@ -1,7 +1,7 @@
 # Enshrined Proposer-Builder Separation (ePBS)
 
 **Associated ENS:** `epbs.eth`  
-**Canonical term:** Enshrined Proposer-Builder Separation (ePBS)  
+**Canonical term:** enshrined proposer-builder separation (ePBS)  
 **Registry ID:** `epbs`  
 **Status:** Draft EIP  
 **Classification:** Core
@@ -14,7 +14,7 @@ This anchor tracks **Enshrined Proposer-Builder Separation (ePBS)** as a protoco
 
 ePBS formalizes the separation between block proposal and execution payload construction directly at the protocol level.
 
-It represents one of the clearest examples of semantic convergence toward a canonical primitive in Ethereum’s coordination architecture.
+It represents one of the clearest cases of semantic convergence toward a protocol-level primitive in Ethereum.
 
 ---
 
@@ -37,7 +37,7 @@ By moving PBS into the protocol layer, ePBS restructures:
 
 ## Pipeline Position
 
-Builder Coordination → Inclusion
+Block Construction / Proposer-Builder Interface
 
 ---
 
@@ -83,7 +83,7 @@ This shift marks a fundamental change in Ethereum’s execution architecture, re
 ## Naming Alignment
 
 - **ENS anchor:** `epbs.eth`  
-- **Canonical primitive name:** Enshrined Proposer-Builder Separation (ePBS)  
+- **Canonical term:** enshrined proposer-builder separation (ePBS)  
 
 Naming is aligned, stable, and widely adopted across the ecosystem.
 
