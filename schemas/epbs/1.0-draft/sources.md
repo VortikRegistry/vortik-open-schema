@@ -24,7 +24,37 @@ It formalizes the separation between:
 - block proposal  
 - execution payload construction  
 
-and aims to reduce reliance on external relay infrastructure.
+and removes reliance on external relay infrastructure by embedding coordination directly into the protocol.
+
+This transition reflects a broader shift toward **protocol-enforced coordination** within Ethereum’s coordination architecture.
+
+---
+
+## Structural Role
+
+ePBS operates at the boundary between:
+
+- builder coordination  
+- inclusion  
+
+It defines a **protocol-level interface** between proposers and builders, restructuring how execution payloads are constructed, selected, and included.
+
+---
+
+## Architectural Impact
+
+ePBS introduces a fundamental architectural shift:
+
+- from **off-protocol coordination** (e.g. MEV-Boost, relays)  
+- to **protocol-enforced coordination**  
+
+This changes:
+
+- how block construction is organized  
+- how proposer roles interact with builders  
+- how execution markets interface with consensus  
+
+This shift is structurally irreversible once adopted at the protocol level.
 
 ---
 
@@ -52,7 +82,7 @@ Research discussions around ePBS focus on:
 
 ## Roadmap Context
 
-ePBS is associated with Ethereum roadmap evolution toward a structured block building pipeline.
+ePBS is part of Ethereum’s evolution toward a structured coordination architecture for block production.
 
 - Vitalik Buterin — “Finally, the block building pipeline”  
   https://firefly.social/post/x/2027405  
@@ -69,13 +99,23 @@ Common terminology associated with this primitive includes:
 - payload commitment  
 - block construction pipeline  
 
+This terminology shows strong semantic convergence across research and core development discussions.
+
 ---
 
 ## Status
 
 Draft EIP (active research and specification phase).
 
-Inclusion in Ethereum depends on:
+ePBS has high protocol relevance and strong likelihood of long-term adoption, pending:
 
 - client implementation readiness  
-- consensus among core developers
+- consensus among core developers  
+
+---
+
+## Notes
+
+This document reflects canonical specification and active research convergence.
+
+It describes a protocol-level primitive with structural impact on Ethereum’s coordination architecture.
