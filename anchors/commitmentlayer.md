@@ -1,4 +1,4 @@
-# Commitment Signaling (Preconfirmations)
+# Commitment Signaling (Preconfirmation Commitments)
 
 **Associated ENS:** `commitmentlayer.eth`  
 **Canonical term:** Commitment Signaling / Preconfirmation Commitments  
@@ -12,7 +12,7 @@
 
 This anchor tracks emerging **commitment signaling mechanisms**, particularly **preconfirmation commitments**, within Ethereum’s coordination pipeline.
 
-The underlying primitive is not yet semantically stabilized and appears across multiple research directions, including preconfirmations, proposer commitments, and execution guarantees.
+The underlying primitive is not yet semantically stabilized and is currently expressed across multiple overlapping research directions, including preconfirmations, proposer commitments, and execution guarantees.
 
 The ENS identifier (`commitmentlayer.eth`) introduces a non-canonical abstraction and is classified as a naming mismatch.
 
@@ -38,7 +38,7 @@ This surface is closely related to:
 
 ## Pipeline Position
 
-Preconfirmation / Commitment Signaling
+Commitment Signaling
 
 ---
 
