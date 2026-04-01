@@ -89,18 +89,16 @@ They are:
 - explicit  
 - non-interpretative  
 
-Schemas may include:
+Schemas include:
 
 - canonical_term  
 - classification (core / valid / repairable / premature)  
-- pipeline_position  
+- pipeline_position (interpretive)  
 - coordination_role  
 - protocol_grounding  
-- related_terms  
-- references  
-- last_reviewed  
+- naming  
 
-Schemas represent the **semantic layer** of the registry.
+Schemas represent the **canonical semantic layer** of the registry.
 
 ---
 
@@ -138,33 +136,33 @@ Purpose:
 Ethereum is modeled as a coordination pipeline:
 
 1. Order Flow  
-2. Order Flow Routing  
+2. Order Flow Routing (OFA)  
 3. Solver Coordination  
-4. Execution Coordination  
+4. Execution Coordination (ambiguous / unstable)  
 5. Builder Coordination  
 6. Inclusion  
 7. Commitment Signaling  
 8. Preconfirmation  
 9. Finality  
 
-Each primitive may map to one or more stages.
+Each primitive maps to one or more stages.
 
-The model is conceptual and does not represent a strict protocol specification.
+The model is **interpretive**, not a protocol specification.
 
 ---
 
-## Primitive vs Market
+## Primitive vs Coordination Surface
 
 The registry prioritizes:
 
 → protocol primitives  
-→ coordination roles  
+→ coordination surfaces  
 
 over:
 
-→ market abstractions  
+→ narrative or purely market abstractions  
 
-Market-related concepts are included only when technically grounded in coordination mechanisms.
+Market-related concepts are included only when grounded in **real coordination mechanisms**.
 
 ---
 
@@ -182,11 +180,11 @@ Market-related concepts are included only when technically grounded in coordinat
 Each entry is classified as:
 
 - **core** — protocol-aligned primitive  
-- **valid** — real coordination surface, not canonical  
+- **valid** — real coordination surface with stable meaning  
 - **repairable** — valid concept with naming misalignment  
-- **premature** — unstable or ambiguous terminology  
+- **premature** — ambiguous or unstable terminology  
 
-Classification is applied at the schema level and may evolve over time.
+Classification is applied at the schema level and evolves with research convergence.
 
 ---
 
@@ -222,4 +220,12 @@ Current focus:
 
 - consolidation of high-confidence primitives  
 - elimination of ambiguous surfaces  
-- alignment with observable protocol evolution
+- alignment with observable protocol evolution  
+
+---
+
+## Notes
+
+Vortik should be understood as a **semantic layer over Ethereum**, not a protocol or framework.
+
+Its role is to make coordination structures legible, comparable, and machine-readable as the ecosystem evolves.
