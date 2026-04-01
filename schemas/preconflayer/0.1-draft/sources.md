@@ -10,16 +10,23 @@ It supports the semantic anchoring of `preconflayer.eth` within the Vortik Seman
 
 ## Research Context
 
-Preconfirmation systems refer to coordination mechanisms that allow transactions to receive early execution assurances prior to final block inclusion.
+Preconfirmation systems refer to coordination mechanisms that provide **early execution assurances** prior to final block inclusion.
 
-These mechanisms aim to reduce latency and improve execution certainty by enabling proposers or sequencing actors to provide early inclusion or ordering guarantees.
+These systems reduce latency and improve execution certainty by enabling proposers or sequencing actors to issue **credible commitments about inclusion or ordering**.
+
+They operate in the gap between:
+
+- execution coordination  
+- final inclusion  
 
 Preconfirmation systems interact with multiple coordination surfaces, including:
 
 - commitment signaling mechanisms  
 - proposer commitments  
-- inclusion enforcement systems  
+- inclusion enforcement systems (e.g. inclusion lists)  
 - based sequencing architectures  
+
+They shape user expectations and execution guarantees **before consensus-level finalization**.
 
 ---
 
@@ -43,12 +50,26 @@ Common terminology associated with this coordination surface includes:
 - L1 preconfirmations  
 - proposer commitments  
 
+This terminology shows **moderate convergence**, but still overlaps with adjacent surfaces such as commitment signaling.
+
 ---
 
 ## Status
 
 Active research coordination surface (2026).
 
-Preconfirmation systems are actively explored in Ethereum sequencing and execution research, particularly in relation to latency reduction, early execution guarantees, and coordination with proposer commitment mechanisms.
+Preconfirmation systems are a structurally important latency and coordination mechanism within Ethereum’s execution pipeline, particularly in relation to:
 
-They are not currently defined as a canonical L1 protocol primitive.
+- early execution guarantees  
+- proposer commitments  
+- sequencing coordination  
+
+They are not currently defined as a canonical L1 protocol primitive and remain an evolving research surface.
+
+---
+
+## Notes
+
+This surface captures **pre-inclusion coordination**, where execution expectations are shaped before transactions are finalized on-chain.
+
+It is closely coupled with commitment signaling but remains a **distinct coordination layer focused on latency and user-facing guarantees**.
