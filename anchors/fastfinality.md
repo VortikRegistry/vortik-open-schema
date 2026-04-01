@@ -38,7 +38,7 @@ It is closely related to broader efforts around:
 
 ## Pipeline Position
 
-Consensus / Finality Layer
+Finality
 
 ---
 
@@ -50,7 +50,7 @@ SSF impacts coordination at the consensus level, particularly:
 - finality checkpoint formation  
 - timing assumptions across slots  
 
-It modifies how quickly consensus transitions from probabilistic inclusion to irreversible finality.
+It changes how quickly consensus transitions from probabilistic inclusion to irreversible finality.
 
 ---
 
