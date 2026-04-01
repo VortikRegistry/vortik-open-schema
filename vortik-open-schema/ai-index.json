@@ -21,8 +21,8 @@
   ],
   "purpose": [
     "semantic indexing of Ethereum coordination primitives",
-    "terminology stabilization across research threads",
-    "machine-readable metadata for protocol and execution infrastructure concepts",
-    "semantic anchoring of coordination primitives across Ethereum research surfaces"
+    "tracking terminology convergence across research and protocol development",
+    "machine-readable metadata for coordination surfaces in execution and consensus",
+    "semantic anchoring of coordination primitives across Ethereum architecture"
   ]
 }
