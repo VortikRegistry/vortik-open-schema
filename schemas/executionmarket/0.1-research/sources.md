@@ -4,7 +4,7 @@
 
 This document compiles references and terminology associated with the concept often described as **“execution markets”**, within Ethereum execution infrastructure research.
 
-Within the Vortik Semantic Registry, this surface is treated as a **semantically unstable coordination layer**, tracked under the term:
+Within the Vortik Semantic Registry, this surface is treated as a **semantically unstable coordination surface**, tracked under the term:
 
 **execution coordination (ambiguous term)**
 
@@ -12,18 +12,33 @@ Within the Vortik Semantic Registry, this surface is treated as a **semantically
 
 ## Research Context
 
-The term “execution market” is commonly used to describe coordination environments where transactions, intents and liquidity sources interact to determine execution outcomes.
+The term “execution market” is commonly used to describe coordination environments where transactions, intents, and liquidity sources interact to determine execution outcomes.
 
-However, this term does not currently map to a clearly defined or canonical protocol primitive.
+However, this term does not map to a clearly defined or canonical protocol primitive.
 
-Instead, it overlaps with multiple distinct coordination layers, including:
+Instead, it overlaps with multiple distinct coordination surfaces, including:
 
 - solver networks  
 - order flow routing mechanisms  
 - builder markets  
 - intent-based execution systems  
 
-As a result, “execution market” is better understood as an **umbrella or narrative term**, rather than a precise technical construct.
+As a result, “execution market” is better understood as an **umbrella or narrative abstraction**, rather than a precise technical construct.
+
+---
+
+## Structural Interpretation
+
+This surface is best interpreted as a **descriptive aggregation layer** spanning multiple parts of the coordination architecture.
+
+It informally refers to interactions occurring between:
+
+- order flow access  
+- solver coordination  
+- execution strategy formation  
+- builder competition  
+
+These interactions do not form a single bounded system and should not be treated as a standalone layer.
 
 ---
 
@@ -53,12 +68,22 @@ Common terminology associated with this coordination surface includes:
 - execution layer (ambiguous usage)  
 - solver-driven execution  
 
+This terminology is inconsistent and has not converged to a canonical form.
+
 ---
 
 ## Status
 
 Premature / ambiguous coordination surface (2026).
 
-The term “execution market” is widely used but lacks precise semantic boundaries within the Ethereum protocol architecture.
+The term “execution market” is widely used but lacks precise semantic boundaries within Ethereum’s coordination architecture.
 
-It is not currently defined as a canonical L1 primitive and is tracked within the registry as a **non-stabilized terminology surface**.
+It is not defined as a canonical L1 primitive and is tracked within the registry as a **non-stabilized terminology surface**.
+
+---
+
+## Notes
+
+This document captures an unstable terminology cluster.
+
+It exists to prevent premature semantic consolidation and to track whether this surface resolves into clearer primitives or dissolves into adjacent coordination layers.
