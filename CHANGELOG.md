@@ -10,16 +10,28 @@ This project follows a lightweight versioning approach aligned with registry mat
 
 ### Added
 
-New semantic anchors documenting coordination layers in Ethereum execution infrastructure:
+New semantic anchors documenting coordination surfaces in Ethereum execution infrastructure:
 
-- `buildermarket.eth` — builder coordination surface  
+- `buildermarket.eth` — builder markets (builder coordination surface)  
 - `executionmarket.eth` — execution coordination (ambiguous term)  
-- `orderflowauction.eth` — order flow auction routing surface  
+- `orderflowauction.eth` — order flow auctions (routing / access layer)  
 
 ### Updated
 
-- Conceptual registry map expanded to include additional coordination layers across the execution pipeline.  
-- Index and navigation pages updated to reflect the extended anchor set.  
+- Conceptual coordination pipeline expanded to reflect upstream and mid-pipeline surfaces:
+  - order flow  
+  - solver coordination  
+  - builder coordination  
+  - inclusion  
+
+- Anchor set extended and aligned with current semantic model.  
+- Schema directory expanded with new surfaces and consistent structure.  
+- Naming normalization applied across anchors (canonical term vs ENS alignment).  
+
+### Notes
+
+- `executionmarket.eth` is explicitly tracked as a **premature / ambiguous surface**.  
+- Order flow auctions (OFA) are now positioned as an **entry-layer coordination mechanism**, not just routing.  
 
 ---
 
@@ -27,23 +39,24 @@ New semantic anchors documenting coordination layers in Ethereum execution infra
 
 ### Added
 
-- Public registry index (`registry.json`) mapping semantic anchors to anchor docs and versioned schemas where available.  
-- GitHub Pages landing (`index.md`) with navigation to anchors, schemas, and the registry index.  
-- Anchors directory with minimal orientation docs:
+- Public registry index (`registry.json`) mapping semantic anchors to anchor docs and versioned schemas.  
+- GitHub Pages landing (`index.md`) with navigation to anchors, schemas, and registry index.  
+- Anchors directory with initial semantic surfaces:
 
-  - `epbs.eth` — ePBS / EIP-7732  
-  - `inclusionlist.eth` — FOCIL / EIP-7805  
+  - `epbs.eth` — Enshrined Proposer-Builder Separation (ePBS)  
+  - `inclusionlist.eth` — Fork-choice enforced inclusion lists (FOCIL)  
   - `commitmentlayer.eth` — commitment signaling coordination  
-  - `preconflayer.eth` — preconfirmation coordination networks  
-  - `fastfinality.eth` — SSF semantic surface  
-  - `solverlayer.eth` — solver coordination surface  
+  - `preconflayer.eth` — preconfirmation systems  
+  - `fastfinality.eth` — Single-Slot Finality (SSF)  
+  - `solverlayer.eth` — solver networks  
 
 ### Changed
 
-- Aligned SSF semantics under the `ssf` surface while keeping `fastfinality.eth` as the associated ENS anchor.  
-- Updated registry paths to reference versioned schemas where present.  
+- SSF semantics aligned under the canonical term **single-slot finality (SSF)** while maintaining `fastfinality.eth` as a **non-canonical ENS anchor**.  
+- Registry structure updated to consistently reference **versioned schemas**.  
+- Terminology alignment introduced across anchors and schemas.  
 
 ### Notes
 
-- Some anchors represent coordination surfaces under active research rather than finalized protocol primitives.  
-- Terminology may evolve as coordination layers stabilize across Ethereum research discussions.
+- Several anchors represent **coordination surfaces under active research**, not finalized protocol primitives.  
+- The registry tracks **semantic convergence**, and terminology may evolve as Ethereum architecture stabilizes.
