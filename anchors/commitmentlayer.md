@@ -4,13 +4,13 @@
 **Canonical term:** Commitment Signaling / Preconfirmation Commitments  
 **Registry ID:** `commitmentlayer`  
 **Status:** Research  
-**Classification:** Repairable
+**Classification:** repairable  
 
 ---
 
 ## Summary
 
-This anchor tracks **commitment signaling mechanisms**, particularly **preconfirmation commitments**, within Ethereum’s emerging coordination stack.
+This anchor tracks **commitment signaling mechanisms**, particularly **preconfirmation commitments**, within Ethereum’s evolving execution and coordination environment.
 
 The ENS identifier (`commitmentlayer.eth`) introduces a non-canonical abstraction and is classified as a naming mismatch.
 
@@ -24,19 +24,27 @@ These commitments are used to:
 
 - provide early execution guarantees  
 - reduce latency uncertainty  
-- enable coordination in preconfirmation systems  
+- enable coordination across preconfirmation systems  
 
 This surface is closely related to:
 
 - preconfirmation networks  
 - proposer commitments  
-- execution coordination systems  
+- builder-proposer interaction models  
 
 ---
 
-## Pipeline Position
+## Semantic Position
 
-Preconfirmation / Commitment Signaling
+This surface is typically associated with **preconfirmation and signaling layers** that operate upstream of final block inclusion.
+
+It may be grouped with:
+
+- builder coordination  
+- solver routing  
+- inclusion constraints  
+
+This positioning is interpretive and does not imply a strict protocol sequence.
 
 ---
 
@@ -60,7 +68,7 @@ This surface is grounded in:
 - Ethereum research on preconfirmations  
 - proposer commitment mechanisms  
 - latency reduction strategies  
-- coordination protocols for early inclusion guarantees  
+- coordination protocols for early inclusion signaling  
 
 ---
 
@@ -79,14 +87,27 @@ This entry is classified as **repairable** due to naming misalignment.
 
 - Track semantic stabilization of commitment signaling  
 - Document preconfirmation commitment mechanisms  
-- Distinguish signaling from execution and inclusion layers  
-- Map commitment behavior within Ethereum’s coordination pipeline  
+- Distinguish signaling from execution and inclusion surfaces  
+- Map commitment behavior across coordination environments  
 
 ---
 
 ## Status
 
-Active research surface with increasing importance in coordination design.
+Active research surface with increasing importance in execution and coordination dynamics.
+
+---
+
+## Registry Context
+
+This anchor represents signaling mechanisms that influence execution expectations prior to final inclusion.
+
+It may also be interpreted within broader structural models of coordination pressure and latency-sensitive execution.
+
+See:
+- `docs/security-hourglass/`
+
+These interpretations are descriptive and do not imply protocol-level guarantees.
 
 ---
 
