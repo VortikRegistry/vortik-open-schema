@@ -14,7 +14,7 @@ This anchor tracks **Enshrined Proposer-Builder Separation (ePBS)** as a protoco
 
 ePBS formalizes the separation between block proposal and execution payload construction directly at the protocol level.
 
-It represents one of the clearest cases of semantic convergence toward a canonical primitive in Ethereum’s coordination architecture.
+It represents one of the clearest examples of semantic convergence toward a canonical primitive in Ethereum’s coordination architecture.
 
 ---
 
@@ -49,7 +49,7 @@ ePBS defines a protocol-level coordination interface between:
 - builders  
 - execution payload selection mechanisms  
 
-It replaces off-protocol coordination (e.g. relay-based PBS) with an enshrined mechanism enforced by the protocol.
+It replaces off-protocol coordination (for example, relay-based PBS) with an enshrined mechanism inside the protocol.
 
 ---
 
@@ -68,7 +68,7 @@ This primitive is grounded in:
 
 The term **ePBS** has reached strong semantic convergence across research, client discussions, and roadmap planning.
 
-Its coupling to a specific protocol upgrade (EIP-7732) makes it highly likely to remain stable as a canonical term.
+Its direct coupling to a protocol-level specification (EIP-7732) makes it highly likely to remain stable as a canonical primitive within Ethereum.
 
 ---
 
