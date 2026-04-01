@@ -10,9 +10,11 @@
 
 ## Summary
 
-This anchor tracks **solver networks** as an emerging coordination surface within Ethereum’s execution and order flow ecosystem.
+This anchor tracks **solver networks** as an emergent coordination surface responsible for **execution strategy formation** within Ethereum’s execution pipeline.
 
-The ENS identifier (`solverlayer.eth`) does not reflect canonical terminology and is classified as a naming mismatch.
+Rather than passive intermediaries, solver networks represent competitive systems that construct and optimize transaction execution paths based on user intents.
+
+The ENS identifier (`solverlayer.eth`) introduces a non-canonical architectural abstraction and is classified as a naming mismatch.
 
 ---
 
@@ -26,29 +28,56 @@ They are responsible for:
 - constructing execution strategies  
 - competing to fulfill desired outcomes  
 
-This surface is closely related to:
+This surface has developed alongside:
 
-- order flow auctions  
-- intent-based architectures  
-- off-chain execution coordination  
+- order flow auctions (OFA)  
+- private order flow systems  
+- intent-based execution architectures  
+- MEV-aware coordination models  
 
 ---
 
 ## Pipeline Position
 
-Order Flow → Execution Coordination
+Order Flow → Solver Networks → Builder Markets
 
 ---
 
 ## Coordination Role
 
-Solver networks coordinate:
+Solver networks do not merely relay transactions.
 
-- user intents  
-- execution strategies  
-- transaction construction  
+They compete to:
 
-They act as intermediaries between user intent expression and final execution inclusion.
+- determine how user intents are executed  
+- construct optimal execution strategies  
+- capture execution-related value  
+
+They act as the **strategy layer** between user intent and block construction.
+
+---
+
+## Strategy Dynamics
+
+Solver networks introduce competition over:
+
+- execution paths  
+- transaction ordering strategies  
+- value extraction and distribution  
+
+Different solvers may produce distinct execution outcomes for the same intent, leading to a competitive environment over execution quality and profitability.
+
+---
+
+## Dependency Structure
+
+Solver networks depend on:
+
+- access to order flow (OFA and routing layers)  
+- interaction with builders for inclusion  
+- coordination infrastructure for strategy dissemination  
+
+Their effectiveness is constrained by upstream flow control and downstream inclusion mechanisms.
 
 ---
 
@@ -63,29 +92,47 @@ This surface is grounded in:
 
 ---
 
+## Structural Importance
+
+Solver networks define how value is executed within Ethereum:
+
+- they determine execution pathways  
+- they shape transaction outcomes  
+- they influence how MEV is realized and distributed  
+
+They represent the **execution intelligence layer** of the coordination pipeline.
+
+---
+
 ## Naming Alignment
 
 - **ENS anchor:** `solverlayer.eth`  
 - **Canonical term:** Solver Networks  
 
-The ENS naming introduces a non-canonical abstraction ("layer").
+The ENS naming introduces a non-canonical abstraction ("layer"), while the underlying concept is better described as a network of competing execution agents.
 
 This entry is classified as **repairable** due to naming misalignment.
+
+---
+
+## Semantic Stability
+
+Terminology around solver networks is stabilizing but remains tied to evolving intent-based execution models.
 
 ---
 
 ## Registry Role
 
 - Track semantic stabilization of solver networks  
-- Document the role of solvers in execution coordination  
-- Distinguish solver systems from protocol-level primitives  
-- Map solver participation within Ethereum’s coordination pipeline  
+- Document execution strategy formation mechanisms  
+- Distinguish solver competition from routing and inclusion layers  
+- Map execution intelligence within Ethereum’s coordination pipeline  
 
 ---
 
 ## Status
 
-Active research surface with increasing relevance.
+Active research surface with increasing structural importance in execution design.
 
 ---
 
