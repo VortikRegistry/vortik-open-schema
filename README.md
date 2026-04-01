@@ -15,7 +15,7 @@ Rather than defining protocol rules, the registry operates as a semantic coordin
 
 - maps coordination primitives and surfaces  
 - tracks naming convergence across research and implementation  
-- positions each concept within the execution pipeline  
+- positions each concept within the coordination pipeline  
 
 Its purpose is to provide a **consistent semantic reference layer** across protocol research, infrastructure, and coordination discussions.
 
@@ -29,11 +29,11 @@ Vortik includes independent structural research exploring coordination dynamics 
 
 A structural model describing how coordination pressure compresses across Ethereum layers:
 
-- Order flow & execution  
-- Builder markets (ePBS)  
-- Inclusion enforcement (FOCIL)  
-- Commitment & preconfirmation layers  
-- Finality (SSF research track)  
+- order flow & execution  
+- builder coordination (ePBS context)  
+- inclusion enforcement (FOCIL)  
+- commitment and preconfirmation layers  
+- finality (SSF research track)  
 
 📄 Read the full document:  
 https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/security-hourglass/Security_Hourglass_Model_V5_1E_Final_Designed.pdf
@@ -49,15 +49,15 @@ This model provides the conceptual framing behind the registry.
 
 | Anchor | Canonical Surface | Classification |
 |--------|------------------|---------------|
-| `epbs.eth` | Enshrined Proposer-Builder Separation (EIP-7732) | core |
-| `inclusionlist.eth` | Fork-choice enforced inclusion (FOCIL) | core |
-| `commitmentlayer.eth` | Preconfirmation commitment signaling | repairable |
-| `preconflayer.eth` | Preconfirmation systems | repairable |
-| `fastfinality.eth` | Single Slot Finality (SSF) | valid |
-| `buildermarket.eth` | Builder coordination (builder markets) | valid |
-| `solverlayer.eth` | Solver networks | repairable |
-| `orderflowauction.eth` | Order flow auctions (OFA) | valid |
-| `executionmarket.eth` | Execution coordination (ambiguous term) | premature |
+| `epbs.eth` | enshrined proposer-builder separation (EIP-7732) | core |
+| `inclusionlist.eth` | fork-choice enforced inclusion lists (FOCIL) | core |
+| `commitmentlayer.eth` | commitment signaling (preconfirmation-related) | repairable |
+| `preconflayer.eth` | preconfirmation systems | repairable |
+| `fastfinality.eth` | single-slot finality (SSF) | repairable |
+| `buildermarket.eth` | builder coordination / builder markets | valid |
+| `solverlayer.eth` | solver networks | repairable |
+| `orderflowauction.eth` | order flow auctions (OFA) | valid |
+| `executionmarket.eth` | execution coordination (ambiguous term) | premature |
 
 These anchors reflect emerging semantic convergence across Ethereum coordination architecture.
 
@@ -75,9 +75,7 @@ Execution Coordination (ambiguous surface)
 ↓  
 Builder Coordination  
 ↓  
-ePBS  
-↓  
-Inclusion Enforcement  
+Inclusion  
 ↓  
 Commitment Signaling  
 ↓  
@@ -91,7 +89,7 @@ Finality (SSF)
 
 Ethereum is increasingly understood as a coordination system rather than only an execution engine.
 
-This repository maps how coordination is becoming explicit across the stack:
+This repository maps how coordination becomes explicit across the stack:
 
 Order Flow  
 → Order Flow Auctions  
@@ -205,7 +203,7 @@ Vortik acts as a semantic interface between:
 
 - emerging coordination primitives  
 - infrastructure-level implementation  
-- naming stabilization across the ecosystem  
+- terminology stabilization across the ecosystem  
 
 It does not define the protocol.
 
@@ -215,9 +213,9 @@ It maps how the protocol is becoming structured.
 
 ## Notes
 
-- Independent research artifact  
-- Not affiliated with Ethereum Foundation  
-- Terminology and classifications may evolve  
+- independent research artifact  
+- not affiliated with Ethereum Foundation  
+- terminology and classifications may evolve  
 
 ---
 
