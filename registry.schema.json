@@ -1,7 +1,13 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "required": ["version", "anchors"],
+  "required": [
+    "registry",
+    "version",
+    "description",
+    "source_of_truth",
+    "anchors"
+  ],
   "properties": {
     "registry": {
       "type": "string"
@@ -12,6 +18,10 @@
     "description": {
       "type": "string"
     },
+    "source_of_truth": {
+      "type": "string",
+      "enum": ["schemas"]
+    },
     "anchors": {
       "type": "array",
       "items": {
@@ -19,35 +29,22 @@
         "required": [
           "id",
           "ens",
-          "canonical_term",
-          "classification",
-          "status",
           "schema",
           "anchor_doc"
         ],
         "properties": {
-          "id": { "type": "string" },
-          "ens": { "type": "string" },
-          "canonical_term": { "type": "string" },
-          "classification": {
-            "type": "string",
-            "enum": [
-              "core",
-              "valid",
-              "premature",
-              "speculative",
-              "repairable",
-              "external"
-            ]
+          "id": {
+            "type": "string"
           },
-          "type": {
-            "type": "string",
-            "enum": ["primitive", "role", "market", "research", "mechanism"]
+          "ens": {
+            "type": "string"
           },
-          "role": { "type": "string" },
-          "status": { "type": "string" },
-          "schema": { "type": "string" },
-          "anchor_doc": { "type": "string" }
+          "schema": {
+            "type": "string"
+          },
+          "anchor_doc": {
+            "type": "string"
+          }
         },
         "additionalProperties": false
       }
@@ -67,18 +64,34 @@
           "summary"
         ],
         "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" },
-          "canonical_term": { "type": "string" },
-          "category": { "type": "string" },
-          "abstraction_level": { "type": ["string", "null"] },
-          "coverage_status": { "type": "string" },
-          "ens_status": { "type": "string" },
-          "desired_ens": { "type": ["string", "null"] },
-          "status": { "type": "string" },
-          "term_risk": { "type": "string" },
-          "summary": { "type": "string" },
-          "naming_note": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "canonical_term": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["primitive", "market", "standard", "coordination-surface", "mechanism"]
+          },
+          "coverage_status": {
+            "type": "string"
+          },
+          "ens_status": {
+            "type": "string"
+          },
+          "desired_ens": {
+            "type": ["string", "null"]
+          },
+          "status": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          }
         },
         "additionalProperties": false
       }
