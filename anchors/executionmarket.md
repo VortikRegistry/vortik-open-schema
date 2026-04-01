@@ -14,6 +14,8 @@ This anchor tracks **execution coordination markets** as an emerging and non-sta
 
 The term does not currently represent a canonical primitive and is classified as experimental.
 
+It may not consolidate into a standalone category and could instead dissolve into adjacent coordination surfaces as terminology evolves.
+
 ---
 
 ## Context
@@ -63,6 +65,16 @@ The concept is derived from:
 - Ethereum research discussions  
 - intent-based execution systems  
 - MEV-aware coordination models  
+
+---
+
+## Semantic Note
+
+Execution coordination markets should not be interpreted as a defined protocol layer or stable architectural component.
+
+They represent a provisional abstraction used to describe interactions between order flow, solvers, and execution strategy formation.
+
+The concept may fragment or disappear as clearer primitives (such as solver networks or order flow auctions) stabilize.
 
 ---
 
