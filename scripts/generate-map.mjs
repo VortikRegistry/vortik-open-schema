@@ -11,19 +11,35 @@ const order = [
   "inclusionlist",
   "commitmentlayer",
   "preconflayer",
-  "ssf"
+  "fastfinality"
 ];
+
+// 👇 etiquetas más claras (clave)
+const labels = {
+  orderflowauction: "Order Flow Auctions",
+  solverlayer: "Solver Networks",
+  executionmarket: "Execution Coordination",
+  buildermarket: "Builder Markets",
+  epbs: "ePBS",
+  inclusionlist: "Inclusion Lists / FOCIL",
+  commitmentlayer: "Commitment Signaling",
+  preconflayer: "Preconfirmation Systems",
+  fastfinality: "Single-Slot Finality"
+};
 
 const map = [];
 
 for (const id of order) {
   const anchor = registry.anchors.find(a => a.id === id);
   if (anchor) {
-    map.push(anchor.id);
+    map.push(labels[id] || anchor.id);
   }
 }
 
-const output = map.join("\n↓\n");
+const output = `# Coordination Map
+
+${map.join("\n↓\n")}
+`;
 
 fs.writeFileSync("coordination-map.txt", output);
 
