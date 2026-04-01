@@ -1,0 +1,17 @@
+# Coordination Map
+
+Order Flow Auctions
+↓
+Solver Networks
+↓
+Execution Coordination
+↓
+Builder Markets
+↓
+ePBS
+↓
+Inclusion Lists / FOCIL
+↓
+Commitment Signaling
+↓
+Preconfirmation Systems
