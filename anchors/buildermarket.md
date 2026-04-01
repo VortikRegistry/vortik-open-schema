@@ -1,10 +1,10 @@
 # Builder Markets
 
 **Associated ENS:** `buildermarket.eth`  
-**Canonical term:** Builder Markets  
+**Canonical term:** builder markets  
 **Registry ID:** `buildermarket`  
 **Status:** Research  
-**Classification:** Ecosystem-Aligned  
+**Classification:** Premature  
 
 ---
 
@@ -35,7 +35,7 @@ They represent the competitive environment in which block builders construct exe
 
 ## Semantic Position
 
-Builder markets represent an **economic coordination surface**, not a protocol-defined layer or primitive.
+Builder markets represent an **informal economic coordination surface**, not a protocol-defined layer or primitive.
 
 They are commonly associated with:
 
@@ -83,11 +83,11 @@ Their structure may shift significantly as protocol-level changes (such as ePBS)
 ## Naming Alignment
 
 - **ENS anchor:** `buildermarket.eth`  
-- **Canonical term:** Builder Markets  
+- **Canonical term:** builder markets  
 
 The term is widely used across ecosystem discussions but is not formally defined at the protocol level.
 
-It is considered **ecosystem-aligned**, reflecting common usage rather than canonical specification.
+It is considered a non-canonical term with ecosystem-level usage.
 
 ---
 
