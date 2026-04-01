@@ -1,32 +1,30 @@
 # Vortik Semantic Registry — Conceptual Coordination Map
 
-The Vortik registry tracks terminology convergence across Ethereum coordination primitives.
+The Vortik registry tracks terminology convergence across Ethereum coordination primitives and coordination surfaces.
 
-These primitives form a layered conceptual structure representing how transaction flow, execution coordination, and protocol guarantees interact in the Ethereum ecosystem.
+These surfaces form a layered conceptual structure representing how transaction flow, execution coordination, and protocol guarantees interact across the Ethereum coordination pipeline.
 
 ---
 
 ## Conceptual Layers
 
-User Intents / Transactions  
+Order Flow (User Intents / Transactions)  
 ↓  
 Order Flow Routing (Order Flow Auctions)  
 ↓  
-Solver Coordination Networks  
+Solver Coordination  
 ↓  
-Execution Coordination Surfaces  
+Execution Coordination (ambiguous surface)  
 ↓  
-Builder Markets  
+Builder Coordination  
 ↓  
-Proposer / Builder Separation (ePBS)  
+Inclusion  
 ↓  
-Inclusion Enforcement (FOCIL / Inclusion Lists)  
+Commitment Signaling  
 ↓  
-Commitment Signaling Layers  
+Preconfirmation  
 ↓  
-Preconfirmation Networks  
-↓  
-Finality Systems (SSF research)
+Finality (SSF research)
 
 ---
 
@@ -36,15 +34,30 @@ The registry currently tracks the following anchors:
 
 | Anchor | Conceptual Layer |
 |------|------|
-| orderflowauction.eth | Order Flow Routing |
-| solverlayer.eth | Solver Coordination Networks |
-| executionmarket.eth | Execution Coordination Surface |
-| buildermarket.eth | Builder Market Structures |
-| epbs.eth | Proposer-Builder Separation |
-| inclusionlist.eth | Inclusion Enforcement |
-| commitmentlayer.eth | Commitment Signaling |
-| preconflayer.eth | Preconfirmation Networks |
-| fastfinality.eth | Finality Research |
+| `orderflowauction.eth` | Order Flow Routing |
+| `solverlayer.eth` | Solver Coordination |
+| `executionmarket.eth` | Execution Coordination (ambiguous) |
+| `buildermarket.eth` | Builder Coordination |
+| `epbs.eth` | Builder Coordination (protocol-enforced separation) |
+| `inclusionlist.eth` | Inclusion |
+| `commitmentlayer.eth` | Commitment Signaling |
+| `preconflayer.eth` | Preconfirmation |
+| `fastfinality.eth` | Finality |
+
+---
+
+## Interpretation
+
+The coordination pipeline reflects how responsibility shifts across actors and mechanisms:
+
+- early stages handle **transaction flow and routing**
+- middle layers coordinate **execution and block construction**
+- later stages enforce **inclusion guarantees and ordering commitments**
+- final stages provide **consensus-level finality**
+
+Not all layers correspond to protocol primitives.
+
+Some represent **coordination surfaces** where terminology and structure are still evolving.
 
 ---
 
@@ -52,4 +65,10 @@ The registry currently tracks the following anchors:
 
 Vortik does not implement protocol logic.
 
-Instead, the registry documents semantic convergence across Ethereum research discussions and provides lightweight metadata schemas to track terminology stabilization across coordination primitives.
+Instead, the registry:
+
+- documents semantic convergence across Ethereum research  
+- tracks coordination primitives and surfaces  
+- provides structured schemas for machine-readable semantic metadata  
+
+Its purpose is to act as a **semantic interface layer** across research, infrastructure, and protocol discussions.
