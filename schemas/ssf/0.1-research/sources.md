@@ -24,6 +24,19 @@ SSF is one of the major research directions in Ethereum consensus evolution.
 
 ---
 
+## Structural Role
+
+SSF operates at the **finality stage** of Ethereum’s coordination architecture.
+
+It affects how quickly consensus transitions from:
+
+- probabilistic inclusion  
+- to irreversible finality  
+
+This makes SSF a core research surface for understanding how Ethereum may compress the time between block proposal and economically reliable settlement.
+
+---
+
 ## Related EIPs (Context / Prerequisites)
 
 - EIP-7251 — Increase the MAX_EFFECTIVE_BALANCE  
@@ -56,13 +69,15 @@ Common terminology associated with this surface includes:
 - near-single-slot finality  
 - fast finality (non-canonical / adjacent)  
 
+Terminology across the ecosystem strongly converges on **SSF** as the canonical shorthand, while “fast finality” remains only a descriptive approximation.
+
 ---
 
 ## Status
 
 Research track (2026).
 
-Terminology across the ecosystem strongly converges on **SSF** as the canonical shorthand.
+SSF is a major consensus research direction and should be understood as a structurally important finality primitive, not merely a latency optimization.
 
 ---
 
@@ -71,3 +86,11 @@ Terminology across the ecosystem strongly converges on **SSF** as the canonical 
 Within Ethereum roadmap discussions, faster finality is treated as a major long-term consensus objective.
 
 SSF is the research surface most commonly associated with this transition and should be understood as a major consensus evolution vector rather than a simple latency improvement.
+
+---
+
+## Notes
+
+This document reflects an active consensus research surface with strong semantic convergence around the term **SSF**.
+
+It supports a repairable ENS anchor (`fastfinality.eth`) whose wording is adjacent, but not canonical.
