@@ -2,12 +2,12 @@
 
 ## Purpose
 
-This document defines the criteria required for a concept to be recognized as a valid primitive or semantic surface within the Vortik Semantic Registry.
+This document defines the criteria required for a concept to be recognized as a valid primitive or coordination surface within the Vortik Semantic Registry.
 
 It establishes the internal standard used to:
 
-- accept or reject primitives  
-- classify semantic surfaces  
+- accept or reject entries  
+- classify coordination surfaces  
 - maintain consistency across the registry  
 
 ---
@@ -20,7 +20,7 @@ It must represent:
 
 - a protocol-level mechanism  
 - a coordination role  
-- or a technically grounded interaction surface  
+- or a technically grounded coordination surface  
 
 A primitive is not:
 
@@ -39,7 +39,7 @@ A concept must satisfy at least one of the following:
 The primitive is explicitly defined or implied within:
 
 - an EIP  
-- consensus rules  
+- consensus mechanisms  
 - execution layer mechanics  
 
 ---
@@ -61,11 +61,12 @@ The primitive performs a distinct role in coordination between actors, such as:
 The primitive maps to a defined stage within the Ethereum coordination pipeline:
 
 - order flow  
-- visibility  
+- solver coordination  
 - builder coordination  
 - inclusion  
-- execution  
 - finality  
+
+Pipeline positioning is **interpretive**, but must be defensible.
 
 ---
 
@@ -79,34 +80,34 @@ The term appears in:
 
 ---
 
-## Invalid Primitives
+## Invalid Entries
 
 A concept must be rejected if:
 
 - it does not map to a real coordination role or mechanism  
 - it cannot be positioned within the pipeline  
-- it exists only as a broad abstraction (e.g. “market” without structure)  
+- it exists only as a broad abstraction without structure  
 - it has no observable usage in research or implementation  
 
 ---
 
-## Semantic Surfaces
+## Coordination Surfaces
 
 Not all valid entries are primitives.
 
-Some are **semantic surfaces**, which:
+Some are **coordination surfaces**, which:
 
 - represent emerging terminology  
 - describe coordination patterns not yet formalized  
 - may later converge into primitives  
 
-These must be explicitly classified as non-canonical.
+These must be explicitly classified using the registry classification system.
 
 ---
 
 ## Naming Requirements
 
-Each primitive must have:
+Each entry must have:
 
 - a canonical technical term  
 - a clearly defined conceptual scope  
@@ -114,7 +115,7 @@ Each primitive must have:
 
 If ENS naming deviates:
 
-→ it must be classified (e.g. repairable)
+→ it must be explicitly classified (e.g. repairable)
 
 ---
 
@@ -122,47 +123,53 @@ If ENS naming deviates:
 
 Each entry must be assigned one classification:
 
-- **core** — protocol-aligned and structurally defined  
-- **valid** — real coordination surface, not canonically fixed  
-- **premature** — unstable or early-stage terminology  
-- **speculative** — dependent on future evolution  
-- **repairable** — valid concept, naming mismatch  
-- **external** — tracked but not owned  
+- **core** — protocol-aligned primitive  
+- **valid** — stable coordination surface  
+- **repairable** — valid concept with naming misalignment  
+- **premature** — ambiguous or unstable terminology  
+
+Classification is applied at the schema level and may evolve over time.
 
 ---
 
 ## Required Fields (Schema Alignment)
 
-Each primitive must map to a schema containing:
+Each entry must map to a schema containing:
 
-- identifier  
+- id  
+- version  
 - canonical_term  
 - classification  
-- conceptual_scope  
-- pipeline_stage  
 - status  
+- type  
+- summary  
+- pipeline_position  
+- coordination_role  
+- protocol_grounding  
+- naming  
 - sources  
-- last_reviewed  
+
+Schemas represent the **machine-readable semantic layer**.
 
 ---
 
 ## Consistency Rules
 
-- A primitive cannot exist without pipeline relevance  
-- A primitive cannot be classified without justification  
-- A primitive cannot be included without observable grounding  
+- An entry cannot exist without pipeline relevance  
+- An entry cannot be classified without justification  
+- An entry cannot be included without observable grounding  
 
 ---
 
 ## Evolution Rules
 
-Primitives may change classification over time:
+Entries may change classification over time:
 
 - premature → valid  
 - valid → core  
 - repairable → aligned  
 
-The registry must reflect:
+The registry reflects:
 
 → **semantic convergence, not assumption**
 
@@ -180,8 +187,8 @@ It only recognizes and structures them.
 
 If a concept cannot be placed:
 
-- in the pipeline  
-- in coordination  
+- in the coordination pipeline  
+- in a coordination role  
 - or in observable protocol evolution  
 
 → it does not belong in the registry.
