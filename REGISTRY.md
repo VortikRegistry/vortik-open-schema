@@ -1,14 +1,14 @@
 # Vortik Semantic Registry Model
 
-The Vortik Semantic Registry documents conceptual primitives across the Ethereum protocol research ecosystem.
+The Vortik Semantic Registry documents coordination primitives and surfaces across the Ethereum protocol research ecosystem.
 
-Its goal is not to define protocol rules, but to track **semantic stabilization** across research areas and coordination primitives.
+Its goal is not to define protocol rules, but to track **semantic stabilization** across coordination layers and research domains.
 
 ---
 
 # Conceptual Model
 
-Each tracked primitive is represented through four layers:
+Each tracked entry is represented through four layers:
 
 ENS identifier  
 ↓  
@@ -18,45 +18,45 @@ Versioned schema (`/schemas/`)
 ↓  
 Human-readable anchor documentation (`/anchors/`)
 
-This separation allows stable naming through ENS while allowing the semantic model and metadata to evolve through versioned schemas.
+This separation allows stable naming through ENS while enabling the semantic model and metadata to evolve via versioned schemas.
 
 ---
 
 # Anchors
 
-Anchors represent **semantic coordination surfaces** appearing across Ethereum protocol research and execution infrastructure discussions.
+Anchors represent **coordination primitives and coordination surfaces** emerging across Ethereum research and execution infrastructure.
 
 Examples include:
 
-- proposer-builder separation
-- inclusion enforcement models
-- commitment signaling
-- preconfirmation coordination
-- builder markets
-- solver networks
-- execution coordination surfaces
-- order flow auctions
-- single-slot finality research
+- proposer-builder separation  
+- inclusion enforcement mechanisms  
+- commitment signaling  
+- preconfirmation systems  
+- builder coordination environments  
+- solver networks  
+- execution coordination (ambiguous surface)  
+- order flow auctions  
+- single-slot finality research  
 
-Anchors are intentionally minimal and serve as orientation documents rather than full specifications.
+Anchors are intentionally minimal and serve as **orientation layers**, not specifications.
 
 ---
 
 # ENS as Semantic Anchors
 
-ENS identifiers are used as neutral conceptual anchors for primitives tracked by the registry.
+ENS identifiers are used as neutral conceptual anchors for tracked primitives and surfaces.
 
-Example mappings include:
+Example mappings:
 
-epbs.eth → proposer-builder separation  
-inclusionlist.eth → inclusion enforcement models  
-preconflayer.eth → preconfirmation coordination  
-commitmentlayer.eth → commitment signaling primitives  
-buildermarket.eth → block builder market structures  
-solverlayer.eth → solver coordination networks  
-executionmarket.eth → execution coordination surfaces  
-orderflowauction.eth → order flow auction mechanisms  
-fastfinality.eth → single-slot finality research  
+epbs.eth → enshrined proposer-builder separation  
+inclusionlist.eth → inclusion enforcement (FOCIL)  
+preconflayer.eth → preconfirmation systems  
+commitmentlayer.eth → commitment signaling  
+buildermarket.eth → builder coordination  
+solverlayer.eth → solver networks  
+executionmarket.eth → execution coordination (ambiguous term)  
+orderflowauction.eth → order flow auctions  
+fastfinality.eth → single-slot finality (SSF)  
 
 These identifiers provide stable conceptual anchors independent of implementation changes or terminology drift.
 
@@ -64,20 +64,19 @@ These identifiers provide stable conceptual anchors independent of implementatio
 
 # Registry Scope
 
-The registry currently tracks primitives related to:
+The registry tracks coordination surfaces emerging across the Ethereum coordination pipeline, including:
 
-- proposer-builder separation (PBS / ePBS)
-- builder markets and block construction coordination
-- inclusion enforcement (FOCIL and related models)
-- commitment signaling layers
-- preconfirmation coordination
-- solver coordination networks
-- execution coordination surfaces
-- order flow auction systems
-- intent-based execution architectures
-- single-slot finality research
+- proposer-builder separation (PBS / ePBS)  
+- builder coordination and block construction  
+- inclusion enforcement (FOCIL and related mechanisms)  
+- commitment signaling layers  
+- preconfirmation systems  
+- solver coordination networks  
+- execution coordination (ambiguous surface)  
+- order flow auction routing systems  
+- single-slot finality research  
 
-New anchors may be added when research areas converge around stable terminology.
+New anchors may be introduced when research areas demonstrate **observable semantic convergence**.
 
 ---
 
@@ -85,4 +84,30 @@ New anchors may be added when research areas converge around stable terminology.
 
 The Vortik registry is not a governance body and does not define protocol standards.
 
-It exists purely as a documentation and semantic alignment layer for Ethereum coordination primitives.
+It exists as a **semantic and documentation layer** for Ethereum coordination primitives and surfaces.
+
+Its role is to:
+
+- reduce ambiguity  
+- track terminology convergence  
+- provide a consistent semantic reference across research and infrastructure  
+
+---
+
+# Design Principle
+
+The registry does not create primitives.
+
+It recognizes, structures, and tracks them as they emerge from:
+
+- protocol research  
+- implementation patterns  
+- coordination mechanisms  
+
+---
+
+# Final Note
+
+Semantic structure precedes standardization.
+
+The registry exists to make that structure explicit.
