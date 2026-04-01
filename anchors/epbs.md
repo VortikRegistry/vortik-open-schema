@@ -49,7 +49,7 @@ ePBS defines a protocol-level coordination interface between:
 - builders  
 - execution payload selection mechanisms  
 
-It replaces off-protocol coordination (for example, relay-based PBS) with an enshrined mechanism inside the protocol.
+It replaces off-protocol coordination (for example, relay-based PBS) with an enshrined mechanism enforced by the protocol.
 
 ---
 
