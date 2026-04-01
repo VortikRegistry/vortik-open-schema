@@ -12,9 +12,9 @@
 
 This anchor tracks **Enshrined Proposer-Builder Separation (ePBS)** as a protocol-level coordination primitive within Ethereum.
 
-ePBS formalizes the separation between block proposal and execution payload construction at the protocol level.
+ePBS formalizes the separation between block proposal and execution payload construction directly at the protocol level.
 
-It is one of the clearest examples of semantic convergence toward canonical terminology in Ethereum’s coordination architecture.
+It represents one of the clearest cases of semantic convergence toward a canonical primitive in Ethereum’s coordination architecture.
 
 ---
 
@@ -31,6 +31,7 @@ By moving PBS into the protocol layer, ePBS restructures:
 - block construction responsibilities  
 - proposer roles  
 - execution payload selection  
+- coordination pathways between actors  
 
 ---
 
@@ -48,7 +49,7 @@ ePBS defines a protocol-level coordination interface between:
 - builders  
 - execution payload selection mechanisms  
 
-It replaces off-protocol coordination with an enshrined mechanism inside the protocol.
+It replaces off-protocol coordination (e.g. relay-based PBS) with an enshrined mechanism enforced by the protocol.
 
 ---
 
@@ -63,12 +64,28 @@ This primitive is grounded in:
 
 ---
 
+## Semantic Stability
+
+The term **ePBS** has reached strong semantic convergence across research, client discussions, and roadmap planning.
+
+Its coupling to a specific protocol upgrade (EIP-7732) makes it highly likely to remain stable as a canonical term.
+
+---
+
+## Structural Importance
+
+ePBS represents a transition from **off-protocol coordination** to **protocol-enforced coordination**.
+
+This shift marks a fundamental change in Ethereum’s execution architecture, redefining how block construction and proposer roles interact at the consensus level.
+
+---
+
 ## Naming Alignment
 
 - **ENS anchor:** `epbs.eth`  
 - **Canonical primitive name:** Enshrined Proposer-Builder Separation (ePBS)  
 
-Naming is aligned and stable.
+Naming is aligned, stable, and widely adopted across the ecosystem.
 
 ---
 
@@ -83,7 +100,7 @@ Naming is aligned and stable.
 
 ## Status
 
-Draft EIP with active protocol relevance.
+Draft EIP with active protocol relevance and high likelihood of long-term semantic stability.
 
 ---
 
