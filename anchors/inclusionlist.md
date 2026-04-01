@@ -10,41 +10,52 @@
 
 ## Summary
 
-This anchor tracks **Inclusion Lists**, including **Fork-Choice Enforced Inclusion Lists (FOCIL)**, as a protocol-level mechanism for enforcing transaction inclusion guarantees within Ethereum.
+This anchor tracks **Inclusion Lists**, including **Fork-Choice Enforced Inclusion Lists (FOCIL)**, as a protocol-level mechanism for enforcing transaction inclusion constraints within Ethereum.
 
-This surface represents a coordination mechanism focused on censorship resistance and inclusion enforcement.
+Rather than coordinating transaction selection, inclusion lists impose **constraints on block construction**, limiting the ability of proposers and builders to exclude specific transactions.
 
 ---
 
 ## Context
 
-Inclusion lists are mechanisms designed to mitigate transaction censorship in block construction.
+Inclusion lists are designed to mitigate transaction censorship in block construction by introducing protocol-level constraints on inclusion.
 
-They introduce constraints that ensure certain transactions cannot be indefinitely excluded from the block production pipeline.
+They ensure that certain transactions cannot be indefinitely excluded from the execution pipeline.
 
-FOCIL extends this concept by integrating inclusion enforcement directly into fork choice rules.
+FOCIL extends this mechanism by integrating inclusion enforcement directly into fork-choice rules, making inclusion constraints part of consensus dynamics rather than optional coordination.
 
 The primary specification associated with this surface is **EIP-7805**.
-
-Inclusion lists aim to strengthen censorship resistance while preserving Ethereum’s consensus properties.
 
 ---
 
 ## Pipeline Position
 
-Inclusion
+Inclusion (Constraint Layer)
 
 ---
 
 ## Coordination Role
 
-Inclusion lists introduce constraints on proposer behavior by requiring the inclusion of specific transactions.
+Inclusion lists do not coordinate actors directly.
 
-They affect coordination between:
+Instead, they constrain coordination by:
 
-- proposers  
-- transaction selection logic  
-- mempool visibility mechanisms  
+- limiting proposer discretion over transaction inclusion  
+- restricting builder optimization strategies  
+- enforcing inclusion requirements through fork-choice dynamics  
+
+They reshape how transaction selection interacts with consensus.
+
+---
+
+## Constraint Dynamics
+
+FOCIL introduces a structural tension between:
+
+- **block value maximization** (builder incentives)  
+- **mandatory inclusion constraints** (protocol enforcement)  
+
+This creates a constrained optimization environment in which builders and proposers must satisfy inclusion requirements while attempting to preserve economic efficiency.
 
 ---
 
@@ -53,9 +64,31 @@ They affect coordination between:
 This mechanism is grounded in:
 
 - EIP-7805  
-- Ethereum research discussions on inclusion enforcement  
+- Ethereum research on inclusion enforcement  
 - fork-choice rule modifications  
 - censorship resistance design work  
+
+---
+
+## Structural Importance
+
+FOCIL represents a shift from **discretionary inclusion** to **protocol-constrained inclusion**.
+
+This changes:
+
+- how transaction selection power is exercised  
+- how censorship resistance is enforced  
+- how builder and proposer roles interact under constraints  
+
+It introduces inclusion as a **protocol-enforced boundary condition**, not a coordination outcome.
+
+---
+
+## Semantic Stability
+
+The term **Inclusion Lists** is broadly used, while **FOCIL** provides a more precise reference to fork-choice enforced implementations.
+
+Semantic convergence is ongoing but progressing toward stable terminology.
 
 ---
 
@@ -64,22 +97,22 @@ This mechanism is grounded in:
 - **ENS anchor:** `inclusionlist.eth`  
 - **Canonical terms:** Inclusion Lists / FOCIL  
 
-Naming is partially stabilized, with ongoing convergence between generic terminology and specific mechanism naming.
+Naming is partially stabilized, with increasing adoption of FOCIL in technical discussions.
 
 ---
 
 ## Registry Role
 
 - Track semantic convergence between inclusion lists and FOCIL  
-- Document inclusion enforcement mechanisms  
-- Provide a stable semantic reference for inclusion-related primitives  
-- Map inclusion guarantees within Ethereum’s coordination pipeline  
+- Document constraint-based inclusion mechanisms  
+- Distinguish inclusion enforcement from coordination layers  
+- Map inclusion constraints within Ethereum’s coordination pipeline  
 
 ---
 
 ## Status
 
-Draft EIP with active research and specification development.
+Draft EIP with high protocol relevance and active research development.
 
 ---
 
