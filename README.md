@@ -23,22 +23,25 @@ Its purpose is to provide a **consistent semantic reference layer** across proto
 
 ## Research Layer
 
-### Security Hourglass — Coordination Compression
+Vortik includes independent structural research exploring coordination dynamics across Ethereum.
 
-This registry is complemented by a structural model describing coordination compression across Ethereum:
+### Security Hourglass — Coordination Compression Model
 
-→ ./docs/security-hourglass/
+A structural model describing how coordination pressure compresses across Ethereum layers:
 
-The document explores how:
+- Order flow & execution  
+- Builder markets (ePBS)  
+- Inclusion enforcement (FOCIL)  
+- Commitment & preconfirmation layers  
+- Finality (SSF research track)  
 
-- ePBS  
-- Inclusion Lists  
-- Preconfirmations  
-- Builder and Solver coordination  
+📄 Read the full document:  
+https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/security-hourglass/Security_Hourglass_Model_V5_1E_Final_Designed.pdf
 
-are converging into a constrained coordination system.
+📂 Explore the section:  
+https://github.com/VortikRegistry/vortik-open-schema/tree/main/docs/security-hourglass
 
-It provides the conceptual framing behind this registry.
+This model provides the conceptual framing behind the registry.
 
 ---
 
@@ -56,9 +59,7 @@ It provides the conceptual framing behind this registry.
 | `orderflowauction.eth` | Order flow auctions (OFA) | valid |
 | `executionmarket.eth` | Execution coordination (ambiguous term) | premature |
 
-These anchors are not arbitrary labels.
-
-They reflect emerging semantic convergence across Ethereum coordination architecture.
+These anchors reflect emerging semantic convergence across Ethereum coordination architecture.
 
 ---
 
@@ -133,7 +134,7 @@ This architecture separates:
 
 The registry follows a semantic-first approach:
 
-- terminology is tracked before formal standardization  
+- terminology stabilizes before formal standardization  
 - primitives are classified by protocol grounding and stability  
 - ambiguous terminology is explicitly marked and not canonized prematurely  
 
@@ -145,18 +146,15 @@ Each surface is documented through:
 
 ---
 
-## Schema Model
+## Strategic Context
 
-Schemas describe coordination surfaces using:
+As Ethereum coordination layers evolve:
 
-- canonical_term  
-- classification (core / valid / repairable / premature)  
-- pipeline_position  
-- coordination_role  
-- protocol_grounding  
-- naming (ENS mapping)  
+- terminology tends to stabilize before standards  
+- coordination surfaces compress into fewer critical layers  
+- naming becomes infrastructure  
 
-This enables consistent comparison across layers of the Ethereum coordination stack.
+This registry operates at that intersection.
 
 ---
 
