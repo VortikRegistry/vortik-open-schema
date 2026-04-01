@@ -1,34 +1,44 @@
-name: Validate Registry
+name: Validate Registry Files
 
 on:
   push:
     paths:
       - "registry.json"
       - "registry.schema.json"
+      - "anchors.index.json"
+      - "maps/*.json"
   pull_request:
     paths:
       - "registry.json"
       - "registry.schema.json"
+      - "anchors.index.json"
+      - "maps/*.json"
 
 jobs:
-  validate:
+  validate-registry:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: Install validator
+      - name: Install AJV CLI
         run: npm install -g ajv-cli
 
-      - name: Validate registry.json
+      - name: Validate registry.json against registry.schema.json
         run: |
           ajv validate \
             --spec=draft7 \
+            --all-errors \
             -s registry.schema.json \
             -d registry.json
+
+      - name: Check JSON file formatting
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('registry.json','utf8')); console.log('registry.json OK')"
+          node -e "JSON.parse(require('fs').readFileSync('registry.schema.json','utf8')); console.log('registry.schema.json OK')"
