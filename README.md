@@ -85,6 +85,32 @@ Finality (SSF)
 
 ---
 
+## Coordination Stack (derived from registry)
+
+```text
+Order Flow Auctions
+↓
+Solver Networks
+↓
+Execution Coordination
+↓
+Builder Markets
+↓
+ePBS
+↓
+Inclusion Lists / FOCIL
+↓
+Commitment Signaling
+↓
+Preconfirmation Systems
+↓
+Single-Slot Finality
+```
+
+Source: [`coordination-map.txt`](coordination-map.txt)
+
+---
+
 ## Coordination Stack
 
 Ethereum is increasingly understood as a coordination system rather than only an execution engine.
