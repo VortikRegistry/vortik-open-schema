@@ -1,17 +1,13 @@
-# Coordination Map
+# Coordination Pipeline (Ethereum 2026)
 
-Order Flow Auctions
+Order Flow Routing
 ↓
-Solver Networks
+Solver Coordination
 ↓
-Execution Coordination
+Builder Construction
 ↓
-Builder Markets
+ePBS (Proposer-Builder Separation)
 ↓
-ePBS
+Inclusion Constraints (FOCIL)
 ↓
-Inclusion Lists / FOCIL
-↓
-Commitment Signaling
-↓
-Preconfirmation Systems
+Finality (Single-Slot Finality)
