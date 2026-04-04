@@ -54,7 +54,7 @@ This changes:
 - how proposer roles interact with builders  
 - how execution markets interface with consensus  
 
-This shift is structurally irreversible once adopted at the protocol level.
+This shift would represent a structurally significant transition once adopted at the protocol level.
 
 ---
 
