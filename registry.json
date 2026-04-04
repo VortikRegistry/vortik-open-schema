@@ -67,7 +67,7 @@
       "classification": "valid",
       "status": "research",
       "type": "market",
-      "role": "competition and coordination between block builders",
+      "role": "builder-level competition and payload construction coordination",
       "schema": "schemas/buildermarket/0.1-research/schema.json",
       "anchor_doc": "anchors/buildermarket.md"
     },
@@ -78,7 +78,7 @@
       "classification": "repairable",
       "status": "research",
       "type": "market",
-      "role": "solver-based execution coordination and routing",
+      "role": "solver coordination over execution routing and intent fulfillment",
       "schema": "schemas/solverlayer/0.1-research/schema.json",
       "anchor_doc": "anchors/solverlayer.md"
     },
@@ -89,7 +89,7 @@
       "classification": "premature",
       "status": "research",
       "type": "market",
-      "role": "ambiguous execution coordination layer between routing and block construction",
+      "role": "ambiguous execution coordination surface between routing and block construction",
       "schema": "schemas/executionmarket/0.1-research/schema.json",
       "anchor_doc": "anchors/executionmarket.md"
     },
@@ -100,7 +100,7 @@
       "classification": "valid",
       "status": "research",
       "type": "market",
-      "role": "auction-based routing of transaction order flow",
+      "role": "auction-based control and routing of transaction order flow",
       "schema": "schemas/orderflowauction/0.1-research/schema.json",
       "anchor_doc": "anchors/orderflowauction.md"
     }
