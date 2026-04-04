@@ -4,7 +4,7 @@ Order Flow Routing
 ↓
 Solver Coordination
 ↓
-Builder Construction
+Payload Construction
 ↓
 ePBS (Proposer-Builder Separation)
 ↓
