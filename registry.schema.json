@@ -22,6 +22,9 @@
       "type": "string",
       "enum": ["schemas"]
     },
+    "last_updated": {
+      "type": "string"
+    },
     "anchors": {
       "type": "array",
       "items": {
@@ -29,6 +32,11 @@
         "required": [
           "id",
           "ens",
+          "canonical_term",
+          "classification",
+          "status",
+          "type",
+          "role",
           "schema",
           "anchor_doc"
         ],
@@ -37,6 +45,32 @@
             "type": "string"
           },
           "ens": {
+            "type": "string"
+          },
+          "canonical_term": {
+            "type": "string"
+          },
+          "classification": {
+            "type": "string",
+            "enum": [
+              "core",
+              "valid",
+              "repairable",
+              "premature"
+            ]
+          },
+          "status": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "primitive",
+              "mechanism",
+              "market"
+            ]
+          },
+          "role": {
             "type": "string"
           },
           "schema": {
@@ -75,7 +109,13 @@
           },
           "category": {
             "type": "string",
-            "enum": ["primitive", "market", "standard", "coordination-surface", "mechanism"]
+            "enum": [
+              "primitive",
+              "market",
+              "standard",
+              "coordination-surface",
+              "mechanism"
+            ]
           },
           "coverage_status": {
             "type": "string"
