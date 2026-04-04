@@ -2,29 +2,24 @@ import fs from "fs";
 
 const registry = JSON.parse(fs.readFileSync("registry.json", "utf8"));
 
+// 🔥 pipeline real (actualizado)
 const order = [
   "orderflowauction",
   "solverlayer",
-  "executionmarket",
   "buildermarket",
   "epbs",
   "inclusionlist",
-  "commitmentlayer",
-  "preconflayer",
-  "fastfinality"
+  "ssf"
 ];
 
-// 👇 etiquetas más claras (clave)
+// 👇 etiquetas alineadas con narrativa actual
 const labels = {
-  orderflowauction: "Order Flow Auctions",
-  solverlayer: "Solver Networks",
-  executionmarket: "Execution Coordination",
-  buildermarket: "Builder Markets",
-  epbs: "ePBS",
-  inclusionlist: "Inclusion Lists / FOCIL",
-  commitmentlayer: "Commitment Signaling",
-  preconflayer: "Preconfirmation Systems",
-  fastfinality: "Single-Slot Finality"
+  orderflowauction: "Order Flow Routing",
+  solverlayer: "Solver Coordination",
+  buildermarket: "Builder Construction",
+  epbs: "ePBS (Proposer-Builder Separation)",
+  inclusionlist: "Inclusion Constraints (FOCIL)",
+  ssf: "Finality (Single-Slot Finality)"
 };
 
 const map = [];
@@ -36,7 +31,7 @@ for (const id of order) {
   }
 }
 
-const output = `# Coordination Map
+const output = `# Coordination Pipeline (Ethereum 2026)
 
 ${map.join("\n↓\n")}
 `;
