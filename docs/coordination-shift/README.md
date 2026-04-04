@@ -1,5 +1,5 @@
 # VORTIK SEMANTIC REGISTRY  
-## Coordination Shift Report — v2 (Investor / Research Grade)  
+## Coordination Shift Report — v2 (Refined / Institutional Grade)  
 ### Ethereum Coordination & Settlement Dynamics (2026)
 
 ---
@@ -8,11 +8,11 @@
 
 Ethereum is undergoing a structural transition from an internally coordinated execution system toward a settlement layer validating externally coordinated outcomes.
 
-This shift is driven by the emergence of off-chain coordination markets, including:
+This shift is driven by the emergence of external coordination mechanisms, including:
 
-- order flow auctions  
-- solver networks  
-- builder competition  
+- order flow routing systems  
+- solver-based execution coordination  
+- builder-level payload construction  
 
 The protocol increasingly acts as a constraint and settlement mechanism rather than the primary coordination layer.
 
@@ -23,6 +23,8 @@ This transformation introduces:
 - semantic instability  
 
 Critically, execution and validation are no longer co-located, creating a structural separation between economic coordination and protocol enforcement.
+
+Ethereum is transitioning from execution coordination to **constraint enforcement over externally generated outcomes**.
 
 This separation redefines Ethereum from an execution system into a constraint system.
 
@@ -43,7 +45,7 @@ Externally coordinated execution + protocol-constrained settlement
 - Enshrined Proposer-Builder Separation (ePBS)  
 - Inclusion Lists / FOCIL  
 - Solver-based execution systems  
-- Order flow marketization  
+- Externalized order flow routing  
 - Preconfirmation mechanisms  
 
 This transition decouples:
@@ -51,13 +53,25 @@ This transition decouples:
 - execution agency (who determines outcomes)  
 - validation authority (who enforces correctness)  
 
+Coordination is no longer protocol-native.
+
 As a result, Ethereum no longer determines *what* happens, only *whether* outcomes are valid.
 
 ---
 
-## 3. COORDINATION STACK MODEL
+## 3. COORDINATION PIPELINE MODEL
 
-Order Flow ↓ Solver Networks ↓ Execution / Intent Markets ↓ Builder Market ↓ ePBS (Proposer-Builder Separation) ↓ Inclusion Constraints (FOCIL / Inclusion Lists) ↓ Finality (Consensus Layer)
+Order Flow  
+↓  
+Solvers  
+↓  
+Builders  
+↓  
+ePBS (Proposer-Builder Separation)  
+↓  
+Inclusion Constraints (FOCIL / Inclusion Lists)  
+↓  
+Finality (Consensus Layer)
 
 ### Interpretation
 
@@ -65,7 +79,9 @@ Order Flow ↓ Solver Networks ↓ Execution / Intent Markets ↓ Builder Market
 - Middle layers constrain inclusion  
 - Lower layers finalize state  
 
-This stack forms an asynchronous coordination pipeline in which execution precedes validation and is only partially constrained by it.
+This structure is a coordination pipeline, not a stack of markets.
+
+Execution precedes validation and is only partially constrained by it.
 
 The protocol validates outcomes it does not originate.
 
@@ -77,13 +93,13 @@ The protocol validates outcomes it does not originate.
 
 Execution decisions increasingly occur before consensus:
 
-- solvers determine optimal execution paths  
-- builders compete on transaction ordering  
-- order flow is auctioned and routed externally  
+- solvers determine execution paths  
+- builders construct payloads  
+- order flow is routed externally  
 
 Execution becomes a competitive, latency-sensitive process operating outside protocol boundaries.
 
-Outcome formation migrates to external coordination layers.
+Outcome formation migrates to external coordination systems.
 
 ---
 
@@ -92,10 +108,12 @@ Outcome formation migrates to external coordination layers.
 Ethereum enforces:
 
 - validity constraints  
-- partial inclusion guarantees  
+- inclusion constraints  
 - final state settlement  
 
 It does **not** determine execution strategy.
+
+The protocol has lost execution agency.
 
 This introduces a structural asymmetry:  
 the protocol enforces correctness without controlling the process that generates outcomes.
@@ -115,7 +133,7 @@ Key coordination mechanisms now operate outside L1:
 
 Coordination is externalized, while enforcement remains internal to the protocol.
 
-This creates a layered system where economic coordination and protocol guarantees evolve independently.
+This creates a system where economic coordination and protocol guarantees evolve independently.
 
 ---
 
@@ -147,16 +165,14 @@ These failure modes emerge from the misalignment between coordination incentives
 
 ---
 
-## 6. MARKET STRUCTURE IMPLICATIONS
+## 6. COORDINATION STRUCTURE IMPLICATIONS
 
-- execution becomes market-driven  
-- coordination shifts off-chain  
+- execution is actor-driven  
+- coordination is externalized  
 - protocol neutrality becomes conditional  
-- economic actors gain dominant influence  
+- power concentrates in coordination interfaces  
 
-Markets increasingly determine outcomes, while the protocol validates them under constraint.
-
-Economic coordination becomes the primary driver of system behavior.
+External coordination becomes the primary driver of system behavior.
 
 ---
 
@@ -173,6 +189,8 @@ This creates friction in:
 - research alignment  
 - implementation clarity  
 - infrastructure interoperability  
+
+Naming convergence lags behind structural convergence.
 
 Terminology stabilizes before systems do, creating a critical window for semantic capture.
 
@@ -204,13 +222,13 @@ Without semantic convergence, coordination systems cannot be reliably understood
 
 Ethereum is evolving into:
 
-a constraint-based settlement layer validating externally coordinated economic systems
+a constraint-based settlement layer validating externally coordinated outcomes
 
 The dominant question becomes:
 
 who controls the coordination layers above consensus?
 
-Control over execution is migrating away from the protocol toward specialized, competitive actors.
+Control over outcome formation is migrating away from the protocol toward specialized actors coordinating outside it.
 
 Power follows coordination. Coordination follows structure.
 
@@ -234,6 +252,22 @@ The system is no longer defined by how blocks are produced,
 but by how coordination is structured.
 
 The critical layer is no longer execution — it is coordination.
+
+---
+
+## 11. STRUCTURAL REFRAMING
+
+Ethereum should no longer be modeled as a market system.
+
+It is a:
+
+- coordination pipeline  
+- constraint system  
+- validation machine  
+
+Economic activity occurs outside the protocol.
+
+The protocol enforces boundaries, not decisions.
 
 ---
 
