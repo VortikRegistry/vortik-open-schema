@@ -10,17 +10,17 @@ It supports the semantic anchoring of `fastfinality.eth` within the Vortik Seman
 
 ## Research Context
 
-Single-Slot Finality (SSF) refers to research aimed at reducing Ethereum finality latency so that blocks can become final within a single slot or near-single-slot timeframes.
+Single-Slot Finality (SSF) refers to a class of research efforts aimed at reducing Ethereum finality latency such that blocks may become final within a single slot or near-single-slot timeframe.
 
 This surface is associated with research into:
 
-- faster consensus finality  
-- validator coordination  
-- committee structure  
+- accelerated consensus finality  
+- validator coordination dynamics  
+- committee design and scaling  
 - signature aggregation  
 - consensus-path latency constraints  
 
-SSF is one of the major research directions in Ethereum consensus evolution.
+SSF represents a major research direction in the evolution of Ethereum consensus.
 
 ---
 
@@ -31,9 +31,9 @@ SSF operates at the **finality stage** of Ethereum’s coordination architecture
 It affects how quickly consensus transitions from:
 
 - probabilistic inclusion  
-- to irreversible finality  
+- to economically irreversible finality  
 
-This makes SSF a core research surface for understanding how Ethereum may compress the time between block proposal and economically reliable settlement.
+This positions SSF as a core research surface for understanding how Ethereum may compress the latency between block proposal and reliable settlement.
 
 ---
 
@@ -69,7 +69,7 @@ Common terminology associated with this surface includes:
 - near-single-slot finality  
 - fast finality (non-canonical / adjacent)  
 
-Terminology across the ecosystem strongly converges on **SSF** as the canonical shorthand, while “fast finality” remains only a descriptive approximation.
+Terminology across the ecosystem converges strongly on **SSF** as the canonical shorthand, while “fast finality” remains a descriptive approximation rather than a formally adopted term.
 
 ---
 
@@ -77,15 +77,15 @@ Terminology across the ecosystem strongly converges on **SSF** as the canonical 
 
 Research track (2026).
 
-SSF is a major consensus research direction and should be understood as a structurally important finality primitive, not merely a latency optimization.
+SSF is a major consensus research direction and should be understood as a structurally significant finality primitive, not merely a latency optimization.
 
 ---
 
 ## Roadmap Context
 
-Within Ethereum roadmap discussions, faster finality is treated as a major long-term consensus objective.
+Within Ethereum roadmap discussions, faster finality is treated as a long-term consensus objective.
 
-SSF is the research surface most commonly associated with this transition and should be understood as a major consensus evolution vector rather than a simple latency improvement.
+SSF is the primary research surface associated with this transition and should be understood as a major consensus evolution vector rather than a simple performance improvement.
 
 ---
 
