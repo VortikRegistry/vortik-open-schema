@@ -37,7 +37,7 @@
     },
     "classification": {
       "type": "string",
-      "const": "ecosystem-aligned",
+      "const": "valid",
       "description": "Semantic classification within the Vortik registry."
     },
     "status": {
