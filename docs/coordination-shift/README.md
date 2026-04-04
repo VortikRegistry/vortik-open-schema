@@ -1,6 +1,5 @@
-
 # VORTIK SEMANTIC REGISTRY  
-## Coordination Shift Report — v2 (Investor / Research Grade)  
+## Coordination Shift Report — v2.1 (Investor / Research Grade)  
 ### Ethereum Coordination & Settlement Dynamics (2026)
 
 ---
@@ -23,6 +22,8 @@ This transformation introduces:
 - systemic risks  
 - semantic instability  
 
+Critically, Ethereum is entering a regime where execution and validation are no longer co-located.
+
 ---
 
 ## 2. SYSTEM TRANSFORMATION
@@ -33,7 +34,7 @@ Protocol-coordinated execution
 
 ### Emerging Model
 
-Externally coordinated execution + protocol settlement  
+Externally coordinated execution + constraint-based protocol settlement  
 
 ### Key Transition Drivers
 
@@ -43,9 +44,14 @@ Externally coordinated execution + protocol settlement
 - Order flow marketization  
 - Preconfirmation mechanisms  
 
+This transition introduces a structural decoupling between:
+
+- execution agency  
+- validation authority  
+
 ---
 
-## 3. COORDINATION STACK MODEL
+## 3. ASYNCHRONOUS COORDINATION PIPELINE
 
 Order Flow ↓ Solver Networks ↓ Execution / Intent Markets ↓ Builder Market ↓ ePBS (Proposer-Builder Separation) ↓ Inclusion Constraints (FOCIL / Inclusion Lists) ↓ Finality (Consensus Layer)
 
@@ -54,6 +60,10 @@ Order Flow ↓ Solver Networks ↓ Execution / Intent Markets ↓ Builder Market
 - Upper layers define execution outcomes  
 - Middle layers constrain inclusion  
 - Lower layers finalize state  
+
+This pipeline is inherently asynchronous.
+
+Execution decisions occur before validation, and validation enforces constraints on outcomes it did not originate.
 
 ---
 
@@ -67,6 +77,8 @@ Execution decisions increasingly occur before consensus:
 - builders compete on transaction ordering  
 - order flow is auctioned and routed externally  
 
+Execution becomes a competitive, latency-sensitive process outside the protocol.
+
 ---
 
 ### 4.2 Protocol Role Shift
@@ -79,6 +91,10 @@ Ethereum enforces:
 
 It does **not** determine execution strategy.
 
+This introduces a structural paradox:
+
+the protocol enforces correctness without controlling the process that produces outcomes.
+
 ---
 
 ### 4.3 Externalization of Coordination
@@ -89,6 +105,8 @@ Key coordination mechanisms now operate outside L1:
 - RFQ systems  
 - solver coordination networks  
 - latency-sensitive routing layers  
+
+Coordination is externalized, while enforcement remains internal.
 
 ---
 
@@ -125,6 +143,8 @@ Key coordination mechanisms now operate outside L1:
 - protocol neutrality becomes conditional  
 - economic actors gain dominant influence  
 
+Markets define outcomes. The protocol validates them.
+
 ---
 
 ## 7. SEMANTIC INSTABILITY
@@ -140,6 +160,8 @@ This creates friction in:
 - research alignment  
 - implementation clarity  
 - infrastructure interoperability  
+
+Terminology stabilizes before systems do.
 
 ---
 
@@ -157,23 +179,59 @@ Vortik operates as a semantic infrastructure layer over emerging coordination sy
 ### Positioning
 
 Vortik does **not** define protocol rules.  
-It documents and stabilizes the semantic layer of evolving coordination systems.
+It stabilizes the language describing systems that are still forming.
 
 ---
 
-## 9. STRATEGIC THESIS
+## 9. ACTOR IMPLICATIONS
+
+### Builders
+
+- gain execution power  
+- compete on ordering, latency, and access to order flow  
+- constrained by inclusion rules and proposer selection  
+
+---
+
+### Validators / Proposers
+
+- reduced role in execution  
+- increased role in enforcement and selection  
+- depend on external actors for block construction  
+
+---
+
+### Users / Order Flow Originators
+
+- execution quality depends on off-chain systems  
+- increasing reliance on private routing and intermediaries  
+- reduced transparency in execution paths  
+
+---
+
+### Protocol
+
+- transitions from coordinator to constraint system  
+- enforces validity and partial fairness  
+- does not control economic ordering  
+
+---
+
+## 10. STRATEGIC THESIS
 
 Ethereum is evolving into:
 
-a settlement layer validating externally coordinated economic systems
+a constraint-based settlement layer validating externally coordinated economic systems
 
 The dominant question becomes:
 
 who controls the coordination layers above consensus?
 
+Control over execution migrates away from the protocol toward specialized actors.
+
 ---
 
-## 10. CONCLUSION
+## 11. CONCLUSION
 
 The shift toward external coordination introduces:
 
@@ -187,6 +245,9 @@ Understanding Ethereum now requires:
 - risk analysis  
 - semantic stabilization  
 
+The system is no longer defined by how blocks are produced,  
+but by how coordination is structured.
+
 ---
 
 ## FINAL NOTE
@@ -199,4 +260,5 @@ Vortik exists at the intersection of:
 
 ---
 
-Mapping the system before it stabilizes.
+Control follows coordination.  
+Coordination follows naming.
