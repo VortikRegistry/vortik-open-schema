@@ -1,13 +1,13 @@
-# Coordination Pipeline (Ethereum 2026)
+# Ethereum Coordination Pipeline (2026)
 
-Order Flow Routing
-↓
-Solver Coordination
-↓
-Payload Construction
-↓
-ePBS (Proposer-Builder Separation)
-↓
-Inclusion Constraints (FOCIL)
-↓
+Order Flow Routing  
+↓  
+Solver Coordination  
+↓  
+Payload Construction (Builders)  
+↓  
+ePBS (Proposer-Builder Separation)  
+↓  
+Inclusion Constraints (FOCIL)  
+↓  
 Finality (Single-Slot Finality)
