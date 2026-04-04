@@ -1,5 +1,5 @@
 # VORTIK SEMANTIC REGISTRY  
-## Coordination Shift Report — v2.1 (Investor / Research Grade)  
+## Coordination Shift Report — v2 (Investor / Research Grade)  
 ### Ethereum Coordination & Settlement Dynamics (2026)
 
 ---
@@ -22,7 +22,7 @@ This transformation introduces:
 - systemic risks  
 - semantic instability  
 
-Critically, Ethereum is entering a regime where execution and validation are no longer co-located.
+Critically, execution and validation are no longer co-located, creating a structural separation between economic coordination and protocol enforcement.
 
 ---
 
@@ -34,7 +34,7 @@ Protocol-coordinated execution
 
 ### Emerging Model
 
-Externally coordinated execution + constraint-based protocol settlement  
+Externally coordinated execution + protocol settlement  
 
 ### Key Transition Drivers
 
@@ -44,14 +44,14 @@ Externally coordinated execution + constraint-based protocol settlement
 - Order flow marketization  
 - Preconfirmation mechanisms  
 
-This transition introduces a structural decoupling between:
+This transition decouples:
 
-- execution agency  
-- validation authority  
+- execution agency (who determines outcomes)  
+- validation authority (who enforces correctness)  
 
 ---
 
-## 3. ASYNCHRONOUS COORDINATION PIPELINE
+## 3. COORDINATION STACK MODEL
 
 Order Flow ↓ Solver Networks ↓ Execution / Intent Markets ↓ Builder Market ↓ ePBS (Proposer-Builder Separation) ↓ Inclusion Constraints (FOCIL / Inclusion Lists) ↓ Finality (Consensus Layer)
 
@@ -61,9 +61,7 @@ Order Flow ↓ Solver Networks ↓ Execution / Intent Markets ↓ Builder Market
 - Middle layers constrain inclusion  
 - Lower layers finalize state  
 
-This pipeline is inherently asynchronous.
-
-Execution decisions occur before validation, and validation enforces constraints on outcomes it did not originate.
+This stack forms an asynchronous coordination pipeline, where execution precedes validation and is only partially constrained by it.
 
 ---
 
@@ -77,7 +75,7 @@ Execution decisions increasingly occur before consensus:
 - builders compete on transaction ordering  
 - order flow is auctioned and routed externally  
 
-Execution becomes a competitive, latency-sensitive process outside the protocol.
+Execution becomes a competitive, latency-sensitive process operating outside protocol boundaries.
 
 ---
 
@@ -91,9 +89,8 @@ Ethereum enforces:
 
 It does **not** determine execution strategy.
 
-This introduces a structural paradox:
-
-the protocol enforces correctness without controlling the process that produces outcomes.
+This introduces a structural asymmetry:  
+the protocol enforces correctness without controlling the process that generates outcomes.
 
 ---
 
@@ -106,7 +103,7 @@ Key coordination mechanisms now operate outside L1:
 - solver coordination networks  
 - latency-sensitive routing layers  
 
-Coordination is externalized, while enforcement remains internal.
+Coordination is externalized, while enforcement remains internal to the protocol.
 
 ---
 
@@ -143,7 +140,7 @@ Coordination is externalized, while enforcement remains internal.
 - protocol neutrality becomes conditional  
 - economic actors gain dominant influence  
 
-Markets define outcomes. The protocol validates them.
+Markets increasingly determine outcomes, while the protocol validates them under constraint.
 
 ---
 
@@ -161,7 +158,7 @@ This creates friction in:
 - implementation clarity  
 - infrastructure interoperability  
 
-Terminology stabilizes before systems do.
+Terminology stabilizes before systems do, creating a critical window for semantic capture.
 
 ---
 
@@ -179,59 +176,25 @@ Vortik operates as a semantic infrastructure layer over emerging coordination sy
 ### Positioning
 
 Vortik does **not** define protocol rules.  
-It stabilizes the language describing systems that are still forming.
+It documents and stabilizes the semantic layer of evolving coordination systems.
 
 ---
 
-## 9. ACTOR IMPLICATIONS
-
-### Builders
-
-- gain execution power  
-- compete on ordering, latency, and access to order flow  
-- constrained by inclusion rules and proposer selection  
-
----
-
-### Validators / Proposers
-
-- reduced role in execution  
-- increased role in enforcement and selection  
-- depend on external actors for block construction  
-
----
-
-### Users / Order Flow Originators
-
-- execution quality depends on off-chain systems  
-- increasing reliance on private routing and intermediaries  
-- reduced transparency in execution paths  
-
----
-
-### Protocol
-
-- transitions from coordinator to constraint system  
-- enforces validity and partial fairness  
-- does not control economic ordering  
-
----
-
-## 10. STRATEGIC THESIS
+## 9. STRATEGIC THESIS
 
 Ethereum is evolving into:
 
-a constraint-based settlement layer validating externally coordinated economic systems
+a settlement layer validating externally coordinated economic systems
 
 The dominant question becomes:
 
 who controls the coordination layers above consensus?
 
-Control over execution migrates away from the protocol toward specialized actors.
+Control over execution is migrating away from the protocol toward specialized, competitive actors.
 
 ---
 
-## 11. CONCLUSION
+## 10. CONCLUSION
 
 The shift toward external coordination introduces:
 
@@ -260,5 +223,5 @@ Vortik exists at the intersection of:
 
 ---
 
-Control follows coordination.  
-Coordination follows naming.
+Mapping the system before it stabilizes.  
+Control follows coordination. Coordination follows naming.
