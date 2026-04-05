@@ -16,11 +16,13 @@ They emerged as a consequence of proposer-builder separation (PBS), where block 
 
 This separation creates a market structure in which:
 
-- builders compete to construct the most valuable blocks  
+- builders compete to construct execution payloads  
 - proposers select among competing bids  
-- execution value is aggregated and priced before inclusion  
+- execution value is aggregated prior to inclusion  
 
-Builder markets are therefore not a protocol primitive, but an **emergent coordination surface** resulting from how execution is organized.
+However, with the progression toward **enshrined PBS (ePBS)**, this coordination is increasingly defined at the protocol level.
+
+As a result, builder markets are better understood as a **transitional abstraction**, rather than a stable architectural component.
 
 ---
 
@@ -30,7 +32,7 @@ Builder markets operate at the **block construction stage** of the execution pip
 
 They sit downstream from:
 
-- order flow access (OFA)  
+- order flow access  
 - solver-generated execution strategies  
 
 and upstream from:
@@ -38,44 +40,44 @@ and upstream from:
 - proposer selection  
 - protocol-level inclusion (ePBS / FOCIL)  
 
-They represent the point where execution strategies are materialized into concrete blocks.
+They describe how execution payloads are constructed and competed over before inclusion.
 
 ---
 
-## Coordination Dynamics
+## Structural Shift
 
-Builder markets coordinate:
+The role of builder markets is evolving due to protocol changes.
 
-- competition between block builders  
-- aggregation of transaction bundles  
-- pricing of execution value  
-- interaction between builders and proposers  
+With ePBS:
 
-They create a competitive environment where multiple candidate blocks are produced for each slot.
+- builder roles become protocol-defined  
+- payload construction becomes standardized  
+- proposer-builder interaction is formalized  
 
----
+This shifts the system from:
 
-## Relationship to Protocol Design
+- market-based coordination  
 
-Builder markets exist because the protocol does not directly perform block construction.
+to:
 
-Instead:
+- role-based, protocol-enforced coordination  
 
-- execution is externalized  
-- coordination emerges through market mechanisms  
-- builders compete under incentive constraints  
-
-This dynamic persists across both PBS and enshrined PBS (ePBS) designs.
+As a result, the concept of “builder markets” loses precision as a primary descriptor of system behavior.
 
 ---
 
-## Primary Research Threads
+## Research Surface
 
-- ePBS Design Constraints  
-  https://ethresear.ch/t/epbs-design-constraints/18728  
+Discussion of builder markets appears across:
 
-- Why Enshrine Proposer-Builder Separation — A viable path to ePBS  
-  https://ethresear.ch/t/why-enshrine-proposer-builder-separation-a-viable-path-to-epbs/15710  
+- PBS and MEV supply chain research  
+- MEV-Boost and relay-based architectures  
+- block construction competition models  
+
+Representative discussions can be found across:
+
+- Ethereum Research  
+  https://ethresear.ch/
 
 ---
 
@@ -84,35 +86,30 @@ This dynamic persists across both PBS and enshrined PBS (ePBS) designs.
 Common terminology associated with this coordination surface includes:
 
 - builder markets  
-- builder market  
-- block builder market  
-- block building market  
 - builder competition  
+- block building markets  
+- PBS markets  
 
-This terminology reflects ecosystem convergence rather than formal protocol naming.
+This terminology shows **historical convergence**, but is increasingly being replaced by:
 
----
-
-## System Position
-
-Within Ethereum’s coordination pipeline:
-
-Order Flow → Solver Networks → Builder Markets → ePBS → Inclusion → Finality  
-
-Builder markets represent the stage where execution strategies are transformed into candidate blocks competing for inclusion.
+- builder roles  
+- payload construction  
+- proposer-builder interfaces  
 
 ---
 
 ## Status
 
-Research-aligned coordination surface with strong ecosystem presence.
+Transitional / declining coordination abstraction (2026).
 
-Builder markets remain a core component of Ethereum’s execution pipeline despite not being a protocol-defined primitive.
+Builder markets remain relevant as a descriptive model of block construction competition, but are being superseded by protocol-level definitions of builder roles and interactions.
+
+They are not a canonical L1 primitive and are tracked as a **legacy abstraction within the execution pipeline**.
 
 ---
 
 ## Notes
 
-This document reflects observed coordination behavior and research discussion.
+This surface captures how block construction was historically organized under market-based coordination.
 
-It does not define a protocol specification.
+Its role is being redefined as Ethereum transitions toward protocol-enforced builder semantics under ePBS.
