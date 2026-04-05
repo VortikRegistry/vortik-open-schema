@@ -21,15 +21,15 @@ Inclusion lists are mechanisms designed to mitigate transaction censorship in Et
 
 FOCIL extends this concept by integrating inclusion enforcement directly into fork-choice rules.
 
-Rather than coordinating transaction selection, this mechanism imposes **protocol-level constraints on inclusion**, limiting the ability of proposers and builders to exclude transactions.
+Rather than coordinating transaction selection, this mechanism introduces **protocol-level inclusion constraints**, limiting the ability of proposers and builders to exclude transactions.
 
 ---
 
 ## Structural Role
 
-Inclusion lists operate at the **inclusion stage** of Ethereum’s coordination architecture.
+Inclusion lists operate at the **inclusion stage** of Ethereum’s coordination pipeline.
 
-They act as a **constraint mechanism**, not a coordination layer, enforcing rules that shape how transactions must be included in blocks.
+They function as a **protocol-enforced constraint mechanism**, not a coordination layer, shaping how transactions must be included in blocks.
 
 ---
 
@@ -61,7 +61,7 @@ Common terminology associated with this mechanism includes:
 - inclusion enforcement  
 - censorship resistance  
 
-This terminology is converging, with **FOCIL** emerging as the precise reference for fork-choice enforced implementations.
+This terminology is converging, with **FOCIL** emerging as the precise canonical reference.
 
 ---
 
@@ -79,6 +79,6 @@ Inclusion in Ethereum depends on:
 
 ## Notes
 
-This document reflects an inclusion **constraint mechanism**, not a coordination market or layer.
+This document reflects a **protocol-enforced constraint primitive**, not a coordination market or abstraction layer.
 
-It captures a protocol-enforced boundary condition within Ethereum’s coordination architecture.
+It captures a boundary condition within Ethereum’s coordination architecture, where inclusion becomes partially programmable and enforced by consensus.
