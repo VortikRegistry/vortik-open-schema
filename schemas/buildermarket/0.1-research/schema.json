@@ -33,12 +33,12 @@
     "canonical_term": {
       "type": "string",
       "const": "builder markets",
-      "description": "Canonical technical term tracked by this anchor."
+      "description": "Legacy term referring to competitive block construction environments."
     },
     "classification": {
       "type": "string",
-      "const": "valid",
-      "description": "Semantic classification within the Vortik registry."
+      "const": "repairable",
+      "description": "Legacy coordination abstraction being replaced by role-based builder semantics."
     },
     "status": {
       "type": "string",
@@ -48,43 +48,41 @@
     "type": {
       "type": "string",
       "const": "market",
-      "description": "Structural type of this coordination surface."
+      "description": "Market-based abstraction for builder competition."
     },
     "summary": {
       "type": "string",
       "minLength": 20,
-      "description": "Short description of builder market coordination."
+      "description": "Market-based abstraction describing competition among builders for block construction, increasingly superseded by protocol-defined builder roles under ePBS."
     },
     "pipeline_position": {
       "type": "array",
-      "description": "Interpretive pipeline stage where builder markets typically operate.",
+      "description": "Primary pipeline stage where this abstraction is most relevant.",
       "minItems": 1,
+      "maxItems": 1,
       "items": {
         "type": "string",
         "enum": [
-          "order flow",
-          "solver coordination",
-          "builder coordination",
-          "inclusion"
+          "builder coordination"
         ]
       }
     },
     "coordination_role": {
       "type": "array",
-      "description": "Key coordination roles of builder markets.",
+      "description": "Key coordination functions historically attributed to builder markets.",
       "minItems": 1,
       "items": {
         "type": "string",
-        "minLength": 3
+        "minLength": 5
       }
     },
     "protocol_grounding": {
       "type": "array",
-      "description": "Primary protocol or research references grounding builder markets.",
+      "description": "Primary protocol or research references grounding this surface.",
       "minItems": 1,
       "items": {
         "type": "string",
-        "minLength": 3
+        "minLength": 5
       }
     },
     "naming": {
@@ -107,11 +105,11 @@
         },
         "mismatch": {
           "type": "boolean",
-          "const": false
+          "const": true
         },
         "notes": {
           "type": "string",
-          "minLength": 5
+          "minLength": 10
         }
       }
     },
