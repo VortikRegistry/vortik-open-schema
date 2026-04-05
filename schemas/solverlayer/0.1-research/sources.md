@@ -14,12 +14,43 @@ Solver networks refer to coordination mechanisms where specialised actors (solve
 
 These systems emerge primarily within intent-based architectures, where users express desired outcomes rather than explicit transactions.
 
-Solver networks interact with multiple coordination surfaces, including:
+Solver networks are responsible for:
 
-- order flow routing systems  
-- execution markets  
-- builder markets  
-- intent-based transaction frameworks  
+- interpreting user intents  
+- computing valid execution paths  
+- selecting optimal outcomes under constraints  
+
+They represent a shift from transaction submission toward **outcome-based execution coordination**.
+
+---
+
+## Structural Role
+
+Solver networks operate at the **solver coordination stage** of Ethereum’s execution pipeline.
+
+They sit downstream from:
+
+- order flow access  
+
+and upstream from:
+
+- builder coordination  
+- preconfirmation systems  
+- protocol-level inclusion  
+
+Their role is to transform user intents into executable payload candidates.
+
+---
+
+## Coordination Dynamics
+
+Solver networks introduce competition over:
+
+- execution outcomes  
+- routing strategies  
+- constraint satisfaction  
+
+Rather than competing for block space directly, solvers compete to produce **valid and optimal execution bundles** that can be forwarded to builders.
 
 ---
 
@@ -30,7 +61,7 @@ Discussion around solver networks appears across Ethereum research and ecosystem
 - intent-based execution  
 - solver competition models  
 - execution routing  
-- off-chain coordination layers  
+- outcome-based coordination  
 
 Representative discussions can be found across:
 
@@ -44,14 +75,29 @@ Representative discussions can be found across:
 Common terminology associated with this coordination surface includes:
 
 - solver networks  
-- solver layer (non-canonical)  
 - intent solvers  
 - execution solvers  
+- solver layer (non-canonical)  
+
+This terminology is still evolving, with no fully stabilized canonical naming.
 
 ---
 
 ## Status
 
-Research coordination surface (2026).
+Active research coordination surface (2026).
 
-Solver networks are actively explored in Ethereum execution infrastructure but are not currently defined as a canonical L1 protocol primitive.
+Solver networks are already present in production intent frameworks, but remain an evolving and non-canonical component of Ethereum’s coordination architecture.
+
+---
+
+## Notes
+
+Solver networks externalize execution decision-making from the protocol.
+
+They form a critical part of the system where:
+
+- execution is determined  
+- but not yet enforced  
+
+This makes them a key coordination surface in Ethereum’s transition toward externally coordinated execution and protocol-enforced validation.
