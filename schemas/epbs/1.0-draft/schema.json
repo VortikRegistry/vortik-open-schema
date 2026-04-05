@@ -48,26 +48,23 @@
     "type": {
       "type": "string",
       "const": "primitive",
-      "description": "Structural type of this tracked surface."
+      "description": "Protocol-level primitive defining proposer-builder separation."
     },
     "summary": {
       "type": "string",
-      "description": "Short description of the primitive.",
+      "description": "Protocol-level primitive enshrining proposer-builder separation, defining the interface between block construction and block proposal and restructuring Ethereum’s block production pipeline.",
       "minLength": 20
     },
     "pipeline_position": {
       "type": "array",
       "description": "Pipeline stages where this primitive is most relevant.",
       "minItems": 1,
+      "maxItems": 2,
       "items": {
         "type": "string",
         "enum": [
-          "order flow",
-          "visibility",
           "builder coordination",
-          "inclusion",
-          "execution",
-          "finality"
+          "inclusion"
         ]
       }
     },
@@ -77,7 +74,7 @@
       "minItems": 1,
       "items": {
         "type": "string",
-        "minLength": 3
+        "minLength": 5
       }
     },
     "protocol_grounding": {
@@ -86,7 +83,7 @@
       "minItems": 1,
       "items": {
         "type": "string",
-        "minLength": 3
+        "minLength": 5
       }
     },
     "naming": {
@@ -113,7 +110,7 @@
         },
         "notes": {
           "type": "string",
-          "minLength": 3
+          "minLength": 5
         }
       }
     },
