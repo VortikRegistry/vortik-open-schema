@@ -1,12 +1,12 @@
-# Anchors
+Anchors
 
-This directory contains the human-readable layer of the **Vortik Semantic Registry**.
+This directory contains the human-readable layer of the Vortik Semantic Registry.
 
-Each file corresponds to a semantic anchor representing a **protocol primitive, coordination mechanism, market-adjacent structure, or technically grounded research surface** within Ethereum’s evolving architecture.
+Each file corresponds to a semantic anchor representing a protocol primitive, coordination mechanism, or research surface within Ethereum’s evolving coordination architecture.
 
 ---
 
-## Purpose
+Purpose
 
 Anchors provide minimal, structured descriptions of each tracked concept.
 
@@ -14,87 +14,87 @@ They are not intended to define the protocol, but to:
 
 - document emerging terminology
 - track semantic convergence
-- distinguish canonical naming from approximate or ENS-based representations
+- distinguish canonical technical concepts from approximate or ecosystem-level naming
 
 ---
 
-## Canonical vs ENS Naming
+Canonical vs ENS Naming
 
 Each anchor is associated with an ENS domain.
 
 However:
 
-**the ENS does not define the primitive**  
-**the canonical technical term defines the primitive**
+the ENS does not define the primitive
+the canonical technical term defines the primitive
 
 When mismatches exist, they are explicitly documented and classified.
 
 ---
 
-## Anchor Scope
+Anchor Scope
 
-Anchors correspond to real surfaces discussed across Ethereum research, infrastructure, and implementation, including:
+Anchors correspond to structurally relevant coordination surfaces observed across Ethereum research, infrastructure, and implementation.
 
-- proposer-builder separation (ePBS)
-- inclusion enforcement (FOCIL)
-- commitment signaling
-- preconfirmation systems
-- builder competition
-- solver networks
-- order flow auctions
-- finality research (SSF)
+These include:
+
+- protocol primitives (ePBS, FOCIL)
+- coordination mechanisms (preconfirmations, commitments)
+- execution coordination surfaces (solver networks)
+- ecosystem abstractions (order flow auctions, builder markets)
+
+Inclusion is selective.
 
 Each anchor must map to:
 
-- a real protocol primitive
-- a market or coordination structure
+- a protocol-defined primitive
+- a persistent coordination function
 - or a technically grounded research surface
 
 ---
 
-## Anchor Index
+Anchor Index
 
 The following anchors are currently tracked:
 
-### Core (protocol-aligned)
-- `epbs.eth` — Enshrined Proposer-Builder Separation
-- `inclusionlist.eth` — Inclusion Lists / FOCIL
+Core (protocol-aligned primitives)
 
-### Valid (real but non-canonical or non-enshrined surfaces)
-- `buildermarket.eth` — Builder markets
-- `orderflowauction.eth` — Order Flow Auctions (OFA)
-- `fastfinality.eth` — Single Slot Finality (SSF)
+- "epbs.eth" — Enshrined Proposer-Builder Separation
+- "inclusionlist.eth" — Inclusion Lists / FOCIL
 
-### Repairable (valid concept, naming mismatch or imperfect fit)
-- `commitmentlayer.eth` — Commitment signaling / preconfirmation commitments
-- `preconflayer.eth` — Preconfirmation systems
-- `solverlayer.eth` — Solver networks
+Repairable (valid but imperfect or transitional abstractions)
 
-### Premature (unstable or ambiguous terminology)
-- `executionmarket.eth` — Execution coordination surface (ambiguous term)
+- "buildermarket.eth" — Builder markets
+- "orderflowauction.eth" — Order Flow Auctions (OFA)
+- "commitmentlayer.eth" — Preconfirmation commitments
+- "preconflayer.eth" — Preconfirmation systems
+- "solverlayer.eth" — Solver networks
+- "fastfinality.eth" — Single Slot Finality (SSF)
+
+Premature (unstable or ambiguous terminology)
+
+- "executionmarket.eth" — Execution coordination (ambiguous term)
 
 ---
 
-## Relationship With Schemas
+Relationship With Schemas
 
 Anchor documents are descriptive.
 
-Formal metadata is defined in `/schemas/`, where each anchor has a versioned JSON schema specifying:
+Formal metadata is defined in "/schemas/", where each anchor has a versioned JSON schema specifying:
 
 - identifier
 - conceptual scope
 - semantic classification
-- research sources
+- research grounding
 - status
-- last reviewed
 
-Schemas represent the **machine-readable layer of the registry**.
+Schemas represent the machine-readable layer of the registry.
 
 ---
 
-## Relationship With the Registry
+Relationship With the Registry
 
-All anchors are indexed in `registry.json`, which provides the canonical mapping:
+All anchors are indexed in "registry.json", which provides the canonical mapping:
 
 ENS → canonical term → schema → anchor document
 
@@ -102,67 +102,72 @@ This enables:
 
 - programmatic discovery
 - structured analysis
-- future interoperability with tooling
+- interoperability with tooling
 
 ---
 
-## Design Model
+Design Model
 
 The system is composed of three layers:
 
-### ENS Anchors
-Stable identifiers used as semantic entry points.
+ENS Anchors
 
-### Anchor Documents
-Minimal human-readable interpretation of each primitive or surface.
+Stable identifiers used as semantic entry points
 
-### Schemas
-Structured, versioned, machine-readable definitions.
+Anchor Documents
+
+Minimal human-readable interpretation
+
+Schemas
+
+Structured, versioned, machine-readable definitions
 
 ---
 
-## Semantic Interpretation
+Semantic Interpretation
 
-The registry may group anchors into recurring semantic clusters such as:
+The registry may group anchors into recurring coordination clusters such as:
 
-1. Order Flow
-2. Routing / Auctions
-3. Builder Coordination
+1. Order flow access
+2. Solver coordination
+3. Builder coordination
 4. Inclusion
-5. Commitments / Preconfirmations
+5. Commitments and preconfirmations
 6. Finality
 
-This grouping is interpretive.
-
-It does **not** imply a strict protocol architecture or a canonical execution sequence.
+These groupings are interpretive and do not define a strict execution sequence.
 
 ---
 
-## Relation to Research Layer
+Relation to Research Layer
 
-Some anchors also relate to the structural interpretation developed in:
+Some anchors relate to the structural interpretation developed in:
 
-- `docs/security-hourglass/`
+- "docs/security-hourglass/"
 
-That document should be read as a research layer complementing the registry,
-not as a replacement for protocol definitions.
+This should be understood as a research layer complementing the registry, not a protocol specification.
 
 ---
 
-## Design Philosophy
+Design Philosophy
 
 - Semantic structure precedes standardization
 - Canonical naming overrides ENS wording
 - Precision is prioritized over coverage
+- Protocol-defined primitives supersede market abstractions
 - Early mapping is only valuable if technically grounded
 
 ---
 
-## System Status
+System Status
 
 The registry is transitioning from:
 
-conceptual semantic mapping  
+conceptual semantic mapping
 → structured semantic infrastructure
 
-The current focus is consolidating high-quality primitive representations before expanding coverage.
+Current focus:
+
+- consolidating protocol-aligned primitives
+- refining coordination surfaces
+- identifying unstable terminology before convergence locks in
