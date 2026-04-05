@@ -26,7 +26,7 @@ It formalizes the separation between:
 
 and removes reliance on external relay infrastructure by embedding coordination directly into the protocol.
 
-This transition reflects a broader shift toward **protocol-enforced coordination** within Ethereum’s coordination architecture.
+This transition reflects a broader shift toward **protocol-enforced coordination**, where execution is externalized but validation and selection are enforced by consensus.
 
 ---
 
@@ -52,9 +52,9 @@ This changes:
 
 - how block construction is organized  
 - how proposer roles interact with builders  
-- how execution markets interface with consensus  
+- how execution flows interface with consensus  
 
-This shift would represent a structurally significant transition once adopted at the protocol level.
+Under ePBS, builder roles become protocol-defined and payloads become consensus-validated objects.
 
 ---
 
@@ -65,7 +65,7 @@ Research discussions around ePBS focus on:
 - protocol-level builder selection  
 - payload commitment mechanisms  
 - proposer-builder coordination  
-- block production market structure  
+- block production structure  
 - MEV supply chain redesign  
 
 ---
@@ -82,7 +82,7 @@ Research discussions around ePBS focus on:
 
 ## Roadmap Context
 
-ePBS is part of Ethereum’s evolution toward a structured coordination architecture for block production.
+ePBS is part of Ethereum’s evolution toward a structured coordination pipeline for block production.
 
 - Vitalik Buterin — “Finally, the block building pipeline”  
   https://firefly.social/post/x/2027405  
@@ -118,4 +118,4 @@ ePBS has high protocol relevance and strong likelihood of long-term adoption, pe
 
 This document reflects canonical specification and active research convergence.
 
-It describes a protocol-level primitive with structural impact on Ethereum’s coordination architecture.
+It describes a **protocol-level interface primitive** with structural impact on Ethereum’s coordination pipeline.
