@@ -1,135 +1,137 @@
-# Order Flow Auctions
+Order Flow Auctions
 
-**Associated ENS:** `orderflowauction.eth`  
-**Canonical term:** Order Flow Auctions (OFA)  
-**Registry ID:** `orderflowauction`  
-**Status:** Research  
-**Classification:** Semi-stable
-
----
-
-## Summary
-
-This anchor tracks **Order Flow Auctions (OFA)** as a coordination mechanism governing **access to transaction flow** within Ethereum’s execution pipeline.
-
-Rather than simple routing, OFA define how order flow is **auctioned, priced, and allocated** before entering block construction.
+Associated ENS: "orderflowauction.eth"
+Canonical term: order flow auctions (OFA)
+Registry ID: "orderflowauction"
+Status: Research
+Classification: Repairable
 
 ---
 
-## Context
+Summary
 
-Order flow auctions are mechanisms in which **transaction flow is sold or allocated via competitive auction processes** among execution agents.
+This anchor tracks order flow auctions (OFA) as a coordination mechanism governing access to transaction flow within Ethereum’s execution pipeline.
+
+While widely used, OFA represent an off-protocol market-based abstraction, whose role is evolving as new execution models emerge.
+
+---
+
+Context
+
+Order flow auctions are mechanisms in which transaction flow is allocated via competitive auction processes among execution participants.
 
 They are used to:
 
-- route transactions through competitive mechanisms  
-- internalize and redistribute MEV  
-- enable competition between solvers, searchers, and execution strategies  
+- route transactions through competitive mechanisms
+- internalize and redistribute MEV
+- enable competition between solvers, searchers, and execution strategies
 
-This surface has emerged alongside:
+This surface emerged alongside:
 
-- private order flow systems  
-- intent-based execution  
-- solver networks  
-- MEV-aware infrastructure  
-
----
-
-## Pipeline Position
-
-Order Flow (Access Layer) → Solver Networks → Builder Markets → ePBS
+- private order flow systems
+- solver-based execution
+- MEV-aware infrastructure
 
 ---
 
-## Coordination Role
+Pipeline Position
 
-OFA do not simply route transactions.
+Order flow auctions operate at the order flow access stage of the coordination pipeline.
 
-They coordinate **access to order flow**, determining:
+They sit upstream from:
 
-- which actors receive transaction flow  
-- how execution opportunities are distributed  
-- how upstream value is captured  
-
-They act as the **entry coordination layer** between user-originated transactions and downstream execution systems.
+- solver coordination
+- builder coordination
+- protocol-level inclusion
 
 ---
 
-## Flow Control Dynamics
+Coordination Role
 
-OFA introduce competition for control over transaction flow:
+OFA coordinate access to transaction flow, determining:
 
-- wallets and frontends originate flow  
-- auction mechanisms determine routing  
-- solvers, searchers, and builders compete for access  
+- which actors receive order flow
+- how execution opportunities are distributed
+- how upstream value is captured
 
-This creates a **market-based control layer** governing how transactions enter the execution pipeline.
+They function as an access control mechanism between user-originated transactions and downstream execution systems.
 
 ---
 
-## Protocol Grounding
+Structural Shift
 
-This surface is **not directly specified at the protocol level**.
+The role of OFA is evolving due to the emergence of:
+
+- intent-based execution systems
+- solver-native coordination
+- protocol-level inclusion constraints (e.g. FOCIL)
+- encrypted and controlled visibility surfaces
+
+These developments reduce the centrality of auction-based routing as the dominant coordination model.
+
+---
+
+Protocol Grounding
+
+This surface is not defined at the protocol level.
 
 It is grounded in:
 
-- Ethereum research on MEV and order flow  
-- private mempool and routing systems  
-- intent-based execution architectures  
-- off-protocol auction mechanisms  
+- Ethereum research on MEV and order flow
+- private mempool and routing systems
+- intent-based execution architectures
+- off-chain auction mechanisms
 
-OFA operate primarily in the **off-chain coordination layer**, interfacing with but not enforced by consensus.
-
----
-
-## Structural Importance
-
-OFA represent control over the **entry point of the execution pipeline**.
-
-They determine:
-
-- who sees transactions first  
-- how execution opportunities are distributed  
-- whether order flow is public, private, or selectively routed  
-
-This makes OFA a critical **upstream coordination surface**, though not a consensus-layer primitive.
+OFA operate primarily in the off-protocol coordination layer.
 
 ---
 
-## Semantic Stability
+Structural Importance
 
-The term **Order Flow Auctions (OFA)** is widely used and shows **strong semantic convergence** across research, MEV infrastructure, and ecosystem discussions.
+OFA represent control over the exposure of transaction flow, influencing:
 
-While not formally standardized, the concept is **unlikely to disappear** and is stabilizing as a recognized coordination layer.
+- who sees transactions
+- how execution opportunities are distributed
+- whether flow is public, private, or selectively routed
 
----
-
-## Naming Alignment
-
-- **ENS anchor:** `orderflowauction.eth`  
-- **Canonical term:** Order Flow Auctions (OFA)  
-
-Naming is well aligned with ecosystem usage and research terminology.
+However, this control is increasingly shared or constrained by emerging coordination primitives.
 
 ---
 
-## Registry Role
+Semantic Stability
 
-- Track stabilization of order flow auction terminology  
-- Document upstream coordination over transaction flow  
-- Distinguish flow access from execution and inclusion layers  
-- Map entry control within Ethereum’s coordination pipeline  
+The term order flow auctions (OFA) shows strong ecosystem usage and partial semantic convergence.
 
----
-
-## Status
-
-Research-aligned surface with high ecosystem relevance and **medium–high semantic persistence**, but not protocol-enforced.
+However, its interpretation as a dominant coordination model is being challenged by new execution paradigms.
 
 ---
 
-## Sources
+Naming Alignment
+
+- ENS anchor: "orderflowauction.eth"
+- Canonical term: order flow auctions (OFA)
+
+Naming is aligned with ecosystem usage, though the scope of the term may narrow as coordination models evolve.
+
+---
+
+Registry Role
+
+- Track usage and evolution of order flow auction terminology
+- Document upstream coordination over transaction flow
+- Distinguish flow access from execution and inclusion layers
+- Monitor transition toward non-auction-based coordination mechanisms
+
+---
+
+Status
+
+Active research surface with strong ecosystem relevance, but partially displaced as a dominant coordination model.
+
+---
+
+Sources
 
 Primary research references are documented in:
 
-`schemas/orderflowauction/`
+"schemas/orderflowauction/"
