@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/executionmarket/0.1-research/schema.json",
   "title": "Vortik Open Schema — Execution Coordination (Ambiguous Term)",
-  "description": "Machine-readable schema for the Execution Coordination semantic anchor within the Vortik Semantic Registry. Research artifact; not an official protocol specification.",
+  "description": "Machine-readable schema for an ambiguous execution coordination concept within the Vortik Semantic Registry. This anchor tracks a non-canonical and unstable term.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -33,7 +33,7 @@
     "canonical_term": {
       "type": "string",
       "const": "execution coordination (ambiguous term)",
-      "description": "Current registry term used to track an unstable and non-canonical execution-surface concept."
+      "description": "Non-canonical term used to describe loosely defined execution-related coordination."
     },
     "classification": {
       "type": "string",
@@ -47,44 +47,42 @@
     },
     "type": {
       "type": "string",
-      "const": "ambiguous-surface",
-      "description": "Provisional structural type used for an unstable and non-canonical coordination concept."
+      "const": "market",
+      "description": "Legacy abstraction loosely referring to execution-related coordination."
     },
     "summary": {
       "type": "string",
-      "description": "Short description of the surface.",
+      "description": "Non-canonical and ambiguous term historically used to describe execution-related coordination, without a clearly defined role in the modern Ethereum pipeline.",
       "minLength": 20
     },
     "pipeline_position": {
       "type": "array",
-      "description": "Interpretive pipeline stages where this surface is most commonly associated.",
+      "description": "This term does not map cleanly to a specific pipeline stage.",
       "minItems": 1,
+      "maxItems": 1,
       "items": {
         "type": "string",
         "enum": [
-          "order flow",
-          "solver coordination",
-          "builder coordination",
-          "execution"
+          "solver coordination"
         ]
       }
     },
     "coordination_role": {
       "type": "array",
-      "description": "Key coordination functions tentatively attributed to this surface.",
+      "description": "Ambiguous coordination roles attributed to this term.",
       "minItems": 1,
       "items": {
         "type": "string",
-        "minLength": 3
+        "minLength": 5
       }
     },
     "protocol_grounding": {
       "type": "array",
-      "description": "Primary protocol or research references grounding this surface.",
+      "description": "No direct protocol grounding; term originates from informal discussions.",
       "minItems": 1,
       "items": {
         "type": "string",
-        "minLength": 3
+        "minLength": 5
       }
     },
     "naming": {
@@ -111,7 +109,7 @@
         },
         "notes": {
           "type": "string",
-          "minLength": 5
+          "minLength": 10
         }
       }
     },
