@@ -1,42 +1,38 @@
-# Coordination Stack (Semantic Interpretation)
+# Coordination Surfaces (Semantic Interpretation)
 
-This document represents a semantic interpretation of how coordination-related concepts are commonly structured across Ethereum.
+This document represents a semantic interpretation of how coordination-related concepts are commonly grouped across Ethereum.
 
 It does not describe a canonical or enforced protocol architecture.
 
 ---
 
-## Conceptual Flow
+## Conceptual Surfaces
 
-Order Flow  
-↓  
-Order Flow Auctions  
-↓  
-Solver Networks  
-↓  
-Builder Coordination  
-↓  
-Inclusion  
-↓  
-Commitments  
-↓  
-Preconfirmations  
-↓  
-Finality  
+- Order Flow Access  
+- Solver Coordination  
+- Builder Coordination  
+- Inclusion  
+- Commitments  
+- Preconfirmations  
+- Finality  
 
 ---
 
 ## Interpretation
 
-This sequence reflects how terminology is often grouped in research discussions, infrastructure design, and ecosystem narratives.
+These surfaces reflect how terminology is commonly clustered across:
 
-It should not be interpreted as:
+- research discussions  
+- infrastructure design  
+- emerging coordination mechanisms  
+
+They should not be interpreted as:
 
 - a strict execution pipeline  
 - a protocol-enforced sequence  
 - or a deterministic architecture  
 
-Instead, it is a **semantic clustering of coordination surfaces**.
+Instead, they represent **recurring coordination surfaces** that may overlap and interact.
 
 ---
 
@@ -46,7 +42,7 @@ Across Ethereum research and infrastructure:
 
 - similar concepts are repeatedly grouped  
 - terminology begins to stabilize  
-- surfaces become easier to compare  
+- coordination surfaces become recognizable  
 
 This document captures that convergence.
 
@@ -66,9 +62,9 @@ It is descriptive, not prescriptive.
 
 ## Relation to Vortik
 
-Each layer corresponds to semantic anchors tracked in the registry.
+Each surface is associated with semantic anchors tracked in the registry.
 
 See:
 
-- `coordination-stack.json`
+- `coordination-surfaces.json`
 - `../anchors/`
