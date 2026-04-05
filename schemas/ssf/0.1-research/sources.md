@@ -26,14 +26,15 @@ SSF represents a major research direction in the evolution of Ethereum consensus
 
 ## Structural Role
 
-SSF operates at the **finality stage** of Ethereum’s coordination architecture.
+SSF operates at the **finality stage** of Ethereum’s coordination pipeline.
 
-It affects how quickly consensus transitions from:
+It governs how quickly the system transitions from:
 
 - probabilistic inclusion  
-- to economically irreversible finality  
+to  
+- economically irreversible finality  
 
-This positions SSF as a core research surface for understanding how Ethereum may compress the latency between block proposal and reliable settlement.
+This positions SSF as a **consensus primitive** defining the latency boundary between execution and settlement.
 
 ---
 
@@ -69,15 +70,15 @@ Common terminology associated with this surface includes:
 - near-single-slot finality  
 - fast finality (non-canonical / adjacent)  
 
-Terminology across the ecosystem converges strongly on **SSF** as the canonical shorthand, while “fast finality” remains a descriptive approximation rather than a formally adopted term.
+Terminology across the ecosystem converges strongly on **SSF** as the canonical shorthand, while “fast finality” remains a descriptive approximation.
 
 ---
 
 ## Status
 
-Research track (2026).
+Research primitive (2026).
 
-SSF is a major consensus research direction and should be understood as a structurally significant finality primitive, not merely a latency optimization.
+SSF is a structurally significant consensus primitive and should be understood as a core component of Ethereum’s long-term finality model, not merely a performance optimization.
 
 ---
 
@@ -85,7 +86,7 @@ SSF is a major consensus research direction and should be understood as a struct
 
 Within Ethereum roadmap discussions, faster finality is treated as a long-term consensus objective.
 
-SSF is the primary research surface associated with this transition and should be understood as a major consensus evolution vector rather than a simple performance improvement.
+SSF is the primary research surface associated with this transition and represents a major evolution in how Ethereum achieves finality guarantees.
 
 ---
 
@@ -93,4 +94,4 @@ SSF is the primary research surface associated with this transition and should b
 
 This document reflects an active consensus research surface with strong semantic convergence around the term **SSF**.
 
-It supports a repairable ENS anchor (`fastfinality.eth`) whose wording is adjacent, but not canonical.
+It supports a **repairable ENS anchor** (`fastfinality.eth`), where the naming is adjacent but not canonical.
