@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/commitmentlayer/0.1-draft/schema.json",
-  "title": "Vortik Open Schema — Commitment Signaling / Preconfirmation Commitments",
-  "description": "Machine-readable schema for the Commitment Signaling / Preconfirmation Commitments semantic anchor within the Vortik Semantic Registry. Research artifact; not an official protocol specification.",
+  "title": "Vortik Open Schema — Preconfirmation Commitments",
+  "description": "Machine-readable schema for the Preconfirmation Commitments semantic anchor within the Vortik Semantic Registry. Research surface; not an official protocol specification.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -32,7 +32,7 @@
     },
     "canonical_term": {
       "type": "string",
-      "const": "commitment signaling / preconfirmation commitments",
+      "const": "preconfirmation commitments",
       "description": "Canonical technical term tracked by this anchor."
     },
     "classification": {
@@ -47,8 +47,8 @@
     },
     "type": {
       "type": "string",
-      "const": "coordination-surface",
-      "description": "Emergent coordination surface rather than a discrete protocol mechanism."
+      "const": "mechanism",
+      "description": "Structural type of this tracked surface."
     },
     "summary": {
       "type": "string",
@@ -57,26 +57,23 @@
     },
     "pipeline_position": {
       "type": "array",
-      "description": "Interpretive position within the coordination pipeline.",
+      "description": "Interpretive pipeline stage where this surface is most relevant.",
       "minItems": 1,
+      "maxItems": 1,
       "items": {
         "type": "string",
         "enum": [
-          "order flow",
-          "solver coordination",
-          "builder coordination",
-          "preconfirmation",
-          "inclusion"
+          "preconfirmation"
         ]
       }
     },
     "coordination_role": {
       "type": "array",
-      "description": "Key coordination functions performed by commitment signaling mechanisms.",
+      "description": "Key coordination functions performed by preconfirmation commitments.",
       "minItems": 1,
       "items": {
         "type": "string",
-        "minLength": 3
+        "minLength": 5
       }
     },
     "protocol_grounding": {
@@ -85,7 +82,7 @@
       "minItems": 1,
       "items": {
         "type": "string",
-        "minLength": 3
+        "minLength": 5
       }
     },
     "naming": {
@@ -104,7 +101,7 @@
         },
         "canonical": {
           "type": "string",
-          "const": "commitment signaling / preconfirmation commitments"
+          "const": "preconfirmation commitments"
         },
         "mismatch": {
           "type": "boolean",
@@ -112,7 +109,7 @@
         },
         "notes": {
           "type": "string",
-          "minLength": 5
+          "minLength": 10
         }
       }
     },
