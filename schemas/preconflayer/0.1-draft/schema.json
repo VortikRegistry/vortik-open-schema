@@ -57,13 +57,13 @@
     },
     "pipeline_position": {
       "type": "array",
-      "description": "Interpretive pipeline stages where this surface is most relevant.",
+      "description": "Interpretive pipeline stage where this surface is most relevant.",
       "minItems": 1,
+      "maxItems": 1,
       "items": {
         "type": "string",
         "enum": [
-          "builder coordination",
-          "inclusion"
+          "preconfirmation"
         ]
       }
     },
