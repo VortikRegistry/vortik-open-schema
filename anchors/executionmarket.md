@@ -1,111 +1,123 @@
-# Execution Coordination
+Execution Coordination
 
-**Associated ENS:** `executionmarket.eth`  
-**Canonical term:** execution coordination  
-**Registry ID:** `executionmarket`  
-**Status:** Research  
-**Classification:** Premature  
-
----
-
-## Summary
-
-This anchor tracks **execution coordination** as an emerging and non-stabilized conceptual surface within Ethereum’s execution pipeline.
-
-The term does not currently represent a canonical primitive and is classified as premature.
-
-It may not consolidate into a standalone category and could instead dissolve into adjacent coordination surfaces as terminology evolves.
+Associated ENS: "executionmarket.eth"
+Canonical term: execution coordination (ambiguous term)
+Registry ID: "executionmarket"
+Status: Research
+Classification: Premature
 
 ---
 
-## Context
+Summary
 
-Execution coordination describes the environment in which:
+This anchor tracks execution coordination (ambiguous term) as an unstable and non-canonical conceptual surface within Ethereum’s execution pipeline.
 
-- order flow is routed  
-- solvers compete  
-- execution strategies are constructed  
+The term does not correspond to a clearly defined primitive and is classified as premature.
 
-before final block construction.
-
-The notion of an "execution market" appears in research and ecosystem discussions, but does not yet have a stable or widely accepted definition.
-
-This surface overlaps with:
-
-- order flow auctions  
-- solver networks  
-- builder coordination  
+It may not consolidate into a standalone category and could instead dissolve into adjacent coordination surfaces as terminology stabilizes.
 
 ---
 
-## Pipeline Position
+Context
 
-Order Flow → Solver Coordination → Execution Coordination → Block Construction
+Execution coordination is often used to describe environments where:
+
+- order flow is routed
+- solvers compete
+- execution strategies are constructed
+
+prior to block construction.
+
+However, this usage does not map to a single bounded system.
+
+Instead, it overlaps with multiple distinct coordination surfaces, including:
+
+- order flow auctions
+- solver networks
+- builder coordination
 
 ---
 
-## Coordination Role
+Structural Interpretation
+
+Execution coordination is best understood as a descriptive aggregation of interactions, rather than a discrete pipeline stage or architectural layer.
+
+It informally groups together processes that occur across:
+
+- order flow access
+- solver coordination
+- execution strategy formation
+
+These processes are already captured by more precise primitives within the registry.
+
+---
+
+Coordination Role
 
 This surface attempts to describe coordination between:
 
-- transaction routing  
-- solver competition  
-- execution strategy formation  
+- transaction routing
+- solver competition
+- execution strategy formation
 
-However, its boundaries are not clearly defined and may collapse into adjacent primitives as terminology stabilizes.
+However, these roles are distributed across multiple well-defined primitives, and do not form a single cohesive mechanism.
 
 ---
 
-## Protocol Grounding
+Protocol Grounding
 
 There is no formal protocol specification for execution coordination.
 
 The concept is derived from:
 
-- Ethereum research discussions  
-- intent-based execution systems  
-- MEV-aware coordination models  
+- Ethereum research discussions
+- intent-based execution systems
+- MEV-aware coordination models
 
 ---
 
-## Semantic Note
+Semantic Note
 
-Execution coordination should not be interpreted as a defined protocol layer or stable architectural component.
+Execution coordination should not be interpreted as a stable architectural component.
 
-It represents a provisional abstraction used to describe interactions between order flow, solvers, and execution strategy formation.
+It represents a non-canonical and potentially dissolving terminology cluster, used to describe overlapping coordination behaviors.
 
-The concept may fragment or disappear as clearer primitives (such as solver networks or order flow auctions) stabilize.
+As Ethereum terminology converges, this surface is likely to:
 
----
-
-## Naming Alignment
-
-- **ENS anchor:** `executionmarket.eth`  
-- **Canonical term:** execution coordination  
-
-The ENS naming suggests a market structure that is not semantically stabilized.
-
-This entry is classified as **premature** due to lack of canonical definition.
+- fragment into more precise primitives
+  or
+- disappear as a standalone concept
 
 ---
 
-## Registry Role
+Naming Alignment
 
-- Track emergence of execution coordination terminology  
-- Observe whether this surface stabilizes or dissolves  
-- Map relationships between solver networks and block construction  
-- Prevent premature semantic solidification  
+- ENS anchor: "executionmarket.eth"
+- Canonical term: execution coordination (ambiguous term)
 
----
+The ENS naming reflects a market-based abstraction that is not semantically stabilized.
 
-## Status
-
-Experimental research surface with uncertain long-term stability.
+This entry is intentionally tracked to avoid premature consolidation of an ill-defined concept.
 
 ---
 
-## Sources
+Registry Role
+
+- Track emergence of ambiguous execution-layer terminology
+- Prevent premature semantic consolidation
+- Identify overlaps between coordination surfaces
+- Observe whether this surface resolves or dissolves
+
+---
+
+Status
+
+Premature and unstable coordination surface with uncertain long-term viability.
+
+---
+
+Sources
 
 Primary research references are documented in:
 
-`schemas/executionmarket/`
+"schemas/executionmarket/"
