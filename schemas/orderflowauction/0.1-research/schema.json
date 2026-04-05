@@ -37,8 +37,8 @@
     },
     "classification": {
       "type": "string",
-      "const": "valid",
-      "description": "Semantic classification within the Vortik registry."
+      "const": "repairable",
+      "description": "Legacy coordination surface losing centrality in the emerging Ethereum execution architecture."
     },
     "status": {
       "type": "string",
@@ -48,23 +48,22 @@
     "type": {
       "type": "string",
       "const": "market",
-      "description": "Structural type of this tracked coordination surface."
+      "description": "Auction-based coordination mechanism for routing transaction order flow."
     },
     "summary": {
       "type": "string",
-      "description": "Short description of the coordination surface.",
+      "description": "Auction-based mechanism for routing transaction order flow, historically central in MEV supply chains but decreasing in importance with the rise of intents, solver coordination, and direct execution routing.",
       "minLength": 20
     },
     "pipeline_position": {
       "type": "array",
       "description": "Interpretive pipeline stages where this surface is most relevant.",
       "minItems": 1,
+      "maxItems": 1,
       "items": {
         "type": "string",
         "enum": [
-          "order flow",
-          "solver coordination",
-          "builder coordination"
+          "order flow"
         ]
       }
     },
@@ -74,7 +73,7 @@
       "minItems": 1,
       "items": {
         "type": "string",
-        "minLength": 3
+        "minLength": 5
       }
     },
     "protocol_grounding": {
@@ -83,7 +82,7 @@
       "minItems": 1,
       "items": {
         "type": "string",
-        "minLength": 3
+        "minLength": 5
       }
     },
     "naming": {
@@ -110,7 +109,7 @@
         },
         "notes": {
           "type": "string",
-          "minLength": 5
+          "minLength": 10
         }
       }
     },
