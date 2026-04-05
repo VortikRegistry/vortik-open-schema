@@ -12,12 +12,12 @@ It supports the semantic anchoring of `orderflowauction.eth` within the Vortik S
 
 Order flow auctions refer to coordination mechanisms where **access to transaction flow is auctioned** among competing execution participants prior to block construction.
 
-These mechanisms operate at the **entry and routing stage** of the execution pipeline and are closely associated with:
+These mechanisms operate at the **entry and routing stage** of the execution pipeline and have historically been associated with:
 
 - private order flow routing  
 - solver competition  
-- intent-based execution systems  
-- builder market interactions  
+- builder coordination  
+- MEV supply chain structuring  
 
 Order flow auctions determine:
 
@@ -25,7 +25,26 @@ Order flow auctions determine:
 - how execution opportunities are distributed  
 - how upstream MEV is internalized and allocated  
 
-They represent a key coordination surface controlling **access to execution opportunities before inclusion**.
+They represent a coordination surface controlling **access to execution opportunities before inclusion**.
+
+---
+
+## Structural Interpretation
+
+Order flow auctions are best understood as a **legacy coordination mechanism** at the entry point of the execution pipeline.
+
+While structurally important in earlier MEV architectures, their relative importance is decreasing with the emergence of:
+
+- intent-based execution systems  
+- solver-native coordination  
+- direct routing mechanisms  
+- protocol-aligned execution flows  
+
+This reflects a broader shift from:
+
+- auction-based coordination  
+to  
+- role-based and object-based coordination  
 
 ---
 
@@ -57,24 +76,26 @@ Common terminology associated with this coordination surface includes:
 - transaction routing auction  
 - order flow routing  
 
-This terminology shows **strong semantic convergence** across research and ecosystem discussions.
+This terminology shows **strong historical convergence**, though its relevance is evolving.
 
 ---
 
 ## Status
 
-Research-aligned coordination surface (2026).
+Declining coordination surface (2026).
 
-Order flow auctions are a structurally important upstream mechanism in Ethereum’s execution pipeline, particularly in relation to:
+Order flow auctions remain present within Ethereum’s execution ecosystem but are losing centrality as coordination shifts toward:
 
-- transaction routing  
-- solver competition  
-- MEV redistribution  
+- solver networks  
+- intent-based execution  
+- protocol-constrained inclusion  
 
-They are not currently defined as a canonical L1 protocol primitive, but represent a **critical coordination layer preceding execution and inclusion**.
+They are not defined as a canonical L1 primitive and are tracked as a **transitional mechanism within the execution pipeline**.
 
 ---
 
 ## Notes
 
-This surface represents control over the **entry point of the execution pipeline**, shaping how transaction flow is exposed, priced, and routed across competing execution participants.
+This surface represents control over the **entry point of the execution pipeline**, shaping how transaction flow is exposed, priced, and routed.
+
+Its role is increasingly being reabsorbed into more structured coordination primitives and execution models.
