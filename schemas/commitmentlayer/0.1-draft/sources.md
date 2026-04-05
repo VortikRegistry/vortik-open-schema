@@ -1,8 +1,8 @@
-# Commitment Signaling / Preconfirmation Commitments — Sources
+# Preconfirmation Commitments — Sources
 
 ## Overview
 
-This document compiles primary references and terminology associated with **commitment signaling** and **preconfirmation commitments** within Ethereum execution, sequencing, and latency-sensitive coordination research.
+This document compiles primary references and terminology associated with **preconfirmation commitments** within Ethereum execution, sequencing, and latency-sensitive coordination research.
 
 It supports the semantic anchoring of `commitmentlayer.eth` within the Vortik Semantic Registry.
 
@@ -10,50 +10,42 @@ It supports the semantic anchoring of `commitmentlayer.eth` within the Vortik Se
 
 ## Research Context
 
-Commitment signaling refers to mechanisms through which proposers, builders, or related sequencing actors provide early signals regarding future transaction inclusion, ordering, or execution guarantees.
+Preconfirmation commitments refer to mechanisms through which proposers, builders, or related sequencing actors provide **early, credible commitments** regarding future transaction inclusion, ordering, or execution outcomes.
 
-These mechanisms are closely associated with:
+These commitments are a core component of:
 
 - preconfirmation systems  
 - proposer commitments  
 - transaction inclusion assurances  
-- sequencing neutrality constraints  
+- sequencing coordination  
 
-This surface emerges in research focused on:
+They emerge in research focused on:
 
 - reducing execution uncertainty  
 - improving low-latency transaction experience  
 - coordinating transaction flow before final block inclusion  
 - separating economic guarantees from protocol guarantees  
 
-It should not be interpreted as a standalone protocol layer.
-
-Rather, it represents an emergent coordination surface spanning multiple execution and sequencing contexts.
-
 ---
 
 ## Structural Role
 
-Commitment signaling operates as a **guarantee-oriented coordination surface** between transaction initiation and final inclusion.
+Preconfirmation commitments operate at the **preconfirmation stage** of Ethereum’s coordination pipeline.
 
-It sits downstream from:
+They function as a **guarantee mechanism**, enabling actors to signal expected execution outcomes before protocol-level inclusion and finality.
 
-- order flow access  
-- solver and routing systems  
+They sit between:
 
-and upstream from:
+- execution coordination  
+- protocol-enforced inclusion  
 
-- builder coordination  
-- protocol-level inclusion  
-- finality  
-
-Its purpose is to shape execution expectations before on-chain confirmation.
+and shape execution expectations prior to on-chain confirmation.
 
 ---
 
 ## Guarantee Dynamics
 
-Commitment signaling introduces a separation between:
+Preconfirmation commitments introduce a separation between:
 
 - **economic guarantees** (early commitments, preconfirmations)  
 - **protocol guarantees** (actual inclusion and finality)  
@@ -74,25 +66,28 @@ This distinction is critical, since execution may be perceived as confirmed befo
 
 ## Terminology Surface
 
-Common terminology associated with this coordination surface includes:
+Common terminology associated with this surface includes:
 
-- commitment signaling  
 - preconfirmation commitments  
 - proposer commitments  
 - preconfirmations  
-- commitment layer (non-canonical)  
+- commitment signaling  
 
-This terminology remains fluid and has not yet converged to a single canonical form.
+This terminology remains fluid and overlaps with adjacent surfaces such as preconfirmation systems.
 
 ---
 
 ## Status
 
-Active research coordination surface (2026).
+Active research coordination mechanism (2026).
 
-Commitment signaling mechanisms are actively explored in Ethereum execution and sequencing research, particularly in relation to preconfirmations, neutrality, and latency-sensitive coordination.
+Preconfirmation commitments are a structurally important component of Ethereum’s execution pipeline, particularly in relation to:
 
-They are not currently defined as a canonical L1 protocol primitive.
+- early execution guarantees  
+- proposer commitments  
+- sequencing coordination  
+
+They are not currently defined as a canonical L1 protocol primitive and remain an evolving research surface.
 
 ---
 
@@ -100,4 +95,4 @@ They are not currently defined as a canonical L1 protocol primitive.
 
 This document reflects observed research discussion and terminology convergence.
 
-It does not define a protocol specification.
+Preconfirmation commitments are closely coupled with preconfirmation systems, but represent a **more specific mechanism focused on signaling and guarantees**, rather than the full coordination surface.
