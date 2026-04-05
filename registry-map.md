@@ -1,74 +1,85 @@
-# Vortik Semantic Registry — Conceptual Coordination Map
+Vortik Semantic Registry — Conceptual Coordination Map
 
 The Vortik registry tracks terminology convergence across Ethereum coordination primitives and coordination surfaces.
 
-These surfaces form a layered conceptual structure representing how transaction flow, execution coordination, and protocol guarantees interact across the Ethereum coordination pipeline.
+These surfaces do not form a strict linear pipeline.
+
+Instead, they represent interacting coordination domains across the Ethereum execution and consensus system.
 
 ---
 
-## Conceptual Layers
+Coordination Surfaces (Interpretive Model)
 
-Order Flow (User Intents / Transactions)  
-↓  
-Order Flow Routing (Order Flow Auctions)  
-↓  
-Solver Coordination  
-↓  
-Execution Coordination (ambiguous surface)  
-↓  
-Builder Coordination  
-↓  
-Inclusion  
-↓  
-Commitment Signaling  
-↓  
-Preconfirmation  
-↓  
-Finality (SSF research)
+The registry groups recurring coordination functions into the following surfaces:
+
+- order flow access
+- solver coordination
+- builder coordination
+- inclusion
+- commitments and preconfirmations
+- finality
+
+Some ecosystem abstractions (e.g. order flow auctions, builder markets) operate within or across these surfaces.
+
+Ambiguous terminology (e.g. execution coordination) is tracked but not treated as a distinct layer.
 
 ---
 
-## Anchor Mapping
+Anchor Mapping
 
 The registry currently tracks the following anchors:
 
-| Anchor | Conceptual Layer |
-|------|------|
-| `orderflowauction.eth` | Order Flow Routing |
-| `solverlayer.eth` | Solver Coordination |
-| `executionmarket.eth` | Execution Coordination (ambiguous) |
-| `buildermarket.eth` | Builder Coordination |
-| `epbs.eth` | Builder Coordination (protocol-enforced separation) |
-| `inclusionlist.eth` | Inclusion |
-| `commitmentlayer.eth` | Commitment Signaling |
-| `preconflayer.eth` | Preconfirmation |
-| `fastfinality.eth` | Finality |
+Anchor| Coordination Surface
+"orderflowauction.eth"| order flow access
+"solverlayer.eth"| solver coordination
+"buildermarket.eth"| builder coordination (ecosystem abstraction)
+"epbs.eth"| builder coordination (protocol-defined primitive)
+"inclusionlist.eth"| inclusion
+"commitmentlayer.eth"| commitment signaling
+"preconflayer.eth"| preconfirmation systems
+"fastfinality.eth"| finality
+
+Ambiguous surface:
+
+Anchor| Interpretation
+"executionmarket.eth"| overlapping coordination behaviors (non-canonical)
 
 ---
 
-## Interpretation
+Interpretation
 
-The coordination pipeline reflects how responsibility shifts across actors and mechanisms:
+The coordination model reflects how responsibilities and guarantees are distributed across the system:
 
-- early stages handle **transaction flow and routing**
-- middle layers coordinate **execution and block construction**
-- later stages enforce **inclusion guarantees and ordering commitments**
-- final stages provide **consensus-level finality**
+- upstream surfaces manage access to transaction flow and execution opportunities
+- mid-layer surfaces coordinate execution and block construction roles
+- protocol-level primitives enforce inclusion constraints and selection rules
+- downstream surfaces provide execution guarantees and finality
 
-Not all layers correspond to protocol primitives.
-
-Some represent **coordination surfaces** where terminology and structure are still evolving.
+These surfaces are not strictly sequential and may overlap or interact dynamically.
 
 ---
 
-## Registry Role
+Structural Note
+
+Ethereum is evolving toward a system where:
+
+- execution is externally coordinated
+- validation and inclusion are protocol-enforced
+- visibility and access to flow become controlled surfaces
+- terminology converges around primitives, roles, and objects
+
+As this structure stabilizes, some abstractions (e.g. market-based layers) lose precision, while protocol-defined constructs become dominant.
+
+---
+
+Registry Role
 
 Vortik does not implement protocol logic.
 
 Instead, the registry:
 
-- documents semantic convergence across Ethereum research  
-- tracks coordination primitives and surfaces  
-- provides structured schemas for machine-readable semantic metadata  
+- documents semantic convergence across Ethereum research
+- tracks coordination primitives and surfaces
+- provides structured schemas for machine-readable semantic metadata
 
-Its purpose is to act as a **semantic interface layer** across research, infrastructure, and protocol discussions.
+Its purpose is to act as a semantic interface layer across research, infrastructure, and protocol discussions.
