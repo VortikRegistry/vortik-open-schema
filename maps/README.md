@@ -1,30 +1,22 @@
-# Coordination Stack Map
+# Coordination Surfaces Map
 
 This map is a semantic abstraction used by the Vortik Semantic Registry.
 
 It does not describe a strict protocol architecture.
 
-Instead, it summarizes how terminology clusters across Ethereum research and execution infrastructure.
+Instead, it summarizes how coordination-related terminology clusters across Ethereum research and execution infrastructure.
 
 ---
 
-## Stack
+## Surfaces
 
-Order Flow  
-↓  
-Order Flow Auctions  
-↓  
-Solver Networks  
-↓  
-Builder Coordination  
-↓  
-Inclusion  
-↓  
-Commitments  
-↓  
-Preconfirmations  
-↓  
-Finality  
+- Order Flow Access  
+- Solver Coordination  
+- Builder Coordination  
+- Inclusion  
+- Commitments  
+- Preconfirmations  
+- Finality  
 
 ---
 
@@ -32,7 +24,7 @@ Finality
 
 This map illustrates how coordination-related terminology is increasingly grouped into recurring semantic surfaces.
 
-It is not a claim that Ethereum operates as a single linear stack.
+These surfaces may overlap and interact, and should not be interpreted as a linear pipeline.
 
 It is a semantic observation of how concepts are being named, discussed, and connected across the ecosystem.
 
@@ -46,14 +38,14 @@ As terminology converges:
 - semantic fragmentation decreases  
 - naming becomes more structurally relevant  
 
-This helps researchers, infrastructure teams, and observers compare surfaces across research and implementation.
+This helps researchers, infrastructure teams, and observers compare coordination surfaces across research and implementation.
 
 ---
 
 ## Relation to Vortik
 
-Each layer in this map relates to semantic anchors tracked in the Vortik registry.
+Each surface in this map relates to semantic anchors tracked in the Vortik registry.
 
 See:
 
-- `coordination-stack.json`
+- `coordination-surfaces.json`
