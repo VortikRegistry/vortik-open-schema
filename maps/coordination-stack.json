@@ -1,55 +1,54 @@
 {
-  "name": "coordination-stack-semantic-map",
-  "version": "0.2",
-  "description": "Semantic abstraction of coordination-related terminology across Ethereum. This does not represent a canonical protocol architecture.",
-  "layers": [
+  "name": "coordination-surfaces-semantic-map",
+  "version": "0.3",
+  "description": "Interpretive semantic map of recurring coordination surfaces across Ethereum. This does not represent a canonical protocol architecture or a strict execution sequence.",
+  "surfaces": [
     {
-      "id": "orderflow",
-      "label": "Order Flow",
-      "description": "Transaction intent generation and routing",
+      "id": "order_flow_access",
+      "label": "Order Flow Access",
+      "description": "Transaction origination, exposure, and routing prior to execution coordination.",
       "related_anchors": ["orderflowauction.eth"]
     },
     {
-      "id": "ofa",
-      "label": "Order Flow Auctions",
-      "description": "Auction-based routing of order flow",
-      "related_anchors": ["orderflowauction.eth"]
-    },
-    {
-      "id": "solver",
-      "label": "Solver Networks",
-      "description": "Intent solving and execution optimization",
+      "id": "solver_coordination",
+      "label": "Solver Coordination",
+      "description": "Intent solving, execution path selection, and outcome optimization.",
       "related_anchors": ["solverlayer.eth"]
     },
     {
-      "id": "builder",
+      "id": "builder_coordination",
       "label": "Builder Coordination",
-      "description": "Block construction and ordering markets",
-      "related_anchors": ["buildermarket.eth"]
+      "description": "Execution payload construction and proposer-builder coordination prior to inclusion.",
+      "related_anchors": ["buildermarket.eth", "epbs.eth"]
     },
     {
       "id": "inclusion",
       "label": "Inclusion",
-      "description": "Censorship resistance and inclusion constraints",
+      "description": "Protocol-enforced inclusion constraints and censorship-resistance mechanisms.",
       "related_anchors": ["inclusionlist.eth"]
     },
     {
-      "id": "commitment",
+      "id": "commitments",
       "label": "Commitments",
-      "description": "Preconfirmation signaling and coordination",
+      "description": "Preconfirmation commitments and early execution guarantees prior to inclusion.",
       "related_anchors": ["commitmentlayer.eth"]
     },
     {
       "id": "preconfirmations",
       "label": "Preconfirmations",
-      "description": "Latency-sensitive execution assurances",
+      "description": "Latency-sensitive execution assurances and user-facing guarantees before final settlement.",
       "related_anchors": ["preconflayer.eth"]
     },
     {
       "id": "finality",
       "label": "Finality",
-      "description": "Consensus settlement and final state",
+      "description": "Consensus settlement and transition from probabilistic inclusion to irreversible final state.",
       "related_anchors": ["fastfinality.eth"]
     }
+  ],
+  "notes": [
+    "This map is interpretive and semantic, not canonical.",
+    "Surfaces may overlap and should not be read as a rigid linear pipeline.",
+    "Ambiguous terms such as execution coordination are intentionally excluded from the main surface model."
   ]
 }
