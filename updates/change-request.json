@@ -1,3 +1,10 @@
 {
-  "anchors": []
+  "anchors": [
+    {
+      "id": "epbs",
+      "update": {
+        "classification": "core"
+      }
+    }
+  ]
 }
