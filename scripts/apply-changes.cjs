@@ -1,4 +1,3 @@
-
 const fs = require("fs");
 
 const registry = JSON.parse(fs.readFileSync("registry.json"));
@@ -16,7 +15,7 @@ changes.anchors.forEach(change => {
   const registryAnchor = registry.anchors.find(a => a.id === id);
   if (!registryAnchor) {
     console.error(`Anchor not found in registry: ${id}`);
-    return;
+    process.exit(1);
   }
 
   applyUpdate(registryAnchor, update);
