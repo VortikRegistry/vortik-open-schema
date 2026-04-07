@@ -3,8 +3,17 @@ const fs = require("fs");
 const registry = JSON.parse(fs.readFileSync("registry.json"));
 const changes = JSON.parse(fs.readFileSync("updates/change-request.json"));
 
+const ALLOWED_FIELDS = [
+  "canonical_term",
+  "classification"
+];
+
 function applyUpdate(target, update) {
   Object.keys(update).forEach(key => {
+    if (!ALLOWED_FIELDS.includes(key)) {
+      console.error(`Invalid field: ${key}`);
+      process.exit(1);
+    }
     target[key] = update[key];
   });
 }
