@@ -20,8 +20,10 @@ jobs:
         with:
           node-version: 18
 
-      - name: Run script
-        run: node scripts/apply-changes.cjs
+      - name: Run scripts
+        run: |
+          node scripts/apply-changes.cjs
+          node scripts/generate-views.cjs
 
       - name: Commit changes
         run: |
