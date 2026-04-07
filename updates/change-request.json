@@ -3,7 +3,8 @@
     {
       "id": "epbs",
       "update": {
-        "classification": "core"
+        "classification": "core",
+        "test": "run"
       }
     }
   ]
