@@ -14,7 +14,8 @@
       "type": "primitive",
       "role": "block construction separation and proposer-builder auction mechanism",
       "schema": "schemas/epbs/1.0-draft/schema.json",
-      "anchor_doc": "anchors/epbs.md"
+      "anchor_doc": "anchors/epbs.md",
+      "test": "run"
     },
     {
       "id": "inclusionlist",
