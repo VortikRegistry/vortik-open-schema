@@ -4,7 +4,7 @@
 **Canonical term:** enshrined proposer-builder separation (ePBS)  
 **Registry ID:** `epbs`  
 **Status:** Draft EIP  
-**Classification:** Core
+**Classification: core
 
 ---
 
