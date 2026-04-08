@@ -121,5 +121,6 @@
         "format": "uri"
       }
     }
-  }
+  },
+  "classification": "repairable"
 }

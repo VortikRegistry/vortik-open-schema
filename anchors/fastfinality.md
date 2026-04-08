@@ -4,7 +4,7 @@
 **Canonical term:** Single-Slot Finality (SSF)  
 **Registry ID:** `ssf`  
 **Status:** Research  
-**Classification:** Repairable
+**Classification: repairable
 
 ---
 
