@@ -123,5 +123,6 @@
         "format": "uri"
       }
     }
-  }
+  },
+  "classification": "core"
 }
