@@ -124,6 +124,6 @@
       }
     }
   },
-  "classification":"classification": "core",
+  "classification":"classification":"core",
   "test": "run"
 }
