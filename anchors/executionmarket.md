@@ -4,7 +4,7 @@ Associated ENS: "executionmarket.eth"
 Canonical term: execution coordination (ambiguous term)
 Registry ID: "executionmarket"
 Status: Research
-Classification: Premature
+Classification: premature
 
 ---
 
