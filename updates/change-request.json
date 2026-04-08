@@ -3,6 +3,7 @@
     {
       "id": "epbs",
       "update": {
+        "classification": "core",
         "canonical_term": "enshrined proposer-builder separation (ePBS)"
       }
     }
