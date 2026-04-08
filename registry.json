@@ -65,7 +65,7 @@
       "id": "buildermarket",
       "ens": "buildermarket.eth",
       "canonical_term": "builder markets",
-      "classification": "repairable",
+      "classification": "premature",
       "status": "research",
       "type": "market",
       "role": "builder-level competition and payload construction coordination",

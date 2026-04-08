@@ -4,7 +4,7 @@ Associated ENS: "buildermarket.eth"
 Canonical term: builder markets
 Registry ID: "buildermarket"
 Status: Research
-Classification: Repairable
+Classification: premature
 
 ---
 

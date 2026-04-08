@@ -122,5 +122,6 @@
         "format": "uri"
       }
     }
-  }
+  },
+  "classification": "premature"
 }
