@@ -5,6 +5,12 @@
       "update": {
         "classification": "core"
       }
+    },
+    {
+      "id": "ssf",
+      "update": {
+        "classification": "repairable"
+      }
     }
   ]
 }
