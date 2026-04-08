@@ -3,13 +3,7 @@
     {
       "id": "epbs",
       "update": {
-        "classification": "core"
-      }
-    },
-    {
-      "id": "ssf",
-      "update": {
-        "classification": "repairable"
+        "canonical_term": "enshrined proposer-builder separation (ePBS)"
       }
     }
   ]
