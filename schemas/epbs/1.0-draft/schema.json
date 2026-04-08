@@ -124,5 +124,6 @@
       }
     }
   },
-  "classification": "core"
+  "classification": "core",
+  "canonical_term": "enshrined proposer-builder separation (ePBS)"
 }

@@ -1,7 +1,7 @@
 # Enshrined Proposer-Builder Separation (ePBS)
 
 **Associated ENS:** `epbs.eth`  
-**Canonical term:** enshrined proposer-builder separation (ePBS)  
+**Canonical term: enshrined proposer-builder separation (ePBS)
 **Registry ID:** `epbs`  
 **Status:** Draft EIP  
 **Classification: core
