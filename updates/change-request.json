@@ -5,6 +5,18 @@
       "update": {
         "classification": "premature"
       }
+    },
+    {
+      "id": "executionmarket",
+      "update": {
+        "classification": "premature"
+      }
+    },
+    {
+      "id": "blockspacemarket",
+      "update": {
+        "classification": "premature"
+      }
     }
   ]
 }
