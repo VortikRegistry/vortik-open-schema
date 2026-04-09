@@ -3,7 +3,7 @@
   "version": "0.6.0",
   "description": "Independent semantic registry indexing Ethereum coordination primitives and surfaces via ENS-anchored schemas.",
   "source_of_truth": "schemas",
-  "last_updated": "2026-03-06",
+  "last_updated": "2026-04-09",
   "anchors": [
     {
       "id": "epbs",
@@ -14,8 +14,7 @@
       "type": "primitive",
       "role": "block construction separation and proposer-builder auction mechanism",
       "schema": "schemas/epbs/1.0-draft/schema.json",
-      "anchor_doc": "anchors/epbs.md",
-      "test": "run"
+      "anchor_doc": "anchors/epbs.md"
     },
     {
       "id": "inclusionlist",
@@ -98,7 +97,7 @@
       "id": "orderflowauction",
       "ens": "orderflowauction.eth",
       "canonical_term": "order flow auctions (OFA)",
-      "classification": "repairable",
+      "classification": "valid",
       "status": "research",
       "type": "market",
       "role": "auction-based control and routing of transaction order flow",
