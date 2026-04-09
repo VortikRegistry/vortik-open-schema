@@ -1,44 +1,84 @@
 # Semantic Status
 
-This document tracks the current research maturity of primitives and coordination surfaces referenced by the Vortik Semantic Registry.
+This document tracks the current semantic maturity of primitives, roles, and coordination surfaces referenced by the Vortik Semantic Registry.
 
-Status labels describe how stabilized the terminology and design space of each surface currently is.
+Status reflects **semantic stabilization**, not implementation readiness.
 
 ---
 
-## Draft EIP Primitives
+## Protocol Primitives (High Confidence)
 
-These primitives are defined through active Ethereum Improvement Proposals but may still evolve before protocol inclusion.
+These primitives are grounded in protocol specifications or active EIPs.
 
 - epbs — enshrined proposer-builder separation (EIP-7732)  
-- inclusionlist — fork-choice enforced inclusion lists (FOCIL, EIP-7805)  
+- inclusionlist — fork-choice enforced inclusion (FOCIL, EIP-7805)  
 
-These represent **protocol-bound primitives under active specification**.
+These represent:
+
+→ **protocol-defined coordination mechanisms**  
+→ **structurally stable primitives**
 
 ---
 
-## Active Research Surfaces
+## Emerging Coordination Roles and Mechanisms
 
-These coordination surfaces appear across Ethereum research discussions but are not currently standardized as canonical L1 primitives.
+These surfaces reflect real coordination structures, but are still stabilizing in terminology and scope.
 
 - commitmentlayer — commitment signaling (preconfirmation-related)  
 - preconflayer — preconfirmation systems  
-- buildermarket — builder coordination / builder markets  
-- solverlayer — solver networks  
-- executionmarket — execution coordination (ambiguous term)  
+- solverlayer — solver coordination  
 - orderflowauction — order flow auctions (OFA)  
 
-These represent **coordination surfaces with observable usage but incomplete semantic stabilization**.
+These represent:
+
+→ **active coordination mechanisms**  
+→ **partially stabilized terminology surfaces**
+
+---
+
+## Ambiguous / Premature Surfaces
+
+These terms appear in research and discussion, but lack clear semantic boundaries or canonical definition.
+
+- executionmarket — execution coordination (ambiguous term)  
+
+These represent:
+
+→ **unstable terminology clusters**  
+→ **non-canonical coordination abstractions**
+
+They are tracked to prevent premature standardization.
+
+---
+
+## Legacy / Degrading Abstractions
+
+These concepts were historically useful, but are losing precision due to protocol evolution.
+
+- buildermarket — builder markets / builder coordination abstraction  
+
+These represent:
+
+→ **superseded coordination models**  
+→ **semantic drift away from protocol reality**
+
+In particular:
+
+- builder is now a **protocol-defined role (ePBS)**  
+- market-based descriptions are being replaced by **role-based coordination**
 
 ---
 
 ## Consensus Research
 
-These primitives relate to long-term consensus evolution and protocol design.
+These primitives relate to long-term consensus evolution.
 
 - ssf — single-slot finality (SSF)  
 
-This represents a **high-impact consensus research direction with evolving design space**.
+These represent:
+
+→ **high-impact research directions**  
+→ **emerging consensus-level primitives**
 
 ---
 
@@ -46,16 +86,32 @@ This represents a **high-impact consensus research direction with evolving desig
 
 The registry distinguishes between:
 
-- **protocol primitives** → grounded in EIPs or consensus mechanisms  
-- **coordination surfaces** → emerging structures across execution and coordination layers  
-- **consensus research directions** → long-term protocol evolution paths  
+- **protocol primitives** → defined or formalizing within the protocol  
+- **coordination roles and mechanisms** → observable system structures  
+- **ambiguous terminology surfaces** → unstable or overlapping concepts  
+- **legacy abstractions** → concepts losing structural relevance  
 
-Status reflects **semantic maturity**, not implementation readiness or adoption.
+---
+
+## Structural Shift (2026)
+
+Ethereum coordination is transitioning from:
+
+→ market-based and layered descriptions  
+
+to:
+
+→ **role-based coordination**  
+→ **commitment-driven validation**  
+→ **constraint-enforced inclusion**  
+→ **asynchronous execution pipelines**
+
+This shift directly impacts semantic classification.
 
 ---
 
 ## Notes
 
-- Terminology may evolve as research converges  
+- Terminology evolves as research converges  
 - Classification is defined at the schema level and may change over time  
-- Inclusion in this document does not imply protocol standardization
+- Inclusion does not imply protocol standardization
