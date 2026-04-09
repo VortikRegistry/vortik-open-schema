@@ -4,7 +4,7 @@
 
 This document compiles references and terminology associated with the concept often described as **“execution markets”** within Ethereum execution infrastructure research.
 
-Within the Vortik Semantic Registry, this surface is treated as a **semantically unstable coordination surface**, tracked under the term:
+Within the Vortik Semantic Registry, this surface is treated as a **premature and semantically unstable coordination abstraction**, tracked under the term:
 
 **execution coordination (ambiguous term)**
 
@@ -38,7 +38,21 @@ It informally refers to interactions occurring between:
 - execution strategy formation  
 - builder coordination  
 
-These interactions do not form a single bounded system and should not be treated as a standalone layer or primitive.
+These interactions do not form a single bounded system and should not be treated as a standalone layer, market, or protocol primitive.
+
+---
+
+## Structural Shift
+
+With the progression toward **ePBS and protocol-enforced coordination**, execution is no longer modeled as a market surface.
+
+Instead, it is decomposed into:
+
+- protocol-defined roles (builder, proposer)  
+- explicit coordination stages  
+- commitment-based execution flows  
+
+As a result, the concept of “execution markets” is increasingly **misaligned with the actual system architecture** and should be treated as a **premature abstraction**.
 
 ---
 
@@ -68,7 +82,14 @@ Common terminology associated with this coordination surface includes:
 - execution layer (ambiguous usage)  
 - solver-driven execution  
 
-This terminology is inconsistent and has not converged to a canonical form.
+This terminology is inconsistent, overlapping, and has not converged to a canonical form.
+
+It is increasingly being replaced by:
+
+- solver coordination  
+- builder roles  
+- execution pipeline stages  
+- intent execution systems  
 
 ---
 
@@ -78,7 +99,7 @@ Premature / ambiguous terminology surface (2026).
 
 The term “execution market” is widely used but lacks precise semantic boundaries within Ethereum’s coordination architecture.
 
-It is not defined as a canonical L1 primitive and is tracked within the registry as a **non-stabilized terminology surface**.
+It is not defined as a canonical L1 primitive and is tracked within the registry as a **premature and unstable terminology surface**.
 
 ---
 
@@ -90,4 +111,6 @@ It exists to:
 
 - prevent premature semantic consolidation  
 - highlight overlap between distinct coordination primitives  
-- track whether this surface resolves into clearer primitives or dissolves into adjacent layers
+- track whether this surface resolves into clearer primitives or dissolves into adjacent protocol-defined roles and pipeline stages  
+
+Accordingly, `executionmarket.eth` should not be interpreted as representing a durable or protocol-native category, but as a **transitional and increasingly invalid abstraction** within Ethereum’s evolving coordination model.
