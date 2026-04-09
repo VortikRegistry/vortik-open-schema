@@ -1,11 +1,18 @@
 # Vortik Index
 
-- enshrined proposer-builder separation (ePBS) (epbs)
-- fork-choice enforced inclusion lists (FOCIL) (inclusionlist)
-- preconfirmation commitments (commitmentlayer)
-- preconfirmation systems (preconflayer)
-- single-slot finality (SSF) (ssf)
-- builder markets (buildermarket)
-- solver networks (solverlayer)
-- execution coordination (ambiguous term) (executionmarket)
-- order flow auctions (OFA) (orderflowauction)
+## Core Primitives
+- enshrined proposer-builder separation (ePBS) (`epbs`)
+- fork-choice enforced inclusion lists (FOCIL) (`inclusionlist`)
+
+## Repairable Surfaces
+- preconfirmation commitments (`commitmentlayer`)
+- preconfirmation systems (`preconflayer`)
+- single-slot finality (SSF) (`ssf`)
+- solver networks (`solverlayer`)
+
+## Valid Surfaces
+- order flow auctions (OFA) (`orderflowauction`)
+
+## Premature / Ambiguous Surfaces
+- builder markets (`buildermarket`)
+- execution coordination (ambiguous term) (`executionmarket`)
