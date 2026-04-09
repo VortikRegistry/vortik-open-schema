@@ -1,31 +1,95 @@
 # Ethereum Coordination Primitives
 
-The Vortik Semantic Registry tracks conceptual primitives across Ethereum protocol research.
+The Vortik Semantic Registry tracks coordination primitives and semantic surfaces emerging across Ethereum protocol evolution.
 
-These primitives represent coordination mechanisms that repeatedly appear across research discussions, EIP proposals and infrastructure architecture debates.
+These primitives represent **real coordination mechanisms**, not narrative abstractions.
 
-The registry documents terminology convergence across these primitives without defining protocol rules.
+The registry does not define protocol rules.
+
+Its role is to track:
+
+- semantic convergence  
+- structural alignment  
+- terminology stability  
+
+as they emerge across research, implementation, and production systems.
 
 ---
 
-# Execution Infrastructure Primitives
+# Coordination Model (2026)
 
-These primitives appear in execution infrastructure layers before block construction.
+Ethereum is no longer accurately described as a linear pipeline or market-based system.
+
+Instead, it operates as a coordination system composed of:
+
+- protocol-defined roles  
+- verifiable commitments  
+- enforced constraints  
+- execution and confirmation flows  
+
+Primitives are mapped across these dimensions rather than fixed “layers” or “markets”.
+
+---
+
+# Core Coordination Dimensions
+
+## Roles
+
+Actors with explicit responsibilities in the system:
+
+- proposer  
+- builder  
+- solver (off-protocol / emerging)  
+
+---
+
+## Commitments
+
+Verifiable promises that structure coordination:
+
+- execution payload commitments (ePBS)  
+- bid commitments  
+- confirmation guarantees (FCR direction)  
+
+---
+
+## Constraints
+
+Rules enforced at the protocol level:
+
+- inclusion constraints (FOCIL)  
+- fork-choice enforced validity  
+- protocol-level safety rules  
+
+---
+
+## Flows
+
+Temporal coordination processes:
+
+- ordering  
+- execution (decoupled under ePBS)  
+- confirmation  
+- finality  
+
+---
+
+# Execution Surfaces
 
 ## Order Flow Auctions
 
 Anchor: orderflowauction.eth
 
-Order flow auctions refer to mechanisms where transaction flow is auctioned or routed before reaching block builders.
+Order flow auctions describe mechanisms where transaction flow is routed or auctioned before reaching block builders.
 
-Research areas include:
+Relevant systems include:
 
-- order flow auctions (OFAs)
-- RFQ-style execution environments
-- private order flow routing
-- intent routing systems
+- OFAs  
+- RFQ-style execution  
+- private order flow routing  
+- intent-based routing  
 
-Order flow auctions interact closely with solver networks and execution coordination surfaces.
+These operate **before protocol-level coordination** and feed into solver and builder activity.
 
 ---
 
@@ -35,44 +99,65 @@ Anchor: solverlayer.eth
 
 Solver networks appear in intent-based architectures where off-chain agents compete to satisfy user intents.
 
-These systems coordinate:
+They coordinate:
 
-- order flow
-- liquidity
-- transaction execution strategies
+- order flow  
+- liquidity  
+- execution strategies  
 
-Solvers determine optimal execution outcomes before block construction.
+Solvers determine execution outcomes **prior to builder participation**.
+
+Note: “layer” is a naming mismatch; this surface corresponds to a role-based coordination system.
 
 ---
 
-## Execution Coordination Surfaces
+## Execution Coordination (Ambiguous)
 
 Anchor: executionmarket.eth
 
-Execution coordination surfaces refer to conceptual environments where transaction execution rights are routed or allocated across competing actors.
+This surface tracks a **non-canonical and unstable abstraction**.
 
-These surfaces may involve:
+“Execution market” is used informally to describe overlapping systems such as:
 
-- execution routing environments
-- competitive blockspace allocation
-- solver-driven execution systems
-- cross-domain execution coordination
+- solver coordination  
+- order flow routing  
+- execution strategy formation  
+- builder interaction  
 
-Terminology in this area remains fluid across research discussions and has not yet stabilized around a single canonical term.
+It does not map to a single primitive.
+
+Status:
+→ **premature / unstable terminology surface**
 
 ---
 
-# Block Construction Primitives
+# Block Construction
 
-These primitives relate directly to how blocks are assembled and delivered to proposers.
+## Builder Role (Protocol-Level)
 
-## Builder Markets
+Builder coordination is no longer accurately described as a market.
+
+Under ePBS, builders are:
+
+- protocol-recognized actors  
+- responsible for execution payload construction  
+- integrated into consensus coordination  
+
+---
+
+## Builder Markets (Legacy Abstraction)
 
 Anchor: buildermarket.eth
 
-Builder markets represent the competitive environment where block builders construct blocks and compete to supply them to proposers.
+Builder markets describe the historical competitive environment of block construction.
 
-These markets emerge naturally from proposer-builder separation and the MEV supply chain.
+With ePBS:
+
+- this abstraction becomes less precise  
+- coordination shifts from market → protocol-defined roles  
+
+Status:
+→ **repairable / transitioning abstraction**
 
 ---
 
@@ -80,51 +165,54 @@ These markets emerge naturally from proposer-builder separation and the MEV supp
 
 Anchor: epbs.eth
 
-ePBS refers to integrating proposer-builder separation directly into the Ethereum protocol.
+ePBS integrates proposer-builder separation directly into the protocol.
 
-This primitive addresses:
+It introduces:
 
-- MEV supply chain structure
-- block building decentralization
-- proposer-builder coordination
+- execution payload commitments  
+- separation of consensus and execution timing  
+- builder participation in protocol-level coordination  
 
-Relevant discussions appear across research threads exploring the evolution of PBS toward enshrined designs.
+This is a **core primitive of Ethereum’s post-2026 architecture**.
 
 ---
 
-# Inclusion and Ordering Guarantees
+# Inclusion and Constraints
 
-These primitives focus on censorship resistance and transaction ordering guarantees.
-
-## Inclusion Enforcement
+## Inclusion Constraints (FOCIL)
 
 Anchor: inclusionlist.eth
 
-Inclusion enforcement mechanisms attempt to mitigate transaction censorship.
+FOCIL enforces transaction inclusion through fork-choice rules.
 
-Research areas include:
+It ensures:
 
-- inclusion lists
-- FOCIL proposals
-- censorship resistance mechanisms
+- mandatory inclusion of specified transactions  
+- censorship resistance at the protocol level  
 
-These designs aim to guarantee that proposers cannot indefinitely exclude valid transactions.
+This represents a shift from:
+
+→ social guarantees  
+to  
+→ protocol-enforced constraints  
 
 ---
+
+# Commitment & Confirmation
 
 ## Commitment Signaling
 
 Anchor: commitmentlayer.eth
 
-Commitment signaling mechanisms coordinate promises made by block builders or proposers before block publication.
+Commitment signaling refers to mechanisms where actors provide guarantees prior to execution or inclusion.
 
-These systems may involve:
+This includes:
 
-- proposer commitments
-- ordering guarantees
-- conditional inclusion logic
+- builder commitments  
+- ordering guarantees  
+- execution commitments  
 
-These mechanisms are closely related to preconfirmation systems.
+This surface is evolving alongside ePBS and FCR.
 
 ---
 
@@ -132,30 +220,83 @@ These mechanisms are closely related to preconfirmation systems.
 
 Anchor: preconflayer.eth
 
-Preconfirmations refer to mechanisms allowing transaction ordering guarantees before final block inclusion.
+Preconfirmations provide early guarantees about transaction ordering or inclusion.
 
-Research areas include:
+They are relevant to:
 
-- proposer commitments
-- sequencing guarantees
-- latency coordination between actors
+- latency-sensitive systems  
+- rollups  
+- bridging infrastructure  
 
-These mechanisms are being explored across rollup and L1 coordination models.
+Status:
+→ emerging but not fully standardized  
+
+Note: “layer” is a naming mismatch.
 
 ---
 
-# Consensus Evolution
+## Fast Confirmation (FCR Direction)
+
+No single canonical ENS anchor yet.
+
+Fast Confirmation Rule (FCR) introduces:
+
+- ~12 second deterministic non-revert guarantees (under assumptions)  
+- a new confirmation phase between inclusion and finality  
+
+This creates a **three-tier settlement model**:
+
+1. inclusion  
+2. confirmation  
+3. finality  
+
+---
+
+# Finality
 
 ## Single Slot Finality (SSF)
 
 Anchor: fastfinality.eth
 
-Single Slot Finality (SSF) is a research direction aimed at reducing Ethereum finality time to a single slot.
+SSF aims to reduce finality time to a single slot.
 
-This primitive affects:
+Canonical terminology:
+→ **Single Slot Finality (SSF)**
 
-- validator coordination
-- fork choice rules
-- protocol safety assumptions
+“Fast finality” is a non-canonical generalization.
 
-While the ecosystem often refers to "fast finality", terminology in research strongly converges on **Single Slot Finality (SSF)** as the canonical name for this consensus evolution.
+This primitive impacts:
+
+- validator coordination  
+- fork-choice design  
+- protocol safety  
+
+---
+
+# Summary
+
+Ethereum coordination has shifted from:
+
+❌ market-based abstractions  
+❌ linear pipelines  
+
+to:
+
+✅ role-based coordination  
+✅ commitment-driven execution  
+✅ constraint-enforced inclusion  
+✅ multi-stage settlement (inclusion → confirmation → finality)  
+
+---
+
+# Notes
+
+This document reflects **active protocol convergence (2026)**.
+
+Primitives are only included when grounded in:
+
+- protocol changes  
+- client implementation  
+- sustained research convergence  
+
+Non-canonical or unstable terms are tracked explicitly but not treated as core primitives.
