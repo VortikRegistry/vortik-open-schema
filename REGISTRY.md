@@ -1,8 +1,8 @@
 # Vortik Semantic Registry Model
 
-The Vortik Semantic Registry documents coordination primitives and surfaces across the Ethereum protocol research ecosystem.
+The Vortik Semantic Registry documents coordination primitives and semantic surfaces emerging across Ethereum’s protocol research and implementation landscape.
 
-Its goal is not to define protocol rules, but to track **semantic stabilization** across coordination layers and research domains.
+Its goal is not to define protocol rules, but to track **semantic stabilization** as coordination structures become explicit.
 
 ---
 
@@ -18,33 +18,46 @@ Versioned schema (`/schemas/`)
 ↓  
 Human-readable anchor documentation (`/anchors/`)
 
-This separation allows stable naming through ENS while enabling the semantic model and metadata to evolve via versioned schemas.
+This separation allows:
+
+- stable naming through ENS  
+- evolving semantic structure via schemas  
+- independent interpretation layers  
 
 ---
 
 # Anchors
 
-Anchors represent **coordination primitives and coordination surfaces** emerging across Ethereum research and execution infrastructure.
+Anchors represent **coordination primitives, roles, and semantic surfaces** observed in Ethereum’s architecture.
+
+They do not define the system.
+
+They expose how the system is being described and understood.
+
+Anchors may represent:
+
+- protocol-defined primitives  
+- coordination roles  
+- enforcement mechanisms  
+- emerging or unstable terminology surfaces  
 
 Examples include:
 
-- proposer-builder separation  
-- inclusion enforcement mechanisms  
+- enshrined proposer-builder separation (ePBS)  
+- inclusion enforcement (FOCIL)  
+- builder (protocol role)  
 - commitment signaling  
 - preconfirmation systems  
-- builder coordination environments  
-- solver networks  
-- execution coordination (ambiguous surface)  
+- solver coordination  
 - order flow auctions  
-- single-slot finality research  
-
-Anchors are intentionally minimal and serve as **orientation layers**, not specifications.
+- execution coordination (ambiguous term)  
+- single-slot finality (SSF)  
 
 ---
 
 # ENS as Semantic Anchors
 
-ENS identifiers are used as neutral conceptual anchors for tracked primitives and surfaces.
+ENS identifiers act as stable semantic references for tracked primitives and surfaces.
 
 Example mappings:
 
@@ -52,62 +65,116 @@ epbs.eth → enshrined proposer-builder separation
 inclusionlist.eth → inclusion enforcement (FOCIL)  
 preconflayer.eth → preconfirmation systems  
 commitmentlayer.eth → commitment signaling  
-buildermarket.eth → builder coordination  
-solverlayer.eth → solver networks  
+buildermarket.eth → legacy builder market abstraction (non-canonical)  
+solverlayer.eth → solver coordination  
 executionmarket.eth → execution coordination (ambiguous term)  
 orderflowauction.eth → order flow auctions  
 fastfinality.eth → single-slot finality (SSF)  
 
-These identifiers provide stable conceptual anchors independent of implementation changes or terminology drift.
+These identifiers provide:
+
+- stability across naming changes  
+- continuity across research phases  
+- anchoring for semantic interpretation  
 
 ---
 
 # Registry Scope
 
-The registry tracks coordination surfaces emerging across the Ethereum coordination pipeline, including:
+The registry tracks coordination structures across Ethereum, including:
 
-- proposer-builder separation (PBS / ePBS)  
-- builder coordination and block construction  
-- inclusion enforcement (FOCIL and related mechanisms)  
-- commitment signaling layers  
-- preconfirmation systems  
-- solver coordination networks  
-- execution coordination (ambiguous surface)  
-- order flow auction routing systems  
-- single-slot finality research  
+- protocol primitives (ePBS, inclusion enforcement)  
+- coordination roles (builder, proposer, solver)  
+- enforcement mechanisms (FOCIL, commitments)  
+- execution coordination surfaces  
+- preconfirmation and confirmation mechanisms  
+- finality evolution (SSF)  
+- order flow and routing systems  
 
-New anchors may be introduced when research areas demonstrate **observable semantic convergence**.
+Surfaces are only included when they are:
+
+→ grounded in real protocol behavior or research  
+→ observable across multiple sources  
+
+---
+
+# System Model (Current Interpretation)
+
+Ethereum is evolving toward a system defined by:
+
+→ **roles**  
+→ **commitments**  
+→ **constraints**  
+→ **asynchronous coordination pipelines**
+
+Key structural shifts:
+
+- execution is decoupled from consensus (ePBS)  
+- commitments replace immediate execution validation  
+- inclusion is enforced via protocol-level constraints (FOCIL)  
+- confirmation emerges as an intermediate coordination layer  
+
+The registry reflects this shift by prioritizing:
+
+- protocol-aligned primitives  
+- coordination roles  
+- enforceable mechanisms  
+
+over:
+
+- market-based abstractions  
+- informal layering models  
 
 ---
 
 # Neutrality
 
-The Vortik registry is not a governance body and does not define protocol standards.
+The Vortik registry is not a governance system and does not define standards.
 
-It exists as a **semantic and documentation layer** for Ethereum coordination primitives and surfaces.
+It operates as a **semantic infrastructure layer** that:
 
-Its role is to:
-
-- reduce ambiguity  
-- track terminology convergence  
-- provide a consistent semantic reference across research and infrastructure  
+- reduces ambiguity  
+- tracks terminology convergence  
+- maps coordination structures  
 
 ---
 
 # Design Principle
 
-The registry does not create primitives.
+The registry does not invent primitives.
 
-It recognizes, structures, and tracks them as they emerge from:
+It:
+
+- observes  
+- structures  
+- tracks  
+
+semantic convergence emerging from:
 
 - protocol research  
-- implementation patterns  
+- client implementations  
 - coordination mechanisms  
+
+---
+
+# Semantic Classification
+
+Each entry is classified as:
+
+- **core** — protocol-aligned primitive  
+- **valid** — stable coordination surface  
+- **repairable** — valid concept with naming misalignment  
+- **premature** — ambiguous or unstable terminology  
+- **deprecated** — concept losing structural relevance  
+
+Classification evolves with protocol convergence.
 
 ---
 
 # Final Note
 
-Semantic structure precedes standardization.
+Ethereum coordination is becoming structurally explicit.
 
-The registry exists to make that structure explicit.
+Semantic structure emerges before standardization.
+
+The registry exists to capture that structure while it is still forming.
