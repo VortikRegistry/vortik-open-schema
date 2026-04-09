@@ -37,7 +37,7 @@
     },
     "classification": {
       "type": "string",
-      "const": "repairable",
+      "const": "premature",
       "description": "Legacy coordination abstraction being replaced by role-based builder semantics."
     },
     "status": {
@@ -122,6 +122,5 @@
         "format": "uri"
       }
     }
-  },
-  "classification": "premature"
+  }
 }
