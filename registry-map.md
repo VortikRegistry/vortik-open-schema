@@ -1,85 +1,172 @@
-Vortik Semantic Registry — Conceptual Coordination Map
+# Vortik Semantic Registry — Conceptual Coordination Map
 
-The Vortik registry tracks terminology convergence across Ethereum coordination primitives and coordination surfaces.
+The Vortik registry tracks semantic convergence across coordination primitives, roles, and emerging surfaces within Ethereum.
 
-These surfaces do not form a strict linear pipeline.
+These elements do not form a strict linear pipeline.
 
-Instead, they represent interacting coordination domains across the Ethereum execution and consensus system.
-
----
-
-Coordination Surfaces (Interpretive Model)
-
-The registry groups recurring coordination functions into the following surfaces:
-
-- order flow access
-- solver coordination
-- builder coordination
-- inclusion
-- commitments and preconfirmations
-- finality
-
-Some ecosystem abstractions (e.g. order flow auctions, builder markets) operate within or across these surfaces.
-
-Ambiguous terminology (e.g. execution coordination) is tracked but not treated as a distinct layer.
+Instead, they represent **interacting coordination structures** across an increasingly asynchronous system.
 
 ---
 
-Anchor Mapping
+# Coordination Model (Interpretive)
 
-The registry currently tracks the following anchors:
+Ethereum coordination can be interpreted through interacting domains:
 
-Anchor| Coordination Surface
-"orderflowauction.eth"| order flow access
-"solverlayer.eth"| solver coordination
-"buildermarket.eth"| builder coordination (ecosystem abstraction)
-"epbs.eth"| builder coordination (protocol-defined primitive)
-"inclusionlist.eth"| inclusion
-"commitmentlayer.eth"| commitment signaling
-"preconflayer.eth"| preconfirmation systems
-"fastfinality.eth"| finality
+- order flow access  
+- solver coordination  
+- payload construction  
+- proposer-builder separation (ePBS)  
+- inclusion constraints (FOCIL)  
+- commitment and preconfirmation mechanisms  
+- finality (SSF trajectory)  
 
-Ambiguous surface:
+These domains are:
 
-Anchor| Interpretation
-"executionmarket.eth"| overlapping coordination behaviors (non-canonical)
-
----
-
-Interpretation
-
-The coordination model reflects how responsibilities and guarantees are distributed across the system:
-
-- upstream surfaces manage access to transaction flow and execution opportunities
-- mid-layer surfaces coordinate execution and block construction roles
-- protocol-level primitives enforce inclusion constraints and selection rules
-- downstream surfaces provide execution guarantees and finality
-
-These surfaces are not strictly sequential and may overlap or interact dynamically.
+→ not strictly sequential  
+→ partially overlapping  
+→ increasingly decoupled  
 
 ---
 
-Structural Note
+# Structural Components
 
-Ethereum is evolving toward a system where:
+The registry distinguishes between:
 
-- execution is externally coordinated
-- validation and inclusion are protocol-enforced
-- visibility and access to flow become controlled surfaces
-- terminology converges around primitives, roles, and objects
+### 1. Roles
 
-As this structure stabilizes, some abstractions (e.g. market-based layers) lose precision, while protocol-defined constructs become dominant.
+Actors explicitly defined or emerging in coordination:
+
+- proposer  
+- builder  
+- solver  
 
 ---
 
-Registry Role
+### 2. Primitives
+
+Protocol-aligned mechanisms:
+
+- ePBS (proposer-builder separation)  
+- inclusion enforcement (FOCIL)  
+
+---
+
+### 3. Commitments and Constraints
+
+Mechanisms enforcing coordination:
+
+- execution commitments  
+- inclusion constraints  
+- preconfirmation signals  
+
+---
+
+### 4. Coordination Surfaces
+
+Observed interaction domains:
+
+- order flow routing  
+- solver coordination  
+- preconfirmation systems  
+
+These are **interpretive**, not protocol-defined layers.
+
+---
+
+### 5. Ambiguous Surfaces
+
+Unstable terminology clusters:
+
+- execution coordination (executionmarket.eth)  
+
+These are tracked but not treated as canonical structures.
+
+---
+
+### 6. Legacy Abstractions
+
+Concepts losing precision:
+
+- builder markets (buildermarket.eth)  
+
+These describe historical coordination models replaced by protocol-defined roles.
+
+---
+
+# Anchor Mapping
+
+The registry tracks anchors across these structures:
+
+Anchor | Structural Interpretation
+---|---
+orderflowauction.eth | order flow routing surface  
+solverlayer.eth | solver coordination  
+epbs.eth | proposer-builder separation (protocol primitive)  
+inclusionlist.eth | inclusion constraints (FOCIL)  
+commitmentlayer.eth | commitment signaling  
+preconflayer.eth | preconfirmation systems  
+fastfinality.eth | finality (SSF trajectory)  
+buildermarket.eth | legacy builder market abstraction  
+
+Ambiguous:
+
+Anchor | Interpretation
+---|---
+executionmarket.eth | overlapping coordination behaviors (non-canonical)  
+
+---
+
+# Interpretation
+
+Coordination in Ethereum is shifting toward:
+
+- **role-based interaction**  
+- **commitment-driven validation**  
+- **constraint-enforced inclusion**  
+- **asynchronous execution pipelines**  
+
+System behavior is no longer well described by:
+
+- layered models  
+- market abstractions  
+
+Instead, it is defined by:
+
+→ roles  
+→ commitments  
+→ constraints  
+→ pipeline stages  
+
+---
+
+# Structural Note
+
+Key structural changes:
+
+- execution is decoupled from consensus (ePBS)  
+- blocks are defined by commitments, not immediate execution  
+- inclusion is enforced via protocol constraints  
+- confirmation emerges as a distinct coordination phase  
+
+As a result:
+
+- market-based terminology loses precision  
+- protocol primitives dominate semantic convergence  
+
+---
+
+# Registry Role
 
 Vortik does not implement protocol logic.
 
-Instead, the registry:
+It:
 
-- documents semantic convergence across Ethereum research
-- tracks coordination primitives and surfaces
-- provides structured schemas for machine-readable semantic metadata
+- documents semantic convergence  
+- tracks coordination primitives, roles, and surfaces  
+- provides structured schemas for machine-readable interpretation  
 
-Its purpose is to act as a semantic interface layer across research, infrastructure, and protocol discussions.
+Its purpose is to act as a **semantic interface layer** across:
+
+- research  
+- implementation  
+- coordination discussions
