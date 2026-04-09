@@ -55,30 +55,25 @@ It documents how coordination structure becomes semantically stable.
 
 ---
 
-## Coordination Mechanisms (Repairable)
+## Coordination Mechanisms
 
-- "commitmentlayer.eth" (anchors/commitmentlayer.md) — commitment signaling  
-- "preconflayer.eth" (anchors/preconflayer.md) — preconfirmation systems  
-- "fastfinality.eth" (anchors/fastfinality.md) — single-slot finality (SSF)  
-
----
-
-## Valid Coordination Surfaces
-
-- "orderflowauction.eth" (anchors/orderflowauction.md) — order flow auctions (OFA)  
+- "commitmentlayer.eth" (anchors/commitmentlayer.md) — commitment signaling *(repairable)*  
+- "preconflayer.eth" (anchors/preconflayer.md) — preconfirmation systems *(repairable)*  
+- "fastfinality.eth" (anchors/fastfinality.md) — single-slot finality (SSF) *(repairable)*  
 
 ---
 
-## Premature / Ambiguous Surfaces
+## Coordination Surfaces
 
-- "executionmarket.eth" (anchors/executionmarket.md) — execution coordination (ambiguous term)  
-- "buildermarket.eth" (anchors/buildermarket.md) — builder markets (legacy abstraction)  
+- "solverlayer.eth" (anchors/solverlayer.md) — solver coordination *(repairable)*  
+- "orderflowauction.eth" (anchors/orderflowauction.md) — order flow auctions (OFA) *(valid)*  
 
 ---
 
-## Additional Coordination Surfaces
+## Ambiguous / Transitional Surfaces
 
-- "solverlayer.eth" (anchors/solverlayer.md) — solver coordination  
+- "executionmarket.eth" (anchors/executionmarket.md) — execution coordination (ambiguous term) *(premature)*  
+- "buildermarket.eth" (anchors/buildermarket.md) — builder markets (legacy abstraction) *(premature)*  
 
 ---
 
@@ -90,6 +85,13 @@ Ethereum coordination is evolving toward:
 - commitment-driven validation  
 - constraint-enforced inclusion  
 - asynchronous execution pipelines  
+
+The system is increasingly defined by:
+
+→ roles  
+→ commitments  
+→ constraints  
+→ coordination stages  
 
 As a result:
 
