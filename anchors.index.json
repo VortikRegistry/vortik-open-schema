@@ -42,7 +42,7 @@
       "ens": "buildermarket.eth",
       "schema": "schemas/buildermarket/0.1-research/schema.json",
       "doc": "anchors/buildermarket.md",
-      "classification": "valid"
+      "classification": "premature"
     },
     {
       "id": "solverlayer",
