@@ -1,15 +1,13 @@
-# Coordination Map (Deprecated)
+# Coordination Pipeline (Ethereum 2026)
 
-This file is deprecated.
-
-It was generated from an earlier linear pipeline model of Ethereum coordination and no longer reflects the current semantic framework used by the Vortik Semantic Registry.
-
-The registry now tracks coordination through:
-
-- roles
-- constraints
-- commitments
-- coordination surfaces
-- evolving execution / confirmation flows
-
-Do not treat this file as an authoritative representation of Ethereum architecture.
+Order Flow Routing
+↓
+Solver Coordination
+↓
+Payload Construction
+↓
+ePBS (Proposer-Builder Separation)
+↓
+Inclusion Constraints (FOCIL)
+↓
+Finality (Single-Slot Finality)
