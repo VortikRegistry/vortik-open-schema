@@ -30,9 +30,9 @@ To establish a structured, machine-readable layer that captures:
 The registry focuses on identifying and structuring:
 
 - coordination primitives  
-- coordination roles  
-- pipeline stages  
-- technically grounded surfaces  
+- protocol roles  
+- constraints and commitments  
+- coordination surfaces  
 
 All entries must map to real or actively researched components within Ethereum.
 
@@ -68,7 +68,7 @@ Anchors are minimal human-readable representations of each tracked primitive or 
 Each anchor:
 
 - describes a real coordination element  
-- positions the concept within the pipeline  
+- positions the concept within the coordination system  
 - clarifies naming alignment vs canonical terminology  
 
 Anchors do not define the primitive.
@@ -92,8 +92,8 @@ They are:
 Schemas include:
 
 - canonical_term  
-- classification (core / valid / repairable / premature)  
-- pipeline_position (interpretive)  
+- classification (core / valid / repairable / premature / deprecated)  
+- coordination_surface (interpretive)  
 - coordination_role  
 - protocol_grounding  
 - naming  
@@ -133,21 +133,39 @@ Purpose:
 
 ## Conceptual Model
 
-Ethereum is modeled as a coordination pipeline:
+Ethereum is modeled as a coordination system composed of:
 
-1. Order Flow  
-2. Order Flow Routing (OFA)  
-3. Solver Coordination  
-4. Execution Coordination (ambiguous / unstable)  
-5. Builder Coordination  
-6. Inclusion  
-7. Commitment Signaling  
-8. Preconfirmation  
-9. Finality  
+- protocol-defined roles  
+- verifiable commitments  
+- enforced constraints  
+- evolving coordination surfaces  
+- execution and confirmation flows  
 
-Each primitive maps to one or more stages.
+Rather than a strictly linear pipeline, the system operates as a partially asynchronous coordination structure.
 
-The model is **interpretive**, not a protocol specification.
+Core dimensions:
+
+### Roles
+- proposer  
+- builder  
+- solver (off-protocol / emerging)  
+
+### Commitments
+- execution payload commitments  
+- bid commitments (ePBS)  
+- confirmation guarantees (FCR direction)  
+
+### Constraints
+- inclusion constraints (FOCIL)  
+- protocol-level validity rules  
+
+### Flows
+- ordering  
+- execution (decoupled under ePBS)  
+- confirmation  
+- finality  
+
+The registry maps semantic anchors to these dimensions rather than enforcing a rigid stage-based pipeline.
 
 ---
 
@@ -183,6 +201,7 @@ Each entry is classified as:
 - **valid** — real coordination surface with stable meaning  
 - **repairable** — valid concept with naming misalignment  
 - **premature** — ambiguous or unstable terminology  
+- **deprecated** — superseded abstraction or structurally invalid term  
 
 Classification is applied at the schema level and evolves with research convergence.
 
