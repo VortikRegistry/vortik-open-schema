@@ -2,31 +2,32 @@
 
 ## Purpose
 
-This document defines the criteria required for a concept to be recognized as a valid primitive or coordination surface within the Vortik Semantic Registry.
+This document defines the criteria required for a concept to be recognized as a valid primitive, role, or coordination surface within the Vortik Semantic Registry.
 
 It establishes the internal standard used to:
 
 - accept or reject entries  
-- classify coordination surfaces  
-- maintain consistency across the registry  
+- classify coordination structures  
+- maintain semantic consistency  
 
 ---
 
 ## Definition
 
-A primitive is a **structural element of coordination** within Ethereum.
+A valid entry represents a **structural element of coordination** within Ethereum.
 
-It must represent:
+This may include:
 
-- a protocol-level mechanism  
-- a coordination role  
-- or a technically grounded coordination surface  
+- protocol primitives  
+- coordination roles  
+- enforcement mechanisms  
+- coordination surfaces  
 
-A primitive is not:
+A valid entry is not:
 
 - a narrative concept  
 - a marketing abstraction  
-- or a speculative label without grounding  
+- a speculative label without grounding  
 
 ---
 
@@ -36,17 +37,17 @@ A concept must satisfy at least one of the following:
 
 ### 1. Protocol Grounding
 
-The primitive is explicitly defined or implied within:
+The concept is defined or implied within:
 
-- an EIP  
+- EIPs  
 - consensus mechanisms  
 - execution layer mechanics  
 
 ---
 
-### 2. Coordination Function
+### 2. Coordination Role
 
-The primitive performs a distinct role in coordination between actors, such as:
+The concept represents a distinct role in coordination, such as:
 
 - proposer  
 - builder  
@@ -56,17 +57,20 @@ The primitive performs a distinct role in coordination between actors, such as:
 
 ---
 
-### 3. Pipeline Position
+### 3. Structural Position
 
-The primitive maps to a defined stage within the Ethereum coordination pipeline:
+The concept can be placed within Ethereum’s coordination structure, including:
 
-- order flow  
+- order flow access  
 - solver coordination  
-- builder coordination  
-- inclusion  
+- payload construction  
+- proposer-builder interaction (ePBS)  
+- inclusion constraints (FOCIL)  
+- commitment signaling  
+- preconfirmation systems  
 - finality  
 
-Pipeline positioning is **interpretive**, but must be defensible.
+Positioning is **interpretive**, not strictly sequential.
 
 ---
 
@@ -85,9 +89,9 @@ The term appears in:
 A concept must be rejected if:
 
 - it does not map to a real coordination role or mechanism  
-- it cannot be positioned within the pipeline  
+- it cannot be positioned within coordination structure  
 - it exists only as a broad abstraction without structure  
-- it has no observable usage in research or implementation  
+- it has no observable usage  
 
 ---
 
@@ -97,25 +101,53 @@ Not all valid entries are primitives.
 
 Some are **coordination surfaces**, which:
 
-- represent emerging terminology  
-- describe coordination patterns not yet formalized  
-- may later converge into primitives  
+- describe interaction domains  
+- capture emerging terminology  
+- may not be protocol-defined  
 
-These must be explicitly classified using the registry classification system.
+These must be explicitly classified.
+
+---
+
+## Ambiguous Surfaces
+
+Some entries represent unstable terminology clusters.
+
+These:
+
+- overlap multiple coordination domains  
+- lack clear boundaries  
+- should not be treated as canonical  
+
+Example:
+
+- execution coordination (executionmarket.eth)
+
+---
+
+## Legacy / Deprecated Concepts
+
+Some concepts lose precision over time due to protocol evolution.
+
+These must be classified as:
+
+- **deprecated** (or equivalent classification)
+
+Example:
+
+- builder markets (replaced by protocol-defined builder roles under ePBS)
 
 ---
 
 ## Naming Requirements
 
-Each entry must have:
+Each entry must include:
 
-- a canonical technical term  
-- a clearly defined conceptual scope  
+- canonical technical term  
+- clearly defined conceptual scope  
 - explicit separation between canonical naming and ENS naming  
 
-If ENS naming deviates:
-
-→ it must be explicitly classified (e.g. repairable)
+Naming mismatches must be classified (e.g. repairable).
 
 ---
 
@@ -127,8 +159,9 @@ Each entry must be assigned one classification:
 - **valid** — stable coordination surface  
 - **repairable** — valid concept with naming misalignment  
 - **premature** — ambiguous or unstable terminology  
+- **deprecated** — concept losing structural relevance  
 
-Classification is applied at the schema level and may evolve over time.
+Classification evolves with semantic convergence.
 
 ---
 
@@ -143,21 +176,21 @@ Each entry must map to a schema containing:
 - status  
 - type  
 - summary  
-- pipeline_position  
+- pipeline_position (interpretive)  
 - coordination_role  
 - protocol_grounding  
 - naming  
 - sources  
 
-Schemas represent the **machine-readable semantic layer**.
+Schemas define the **machine-readable semantic layer**.
 
 ---
 
 ## Consistency Rules
 
-- An entry cannot exist without pipeline relevance  
-- An entry cannot be classified without justification  
-- An entry cannot be included without observable grounding  
+- An entry must have structural relevance  
+- Classification must be justified  
+- Inclusion requires observable grounding  
 
 ---
 
@@ -168,6 +201,7 @@ Entries may change classification over time:
 - premature → valid  
 - valid → core  
 - repairable → aligned  
+- valid → deprecated  
 
 The registry reflects:
 
@@ -179,16 +213,20 @@ The registry reflects:
 
 The registry does not create primitives.
 
-It only recognizes and structures them.
+It:
+
+- observes  
+- structures  
+- tracks  
 
 ---
 
 ## Final Principle
 
-If a concept cannot be placed:
+If a concept cannot be placed within:
 
-- in the coordination pipeline  
-- in a coordination role  
-- or in observable protocol evolution  
+- coordination roles  
+- coordination structure  
+- or observable protocol evolution  
 
 → it does not belong in the registry.
