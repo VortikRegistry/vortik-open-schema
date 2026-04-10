@@ -84,6 +84,7 @@
       color:#d7e3ff;
       font-family:var(--mono);
       font-size:12px;
+      flex:0 0 auto;
     }
 
     .brand small{
@@ -107,6 +108,7 @@
       color:var(--muted);
       background:rgba(255,255,255,.02);
       font-size:14px;
+      transition:.18s ease;
     }
 
     .nav a:hover{
@@ -159,13 +161,13 @@
       font-size:clamp(34px, 5vw, 64px);
       line-height:1.02;
       letter-spacing:-.04em;
-      max-width:820px;
+      max-width:860px;
     }
 
     .lead{
       font-size:clamp(16px, 1.9vw, 20px);
       color:var(--muted);
-      max-width:820px;
+      max-width:860px;
       line-height:1.65;
     }
 
@@ -183,11 +185,70 @@
       color:#eef4ff;
       font-weight:600;
       box-shadow: var(--glow);
+      transition:
+        transform .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease,
+        background .18s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+      border-color:rgba(122,162,255,.24);
     }
 
     .btn.primary{
       background:linear-gradient(135deg, rgba(122,162,255,.22), rgba(159,122,234,.18));
       border-color:rgba(122,162,255,.28);
+    }
+
+    .app-btn{
+      position:relative;
+      overflow:hidden;
+    }
+
+    .app-btn::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255,255,255,.08) 35%,
+        transparent 70%
+      );
+      transform:translateX(-120%);
+      transition:transform .55s ease;
+      pointer-events:none;
+    }
+
+    .app-btn:hover{
+      transform:translateY(-2px);
+      border-color:rgba(122,162,255,.45);
+      box-shadow:
+        0 0 0 1px rgba(122,162,255,.16),
+        0 12px 40px rgba(0,0,0,.42),
+        0 0 24px rgba(122,162,255,.12);
+    }
+
+    .app-btn:hover::before{
+      transform:translateX(120%);
+    }
+
+    .app-btn-icon{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:18px;
+      height:18px;
+      font-size:10px;
+      line-height:1;
+      color:#dbe7ff;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow:0 0 10px rgba(122,162,255,.22);
+      flex:0 0 auto;
     }
 
     .chips{
@@ -561,10 +622,55 @@
       font-size:14px;
     }
 
-    .foot{
-      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
-      border-top:1px solid rgba(255,255,255,.06);
-      padding-top:18px;
+    .footer-shell{
+      margin-top:60px;
+      padding-top:24px;
+      border-top:1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-grid{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      gap:24px;
+      font-size:14px;
+      color:#a8b4c7;
+    }
+
+    .footer-col{
+      min-width:220px;
+      max-width:320px;
+    }
+
+    .footer-title{
+      font-weight:600;
+      color:#e9eef7;
+      margin-bottom:8px;
+    }
+
+    .footer-links{
+      line-height:1.8;
+    }
+
+    .footer-links a{
+      color:#cfdcf2;
+      transition:.18s ease;
+    }
+
+    .footer-links a:hover{
+      color:#ffffff;
+    }
+
+    .footer-bottom{
+      margin-top:28px;
+      padding-top:16px;
+      border-top:1px solid rgba(255,255,255,0.05);
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      gap:12px;
+      font-size:13px;
+      color:#8ea0b8;
     }
 
     .status-dot{
@@ -603,6 +709,11 @@
       .section-head{display:block}
       .section-head p{margin-top:8px}
       .flow-step{align-items:flex-start}
+      .footer-grid,
+      .footer-bottom{display:block}
+      .footer-col{max-width:none}
+      .footer-col + .footer-col{margin-top:20px}
+      .footer-bottom div + div{margin-top:10px}
     }
   </style>
 </head>
@@ -637,11 +748,17 @@
           Vortik maps how terminology stabilizes across protocol primitives, coordination roles,
           commitments, constraints, and emerging coordination structures across Ethereum research and implementation.
         </p>
+
         <div class="hero-actions">
-          <a class="btn primary" href="./registry.json">Open registry.json</a>
+          <a class="btn primary app-btn" href="./app.html">
+            <span class="app-btn-icon">◉</span>
+            <span>Open interactive app</span>
+          </a>
+          <a class="btn" href="./registry.json">Open registry.json</a>
           <a class="btn" href="./maps/coordination-stack.json">Open coordination-stack.json</a>
           <a class="btn" href="https://github.com/VortikRegistry/vortik-open-schema">GitHub</a>
         </div>
+
         <div class="chips">
           <div class="chip">ethereum</div>
           <div class="chip">coordination</div>
@@ -666,6 +783,7 @@
             </p>
           </div>
         </div>
+
         <div class="stats">
           <div class="stat">
             <div class="label">Anchors tracked</div>
@@ -702,6 +820,7 @@
                 </p>
               </div>
             </div>
+
             <div class="model-list">
               <div class="mini-card">
                 <h3>Roles</h3>
@@ -810,6 +929,7 @@ anchor documentation (/anchors/)</div>
             <p>Direct access to machine-readable sources and repository navigation.</p>
           </div>
         </div>
+
         <div class="registry-grid">
           <a class="registry-box" href="./registry.json">
             <div class="k">Registry endpoint</div>
@@ -840,9 +960,41 @@ anchor documentation (/anchors/)</div>
     </main>
 
     <footer>
-      <div class="foot">
-        <div><span class="status-dot"></span>Independent research artifact</div>
-        <div>Not affiliated with the Ethereum Foundation</div>
+      <div class="footer-shell">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <div class="footer-title">Vortik Semantic Registry</div>
+            <div class="footer-links">
+              Machine-readable semantic infrastructure for Ethereum coordination.
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <div class="footer-title">Resources</div>
+            <div class="footer-links">
+              <a href="./registry.json">registry.json</a><br>
+              <a href="./anchors.index.json">anchors.index.json</a><br>
+              <a href="./maps/coordination-stack.json">coordination-stack.json</a><br>
+              <a href="./maps/coordination-surfaces.json">coordination-surfaces.json</a><br>
+              <a href="./anchors/">Anchor docs</a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <div class="footer-title">Contact</div>
+            <div class="footer-links">
+              <a href="https://github.com/VortikRegistry/vortik-open-schema/issues">Issues</a> /
+              <a href="https://github.com/VortikRegistry/vortik-open-schema/discussions">Discussions</a><br>
+              <a href="mailto:contact.preconf@gmail.com">contact.preconf@gmail.com</a><br>
+              <a href="https://x.com/VortikRegistry">X: @VortikRegistry</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div>© 2026 Vortik Semantic Registry</div>
+          <div><span class="status-dot"></span>Independent research artifact · Not affiliated with the Ethereum Foundation</div>
+        </div>
       </div>
     </footer>
   </div>
@@ -1042,73 +1194,3 @@ anchor documentation (/anchors/)</div>
   </script>
 </body>
 </html>
-
-<footer style="margin-top:60px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.08);">
-
-  <div style="
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:space-between;
-    gap:24px;
-    font-size:14px;
-    color:#a8b4c7;
-  ">
-
-    <!-- Left: identity -->
-    <div style="max-width:320px;">
-      <div style="font-weight:600; color:#e9eef7; margin-bottom:8px;">
-        Vortik Semantic Registry
-      </div>
-      <div style="line-height:1.6;">
-        Machine-readable semantic infrastructure for Ethereum coordination.
-      </div>
-    </div>
-
-    <!-- Middle: navigation -->
-    <div>
-      <div style="font-weight:600; color:#e9eef7; margin-bottom:8px;">Resources</div>
-      <div style="line-height:1.8;">
-        <a href="./registry.json">registry.json</a><br>
-        <a href="./anchors.index.json">anchors.index.json</a><br>
-        <a href="./maps/coordination-stack.json">coordination-stack.json</a><br>
-        <a href="./maps/coordination-surfaces.json">coordination-surfaces.json</a><br>
-        <a href="./anchors/">Anchor docs</a>
-      </div>
-    </div>
-
-    <!-- Right: contact -->
-    <div>
-      <div style="font-weight:600; color:#e9eef7; margin-bottom:8px;">Contact</div>
-      <div style="line-height:1.8;">
-        <a href="https://github.com/VortikRegistry/vortik-open-schema/issues">Issues</a> /
-        <a href="https://github.com/VortikRegistry/vortik-open-schema/discussions">Discussions</a><br>
-        <a href="mailto:contact.preconf@gmail.com">contact.preconf@gmail.com</a><br>
-        <a href="https://x.com/VortikRegistry">X: @VortikRegistry</a>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Bottom line -->
-  <div style="
-    margin-top:28px;
-    padding-top:16px;
-    border-top:1px solid rgba(255,255,255,0.05);
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:space-between;
-    gap:12px;
-    font-size:13px;
-    color:#8ea0b8;
-  ">
-    <div>
-      © 2026 Vortik Semantic Registry
-    </div>
-    <div>
-      Independent research artifact · Not affiliated with the Ethereum Foundation
-    </div>
-  </div>
-
-</footer>
-
-<a href="./app.html">Open interactive app</a>
