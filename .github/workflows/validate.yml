@@ -35,6 +35,9 @@ jobs:
           node -e "JSON.parse(require('fs').readFileSync('registry.json','utf8'))"
           echo "✅ registry.json valid"
 
+      - name: Generate anchors index
+        run: node scripts/generate-anchors-index.mjs
+
       - name: Validate anchors.index.json
         run: |
           if [ ! -f anchors.index.json ]; then
@@ -71,13 +74,13 @@ jobs:
       - name: Sync docs
         run: node scripts/sync-docs.mjs
 
-      - name: Commit docs updates
+      - name: Commit generated updates
         if: github.event_name == 'push'
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add docs
-          git diff --cached --quiet || git commit -m "sync docs"
+          git add anchors.index.json docs maps/coordination-map.txt
+          git diff --cached --quiet || git commit -m "generate derived files"
           git push
 
       - name: Done
