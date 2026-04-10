@@ -9,7 +9,7 @@ title: Vortik Semantic Registry
 
 ### Semantic Infrastructure for Ethereum Coordination
 
-<p><strong>Mapping terminology stabilization across primitives, roles, commitments, constraints, and emerging coordination structures.</strong></p>
+<p><strong>Mapping terminology stabilization across primitives, roles, commitments, constraints, and coordination structures.</strong></p>
 
 <p>
 <code>ethereum</code>
@@ -33,11 +33,11 @@ The **Vortik Semantic Registry** is an independent, machine-readable semantic re
 
 It connects:
 
-- **protocol primitives**
-- **coordination roles**
-- **enforcement mechanisms**
-- **semantic abstractions**
-- **emerging terminology**
+- **protocol primitives**  
+- **coordination roles**  
+- **enforcement mechanisms**  
+- **semantic abstractions**  
+- **emerging terminology**  
 
 to stable **ENS identifiers** and **versioned schemas**.
 
@@ -48,53 +48,49 @@ It documents how coordination structure becomes semantically stable **before sta
 
 ## Structural Thesis
 
-Ethereum is not a simple linear execution pipeline.
+Ethereum is not a linear execution pipeline.
 
 It is a coordination system composed of:
 
-- **roles**
-- **commitments**
-- **constraints**
-- **execution flows**
-- **confirmation layers**
+- **roles**  
+- **commitments**  
+- **constraints**  
+- **execution flows**  
+- **finality layers**  
 
-As primitives become explicit:
+Coordination does not occur in a strict sequence.
 
-- abstractions either stabilize  
-- or lose precision  
+Instead, it emerges across interacting domains that:
 
-The registry operates at that semantic boundary.
+- overlap  
+- reinforce each other  
+- evolve over time  
 
----
-
-## Coordination Model
-
-Order Flow Access  
-↓  
-Solver Coordination  
-↓  
-Payload Construction  
-↓  
-Proposer-Builder Separation (ePBS)  
-↓  
-Inclusion Enforcement (FOCIL)  
-↓  
-Commitments & Preconfirmations  
-↓  
-Finality (SSF)
+The registry reflects this structure as it becomes explicit.
 
 ---
 
-This model is:
+## Coordination Model (Interpretive)
 
-- **interpretive**
-- **not strictly sequential**
-- **partially overlapping**
-- **structurally evolving**
+The registry organizes coordination into recurring domains:
+
+- **order flow access**  
+- **solver coordination**  
+- **payload construction**  
+- **proposer-builder separation (ePBS)**  
+- **inclusion enforcement (FOCIL)**  
+- **commitment and preconfirmation layers**  
+- **finality (SSF)**  
+
+These domains:
+
+- are **not strictly sequential**  
+- may **overlap or interact dynamically**  
+- reflect **responsibility and constraint distribution**, not execution order  
 
 Ethereum coordination is increasingly defined by:
 
-roles → commitments → constraints → coordination stages
+**roles → commitments → constraints → coordination stages**
 
 ---
 
@@ -104,9 +100,9 @@ ENS identifier
 ↓  
 registry.json  
 ↓  
-versioned schemas (/schemas/)  
+versioned schemas (`/schemas/`)  
 ↓  
-anchor documentation (/anchors/)  
+anchor documentation (`/anchors/`)  
 
 ---
 
@@ -146,7 +142,7 @@ This architecture separates:
 
 ---
 
-## Ambiguous / Transitional Surfaces
+## Ambiguous / Transitional
 
 | Anchor | Surface | Classification |
 |--------|--------|----------------|
@@ -198,10 +194,10 @@ Ethereum coordination is evolving toward:
 - asynchronous execution  
 - multi-stage settlement  
 
-As this stabilizes:
+As this structure stabilizes:
 
 - abstractions lose precision  
-- primitives become dominant  
+- protocol primitives become dominant  
 - terminology converges around roles, commitments, constraints, and protocol objects  
 
 Vortik operates at that semantic edge.
@@ -210,12 +206,12 @@ Vortik operates at that semantic edge.
 
 ## Navigation
 
-- Anchors (anchors/)  
-- Schemas (schemas/)  
-- Registry (registry.json)  
-- Maps (maps/)  
-- Research (docs/)  
-- GitHub (https://github.com/VortikRegistry/vortik-open-schema)
+- [Anchors](anchors/)  
+- [Schemas](schemas/)  
+- [Registry](registry.json)  
+- [Maps](maps/)  
+- [Research](docs/)  
+- [GitHub](https://github.com/VortikRegistry/vortik-open-schema)
 
 ---
 
