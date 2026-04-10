@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/epbs/1.0-draft/schema.json",
+  "title": "Vortik Open Schema — Enshrined Proposer-Builder Separation (ePBS)",
+  "description": "Machine-readable schema for the ePBS semantic anchor within the Vortik Semantic Registry. Research artifact; not an official protocol specification.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "version",
+    "canonical_term",
+    "classification",
+    "status",
+    "type",
+    "summary",
+    "pipeline_position",
+    "coordination_role",
+    "protocol_grounding",
+    "naming",
+    "sources"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "const": "epbs",
+      "description": "Registry identifier for this semantic anchor."
+    },
+    "version": {
+      "type": "string",
+      "const": "1.0-draft",
+      "description": "Schema version for this anchor."
+    },
+    "canonical_term": {
+      "type": "string",
+      "const": "enshrined proposer-builder separation (ePBS)",
+      "description": "Canonical technical term tracked by this anchor."
+    },
+    "classification": {
+      "type": "string",
+      "const": "core",
+      "description": "Semantic classification within the Vortik registry."
+    },
+    "status": {
+      "type": "string",
+      "const": "draft-eip",
+      "description": "Current maturity/status of the tracked primitive."
+    },
+    "type": {
+      "type": "string",
+      "const": "primitive",
+      "description": "Protocol-level primitive defining proposer-builder separation."
+    },
+    "summary": {
+      "type": "string",
+      "description": "Protocol-level primitive enshrining proposer-builder separation, defining the interface between block construction and block proposal and restructuring Ethereum’s block production pipeline.",
+      "minLength": 20
+    },
+    "pipeline_position": {
+      "type": "array",
+      "description": "Pipeline stages where this primitive is most relevant.",
+      "minItems": 1,
+      "maxItems": 2,
+      "items": {
+        "type": "string",
+        "enum": [
+          "builder coordination",
+          "inclusion"
+        ]
+      }
+    },
+    "coordination_role": {
+      "type": "array",
+      "description": "Key coordination functions performed by this primitive.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    },
+    "protocol_grounding": {
+      "type": "array",
+      "description": "Primary protocol or research references grounding this primitive.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    },
+    "naming": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ens",
+        "canonical",
+        "mismatch",
+        "notes"
+      ],
+      "properties": {
+        "ens": {
+          "type": "string",
+          "const": "epbs.eth"
+        },
+        "canonical": {
+          "type": "string",
+          "const": "enshrined proposer-builder separation (ePBS)"
+        },
+        "mismatch": {
+          "type": "boolean",
+          "const": false
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 5
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "description": "Primary source references for this anchor.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    }
+  }
+}

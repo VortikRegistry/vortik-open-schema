@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/solverlayer/0.1-research/schema.json",
+  "title": "Vortik Open Schema — Solver Networks",
+  "description": "Machine-readable schema for the Solver Networks semantic anchor within the Vortik Semantic Registry. Research artifact; not an official protocol specification.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "version",
+    "canonical_term",
+    "classification",
+    "status",
+    "type",
+    "summary",
+    "pipeline_position",
+    "coordination_role",
+    "protocol_grounding",
+    "naming",
+    "sources"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "const": "solverlayer",
+      "description": "Registry identifier for this semantic anchor."
+    },
+    "version": {
+      "type": "string",
+      "const": "0.1-research",
+      "description": "Schema version for this anchor."
+    },
+    "canonical_term": {
+      "type": "string",
+      "const": "solver networks",
+      "description": "Canonical technical term tracked by this anchor."
+    },
+    "classification": {
+      "type": "string",
+      "const": "repairable",
+      "description": "Semantic classification within the Vortik registry."
+    },
+    "status": {
+      "type": "string",
+      "const": "research",
+      "description": "Current maturity/status of the tracked surface."
+    },
+    "type": {
+      "type": "string",
+      "const": "market",
+      "description": "Structural type of this tracked surface."
+    },
+    "summary": {
+      "type": "string",
+      "description": "Short description of the surface.",
+      "minLength": 20
+    },
+    "pipeline_position": {
+      "type": "array",
+      "description": "Interpretive pipeline stage where this surface is most relevant.",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "solver coordination"
+        ]
+      }
+    },
+    "coordination_role": {
+      "type": "array",
+      "description": "Key coordination functions performed by solver networks.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "protocol_grounding": {
+      "type": "array",
+      "description": "Primary protocol or research references grounding this surface.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "naming": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ens",
+        "canonical",
+        "mismatch",
+        "notes"
+      ],
+      "properties": {
+        "ens": {
+          "type": "string",
+          "const": "solverlayer.eth"
+        },
+        "canonical": {
+          "type": "string",
+          "const": "solver networks"
+        },
+        "mismatch": {
+          "type": "boolean",
+          "const": true
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 5
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "description": "Primary source references for this anchor.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    }
+  }
+}

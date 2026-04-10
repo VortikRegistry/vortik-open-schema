@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/executionmarket/0.1-research/schema.json",
+  "title": "Vortik Open Schema — Execution Coordination (Ambiguous Term)",
+  "description": "Machine-readable schema for an ambiguous execution coordination concept within the Vortik Semantic Registry. This anchor tracks a non-canonical and unstable term.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "version",
+    "canonical_term",
+    "classification",
+    "status",
+    "type",
+    "summary",
+    "pipeline_position",
+    "coordination_role",
+    "protocol_grounding",
+    "naming",
+    "sources"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "const": "executionmarket",
+      "description": "Registry identifier for this semantic anchor."
+    },
+    "version": {
+      "type": "string",
+      "const": "0.1-research",
+      "description": "Schema version for this anchor."
+    },
+    "canonical_term": {
+      "type": "string",
+      "const": "execution coordination (ambiguous term)",
+      "description": "Non-canonical term used to describe loosely defined execution-related coordination."
+    },
+    "classification": {
+      "type": "string",
+      "const": "premature",
+      "description": "Semantic classification within the Vortik registry."
+    },
+    "status": {
+      "type": "string",
+      "const": "research",
+      "description": "Current maturity/status of the tracked surface."
+    },
+    "type": {
+      "type": "string",
+      "const": "market",
+      "description": "Legacy abstraction loosely referring to execution-related coordination."
+    },
+    "summary": {
+      "type": "string",
+      "description": "Non-canonical and ambiguous term historically used to describe execution-related coordination, without a clearly defined role in the modern Ethereum pipeline.",
+      "minLength": 20
+    },
+    "pipeline_position": {
+      "type": "array",
+      "description": "This term does not map cleanly to a specific pipeline stage.",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "solver coordination"
+        ]
+      }
+    },
+    "coordination_role": {
+      "type": "array",
+      "description": "Ambiguous coordination roles attributed to this term.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    },
+    "protocol_grounding": {
+      "type": "array",
+      "description": "No direct protocol grounding; term originates from informal discussions.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    },
+    "naming": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ens",
+        "canonical",
+        "mismatch",
+        "notes"
+      ],
+      "properties": {
+        "ens": {
+          "type": "string",
+          "const": "executionmarket.eth"
+        },
+        "canonical": {
+          "type": "string",
+          "const": "execution coordination (ambiguous term)"
+        },
+        "mismatch": {
+          "type": "boolean",
+          "const": true
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 10
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "description": "Primary source references for this anchor.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    }
+  }
+}

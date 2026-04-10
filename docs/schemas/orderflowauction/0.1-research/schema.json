@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/orderflowauction/0.1-research/schema.json",
+  "title": "Vortik Open Schema — Order Flow Auctions (OFA)",
+  "description": "Machine-readable schema for the Order Flow Auctions (OFA) semantic anchor within the Vortik Semantic Registry. Research artifact; not an official protocol specification.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "version",
+    "canonical_term",
+    "classification",
+    "status",
+    "type",
+    "summary",
+    "pipeline_position",
+    "coordination_role",
+    "protocol_grounding",
+    "naming",
+    "sources"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "const": "orderflowauction",
+      "description": "Registry identifier for this semantic anchor."
+    },
+    "version": {
+      "type": "string",
+      "const": "0.1-research",
+      "description": "Schema version for this anchor."
+    },
+    "canonical_term": {
+      "type": "string",
+      "const": "order flow auctions (OFA)",
+      "description": "Canonical technical term tracked by this anchor."
+    },
+    "classification": {
+      "type": "string",
+      "const": "repairable",
+      "description": "Legacy coordination surface losing centrality in the emerging Ethereum execution architecture."
+    },
+    "status": {
+      "type": "string",
+      "const": "research",
+      "description": "Current maturity/status of the tracked surface."
+    },
+    "type": {
+      "type": "string",
+      "const": "market",
+      "description": "Auction-based coordination mechanism for routing transaction order flow."
+    },
+    "summary": {
+      "type": "string",
+      "description": "Auction-based mechanism for routing transaction order flow, historically central in MEV supply chains but decreasing in importance with the rise of intents, solver coordination, and direct execution routing.",
+      "minLength": 20
+    },
+    "pipeline_position": {
+      "type": "array",
+      "description": "Interpretive pipeline stages where this surface is most relevant.",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "order flow"
+        ]
+      }
+    },
+    "coordination_role": {
+      "type": "array",
+      "description": "Key coordination functions performed by order flow auctions.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    },
+    "protocol_grounding": {
+      "type": "array",
+      "description": "Primary protocol or research references grounding this surface.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    },
+    "naming": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ens",
+        "canonical",
+        "mismatch",
+        "notes"
+      ],
+      "properties": {
+        "ens": {
+          "type": "string",
+          "const": "orderflowauction.eth"
+        },
+        "canonical": {
+          "type": "string",
+          "const": "order flow auctions (OFA)"
+        },
+        "mismatch": {
+          "type": "boolean",
+          "const": false
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 10
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "description": "Primary source references for this anchor.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    }
+  }
+}

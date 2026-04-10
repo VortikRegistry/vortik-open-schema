@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/buildermarket/0.1-research/schema.json",
+  "title": "Vortik Open Schema — Builder Markets",
+  "description": "Machine-readable schema for the Builder Markets semantic anchor within the Vortik Semantic Registry. Research artifact; not an official protocol specification.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "version",
+    "canonical_term",
+    "classification",
+    "status",
+    "type",
+    "summary",
+    "pipeline_position",
+    "coordination_role",
+    "protocol_grounding",
+    "naming",
+    "sources"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "const": "buildermarket",
+      "description": "Registry identifier for this semantic anchor."
+    },
+    "version": {
+      "type": "string",
+      "const": "0.1-research",
+      "description": "Schema version for this anchor."
+    },
+    "canonical_term": {
+      "type": "string",
+      "const": "builder markets",
+      "description": "Legacy term referring to competitive block construction environments."
+    },
+    "classification": {
+      "type": "string",
+      "const": "premature",
+      "description": "Legacy coordination abstraction being replaced by role-based builder semantics."
+    },
+    "status": {
+      "type": "string",
+      "const": "research",
+      "description": "Current maturity/status of the tracked surface."
+    },
+    "type": {
+      "type": "string",
+      "const": "market",
+      "description": "Market-based abstraction for builder competition."
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 20,
+      "description": "Market-based abstraction describing competition among builders for block construction, increasingly superseded by protocol-defined builder roles under ePBS."
+    },
+    "pipeline_position": {
+      "type": "array",
+      "description": "Primary pipeline stage where this abstraction is most relevant.",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "builder coordination"
+        ]
+      }
+    },
+    "coordination_role": {
+      "type": "array",
+      "description": "Key coordination functions historically attributed to builder markets.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    },
+    "protocol_grounding": {
+      "type": "array",
+      "description": "Primary protocol or research references grounding this surface.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    },
+    "naming": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ens",
+        "canonical",
+        "mismatch",
+        "notes"
+      ],
+      "properties": {
+        "ens": {
+          "type": "string",
+          "const": "buildermarket.eth"
+        },
+        "canonical": {
+          "type": "string",
+          "const": "builder markets"
+        },
+        "mismatch": {
+          "type": "boolean",
+          "const": true
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 10
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "description": "Primary source references for this anchor.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    }
+  }
+}

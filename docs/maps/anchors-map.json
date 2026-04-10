@@ -1,0 +1,47 @@
+ñ[
+  {
+    "id": "epbs",
+    "term": "enshrined proposer-builder separation (ePBS)",
+    "classification": "core"
+  },
+  {
+    "id": "inclusionlist",
+    "term": "fork-choice enforced inclusion lists (FOCIL)",
+    "classification": "core"
+  },
+  {
+    "id": "commitmentlayer",
+    "term": "preconfirmation commitments",
+    "classification": "repairable"
+  },
+  {
+    "id": "preconflayer",
+    "term": "preconfirmation systems",
+    "classification": "repairable"
+  },
+  {
+    "id": "ssf",
+    "term": "single-slot finality (SSF)",
+    "classification": "repairable"
+  },
+  {
+    "id": "buildermarket",
+    "term": "builder markets",
+    "classification": "premature"
+  },
+  {
+    "id": "solverlayer",
+    "term": "solver networks",
+    "classification": "repairable"
+  },
+  {
+    "id": "executionmarket",
+    "term": "execution coordination (ambiguous term)",
+    "classification": "premature"
+  },
+  {
+    "id": "orderflowauction",
+    "term": "order flow auctions (OFA)",
+    "classification": "valid"
+  }
+]

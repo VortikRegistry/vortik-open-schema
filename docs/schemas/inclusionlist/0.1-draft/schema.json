@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/inclusionlist/0.1-draft/schema.json",
+  "title": "Vortik Open Schema — Inclusion Lists / FOCIL",
+  "description": "Machine-readable schema for the Inclusion Lists / FOCIL semantic anchor within the Vortik Semantic Registry. Research artifact; not an official protocol specification.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "version",
+    "canonical_term",
+    "classification",
+    "status",
+    "type",
+    "summary",
+    "pipeline_position",
+    "coordination_role",
+    "protocol_grounding",
+    "naming",
+    "sources"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "const": "inclusionlist",
+      "description": "Registry identifier for this semantic anchor."
+    },
+    "version": {
+      "type": "string",
+      "const": "0.1-draft",
+      "description": "Schema version for this anchor."
+    },
+    "canonical_term": {
+      "type": "string",
+      "const": "fork-choice enforced inclusion lists (FOCIL)",
+      "description": "Canonical technical term tracked by this anchor."
+    },
+    "classification": {
+      "type": "string",
+      "const": "core",
+      "description": "Semantic classification within the Vortik registry."
+    },
+    "status": {
+      "type": "string",
+      "const": "draft-eip",
+      "description": "Current maturity/status of the tracked mechanism."
+    },
+    "type": {
+      "type": "string",
+      "const": "mechanism",
+      "description": "Protocol-enforced constraint mechanism."
+    },
+    "summary": {
+      "type": "string",
+      "description": "Protocol-level inclusion constraint mechanism enforcing transaction inclusion through fork-choice rules, limiting censorship and shaping block construction.",
+      "minLength": 20
+    },
+    "pipeline_position": {
+      "type": "array",
+      "description": "Interpretive pipeline stages where this mechanism is most relevant.",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "inclusion"
+        ]
+      }
+    },
+    "coordination_role": {
+      "type": "array",
+      "description": "Key coordination functions performed by this mechanism.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    },
+    "protocol_grounding": {
+      "type": "array",
+      "description": "Primary protocol or research references grounding this mechanism.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    },
+    "naming": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ens",
+        "canonical",
+        "mismatch",
+        "notes"
+      ],
+      "properties": {
+        "ens": {
+          "type": "string",
+          "const": "inclusionlist.eth"
+        },
+        "canonical": {
+          "type": "string",
+          "const": "fork-choice enforced inclusion lists (FOCIL)"
+        },
+        "mismatch": {
+          "type": "boolean",
+          "const": true
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 10
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "description": "Primary source references for this anchor.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    }
+  }
+}
