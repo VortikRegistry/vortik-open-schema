@@ -82,5 +82,5 @@ Each surface is associated with semantic anchors tracked in the registry.
 
 See:
 
-- `coordination-surfaces.json`
+- `coordination-stack.json`
 - `../anchors/`
