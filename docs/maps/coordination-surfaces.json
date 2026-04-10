@@ -1,1 +1,68 @@
+{
+  "model": "vortik-coordination-surfaces",
+  "version": "1.0.0",
+  "type": "semantic-layer",
+  "description": "Machine-readable mapping of coordination surfaces across Ethereum based on interpretive domain grouping.",
+  "last_updated": "2026-04-09",
 
+  "surfaces": [
+    {
+      "id": "orderflow",
+      "name": "Order Flow Access & Routing",
+      "anchors": ["orderflowauction"],
+      "category": "upstream",
+      "description": "Access to transaction flow, routing mechanisms, and user intent entry points."
+    },
+    {
+      "id": "solver",
+      "name": "Solver Coordination",
+      "anchors": ["solverlayer"],
+      "category": "execution",
+      "description": "Coordination of execution strategies and intent resolution across competing solvers."
+    },
+    {
+      "id": "builder",
+      "name": "Builder Coordination",
+      "anchors": ["buildermarket", "epbs"],
+      "category": "block-construction",
+      "description": "Coordination of payload construction and proposer-builder interaction, transitioning from market-based to protocol-defined roles."
+    },
+    {
+      "id": "inclusion",
+      "name": "Inclusion",
+      "anchors": ["inclusionlist"],
+      "category": "protocol-enforcement",
+      "description": "Constraint mechanisms ensuring transaction inclusion and censorship resistance."
+    },
+    {
+      "id": "commitment",
+      "name": "Commitments & Preconfirmations",
+      "anchors": ["commitmentlayer", "preconflayer"],
+      "category": "execution-guarantees",
+      "description": "Coordination of early execution guarantees and commitment signaling prior to final inclusion."
+    },
+    {
+      "id": "finality",
+      "name": "Finality",
+      "anchors": ["ssf"],
+      "category": "consensus",
+      "description": "Consensus-level confirmation and irreversibility of state transitions."
+    }
+  ],
+
+  "ambiguous_surfaces": [
+    {
+      "id": "execution",
+      "name": "Execution Coordination (Ambiguous)",
+      "anchors": ["executionmarket"],
+      "description": "Non-canonical coordination surface spanning routing, solver activity, execution strategy, and payload construction."
+    }
+  ],
+
+  "notes": [
+    "Surfaces are interpretive groupings, not protocol-defined layers.",
+    "Surfaces may overlap and interact dynamically.",
+    "Some surfaces represent transitional abstractions rather than stable primitives.",
+    "Execution coordination is explicitly tracked as an ambiguous and non-canonical surface."
+  ]
+}
