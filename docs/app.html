@@ -1,15 +1,16 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vortik Semantic Registry — App</title>
+  <title>Vortik Semantic Registry — Interactive App</title>
   <style>
     :root{
       --bg:#05070a;
       --panel:#0b0f14;
       --panel-2:#111722;
+      --panel-3:#0d131d;
+      --line:#1e2735;
       --soft:#8ea0b8;
       --text:#e9eef7;
       --muted:#a8b4c7;
@@ -20,10 +21,10 @@
       --deprecated:#7d8590;
       --accent:#7aa2ff;
       --accent-2:#9f7aea;
-      --glow: 0 0 0 1px rgba(122,162,255,.12), 0 8px 40px rgba(0,0,0,.35);
+      --glow:0 0 0 1px rgba(122,162,255,.12), 0 8px 40px rgba(0,0,0,.35);
       --radius:20px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     *{box-sizing:border-box}
@@ -43,7 +44,10 @@
     a:hover{color:#fff}
 
     .grid-bg{
-      position:fixed; inset:0; pointer-events:none; opacity:.08;
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.08;
       background-image:
         linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
@@ -52,38 +56,50 @@
     }
 
     .wrap{
-      width:min(1180px, calc(100% - 32px));
+      width:min(1280px, calc(100% - 32px));
       margin:0 auto;
     }
 
     .topbar{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(16px);
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(16px);
       background:rgba(5,7,10,.72);
       border-bottom:1px solid rgba(255,255,255,.05);
     }
 
     .topbar-inner{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:16px; min-height:68px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      min-height:68px;
     }
 
     .brand{
-      display:flex; align-items:center; gap:14px;
-      font-weight:700; letter-spacing:.02em;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      font-weight:700;
+      letter-spacing:.02em;
     }
 
     .brand-mark{
-      width:40px; height:40px; border-radius:14px;
+      width:40px;
+      height:40px;
+      border-radius:14px;
       background:
         linear-gradient(135deg, rgba(122,162,255,.22), rgba(159,122,234,.18)),
         #0b1220;
       border:1px solid rgba(255,255,255,.08);
-      box-shadow: var(--glow);
-      display:grid; place-items:center;
+      box-shadow:var(--glow);
+      display:grid;
+      place-items:center;
       color:#d7e3ff;
       font-family:var(--mono);
       font-size:12px;
+      flex:0 0 auto;
     }
 
     .brand small{
@@ -97,7 +113,9 @@
     }
 
     .nav{
-      display:flex; gap:10px; flex-wrap:wrap;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
     .nav a{
@@ -107,6 +125,7 @@
       color:var(--muted);
       background:rgba(255,255,255,.02);
       font-size:14px;
+      transition:.18s ease;
     }
 
     .nav a:hover{
@@ -116,7 +135,7 @@
     }
 
     .hero{
-      padding:54px 0 24px;
+      padding:42px 0 22px;
     }
 
     .hero-card{
@@ -128,21 +147,25 @@
         linear-gradient(135deg, rgba(122,162,255,.08), rgba(159,122,234,.05)),
         var(--panel);
       border-radius:30px;
-      box-shadow: var(--glow);
+      box-shadow:var(--glow);
       padding:30px;
     }
 
     .hero-card::after{
       content:"";
-      position:absolute; inset:auto -10% -35% auto;
-      width:460px; height:460px;
+      position:absolute;
+      inset:auto -10% -35% auto;
+      width:460px;
+      height:460px;
       background:radial-gradient(circle, rgba(122,162,255,.20), transparent 62%);
       pointer-events:none;
-      filter: blur(12px);
+      filter:blur(12px);
     }
 
     .eyebrow{
-      display:inline-flex; align-items:center; gap:8px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
       padding:8px 12px;
       border-radius:999px;
       border:1px solid rgba(122,162,255,.18);
@@ -155,34 +178,48 @@
     }
 
     h1{
-      margin:18px 0 12px;
-      font-size:clamp(30px, 5vw, 56px);
+      margin:18px 0 10px;
+      font-size:clamp(30px, 5vw, 52px);
       line-height:1.02;
       letter-spacing:-.04em;
-      max-width:820px;
+      max-width:900px;
     }
 
     .lead{
       font-size:clamp(15px, 1.9vw, 19px);
       color:var(--muted);
-      max-width:820px;
+      max-width:900px;
       line-height:1.65;
     }
 
     .hero-actions{
-      display:flex; flex-wrap:wrap; gap:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
       margin-top:22px;
     }
 
     .btn{
-      display:inline-flex; align-items:center; gap:10px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
       border-radius:14px;
       padding:12px 16px;
       border:1px solid rgba(255,255,255,.08);
       background:rgba(255,255,255,.03);
       color:#eef4ff;
       font-weight:600;
-      box-shadow: var(--glow);
+      box-shadow:var(--glow);
+      transition:
+        transform .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease,
+        background .18s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+      border-color:rgba(122,162,255,.24);
     }
 
     .btn.primary{
@@ -190,11 +227,14 @@
       border-color:rgba(122,162,255,.28);
     }
 
-    main{ padding:8px 0 80px; }
-    section{ margin:22px 0; }
+    main{padding:8px 0 80px}
+    section{margin:22px 0}
 
     .section-head{
-      display:flex; align-items:end; justify-content:space-between; gap:16px;
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:16px;
       margin-bottom:14px;
     }
 
@@ -222,7 +262,7 @@
 
     .stats{
       display:grid;
-      grid-template-columns:repeat(4, minmax(0,1fr));
+      grid-template-columns:repeat(5, minmax(0,1fr));
       gap:14px;
     }
 
@@ -254,92 +294,28 @@
       line-height:1.45;
     }
 
-    .two-col{
+    .layout{
       display:grid;
-      grid-template-columns:1.1fr .9fr;
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, .65fr);
+      gap:18px;
+      align-items:start;
+    }
+
+    .stack{
+      display:grid;
       gap:18px;
     }
 
-    .model-list{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0,1fr));
+    .search-row{
+      display:flex;
       gap:12px;
-      margin-top:14px;
-    }
-
-    .mini-card{
-      padding:16px;
-      border-radius:18px;
-      background:var(--panel-2);
-      border:1px solid rgba(255,255,255,.05);
-    }
-
-    .mini-card h3{
-      margin:0 0 8px;
-      font-size:16px;
-    }
-
-    .mini-card p{
-      margin:0;
-      color:var(--muted);
-      line-height:1.5;
-      font-size:14px;
-    }
-
-    .flow-card{
-      padding:22px;
-      border-radius:22px;
-      background:
-        radial-gradient(circle at top right, rgba(122,162,255,.08), transparent 40%),
-        var(--panel-2);
-      border:1px solid rgba(255,255,255,.06);
-      min-height:100%;
-    }
-
-    .flow-track{
-      display:grid;
-      gap:10px;
-      margin-top:16px;
-    }
-
-    .flow-step{
-      display:flex; align-items:center; gap:12px;
-      border:1px solid rgba(255,255,255,.06);
-      background:#0b1018;
-      border-radius:16px;
-      padding:12px 14px;
-      min-height:56px;
-    }
-
-    .flow-step .num{
-      width:28px; height:28px;
-      border-radius:999px;
-      background:rgba(122,162,255,.14);
-      color:#dbe7ff;
-      display:grid; place-items:center;
-      font-family:var(--mono);
-      font-size:12px;
-      border:1px solid rgba(122,162,255,.24);
-      flex:0 0 auto;
-    }
-
-    .flow-step strong{display:block;font-size:15px}
-    .flow-step span{display:block;color:var(--soft);font-size:13px;margin-top:2px}
-
-    .arrow{
-      color:rgba(255,255,255,.26);
-      text-align:center;
-      font-size:20px;
-      line-height:1;
-    }
-
-    .anchor-toolbar{
-      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
-      margin-bottom:14px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-bottom:16px;
     }
 
     .search{
-      width:min(380px, 100%);
+      flex:1 1 340px;
       position:relative;
     }
 
@@ -351,10 +327,13 @@
       border-radius:14px;
       padding:12px 14px;
       outline:none;
+      font-size:14px;
     }
 
     .legend{
-      display:flex; gap:10px; flex-wrap:wrap;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
       align-items:center;
     }
 
@@ -366,6 +345,7 @@
       border-radius:999px;
       padding:8px 12px;
       font-size:13px;
+      transition:.18s ease;
     }
 
     .legend button.active{
@@ -376,7 +356,7 @@
 
     .anchor-grid{
       display:grid;
-      grid-template-columns:repeat(3, minmax(0,1fr));
+      grid-template-columns:repeat(2, minmax(0,1fr));
       gap:14px;
     }
 
@@ -399,7 +379,9 @@
     }
 
     .anchor-top{
-      display:flex; justify-content:space-between; gap:12px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
       align-items:flex-start;
     }
 
@@ -426,7 +408,9 @@
     }
 
     .anchor-meta{
-      display:flex; gap:8px; flex-wrap:wrap;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
       margin-top:14px;
     }
 
@@ -447,7 +431,9 @@
     .tag.deprecated{border-color:rgba(125,133,144,.22); color:var(--deprecated)}
 
     .anchor-links{
-      display:flex; gap:10px; flex-wrap:wrap;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
       margin-top:16px;
     }
 
@@ -457,59 +443,99 @@
       border-bottom:1px solid rgba(220,232,255,.2);
     }
 
-    .model-grid{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0,1fr));
-      gap:14px;
+    .empty{
+      color:var(--soft);
+      padding:10px 0 4px;
     }
 
-    .domain-card{
-      padding:18px;
-      border-radius:18px;
-      background:var(--panel-2);
+    .side-stack{
+      display:grid;
+      gap:18px;
+    }
+
+    .mini-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .mini-item{
+      padding:14px 16px;
+      border-radius:16px;
+      background:var(--panel-3);
       border:1px solid rgba(255,255,255,.05);
     }
 
-    .domain-card h3{
-      margin:0 0 8px;
-      font-size:18px;
+    .mini-item h3{
+      margin:0 0 6px;
+      font-size:15px;
       letter-spacing:-.02em;
     }
 
-    .domain-card p{
-      margin:0 0 14px;
+    .mini-item p{
+      margin:0;
       color:var(--muted);
-      font-size:14px;
-      line-height:1.55;
+      font-size:13px;
+      line-height:1.5;
     }
 
-    .domain-card .line{
+    .mini-item .mono{
+      display:block;
       margin-top:8px;
       color:#dbe8fb;
-      font-size:13px;
+      font-size:12px;
       font-family:var(--mono);
+      line-height:1.6;
+      word-break:break-word;
     }
 
-    .empty{
-      color:var(--soft);
-      padding:20px 0 4px;
+    .relations{
+      display:grid;
+      gap:10px;
     }
 
-    footer{
-      padding:18px 0 60px;
-      color:var(--soft);
-      font-size:14px;
+    .relation{
+      padding:12px 14px;
+      border-radius:14px;
+      background:#0b1018;
+      border:1px solid rgba(255,255,255,.05);
+      font-family:var(--mono);
+      font-size:13px;
+      color:#dce7f8;
     }
 
-    .foot{
-      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
-      border-top:1px solid rgba(255,255,255,.06);
-      padding-top:18px;
+    .surface-list{
+      display:grid;
+      gap:10px;
     }
 
-    .status-dot{
-      width:8px; height:8px; border-radius:999px; display:inline-block; margin-right:8px;
-      background:var(--core); box-shadow:0 0 12px rgba(61,220,151,.7);
+    .surface-item{
+      padding:14px 16px;
+      border-radius:16px;
+      background:var(--panel-3);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .surface-item strong{
+      display:block;
+      font-size:15px;
+      margin-bottom:6px;
+    }
+
+    .surface-item span{
+      display:block;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .surface-item code{
+      display:block;
+      margin-top:8px;
+      color:#dce7f8;
+      font-family:var(--mono);
+      font-size:12px;
+      line-height:1.6;
+      white-space:pre-wrap;
     }
 
     .loading, .error{
@@ -521,27 +547,56 @@
       margin:14px 0;
     }
 
-    .error{border-color:rgba(255,123,114,.28); color:#ffd7d5}
+    .error{
+      border-color:rgba(255,123,114,.28);
+      color:#ffd7d5;
+    }
 
-    @media (max-width: 1080px){
+    footer{
+      padding:18px 0 60px;
+      color:var(--soft);
+      font-size:14px;
+    }
+
+    .foot{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      border-top:1px solid rgba(255,255,255,.06);
+      padding-top:18px;
+    }
+
+    .status-dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      display:inline-block;
+      margin-right:8px;
+      background:var(--core);
+      box-shadow:0 0 12px rgba(61,220,151,.7);
+    }
+
+    @media (max-width: 1180px){
+      .stats{grid-template-columns:repeat(3,1fr)}
+      .layout{grid-template-columns:1fr}
+    }
+
+    @media (max-width: 920px){
+      .anchor-grid{grid-template-columns:1fr}
       .stats{grid-template-columns:repeat(2,1fr)}
-      .two-col{grid-template-columns:1fr}
-      .anchor-grid{grid-template-columns:1fr 1fr}
-      .model-grid{grid-template-columns:1fr 1fr}
     }
 
     @media (max-width: 720px){
       .topbar-inner{padding:10px 0}
       .nav{display:none}
-      .hero{padding-top:40px}
+      .hero{padding-top:34px}
       .hero-card{padding:22px}
-      .stats,
-      .anchor-grid,
-      .model-grid,
-      .model-list{grid-template-columns:1fr}
+      .stats,.model-grid{grid-template-columns:1fr}
       .section-head{display:block}
       .section-head p{margin-top:8px}
-      .flow-step{align-items:flex-start}
+      .foot{display:block}
+      .foot div + div{margin-top:10px}
     }
   </style>
 </head>
@@ -551,16 +606,17 @@
   <header class="topbar">
     <div class="wrap topbar-inner">
       <div class="brand">
-        <div class="brand-mark">VSR</div>
+        <div class="brand-mark">APP</div>
         <div>
-          Vortik Semantic Registry
-          <small>interactive semantic explorer</small>
+          Vortik Interactive Explorer
+          <small>semantic registry application layer</small>
         </div>
       </div>
       <nav class="nav">
         <a href="./index.html">Home</a>
         <a href="#anchors">Anchors</a>
-        <a href="#model">Model</a>
+        <a href="#domains">Domains</a>
+        <a href="#relations">Relations</a>
       </nav>
     </div>
   </header>
@@ -568,21 +624,22 @@
   <div class="wrap">
     <section class="hero">
       <div class="hero-card">
-        <div class="eyebrow">Interactive Registry App</div>
-        <h1>Explore anchors, classifications, and coordination domains.</h1>
+        <div class="eyebrow">Interactive Explorer</div>
+        <h1>Explore anchors, domains, and semantic structure in real time.</h1>
         <p class="lead">
-          This interface reads the public JSON layers exposed by Vortik and renders
-          the semantic registry as a searchable coordination explorer.
+          This application layer reads the public JSON registry and coordination model,
+          then renders Vortik as an interactive semantic explorer for research and infrastructure use.
         </p>
         <div class="hero-actions">
-          <a class="btn primary" href="./index.html">Back to home</a>
+          <a class="btn primary" href="./index.html">Back to canonical home</a>
           <a class="btn" href="./registry.json">Open registry.json</a>
           <a class="btn" href="./maps/coordination-stack.json">Open coordination-stack.json</a>
+          <a class="btn" href="./maps/coordination-surfaces.json">Open coordination-surfaces.json</a>
         </div>
       </div>
     </section>
 
-    <div id="loading" class="loading">Loading registry and coordination models…</div>
+    <div id="loading" class="loading">Loading registry and coordination layers…</div>
     <div id="error" class="error" style="display:none;"></div>
 
     <main id="app" style="display:none;">
@@ -591,101 +648,92 @@
           <div class="stat">
             <div class="label">Anchors tracked</div>
             <div class="value" id="statAnchors">0</div>
-            <div class="sub">Semantic anchors indexed through ENS-linked schemas.</div>
+            <div class="sub">Machine-readable anchors exposed by the registry.</div>
           </div>
           <div class="stat">
-            <div class="label">Core primitives</div>
+            <div class="label">Core</div>
             <div class="value" id="statCore">0</div>
             <div class="sub">Protocol-aligned primitives with strong structural grounding.</div>
           </div>
           <div class="stat">
+            <div class="label">Valid</div>
+            <div class="value" id="statValid">0</div>
+            <div class="sub">Stable coordination surfaces with usable semantic precision.</div>
+          </div>
+          <div class="stat">
             <div class="label">Repairable</div>
             <div class="value" id="statRepairable">0</div>
-            <div class="sub">Structurally real concepts with naming drift.</div>
+            <div class="sub">Real concepts with naming or alignment drift.</div>
           </div>
           <div class="stat">
             <div class="label">Premature / deprecated</div>
             <div class="value" id="statPremature">0</div>
-            <div class="sub">Unstable or legacy abstractions.</div>
+            <div class="sub">Ambiguous, unstable, or legacy abstractions.</div>
           </div>
         </div>
       </section>
 
       <section>
-        <div class="two-col">
-          <div class="panel pad">
-            <div class="section-head">
-              <div>
-                <h2>Structural Thesis</h2>
-                <p>Ethereum coordination is increasingly legible through roles, commitments, constraints, and interacting domains.</p>
+        <div class="layout">
+          <div class="stack">
+            <div class="panel pad" id="anchors">
+              <div class="section-head">
+                <div>
+                  <h2>Anchor Explorer</h2>
+                  <p>Search and filter the registry across identifiers, ENS names, canonical terms, roles, types, and statuses.</p>
+                </div>
               </div>
-            </div>
-            <div class="model-list">
-              <div class="mini-card">
-                <h3>Roles</h3>
-                <p>Proposer, builder, solver, and related actors distribute responsibility across evolving coordination surfaces.</p>
+
+              <div class="search-row">
+                <div class="search">
+                  <input id="searchInput" type="text" placeholder="Search by id, ENS, canonical term, role, type, or status..." />
+                </div>
+                <div class="legend" id="legend"></div>
               </div>
-              <div class="mini-card">
-                <h3>Commitments</h3>
-                <p>Commitment signaling and preconfirmation mechanisms shape execution expectations before finality.</p>
-              </div>
-              <div class="mini-card">
-                <h3>Constraints</h3>
-                <p>Protocol enforcement increasingly replaces informal coordination assumptions.</p>
-              </div>
-              <div class="mini-card">
-                <h3>Domains</h3>
-                <p>Coordination is not strictly sequential; domains overlap and interact dynamically.</p>
-              </div>
+
+              <div class="anchor-grid" id="anchorGrid"></div>
+              <div id="anchorEmpty" class="empty" style="display:none;">No anchors match the current filters.</div>
             </div>
           </div>
 
-          <div class="flow-card">
-            <div class="section-head">
-              <div>
-                <h2>Interpretive Model</h2>
-                <p>Displayed as recurring domains, not a canonical protocol pipeline.</p>
+          <aside class="side-stack">
+            <div class="panel pad" id="domains">
+              <div class="section-head">
+                <div>
+                  <h2>Domains</h2>
+                  <p>Interpretive coordination domains from the stack model.</p>
+                </div>
               </div>
+              <div class="mini-list" id="domainList"></div>
             </div>
-            <div class="flow-track" id="flowTrack"></div>
-          </div>
-        </div>
-      </section>
 
-      <section id="anchors">
-        <div class="section-head">
-          <div>
-            <h2>Anchors</h2>
-            <p>Filter and inspect primitives, mechanisms, valid coordination surfaces, and ambiguous terms.</p>
-          </div>
-        </div>
-
-        <div class="panel pad">
-          <div class="anchor-toolbar">
-            <div class="search">
-              <input id="searchInput" type="text" placeholder="Search by id, ENS, canonical term, role, type..." />
+            <div class="panel pad">
+              <div class="section-head">
+                <div>
+                  <h2>Surfaces</h2>
+                  <p>Machine-readable surface layer grouped for exploration.</p>
+                </div>
+              </div>
+              <div class="surface-list" id="surfaceList"></div>
             </div>
-            <div class="legend" id="legend"></div>
-          </div>
-          <div class="anchor-grid" id="anchorGrid"></div>
-          <div id="anchorEmpty" class="empty" style="display:none;">No anchors match the current filters.</div>
-        </div>
-      </section>
 
-      <section id="model">
-        <div class="section-head">
-          <div>
-            <h2>Coordination Domains</h2>
-            <p>Domains from the interpretive coordination model, including overlaps and non-canonical surfaces.</p>
-          </div>
+            <div class="panel pad" id="relations">
+              <div class="section-head">
+                <div>
+                  <h2>Relations</h2>
+                  <p>Flow and overlap relations from the coordination model.</p>
+                </div>
+              </div>
+              <div class="relations" id="relationList"></div>
+            </div>
+          </aside>
         </div>
-        <div class="model-grid" id="domainGrid"></div>
       </section>
     </main>
 
     <footer>
       <div class="foot">
-        <div><span class="status-dot"></span>Interactive app over public registry JSON</div>
+        <div><span class="status-dot"></span>Interactive explorer over public registry JSON</div>
         <div><a href="./index.html">Return to canonical home</a></div>
       </div>
     </footer>
@@ -702,16 +750,20 @@
 
     const clsOrder = ["core", "valid", "repairable", "premature", "deprecated"];
 
-    function clsCount(anchors, cls){
-      return anchors.filter(a => a.classification === cls).length;
-    }
-
     function esc(s){
       return String(s ?? "")
         .replaceAll("&","&amp;")
         .replaceAll("<","&lt;")
         .replaceAll(">","&gt;")
         .replaceAll('"',"&quot;");
+    }
+
+    function clsCount(anchors, cls){
+      return anchors.filter(a => a.classification === cls).length;
+    }
+
+    function tag(cls){
+      return `<span class="tag ${esc(cls)}">${esc(cls)}</span>`;
     }
 
     function linkForAnchor(anchor){
@@ -724,33 +776,20 @@
       return schema ? `./${schema}` : "./schemas/";
     }
 
-    function tag(cls){
-      return `<span class="tag ${esc(cls)}">${esc(cls)}</span>`;
+    async function loadJSON(path) {
+      const res = await fetch(path, { cache: "no-store" });
+      if (!res.ok) throw new Error(`Failed to load ${path}`);
+      return res.json();
     }
 
     function renderStats() {
       const anchors = state.registry.anchors || [];
       document.getElementById("statAnchors").textContent = anchors.length;
       document.getElementById("statCore").textContent = clsCount(anchors, "core");
+      document.getElementById("statValid").textContent = clsCount(anchors, "valid");
       document.getElementById("statRepairable").textContent = clsCount(anchors, "repairable");
       document.getElementById("statPremature").textContent =
         clsCount(anchors, "premature") + clsCount(anchors, "deprecated");
-    }
-
-    function renderFlow() {
-      const track = document.getElementById("flowTrack");
-      const domains = state.model.domains.filter(d => d.id !== "execution");
-
-      track.innerHTML = domains.map((d, i) => `
-        <div class="flow-step">
-          <div class="num">${i + 1}</div>
-          <div>
-            <strong>${esc(d.name)}</strong>
-            <span>${esc(d.description)}</span>
-          </div>
-        </div>
-        ${i < domains.length - 1 ? `<div class="arrow">↓</div>` : ""}
-      `).join("");
     }
 
     function renderLegend() {
@@ -776,7 +815,13 @@
       return state.registry.anchors.filter(a => {
         const passCls = state.filter === "all" ? true : a.classification === state.filter;
         const hay = [
-          a.id, a.ens, a.canonical_term, a.role, a.type, a.status, a.classification
+          a.id,
+          a.ens,
+          a.canonical_term,
+          a.role,
+          a.type,
+          a.status,
+          a.classification
         ].join(" ").toLowerCase();
         const passQuery = q ? hay.includes(q) : true;
         return passCls && passQuery;
@@ -811,14 +856,18 @@
             </div>
             ${tag(a.classification)}
           </div>
+
           <div class="anchor-term">${esc(a.canonical_term)}</div>
+
           <div class="anchor-meta">
             <span class="tag">${esc(a.type)}</span>
             <span class="tag">${esc(a.status)}</span>
           </div>
+
           <div class="anchor-term" style="min-height:auto; margin-top:12px;">
             ${esc(a.role)}
           </div>
+
           <div class="anchor-links">
             <a href="${linkForAnchor(a)}">anchor doc</a>
             <a href="${schemaLink(a)}">schema</a>
@@ -828,24 +877,55 @@
     }
 
     function renderDomains() {
-      const grid = document.getElementById("domainGrid");
-      grid.innerHTML = state.model.domains.map(d => `
-        <div class="domain-card">
+      const list = document.getElementById("domainList");
+      list.innerHTML = state.model.domains.map(d => `
+        <div class="mini-item">
           <h3>${esc(d.name)}</h3>
           <p>${esc(d.description)}</p>
-          <div class="line">id: ${esc(d.id)}</div>
-          <div class="line">anchors: ${esc((d.anchors || []).join(", "))}</div>
-          <div class="line">upstream: ${esc((d.upstream || []).join(", ") || "—")}</div>
-          <div class="line">downstream: ${esc((d.downstream || []).join(", ") || "—")}</div>
-          <div class="line">interacts_with: ${esc((d.interacts_with || []).join(", ") || "—")}</div>
+          <span class="mono">id: ${esc(d.id)}</span>
+          <span class="mono">anchors: ${esc((d.anchors || []).join(", "))}</span>
+          <span class="mono">upstream: ${esc((d.upstream || []).join(", ") || "—")}</span>
+          <span class="mono">downstream: ${esc((d.downstream || []).join(", ") || "—")}</span>
         </div>
       `).join("");
     }
 
-    async function loadJSON(path) {
-      const res = await fetch(path, { cache: "no-store" });
-      if (!res.ok) throw new Error(`Failed to load ${path}`);
-      return res.json();
+    function renderSurfaces() {
+      const list = document.getElementById("surfaceList");
+      const surfaces = state.surfaces.surfaces || [];
+      const ambiguous = state.surfaces.ambiguous_surfaces || [];
+
+      list.innerHTML = [
+        ...surfaces.map(s => `
+          <div class="surface-item">
+            <strong>${esc(s.name)}</strong>
+            <span>${esc(s.description)}</span>
+            <code>anchors: ${(s.anchors || []).map(esc).join(", ")}</code>
+          </div>
+        `),
+        ...ambiguous.map(s => `
+          <div class="surface-item">
+            <strong>${esc(s.name)}</strong>
+            <span>${esc(s.description)}</span>
+            <code>anchors: ${(s.anchors || []).map(esc).join(", ")}</code>
+          </div>
+        `)
+      ].join("");
+    }
+
+    function renderRelations() {
+      const list = document.getElementById("relationList");
+      const rels = state.model.relationships || [];
+
+      list.innerHTML = rels.map(r => {
+        if (r.type === "flow") {
+          return `<div class="relation">flow: ${esc(r.from)} → ${esc(r.to)}</div>`;
+        }
+        if (r.type === "overlap") {
+          return `<div class="relation">overlap: ${esc((r.between || []).join(" ↔ "))}</div>`;
+        }
+        return `<div class="relation">${esc(JSON.stringify(r))}</div>`;
+      }).join("");
     }
 
     async function boot() {
@@ -861,10 +941,11 @@
         state.surfaces = surfaces;
 
         renderStats();
-        renderFlow();
         renderLegend();
         renderAnchors();
         renderDomains();
+        renderSurfaces();
+        renderRelations();
 
         const input = document.getElementById("searchInput");
         input.addEventListener("input", (e) => {
