@@ -1,4 +1,4 @@
-[
+ñ[
   {
     "id": "epbs",
     "term": "enshrined proposer-builder separation (ePBS)",
@@ -42,6 +42,6 @@
   {
     "id": "orderflowauction",
     "term": "order flow auctions (OFA)",
-    "classification": "repairable"
+    "classification": "valid"
   }
 ]
