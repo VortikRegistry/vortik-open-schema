@@ -1,53 +1,77 @@
 import fs from "fs";
 
-// 📥 cargar registry con protección básica
-let registry;
+// ---------- LOAD MODEL ----------
+
+let model;
+
 try {
-  registry = JSON.parse(fs.readFileSync("registry.json", "utf8"));
+  model = JSON.parse(fs.readFileSync("maps/coordination-stack.json", "utf8"));
 } catch (err) {
-  console.error("❌ Failed to read registry.json");
+  console.error("❌ Failed to read coordination-stack.json");
   process.exit(1);
 }
 
-// 🔥 pipeline real (actualizado)
-const order = [
-  "orderflowauction",
-  "solverlayer",
-  "buildermarket",
-  "epbs",
-  "inclusionlist",
-  "ssf"
-];
+// ---------- BUILD OUTPUT ----------
 
-// 👇 etiquetas alineadas con narrativa actual
-const labels = {
-  orderflowauction: "Order Flow Routing",
-  solverlayer: "Solver Coordination",
-  buildermarket: "Payload Construction",
-  epbs: "ePBS (Proposer-Builder Separation)",
-  inclusionlist: "Inclusion Constraints (FOCIL)",
-  ssf: "Finality (Single-Slot Finality)"
-};
+let output = `# Coordination Surfaces Map (Ethereum)\n\n`;
 
-const map = [];
+output += `Model: ${model.model} v${model.version}\n`;
+output += `Type: ${model.type}\n\n`;
 
-for (const id of order) {
-  const anchor = registry.anchors.find(a => a.id === id);
-
-  if (!anchor) {
-    console.warn(`⚠️ Missing anchor: ${id}`);
-    continue;
-  }
-
-  map.push(labels[id] || anchor.id);
+output += `## Principles\n`;
+for (const p of model.principles) {
+  output += `- ${p}\n`;
 }
 
-// 📄 output final
-const output = `# Coordination Pipeline (Ethereum 2026)
+output += `\n---\n\n`;
 
-${map.join("\n↓\n")}
-`;
+output += `## Domains\n\n`;
 
-fs.writeFileSync("coordination-map.txt", output);
+for (const domain of model.domains) {
+  output += `### ${domain.name}\n`;
+  output += `- id: ${domain.id}\n`;
+  output += `- description: ${domain.description}\n`;
+  output += `- anchors: ${domain.anchors.join(", ")}\n`;
 
-console.log("✅ Coordination map generated.");
+  if (domain.upstream.length > 0) {
+    output += `- upstream: ${domain.upstream.join(", ")}\n`;
+  }
+
+  if (domain.downstream.length > 0) {
+    output += `- downstream: ${domain.downstream.join(", ")}\n`;
+  }
+
+  if (domain.interacts_with.length > 0) {
+    output += `- interacts_with: ${domain.interacts_with.join(", ")}\n`;
+  }
+
+  output += `\n`;
+}
+
+output += `---\n\n`;
+
+output += `## Relationships\n\n`;
+
+for (const rel of model.relationships) {
+  if (rel.type === "flow") {
+    output += `- flow: ${rel.from} → ${rel.to}\n`;
+  }
+
+  if (rel.type === "overlap") {
+    output += `- overlap: ${rel.between.join(" ↔ ")}\n`;
+  }
+}
+
+output += `\n---\n\n`;
+
+output += `## Notes\n\n`;
+
+for (const note of model.notes) {
+  output += `- ${note}\n`;
+}
+
+// ---------- WRITE FILE ----------
+
+fs.writeFileSync("maps/coordination-map.md", output);
+
+console.log("✅ Coordination surfaces map generated.");
