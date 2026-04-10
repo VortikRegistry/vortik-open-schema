@@ -1,6 +1,6 @@
 {
   "registry": "vortik-semantic-registry",
-  "index_version": "0.3",
+  "index_version": "0.6.0",
   "anchors": [
     {
       "id": "epbs",
