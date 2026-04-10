@@ -3,8 +3,7 @@
   "version": "2.0.0",
   "type": "interpretive",
   "description": "Interpretive coordination model describing how roles, commitments, and constraints interact across Ethereum coordination domains.",
-  "last_updated": "2026-03-10",
-
+  "last_updated": "2026-04-09",
   "principles": [
     "not strictly sequential",
     "partially overlapping",
@@ -12,12 +11,11 @@
     "commitment-driven validation",
     "constraint-enforced inclusion"
   ],
-
   "domains": [
     {
       "id": "orderflow",
-      "name": "Order Flow Access",
-      "description": "Access to transaction flow and user intent entry points.",
+      "name": "Order Flow Access & Routing",
+      "description": "Access to transaction flow, routing logic, and user intent entry points.",
       "anchors": ["orderflowauction"],
       "upstream": [],
       "downstream": ["solver"],
@@ -35,7 +33,7 @@
     {
       "id": "payload",
       "name": "Payload Construction",
-      "description": "Aggregation of transactions and execution outcomes into block payloads.",
+      "description": "Aggregation of transactions and execution outcomes into candidate block payloads.",
       "anchors": ["buildermarket"],
       "upstream": ["solver"],
       "downstream": ["builder"],
@@ -87,7 +85,6 @@
       "interacts_with": ["solver", "payload"]
     }
   ],
-
   "relationships": [
     {
       "type": "flow",
@@ -128,7 +125,6 @@
       "between": ["execution", "payload"]
     }
   ],
-
   "notes": [
     "This model is interpretive and does not represent protocol execution order.",
     "Domains may overlap and interact dynamically.",
