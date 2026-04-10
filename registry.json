@@ -77,7 +77,7 @@
       "canonical_term": "solver networks",
       "classification": "repairable",
       "status": "research",
-      "type": "market",
+      "type": "coordination_surface",
       "role": "solver coordination over execution routing and intent fulfillment",
       "schema": "schemas/solverlayer/0.1-research/schema.json",
       "anchor_doc": "anchors/solverlayer.md"
@@ -88,7 +88,7 @@
       "canonical_term": "execution coordination (ambiguous term)",
       "classification": "premature",
       "status": "research",
-      "type": "market",
+      "type": "coordination_surface",
       "role": "ambiguous execution coordination surface between routing and block construction",
       "schema": "schemas/executionmarket/0.1-research/schema.json",
       "anchor_doc": "anchors/executionmarket.md"
@@ -99,7 +99,7 @@
       "canonical_term": "order flow auctions (OFA)",
       "classification": "valid",
       "status": "research",
-      "type": "market",
+      "type": "mechanism",
       "role": "auction-based control and routing of transaction order flow",
       "schema": "schemas/orderflowauction/0.1-research/schema.json",
       "anchor_doc": "anchors/orderflowauction.md"
