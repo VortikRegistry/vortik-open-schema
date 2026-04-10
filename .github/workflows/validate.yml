@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -62,6 +64,18 @@ jobs:
 
       - name: Generate coordination map
         run: node scripts/generate-map.mjs
+
+      - name: Sync docs
+        run: node scripts/sync-docs.mjs
+
+      - name: Commit docs updates
+        if: github.event_name == 'push'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add docs
+          git diff --cached --quiet || git commit -m "sync docs"
+          git push
 
       - name: Done
         run: echo "🎯 All validations passed"
