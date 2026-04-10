@@ -8,13 +8,29 @@ It does not describe a canonical or enforced protocol architecture.
 
 ## Conceptual Surfaces
 
-- Order Flow Access  
+- Order Flow Access & Routing (OFA)  
 - Solver Coordination  
 - Builder Coordination  
 - Inclusion  
-- Commitments  
-- Preconfirmations  
+- Commitments & Preconfirmations  
 - Finality  
+
+---
+
+## Ambiguous / Overlapping Surface
+
+- Execution Coordination (ambiguous term)  
+
+This surface does not map cleanly to a single stage.
+
+It spans interactions between:
+
+- order flow routing  
+- solver coordination  
+- execution strategy formation  
+- builder coordination  
+
+It is tracked as a **non-canonical semantic surface**.
 
 ---
 
