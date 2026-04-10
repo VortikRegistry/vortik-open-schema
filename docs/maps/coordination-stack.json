@@ -1,1 +1,136 @@
 
+{
+  "model": "vortik-coordination-model",
+  "version": "2.0.0",
+  "type": "interpretive",
+  "description": "Interpretive coordination model describing how roles, commitments, and constraints interact across Ethereum coordination domains.",
+  "last_updated": "2026-04-09",
+  "principles": [
+    "not strictly sequential",
+    "partially overlapping",
+    "role-based coordination",
+    "commitment-driven validation",
+    "constraint-enforced inclusion"
+  ],
+  "domains": [
+    {
+      "id": "orderflow",
+      "name": "Order Flow Access & Routing",
+      "description": "Access to transaction flow, routing logic, and user intent entry points.",
+      "anchors": ["orderflowauction"],
+      "upstream": [],
+      "downstream": ["solver"],
+      "interacts_with": ["solver"]
+    },
+    {
+      "id": "solver",
+      "name": "Solver Coordination",
+      "description": "Coordination of execution strategies and intent resolution across competing solvers.",
+      "anchors": ["solverlayer"],
+      "upstream": ["orderflow"],
+      "downstream": ["payload"],
+      "interacts_with": ["orderflow", "payload", "execution"]
+    },
+    {
+      "id": "payload",
+      "name": "Payload Construction",
+      "description": "Aggregation of transactions and execution outcomes into candidate block payloads.",
+      "anchors": ["buildermarket"],
+      "upstream": ["solver"],
+      "downstream": ["builder"],
+      "interacts_with": ["solver", "builder"]
+    },
+    {
+      "id": "builder",
+      "name": "Proposer-Builder Separation",
+      "description": "Protocol-level separation of block construction and proposal (ePBS).",
+      "anchors": ["epbs"],
+      "upstream": ["payload"],
+      "downstream": ["inclusion"],
+      "interacts_with": ["payload", "inclusion"]
+    },
+    {
+      "id": "inclusion",
+      "name": "Inclusion Enforcement",
+      "description": "Constraint mechanisms ensuring transaction inclusion and censorship resistance.",
+      "anchors": ["inclusionlist"],
+      "upstream": ["builder"],
+      "downstream": ["commitment"],
+      "interacts_with": ["builder", "commitment"]
+    },
+    {
+      "id": "commitment",
+      "name": "Commitment & Preconfirmation",
+      "description": "Coordination of early execution guarantees and commitment signaling.",
+      "anchors": ["commitmentlayer", "preconflayer"],
+      "upstream": ["inclusion"],
+      "downstream": ["finality"],
+      "interacts_with": ["inclusion", "finality"]
+    },
+    {
+      "id": "finality",
+      "name": "Finality",
+      "description": "Consensus-level confirmation and irreversibility of state (SSF research direction).",
+      "anchors": ["ssf"],
+      "upstream": ["commitment"],
+      "downstream": [],
+      "interacts_with": ["commitment"]
+    },
+    {
+      "id": "execution",
+      "name": "Execution Coordination (Ambiguous)",
+      "description": "Non-canonical coordination surface spanning routing, solver activity, and payload construction.",
+      "anchors": ["executionmarket"],
+      "upstream": ["orderflow"],
+      "downstream": ["payload"],
+      "interacts_with": ["solver", "payload"]
+    }
+  ],
+  "relationships": [
+    {
+      "type": "flow",
+      "from": "orderflow",
+      "to": "solver"
+    },
+    {
+      "type": "flow",
+      "from": "solver",
+      "to": "payload"
+    },
+    {
+      "type": "flow",
+      "from": "payload",
+      "to": "builder"
+    },
+    {
+      "type": "flow",
+      "from": "builder",
+      "to": "inclusion"
+    },
+    {
+      "type": "flow",
+      "from": "inclusion",
+      "to": "commitment"
+    },
+    {
+      "type": "flow",
+      "from": "commitment",
+      "to": "finality"
+    },
+    {
+      "type": "overlap",
+      "between": ["solver", "execution"]
+    },
+    {
+      "type": "overlap",
+      "between": ["execution", "payload"]
+    }
+  ],
+  "notes": [
+    "This model is interpretive and does not represent protocol execution order.",
+    "Domains may overlap and interact dynamically.",
+    "Some domains represent transitional or ambiguous terminology surfaces.",
+    "Builder markets are modeled as a legacy abstraction within payload construction.",
+    "Execution coordination is intentionally classified as ambiguous and non-canonical."
+  ]
+}
