@@ -296,7 +296,7 @@
 
     .layout{
       display:grid;
-      grid-template-columns: minmax(0, 1.35fr) minmax(320px, .65fr);
+      grid-template-columns:minmax(0, 1.35fr) minmax(320px, .65fr);
       gap:18px;
       align-items:start;
     }
@@ -352,6 +352,13 @@
       border-color:rgba(122,162,255,.28);
       background:rgba(122,162,255,.12);
       color:#fff;
+    }
+
+    .context-note{
+      margin-bottom:18px;
+      color:#8ea0b8;
+      line-height:1.6;
+      font-size:14px;
     }
 
     .anchor-grid{
@@ -627,8 +634,8 @@
         <div class="eyebrow">Interactive Explorer</div>
         <h1>Explore anchors, domains, and semantic structure in real time.</h1>
         <p class="lead">
-          This application layer reads the public JSON registry and coordination model,
-          then renders Vortik as an interactive semantic explorer for research and infrastructure use.
+          This application layer renders the public registry, semantic anchors, and coordination model
+          as an interactive explorer for Ethereum research, infrastructure mapping, and terminology analysis.
         </p>
         <div class="hero-actions">
           <a class="btn primary" href="./index.html">Back to canonical home</a>
@@ -679,9 +686,14 @@
             <div class="panel pad" id="anchors">
               <div class="section-head">
                 <div>
-                  <h2>Anchor Explorer</h2>
-                  <p>Search and filter the registry across identifiers, ENS names, canonical terms, roles, types, and statuses.</p>
+                  <h2>Semantic Anchors</h2>
+                  <p>Core primitives and coordination mechanisms anchored via ENS and tracked through semantic schemas.</p>
                 </div>
+              </div>
+
+              <div class="context-note">
+                The registry distinguishes between protocol-aligned primitives, valid coordination surfaces,
+                repairable terminology, and premature abstractions.
               </div>
 
               <div class="search-row">
@@ -700,8 +712,8 @@
             <div class="panel pad" id="domains">
               <div class="section-head">
                 <div>
-                  <h2>Domains</h2>
-                  <p>Interpretive coordination domains from the stack model.</p>
+                  <h2>Coordination Domains</h2>
+                  <p>Interpretive coordination domains derived from the canonical stack model.</p>
                 </div>
               </div>
               <div class="mini-list" id="domainList"></div>
@@ -710,8 +722,8 @@
             <div class="panel pad">
               <div class="section-head">
                 <div>
-                  <h2>Surfaces</h2>
-                  <p>Machine-readable surface layer grouped for exploration.</p>
+                  <h2>Surface Layer</h2>
+                  <p>Machine-readable semantic surfaces grouped for exploration.</p>
                 </div>
               </div>
               <div class="surface-list" id="surfaceList"></div>
