@@ -1,1 +1,70 @@
 
+{
+  "registry": "vortik-semantic-registry",
+  "index_version": "0.6.0",
+  "anchors": [
+    {
+      "id": "epbs",
+      "ens": "epbs.eth",
+      "schema": "schemas/epbs/1.0-draft/schema.json",
+      "doc": "anchors/epbs.md",
+      "classification": "core"
+    },
+    {
+      "id": "inclusionlist",
+      "ens": "inclusionlist.eth",
+      "schema": "schemas/inclusionlist/0.1-draft/schema.json",
+      "doc": "anchors/inclusionlist.md",
+      "classification": "core"
+    },
+    {
+      "id": "commitmentlayer",
+      "ens": "commitmentlayer.eth",
+      "schema": "schemas/commitmentlayer/0.1-draft/schema.json",
+      "doc": "anchors/commitmentlayer.md",
+      "classification": "repairable"
+    },
+    {
+      "id": "preconflayer",
+      "ens": "preconflayer.eth",
+      "schema": "schemas/preconflayer/0.1-draft/schema.json",
+      "doc": "anchors/preconflayer.md",
+      "classification": "repairable"
+    },
+    {
+      "id": "ssf",
+      "ens": "fastfinality.eth",
+      "schema": "schemas/ssf/0.1-research/schema.json",
+      "doc": "anchors/fastfinality.md",
+      "classification": "repairable"
+    },
+    {
+      "id": "buildermarket",
+      "ens": "buildermarket.eth",
+      "schema": "schemas/buildermarket/0.1-research/schema.json",
+      "doc": "anchors/buildermarket.md",
+      "classification": "premature"
+    },
+    {
+      "id": "solverlayer",
+      "ens": "solverlayer.eth",
+      "schema": "schemas/solverlayer/0.1-research/schema.json",
+      "doc": "anchors/solverlayer.md",
+      "classification": "repairable"
+    },
+    {
+      "id": "executionmarket",
+      "ens": "executionmarket.eth",
+      "schema": "schemas/executionmarket/0.1-research/schema.json",
+      "doc": "anchors/executionmarket.md",
+      "classification": "premature"
+    },
+    {
+      "id": "orderflowauction",
+      "ens": "orderflowauction.eth",
+      "schema": "schemas/orderflowauction/0.1-research/schema.json",
+      "doc": "anchors/orderflowauction.md",
+      "classification": "valid"
+    }
+  ]
+}
