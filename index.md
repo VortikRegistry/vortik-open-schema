@@ -1,109 +1,242 @@
+---
+layout: default
+title: Vortik Semantic Registry
+---
+
+<div align="center">
+
 # Vortik Semantic Registry
 
-📄 Canonical Registry Document (PDF)  
-A structured overview of the registry, coordination primitives, and semantic anchoring.
+### Semantic Infrastructure for Ethereum Coordination
 
-→ "Download PDF" (docs/vortik-semantic-registry.pdf)
+<p><strong>Mapping terminology stabilization across primitives, roles, commitments, constraints, and emerging coordination structures.</strong></p>
 
----
+<p>
+<code>ethereum</code>
+<code>coordination</code>
+<code>semantic infrastructure</code>
+<code>ens-anchored schemas</code>
+</p>
 
-Independent machine-readable registry mapping terminology convergence and semantic stabilization across Ethereum coordination primitives, roles, and emerging coordination structures.
-
-The registry connects:
-
-- protocol primitives  
-- coordination roles  
-- enforcement mechanisms  
-- evolving terminology  
-
-to stable ENS identifiers and versioned schemas.
+</div>
 
 ---
 
-## Why this registry exists
-
-Terminology in Ethereum research often stabilizes before formal standardization.
-
-Different teams may refer to similar coordination mechanisms using different terms, creating fragmentation across discussions.
-
-The Vortik Semantic Registry exists to:
-
-- track terminology convergence across research  
-- provide stable semantic anchors via ENS  
-- enable machine-readable referencing  
-- distinguish protocol primitives from abstractions  
-
-This registry does not define standards.
-
-It documents how coordination structure becomes semantically stable.
+> **Ethereum coordination is becoming structurally legible.**  
+> The Vortik Semantic Registry maps how coordination structure stabilizes across protocol evolution.
 
 ---
 
-## Navigation
+## Overview
 
-- "Anchors" (anchors/)  
-- "Schemas" (schemas/)  
-- "Registry index (registry.json)" (registry.json)  
-- "Repository on GitHub" (https://github.com/VortikRegistry/vortik-open-schema)  
+The **Vortik Semantic Registry** is an independent, machine-readable semantic registry tracking how terminology converges across Ethereum coordination architecture.
+
+It connects:
+
+- **protocol primitives**
+- **coordination roles**
+- **enforcement mechanisms**
+- **semantic abstractions**
+- **emerging terminology**
+
+to stable **ENS identifiers** and **versioned schemas**.
+
+It does **not** define protocol rules.  
+It documents how coordination structure becomes semantically stable **before standardization**.
+
+---
+
+## Structural Thesis
+
+Ethereum is not a simple linear execution pipeline.
+
+It is a coordination system composed of:
+
+- **roles**
+- **commitments**
+- **constraints**
+- **execution flows**
+- **confirmation layers**
+
+As primitives become explicit:
+
+- abstractions either stabilize  
+- or lose precision  
+
+The registry operates at that semantic boundary.
+
+---
+
+## Coordination Model
+
+Order Flow Access  
+↓  
+Solver Coordination  
+↓  
+Payload Construction  
+↓  
+Proposer-Builder Separation (ePBS)  
+↓  
+Inclusion Enforcement (FOCIL)  
+↓  
+Commitments & Preconfirmations  
+↓  
+Finality (SSF)
+
+---
+
+This model is:
+
+- **interpretive**
+- **not strictly sequential**
+- **partially overlapping**
+- **structurally evolving**
+
+Ethereum coordination is increasingly defined by:
+
+roles → commitments → constraints → coordination stages
+
+---
+
+## Registry Architecture
+
+ENS identifier  
+↓  
+registry.json  
+↓  
+versioned schemas (/schemas/)  
+↓  
+anchor documentation (/anchors/)  
+
+---
+
+This architecture separates:
+
+- **stable naming surfaces** → ENS  
+- **machine-readable semantic structure** → registry + schemas  
+- **human-readable interpretation** → anchors  
 
 ---
 
 ## Core Primitives
 
-- "epbs.eth" (anchors/epbs.md) — enshrined proposer-builder separation (EIP-7732)  
-- "inclusionlist.eth" (anchors/inclusionlist.md) — fork-choice enforced inclusion (FOCIL / EIP-7805)  
+| Anchor | Canonical Surface | Classification |
+|--------|------------------|----------------|
+| epbs.eth | enshrined proposer-builder separation (EIP-7732) | core |
+| inclusionlist.eth | fork-choice enforced inclusion (FOCIL / EIP-7805) | core |
 
 ---
 
 ## Coordination Mechanisms
 
-- "commitmentlayer.eth" (anchors/commitmentlayer.md) — commitment signaling *(repairable)*  
-- "preconflayer.eth" (anchors/preconflayer.md) — preconfirmation systems *(repairable)*  
-- "fastfinality.eth" (anchors/fastfinality.md) — single-slot finality (SSF) *(repairable)*  
+| Anchor | Surface | Classification |
+|--------|--------|----------------|
+| commitmentlayer.eth | commitment signaling | repairable |
+| preconflayer.eth | preconfirmation systems | repairable |
+| fastfinality.eth | single-slot finality (SSF) | repairable |
 
 ---
 
 ## Coordination Surfaces
 
-- "solverlayer.eth" (anchors/solverlayer.md) — solver coordination *(repairable)*  
-- "orderflowauction.eth" (anchors/orderflowauction.md) — order flow auctions (OFA) *(valid)*  
+| Anchor | Surface | Classification |
+|--------|--------|----------------|
+| solverlayer.eth | solver coordination | repairable |
+| orderflowauction.eth | order flow auctions (OFA) | valid |
 
 ---
 
 ## Ambiguous / Transitional Surfaces
 
-- "executionmarket.eth" (anchors/executionmarket.md) — execution coordination (ambiguous term) *(premature)*  
-- "buildermarket.eth" (anchors/buildermarket.md) — builder markets (legacy abstraction) *(premature)*  
+| Anchor | Surface | Classification |
+|--------|--------|----------------|
+| executionmarket.eth | execution coordination (ambiguous term) | premature |
+| buildermarket.eth | builder markets (legacy abstraction) | premature |
 
 ---
 
-## Structural Context
+## Why this registry exists
+
+Terminology in Ethereum research stabilizes before formal standardization.
+
+Different teams describe similar coordination structures using different terms, creating fragmentation across:
+
+- research  
+- implementation  
+- infrastructure  
+- protocol discussions  
+
+The registry exists to:
+
+- track semantic convergence  
+- provide stable ENS anchors  
+- enable machine-readable coordination mapping  
+- distinguish primitives from abstractions  
+- preserve unstable terminology without premature canonization  
+
+---
+
+## Classification Model
+
+| Classification | Meaning |
+|---|---|
+| core | protocol-aligned primitive |
+| valid | stable coordination surface |
+| repairable | structurally valid with naming misalignment |
+| premature | ambiguous or unstable terminology |
+| deprecated | superseded abstraction |
+
+---
+
+## Strategic Context
 
 Ethereum coordination is evolving toward:
 
 - role-based interaction  
 - commitment-driven validation  
 - constraint-enforced inclusion  
-- asynchronous execution pipelines  
+- asynchronous execution  
+- multi-stage settlement  
 
-The system is increasingly defined by:
+As this stabilizes:
 
-→ roles  
-→ commitments  
-→ constraints  
-→ coordination stages  
+- abstractions lose precision  
+- primitives become dominant  
+- terminology converges around roles, commitments, constraints, and protocol objects  
 
-As a result:
+Vortik operates at that semantic edge.
 
-- market-based abstractions lose precision  
-- protocol-defined primitives become dominant  
+---
+
+## Navigation
+
+- Anchors (anchors/)  
+- Schemas (schemas/)  
+- Registry (registry.json)  
+- Maps (maps/)  
+- Research (docs/)  
+- GitHub (https://github.com/VortikRegistry/vortik-open-schema)
+
+---
+
+## Registry Endpoint
+
+https://vortikregistry.github.io/vortik-open-schema/registry.json
 
 ---
 
 ## Disclaimer
 
-This is an independent research artifact.
+Independent research artifact.  
+Not affiliated with the Ethereum Foundation.
 
-It is not affiliated with the Ethereum Foundation or any core development team.
+Terminology and classifications may evolve.
 
-Terminology and classifications may evolve as research progresses.
+---
+
+<div align="center">
+
+### Vortik Semantic Registry  
+<sub>semantic infrastructure for coordination before standardization</sub>
+
+</div>
