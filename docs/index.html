@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -639,8 +638,8 @@
           commitments, constraints, and emerging coordination structures across Ethereum research and implementation.
         </p>
         <div class="hero-actions">
-          <a class="btn primary" href="/vortik-open-schema/registry.json">Open registry.json</a>
-          <a class="btn" href="/vortik-open-schema/maps/coordination-stack.json">Open coordination-stack.json</a>
+          <a class="btn primary" href="./registry.json">Open registry.json</a>
+          <a class="btn" href="./maps/coordination-stack.json">Open coordination-stack.json</a>
           <a class="btn" href="https://github.com/VortikRegistry/vortik-open-schema">GitHub</a>
         </div>
         <div class="chips">
@@ -812,23 +811,23 @@ anchor documentation (/anchors/)</div>
           </div>
         </div>
         <div class="registry-grid">
-          <a class="registry-box" href="/vortik-open-schema/registry.json">
+          <a class="registry-box" href="./registry.json">
             <div class="k">Registry endpoint</div>
             <div class="v">registry.json</div>
           </a>
-          <a class="registry-box" href="/vortik-open-schema/anchors.index.json">
+          <a class="registry-box" href="./anchors.index.json">
             <div class="k">Anchor index</div>
             <div class="v">anchors.index.json</div>
           </a>
-          <a class="registry-box" href="/vortik-open-schema/maps/coordination-stack.json">
+          <a class="registry-box" href="./maps/coordination-stack.json">
             <div class="k">Coordination model</div>
             <div class="v">coordination-stack.json</div>
           </a>
-          <a class="registry-box" href="/vortik-open-schema/maps/coordination-surfaces.json">
+          <a class="registry-box" href="./maps/coordination-surfaces.json">
             <div class="k">Surface layer</div>
             <div class="v">coordination-surfaces.json</div>
           </a>
-          <a class="registry-box" href="/vortik-open-schema/anchors/">
+          <a class="registry-box" href="./anchors/">
             <div class="k">Anchor docs</div>
             <div class="v">/anchors/</div>
           </a>
@@ -849,8 +848,6 @@ anchor documentation (/anchors/)</div>
   </div>
 
   <script>
-    const BASE = "/vortik-open-schema";
-
     const state = {
       registry: null,
       model: null,
@@ -875,12 +872,12 @@ anchor documentation (/anchors/)</div>
 
     function linkForAnchor(anchor){
       const doc = anchor.anchor_doc || "";
-      return doc ? `${BASE}/${doc}` : `${BASE}/anchors/`;
+      return doc ? `./${doc}` : "./anchors/";
     }
 
     function schemaLink(anchor){
       const schema = anchor.schema || "";
-      return schema ? `${BASE}/${schema}` : `${BASE}/schemas/`;
+      return schema ? `./${schema}` : "./schemas/";
     }
 
     function tag(cls){
@@ -1010,9 +1007,9 @@ anchor documentation (/anchors/)</div>
     async function boot() {
       try {
         const [registry, model, surfaces] = await Promise.all([
-          loadJSON(`${BASE}/registry.json`),
-          loadJSON(`${BASE}/maps/coordination-stack.json`),
-          loadJSON(`${BASE}/maps/coordination-surfaces.json`)
+          loadJSON("./registry.json"),
+          loadJSON("./maps/coordination-stack.json"),
+          loadJSON("./maps/coordination-surfaces.json")
         ]);
 
         state.registry = registry;
