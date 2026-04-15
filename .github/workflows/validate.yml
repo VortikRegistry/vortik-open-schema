@@ -75,6 +75,9 @@ jobs:
       - name: Sync docs
         run: node scripts/sync-docs.mjs
 
+      - name: Validate integrity
+        run: node scripts/validate-integrity.mjs
+
       - name: Commit generated updates
         if: github.event_name == 'push'
         run: |
