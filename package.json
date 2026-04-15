@@ -4,10 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "validate": "npm run validate:registry",
+    "validate": "npm run validate:registry && npm run validate:integrity",
     "validate:registry": "node scripts/validate-registry.mjs",
+    "validate:integrity": "node scripts/validate-integrity.mjs",
     "fix:schemas": "node scripts/fix-schemas.cjs",
     "generate:map": "node scripts/generate-map.mjs",
+    "generate:anchors-index": "node scripts/generate-anchors-index.mjs",
+    "sync:docs": "node scripts/sync-docs.mjs",
     "check": "npm run fix:schemas && npm run validate"
   }
 }
