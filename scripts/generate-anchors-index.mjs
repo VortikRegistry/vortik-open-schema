@@ -12,6 +12,12 @@ const anchorsIndex = {
     canonical_term: anchor.canonical_term,
     classification: anchor.classification,
     status: anchor.status,
+
+    // 👇 NUEVO (clave)
+    status_label: anchor.status_label,
+    stage: anchor.stage,
+    market_priority: anchor.market_priority,
+
     type: anchor.type,
     role: anchor.role,
     schema: anchor.schema,
