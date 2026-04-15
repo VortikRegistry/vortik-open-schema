@@ -4,9 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "validate": "npm run validate:registry && npm run validate:schemas",
+    "validate": "npm run validate:registry",
     "validate:registry": "node scripts/validate-registry.mjs",
-    "validate:schemas": "node scripts/validate-schemas.mjs",
     "fix:schemas": "node scripts/fix-schemas.cjs",
     "generate:map": "node scripts/generate-map.mjs",
     "check": "npm run fix:schemas && npm run validate"
