@@ -567,6 +567,16 @@
     .tag.premature{border-color:rgba(255,123,114,.22); color:var(--premature)}
     .tag.deprecated{border-color:rgba(125,133,144,.22); color:var(--deprecated)}
 
+    .tag.status-core{border-color:rgba(61,220,151,.22); color:var(--core)}
+    .tag.status-emerging{border-color:rgba(246,196,83,.22); color:var(--repairable)}
+    .tag.status-transitional{border-color:rgba(89,168,255,.22); color:var(--valid)}
+    .tag.status-deprecated{border-color:rgba(255,123,114,.22); color:var(--premature)}
+
+    .tag.stage-canonical{border-color:rgba(61,220,151,.18); color:#bff3da}
+    .tag.stage-implemented{border-color:rgba(89,168,255,.18); color:#cfe3ff}
+    .tag.stage-emerging{border-color:rgba(246,196,83,.18); color:#ffe8a6}
+    .tag.stage-research{border-color:rgba(125,133,144,.22); color:#c2c8d0}
+
     .anchor-links{
       display:flex; gap:10px; flex-wrap:wrap;
       margin-top:16px;
@@ -1009,6 +1019,7 @@ anchor documentation (/anchors/)</div>
     };
 
     const clsOrder = ["core", "valid", "repairable", "premature", "deprecated"];
+    const statusOrder = ["core", "emerging", "transitional", "deprecated"];
 
     function clsCount(anchors, cls){
       return anchors.filter(a => a.classification === cls).length;
@@ -1034,6 +1045,16 @@ anchor documentation (/anchors/)</div>
 
     function tag(cls){
       return `<span class="tag ${esc(cls)}">${esc(cls)}</span>`;
+    }
+
+    function statusTag(statusLabel){
+      if (!statusLabel) return "";
+      return `<span class="tag status-${esc(statusLabel)}">${esc(statusLabel)}</span>`;
+    }
+
+    function stageTag(stage){
+      if (!stage) return "";
+      return `<span class="tag stage-${esc(stage)}">${esc(stage)}</span>`;
     }
 
     function renderStats() {
@@ -1084,7 +1105,15 @@ anchor documentation (/anchors/)</div>
       return state.registry.anchors.filter(a => {
         const passCls = state.filter === "all" ? true : a.classification === state.filter;
         const hay = [
-          a.id, a.ens, a.canonical_term, a.role, a.type, a.status, a.classification
+          a.id,
+          a.ens,
+          a.canonical_term,
+          a.role,
+          a.type,
+          a.status,
+          a.classification,
+          a.status_label,
+          a.stage
         ].join(" ").toLowerCase();
         const passQuery = q ? hay.includes(q) : true;
         return passCls && passQuery;
@@ -1096,9 +1125,14 @@ anchor documentation (/anchors/)</div>
       const empty = document.getElementById("anchorEmpty");
       const anchors = filteredAnchors()
         .sort((a,b) => {
+          const as = statusOrder.indexOf(a.status_label || "");
+          const bs = statusOrder.indexOf(b.status_label || "");
+          if (as !== bs) return (as === -1 ? 999 : as) - (bs === -1 ? 999 : bs);
+
           const ac = clsOrder.indexOf(a.classification);
           const bc = clsOrder.indexOf(b.classification);
           if (ac !== bc) return ac - bc;
+
           return a.id.localeCompare(b.id);
         });
 
@@ -1121,6 +1155,8 @@ anchor documentation (/anchors/)</div>
           </div>
           <div class="anchor-term">${esc(a.canonical_term)}</div>
           <div class="anchor-meta">
+            ${statusTag(a.status_label)}
+            ${stageTag(a.stage)}
             <span class="tag">${esc(a.type)}</span>
             <span class="tag">${esc(a.status)}</span>
           </div>
