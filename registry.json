@@ -22,7 +22,7 @@
     "status_label": "core",
     "stage": "implemented",
     "market_priority": "high",
-    "type": "constraint",
+    "type": "mechanism",
     "role": "protocol-enforced transaction inclusion via validator committees",
     "schema": "schemas/inclusionlist/0.1-draft/schema.json",
     "anchor_doc": "anchors/inclusionlist.md"
@@ -36,7 +36,7 @@
     "status_label": "emerging",
     "stage": "emerging",
     "market_priority": "medium",
-    "type": "primitive",
+    "type": "mechanism",
     "role": "binding bids and execution rights in block construction",
     "schema": "schemas/commitmentlayer/0.1-draft/schema.json",
     "anchor_doc": "anchors/commitmentlayer.md"
