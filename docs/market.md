@@ -1,58 +1,67 @@
-# Vortik Market View
+# Vortik Market Layer
 
-This view reflects the current semantic and strategic positioning of ENS anchors based on protocol alignment and coordination relevance.
-
-## 🔥 Featured Anchors
-
-High-priority primitives aligned with protocol evolution.
-
-- epbs.eth — enshrined proposer-builder separation
-- inclusionlist.eth — fork-choice enforced inclusion
+Auto-generated from market.index.json  
+Do not edit manually.
 
 ---
 
-## ⚙️ Active / Emerging
+## Summary
 
-Relevant but not fully canonical or still evolving.
-
-- commitmentlayer.eth — commitments abstraction
-- preconflayer.eth — preconfirmation systems
-- fastfinality.eth — single-slot finality (SSF)
-- solverlayer.eth — solver coordination
-- orderflowauction.eth — order flow auctions
+- Total anchors: 9
+- Featured: 2
+- Standard: 5
+- Background: 2
 
 ---
 
-## 🧪 Background / Transitional
+## 🔥 Featured (High Signal)
 
-Lower priority or dependent on narrative evolution.
+- **epbs.eth** — enshrined proposer-builder separation (ePBS)  
+  priority: high  
+  classification: core  
+  status: core
 
-- buildermarket.eth — deprecated abstraction
-- executionmarket.eth — ambiguous coordination term
+- **inclusionlist.eth** — fork-choice enforced inclusion lists (FOCIL)  
+  priority: high  
+  classification: core  
+  status: core
 
----
+## Standard
 
-## 🧠 Interpretation
+- **commitmentlayer.eth** — commitments  
+  priority: medium  
+  classification: repairable  
+  status: emerging
 
-Ethereum is converging toward:
+- **preconflayer.eth** — preconfirmation systems  
+  priority: medium  
+  classification: repairable  
+  status: emerging
 
-- protocol-native primitives
-- commitment-based coordination
-- explicit roles (builder, proposer)
-- enforced constraints (inclusion)
+- **fastfinality.eth** — single-slot finality (SSF)  
+  priority: medium  
+  classification: repairable  
+  status: emerging
 
-Narratives such as "markets" and "layers" are being replaced by protocol-defined mechanisms.
+- **solverlayer.eth** — solver networks  
+  priority: medium  
+  classification: repairable  
+  status: transitional
 
----
+- **orderflowauction.eth** — order flow auctions (OFA)  
+  priority: medium  
+  classification: valid  
+  status: transitional
 
-## ⚠️ Note
+## Background
 
-This is not a marketplace.
+- **buildermarket.eth** — builder markets  
+  priority: low  
+  classification: premature  
+  status: deprecated
 
-This is a semantic registry reflecting protocol reality.
+- **executionmarket.eth** — execution coordination (ambiguous term)  
+  priority: low  
+  classification: premature  
+  status: deprecated
 
-Positioning is derived from:
-
-- EIP inclusion
-- client implementation
-- coordination relevance
