@@ -1,4 +1,3 @@
-
 import fs from "fs";
 
 const registry = JSON.parse(fs.readFileSync("registry.json", "utf8"));
@@ -56,10 +55,10 @@ const marketIndex = {
   segments: grouped
 };
 
-// Guardar archivo
+// Guardar archivo dentro de docs para GitHub Pages
 fs.writeFileSync(
-  "market.index.json",
+  "docs/market.index.json",
   JSON.stringify(marketIndex, null, 2) + "\n"
 );
 
-console.log("✅ market.index.json generated");
+console.log("✅ docs/market.index.json generated");
