@@ -294,6 +294,41 @@
       line-height:1.45;
     }
 
+    .market-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
+    }
+
+    .market-card{
+      padding:18px;
+      border-radius:18px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
+        var(--panel-2);
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .market-card h3{
+      margin:0 0 8px;
+      font-size:18px;
+      letter-spacing:-.03em;
+    }
+
+    .market-card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.55;
+      font-size:14px;
+    }
+
+    .market-meta{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
     .layout{
       display:grid;
       grid-template-columns:minmax(0, 1.35fr) minmax(320px, .65fr);
@@ -437,15 +472,14 @@
     .tag.premature{border-color:rgba(255,123,114,.22); color:var(--premature)}
     .tag.deprecated{border-color:rgba(125,133,144,.22); color:var(--deprecated)}
 
-    .tag.status-core{border-color:rgba(61,220,151,.22); color:var(--core)}
-    .tag.status-emerging{border-color:rgba(246,196,83,.22); color:var(--repairable)}
-    .tag.status-transitional{border-color:rgba(89,168,255,.22); color:var(--valid)}
-    .tag.status-deprecated{border-color:rgba(255,123,114,.22); color:var(--premature)}
+    .tag.priority-high{border-color:rgba(122,162,255,.24); color:#cfe0ff}
+    .tag.priority-medium{border-color:rgba(159,122,234,.24); color:#e0d3ff}
+    .tag.priority-low{border-color:rgba(125,133,144,.22); color:#c1c7d0}
 
-    .tag.stage-canonical{border-color:rgba(61,220,151,.18); color:#bff3da}
-    .tag.stage-implemented{border-color:rgba(89,168,255,.18); color:#cfe3ff}
-    .tag.stage-emerging{border-color:rgba(246,196,83,.18); color:#ffe8a6}
-    .tag.stage-research{border-color:rgba(125,133,144,.22); color:#c2c8d0}
+    .tag.strategy-hold{border-color:rgba(61,220,151,.22); color:var(--core)}
+    .tag.strategy-monitor{border-color:rgba(246,196,83,.22); color:var(--repairable)}
+    .tag.strategy-opportunistic{border-color:rgba(89,168,255,.22); color:var(--valid)}
+    .tag.strategy-liquidate{border-color:rgba(255,123,114,.22); color:var(--premature)}
 
     .anchor-links{
       display:flex;
@@ -597,6 +631,7 @@
     @media (max-width: 1180px){
       .stats{grid-template-columns:repeat(3,1fr)}
       .layout{grid-template-columns:1fr}
+      .market-grid{grid-template-columns:1fr}
     }
 
     @media (max-width: 920px){
@@ -609,7 +644,7 @@
       .nav{display:none}
       .hero{padding-top:34px}
       .hero-card{padding:22px}
-      .stats,.model-grid{grid-template-columns:1fr}
+      .stats,.market-grid{grid-template-columns:1fr}
       .section-head{display:block}
       .section-head p{margin-top:8px}
       .foot{display:block}
@@ -631,6 +666,7 @@
       </div>
       <nav class="nav">
         <a href="./index.html">Home</a>
+        <a href="#signals">Signals</a>
         <a href="#anchors">Anchors</a>
         <a href="#domains">Domains</a>
         <a href="#relations">Relations</a>
@@ -644,14 +680,15 @@
         <div class="eyebrow">Interactive Explorer</div>
         <h1>Explore anchors, domains, and semantic structure in real time.</h1>
         <p class="lead">
-          This application layer renders the public registry, semantic anchors, and coordination model
-          as an interactive explorer for Ethereum research, infrastructure mapping, and terminology analysis.
+          This application layer renders the public registry, semantic anchors, coordination model,
+          and strategic market layer as an interactive explorer for Ethereum research,
+          infrastructure mapping, and terminology analysis.
         </p>
         <div class="hero-actions">
           <a class="btn primary" href="./index.html">Back to canonical home</a>
           <a class="btn" href="./registry.json">Open registry.json</a>
+          <a class="btn" href="./market.index.json">Open market.index.json</a>
           <a class="btn" href="./maps/coordination-stack.json">Open coordination-stack.json</a>
-          <a class="btn" href="./maps/coordination-surfaces.json">Open coordination-surfaces.json</a>
         </div>
       </div>
     </section>
@@ -683,11 +720,21 @@
             <div class="sub">Real concepts with naming or alignment drift.</div>
           </div>
           <div class="stat">
-            <div class="label">Premature / deprecated</div>
-            <div class="value" id="statPremature">0</div>
-            <div class="sub">Ambiguous, unstable, or legacy abstractions.</div>
+            <div class="label">Featured</div>
+            <div class="value" id="statFeatured">0</div>
+            <div class="sub">Strategic anchors surfaced by the market intelligence layer.</div>
           </div>
         </div>
+      </section>
+
+      <section id="signals">
+        <div class="section-head">
+          <div>
+            <h2>Strategic Signals</h2>
+            <p>High-signal anchors surfaced through the market layer. This is not a marketplace. It is a positioning layer derived from protocol alignment and semantic relevance.</p>
+          </div>
+        </div>
+        <div class="market-grid" id="marketGrid"></div>
       </section>
 
       <section>
@@ -703,12 +750,13 @@
 
               <div class="context-note">
                 The registry distinguishes between protocol-aligned primitives, valid coordination surfaces,
-                repairable terminology, and premature abstractions.
+                repairable terminology, premature abstractions, and a derived strategic layer that highlights
+                featured anchors without turning the registry into a marketplace.
               </div>
 
               <div class="search-row">
                 <div class="search">
-                  <input id="searchInput" type="text" placeholder="Search by id, ENS, canonical term, role, type, or status..." />
+                  <input id="searchInput" type="text" placeholder="Search by id, ENS, canonical term, role, type, status, or market strategy..." />
                 </div>
                 <div class="legend" id="legend"></div>
               </div>
@@ -755,7 +803,7 @@
 
     <footer>
       <div class="foot">
-        <div><span class="status-dot"></span>Interactive explorer over public registry JSON</div>
+        <div><span class="status-dot"></span>Interactive explorer over registry, maps, and market intelligence</div>
         <div><a href="./index.html">Return to canonical home</a></div>
       </div>
     </footer>
@@ -766,12 +814,12 @@
       registry: null,
       model: null,
       surfaces: null,
+      market: null,
       filter: "all",
       query: ""
     };
 
     const clsOrder = ["core", "valid", "repairable", "premature", "deprecated"];
-    const statusOrder = ["core", "emerging", "transitional", "deprecated"];
 
     function esc(s){
       return String(s ?? "")
@@ -789,14 +837,9 @@
       return `<span class="tag ${esc(cls)}">${esc(cls)}</span>`;
     }
 
-    function statusTag(statusLabel){
-      if (!statusLabel) return "";
-      return `<span class="tag status-${esc(statusLabel)}">${esc(statusLabel)}</span>`;
-    }
-
-    function stageTag(stage){
-      if (!stage) return "";
-      return `<span class="tag stage-${esc(stage)}">${esc(stage)}</span>`;
+    function marketTag(label, value){
+      if (!value) return "";
+      return `<span class="tag ${esc(label + "-" + value)}">${esc(value)}</span>`;
     }
 
     function linkForAnchor(anchor){
@@ -815,14 +858,20 @@
       return res.json();
     }
 
+    function marketLookupById() {
+      const map = new Map();
+      const segments = state.market?.segments || {};
+      Object.values(segments).flat().forEach(item => map.set(item.id, item));
+      return map;
+    }
+
     function renderStats() {
       const anchors = state.registry.anchors || [];
       document.getElementById("statAnchors").textContent = anchors.length;
       document.getElementById("statCore").textContent = clsCount(anchors, "core");
       document.getElementById("statValid").textContent = clsCount(anchors, "valid");
       document.getElementById("statRepairable").textContent = clsCount(anchors, "repairable");
-      document.getElementById("statPremature").textContent =
-        clsCount(anchors, "premature") + clsCount(anchors, "deprecated");
+      document.getElementById("statFeatured").textContent = state.market?.summary?.featured ?? 0;
     }
 
     function renderLegend() {
@@ -845,8 +894,11 @@
 
     function filteredAnchors() {
       const q = state.query.trim().toLowerCase();
+      const marketMap = marketLookupById();
+
       return state.registry.anchors.filter(a => {
         const passCls = state.filter === "all" ? true : a.classification === state.filter;
+        const market = marketMap.get(a.id);
         const hay = [
           a.id,
           a.ens,
@@ -855,22 +907,54 @@
           a.type,
           a.status,
           a.classification,
-          a.status_label,
-          a.stage
+          market?.priority,
+          market?.sale_strategy
         ].join(" ").toLowerCase();
         const passQuery = q ? hay.includes(q) : true;
         return passCls && passQuery;
       });
     }
 
+    function renderMarketSignals() {
+      const grid = document.getElementById("marketGrid");
+      const featured = state.market?.segments?.featured || [];
+
+      if (!featured.length) {
+        grid.innerHTML = `
+          <div class="market-card">
+            <h3>No featured anchors</h3>
+            <p>The market intelligence layer did not surface any featured anchors yet.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = featured.map(item => `
+        <article class="market-card">
+          <h3>${esc(item.ens)}</h3>
+          <p>${esc(item.canonical_term)}</p>
+          <div class="market-meta">
+            ${marketTag("priority", item.priority)}
+            ${marketTag("strategy", item.sale_strategy)}
+            ${tag(item.classification)}
+          </div>
+        </article>
+      `).join("");
+    }
+
     function renderAnchors() {
       const grid = document.getElementById("anchorGrid");
       const empty = document.getElementById("anchorEmpty");
+      const marketMap = marketLookupById();
+
       const anchors = filteredAnchors()
         .sort((a,b) => {
-          const as = statusOrder.indexOf(a.status_label || "");
-          const bs = statusOrder.indexOf(b.status_label || "");
-          if (as !== bs) return (as === -1 ? 999 : as) - (bs === -1 ? 999 : bs);
+          const am = marketMap.get(a.id);
+          const bm = marketMap.get(b.id);
+
+          const ap = am?.priority === "high" ? 3 : am?.priority === "medium" ? 2 : am?.priority === "low" ? 1 : 0;
+          const bp = bm?.priority === "high" ? 3 : bm?.priority === "medium" ? 2 : bm?.priority === "low" ? 1 : 0;
+          if (ap !== bp) return bp - ap;
 
           const ac = clsOrder.indexOf(a.classification);
           const bc = clsOrder.indexOf(b.classification);
@@ -887,35 +971,39 @@
 
       empty.style.display = "none";
 
-      grid.innerHTML = anchors.map(a => `
-        <article class="anchor-card">
-          <div class="anchor-top">
-            <div>
-              <div class="anchor-name">${esc(a.id)}</div>
-              <div class="anchor-ens">${esc(a.ens)}</div>
+      grid.innerHTML = anchors.map(a => {
+        const market = marketMap.get(a.id);
+
+        return `
+          <article class="anchor-card">
+            <div class="anchor-top">
+              <div>
+                <div class="anchor-name">${esc(a.id)}</div>
+                <div class="anchor-ens">${esc(a.ens)}</div>
+              </div>
+              ${tag(a.classification)}
             </div>
-            ${tag(a.classification)}
-          </div>
 
-          <div class="anchor-term">${esc(a.canonical_term)}</div>
+            <div class="anchor-term">${esc(a.canonical_term)}</div>
 
-          <div class="anchor-meta">
-            ${statusTag(a.status_label)}
-            ${stageTag(a.stage)}
-            <span class="tag">${esc(a.type)}</span>
-            <span class="tag">${esc(a.status)}</span>
-          </div>
+            <div class="anchor-meta">
+              <span class="tag">${esc(a.type)}</span>
+              <span class="tag">${esc(a.status)}</span>
+              ${market ? marketTag("priority", market.priority) : ""}
+              ${market ? marketTag("strategy", market.sale_strategy) : ""}
+            </div>
 
-          <div class="anchor-term" style="min-height:auto; margin-top:12px;">
-            ${esc(a.role)}
-          </div>
+            <div class="anchor-term" style="min-height:auto; margin-top:12px;">
+              ${esc(a.role)}
+            </div>
 
-          <div class="anchor-links">
-            <a href="${linkForAnchor(a)}">anchor doc</a>
-            <a href="${schemaLink(a)}">schema</a>
-          </div>
-        </article>
-      `).join("");
+            <div class="anchor-links">
+              <a href="${linkForAnchor(a)}">anchor doc</a>
+              <a href="${schemaLink(a)}">schema</a>
+            </div>
+          </article>
+        `;
+      }).join("");
     }
 
     function renderDomains() {
@@ -972,18 +1060,21 @@
 
     async function boot() {
       try {
-        const [registry, model, surfaces] = await Promise.all([
+        const [registry, model, surfaces, market] = await Promise.all([
           loadJSON("./registry.json"),
           loadJSON("./maps/coordination-stack.json"),
-          loadJSON("./maps/coordination-surfaces.json")
+          loadJSON("./maps/coordination-surfaces.json"),
+          loadJSON("./market.index.json")
         ]);
 
         state.registry = registry;
         state.model = model;
         state.surfaces = surfaces;
+        state.market = market;
 
         renderStats();
         renderLegend();
+        renderMarketSignals();
         renderAnchors();
         renderDomains();
         renderSurfaces();
