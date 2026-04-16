@@ -194,6 +194,7 @@ Supporting artifacts:
 
 - `registry.json` — canonical index
 - `anchors.index.json` — anchor catalogue
+- `market.index.json` — market intelligence layer
 - `schemas/<anchor>/<version>/schema.json`
 - `anchors/<anchor>.md`
 
@@ -253,9 +254,25 @@ It maps how the protocol is becoming structurally legible.
 
 ---
 
-## Contact
+## Contact / Coordination
 
-GitHub Issues / Discussions  
+This registry tracks semantic convergence across Ethereum coordination primitives and emerging protocol-aligned structures.
+
+If you are working on:
+
+- block building (ePBS)
+- inclusion enforcement (FOCIL)
+- preconfirmation systems
+- solver / intent infrastructure
+- coordination primitives or protocol design
+
+or are exploring alignment with canonical terminology and naming surfaces:
+
+→ open a discussion or reach out directly.
+
+---
+
+GitHub Discussions / Issues  
 
 Secondary:  
 contact.preconf@gmail.com
