@@ -1,5 +1,33 @@
 # Vortik Semantic Registry
 
+## 🔥 Strategic Anchors
+
+The following ENS anchors are directly aligned with Ethereum protocol evolution and upcoming changes in block production and coordination.
+
+### Core (Protocol-Aligned)
+
+- **epbs.eth** — enshrined proposer-builder separation (in-protocol PBS)
+- **inclusionlist.eth** — fork-choice enforced inclusion lists (FOCIL)
+
+---
+
+### Emerging / Relevant
+
+- commitmentlayer.eth — commitments as coordination primitive
+- preconflayer.eth — preconfirmation systems
+- fastfinality.eth — single-slot finality (SSF)
+- solverlayer.eth — solver coordination
+- orderflowauction.eth — order flow auctions
+
+---
+
+### Deprecated / Low Alignment
+
+- buildermarket.eth — abstraction replaced by protocol-native builder role
+- executionmarket.eth — ambiguous execution coordination term
+
+---
+
 Independent semantic registry mapping terminology stabilization across Ethereum coordination primitives, protocol roles, constraints, commitments, and evolving coordination surfaces.
 
 🌐 Registry site:  
@@ -98,7 +126,7 @@ registry.json entry
 ↓  
 machine-readable schema  
 ↓  
-human-readable anchor document
+human-readable anchor document  
 
 This architecture separates:
 
@@ -227,7 +255,7 @@ It maps how the protocol is becoming structurally legible.
 
 ## Contact
 
-GitHub Issues / Discussions
+GitHub Issues / Discussions  
 
 Secondary:  
 contact.preconf@gmail.com
