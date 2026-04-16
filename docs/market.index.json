@@ -1,0 +1,129 @@
+{
+  "registry": "vortik-semantic-registry",
+  "index_version": "1.0.0",
+  "generated_from": "registry.json",
+  "last_updated": "2026-04-16T05:20:41.239Z",
+  "summary": {
+    "total": 12,
+    "featured": 2,
+    "standard": 7,
+    "background": 3
+  },
+  "segments": {
+    "featured": [
+      {
+        "id": "epbs",
+        "ens": "epbs.eth",
+        "canonical_term": "enshrined proposer-builder separation (ePBS)",
+        "priority": "high",
+        "sale_strategy": "hold",
+        "classification": "core",
+        "status": "core"
+      },
+      {
+        "id": "inclusionlist",
+        "ens": "inclusionlist.eth",
+        "canonical_term": "fork-choice enforced inclusion lists (FOCIL)",
+        "priority": "high",
+        "sale_strategy": "hold",
+        "classification": "core",
+        "status": "core"
+      }
+    ],
+    "standard": [
+      {
+        "id": "commitmentlayer",
+        "ens": "commitmentlayer.eth",
+        "canonical_term": "commitments",
+        "priority": "medium",
+        "sale_strategy": "monitor",
+        "classification": "repairable",
+        "status": "emerging"
+      },
+      {
+        "id": "preconflayer",
+        "ens": "preconflayer.eth",
+        "canonical_term": "preconfirmation systems",
+        "priority": "medium",
+        "sale_strategy": "opportunistic",
+        "classification": "repairable",
+        "status": "emerging"
+      },
+      {
+        "id": "ssf",
+        "ens": "fastfinality.eth",
+        "canonical_term": "single-slot finality (SSF)",
+        "priority": "medium",
+        "sale_strategy": "opportunistic",
+        "classification": "repairable",
+        "status": "emerging"
+      },
+      {
+        "id": "solverlayer",
+        "ens": "solverlayer.eth",
+        "canonical_term": "solver networks",
+        "priority": "medium",
+        "sale_strategy": "opportunistic",
+        "classification": "repairable",
+        "status": "transitional"
+      },
+      {
+        "id": "orderflowauction",
+        "ens": "orderflowauction.eth",
+        "canonical_term": "order flow auctions (OFA)",
+        "priority": "medium",
+        "sale_strategy": "opportunistic",
+        "classification": "valid",
+        "status": "transitional"
+      },
+      {
+        "id": "provingmarket",
+        "ens": "provingmarket.eth",
+        "canonical_term": "proving markets",
+        "priority": "medium",
+        "sale_strategy": "monitor",
+        "classification": "valid",
+        "status": "emerging"
+      },
+      {
+        "id": "sequencingmarket",
+        "ens": "sequencingmarket.eth",
+        "canonical_term": "sequencing markets",
+        "priority": "medium",
+        "sale_strategy": "monitor",
+        "classification": "valid",
+        "status": "emerging"
+      }
+    ],
+    "background": [
+      {
+        "id": "buildermarket",
+        "ens": "buildermarket.eth",
+        "canonical_term": "builder markets",
+        "priority": "low",
+        "sale_strategy": "liquidate",
+        "classification": "premature",
+        "status": "deprecated"
+      },
+      {
+        "id": "executionmarket",
+        "ens": "executionmarket.eth",
+        "canonical_term": "execution coordination (ambiguous term)",
+        "priority": "low",
+        "sale_strategy": "liquidate",
+        "classification": "premature",
+        "status": "deprecated"
+      },
+      {
+        "id": "blockspacemarket",
+        "ens": "blockspacemarket.eth",
+        "canonical_term": "blockspace markets",
+        "priority": "low",
+        "sale_strategy": "liquidate",
+        "classification": "premature",
+        "status": "deprecated"
+      }
+    ],
+    "hidden": []
+  }
+}
