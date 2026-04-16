@@ -72,6 +72,9 @@ jobs:
       - name: Generate coordination map
         run: node scripts/generate-map.mjs
 
+      - name: Generate market index
+        run: node scripts/generate-market-index.mjs
+
       - name: Sync docs
         run: node scripts/sync-docs.mjs
 
@@ -83,7 +86,7 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add anchors.index.json docs coordination-map.txt
+          git add anchors.index.json docs coordination-map.txt market.index.json
           git diff --cached --quiet || git commit -m "generate derived files"
           git push
 
