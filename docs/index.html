@@ -303,7 +303,7 @@
 
     .stats{
       display:grid;
-      grid-template-columns:repeat(4, minmax(0,1fr));
+      grid-template-columns:repeat(5, minmax(0,1fr));
       gap:14px;
     }
 
@@ -333,6 +333,41 @@
       color:var(--muted);
       font-size:14px;
       line-height:1.45;
+    }
+
+    .signals-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
+    }
+
+    .signal-card{
+      padding:18px;
+      border-radius:18px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
+        var(--panel-2);
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .signal-card h3{
+      margin:0 0 8px;
+      font-size:18px;
+      letter-spacing:-.03em;
+    }
+
+    .signal-card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.55;
+      font-size:14px;
+    }
+
+    .signal-meta{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:14px;
     }
 
     .two-col{
@@ -577,6 +612,15 @@
     .tag.stage-emerging{border-color:rgba(246,196,83,.18); color:#ffe8a6}
     .tag.stage-research{border-color:rgba(125,133,144,.22); color:#c2c8d0}
 
+    .tag.priority-high{border-color:rgba(122,162,255,.24); color:#cfe0ff}
+    .tag.priority-medium{border-color:rgba(159,122,234,.24); color:#e0d3ff}
+    .tag.priority-low{border-color:rgba(125,133,144,.22); color:#c1c7d0}
+
+    .tag.strategy-hold{border-color:rgba(61,220,151,.22); color:var(--core)}
+    .tag.strategy-monitor{border-color:rgba(246,196,83,.22); color:var(--repairable)}
+    .tag.strategy-opportunistic{border-color:rgba(89,168,255,.22); color:var(--valid)}
+    .tag.strategy-liquidate{border-color:rgba(255,123,114,.22); color:var(--premature)}
+
     .anchor-links{
       display:flex; gap:10px; flex-wrap:wrap;
       margin-top:16px;
@@ -704,6 +748,7 @@
       .two-col{grid-template-columns:1fr}
       .registry-grid{grid-template-columns:1fr 1fr}
       .anchor-grid{grid-template-columns:1fr 1fr}
+      .signals-grid{grid-template-columns:1fr}
     }
 
     @media (max-width: 720px){
@@ -715,7 +760,8 @@
       .registry-grid,
       .anchor-grid,
       .model-grid,
-      .model-list{grid-template-columns:1fr}
+      .model-list,
+      .signals-grid{grid-template-columns:1fr}
       .section-head{display:block}
       .section-head p{margin-top:8px}
       .flow-step{align-items:flex-start}
@@ -741,6 +787,7 @@
       </div>
       <nav class="nav">
         <a href="#overview">Overview</a>
+        <a href="#signals">Signals</a>
         <a href="#anchors">Anchors</a>
         <a href="#model">Model</a>
         <a href="#registry">Registry</a>
@@ -765,6 +812,7 @@
             <span>Open interactive app</span>
           </a>
           <a class="btn" href="./registry.json">Open registry.json</a>
+          <a class="btn" href="./market.index.json">Open market.index.json</a>
           <a class="btn" href="./maps/coordination-stack.json">Open coordination-stack.json</a>
           <a class="btn" href="https://github.com/VortikRegistry/vortik-open-schema">GitHub</a>
         </div>
@@ -815,7 +863,25 @@
             <div class="value" id="statPremature">0</div>
             <div class="sub">Unstable or legacy abstractions not treated as canonical.</div>
           </div>
+          <div class="stat">
+            <div class="label">Featured signals</div>
+            <div class="value" id="statFeatured">0</div>
+            <div class="sub">Strategic anchors surfaced by the market intelligence layer.</div>
+          </div>
         </div>
+      </section>
+
+      <section id="signals">
+        <div class="section-head">
+          <div>
+            <h2>Strategic Signals</h2>
+            <p>
+              High-signal anchors derived from protocol alignment and semantic convergence.
+              This is not a marketplace. It is a positioning layer.
+            </p>
+          </div>
+        </div>
+        <div class="signals-grid" id="signalsGrid"></div>
       </section>
 
       <section>
@@ -911,7 +977,7 @@ anchor documentation (/anchors/)</div>
         <div class="panel pad">
           <div class="anchor-toolbar">
             <div class="search">
-              <input id="searchInput" type="text" placeholder="Search by id, ENS, canonical term, or role…" />
+              <input id="searchInput" type="text" placeholder="Search by id, ENS, canonical term, role, status, priority, or strategy…" />
             </div>
             <div class="legend" id="legend"></div>
           </div>
@@ -949,6 +1015,10 @@ anchor documentation (/anchors/)</div>
             <div class="k">Anchor index</div>
             <div class="v">anchors.index.json</div>
           </a>
+          <a class="registry-box" href="./market.index.json">
+            <div class="k">Market layer</div>
+            <div class="v">market.index.json</div>
+          </a>
           <a class="registry-box" href="./maps/coordination-stack.json">
             <div class="k">Coordination model</div>
             <div class="v">coordination-stack.json</div>
@@ -956,10 +1026,6 @@ anchor documentation (/anchors/)</div>
           <a class="registry-box" href="./maps/coordination-surfaces.json">
             <div class="k">Surface layer</div>
             <div class="v">coordination-surfaces.json</div>
-          </a>
-          <a class="registry-box" href="./anchors/">
-            <div class="k">Anchor docs</div>
-            <div class="v">/anchors/</div>
           </a>
           <a class="registry-box" href="https://github.com/VortikRegistry/vortik-open-schema">
             <div class="k">Repository</div>
@@ -984,6 +1050,7 @@ anchor documentation (/anchors/)</div>
             <div class="footer-links">
               <a href="./registry.json">registry.json</a><br>
               <a href="./anchors.index.json">anchors.index.json</a><br>
+              <a href="./market.index.json">market.index.json</a><br>
               <a href="./maps/coordination-stack.json">coordination-stack.json</a><br>
               <a href="./maps/coordination-surfaces.json">coordination-surfaces.json</a><br>
               <a href="./anchors/">Anchor docs</a>
@@ -1014,6 +1081,7 @@ anchor documentation (/anchors/)</div>
       registry: null,
       model: null,
       surfaces: null,
+      market: null,
       filter: "all",
       query: ""
     };
@@ -1057,6 +1125,18 @@ anchor documentation (/anchors/)</div>
       return `<span class="tag stage-${esc(stage)}">${esc(stage)}</span>`;
     }
 
+    function marketTag(label, value){
+      if (!value) return "";
+      return `<span class="tag ${esc(label + "-" + value)}">${esc(value)}</span>`;
+    }
+
+    function marketLookupById() {
+      const map = new Map();
+      const segments = state.market?.segments || {};
+      Object.values(segments).flat().forEach(item => map.set(item.id, item));
+      return map;
+    }
+
     function renderStats() {
       const anchors = state.registry.anchors || [];
       document.getElementById("statAnchors").textContent = anchors.length;
@@ -1064,6 +1144,7 @@ anchor documentation (/anchors/)</div>
       document.getElementById("statRepairable").textContent = clsCount(anchors, "repairable");
       document.getElementById("statPremature").textContent =
         clsCount(anchors, "premature") + clsCount(anchors, "deprecated");
+      document.getElementById("statFeatured").textContent = state.market?.summary?.featured ?? 0;
     }
 
     function renderFlow() {
@@ -1100,10 +1181,41 @@ anchor documentation (/anchors/)</div>
       });
     }
 
+    function renderSignals() {
+      const grid = document.getElementById("signalsGrid");
+      const featured = state.market?.segments?.featured || [];
+
+      if (!featured.length) {
+        grid.innerHTML = `
+          <div class="signal-card">
+            <h3>No featured signals yet</h3>
+            <p>The market intelligence layer did not surface any featured anchors yet.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = featured.map(item => `
+        <article class="signal-card">
+          <h3>${esc(item.ens)}</h3>
+          <p>${esc(item.canonical_term)}</p>
+          <div class="signal-meta">
+            ${marketTag("priority", item.priority)}
+            ${marketTag("strategy", item.sale_strategy)}
+            ${tag(item.classification)}
+          </div>
+        </article>
+      `).join("");
+    }
+
     function filteredAnchors() {
       const q = state.query.trim().toLowerCase();
+      const marketMap = marketLookupById();
+
       return state.registry.anchors.filter(a => {
         const passCls = state.filter === "all" ? true : a.classification === state.filter;
+        const market = marketMap.get(a.id);
+
         const hay = [
           a.id,
           a.ens,
@@ -1113,8 +1225,11 @@ anchor documentation (/anchors/)</div>
           a.status,
           a.classification,
           a.status_label,
-          a.stage
+          a.stage,
+          market?.priority,
+          market?.sale_strategy
         ].join(" ").toLowerCase();
+
         const passQuery = q ? hay.includes(q) : true;
         return passCls && passQuery;
       });
@@ -1123,8 +1238,17 @@ anchor documentation (/anchors/)</div>
     function renderAnchors() {
       const grid = document.getElementById("anchorGrid");
       const empty = document.getElementById("anchorEmpty");
+      const marketMap = marketLookupById();
+
       const anchors = filteredAnchors()
         .sort((a,b) => {
+          const am = marketMap.get(a.id);
+          const bm = marketMap.get(b.id);
+
+          const ap = am?.priority === "high" ? 3 : am?.priority === "medium" ? 2 : am?.priority === "low" ? 1 : 0;
+          const bp = bm?.priority === "high" ? 3 : bm?.priority === "medium" ? 2 : bm?.priority === "low" ? 1 : 0;
+          if (ap !== bp) return bp - ap;
+
           const as = statusOrder.indexOf(a.status_label || "");
           const bs = statusOrder.indexOf(b.status_label || "");
           if (as !== bs) return (as === -1 ? 999 : as) - (bs === -1 ? 999 : bs);
@@ -1144,31 +1268,37 @@ anchor documentation (/anchors/)</div>
 
       empty.style.display = "none";
 
-      grid.innerHTML = anchors.map(a => `
-        <article class="anchor-card">
-          <div class="anchor-top">
-            <div>
-              <div class="anchor-name">${esc(a.id)}</div>
-              <div class="anchor-ens">${esc(a.ens)}</div>
+      grid.innerHTML = anchors.map(a => {
+        const market = marketMap.get(a.id);
+
+        return `
+          <article class="anchor-card">
+            <div class="anchor-top">
+              <div>
+                <div class="anchor-name">${esc(a.id)}</div>
+                <div class="anchor-ens">${esc(a.ens)}</div>
+              </div>
+              ${tag(a.classification)}
             </div>
-            ${tag(a.classification)}
-          </div>
-          <div class="anchor-term">${esc(a.canonical_term)}</div>
-          <div class="anchor-meta">
-            ${statusTag(a.status_label)}
-            ${stageTag(a.stage)}
-            <span class="tag">${esc(a.type)}</span>
-            <span class="tag">${esc(a.status)}</span>
-          </div>
-          <div class="anchor-term" style="min-height:auto; margin-top:12px;">
-            ${esc(a.role)}
-          </div>
-          <div class="anchor-links">
-            <a href="${linkForAnchor(a)}">anchor doc</a>
-            <a href="${schemaLink(a)}">schema</a>
-          </div>
-        </article>
-      `).join("");
+            <div class="anchor-term">${esc(a.canonical_term)}</div>
+            <div class="anchor-meta">
+              ${statusTag(a.status_label)}
+              ${stageTag(a.stage)}
+              <span class="tag">${esc(a.type)}</span>
+              <span class="tag">${esc(a.status)}</span>
+              ${market ? marketTag("priority", market.priority) : ""}
+              ${market ? marketTag("strategy", market.sale_strategy) : ""}
+            </div>
+            <div class="anchor-term" style="min-height:auto; margin-top:12px;">
+              ${esc(a.role)}
+            </div>
+            <div class="anchor-links">
+              <a href="${linkForAnchor(a)}">anchor doc</a>
+              <a href="${schemaLink(a)}">schema</a>
+            </div>
+          </article>
+        `;
+      }).join("");
     }
 
     function renderDomains() {
@@ -1194,19 +1324,22 @@ anchor documentation (/anchors/)</div>
 
     async function boot() {
       try {
-        const [registry, model, surfaces] = await Promise.all([
+        const [registry, model, surfaces, market] = await Promise.all([
           loadJSON("./registry.json"),
           loadJSON("./maps/coordination-stack.json"),
-          loadJSON("./maps/coordination-surfaces.json")
+          loadJSON("./maps/coordination-surfaces.json"),
+          loadJSON("./market.index.json")
         ]);
 
         state.registry = registry;
         state.model = model;
         state.surfaces = surfaces;
+        state.market = market;
 
         renderStats();
         renderFlow();
         renderLegend();
+        renderSignals();
         renderAnchors();
         renderDomains();
 
