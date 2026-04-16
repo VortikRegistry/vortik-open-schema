@@ -1,0 +1,6 @@
+{
+  "name": "sequencingmarket",
+  "version": "0.1-research",
+  "type": "coordination_surface",
+  "description": "Transaction ordering coordination across rollups"
+}

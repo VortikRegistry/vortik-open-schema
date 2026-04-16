@@ -128,6 +128,48 @@
       "role": "auction-based routing of transaction flow toward builders",
       "schema": "schemas/orderflowauction/0.1-research/schema.json",
       "anchor_doc": "anchors/orderflowauction.md"
+    },
+    {
+      "id": "provingmarket",
+      "ens": "provingmarket.eth",
+      "canonical_term": "proving markets",
+      "classification": "valid",
+      "status": "research",
+      "status_label": "emerging",
+      "stage": "research",
+      "market_priority": "medium",
+      "type": "coordination_surface",
+      "role": "proof generation and proving coordination across zk systems and rollup infrastructure",
+      "schema": "schemas/provingmarket/0.1-research/schema.json",
+      "anchor_doc": "anchors/provingmarket.md"
+    },
+    {
+      "id": "sequencingmarket",
+      "ens": "sequencingmarket.eth",
+      "canonical_term": "sequencing markets",
+      "classification": "valid",
+      "status": "research",
+      "status_label": "emerging",
+      "stage": "research",
+      "market_priority": "medium",
+      "type": "coordination_surface",
+      "role": "sequencer coordination and transaction ordering across rollup and shared sequencing environments",
+      "schema": "schemas/sequencingmarket/0.1-research/schema.json",
+      "anchor_doc": "anchors/sequencingmarket.md"
+    },
+    {
+      "id": "blockspacemarket",
+      "ens": "blockspacemarket.eth",
+      "canonical_term": "blockspace markets",
+      "classification": "premature",
+      "status": "research",
+      "status_label": "deprecated",
+      "stage": "research",
+      "market_priority": "low",
+      "type": "market",
+      "role": "legacy blockspace market abstraction increasingly displaced by protocol-native coordination mechanisms",
+      "schema": "schemas/blockspacemarket/0.1-research/schema.json",
+      "anchor_doc": "anchors/blockspacemarket.md"
     }
   ]
 }

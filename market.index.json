@@ -2,12 +2,12 @@
   "registry": "vortik-semantic-registry",
   "index_version": "1.0.0",
   "generated_from": "registry.json",
-  "last_updated": "2026-04-16T04:41:46.106Z",
+  "last_updated": "2026-04-16T05:01:11.224Z",
   "summary": {
-    "total": 9,
+    "total": 12,
     "featured": 2,
-    "standard": 5,
-    "background": 2
+    "standard": 7,
+    "background": 3
   },
   "segments": {
     "featured": [
@@ -75,6 +75,24 @@
         "sale_strategy": "opportunistic",
         "classification": "valid",
         "status": "transitional"
+      },
+      {
+        "id": "provingmarket",
+        "ens": "provingmarket.eth",
+        "canonical_term": "proving markets",
+        "priority": "medium",
+        "sale_strategy": "monitor",
+        "classification": "valid",
+        "status": "emerging"
+      },
+      {
+        "id": "sequencingmarket",
+        "ens": "sequencingmarket.eth",
+        "canonical_term": "sequencing markets",
+        "priority": "medium",
+        "sale_strategy": "monitor",
+        "classification": "valid",
+        "status": "emerging"
       }
     ],
     "background": [
@@ -91,6 +109,15 @@
         "id": "executionmarket",
         "ens": "executionmarket.eth",
         "canonical_term": "execution coordination (ambiguous term)",
+        "priority": "low",
+        "sale_strategy": "liquidate",
+        "classification": "premature",
+        "status": "deprecated"
+      },
+      {
+        "id": "blockspacemarket",
+        "ens": "blockspacemarket.eth",
+        "canonical_term": "blockspace markets",
         "priority": "low",
         "sale_strategy": "liquidate",
         "classification": "premature",

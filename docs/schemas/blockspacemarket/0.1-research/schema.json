@@ -1,0 +1,6 @@
+{
+  "name": "blockspacemarket",
+  "version": "0.1-research",
+  "type": "market",
+  "description": "Legacy blockspace market abstraction"
+}

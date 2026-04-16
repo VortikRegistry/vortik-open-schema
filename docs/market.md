@@ -7,10 +7,10 @@ Do not edit manually.
 
 ## Summary
 
-- Total anchors: 9
+- Total anchors: 12
 - Featured: 2
-- Standard: 5
-- Background: 2
+- Standard: 7
+- Background: 3
 
 ---
 
@@ -53,6 +53,16 @@ Do not edit manually.
   classification: valid  
   status: transitional
 
+- **provingmarket.eth** — proving markets  
+  priority: medium  
+  classification: valid  
+  status: emerging
+
+- **sequencingmarket.eth** — sequencing markets  
+  priority: medium  
+  classification: valid  
+  status: emerging
+
 ## Background
 
 - **buildermarket.eth** — builder markets  
@@ -61,6 +71,11 @@ Do not edit manually.
   status: deprecated
 
 - **executionmarket.eth** — execution coordination (ambiguous term)  
+  priority: low  
+  classification: premature  
+  status: deprecated
+
+- **blockspacemarket.eth** — blockspace markets  
   priority: low  
   classification: premature  
   status: deprecated
