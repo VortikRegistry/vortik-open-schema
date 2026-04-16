@@ -1,0 +1,6 @@
+{
+  "name": "provingmarket",
+  "version": "0.1-research",
+  "type": "coordination_surface",
+  "description": "Proof generation coordination across zk systems"
+}
