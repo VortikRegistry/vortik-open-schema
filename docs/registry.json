@@ -17,7 +17,12 @@
       "type": "primitive",
       "role": "in-protocol proposer-builder separation and commitment-based block construction",
       "schema": "schemas/epbs/1.0-draft/schema.json",
-      "anchor_doc": "anchors/epbs.md"
+      "anchor_doc": "anchors/epbs.md",
+      "market": {
+        "priority": "high",
+        "sale_strategy": "hold",
+        "visibility": "featured"
+      }
     },
     {
       "id": "inclusionlist",
@@ -31,7 +36,12 @@
       "type": "mechanism",
       "role": "protocol-enforced transaction inclusion via validator committees",
       "schema": "schemas/inclusionlist/0.1-draft/schema.json",
-      "anchor_doc": "anchors/inclusionlist.md"
+      "anchor_doc": "anchors/inclusionlist.md",
+      "market": {
+        "priority": "high",
+        "sale_strategy": "hold",
+        "visibility": "featured"
+      }
     },
     {
       "id": "commitmentlayer",
@@ -45,7 +55,12 @@
       "type": "mechanism",
       "role": "binding bids and execution rights in block construction",
       "schema": "schemas/commitmentlayer/0.1-draft/schema.json",
-      "anchor_doc": "anchors/commitmentlayer.md"
+      "anchor_doc": "anchors/commitmentlayer.md",
+      "market": {
+        "priority": "medium",
+        "sale_strategy": "monitor",
+        "visibility": "standard"
+      }
     },
     {
       "id": "preconflayer",
@@ -59,7 +74,12 @@
       "type": "mechanism",
       "role": "early execution guarantees derived from commitment flows",
       "schema": "schemas/preconflayer/0.1-draft/schema.json",
-      "anchor_doc": "anchors/preconflayer.md"
+      "anchor_doc": "anchors/preconflayer.md",
+      "market": {
+        "priority": "medium",
+        "sale_strategy": "opportunistic",
+        "visibility": "standard"
+      }
     },
     {
       "id": "ssf",
@@ -73,7 +93,12 @@
       "type": "primitive",
       "role": "single-slot finality targeting 12-second confirmation",
       "schema": "schemas/ssf/0.1-research/schema.json",
-      "anchor_doc": "anchors/fastfinality.md"
+      "anchor_doc": "anchors/fastfinality.md",
+      "market": {
+        "priority": "medium",
+        "sale_strategy": "opportunistic",
+        "visibility": "standard"
+      }
     },
     {
       "id": "buildermarket",
@@ -87,7 +112,12 @@
       "type": "market",
       "role": "deprecated abstraction replaced by in-protocol builder role via ePBS",
       "schema": "schemas/buildermarket/0.1-research/schema.json",
-      "anchor_doc": "anchors/buildermarket.md"
+      "anchor_doc": "anchors/buildermarket.md",
+      "market": {
+        "priority": "low",
+        "sale_strategy": "liquidate",
+        "visibility": "background"
+      }
     },
     {
       "id": "solverlayer",
@@ -101,7 +131,12 @@
       "type": "coordination_surface",
       "role": "offchain intent resolution and execution routing",
       "schema": "schemas/solverlayer/0.1-research/schema.json",
-      "anchor_doc": "anchors/solverlayer.md"
+      "anchor_doc": "anchors/solverlayer.md",
+      "market": {
+        "priority": "medium",
+        "sale_strategy": "opportunistic",
+        "visibility": "standard"
+      }
     },
     {
       "id": "executionmarket",
@@ -115,7 +150,12 @@
       "type": "coordination_surface",
       "role": "deprecated abstraction replaced by protocol-native execution mechanisms",
       "schema": "schemas/executionmarket/0.1-research/schema.json",
-      "anchor_doc": "anchors/executionmarket.md"
+      "anchor_doc": "anchors/executionmarket.md",
+      "market": {
+        "priority": "low",
+        "sale_strategy": "liquidate",
+        "visibility": "background"
+      }
     },
     {
       "id": "orderflowauction",
@@ -129,7 +169,12 @@
       "type": "mechanism",
       "role": "auction-based routing of transaction flow toward builders",
       "schema": "schemas/orderflowauction/0.1-research/schema.json",
-      "anchor_doc": "anchors/orderflowauction.md"
+      "anchor_doc": "anchors/orderflowauction.md",
+      "market": {
+        "priority": "medium",
+        "sale_strategy": "opportunistic",
+        "visibility": "standard"
+      }
     }
   ],
   "external_primitives": [
