@@ -78,6 +78,9 @@ jobs:
       - name: Generate market doc
         run: node scripts/generate-market-doc.mjs
 
+      - name: Generate market html
+        run: node scripts/generate-market-html.mjs
+
       - name: Sync docs
         run: node scripts/sync-docs.mjs
 
