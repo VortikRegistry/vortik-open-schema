@@ -601,11 +601,13 @@
     .tag.repairable{border-color:rgba(246,196,83,.22); color:var(--repairable)}
     .tag.premature{border-color:rgba(255,123,114,.22); color:var(--premature)}
     .tag.deprecated{border-color:rgba(125,133,144,.22); color:var(--deprecated)}
+    .tag.external{border-color:rgba(89,168,255,.22); color:var(--valid)}
 
     .tag.status-core{border-color:rgba(61,220,151,.22); color:var(--core)}
     .tag.status-emerging{border-color:rgba(246,196,83,.22); color:var(--repairable)}
     .tag.status-transitional{border-color:rgba(89,168,255,.22); color:var(--valid)}
     .tag.status-deprecated{border-color:rgba(255,123,114,.22); color:var(--premature)}
+    .tag.status-external{border-color:rgba(89,168,255,.22); color:var(--valid)}
 
     .tag.stage-canonical{border-color:rgba(61,220,151,.18); color:#bff3da}
     .tag.stage-implemented{border-color:rgba(89,168,255,.18); color:#cfe3ff}
@@ -788,6 +790,7 @@
       <nav class="nav">
         <a href="#overview">Overview</a>
         <a href="#signals">Signals</a>
+        <a href="./market.html">Market</a>
         <a href="#anchors">Anchors</a>
         <a href="#model">Model</a>
         <a href="#registry">Registry</a>
@@ -811,6 +814,7 @@
             <span class="app-btn-icon">◉</span>
             <span>Open interactive app</span>
           </a>
+          <a class="btn" href="./market.html">Strategic Anchors</a>
           <a class="btn" href="./registry.json">Open registry.json</a>
           <a class="btn" href="./market.index.json">Open market.index.json</a>
           <a class="btn" href="./maps/coordination-stack.json">Open coordination-stack.json</a>
@@ -1019,6 +1023,10 @@ anchor documentation (/anchors/)</div>
             <div class="k">Market layer</div>
             <div class="v">market.index.json</div>
           </a>
+          <a class="registry-box" href="./market.html">
+            <div class="k">Strategic anchors</div>
+            <div class="v">market.html</div>
+          </a>
           <a class="registry-box" href="./maps/coordination-stack.json">
             <div class="k">Coordination model</div>
             <div class="v">coordination-stack.json</div>
@@ -1051,6 +1059,7 @@ anchor documentation (/anchors/)</div>
               <a href="./registry.json">registry.json</a><br>
               <a href="./anchors.index.json">anchors.index.json</a><br>
               <a href="./market.index.json">market.index.json</a><br>
+              <a href="./market.html">market.html</a><br>
               <a href="./maps/coordination-stack.json">coordination-stack.json</a><br>
               <a href="./maps/coordination-surfaces.json">coordination-surfaces.json</a><br>
               <a href="./anchors/">Anchor docs</a>
@@ -1086,8 +1095,8 @@ anchor documentation (/anchors/)</div>
       query: ""
     };
 
-    const clsOrder = ["core", "valid", "repairable", "premature", "deprecated"];
-    const statusOrder = ["core", "emerging", "transitional", "deprecated"];
+    const clsOrder = ["core", "valid", "repairable", "premature", "deprecated", "external"];
+    const statusOrder = ["core", "emerging", "transitional", "deprecated", "external"];
 
     function clsCount(anchors, cls){
       return anchors.filter(a => a.classification === cls).length;
