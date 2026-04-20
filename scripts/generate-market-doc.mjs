@@ -1,7 +1,6 @@
-
 import fs from "fs";
 
-const market = JSON.parse(fs.readFileSync("market.index.json", "utf8"));
+const market = JSON.parse(fs.readFileSync("docs/market.index.json", "utf8"));
 
 const section = (title, items) => {
   if (!items.length) return "";
@@ -18,7 +17,7 @@ const section = (title, items) => {
 
 let output = `# Vortik Market Layer
 
-Auto-generated from market.index.json  
+Auto-generated from docs/market.index.json  
 Do not edit manually.
 
 ---
