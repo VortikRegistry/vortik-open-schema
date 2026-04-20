@@ -1,6 +1,6 @@
 # Vortik Market Layer
 
-Auto-generated from market.index.json  
+Auto-generated from docs/market.index.json  
 Do not edit manually.
 
 ---
