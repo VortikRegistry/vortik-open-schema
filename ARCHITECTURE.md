@@ -2,17 +2,17 @@
 
 ## Overview
 
-Vortik is a semantic registry designed to map, structure, and stabilize terminology emerging across Ethereum’s coordination architecture.
+Vortik is a semantic registry of Ethereum protocol primitives.
 
-The system operates as a **semantic infrastructure layer**, positioned between:
+It maps, structures, and tracks terminology emerging from the protocol as it converges toward a stable coordination model.
 
-- protocol research  
-- implementation  
-- human interpretation  
+The system does not define protocol rules and does not introduce new primitives.
 
-It does not define protocol rules and does not introduce new primitives.
+Its function is to make the protocol **structurally legible** as:
 
-Its function is to **track and organize semantic convergence** as it emerges.
+- primitives (protocol objects)
+- roles (protocol actors)
+- constraints (protocol-enforced rules)
 
 ---
 
@@ -20,21 +20,51 @@ Its function is to **track and organize semantic convergence** as it emerges.
 
 To establish a structured, machine-readable layer that captures:
 
-→ **canonical terminology surfaces**  
-→ **before formal standardization occurs**
+→ **canonical protocol terminology**  
+→ **as it stabilizes through specification and implementation**
+
+The registry tracks convergence — it does not anticipate or invent it.
+
+---
+
+## System Model
+
+Ethereum is evolving into a **mechanism design system**, not a pipeline or layered stack.
+
+Key properties:
+
+- execution is separated from consensus (ePBS)
+- commitments replace full payload visibility at proposal time
+- constraints (e.g. inclusion lists) restrict builder behavior
+- validation is partially asynchronous and multi-stage
+
+The protocol defines:
+
+- valid message types
+- role responsibilities
+- constraint enforcement rules
+
+Economic behavior emerges within these constraints but is not itself part of the protocol definition.
 
 ---
 
 ## System Scope
 
-The registry focuses on identifying and structuring:
+The registry focuses strictly on protocol-aligned elements:
 
-- coordination primitives  
-- protocol roles  
-- constraints and commitments  
-- coordination surfaces  
+- primitives  
+- roles  
+- constraints  
 
-All entries must map to real or actively researched components within Ethereum.
+And selectively tracks:
+
+- coordination surfaces (only when grounded in real mechanisms)
+
+The registry excludes:
+
+- purely narrative abstractions  
+- unstable market terminology  
+- non-protocol layers  
 
 ---
 
@@ -44,152 +74,162 @@ All entries must map to real or actively researched components within Ethereum.
 
 Location: `/registry.json`
 
-The registry is a **lightweight index of semantic anchors**.
+The registry is the **source of truth**.
+
+It provides a minimal index of semantic anchors and links to their definitions.
 
 Each entry includes:
 
 - identifier (id)  
 - ENS mapping  
-- reference to a versioned schema  
-- reference to a human-readable anchor document  
+- reference to schema  
+- reference to anchor document  
 
-The registry does not encode full semantic descriptions.
+The registry does not encode full semantics.
 
-Instead, it acts as a **stable reference layer**, delegating detailed metadata to schemas.
-
----
-
-### 2. Anchors
-
-Location: `/anchors/`
-
-Anchors are minimal human-readable representations of each tracked primitive or surface.
-
-Each anchor:
-
-- describes a real coordination element  
-- positions the concept within the coordination system  
-- clarifies naming alignment vs canonical terminology  
-
-Anchors do not define the primitive.
-
-They expose its **semantic interpretation layer**.
+It acts as a **stable pointer layer**.
 
 ---
 
-### 3. Schemas
+### 2. Schemas
 
 Location: `/schemas/{anchor}/{version}/schema.json`
 
-Schemas define the machine-readable structure of each primitive or surface.
+Schemas define the **canonical semantic structure** of each entry.
 
 They are:
 
 - versioned  
 - explicit  
-- non-interpretative  
+- protocol-grounded  
 
 Schemas include:
 
 - canonical_term  
-- classification (core / valid / repairable / premature / deprecated)  
-- coordination_surface (interpretive)  
-- coordination_role  
-- protocol_grounding  
-- naming  
+- classification  
+- type (primitive / role / constraint / surface)  
+- protocol grounding  
+- naming alignment  
 
-Schemas represent the **canonical semantic layer** of the registry.
-
----
-
-### 4. Sources
-
-Located within each anchor directory.
-
-Sources are tied to observable signals:
-
-- EIP specifications  
-- research discussions  
-- implementation references  
-- coordination mechanisms in development  
-
-Sources validate semantic positioning, not interpret it.
+Schemas represent the **machine-readable semantic layer**.
 
 ---
 
-### 5. External Primitives
+### 3. Anchors
 
-Location: `registry.json → external_primitives`
+Location: `/anchors/`
 
-Tracks relevant primitives not currently mapped to owned ENS identifiers.
+Anchors are minimal human-readable representations.
 
-Purpose:
+Each anchor:
 
-- identify missing canonical surfaces  
-- monitor terminology convergence outside the registry  
-- guide future expansion  
+- describes a real protocol element  
+- aligns naming with canonical terminology  
+- clarifies semantic positioning  
+
+Anchors do not define primitives.
+
+They expose how primitives are **interpreted and referenced**.
+
+---
+
+### 4. Docs Layer
+
+Location: `/docs/`
+
+Public representation of the registry.
+
+Includes:
+
+- index views  
+- semantic navigation  
+- market-facing layer (derived, non-canonical)  
+
+This layer is presentation, not source of truth.
+
+---
+
+### 5. Maps (Non-Canonical)
+
+Location: `/maps/`
+
+Maps are **interpretive views** of the system.
+
+They are:
+
+- derived from registry data  
+- non-authoritative  
+- subject to change  
+
+They do not define structure and should not be treated as canonical representations of Ethereum.
 
 ---
 
 ## Conceptual Model
 
-Ethereum is modeled as a coordination system composed of:
+Ethereum is modeled as a coordination mechanism composed of:
 
-- protocol-defined roles  
-- verifiable commitments  
-- enforced constraints  
-- evolving coordination surfaces  
-- execution and confirmation flows  
+### Primitives
+Protocol-defined objects:
 
-Rather than a strictly linear pipeline, the system operates as a partially asynchronous coordination structure.
-
-Core dimensions:
+- ExecutionPayload  
+- ExecutionHeader  
+- BuilderBid  
+- InclusionList  
 
 ### Roles
+Protocol-defined actors:
+
 - proposer  
 - builder  
-- solver (off-protocol / emerging)  
-
-### Commitments
-- execution payload commitments  
-- bid commitments (ePBS)  
-- confirmation guarantees (FCR direction)  
+- attester  
+- committees (PTC, IL)
 
 ### Constraints
-- inclusion constraints (FOCIL)  
-- protocol-level validity rules  
+Protocol-enforced rules:
 
-### Flows
-- ordering  
-- execution (decoupled under ePBS)  
-- confirmation  
-- finality  
+- inclusion requirements  
+- payload timeliness  
+- bid validity  
 
-The registry maps semantic anchors to these dimensions rather than enforcing a rigid stage-based pipeline.
+### Surfaces (Secondary)
+Observed coordination interfaces:
+
+- builder interaction surfaces  
+- order flow entry points  
+- commitment exposure layers  
+
+Surfaces are tracked only when grounded in real mechanisms.
 
 ---
 
-## Primitive vs Coordination Surface
+## Primitive vs Surface Distinction
 
 The registry prioritizes:
 
-→ protocol primitives  
-→ coordination surfaces  
+→ primitives  
+→ roles  
+→ constraints  
 
-over:
+Over:
 
-→ narrative or purely market abstractions  
+→ markets  
+→ layers  
+→ narrative abstractions  
 
-Market-related concepts are included only when grounded in **real coordination mechanisms**.
+Market language is treated as:
+
+→ descriptive (external)  
+→ not canonical (internal to protocol)
 
 ---
 
 ## Naming Principles
 
-- Canonical technical terminology overrides ENS naming  
-- Semantic precision is prioritized over readability  
-- Early terminology is tracked without assuming stability  
-- Naming mismatches are explicitly classified  
+- Canonical protocol terminology overrides ENS naming  
+- Precision is prioritized over familiarity  
+- Misalignment is explicitly classified  
+- Terminology must map to observable protocol structures  
 
 ---
 
@@ -197,31 +237,31 @@ Market-related concepts are included only when grounded in **real coordination m
 
 Each entry is classified as:
 
-- **core** — protocol-aligned primitive  
-- **valid** — real coordination surface with stable meaning  
+- **core** — protocol-aligned primitive or role  
+- **valid** — real coordination surface  
 - **repairable** — valid concept with naming misalignment  
-- **premature** — ambiguous or unstable terminology  
-- **deprecated** — superseded abstraction or structurally invalid term  
+- **premature** — unstable or weakly defined term  
+- **deprecated** — structurally invalid or obsolete term  
 
-Classification is applied at the schema level and evolves with research convergence.
+Classification evolves with protocol convergence.
 
 ---
 
 ## Design Philosophy
 
-- Semantic structure precedes standardization  
-- Naming clarity reduces coordination friction  
-- Infrastructure value derives from precision, not coverage  
-- Mapping is only valid when grounded in real protocol surfaces  
+- Protocol defines structure, not narrative  
+- Semantic clarity reduces coordination ambiguity  
+- Value emerges from alignment, not speculation  
+- Only observable mechanisms are indexed  
 
 ---
 
 ## System Constraints
 
-- No speculative primitives without technical basis  
-- No reliance on branding or narrative framing  
-- No assumption of future standardization  
-- No abstraction without identifiable coordination relevance  
+- No speculative primitives  
+- No narrative-driven entries  
+- No abstraction without protocol grounding  
+- No duplication of protocol definitions  
 
 ---
 
@@ -229,22 +269,24 @@ Classification is applied at the schema level and evolves with research converge
 
 The registry is transitioning from:
 
-→ conceptual semantic mapping  
+→ semantic exploration  
 
 to:
 
-→ structured semantic infrastructure  
+→ protocol-aligned semantic infrastructure  
 
 Current focus:
 
-- consolidation of high-confidence primitives  
-- elimination of ambiguous surfaces  
-- alignment with observable protocol evolution  
+- consolidation of canonical primitives  
+- removal of misaligned terminology  
+- alignment with EIP-level convergence  
 
 ---
 
-## Notes
+## Final Note
 
-Vortik should be understood as a **semantic layer over Ethereum**, not a protocol or framework.
+Vortik is not a protocol, layer, or market.
 
-Its role is to make coordination structures legible, comparable, and machine-readable as the ecosystem evolves.
+It is a **semantic registry of Ethereum’s coordination primitives**.
+
+Its role is to make the protocol legible as it converges toward its final structural form.
