@@ -75,7 +75,7 @@ Do not edit manually.
   classification: deprecated  
   status: deprecated
 
-- **blockspacemarket.eth** — blockspace market  
+- **blockspacemarket.eth** — blockspace markets  
   priority: low  
   classification: deprecated  
   status: deprecated

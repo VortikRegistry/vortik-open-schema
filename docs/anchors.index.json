@@ -69,7 +69,7 @@
       "stage": "research",
       "market_priority": "medium",
       "type": "primitive",
-      "role": "finality primitive targeting single-slot confirmation semantics, with ENS naming broader than canonical protocol term",
+      "role": "finality primitive targeting single-slot confirmation semantics",
       "schema": "schemas/ssf/0.1-research/schema.json",
       "anchor_doc": "anchors/fastfinality.md"
     },
@@ -124,7 +124,7 @@
       "status_label": "external",
       "stage": "implemented",
       "market_priority": "medium",
-      "type": "external_coordination",
+      "type": "coordination_surface",
       "role": "external order-flow routing and auction mechanisms operating before protocol-level builder coordination",
       "schema": "schemas/orderflowauction/0.1-research/schema.json",
       "anchor_doc": "anchors/orderflowauction.md"
@@ -160,14 +160,14 @@
     {
       "id": "blockspacemarket",
       "ens": "blockspacemarket.eth",
-      "canonical_term": "blockspace market",
+      "canonical_term": "blockspace markets",
       "classification": "deprecated",
       "status": "research",
       "status_label": "deprecated",
       "stage": "research",
       "market_priority": "low",
       "type": "misaligned_abstraction",
-      "role": "legacy pre-ePBS market framing displaced by protocol-native roles, commitments, and constraints",
+      "role": "legacy pre-ePBS market framing increasingly displaced by protocol-native roles, commitments, and constraints",
       "schema": "schemas/blockspacemarket/0.1-research/schema.json",
       "anchor_doc": "anchors/blockspacemarket.md"
     }
