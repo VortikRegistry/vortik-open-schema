@@ -9,8 +9,8 @@ Do not edit manually.
 
 - Total anchors: 12
 - Featured: 2
-- Standard: 7
-- Background: 3
+- Standard: 6
+- Background: 4
 
 ---
 
@@ -28,14 +28,14 @@ Do not edit manually.
 
 ## Standard
 
-- **commitmentlayer.eth** — commitments  
+- **commitmentlayer.eth** — commitment  
   priority: medium  
   classification: repairable  
   status: emerging
 
-- **preconflayer.eth** — preconfirmation systems  
+- **preconflayer.eth** — preconfirmation (emergent)  
   priority: medium  
-  classification: repairable  
+  classification: premature  
   status: emerging
 
 - **fastfinality.eth** — single-slot finality (SSF)  
@@ -43,40 +43,40 @@ Do not edit manually.
   classification: repairable  
   status: emerging
 
-- **solverlayer.eth** — solver networks  
-  priority: medium  
-  classification: repairable  
-  status: transitional
-
 - **orderflowauction.eth** — order flow auctions (OFA)  
   priority: medium  
-  classification: valid  
-  status: transitional
+  classification: external  
+  status: external
 
 - **provingmarket.eth** — proving markets  
   priority: medium  
-  classification: valid  
-  status: emerging
+  classification: external  
+  status: external
 
 - **sequencingmarket.eth** — sequencing markets  
   priority: medium  
-  classification: valid  
-  status: emerging
+  classification: external  
+  status: external
 
 ## Background
 
-- **buildermarket.eth** — builder markets  
+- **buildermarket.eth** — builder  
   priority: low  
-  classification: premature  
+  classification: deprecated  
   status: deprecated
 
-- **executionmarket.eth** — execution coordination (ambiguous term)  
+- **solverlayer.eth** — solver (external)  
+  priority: low  
+  classification: external  
+  status: external
+
+- **executionmarket.eth** — execution (ambiguous)  
   priority: low  
   classification: premature  
   status: deprecated
 
 - **blockspacemarket.eth** — blockspace markets  
   priority: low  
-  classification: premature  
+  classification: deprecated  
   status: deprecated
 

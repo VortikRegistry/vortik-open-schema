@@ -2,12 +2,12 @@
   "registry": "vortik-semantic-registry",
   "index_version": "1.0.0",
   "generated_from": "registry.json",
-  "last_updated": "2026-04-20T17:29:03.412Z",
+  "last_updated": "2026-04-20T17:58:31.732Z",
   "summary": {
     "total": 12,
     "featured": 2,
-    "standard": 7,
-    "background": 3
+    "standard": 6,
+    "background": 4
   },
   "segments": {
     "featured": [
@@ -34,7 +34,7 @@
       {
         "id": "commitmentlayer",
         "ens": "commitmentlayer.eth",
-        "canonical_term": "commitments",
+        "canonical_term": "commitment",
         "priority": "medium",
         "sale_strategy": "monitor",
         "classification": "repairable",
@@ -43,10 +43,10 @@
       {
         "id": "preconflayer",
         "ens": "preconflayer.eth",
-        "canonical_term": "preconfirmation systems",
+        "canonical_term": "preconfirmation (emergent)",
         "priority": "medium",
         "sale_strategy": "opportunistic",
-        "classification": "repairable",
+        "classification": "premature",
         "status": "emerging"
       },
       {
@@ -59,22 +59,13 @@
         "status": "emerging"
       },
       {
-        "id": "solverlayer",
-        "ens": "solverlayer.eth",
-        "canonical_term": "solver networks",
-        "priority": "medium",
-        "sale_strategy": "opportunistic",
-        "classification": "repairable",
-        "status": "transitional"
-      },
-      {
         "id": "orderflowauction",
         "ens": "orderflowauction.eth",
         "canonical_term": "order flow auctions (OFA)",
         "priority": "medium",
         "sale_strategy": "opportunistic",
-        "classification": "valid",
-        "status": "transitional"
+        "classification": "external",
+        "status": "external"
       },
       {
         "id": "provingmarket",
@@ -82,8 +73,8 @@
         "canonical_term": "proving markets",
         "priority": "medium",
         "sale_strategy": "monitor",
-        "classification": "valid",
-        "status": "emerging"
+        "classification": "external",
+        "status": "external"
       },
       {
         "id": "sequencingmarket",
@@ -91,24 +82,33 @@
         "canonical_term": "sequencing markets",
         "priority": "medium",
         "sale_strategy": "monitor",
-        "classification": "valid",
-        "status": "emerging"
+        "classification": "external",
+        "status": "external"
       }
     ],
     "background": [
       {
         "id": "buildermarket",
         "ens": "buildermarket.eth",
-        "canonical_term": "builder markets",
+        "canonical_term": "builder",
         "priority": "low",
         "sale_strategy": "liquidate",
-        "classification": "premature",
+        "classification": "deprecated",
         "status": "deprecated"
+      },
+      {
+        "id": "solverlayer",
+        "ens": "solverlayer.eth",
+        "canonical_term": "solver (external)",
+        "priority": "low",
+        "sale_strategy": "monitor",
+        "classification": "external",
+        "status": "external"
       },
       {
         "id": "executionmarket",
         "ens": "executionmarket.eth",
-        "canonical_term": "execution coordination (ambiguous term)",
+        "canonical_term": "execution (ambiguous)",
         "priority": "low",
         "sale_strategy": "liquidate",
         "classification": "premature",
@@ -120,7 +120,7 @@
         "canonical_term": "blockspace markets",
         "priority": "low",
         "sale_strategy": "liquidate",
-        "classification": "premature",
+        "classification": "deprecated",
         "status": "deprecated"
       }
     ],
