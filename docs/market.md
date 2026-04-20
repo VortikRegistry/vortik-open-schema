@@ -72,10 +72,10 @@ Do not edit manually.
 
 - **executionmarket.eth** — execution (ambiguous)  
   priority: low  
-  classification: premature  
+  classification: deprecated  
   status: deprecated
 
-- **blockspacemarket.eth** — blockspace markets  
+- **blockspacemarket.eth** — blockspace market  
   priority: low  
   classification: deprecated  
   status: deprecated

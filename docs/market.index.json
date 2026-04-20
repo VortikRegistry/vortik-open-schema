@@ -2,7 +2,7 @@
   "registry": "vortik-semantic-registry",
   "index_version": "1.0.0",
   "generated_from": "registry.json",
-  "last_updated": "2026-04-20T17:58:31.732Z",
+  "last_updated": "2026-04-20T18:41:01.404Z",
   "summary": {
     "total": 12,
     "featured": 2,
@@ -111,13 +111,13 @@
         "canonical_term": "execution (ambiguous)",
         "priority": "low",
         "sale_strategy": "liquidate",
-        "classification": "premature",
+        "classification": "deprecated",
         "status": "deprecated"
       },
       {
         "id": "blockspacemarket",
         "ens": "blockspacemarket.eth",
-        "canonical_term": "blockspace markets",
+        "canonical_term": "blockspace market",
         "priority": "low",
         "sale_strategy": "liquidate",
         "classification": "deprecated",
