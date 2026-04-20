@@ -1,1 +1,830 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vortik — Strategic Anchors</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #04060a;
+      --surface-1: #080d14;
+      --surface-2: #0c1320;
+      --surface-3: #101929;
+      --border: rgba(255,255,255,0.06);
+      --border-bright: rgba(255,255,255,0.12);
+      --text: #dce8f8;
+      --muted: #7a90aa;
+      --dim: #4a5a6e;
+
+      --green: #2ecc8a;
+      --green-glow: rgba(46,204,138,0.15);
+      --blue: #4d9eff;
+      --blue-glow: rgba(77,158,255,0.12);
+      --white-dim: rgba(220,232,248,0.55);
+
+      --mono: 'DM Mono', ui-monospace, monospace;
+      --display: 'Syne', ui-sans-serif, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--display);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 900px 500px at 75% -5%, rgba(77,158,255,0.09) 0%, transparent 65%),
+        radial-gradient(ellipse 700px 400px at 15% 5%, rgba(46,204,138,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 600px 800px at 50% 100%, rgba(77,158,255,0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: min(1100px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      background: rgba(4,6,10,0.78);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0e1f38, #081424);
+      border: 1px solid rgba(77,158,255,0.25);
+      display: grid;
+      place-items: center;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--blue);
+      letter-spacing: 0.04em;
+      box-shadow: 0 0 16px rgba(77,158,255,0.1);
+    }
+
+    .brand-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .brand-sub {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 1px;
+      font-weight: 300;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 6px;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .hero {
+      padding: 72px 0 48px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 24px;
+      padding: 6px 12px;
+      border: 1px solid rgba(77,158,255,0.2);
+      border-radius: 999px;
+      background: rgba(77,158,255,0.06);
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 8px var(--blue);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero-title {
+      font-size: clamp(36px, 5.5vw, 64px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      color: var(--text);
+      max-width: 780px;
+      margin-bottom: 20px;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, #4d9eff, #2ecc8a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-lead {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 640px;
+      line-height: 1.7;
+      font-family: var(--mono);
+      font-weight: 300;
+      margin-bottom: 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 22px;
+      background: linear-gradient(135deg, rgba(77,158,255,0.18), rgba(46,204,138,0.12));
+      border: 1px solid rgba(77,158,255,0.3);
+      border-radius: 12px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.25s, border-color 0.25s, transform 0.15s;
+      box-shadow: 0 4px 24px rgba(77,158,255,0.08);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, rgba(77,158,255,0.28), rgba(46,204,138,0.18));
+      border-color: rgba(77,158,255,0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 22px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 13px;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      color: var(--text);
+      border-color: var(--border-bright);
+    }
+
+    .hero-stat-row {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hero-stat-value {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text);
+    }
+
+    .hero-stat-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--dim);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .section {
+      margin: 56px 0;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-family: var(--mono);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--border-bright);
+    }
+
+    .section-count {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--dim);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .card {
+      position: relative;
+      padding: 22px 22px 20px;
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--border-bright);
+      transform: translateY(-2px);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
+    }
+
+    .card-core::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--green-glow), transparent 70%);
+      pointer-events: none;
+    }
+
+    .card-selective::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--blue-glow), transparent 70%);
+      pointer-events: none;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .card-name {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .card-eip {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--dim);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+
+    .card-term {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 400;
+      border: 1px solid;
+    }
+
+    .badge::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .badge-core {
+      color: var(--green);
+      border-color: rgba(46,204,138,0.25);
+      background: rgba(46,204,138,0.06);
+    }
+
+    .badge-selective {
+      color: var(--blue);
+      border-color: rgba(77,158,255,0.25);
+      background: rgba(77,158,255,0.06);
+    }
+
+    .badge-available {
+      color: var(--white-dim);
+      border-color: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .card-pricing {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--dim);
+    }
+
+    .contact-section {
+      margin: 56px 0 80px;
+      padding: 36px;
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .contact-left h3 {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    .contact-left p {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 520px;
+    }
+
+    .contact-right {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0 48px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--dim);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--muted); }
+
+    @media (max-width: 860px) {
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 580px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .hero { padding: 48px 0 32px; }
+      .hero-title { font-size: 34px; }
+      .hero-stat-row { gap: 20px; }
+      .contact-section { padding: 24px; flex-direction: column; }
+      .contact-right { width: 100%; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+      .section { margin: 48px 0; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow { animation: fadeUp 0.5s ease both; }
+    .hero-title   { animation: fadeUp 0.5s 0.08s ease both; }
+    .hero-lead    { animation: fadeUp 0.5s 0.14s ease both; }
+    .hero-actions { animation: fadeUp 0.5s 0.20s ease both; }
+    .hero-stat-row{ animation: fadeUp 0.5s 0.28s ease both; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="./index.html">
+      <div class="brand-mark">VSR</div>
+      <div>
+        <div class="brand-text">Vortik</div>
+        <div class="brand-sub">Semantic Registry</div>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="./index.html">Registry</a>
+      <a href="./app.html">App</a>
+      <a href="https://github.com/VortikRegistry" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <div class="hero-eyebrow">Strategic Availability</div>
+    <h1 class="hero-title">
+      Protocol-aligned<br>
+      <em>naming surfaces</em><br>
+      for Ethereum.
+    </h1>
+    <p class="hero-lead">
+      ENS anchors tracked by Vortik, indexed against Ethereum coordination primitives.
+      Availability is selective. Transfers depend on strategic alignment.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="https://x.com/VortikRegistry" target="_blank" rel="noopener noreferrer">
+        ↗ Request discussion via X
+      </a>
+      <a class="btn-secondary" href="./index.html">
+        View registry
+      </a>
+    </div>
+    <div class="hero-stat-row">
+      <div class="hero-stat">
+        <div class="hero-stat-value">10</div>
+        <div class="hero-stat-label">Tracked anchors</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">2</div>
+        <div class="hero-stat-label">Core protocol</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">EIP-7732</div>
+        <div class="hero-stat-label">Primary reference</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">EIP-7805</div>
+        <div class="hero-stat-label">Inclusion mechanism</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title">Strategic Anchors</div>
+      <div class="section-count">2 assets — not publicly priced</div>
+    </div>
+    <div class="grid-2">
+      <div class="card card-core">
+        <div class="card-top">
+          <div class="card-name">epbs.eth</div>
+          <div class="card-eip">EIP-7732</div>
+        </div>
+        <div class="card-term">
+          enshrined proposer-builder separation (ePBS)<br>
+          scheduled for inclusion — devnet active
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-core">strategic transfer only</span>
+          <span class="card-pricing">price on request</span>
+        </div>
+      </div>
+
+      <div class="card card-core">
+        <div class="card-top">
+          <div class="card-name">inclusionlist.eth</div>
+          <div class="card-eip">EIP-7805</div>
+        </div>
+        <div class="card-term">
+          fork-choice enforced inclusion lists (FOCIL)<br>
+          considered for inclusion — fork candidate
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-core">strategic transfer only</span>
+          <span class="card-pricing">price on request</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title">Monitored / Selective</div>
+      <div class="section-count">5 assets — open to aligned inquiry</div>
+    </div>
+    <div class="grid-3">
+      <div class="card card-selective">
+        <div class="card-top">
+          <div class="card-name">commitmentlayer.eth</div>
+        </div>
+        <div class="card-term">
+          commitment primitive<br>
+          pre-reveal coordination surface
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-selective">selective discussion</span>
+        </div>
+      </div>
+
+      <div class="card card-selective">
+        <div class="card-top">
+          <div class="card-name">fastfinality.eth</div>
+        </div>
+        <div class="card-term">
+          single-slot finality (SSF)<br>
+          broad naming surface for finality research
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-selective">selective discussion</span>
+        </div>
+      </div>
+
+      <div class="card card-selective">
+        <div class="card-top">
+          <div class="card-name">orderflowauction.eth</div>
+        </div>
+        <div class="card-term">
+          order flow auctions (OFA)<br>
+          execution routing and MEV coordination
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-selective">selective discussion</span>
+        </div>
+      </div>
+
+      <div class="card card-selective">
+        <div class="card-top">
+          <div class="card-name">provingmarket.eth</div>
+        </div>
+        <div class="card-term">
+          proving markets<br>
+          ZK and proof-generation infrastructure
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-selective">selective discussion</span>
+        </div>
+      </div>
+
+      <div class="card card-selective">
+        <div class="card-top">
+          <div class="card-name">sequencingmarket.eth</div>
+        </div>
+        <div class="card-term">
+          sequencing markets<br>
+          rollup and shared sequencing design space
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-selective">selective discussion</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title">Available for Transfer</div>
+      <div class="section-count">3 assets — open</div>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-top">
+          <div class="card-name">buildermarket.eth</div>
+        </div>
+        <div class="card-term">
+          builder coordination<br>
+          broad coordination framing
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-available">available</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-name">executionmarket.eth</div>
+        </div>
+        <div class="card-term">
+          execution coordination<br>
+          emergent coordination surface
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-available">available</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-name">blockspacemarket.eth</div>
+        </div>
+        <div class="card-term">
+          blockspace coordination<br>
+          broad coordination framing
+        </div>
+        <div class="card-footer">
+          <span class="badge badge-available">available</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <div class="contact-left">
+      <h3>Acquire or discuss an anchor</h3>
+      <p>
+        Vortik does not operate as an open marketplace.
+        Transfers are evaluated based on protocol alignment, timing, and strategic fit.
+      </p>
+    </div>
+    <div class="contact-right">
+      <a class="btn-primary" href="https://x.com/VortikRegistry" target="_blank" rel="noopener noreferrer">
+        ↗ Request discussion via X
+      </a>
+      <a class="btn-secondary" href="./index.html">
+        View registry context
+      </a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="footer-copy">
+      © 2026 Vortik — Semantic Registry
+    </div>
+    <div class="footer-links">
+      <a href="./index.html">Registry</a>
+      <a href="https://github.com/VortikRegistry" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://x.com/VortikRegistry" target="_blank" rel="noopener noreferrer">X</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
