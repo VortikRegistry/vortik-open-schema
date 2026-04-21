@@ -81,8 +81,8 @@ function renderCard(anchor, tier) {
   const badge = isFeatured
     ? `<span class="badge badge-core">strategic transfer only</span>`
     : isStandard
-    ? `<span class="badge badge-selective">selective discussion</span>`
-    : `<span class="badge badge-available">available</span>`;
+      ? `<span class="badge badge-selective">selective discussion</span>`
+      : `<span class="badge badge-available">available</span>`;
 
   const pricing = isFeatured
     ? `<span class="card-pricing">price on request</span>`
@@ -706,7 +706,7 @@ ${backgroundHtml}
 fs.writeFileSync("docs/market.html", html);
 
 console.log("✅ market.html generated");
-console.log(\`Total anchors: \${anchors.length}\`);
-console.log(\`Featured: \${featured.length}\`);
-console.log(\`Standard: \${standard.length}\`);
-console.log(\`Background: \${background.length}\`);
+console.log(`Total anchors: ${anchors.length}`);
+console.log(`Featured: ${featured.length}`);
+console.log(`Standard: ${standard.length}`);
+console.log(`Background: ${background.length}`);
