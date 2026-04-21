@@ -36,7 +36,7 @@ The following ENS anchors are directly aligned with Ethereum protocol evolution 
 
 ---
 
-### Deprecated / Low Alignment
+### Lower Alignment / Legacy Framing
 
 - buildermarket.eth — abstraction replaced by protocol-native builder role  
 - executionmarket.eth — ambiguous execution coordination term  
@@ -73,6 +73,7 @@ Vortik indexes:
 - protocol primitives (ExecutionPayload, BuilderBid, InclusionList)  
 - protocol roles (proposer, builder, attester)  
 - protocol constraints (inclusion, validity, timing)  
+- naming surfaces aligned with protocol convergence  
 
 It does NOT:
 
@@ -92,11 +93,26 @@ maps/*        → interpretive views (non-canonical)
 
 ---
 
+## Public Interfaces
+
+- Registry Home: `./docs/index.html`  
+- Interactive App: `./docs/app.html`  
+- Strategic Anchors: `./docs/market.html`  
+
+Machine-readable:
+
+- Registry: `./docs/registry.json`  
+- Market Layer: `./docs/market.index.json`  
+- Coordination Stack: `./docs/maps/coordination-stack.json`  
+- Coordination Surfaces: `./docs/maps/coordination-surfaces.json`  
+
+---
+
 ## Example
 
 The protocol is shifting from:
 
-block = execution + consensus
+block = execution + consensus  
 
 to:
 
@@ -187,17 +203,18 @@ Examples:
 
 ---
 
-## Positioning
+## Strategic Access
 
-Vortik is not:
+Selected ENS anchors are surfaced through the strategic layer:
 
-- a protocol  
-- a framework  
-- a market  
+→ `market.html`
 
-It is:
+This is not a marketplace.  
+It is a positioning layer derived from:
 
-→ a semantic registry of Ethereum coordination primitives  
+- protocol alignment  
+- semantic convergence  
+- structural relevance  
 
 ---
 
@@ -215,15 +232,10 @@ Vortik indexes it.
 
 ---
 
-## Notes
-
-- independent research artifact  
-- not affiliated with the Ethereum Foundation  
-- terminology evolves with protocol convergence  
-
----
-
 ## Contact
+
+- X: https://x.com/vortik  
+- GitHub: Issues / Discussions  
 
 If you are working on:
 
@@ -233,7 +245,15 @@ If you are working on:
 - solver / intent infrastructure  
 - coordination primitives  
 
-→ open an issue or discussion.
+→ reach out or open a discussion.
+
+---
+
+## Notes
+
+- independent research artifact  
+- not affiliated with the Ethereum Foundation  
+- terminology evolves with protocol convergence  
 
 ---
 
