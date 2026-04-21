@@ -161,13 +161,13 @@
       font-size:clamp(34px, 5vw, 64px);
       line-height:1.02;
       letter-spacing:-.04em;
-      max-width:860px;
+      max-width:900px;
     }
 
     .lead{
       font-size:clamp(16px, 1.9vw, 20px);
       color:var(--muted);
-      max-width:860px;
+      max-width:900px;
       line-height:1.65;
     }
 
@@ -814,50 +814,29 @@
         <div class="eyebrow">Ethereum coordination is becoming structurally legible</div>
         <h1>Ethereum’s coordination language is stabilizing. Vortik maps it before the market catches up.</h1>
         <p class="lead">
-          Vortik is a semantic registry of Ethereum protocol primitives, roles, constraints, and selected naming surfaces aligned with protocol convergence. It tracks how coordination becomes machine-readable before standardization fully locks in.
+          Vortik is a semantic registry of Ethereum protocol primitives, roles, constraints, and selected naming surfaces. It tracks how coordination becomes explicit through commitments, builders, inclusion constraints, and related protocol vocabulary before semantic convergence fully hardens.
         </p>
 
         <div class="hero-actions">
-          <a class="btn primary app-btn" href="./">
+          <a class="btn primary app-btn" href="./app.html">
             <span class="app-btn-icon">◉</span>
-            <span>Open Registry</span>
+            <span>Open interactive app</span>
           </a>
-          <a class="btn" href="./app.html">Explore App</a>
           <a class="btn" href="./market.html">Strategic Anchors</a>
-          <a class="btn" href="https://x.com/VortikRegistry">Follow on X</a>
+          <a class="btn" href="./registry.json">Open registry.json</a>
+          <a class="btn" href="./market.index.json">Open market.index.json</a>
+          <a class="btn" href="./maps/coordination-stack.json">Open coordination-stack.json</a>
+          <a class="btn" href="https://github.com/VortikRegistry/vortik-open-schema">GitHub</a>
         </div>
 
         <div class="chips">
-          <div class="chip">ePBS</div>
-          <div class="chip">FOCIL</div>
-          <div class="chip">commitment-based execution</div>
+          <div class="chip">ethereum</div>
+          <div class="chip">coordination</div>
+          <div class="chip">primitives</div>
+          <div class="chip">roles</div>
+          <div class="chip">constraints</div>
           <div class="chip">semantic registry</div>
-          <div class="chip">protocol-aligned anchors</div>
         </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-head">
-        <div>
-          <h2>Choose your entry point</h2>
-          <p>Explore Vortik depending on whether you want the canonical registry, an interactive explorer, or the strategic anchor layer.</p>
-        </div>
-      </div>
-
-      <div class="registry-grid">
-        <a class="registry-box" href="./">
-          <div class="k">Canonical interface</div>
-          <div class="v">Registry</div>
-        </a>
-        <a class="registry-box" href="./app.html">
-          <div class="k">Interactive exploration</div>
-          <div class="v">App</div>
-        </a>
-        <a class="registry-box" href="./market.html">
-          <div class="k">Strategic visibility layer</div>
-          <div class="v">Strategic Anchors</div>
-        </a>
       </div>
     </section>
 
@@ -870,8 +849,7 @@
           <div>
             <h2>Overview</h2>
             <p>
-              The registry does not define protocol rules. It documents how coordination structure becomes
-              semantically stable across research, implementation, and protocol evolution.
+              The registry does not define protocol rules. It documents how Ethereum coordination becomes more explicit across protocol primitives, roles, commitments, inclusion constraints, and adjacent coordination surfaces as terminology converges across research, implementation, and ecosystem usage.
             </p>
           </div>
         </div>
@@ -885,17 +863,17 @@
           <div class="stat">
             <div class="label">Core primitives</div>
             <div class="value" id="statCore">0</div>
-            <div class="sub">Protocol-aligned primitives with strong structural grounding.</div>
+            <div class="sub">Protocol-aligned primitives and constraints with strong structural grounding.</div>
           </div>
           <div class="stat">
             <div class="label">Surfaces in repair</div>
             <div class="value" id="statRepairable">0</div>
-            <div class="sub">Structurally real concepts with naming or alignment drift.</div>
+            <div class="sub">Structurally real concepts with naming mismatch or alignment drift.</div>
           </div>
           <div class="stat">
             <div class="label">Ambiguous / transitional</div>
             <div class="value" id="statPremature">0</div>
-            <div class="sub">Unstable or legacy abstractions not treated as canonical.</div>
+            <div class="sub">Legacy or unstable abstractions not treated as canonical protocol language.</div>
           </div>
           <div class="stat">
             <div class="label">Featured signals</div>
@@ -910,8 +888,7 @@
           <div>
             <h2>Strategic Signals</h2>
             <p>
-              High-signal anchors derived from protocol alignment and semantic convergence.
-              This is not a marketplace. It is a positioning layer.
+              High-signal anchors derived from protocol alignment and semantic convergence. This is not a marketplace. It is a positioning layer reflecting where Ethereum’s coordination language appears to be narrowing first.
             </p>
           </div>
         </div>
@@ -925,28 +902,27 @@
               <div>
                 <h2>Structural Thesis</h2>
                 <p>
-                  Ethereum is not a simple linear execution pipeline. It is a coordination system
-                  composed of roles, commitments, constraints, execution flows, and multi-stage settlement.
+                  Ethereum is not just scaling execution. It is making coordination more explicit through protocol-native roles, commitments, constraints, and validation boundaries. Vortik maps that semantic shift before terminology fully hardens in public understanding.
                 </p>
               </div>
             </div>
 
             <div class="model-list">
               <div class="mini-card">
-                <h3>Roles</h3>
-                <p>Proposer, builder, solver, and other actors coordinate responsibility across evolving surfaces.</p>
+                <h3>Primitives</h3>
+                <p>Protocol objects and mechanisms such as ePBS, inclusion lists, commitments, and finality surfaces become more meaningful as implementation narrows language.</p>
               </div>
               <div class="mini-card">
-                <h3>Commitments</h3>
-                <p>Execution and preconfirmation guarantees increasingly shape coordination behavior.</p>
+                <h3>Roles</h3>
+                <p>Builders, proposers, validators, solvers, and adjacent actors shape coordination responsibility across protocol and off-protocol surfaces.</p>
               </div>
               <div class="mini-card">
                 <h3>Constraints</h3>
-                <p>Inclusion enforcement and protocol validity rules replace informal assumptions.</p>
+                <p>Inclusion enforcement, validity rules, and protocol timing increasingly replace informal expectations with explicit coordination logic.</p>
               </div>
               <div class="mini-card">
-                <h3>Stages</h3>
-                <p>Coordination is distributed across overlapping domains, not a single rigid sequence.</p>
+                <h3>Convergence</h3>
+                <p>Some terms remain broad or pedagogical, while others increasingly behave like durable protocol-facing interfaces.</p>
               </div>
             </div>
           </div>
@@ -968,25 +944,24 @@
           <div>
             <h2>Registry Architecture</h2>
             <p>
-              The architecture separates stable naming, machine-readable semantic structure,
-              and human-readable interpretation.
+              The architecture separates stable naming surfaces, machine-readable semantic structure, and human-readable interpretation. ENS anchors serve as naming surfaces, while the registry and schemas encode the semantic model.
             </p>
           </div>
         </div>
 
         <div class="registry-grid">
-          <div class="registry-box">
-            <div class="k">Stable naming</div>
-            <div class="v">ENS identifiers</div>
-          </div>
-          <div class="registry-box">
+          <a class="registry-box" href="./registry.json">
+            <div class="k">Source of truth</div>
+            <div class="v">registry.json</div>
+          </a>
+          <a class="registry-box" href="./schemas/">
             <div class="k">Semantic structure</div>
-            <div class="v">registry.json + versioned schemas</div>
-          </div>
-          <div class="registry-box">
+            <div class="v">versioned schemas</div>
+          </a>
+          <a class="registry-box" href="./anchors/">
             <div class="k">Interpretation</div>
-            <div class="v">anchor documents and maps</div>
-          </div>
+            <div class="v">anchor documents</div>
+          </a>
         </div>
 
         <div class="registry-stack">ENS identifier
@@ -1003,7 +978,7 @@ anchor documentation (/anchors/)</div>
           <div>
             <h2>Anchors</h2>
             <p>
-              Core primitives, coordination mechanisms, valid surfaces, and ambiguous or transitional abstractions.
+              Core protocol-aligned anchors, repairable surfaces, external coordination terms, and deprecated abstractions. This layer helps distinguish what is converging from what remains broad, noisy, or legacy-framed.
             </p>
           </div>
         </div>
@@ -1025,7 +1000,7 @@ anchor documentation (/anchors/)</div>
           <div>
             <h2>Coordination Domains</h2>
             <p>
-              Domains from the interpretive coordination model, including overlaps and non-canonical surfaces.
+              Domains from the interpretive coordination model, including overlaps and non-canonical surfaces. These are map views, not rigid protocol ontology.
             </p>
           </div>
         </div>
@@ -1036,7 +1011,7 @@ anchor documentation (/anchors/)</div>
         <div class="section-head">
           <div>
             <h2>Links</h2>
-            <p>Direct access to machine-readable sources and repository navigation.</p>
+            <p>Direct access to machine-readable sources, public interfaces, and repository navigation.</p>
           </div>
         </div>
 
@@ -1069,6 +1044,14 @@ anchor documentation (/anchors/)</div>
             <div class="k">Repository</div>
             <div class="v">GitHub</div>
           </a>
+          <a class="registry-box" href="./app.html">
+            <div class="k">Explorer</div>
+            <div class="v">interactive app</div>
+          </a>
+          <a class="registry-box" href="./anchors/">
+            <div class="k">Anchor docs</div>
+            <div class="v">human-readable mappings</div>
+          </a>
         </div>
       </section>
     </main>
@@ -1079,7 +1062,7 @@ anchor documentation (/anchors/)</div>
           <div class="footer-col">
             <div class="footer-title">Vortik Semantic Registry</div>
             <div class="footer-links">
-              Machine-readable semantic infrastructure for Ethereum coordination.
+              Machine-readable semantic infrastructure for Ethereum coordination before terminology fully hardens into public-facing consensus.
             </div>
           </div>
 
@@ -1092,7 +1075,7 @@ anchor documentation (/anchors/)</div>
               <a href="./market.html">market.html</a><br>
               <a href="./maps/coordination-stack.json">coordination-stack.json</a><br>
               <a href="./maps/coordination-surfaces.json">coordination-surfaces.json</a><br>
-              <a href="./anchors/">Anchor docs</a>
+              <a href="./anchors/">anchor docs</a>
             </div>
           </div>
 
