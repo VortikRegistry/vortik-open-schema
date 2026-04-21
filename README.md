@@ -10,6 +10,14 @@ It tracks how Ethereum’s coordination system becomes legible as:
 
 ---
 
+## 🔗 Interfaces
+
+- Registry → https://vortikregistry.github.io/docs/index.html  
+- App → https://vortikregistry.github.io/docs/app.html  
+- Strategic Anchors → https://vortikregistry.github.io/docs/market.html  
+
+---
+
 ## 🔥 Strategic Anchors
 
 The following ENS anchors are directly aligned with Ethereum protocol evolution and upcoming changes in block production and coordination.
@@ -93,18 +101,18 @@ maps/*        → interpretive views (non-canonical)
 
 ---
 
-## Public Interfaces
+## Strategic Layer
 
-- Registry Home: `./docs/index.html`  
-- Interactive App: `./docs/app.html`  
-- Strategic Anchors: `./docs/market.html`  
+Selected ENS anchors are surfaced via:
 
-Machine-readable:
+→ https://vortikregistry.github.io/docs/market.html  
 
-- Registry: `./docs/registry.json`  
-- Market Layer: `./docs/market.index.json`  
-- Coordination Stack: `./docs/maps/coordination-stack.json`  
-- Coordination Surfaces: `./docs/maps/coordination-surfaces.json`  
+This is not a marketplace.  
+It is a positioning layer derived from:
+
+- protocol alignment  
+- semantic convergence  
+- structural relevance  
 
 ---
 
@@ -125,8 +133,6 @@ This introduces:
 - payload commitments  
 - constraint-enforced inclusion  
 
-These are the primitives Vortik tracks.
-
 ---
 
 ## ENS Layer
@@ -137,8 +143,6 @@ Examples:
 
 - epbs.eth  
 - inclusionlist.eth  
-
-These represent naming surfaces aligned with protocol convergence.
 
 ---
 
@@ -151,91 +155,22 @@ Ethereum is best described as a coordination system composed of:
 - enforced constraints  
 - asynchronous validation  
 
-Not:
-
-- markets  
-- layers  
-- pipelines  
-
----
-
-## Primitive Categories
-
-### Roles
-- proposer  
-- builder  
-- attester  
-
-### Objects
-- ExecutionPayload  
-- ExecutionHeader  
-- BuilderBid  
-- InclusionList  
-
-### Commitments
-- execution payload commitments  
-- bid commitments  
-
-### Constraints
-- inclusion constraints (FOCIL)  
-- validity rules  
-- timing enforcement  
-
----
-
-## Primitive vs External Coordination
-
-Primitive:
-- protocol-defined  
-- enforced  
-- deterministic  
-
-External:
-- off-chain  
-- emergent  
-- unstable  
-
-Examples:
-
-- builder → primitive  
-- solver → external  
-- order flow routing → external  
-
----
-
-## Strategic Access
-
-Selected ENS anchors are surfaced through the strategic layer:
-
-→ `market.html`
-
-This is not a marketplace.  
-It is a positioning layer derived from:
-
-- protocol alignment  
-- semantic convergence  
-- structural relevance  
-
 ---
 
 ## Status (2026)
 
-The registry aligns with:
+Aligned with:
 
 - ePBS (EIP-7732)  
 - Inclusion Lists (EIP-7805 / FOCIL)  
-- emerging commitment-based coordination  
-
-The protocol is fixing its language.
-
-Vortik indexes it.
+- commitment-based coordination  
 
 ---
 
 ## Contact
 
-- X: https://x.com/vortik  
-- GitHub: Issues / Discussions  
+- X → https://x.com/VortikRegistry  
+- GitHub → Issues / Discussions  
 
 If you are working on:
 
@@ -245,7 +180,7 @@ If you are working on:
 - solver / intent infrastructure  
 - coordination primitives  
 
-→ reach out or open a discussion.
+→ reach out.
 
 ---
 
