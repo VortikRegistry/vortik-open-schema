@@ -1,14 +1,80 @@
 import fs from "fs";
 
 const registry = JSON.parse(fs.readFileSync("registry.json", "utf8"));
-
 const anchors = registry.anchors || [];
 
 const featured = anchors.filter(a => a.market?.visibility === "featured");
 const standard = anchors.filter(a => a.market?.visibility === "standard");
 const background = anchors.filter(a => a.market?.visibility === "background");
 
-const renderCard = (anchor, tier) => {
+const displayNameOverrides = {
+  ssf: "fastfinality.eth"
+};
+
+const copyOverrides = {
+  epbs: {
+    canonical: "enshrined proposer-builder separation (ePBS)",
+    role: "canonical protocol-aligned naming surface for commitment-based block production"
+  },
+  inclusionlist: {
+    canonical: "fork-choice enforced inclusion lists (FOCIL)",
+    role: "protocol-native constraint surface tied directly to inclusion enforcement"
+  },
+  commitmentlayer: {
+    canonical: "commitment",
+    role: "commitment-aligned naming surface with protocol relevance and naming mismatch"
+  },
+  preconflayer: {
+    canonical: "preconfirmation (emergent)",
+    role: "early guarantee surface connected to preconfirmation research and execution timing"
+  },
+  ssf: {
+    canonical: "single-slot finality (SSF)",
+    role: "finality-aligned naming surface connected to fast finality research"
+  },
+  orderflowauction: {
+    canonical: "order flow auctions (OFA)",
+    role: "external coordination surface tied to routing, auction flow, and execution access"
+  },
+  provingmarket: {
+    canonical: "proving markets",
+    role: "external coordination surface aligned with proof generation and zk infrastructure"
+  },
+  sequencingmarket: {
+    canonical: "sequencing markets",
+    role: "external coordination surface aligned with rollup and shared sequencing narratives"
+  },
+  buildermarket: {
+    canonical: "builder",
+    role: "builder-aligned naming surface with legacy market framing"
+  },
+  solverlayer: {
+    canonical: "solver (external)",
+    role: "external actor-aligned naming surface tied to intent routing and solver coordination"
+  },
+  executionmarket: {
+    canonical: "execution (ambiguous)",
+    role: "broad execution-aligned naming surface with non-canonical protocol mapping"
+  },
+  blockspacemarket: {
+    canonical: "blockspace markets",
+    role: "blockspace-oriented naming surface tied to earlier execution market framing"
+  }
+};
+
+function getDisplayName(anchor) {
+  return displayNameOverrides[anchor.id] || anchor.ens || anchor.id;
+}
+
+function getCanonical(anchor) {
+  return copyOverrides[anchor.id]?.canonical || anchor.canonical_term || anchor.id;
+}
+
+function getRole(anchor) {
+  return copyOverrides[anchor.id]?.role || anchor.role || "";
+}
+
+function renderCard(anchor, tier) {
   const isFeatured = tier === "featured";
   const isStandard = tier === "standard";
 
@@ -25,18 +91,18 @@ const renderCard = (anchor, tier) => {
   return `
       <div class="card ${isFeatured ? "card-core" : isStandard ? "card-selective" : ""}">
         <div class="card-top">
-          <div class="card-name">${anchor.ens || anchor.id}</div>
+          <div class="card-name">${getDisplayName(anchor)}</div>
         </div>
         <div class="card-term">
-          ${anchor.canonical_term}<br>
-          ${anchor.role}
+          ${getCanonical(anchor)}<br>
+          ${getRole(anchor)}
         </div>
         <div class="card-footer">
           ${badge}
           ${pricing}
         </div>
       </div>`;
-};
+}
 
 const featuredHtml = featured.map(a => renderCard(a, "featured")).join("\n");
 const standardHtml = standard.map(a => renderCard(a, "standard")).join("\n");
@@ -196,7 +262,7 @@ const html = `<!DOCTYPE html>
       letter-spacing: -0.04em;
       line-height: 1.0;
       color: var(--text);
-      max-width: 780px;
+      max-width: 820px;
       margin-bottom: 20px;
     }
 
@@ -211,7 +277,7 @@ const html = `<!DOCTYPE html>
     .hero-lead {
       font-size: 17px;
       color: var(--muted);
-      max-width: 640px;
+      max-width: 720px;
       line-height: 1.7;
       font-family: var(--mono);
       font-weight: 300;
@@ -536,13 +602,12 @@ const html = `<!DOCTYPE html>
   <section class="hero">
     <div class="hero-eyebrow">Strategic Availability</div>
     <h1 class="hero-title">
-      Protocol-aligned<br>
-      <em>naming surfaces</em><br>
-      for Ethereum.
+      Strategic ENS anchors<br>
+      aligned with Ethereum’s<br>
+      <em>coordination architecture</em>.
     </h1>
     <p class="hero-lead">
-      ENS anchors tracked by Vortik, indexed against Ethereum coordination primitives.
-      Availability is selective. Transfers depend on strategic alignment.
+      Selected ENS anchors indexed by Vortik against Ethereum protocol primitives, roles, and coordination mechanisms. Availability is selective. Transfers depend on strategic alignment, timing, and fit.
     </p>
     <div class="hero-actions">
       <a class="btn-primary" href="https://x.com/VortikRegistry" target="_blank" rel="noopener noreferrer">
@@ -555,7 +620,7 @@ const html = `<!DOCTYPE html>
     <div class="hero-stat-row">
       <div class="hero-stat">
         <div class="hero-stat-value">${anchors.length}</div>
-        <div class="hero-stat-label">Tracked anchors</div>
+        <div class="hero-stat-label">Surfaced anchors</div>
       </div>
       <div class="hero-stat">
         <div class="hero-stat-value">${featured.length}</div>
@@ -641,7 +706,7 @@ ${backgroundHtml}
 fs.writeFileSync("docs/market.html", html);
 
 console.log("✅ market.html generated");
-console.log(`Total anchors: ${anchors.length}`);
-console.log(`Featured: ${featured.length}`);
-console.log(`Standard: ${standard.length}`);
-console.log(`Background: ${background.length}`);
+console.log(\`Total anchors: \${anchors.length}\`);
+console.log(\`Featured: \${featured.length}\`);
+console.log(\`Standard: \${standard.length}\`);
+console.log(\`Background: \${background.length}\`);
