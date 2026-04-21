@@ -460,6 +460,15 @@
       border-radius:18px;
       background:var(--panel-2);
       border:1px solid rgba(255,255,255,.05);
+      transition:transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .registry-box:hover{
+      transform:translateY(-2px);
+      border-color:rgba(122,162,255,.22);
+      background:
+        linear-gradient(180deg, rgba(122,162,255,.05), rgba(255,255,255,.01)),
+        var(--panel-2);
     }
 
     .registry-box .k{
@@ -803,31 +812,52 @@
     <section class="hero">
       <div class="hero-card">
         <div class="eyebrow">Ethereum coordination is becoming structurally legible</div>
-        <h1>Machine-readable semantic infrastructure for coordination before standardization.</h1>
+        <h1>Ethereum’s coordination language is stabilizing. Vortik maps it before the market catches up.</h1>
         <p class="lead">
-          Vortik maps how terminology stabilizes across protocol primitives, coordination roles,
-          commitments, constraints, and emerging coordination structures across Ethereum research and implementation.
+          Vortik is a semantic registry of Ethereum protocol primitives, roles, constraints, and selected naming surfaces aligned with protocol convergence. It tracks how coordination becomes machine-readable before standardization fully locks in.
         </p>
 
         <div class="hero-actions">
-          <a class="btn primary app-btn" href="./app.html">
+          <a class="btn primary app-btn" href="./">
             <span class="app-btn-icon">◉</span>
-            <span>Open interactive app</span>
+            <span>Open Registry</span>
           </a>
+          <a class="btn" href="./app.html">Explore App</a>
           <a class="btn" href="./market.html">Strategic Anchors</a>
-          <a class="btn" href="./registry.json">Open registry.json</a>
-          <a class="btn" href="./market.index.json">Open market.index.json</a>
-          <a class="btn" href="./maps/coordination-stack.json">Open coordination-stack.json</a>
-          <a class="btn" href="https://github.com/VortikRegistry/vortik-open-schema">GitHub</a>
+          <a class="btn" href="https://x.com/VortikRegistry">Follow on X</a>
         </div>
 
         <div class="chips">
-          <div class="chip">ethereum</div>
-          <div class="chip">coordination</div>
-          <div class="chip">ens-anchored schemas</div>
+          <div class="chip">ePBS</div>
+          <div class="chip">FOCIL</div>
+          <div class="chip">commitment-based execution</div>
           <div class="chip">semantic registry</div>
-          <div class="chip">machine-readable</div>
+          <div class="chip">protocol-aligned anchors</div>
         </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>Choose your entry point</h2>
+          <p>Explore Vortik depending on whether you want the canonical registry, an interactive explorer, or the strategic anchor layer.</p>
+        </div>
+      </div>
+
+      <div class="registry-grid">
+        <a class="registry-box" href="./">
+          <div class="k">Canonical interface</div>
+          <div class="v">Registry</div>
+        </a>
+        <a class="registry-box" href="./app.html">
+          <div class="k">Interactive exploration</div>
+          <div class="v">App</div>
+        </a>
+        <a class="registry-box" href="./market.html">
+          <div class="k">Strategic visibility layer</div>
+          <div class="v">Strategic Anchors</div>
+        </a>
       </div>
     </section>
 
@@ -1071,7 +1101,6 @@ anchor documentation (/anchors/)</div>
             <div class="footer-links">
               <a href="https://github.com/VortikRegistry/vortik-open-schema/issues">Issues</a> /
               <a href="https://github.com/VortikRegistry/vortik-open-schema/discussions">Discussions</a><br>
-              <a href="mailto:contact.preconf@gmail.com">contact.preconf@gmail.com</a><br>
               <a href="https://x.com/VortikRegistry">X: @VortikRegistry</a>
             </div>
           </div>
