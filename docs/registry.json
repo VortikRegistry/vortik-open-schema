@@ -1,9 +1,9 @@
 {
   "registry": "vortik-semantic-registry",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Independent semantic registry indexing Ethereum protocol primitives, roles, constraints, and selected external coordination surfaces via ENS-anchored schemas.",
   "source_of_truth": "schemas",
-  "last_updated": "2026-04-20",
+  "last_updated": "2026-04-21",
   "anchors": [
     {
       "id": "epbs",
@@ -15,7 +15,7 @@
       "stage": "canonical",
       "market_priority": "high",
       "type": "primitive",
-      "role": "protocol-defined proposer-builder separation with commitment-based block production",
+      "role": "protocol-defined proposer-builder separation with active devnet implementation, commitment-based block production, and growing consensus-specs convergence",
       "schema": "schemas/epbs/1.0-draft/schema.json",
       "anchor_doc": "anchors/epbs.md",
       "market": {
@@ -34,7 +34,7 @@
       "stage": "canonical",
       "market_priority": "high",
       "type": "constraint",
-      "role": "protocol-enforced inclusion constraint under fork-choice with direct dependency on ePBS-style block production",
+      "role": "protocol-enforced inclusion constraint with fork-scoped relevance, validator committee enforcement, and direct alignment with FOCIL-style inclusion guarantees",
       "schema": "schemas/inclusionlist/0.1-draft/schema.json",
       "anchor_doc": "anchors/inclusionlist.md",
       "market": {
