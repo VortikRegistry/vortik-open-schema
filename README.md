@@ -12,9 +12,9 @@ It tracks how Ethereum’s coordination system becomes legible as:
 
 ## 🔗 Interfaces
 
-- Registry → https://vortikregistry.github.io/docs/index.html  
-- App → https://vortikregistry.github.io/docs/app.html  
-- Strategic Anchors → https://vortikregistry.github.io/docs/market.html  
+- Registry → https://vortikregistry.github.io/vortik-open-schema/  
+- App → https://vortikregistry.github.io/vortik-open-schema/app.html  
+- Strategic Anchors → https://vortikregistry.github.io/vortik-open-schema/market.html  
 
 ---
 
@@ -101,11 +101,20 @@ maps/*        → interpretive views (non-canonical)
 
 ---
 
+## 📡 Machine-readable Endpoints
+
+- Registry → https://vortikregistry.github.io/vortik-open-schema/registry.json  
+- Market Layer → https://vortikregistry.github.io/vortik-open-schema/market.index.json  
+- Coordination Stack → https://vortikregistry.github.io/vortik-open-schema/maps/coordination-stack.json  
+- Coordination Surfaces → https://vortikregistry.github.io/vortik-open-schema/maps/coordination-surfaces.json  
+
+---
+
 ## Strategic Layer
 
 Selected ENS anchors are surfaced via:
 
-→ https://vortikregistry.github.io/docs/market.html  
+→ https://vortikregistry.github.io/vortik-open-schema/market.html  
 
 This is not a marketplace.  
 It is a positioning layer derived from:
@@ -132,6 +141,8 @@ This introduces:
 - builder bids  
 - payload commitments  
 - constraint-enforced inclusion  
+
+These are the primitives Vortik tracks.
 
 ---
 
