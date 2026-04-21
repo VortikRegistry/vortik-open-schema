@@ -1,5 +1,13 @@
 # Vortik — Ethereum Semantic Registry
 
+[![Live Registry](https://img.shields.io/badge/live-registry-0b0f14?style=flat-square&logo=githubpages&logoColor=white)](https://vortikregistry.github.io/vortik-open-schema/)
+[![Interactive App](https://img.shields.io/badge/explore-app-111722?style=flat-square&logo=vercel&logoColor=white)](https://vortikregistry.github.io/vortik-open-schema/app.html)
+[![Strategic Anchors](https://img.shields.io/badge/strategic-anchors-0d131d?style=flat-square&logo=ethereum&logoColor=white)](https://vortikregistry.github.io/vortik-open-schema/market.html)
+[![Registry JSON](https://img.shields.io/badge/source-registry.json-0b1220?style=flat-square&logo=json&logoColor=white)](https://vortikregistry.github.io/vortik-open-schema/registry.json)
+[![Updated](https://img.shields.io/badge/updated-2026--04--20-1e2735?style=flat-square&logo=clockify&logoColor=white)](#)
+
+---
+
 Vortik is a semantic registry of Ethereum protocol primitives.
 
 It tracks how Ethereum’s coordination system becomes legible as:
@@ -10,44 +18,55 @@ It tracks how Ethereum’s coordination system becomes legible as:
 
 ---
 
-## 🔗 Interfaces
+## 🔗 Explore Vortik
 
-- Registry → https://vortikregistry.github.io/vortik-open-schema/  
-- App → https://vortikregistry.github.io/vortik-open-schema/app.html  
-- Strategic Anchors → https://vortikregistry.github.io/vortik-open-schema/market.html  
+Vortik can be explored through three public entry points:
+
+### **Registry**
+The canonical public interface.  
+Use it to understand the registry, its semantic model, and how Ethereum coordination primitives are indexed.  
+→ https://vortikregistry.github.io/vortik-open-schema/
+
+### **Interactive App**
+A navigable exploration layer.  
+Use it to browse anchors, domains, relations, and semantic structure in real time.  
+→ https://vortikregistry.github.io/vortik-open-schema/app.html
+
+### **Strategic Anchors**
+The strategic visibility layer for selected ENS naming surfaces.  
+Use it to explore protocol-aligned anchors connected to Ethereum’s evolving coordination architecture.  
+→ https://vortikregistry.github.io/vortik-open-schema/market.html
 
 ---
 
 ## 🔥 Strategic Anchors
 
-The following ENS anchors are directly aligned with Ethereum protocol evolution and upcoming changes in block production and coordination.
-
 ### Core (Protocol-Aligned)
 
-- **epbs.eth** — enshrined proposer-builder separation (in-protocol PBS)  
-- **inclusionlist.eth** — fork-choice enforced inclusion lists (FOCIL)  
+- **epbs.eth** — enshrined proposer-builder separation  
+- **inclusionlist.eth** — fork-choice enforced inclusion lists  
 
 ---
 
 ### Emerging / Transitional
 
-- commitmentlayer.eth — commitment signaling (naming misaligned)  
-- preconflayer.eth — preconfirmation systems (non-canonical)  
-- fastfinality.eth — single-slot finality (SSF, naming generalized)  
+- commitmentlayer.eth — commitment signaling  
+- preconflayer.eth — preconfirmation systems  
+- fastfinality.eth — single-slot finality  
 
 ---
 
-### External Coordination (Non-Protocol)
+### External Coordination
 
-- solverlayer.eth — solver coordination (off-protocol role)  
-- orderflowauction.eth — order flow routing mechanisms (OFA)  
+- solverlayer.eth — solver coordination  
+- orderflowauction.eth — order flow routing  
 
 ---
 
-### Lower Alignment / Legacy Framing
+### Lower Alignment
 
-- buildermarket.eth — abstraction replaced by protocol-native builder role  
-- executionmarket.eth — ambiguous execution coordination term  
+- buildermarket.eth — legacy abstraction  
+- executionmarket.eth — ambiguous term  
 
 ---
 
@@ -55,22 +74,17 @@ The following ENS anchors are directly aligned with Ethereum protocol evolution 
 
 Ethereum is undergoing a structural shift.
 
-Block production is no longer:
+Block production is becoming:
 
-- a validator task  
-- a linear pipeline  
-- or a simple market  
+- commitment-based  
+- constraint-driven  
+- partially asynchronous  
 
-It is becoming a protocol-defined mechanism where:
+Not:
 
-- builders construct execution  
-- proposers commit without full visibility  
-- constraints enforce inclusion  
-- validation becomes partially asynchronous  
-
-The language of the protocol is changing.
-
-Vortik tracks that change.
+- linear  
+- validator-local  
+- or purely market-based  
 
 ---
 
@@ -78,16 +92,16 @@ Vortik tracks that change.
 
 Vortik indexes:
 
-- protocol primitives (ExecutionPayload, BuilderBid, InclusionList)  
-- protocol roles (proposer, builder, attester)  
-- protocol constraints (inclusion, validity, timing)  
-- naming surfaces aligned with protocol convergence  
+- protocol primitives  
+- protocol roles  
+- protocol constraints  
+- naming surfaces aligned with convergence  
 
 It does NOT:
 
 - define new primitives  
-- speculate on future abstractions  
-- model markets or narrative layers  
+- speculate on abstractions  
+- model markets  
 
 ---
 
@@ -97,73 +111,39 @@ registry.json → source of truth
 schemas/*     → canonical definitions  
 anchors/*     → semantic mapping  
 docs/*        → public interface  
-maps/*        → interpretive views (non-canonical)  
+maps/*        → interpretive views  
 
 ---
 
-## 📡 Machine-readable Endpoints
+## 📡 Machine-readable
 
-- Registry → https://vortikregistry.github.io/vortik-open-schema/registry.json  
-- Market Layer → https://vortikregistry.github.io/vortik-open-schema/market.index.json  
-- Coordination Stack → https://vortikregistry.github.io/vortik-open-schema/maps/coordination-stack.json  
-- Coordination Surfaces → https://vortikregistry.github.io/vortik-open-schema/maps/coordination-surfaces.json  
-
----
-
-## Strategic Layer
-
-Selected ENS anchors are surfaced via:
-
-→ https://vortikregistry.github.io/vortik-open-schema/market.html  
-
-This is not a marketplace.  
-It is a positioning layer derived from:
-
-- protocol alignment  
-- semantic convergence  
-- structural relevance  
+- https://vortikregistry.github.io/vortik-open-schema/registry.json  
+- https://vortikregistry.github.io/vortik-open-schema/market.index.json  
+- https://vortikregistry.github.io/vortik-open-schema/maps/coordination-stack.json  
+- https://vortikregistry.github.io/vortik-open-schema/maps/coordination-surfaces.json  
 
 ---
 
 ## Example
 
-The protocol is shifting from:
-
-block = execution + consensus  
-
-to:
-
 block = commitment  
 execution = deferred  
 
-This introduces:
+Introduces:
 
 - builder bids  
 - payload commitments  
-- constraint-enforced inclusion  
-
-These are the primitives Vortik tracks.
-
----
-
-## ENS Layer
-
-Each entry is mapped to an ENS identifier when possible.
-
-Examples:
-
-- epbs.eth  
-- inclusionlist.eth  
+- enforced inclusion  
 
 ---
 
 ## Core Model
 
-Ethereum is best described as a coordination system composed of:
+Ethereum = coordination system of:
 
-- protocol-defined roles  
-- verifiable commitments  
-- enforced constraints  
+- roles  
+- commitments  
+- constraints  
 - asynchronous validation  
 
 ---
@@ -173,8 +153,8 @@ Ethereum is best described as a coordination system composed of:
 Aligned with:
 
 - ePBS (EIP-7732)  
-- Inclusion Lists (EIP-7805 / FOCIL)  
-- commitment-based coordination  
+- Inclusion Lists (FOCIL)  
+- commitment-based execution  
 
 ---
 
@@ -182,24 +162,6 @@ Aligned with:
 
 - X → https://x.com/VortikRegistry  
 - GitHub → Issues / Discussions  
-
-If you are working on:
-
-- block building (ePBS)  
-- inclusion enforcement (FOCIL)  
-- preconfirmation systems  
-- solver / intent infrastructure  
-- coordination primitives  
-
-→ reach out.
-
----
-
-## Notes
-
-- independent research artifact  
-- not affiliated with the Ethereum Foundation  
-- terminology evolves with protocol convergence  
 
 ---
 
