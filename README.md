@@ -4,7 +4,7 @@
 [![Interactive App](https://img.shields.io/badge/explore-app-111722?style=flat-square&logo=vercel&logoColor=white)](https://vortikregistry.github.io/vortik-open-schema/app.html)
 [![Strategic Anchors](https://img.shields.io/badge/strategic-anchors-0d131d?style=flat-square&logo=ethereum&logoColor=white)](https://vortikregistry.github.io/vortik-open-schema/market.html)
 [![Registry JSON](https://img.shields.io/badge/source-registry.json-0b1220?style=flat-square&logo=json&logoColor=white)](https://vortikregistry.github.io/vortik-open-schema/registry.json)
-[![Updated](https://img.shields.io/badge/updated-2026--04--20-1e2735?style=flat-square&logo=clockify&logoColor=white)](#)
+[![Pipeline](https://img.shields.io/badge/pipeline-active-1e2735?style=flat-square&logo=githubactions&logoColor=white)](https://github.com/VortikRegistry/vortik-open-schema/actions)
 
 ---
 
