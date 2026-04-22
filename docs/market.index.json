@@ -1,8 +1,8 @@
 {
   "registry": "vortik-semantic-registry",
-  "index_version": "1.0.0",
+  "index_version": "1.0.1",
   "generated_from": "registry.json",
-  "last_updated": "2026-04-21T21:38:09.036Z",
+  "last_updated": "2026-04-22T01:14:11.013Z",
   "summary": {
     "total": 12,
     "featured": 2,
@@ -18,7 +18,10 @@
         "priority": "high",
         "sale_strategy": "hold",
         "classification": "core",
-        "status": "core"
+        "status": "implemented",
+        "status_label": "core",
+        "stage": "canonical",
+        "type": "primitive"
       },
       {
         "id": "inclusionlist",
@@ -27,7 +30,10 @@
         "priority": "high",
         "sale_strategy": "hold",
         "classification": "core",
-        "status": "core"
+        "status": "eip-active",
+        "status_label": "core",
+        "stage": "canonical",
+        "type": "constraint"
       }
     ],
     "standard": [
@@ -38,7 +44,10 @@
         "priority": "medium",
         "sale_strategy": "monitor",
         "classification": "repairable",
-        "status": "emerging"
+        "status": "research",
+        "status_label": "emerging",
+        "stage": "emerging",
+        "type": "primitive"
       },
       {
         "id": "preconflayer",
@@ -47,7 +56,10 @@
         "priority": "medium",
         "sale_strategy": "opportunistic",
         "classification": "premature",
-        "status": "emerging"
+        "status": "research",
+        "status_label": "emerging",
+        "stage": "research",
+        "type": "external_mechanism"
       },
       {
         "id": "ssf",
@@ -56,7 +68,10 @@
         "priority": "medium",
         "sale_strategy": "opportunistic",
         "classification": "repairable",
-        "status": "emerging"
+        "status": "research",
+        "status_label": "emerging",
+        "stage": "research",
+        "type": "primitive"
       },
       {
         "id": "orderflowauction",
@@ -65,7 +80,10 @@
         "priority": "medium",
         "sale_strategy": "opportunistic",
         "classification": "external",
-        "status": "external"
+        "status": "research",
+        "status_label": "external",
+        "stage": "implemented",
+        "type": "coordination_surface"
       },
       {
         "id": "provingmarket",
@@ -74,7 +92,10 @@
         "priority": "medium",
         "sale_strategy": "monitor",
         "classification": "external",
-        "status": "external"
+        "status": "research",
+        "status_label": "external",
+        "stage": "research",
+        "type": "coordination_surface"
       },
       {
         "id": "sequencingmarket",
@@ -83,7 +104,10 @@
         "priority": "medium",
         "sale_strategy": "monitor",
         "classification": "external",
-        "status": "external"
+        "status": "research",
+        "status_label": "external",
+        "stage": "research",
+        "type": "coordination_surface"
       }
     ],
     "background": [
@@ -94,7 +118,10 @@
         "priority": "low",
         "sale_strategy": "liquidate",
         "classification": "deprecated",
-        "status": "deprecated"
+        "status": "research",
+        "status_label": "deprecated",
+        "stage": "research",
+        "type": "misaligned_abstraction"
       },
       {
         "id": "solverlayer",
@@ -103,7 +130,10 @@
         "priority": "low",
         "sale_strategy": "monitor",
         "classification": "external",
-        "status": "external"
+        "status": "research",
+        "status_label": "external",
+        "stage": "research",
+        "type": "external_actor"
       },
       {
         "id": "executionmarket",
@@ -112,7 +142,10 @@
         "priority": "low",
         "sale_strategy": "liquidate",
         "classification": "deprecated",
-        "status": "deprecated"
+        "status": "research",
+        "status_label": "deprecated",
+        "stage": "research",
+        "type": "misaligned_abstraction"
       },
       {
         "id": "blockspacemarket",
@@ -121,7 +154,10 @@
         "priority": "low",
         "sale_strategy": "liquidate",
         "classification": "deprecated",
-        "status": "deprecated"
+        "status": "research",
+        "status_label": "deprecated",
+        "stage": "research",
+        "type": "misaligned_abstraction"
       }
     ],
     "hidden": []

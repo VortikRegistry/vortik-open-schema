@@ -19,64 +19,64 @@ Do not edit manually.
 - **epbs.eth** — enshrined proposer-builder separation (ePBS)  
   priority: high  
   classification: core  
-  status: core
+  status: implemented
 
 - **inclusionlist.eth** — fork-choice enforced inclusion lists (FOCIL)  
   priority: high  
   classification: core  
-  status: core
+  status: eip-active
 
 ## Standard
 
 - **commitmentlayer.eth** — commitment  
   priority: medium  
   classification: repairable  
-  status: emerging
+  status: research
 
 - **preconflayer.eth** — preconfirmation (emergent)  
   priority: medium  
   classification: premature  
-  status: emerging
+  status: research
 
 - **fastfinality.eth** — single-slot finality (SSF)  
   priority: medium  
   classification: repairable  
-  status: emerging
+  status: research
 
 - **orderflowauction.eth** — order flow auctions (OFA)  
   priority: medium  
   classification: external  
-  status: external
+  status: research
 
 - **provingmarket.eth** — proving markets  
   priority: medium  
   classification: external  
-  status: external
+  status: research
 
 - **sequencingmarket.eth** — sequencing markets  
   priority: medium  
   classification: external  
-  status: external
+  status: research
 
 ## Background
 
 - **buildermarket.eth** — builder  
   priority: low  
   classification: deprecated  
-  status: deprecated
+  status: research
 
 - **solverlayer.eth** — solver (external)  
   priority: low  
   classification: external  
-  status: external
+  status: research
 
 - **executionmarket.eth** — execution (ambiguous)  
   priority: low  
   classification: deprecated  
-  status: deprecated
+  status: research
 
 - **blockspacemarket.eth** — blockspace markets  
   priority: low  
   classification: deprecated  
-  status: deprecated
+  status: research
 
