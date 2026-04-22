@@ -1,4 +1,3 @@
-
 import fs from "fs";
 import path from "path";
 
@@ -21,9 +20,14 @@ function ok(msg) {
   console.log(`✅ ${msg}`);
 }
 
+function isNonEmptyString(value) {
+  return typeof value === "string" && value.trim().length > 0;
+}
+
 const requiredRootFiles = [
   "registry.json",
   "anchors.index.json",
+  "market.index.json",
   "maps/coordination-stack.json",
   "maps/coordination-surfaces.json"
 ];
@@ -31,10 +35,12 @@ const requiredRootFiles = [
 const requiredDocsFiles = [
   "docs/registry.json",
   "docs/anchors.index.json",
+  "docs/market.index.json",
   "docs/maps/coordination-stack.json",
   "docs/maps/coordination-surfaces.json",
   "docs/index.html",
-  "docs/app.html"
+  "docs/app.html",
+  "docs/market.html"
 ];
 
 for (const file of requiredRootFiles) {
@@ -67,8 +73,8 @@ if (!Array.isArray(registry.anchors)) {
 const seenIds = new Set();
 
 for (const anchor of registry.anchors) {
-  if (!anchor.id) {
-    fail(`Anchor without id detected`);
+  if (!isNonEmptyString(anchor.id)) {
+    fail(`Anchor without valid id detected`);
     continue;
   }
 
@@ -78,19 +84,18 @@ for (const anchor of registry.anchors) {
     seenIds.add(anchor.id);
   }
 
-  if (!anchor.schema) {
-    fail(`Anchor ${anchor.id} is missing schema path`);
+  if (!isNonEmptyString(anchor.schema)) {
+    fail(`Anchor ${anchor.id} is missing a valid schema path`);
   } else if (!exists(anchor.schema)) {
     fail(`Schema file not found for ${anchor.id}: ${anchor.schema}`);
   } else {
     ok(`Schema exists for ${anchor.id}`);
   }
 
-  const docPath = anchor.anchor_doc || anchor.doc;
-  if (!docPath) {
-    fail(`Anchor ${anchor.id} is missing anchor_doc/doc path`);
-  } else if (!exists(docPath)) {
-    fail(`Anchor doc not found for ${anchor.id}: ${docPath}`);
+  if (!isNonEmptyString(anchor.anchor_doc)) {
+    fail(`Anchor ${anchor.id} is missing a valid anchor_doc path`);
+  } else if (!exists(anchor.anchor_doc)) {
+    fail(`Anchor doc not found for ${anchor.id}: ${anchor.anchor_doc}`);
   } else {
     ok(`Anchor doc exists for ${anchor.id}`);
   }
@@ -117,6 +122,40 @@ if (exists("anchors.index.json")) {
     }
 
     ok(`anchors.index.json ids are aligned with registry.json`);
+  }
+}
+
+if (exists("market.index.json")) {
+  const marketIndex = readJSON(path.join(ROOT, "market.index.json"));
+
+  if (!marketIndex.segments || typeof marketIndex.segments !== "object") {
+    fail(`market.index.json does not contain a valid segments object`);
+  } else {
+    const segmentNames = ["featured", "standard", "background", "hidden"];
+
+    for (const segmentName of segmentNames) {
+      const segment = marketIndex.segments[segmentName];
+
+      if (segment !== undefined && !Array.isArray(segment)) {
+        fail(`market.index.json segment "${segmentName}" is not an array`);
+        continue;
+      }
+
+      if (Array.isArray(segment)) {
+        for (const item of segment) {
+          if (!isNonEmptyString(item.id)) {
+            fail(`market.index.json contains item without valid id in segment "${segmentName}"`);
+            continue;
+          }
+
+          if (!seenIds.has(item.id)) {
+            fail(`market.index.json contains id not found in registry.json: ${item.id}`);
+          }
+        }
+      }
+    }
+
+    ok(`market.index.json structure is aligned with registry.json`);
   }
 }
 
