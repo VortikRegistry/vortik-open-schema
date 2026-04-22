@@ -1,23 +1,24 @@
 import fs from "fs";
 
 const registry = JSON.parse(fs.readFileSync("registry.json", "utf8"));
+const anchors = registry.anchors || [];
+
+const sortedAnchors = [...anchors].sort((a, b) => a.id.localeCompare(b.id));
 
 const anchorsIndex = {
   registry: registry.registry,
-  index_version: "1.0.0",
+  index_version: "1.0.1",
   generated_from: "registry.json",
-  anchors: registry.anchors.map(anchor => ({
+  last_updated: new Date().toISOString(),
+  anchors: sortedAnchors.map(anchor => ({
     id: anchor.id,
     ens: anchor.ens,
     canonical_term: anchor.canonical_term,
     classification: anchor.classification,
     status: anchor.status,
-
-    // 👇 NUEVO (clave)
     status_label: anchor.status_label,
     stage: anchor.stage,
     market_priority: anchor.market_priority,
-
     type: anchor.type,
     role: anchor.role,
     schema: anchor.schema,
