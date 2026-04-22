@@ -36,18 +36,6 @@ jobs:
           node -e "JSON.parse(require('fs').readFileSync('registry.json','utf8'))"
           echo "✅ registry.json valid"
 
-      - name: Generate anchors index
-        run: node scripts/generate-anchors-index.mjs
-
-      - name: Validate anchors.index.json
-        run: |
-          if [ ! -f anchors.index.json ]; then
-            echo "❌ anchors.index.json missing"
-            exit 1
-          fi
-          node -e "JSON.parse(require('fs').readFileSync('anchors.index.json','utf8'))"
-          echo "✅ anchors.index.json valid"
-
       - name: Validate coordination surfaces
         run: |
           if [ ! -f maps/coordination-surfaces.json ]; then
@@ -66,14 +54,35 @@ jobs:
           node -e "JSON.parse(require('fs').readFileSync('maps/coordination-stack.json','utf8'))"
           echo "✅ coordination-stack.json valid"
 
+      - name: Generate anchors index
+        run: node scripts/generate-anchors-index.mjs
+
+      - name: Validate anchors.index.json
+        run: |
+          if [ ! -f anchors.index.json ]; then
+            echo "❌ anchors.index.json missing"
+            exit 1
+          fi
+          node -e "JSON.parse(require('fs').readFileSync('anchors.index.json','utf8'))"
+          echo "✅ anchors.index.json valid"
+
+      - name: Generate market index
+        run: node scripts/generate-market-index.mjs
+
+      - name: Validate market.index.json
+        run: |
+          if [ ! -f market.index.json ]; then
+            echo "❌ market.index.json missing"
+            exit 1
+          fi
+          node -e "JSON.parse(require('fs').readFileSync('market.index.json','utf8'))"
+          echo "✅ market.index.json valid"
+
       - name: Run schema cleanup check
         run: node scripts/fix-schemas.cjs
 
       - name: Generate coordination map
         run: node scripts/generate-map.mjs
-
-      - name: Generate market index
-        run: node scripts/generate-market-index.mjs
 
       - name: Generate market doc
         run: node scripts/generate-market-doc.mjs
@@ -92,7 +101,7 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add anchors.index.json docs maps
+          git add anchors.index.json market.index.json docs maps
           git diff --cached --quiet || git commit -m "generate derived files"
           git push
 
