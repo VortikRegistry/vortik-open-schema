@@ -1,4 +1,3 @@
-
 import fs from "fs";
 import path from "path";
 
@@ -6,7 +5,8 @@ const ROOT = process.cwd();
 
 const FILES = [
   "registry.json",
-  "anchors.index.json"
+  "anchors.index.json",
+  "market.index.json"
 ];
 
 const DIRS = [
@@ -15,6 +15,12 @@ const DIRS = [
   "anchors"
 ];
 
+function ensureExists(targetPath, label = "path") {
+  if (!fs.existsSync(targetPath)) {
+    throw new Error(`Missing required ${label}: ${targetPath}`);
+  }
+}
+
 function copyFile(src, dest) {
   fs.mkdirSync(path.dirname(dest), { recursive: true });
   fs.copyFileSync(src, dest);
@@ -22,7 +28,7 @@ function copyFile(src, dest) {
 }
 
 function copyDir(srcDir, destDir) {
-  if (!fs.existsSync(srcDir)) return;
+  ensureExists(srcDir, "directory");
 
   const entries = fs.readdirSync(srcDir, { withFileTypes: true });
 
@@ -40,17 +46,16 @@ function copyDir(srcDir, destDir) {
 
 console.log("🔁 Syncing to docs/...\n");
 
+// Copiar archivos obligatorios
 for (const file of FILES) {
   const src = path.join(ROOT, file);
   const dest = path.join(ROOT, "docs", file);
 
-  if (fs.existsSync(src)) {
-    copyFile(src, dest);
-  } else {
-    console.warn(`⚠ missing: ${file}`);
-  }
+  ensureExists(src, "file");
+  copyFile(src, dest);
 }
 
+// Copiar directorios obligatorios
 for (const dir of DIRS) {
   const srcDir = path.join(ROOT, dir);
   const destDir = path.join(ROOT, "docs", dir);
