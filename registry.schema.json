@@ -58,20 +58,52 @@
               "valid",
               "repairable",
               "premature",
-              "deprecated"
+              "deprecated",
+              "external"
             ]
           },
           "status": {
             "type": "string"
           },
+          "status_label": {
+            "type": "string",
+            "enum": [
+              "core",
+              "emerging",
+              "transitional",
+              "deprecated",
+              "external"
+            ]
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "canonical",
+              "implemented",
+              "emerging",
+              "research"
+            ]
+          },
+          "market_priority": {
+            "type": "string",
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ]
+          },
           "type": {
             "type": "string",
             "enum": [
               "primitive",
+              "constraint",
               "mechanism",
               "market",
               "role",
-              "coordination_surface"
+              "coordination_surface",
+              "external_actor",
+              "external_mechanism",
+              "misaligned_abstraction"
             ]
           },
           "role": {
@@ -84,6 +116,43 @@
           "anchor_doc": {
             "type": "string",
             "pattern": "^anchors\\/.+\\.md$"
+          },
+          "market": {
+            "type": "object",
+            "required": [
+              "priority",
+              "sale_strategy",
+              "visibility"
+            ],
+            "properties": {
+              "priority": {
+                "type": "string",
+                "enum": [
+                  "high",
+                  "medium",
+                  "low"
+                ]
+              },
+              "sale_strategy": {
+                "type": "string",
+                "enum": [
+                  "hold",
+                  "monitor",
+                  "opportunistic",
+                  "liquidate"
+                ]
+              },
+              "visibility": {
+                "type": "string",
+                "enum": [
+                  "featured",
+                  "standard",
+                  "background",
+                  "hidden"
+                ]
+              }
+            },
+            "additionalProperties": false
           }
         },
         "additionalProperties": false
@@ -127,7 +196,7 @@
             "type": "string"
           },
           "ens_status": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "desired_ens": {
             "type": ["string", "null"]
