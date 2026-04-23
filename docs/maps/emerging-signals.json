@@ -1,0 +1,88 @@
+{
+  "generated_at": "2026-04-22",
+  "source": "manual_signal_watchlist",
+  "description": "Emerging semantic signals under watch for Vortik. These are not canonical anchors and should not be treated as protocol-stable registry primitives yet.",
+  "signals": [
+    {
+      "id": "lucid",
+      "name": "LUCID",
+      "canonical_term": "encrypted mempool / commit-before-reveal flow",
+      "category": "mechanism",
+      "status": "emerging",
+      "confidence": "medium",
+      "priority": "high",
+      "summary": "Protocol-facing encrypted-orderflow mechanism linking commit-before-reveal flow with inclusion guarantees and FOCIL-compatible censorship-resistance design.",
+      "why_it_matters": [
+        "Connects inclusion guarantees, encrypted order flow, and commit-before-reveal execution.",
+        "May strengthen the semantic importance of inclusion lists as a public-facing primitive.",
+        "Introduces pressure toward more protocol-native vocabulary than generic OFA framing."
+      ],
+      "related_anchors": [
+        "inclusionlist",
+        "commitmentlayer",
+        "orderflowauction",
+        "preconflayer"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "blockaccesslist",
+      "name": "Block Access List",
+      "canonical_term": "block access list (BAL)",
+      "category": "mechanism",
+      "status": "emerging",
+      "confidence": "medium",
+      "priority": "high",
+      "summary": "Emerging execution-layer coordination object discussed across sidecars, state healing, proposer commitments, and execution-resource decomposition.",
+      "why_it_matters": [
+        "Signals movement toward narrower execution-layer terminology.",
+        "May pressure broad labels such as execution market or blockspace market.",
+        "Could become a more durable execution-facing semantic surface if convergence continues."
+      ],
+      "related_anchors": [
+        "executionmarket",
+        "blockspacemarket",
+        "preconflayer"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "executiontickets",
+      "name": "Execution Tickets",
+      "canonical_term": "execution tickets",
+      "category": "mechanism",
+      "status": "emerging",
+      "confidence": "low",
+      "priority": "medium",
+      "summary": "Potential future execution-coordination mechanism under watch as Ethereum decomposes execution into narrower protocol-facing objects.",
+      "why_it_matters": [
+        "Appears in forward-looking infrastructure narratives.",
+        "Could become strategically important if protocol discussion converges around the term.",
+        "Still too early for canonical treatment."
+      ],
+      "related_anchors": [
+        "executionmarket"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "keyprovider",
+      "name": "Key Provider",
+      "canonical_term": "key provider",
+      "category": "role",
+      "status": "emerging",
+      "confidence": "low",
+      "priority": "medium",
+      "summary": "Potential future coordination role relevant to encrypted mempool or threshold decryption systems if protected order flow becomes more protocol-shaped.",
+      "why_it_matters": [
+        "Could emerge as a meaningful role if encrypted transaction flow becomes more formalized.",
+        "Represents a possible next semantic primitive around protected order flow."
+      ],
+      "related_anchors": [
+        "preconflayer",
+        "orderflowauction"
+      ],
+      "watch_status": "active"
+    }
+  ]
+}
