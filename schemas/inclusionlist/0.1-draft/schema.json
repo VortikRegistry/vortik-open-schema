@@ -48,7 +48,7 @@
     "type": {
       "type": "string",
       "const": "constraint",
-      "description": "Protocol-enforced constraint mechanism."
+      "description": "Protocol-enforced inclusion constraint within Ethereum coordination."
     },
     "summary": {
       "type": "string",
@@ -57,7 +57,7 @@
     },
     "pipeline_position": {
       "type": "array",
-      "description": "Interpretive pipeline stages where this mechanism is most relevant.",
+      "description": "Interpretive coordination domain where this mechanism is most relevant.",
       "minItems": 1,
       "maxItems": 1,
       "items": {
@@ -105,7 +105,7 @@
         },
         "mismatch": {
           "type": "boolean",
-          "const": true
+          "const": false
         },
         "notes": {
           "type": "string",
