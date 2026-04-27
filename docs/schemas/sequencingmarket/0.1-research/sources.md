@@ -14,7 +14,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 ## Registry Metadata
 
 - **Registry:** vortik-semantic-registry
-- **Registry version:** 0.6.2
+- **Registry version:** 0.6.3
 - **Registry ID:** `sequencingmarket`
 - **Associated ENS:** `sequencingmarket.eth`
 - **Canonical term:** sequencing markets
@@ -43,7 +43,7 @@ Broad coordination surface across infrastructure or ecosystem behavior.
 
 ## Registry Role
 
-external sequencing coordination across rollups and shared sequencing environments
+external transaction ordering and sequencing coordination surface across rollups, shared sequencing systems, ordering rights, cross-domain execution, and settlement-adjacent infrastructure
 
 ---
 

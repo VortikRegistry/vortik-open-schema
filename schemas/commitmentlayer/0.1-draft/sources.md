@@ -14,7 +14,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 ## Registry Metadata
 
 - **Registry:** vortik-semantic-registry
-- **Registry version:** 0.6.2
+- **Registry version:** 0.6.3
 - **Registry ID:** `commitmentlayer`
 - **Associated ENS:** `commitmentlayer.eth`
 - **Canonical term:** commitment
@@ -43,7 +43,7 @@ Protocol or research primitive tracked as a semantic object.
 
 ## Registry Role
 
-protocol-relevant commitment primitive used for pre-reveal coordination and bid-based block production, with naming mismatch in ENS suffix
+protocol-relevant commitment primitive used for pre-reveal coordination, bid-based block production, proposer-builder interaction, encrypted flow, and delayed verification patterns, with naming mismatch in ENS suffix
 
 ---
 

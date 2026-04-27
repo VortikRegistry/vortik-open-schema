@@ -14,7 +14,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 ## Registry Metadata
 
 - **Registry:** vortik-semantic-registry
-- **Registry version:** 0.6.2
+- **Registry version:** 0.6.3
 - **Registry ID:** `solverlayer`
 - **Associated ENS:** `solverlayer.eth`
 - **Canonical term:** solver (external)
@@ -43,7 +43,7 @@ External actor or participant outside the current L1 protocol core.
 
 ## Registry Role
 
-off-protocol actor coordinating intent resolution and routing before protocol-level block construction
+off-protocol actor coordinating intent resolution, execution strategy formation, routing, and settlement pathways before protocol-level block construction
 
 ---
 

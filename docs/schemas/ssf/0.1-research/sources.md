@@ -14,7 +14,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 ## Registry Metadata
 
 - **Registry:** vortik-semantic-registry
-- **Registry version:** 0.6.2
+- **Registry version:** 0.6.3
 - **Registry ID:** `ssf`
 - **Associated ENS:** `fastfinality.eth`
 - **Canonical term:** single-slot finality (SSF)
@@ -43,7 +43,7 @@ Protocol or research primitive tracked as a semantic object.
 
 ## Registry Role
 
-finality primitive targeting single-slot confirmation semantics
+finality primitive and roadmap surface targeting single-slot confirmation semantics, with ENS naming that approximates but does not exactly match the canonical SSF terminology
 
 ---
 

@@ -14,7 +14,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 ## Registry Metadata
 
 - **Registry:** vortik-semantic-registry
-- **Registry version:** 0.6.2
+- **Registry version:** 0.6.3
 - **Registry ID:** `buildermarket`
 - **Associated ENS:** `buildermarket.eth`
 - **Canonical term:** builder
@@ -43,7 +43,7 @@ Broad abstraction retained for comparison but not treated as canonical.
 
 ## Registry Role
 
-legacy market framing displaced by the protocol-native builder role under ePBS
+legacy market framing displaced by the protocol-native builder role under ePBS and more precise proposer-builder coordination terminology
 
 ---
 

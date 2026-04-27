@@ -14,7 +14,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 ## Registry Metadata
 
 - **Registry:** vortik-semantic-registry
-- **Registry version:** 0.6.2
+- **Registry version:** 0.6.3
 - **Registry ID:** `blockspacemarket`
 - **Associated ENS:** `blockspacemarket.eth`
 - **Canonical term:** blockspace markets
@@ -43,7 +43,7 @@ Broad abstraction retained for comparison but not treated as canonical.
 
 ## Registry Role
 
-legacy pre-ePBS market framing increasingly displaced by protocol-native roles, commitments, and constraints
+legacy pre-ePBS market framing increasingly displaced by protocol-native roles, commitments, payloads, inclusion constraints, and narrower execution-resource terminology
 
 ---
 

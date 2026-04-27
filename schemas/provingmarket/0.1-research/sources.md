@@ -14,7 +14,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 ## Registry Metadata
 
 - **Registry:** vortik-semantic-registry
-- **Registry version:** 0.6.2
+- **Registry version:** 0.6.3
 - **Registry ID:** `provingmarket`
 - **Associated ENS:** `provingmarket.eth`
 - **Canonical term:** proving markets
@@ -43,7 +43,7 @@ Broad coordination surface across infrastructure or ecosystem behavior.
 
 ## Registry Role
 
-external proof generation and proving coordination across zk systems and rollup infrastructure
+external proof generation and proving coordination surface across zk systems, validity proofs, rollups, proof aggregation, and distributed proving infrastructure
 
 ---
 

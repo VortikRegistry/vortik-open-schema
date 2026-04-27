@@ -14,7 +14,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 ## Registry Metadata
 
 - **Registry:** vortik-semantic-registry
-- **Registry version:** 0.6.2
+- **Registry version:** 0.6.3
 - **Registry ID:** `epbs`
 - **Associated ENS:** `epbs.eth`
 - **Canonical term:** enshrined proposer-builder separation (ePBS)
@@ -43,7 +43,7 @@ Protocol or research primitive tracked as a semantic object.
 
 ## Registry Role
 
-protocol-defined proposer-builder separation with active devnet implementation, commitment-based block production, and growing consensus-specs convergence
+protocol-defined proposer-builder separation with active implementation-facing relevance, commitment-based block production, signed bid flow, payload reveal semantics, and growing consensus-specs convergence
 
 ---
 

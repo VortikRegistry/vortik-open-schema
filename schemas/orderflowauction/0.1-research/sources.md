@@ -14,7 +14,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 ## Registry Metadata
 
 - **Registry:** vortik-semantic-registry
-- **Registry version:** 0.6.2
+- **Registry version:** 0.6.3
 - **Registry ID:** `orderflowauction`
 - **Associated ENS:** `orderflowauction.eth`
 - **Canonical term:** order flow auctions (OFA)
@@ -43,7 +43,7 @@ Broad coordination surface across infrastructure or ecosystem behavior.
 
 ## Registry Role
 
-external order-flow routing and auction mechanisms operating before protocol-level builder coordination
+external order-flow routing and auction surface operating before protocol-level builder coordination, with relevance under pressure from encrypted flow, sealed transactions, and commit-before-reveal mechanisms
 
 ---
 

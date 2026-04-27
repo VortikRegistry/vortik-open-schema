@@ -14,7 +14,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 ## Registry Metadata
 
 - **Registry:** vortik-semantic-registry
-- **Registry version:** 0.6.2
+- **Registry version:** 0.6.3
 - **Registry ID:** `executionmarket`
 - **Associated ENS:** `executionmarket.eth`
 - **Canonical term:** execution (ambiguous)
@@ -43,7 +43,7 @@ Broad abstraction retained for comparison but not treated as canonical.
 
 ## Registry Role
 
-non-canonical market framing that does not map cleanly to any single protocol primitive, role, or constraint
+non-canonical market framing that does not map cleanly to any single protocol primitive, role, constraint, or execution object, and is increasingly pressured by narrower terms such as payload, commitment, builder, inclusion list, and block access list
 
 ---
 

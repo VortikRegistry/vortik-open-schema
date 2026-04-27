@@ -14,7 +14,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 ## Registry Metadata
 
 - **Registry:** vortik-semantic-registry
-- **Registry version:** 0.6.2
+- **Registry version:** 0.6.3
 - **Registry ID:** `preconflayer`
 - **Associated ENS:** `preconflayer.eth`
 - **Canonical term:** preconfirmation (emergent)
@@ -43,7 +43,7 @@ External or off-protocol mechanism related to Ethereum coordination.
 
 ## Registry Role
 
-emergent off-protocol guarantees about likely inclusion or ordering before final protocol confirmation
+emergent off-protocol guarantee mechanism concerning likely inclusion, ordering, or execution outcome before final protocol confirmation, with naming mismatch in ENS suffix
 
 ---
 
