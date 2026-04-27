@@ -37,7 +37,7 @@
     },
     "classification": {
       "type": "string",
-      "const": "repairable",
+      "const": "external",
       "description": "Legacy coordination surface losing centrality in the emerging Ethereum execution architecture."
     },
     "status": {
@@ -47,7 +47,7 @@
     },
     "type": {
       "type": "string",
-      "const": "market",
+      "const": "coordination_surface",
       "description": "Auction-based coordination mechanism for routing transaction order flow."
     },
     "summary": {

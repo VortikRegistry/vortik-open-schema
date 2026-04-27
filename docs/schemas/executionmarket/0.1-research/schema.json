@@ -32,12 +32,12 @@
     },
     "canonical_term": {
       "type": "string",
-      "const": "execution coordination (ambiguous term)",
+      "const": "execution (ambiguous)",
       "description": "Non-canonical term used to describe loosely defined execution-related coordination."
     },
     "classification": {
       "type": "string",
-      "const": "premature",
+      "const": "deprecated",
       "description": "Semantic classification within the Vortik registry."
     },
     "status": {
@@ -47,7 +47,7 @@
     },
     "type": {
       "type": "string",
-      "const": "market",
+      "const": "misaligned_abstraction",
       "description": "Legacy abstraction loosely referring to execution-related coordination."
     },
     "summary": {
@@ -101,7 +101,7 @@
         },
         "canonical": {
           "type": "string",
-          "const": "execution coordination (ambiguous term)"
+          "const": "execution (ambiguous)"
         },
         "mismatch": {
           "type": "boolean",

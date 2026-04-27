@@ -2,5 +2,45 @@
   "name": "sequencingmarket",
   "version": "0.1-research",
   "type": "coordination_surface",
-  "description": "Transaction ordering coordination across rollups"
+  "description": "Transaction ordering coordination across rollups",
+  "properties": {
+    "id": {
+      "type": "string",
+      "const": "sequencingmarket"
+    },
+    "canonical_term": {
+      "type": "string",
+      "const": "sequencing markets"
+    },
+    "classification": {
+      "type": "string",
+      "const": "external"
+    },
+    "status": {
+      "type": "string",
+      "const": "research"
+    },
+    "type": {
+      "type": "string",
+      "const": "coordination_surface"
+    },
+    "naming": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ens",
+        "canonical"
+      ],
+      "properties": {
+        "ens": {
+          "type": "string",
+          "const": "sequencingmarket.eth"
+        },
+        "canonical": {
+          "type": "string",
+          "const": "sequencing markets"
+        }
+      }
+    }
+  }
 }

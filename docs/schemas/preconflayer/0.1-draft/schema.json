@@ -32,12 +32,12 @@
     },
     "canonical_term": {
       "type": "string",
-      "const": "preconfirmation systems",
+      "const": "preconfirmation (emergent)",
       "description": "Canonical technical term tracked by this anchor."
     },
     "classification": {
       "type": "string",
-      "const": "repairable",
+      "const": "premature",
       "description": "Semantic classification within the Vortik registry."
     },
     "status": {
@@ -47,7 +47,7 @@
     },
     "type": {
       "type": "string",
-      "const": "mechanism",
+      "const": "external_mechanism",
       "description": "Structural type of this tracked surface."
     },
     "summary": {
@@ -101,7 +101,7 @@
         },
         "canonical": {
           "type": "string",
-          "const": "preconfirmation systems"
+          "const": "preconfirmation (emergent)"
         },
         "mismatch": {
           "type": "boolean",

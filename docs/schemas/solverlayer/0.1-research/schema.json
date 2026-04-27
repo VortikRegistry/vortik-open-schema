@@ -32,12 +32,12 @@
     },
     "canonical_term": {
       "type": "string",
-      "const": "solver networks",
+      "const": "solver (external)",
       "description": "Canonical technical term tracked by this anchor."
     },
     "classification": {
       "type": "string",
-      "const": "repairable",
+      "const": "external",
       "description": "Semantic classification within the Vortik registry."
     },
     "status": {
@@ -47,7 +47,7 @@
     },
     "type": {
       "type": "string",
-      "const": "market",
+      "const": "external_actor",
       "description": "Structural type of this tracked surface."
     },
     "summary": {
@@ -101,7 +101,7 @@
         },
         "canonical": {
           "type": "string",
-          "const": "solver networks"
+          "const": "solver (external)"
         },
         "mismatch": {
           "type": "boolean",

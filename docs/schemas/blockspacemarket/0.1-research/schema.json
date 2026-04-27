@@ -2,5 +2,45 @@
   "name": "blockspacemarket",
   "version": "0.1-research",
   "type": "market",
-  "description": "Legacy blockspace market abstraction"
+  "description": "Legacy blockspace market abstraction",
+  "properties": {
+    "id": {
+      "type": "string",
+      "const": "blockspacemarket"
+    },
+    "canonical_term": {
+      "type": "string",
+      "const": "blockspace markets"
+    },
+    "classification": {
+      "type": "string",
+      "const": "deprecated"
+    },
+    "status": {
+      "type": "string",
+      "const": "research"
+    },
+    "type": {
+      "type": "string",
+      "const": "misaligned_abstraction"
+    },
+    "naming": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ens",
+        "canonical"
+      ],
+      "properties": {
+        "ens": {
+          "type": "string",
+          "const": "blockspacemarket.eth"
+        },
+        "canonical": {
+          "type": "string",
+          "const": "blockspace markets"
+        }
+      }
+    }
+  }
 }

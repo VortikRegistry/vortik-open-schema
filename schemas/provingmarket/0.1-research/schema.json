@@ -2,5 +2,45 @@
   "name": "provingmarket",
   "version": "0.1-research",
   "type": "coordination_surface",
-  "description": "Proof generation coordination across zk systems"
+  "description": "Proof generation coordination across zk systems",
+  "properties": {
+    "id": {
+      "type": "string",
+      "const": "provingmarket"
+    },
+    "canonical_term": {
+      "type": "string",
+      "const": "proving markets"
+    },
+    "classification": {
+      "type": "string",
+      "const": "external"
+    },
+    "status": {
+      "type": "string",
+      "const": "research"
+    },
+    "type": {
+      "type": "string",
+      "const": "coordination_surface"
+    },
+    "naming": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ens",
+        "canonical"
+      ],
+      "properties": {
+        "ens": {
+          "type": "string",
+          "const": "provingmarket.eth"
+        },
+        "canonical": {
+          "type": "string",
+          "const": "proving markets"
+        }
+      }
+    }
+  }
 }

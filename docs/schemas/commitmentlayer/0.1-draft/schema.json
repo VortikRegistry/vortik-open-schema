@@ -32,7 +32,7 @@
     },
     "canonical_term": {
       "type": "string",
-      "const": "preconfirmation commitments",
+      "const": "commitment",
       "description": "Canonical technical term tracked by this anchor."
     },
     "classification": {
@@ -47,7 +47,7 @@
     },
     "type": {
       "type": "string",
-      "const": "mechanism",
+      "const": "primitive",
       "description": "Structural type of this tracked surface."
     },
     "summary": {
@@ -101,7 +101,7 @@
         },
         "canonical": {
           "type": "string",
-          "const": "preconfirmation commitments"
+          "const": "commitment"
         },
         "mismatch": {
           "type": "boolean",

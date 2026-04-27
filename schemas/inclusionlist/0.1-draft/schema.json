@@ -42,12 +42,12 @@
     },
     "status": {
       "type": "string",
-      "const": "draft-eip",
+      "const": "eip-active",
       "description": "Current maturity/status of the tracked mechanism."
     },
     "type": {
       "type": "string",
-      "const": "mechanism",
+      "const": "constraint",
       "description": "Protocol-enforced constraint mechanism."
     },
     "summary": {

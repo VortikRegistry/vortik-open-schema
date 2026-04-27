@@ -42,7 +42,7 @@
     },
     "status": {
       "type": "string",
-      "const": "draft-eip",
+      "const": "implemented",
       "description": "Current maturity/status of the tracked primitive."
     },
     "type": {
