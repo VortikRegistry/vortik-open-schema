@@ -1,98 +1,107 @@
-# Preconfirmation Commitments — Sources
+<!-- AUTO-GENERATED:START -->
+# commitment — Sources
 
 ## Overview
 
-This document compiles primary references and terminology associated with **preconfirmation commitments** within Ethereum execution, sequencing, and latency-sensitive coordination research.
+This document compiles source context and terminology support for the Vortik semantic anchor associated with `commitmentlayer.eth`.
 
-It supports the semantic anchoring of `commitmentlayer.eth` within the Vortik Semantic Registry.
+It supports the machine-readable and human-readable layers of the **Vortik Semantic Registry**.
 
----
-
-## Research Context
-
-Preconfirmation commitments refer to mechanisms through which proposers, builders, or related sequencing actors provide **early, credible commitments** regarding future transaction inclusion, ordering, or execution outcomes.
-
-These commitments are a core component of:
-
-- preconfirmation systems  
-- proposer commitments  
-- transaction inclusion assurances  
-- sequencing coordination  
-
-They emerge in research focused on:
-
-- reducing execution uncertainty  
-- improving low-latency transaction experience  
-- coordinating transaction flow before final block inclusion  
-- separating economic guarantees from protocol guarantees  
+This document is a research-support artifact. It is not an official Ethereum protocol specification.
 
 ---
 
-## Structural Role
+## Registry Metadata
 
-Preconfirmation commitments operate at the **preconfirmation stage** of Ethereum’s coordination pipeline.
-
-They function as a **guarantee mechanism**, enabling actors to signal expected execution outcomes before protocol-level inclusion and finality.
-
-They sit between:
-
-- execution coordination  
-- protocol-enforced inclusion  
-
-and shape execution expectations prior to on-chain confirmation.
-
----
-
-## Guarantee Dynamics
-
-Preconfirmation commitments introduce a separation between:
-
-- **economic guarantees** (early commitments, preconfirmations)  
-- **protocol guarantees** (actual inclusion and finality)  
-
-This distinction is critical, since execution may be perceived as confirmed before it is finalized on-chain.
+- **Registry:** vortik-semantic-registry
+- **Registry version:** 0.6.2
+- **Registry ID:** `commitmentlayer`
+- **Associated ENS:** `commitmentlayer.eth`
+- **Canonical term:** commitment
+- **Classification:** repairable
+- **Status:** research
+- **Status label:** emerging
+- **Stage:** emerging
+- **Type:** primitive
+- **Market priority:** medium
+- **Sale strategy:** monitor
+- **Visibility:** standard
 
 ---
 
-## Primary Research Threads
+## Semantic Classification
 
-- Uncrowdable inclusion lists: the tension between chain neutrality, preconfirmations and proposer commitments  
-  https://ethresear.ch/t/uncrowdable-inclusion-lists-the-tension-between-chain-neutrality-preconfirmations-and-proposer-commitments/19372
-
-- Becoming based: a path towards decentralised sequencing  
-  https://ethresear.ch/t/becoming-based-a-path-towards-decentralised-sequencing/21733
+Valid underlying concept with imperfect ENS alignment or terminology mismatch.
 
 ---
 
-## Terminology Surface
+## Type Interpretation
 
-Common terminology associated with this surface includes:
-
-- preconfirmation commitments  
-- proposer commitments  
-- preconfirmations  
-- commitment signaling  
-
-This terminology remains fluid and overlaps with adjacent surfaces such as preconfirmation systems.
+Protocol or research primitive tracked as a semantic object.
 
 ---
 
-## Status
+## Registry Role
 
-Active research coordination mechanism (2026).
-
-Preconfirmation commitments are a structurally important component of Ethereum’s execution pipeline, particularly in relation to:
-
-- early execution guarantees  
-- proposer commitments  
-- sequencing coordination  
-
-They are not currently defined as a canonical L1 protocol primitive and remain an evolving research surface.
+protocol-relevant commitment primitive used for pre-reveal coordination and bid-based block production, with naming mismatch in ENS suffix
 
 ---
 
-## Notes
+## Linked Files
 
-This document reflects observed research discussion and terminology convergence.
+- **Anchor document:** `anchors/commitmentlayer.md`
+- **Schema:** `schemas/commitmentlayer/0.1-draft/schema.json`
 
-Preconfirmation commitments are closely coupled with preconfirmation systems, but represent a **more specific mechanism focused on signaling and guarantees**, rather than the full coordination surface.
+---
+
+## Naming Context
+
+- **ENS anchor:** `commitmentlayer.eth`
+- **Canonical term:** commitment
+
+The ENS name is treated as a semantic entry point.
+
+The canonical term is treated as the technical reference used by the registry.
+
+If the ENS name and canonical term diverge, the mismatch should be documented in the corresponding anchor document and schema naming fields.
+
+---
+
+## Source Policy
+
+Sources should prioritize:
+
+- primary EIPs
+- official specifications
+- client or implementation references
+- Ethereum research discussions
+- protocol roadmap materials
+- directly relevant technical documents
+
+Avoid treating social commentary, price speculation, or unsupported market claims as formal sources.
+
+---
+
+## Maintenance Notes
+
+This section is generated from `registry.json`.
+
+Do not manually edit the auto-generated section unless the generation script is being changed.
+
+Manual sources and notes should be placed in the protected manual section below.
+<!-- AUTO-GENERATED:END -->
+
+<!-- MANUAL-SOURCES:START -->
+## Manual Source References
+
+Add primary references, research threads, implementation notes, or protocol links here.
+
+Suggested format:
+
+- Title  
+  URL
+
+## Manual Notes
+
+Add any human-reviewed source notes here.
+<!-- MANUAL-SOURCES:END -->

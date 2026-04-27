@@ -1,118 +1,107 @@
-# Builder Markets — Sources
+<!-- AUTO-GENERATED:START -->
+# builder — Sources
 
 ## Overview
 
-This document compiles primary references and terminology associated with **builder markets** within Ethereum’s execution and block construction ecosystem.
+This document compiles source context and terminology support for the Vortik semantic anchor associated with `buildermarket.eth`.
 
-It supports the semantic anchoring of `buildermarket.eth` within the Vortik Semantic Registry and situates builder markets as a **premature and increasingly outdated coordination abstraction** within Ethereum’s evolving protocol architecture.
+It supports the machine-readable and human-readable layers of the **Vortik Semantic Registry**.
 
----
-
-## Research Context
-
-Builder markets describe the competitive environment in which block builders construct execution payloads and compete to supply blocks to proposers.
-
-They emerged as a consequence of proposer-builder separation (PBS), where block construction and block proposal are decoupled.
-
-This separation creates a market structure in which:
-
-- builders compete to construct execution payloads
-- proposers select among competing bids
-- execution value is aggregated prior to inclusion
-
-However, with the progression toward **enshrined PBS (ePBS)**, this coordination is increasingly defined at the protocol level.
-
-As a result, builder markets are better understood as a **premature and transitional abstraction**, rather than a stable architectural component.
+This document is a research-support artifact. It is not an official Ethereum protocol specification.
 
 ---
 
-## Structural Role
+## Registry Metadata
 
-Builder markets historically operated at the **block construction stage** of the execution pipeline.
-
-They sit downstream from:
-
-- order flow access
-- solver-generated execution strategies
-
-and upstream from:
-
-- proposer selection
-- protocol-level inclusion (ePBS / FOCIL)
-
-They describe how execution payloads were constructed and competed over before inclusion.
-
----
-
-## Structural Shift
-
-The role of builder markets is evolving due to protocol changes.
-
-With ePBS:
-
-- builder roles become protocol-defined
-- payload construction becomes standardized
-- proposer-builder interaction is formalized
-
-This shifts the system from:
-
-- market-based coordination
-
-to:
-
-- role-based, protocol-enforced coordination
-
-As a result, the concept of “builder markets” loses precision as a primary descriptor of system behavior and should be treated as a **premature framing** of a coordination surface now being absorbed into protocol-defined roles and commitments.
+- **Registry:** vortik-semantic-registry
+- **Registry version:** 0.6.2
+- **Registry ID:** `buildermarket`
+- **Associated ENS:** `buildermarket.eth`
+- **Canonical term:** builder
+- **Classification:** deprecated
+- **Status:** research
+- **Status label:** deprecated
+- **Stage:** research
+- **Type:** misaligned_abstraction
+- **Market priority:** low
+- **Sale strategy:** liquidate
+- **Visibility:** background
 
 ---
 
-## Research Surface
+## Semantic Classification
 
-Discussion of builder markets appears across:
-
-- PBS and MEV supply chain research
-- MEV-Boost and relay-based architectures
-- block construction competition models
-
-Representative discussions can be found across:
-
-- Ethereum Research
-  https://ethresear.ch/
+Legacy, broad, or market-oriented abstraction with reduced precision relative to protocol-native terminology.
 
 ---
 
-## Terminology Surface
+## Type Interpretation
 
-Common terminology associated with this coordination surface includes:
-
-- builder markets
-- builder competition
-- block building markets
-- PBS markets
-
-This terminology shows **historical convergence**, but is increasingly being replaced by:
-
-- builder roles
-- payload construction
-- proposer-builder interfaces
-- protocol-native builder semantics
+Broad abstraction retained for comparison but not treated as canonical.
 
 ---
 
-## Status
+## Registry Role
 
-Premature / declining coordination abstraction (2026).
-
-Builder markets remain useful as a historical and ecosystem-level descriptive model of block construction competition, but are being superseded by protocol-level definitions of builder roles and interactions.
-
-They are not a canonical L1 primitive and are tracked as a **premature abstraction within the execution pipeline**.
+legacy market framing displaced by the protocol-native builder role under ePBS
 
 ---
 
-## Notes
+## Linked Files
 
-This surface captures how block construction was historically organized under market-based coordination.
+- **Anchor document:** `anchors/buildermarket.md`
+- **Schema:** `schemas/buildermarket/0.1-research/schema.json`
 
-Its role is being redefined as Ethereum transitions toward protocol-enforced builder semantics under ePBS.
+---
 
-Accordingly, `buildermarket.eth` should not be interpreted as representing a durable protocol-native category, but rather as an increasingly outdated coordination abstraction preserved for semantic tracking.
+## Naming Context
+
+- **ENS anchor:** `buildermarket.eth`
+- **Canonical term:** builder
+
+The ENS name is treated as a semantic entry point.
+
+The canonical term is treated as the technical reference used by the registry.
+
+If the ENS name and canonical term diverge, the mismatch should be documented in the corresponding anchor document and schema naming fields.
+
+---
+
+## Source Policy
+
+Sources should prioritize:
+
+- primary EIPs
+- official specifications
+- client or implementation references
+- Ethereum research discussions
+- protocol roadmap materials
+- directly relevant technical documents
+
+Avoid treating social commentary, price speculation, or unsupported market claims as formal sources.
+
+---
+
+## Maintenance Notes
+
+This section is generated from `registry.json`.
+
+Do not manually edit the auto-generated section unless the generation script is being changed.
+
+Manual sources and notes should be placed in the protected manual section below.
+<!-- AUTO-GENERATED:END -->
+
+<!-- MANUAL-SOURCES:START -->
+## Manual Source References
+
+Add primary references, research threads, implementation notes, or protocol links here.
+
+Suggested format:
+
+- Title  
+  URL
+
+## Manual Notes
+
+Add any human-reviewed source notes here.
+<!-- MANUAL-SOURCES:END -->

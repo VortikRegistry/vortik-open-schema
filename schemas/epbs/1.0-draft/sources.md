@@ -1,121 +1,107 @@
-# ePBS — Sources
+<!-- AUTO-GENERATED:START -->
+# enshrined proposer-builder separation (ePBS) — Sources
 
 ## Overview
 
-This document compiles primary references and terminology associated with **Enshrined Proposer-Builder Separation (ePBS)**.
+This document compiles source context and terminology support for the Vortik semantic anchor associated with `epbs.eth`.
 
-It supports the semantic anchoring of `epbs.eth` within the Vortik Semantic Registry.
+It supports the machine-readable and human-readable layers of the **Vortik Semantic Registry**.
 
----
-
-## Canonical Specification
-
-- EIP-7732 — Enshrined Proposer-Builder Separation  
-  https://eips.ethereum.org/EIPS/eip-7732  
+This document is a research-support artifact. It is not an official Ethereum protocol specification.
 
 ---
 
-## Research Context
+## Registry Metadata
 
-ePBS represents the protocol-level integration of proposer-builder separation within Ethereum consensus.
-
-It formalizes the separation between:
-
-- block proposal  
-- execution payload construction  
-
-and removes reliance on external relay infrastructure by embedding coordination directly into the protocol.
-
-This transition reflects a broader shift toward **protocol-enforced coordination**, where execution is externalized but validation and selection are enforced by consensus.
-
----
-
-## Structural Role
-
-ePBS operates at the boundary between:
-
-- builder coordination  
-- inclusion  
-
-It defines a **protocol-level interface** between proposers and builders, restructuring how execution payloads are constructed, selected, and included.
+- **Registry:** vortik-semantic-registry
+- **Registry version:** 0.6.2
+- **Registry ID:** `epbs`
+- **Associated ENS:** `epbs.eth`
+- **Canonical term:** enshrined proposer-builder separation (ePBS)
+- **Classification:** core
+- **Status:** implemented
+- **Status label:** core
+- **Stage:** canonical
+- **Type:** primitive
+- **Market priority:** high
+- **Sale strategy:** hold
+- **Visibility:** featured
 
 ---
 
-## Architectural Impact
+## Semantic Classification
 
-ePBS introduces a fundamental architectural shift:
-
-- from **off-protocol coordination** (e.g. MEV-Boost, relays)  
-- to **protocol-enforced coordination**  
-
-This changes:
-
-- how block construction is organized  
-- how proposer roles interact with builders  
-- how execution flows interface with consensus  
-
-Under ePBS, builder roles become protocol-defined and payloads become consensus-validated objects.
+Protocol-aligned anchor with strong semantic grounding.
 
 ---
 
-## Core Research Themes
+## Type Interpretation
 
-Research discussions around ePBS focus on:
-
-- protocol-level builder selection  
-- payload commitment mechanisms  
-- proposer-builder coordination  
-- block production structure  
-- MEV supply chain redesign  
+Protocol or research primitive tracked as a semantic object.
 
 ---
 
-## Primary Research Threads
+## Registry Role
 
-- Why Enshrine Proposer-Builder Separation — A viable path to ePBS  
-  https://ethresear.ch/t/why-enshrine-proposer-builder-separation-a-viable-path-to-epbs/15710  
-
-- ePBS Design Constraints  
-  https://ethresear.ch/t/epbs-design-constraints/18728  
+protocol-defined proposer-builder separation with active devnet implementation, commitment-based block production, and growing consensus-specs convergence
 
 ---
 
-## Roadmap Context
+## Linked Files
 
-ePBS is part of Ethereum’s evolution toward a structured coordination pipeline for block production.
-
-- Vitalik Buterin — “Finally, the block building pipeline”  
-  https://firefly.social/post/x/2027405  
+- **Anchor document:** `anchors/epbs.md`
+- **Schema:** `schemas/epbs/1.0-draft/schema.json`
 
 ---
 
-## Terminology Surface
+## Naming Context
 
-Common terminology associated with this primitive includes:
+- **ENS anchor:** `epbs.eth`
+- **Canonical term:** enshrined proposer-builder separation (ePBS)
 
-- enshrined PBS  
-- proposer-builder separation  
-- builder selection  
-- payload commitment  
-- block construction pipeline  
+The ENS name is treated as a semantic entry point.
 
-This terminology shows strong semantic convergence across research and core development discussions.
+The canonical term is treated as the technical reference used by the registry.
 
----
-
-## Status
-
-Draft EIP (active research and specification phase).
-
-ePBS has high protocol relevance and strong likelihood of long-term adoption, pending:
-
-- client implementation readiness  
-- consensus among core developers  
+If the ENS name and canonical term diverge, the mismatch should be documented in the corresponding anchor document and schema naming fields.
 
 ---
 
-## Notes
+## Source Policy
 
-This document reflects canonical specification and active research convergence.
+Sources should prioritize:
 
-It describes a **protocol-level interface primitive** with structural impact on Ethereum’s coordination pipeline.
+- primary EIPs
+- official specifications
+- client or implementation references
+- Ethereum research discussions
+- protocol roadmap materials
+- directly relevant technical documents
+
+Avoid treating social commentary, price speculation, or unsupported market claims as formal sources.
+
+---
+
+## Maintenance Notes
+
+This section is generated from `registry.json`.
+
+Do not manually edit the auto-generated section unless the generation script is being changed.
+
+Manual sources and notes should be placed in the protected manual section below.
+<!-- AUTO-GENERATED:END -->
+
+<!-- MANUAL-SOURCES:START -->
+## Manual Source References
+
+Add primary references, research threads, implementation notes, or protocol links here.
+
+Suggested format:
+
+- Title  
+  URL
+
+## Manual Notes
+
+Add any human-reviewed source notes here.
+<!-- MANUAL-SOURCES:END -->

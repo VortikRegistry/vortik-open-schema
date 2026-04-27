@@ -1,9 +1,9 @@
 <!-- AUTO-GENERATED:START -->
-# solver (external) — Sources
+# proving markets — Sources
 
 ## Overview
 
-This document compiles source context and terminology support for the Vortik semantic anchor associated with `solverlayer.eth`.
+This document compiles source context and terminology support for the Vortik semantic anchor associated with `provingmarket.eth`.
 
 It supports the machine-readable and human-readable layers of the **Vortik Semantic Registry**.
 
@@ -15,17 +15,17 @@ This document is a research-support artifact. It is not an official Ethereum pro
 
 - **Registry:** vortik-semantic-registry
 - **Registry version:** 0.6.2
-- **Registry ID:** `solverlayer`
-- **Associated ENS:** `solverlayer.eth`
-- **Canonical term:** solver (external)
+- **Registry ID:** `provingmarket`
+- **Associated ENS:** `provingmarket.eth`
+- **Canonical term:** proving markets
 - **Classification:** external
 - **Status:** research
 - **Status label:** external
 - **Stage:** research
-- **Type:** external_actor
-- **Market priority:** low
+- **Type:** coordination_surface
+- **Market priority:** medium
 - **Sale strategy:** monitor
-- **Visibility:** background
+- **Visibility:** standard
 
 ---
 
@@ -37,27 +37,27 @@ Ethereum-adjacent or external coordination surface outside the current L1 protoc
 
 ## Type Interpretation
 
-External actor or participant outside the current L1 protocol core.
+Broad coordination surface across infrastructure or ecosystem behavior.
 
 ---
 
 ## Registry Role
 
-off-protocol actor coordinating intent resolution and routing before protocol-level block construction
+external proof generation and proving coordination across zk systems and rollup infrastructure
 
 ---
 
 ## Linked Files
 
-- **Anchor document:** `anchors/solverlayer.md`
-- **Schema:** `schemas/solverlayer/0.1-research/schema.json`
+- **Anchor document:** `anchors/provingmarket.md`
+- **Schema:** `schemas/provingmarket/0.1-research/schema.json`
 
 ---
 
 ## Naming Context
 
-- **ENS anchor:** `solverlayer.eth`
-- **Canonical term:** solver (external)
+- **ENS anchor:** `provingmarket.eth`
+- **Canonical term:** proving markets
 
 The ENS name is treated as a semantic entry point.
 

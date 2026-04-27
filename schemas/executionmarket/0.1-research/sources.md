@@ -1,116 +1,107 @@
-# Execution Coordination (Ambiguous Term) — Sources
+<!-- AUTO-GENERATED:START -->
+# execution (ambiguous) — Sources
 
 ## Overview
 
-This document compiles references and terminology associated with the concept often described as **“execution markets”** within Ethereum execution infrastructure research.
+This document compiles source context and terminology support for the Vortik semantic anchor associated with `executionmarket.eth`.
 
-Within the Vortik Semantic Registry, this surface is treated as a **premature and semantically unstable coordination abstraction**, tracked under the term:
+It supports the machine-readable and human-readable layers of the **Vortik Semantic Registry**.
 
-**execution coordination (ambiguous term)**
-
----
-
-## Research Context
-
-The term “execution market” is commonly used to describe coordination environments where transactions, intents, and liquidity sources interact to determine execution outcomes.
-
-However, this term does not map to a clearly defined or canonical protocol primitive.
-
-Instead, it overlaps with multiple distinct coordination surfaces, including:
-
-- solver networks  
-- order flow routing mechanisms  
-- builder coordination  
-- intent-based execution systems  
-
-As a result, “execution market” is best understood as an **umbrella abstraction**, rather than a precise technical construct.
+This document is a research-support artifact. It is not an official Ethereum protocol specification.
 
 ---
 
-## Structural Interpretation
+## Registry Metadata
 
-This surface is best interpreted as a **descriptive aggregation layer** spanning multiple parts of the coordination pipeline.
-
-It informally refers to interactions occurring between:
-
-- order flow access  
-- solver coordination  
-- execution strategy formation  
-- builder coordination  
-
-These interactions do not form a single bounded system and should not be treated as a standalone layer, market, or protocol primitive.
-
----
-
-## Structural Shift
-
-With the progression toward **ePBS and protocol-enforced coordination**, execution is no longer modeled as a market surface.
-
-Instead, it is decomposed into:
-
-- protocol-defined roles (builder, proposer)  
-- explicit coordination stages  
-- commitment-based execution flows  
-
-As a result, the concept of “execution markets” is increasingly **misaligned with the actual system architecture** and should be treated as a **premature abstraction**.
+- **Registry:** vortik-semantic-registry
+- **Registry version:** 0.6.2
+- **Registry ID:** `executionmarket`
+- **Associated ENS:** `executionmarket.eth`
+- **Canonical term:** execution (ambiguous)
+- **Classification:** deprecated
+- **Status:** research
+- **Status label:** deprecated
+- **Stage:** research
+- **Type:** misaligned_abstraction
+- **Market priority:** low
+- **Sale strategy:** liquidate
+- **Visibility:** background
 
 ---
 
-## Research Surface
+## Semantic Classification
 
-Discussions related to this surface appear across:
-
-- intent-based architecture research  
-- solver-driven execution systems  
-- MEV supply chain design  
-- transaction routing and execution infrastructure  
-
-Representative discussions can be found across:
-
-- Ethereum Research  
-  https://ethresear.ch/
+Legacy, broad, or market-oriented abstraction with reduced precision relative to protocol-native terminology.
 
 ---
 
-## Terminology Surface
+## Type Interpretation
 
-Common terminology associated with this coordination surface includes:
-
-- execution market  
-- execution markets  
-- execution coordination  
-- execution layer (ambiguous usage)  
-- solver-driven execution  
-
-This terminology is inconsistent, overlapping, and has not converged to a canonical form.
-
-It is increasingly being replaced by:
-
-- solver coordination  
-- builder roles  
-- execution pipeline stages  
-- intent execution systems  
+Broad abstraction retained for comparison but not treated as canonical.
 
 ---
 
-## Status
+## Registry Role
 
-Premature / ambiguous terminology surface (2026).
-
-The term “execution market” is widely used but lacks precise semantic boundaries within Ethereum’s coordination architecture.
-
-It is not defined as a canonical L1 primitive and is tracked within the registry as a **premature and unstable terminology surface**.
+non-canonical market framing that does not map cleanly to any single protocol primitive, role, or constraint
 
 ---
 
-## Notes
+## Linked Files
 
-This document captures an unstable terminology cluster.
+- **Anchor document:** `anchors/executionmarket.md`
+- **Schema:** `schemas/executionmarket/0.1-research/schema.json`
 
-It exists to:
+---
 
-- prevent premature semantic consolidation  
-- highlight overlap between distinct coordination primitives  
-- track whether this surface resolves into clearer primitives or dissolves into adjacent protocol-defined roles and pipeline stages  
+## Naming Context
 
-Accordingly, `executionmarket.eth` should not be interpreted as representing a durable or protocol-native category, but as a **transitional and increasingly invalid abstraction** within Ethereum’s evolving coordination model.
+- **ENS anchor:** `executionmarket.eth`
+- **Canonical term:** execution (ambiguous)
+
+The ENS name is treated as a semantic entry point.
+
+The canonical term is treated as the technical reference used by the registry.
+
+If the ENS name and canonical term diverge, the mismatch should be documented in the corresponding anchor document and schema naming fields.
+
+---
+
+## Source Policy
+
+Sources should prioritize:
+
+- primary EIPs
+- official specifications
+- client or implementation references
+- Ethereum research discussions
+- protocol roadmap materials
+- directly relevant technical documents
+
+Avoid treating social commentary, price speculation, or unsupported market claims as formal sources.
+
+---
+
+## Maintenance Notes
+
+This section is generated from `registry.json`.
+
+Do not manually edit the auto-generated section unless the generation script is being changed.
+
+Manual sources and notes should be placed in the protected manual section below.
+<!-- AUTO-GENERATED:END -->
+
+<!-- MANUAL-SOURCES:START -->
+## Manual Source References
+
+Add primary references, research threads, implementation notes, or protocol links here.
+
+Suggested format:
+
+- Title  
+  URL
+
+## Manual Notes
+
+Add any human-reviewed source notes here.
+<!-- MANUAL-SOURCES:END -->

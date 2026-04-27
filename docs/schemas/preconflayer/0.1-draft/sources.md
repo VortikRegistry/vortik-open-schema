@@ -1,85 +1,107 @@
-# Preconfirmation Systems — Sources
+<!-- AUTO-GENERATED:START -->
+# preconfirmation (emergent) — Sources
 
 ## Overview
 
-This document compiles primary references and terminology associated with **preconfirmation systems** within Ethereum execution and sequencing research.
+This document compiles source context and terminology support for the Vortik semantic anchor associated with `preconflayer.eth`.
 
-It supports the semantic anchoring of `preconflayer.eth` within the Vortik Semantic Registry.
+It supports the machine-readable and human-readable layers of the **Vortik Semantic Registry**.
 
----
-
-## Research Context
-
-Preconfirmation systems refer to coordination mechanisms that provide **early execution assurances** prior to final block inclusion.
-
-These systems reduce latency and improve execution certainty by enabling proposers or related sequencing actors to issue **credible commitments regarding inclusion or ordering**.
-
-They operate in the gap between:
-
-- execution coordination  
-- final inclusion  
-
-Preconfirmation systems interact with multiple adjacent coordination surfaces, including:
-
-- commitment signaling mechanisms  
-- proposer commitments  
-- inclusion enforcement systems (e.g. inclusion lists)  
-- based sequencing architectures  
-
-They shape execution expectations and user-facing guarantees **before consensus-level finalization**.
+This document is a research-support artifact. It is not an official Ethereum protocol specification.
 
 ---
 
-## Structural Role
+## Registry Metadata
 
-Preconfirmation systems operate at the **preconfirmation stage** of Ethereum’s coordination pipeline.
-
-They function as a **pre-inclusion coordination mechanism**, enabling early assurances about execution outcomes before protocol-level inclusion and finality are enforced.
-
-Their role is especially relevant in latency-sensitive environments where users or applications require stronger short-term guarantees than raw mempool visibility provides.
-
----
-
-## Primary Research Threads
-
-- Becoming based: a path towards decentralised sequencing  
-  https://ethresear.ch/t/becoming-based-a-path-towards-decentralised-sequencing/21733
-
-- Uncrowdable inclusion lists: the tension between chain neutrality, preconfirmations and proposer commitments  
-  https://ethresear.ch/t/uncrowdable-inclusion-lists-the-tension-between-chain-neutrality-preconfirmations-and-proposer-commitments/19372
+- **Registry:** vortik-semantic-registry
+- **Registry version:** 0.6.2
+- **Registry ID:** `preconflayer`
+- **Associated ENS:** `preconflayer.eth`
+- **Canonical term:** preconfirmation (emergent)
+- **Classification:** premature
+- **Status:** research
+- **Status label:** emerging
+- **Stage:** research
+- **Type:** external_mechanism
+- **Market priority:** medium
+- **Sale strategy:** opportunistic
+- **Visibility:** standard
 
 ---
 
-## Terminology Surface
+## Semantic Classification
 
-Common terminology associated with this coordination surface includes:
-
-- preconfirmation systems  
-- preconfirmations  
-- based preconfirmations  
-- L1 preconfirmations  
-- proposer commitments  
-
-This terminology shows **moderate convergence**, but still overlaps with adjacent surfaces such as commitment signaling.
+Real or emerging concept not yet stable enough to treat as canonical.
 
 ---
 
-## Status
+## Type Interpretation
 
-Active research coordination mechanism (2026).
-
-Preconfirmation systems are a structurally important latency and coordination surface within Ethereum’s execution pipeline, particularly in relation to:
-
-- early execution guarantees  
-- proposer commitments  
-- sequencing coordination  
-
-They are not currently defined as a canonical L1 protocol primitive and remain an evolving research surface.
+External or off-protocol mechanism related to Ethereum coordination.
 
 ---
 
-## Notes
+## Registry Role
 
-This surface captures **pre-inclusion coordination**, where execution expectations are shaped before transactions are finalized on-chain.
+emergent off-protocol guarantees about likely inclusion or ordering before final protocol confirmation
 
-It is closely coupled with commitment signaling but remains a **distinct coordination mechanism** focused on latency and user-facing guarantees.
+---
+
+## Linked Files
+
+- **Anchor document:** `anchors/preconflayer.md`
+- **Schema:** `schemas/preconflayer/0.1-draft/schema.json`
+
+---
+
+## Naming Context
+
+- **ENS anchor:** `preconflayer.eth`
+- **Canonical term:** preconfirmation (emergent)
+
+The ENS name is treated as a semantic entry point.
+
+The canonical term is treated as the technical reference used by the registry.
+
+If the ENS name and canonical term diverge, the mismatch should be documented in the corresponding anchor document and schema naming fields.
+
+---
+
+## Source Policy
+
+Sources should prioritize:
+
+- primary EIPs
+- official specifications
+- client or implementation references
+- Ethereum research discussions
+- protocol roadmap materials
+- directly relevant technical documents
+
+Avoid treating social commentary, price speculation, or unsupported market claims as formal sources.
+
+---
+
+## Maintenance Notes
+
+This section is generated from `registry.json`.
+
+Do not manually edit the auto-generated section unless the generation script is being changed.
+
+Manual sources and notes should be placed in the protected manual section below.
+<!-- AUTO-GENERATED:END -->
+
+<!-- MANUAL-SOURCES:START -->
+## Manual Source References
+
+Add primary references, research threads, implementation notes, or protocol links here.
+
+Suggested format:
+
+- Title  
+  URL
+
+## Manual Notes
+
+Add any human-reviewed source notes here.
+<!-- MANUAL-SOURCES:END -->
