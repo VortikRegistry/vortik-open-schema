@@ -88,20 +88,15 @@ This section is generated from `registry.json`.
 
 Do not manually edit the auto-generated section unless the generation script is being changed.
 
-Manual sources and notes should be placed in the protected manual section below.
+Curated references and source notes should be placed in the protected section below.
 <!-- AUTO-GENERATED:END -->
 
 <!-- MANUAL-SOURCES:START -->
-## Manual Source References
+## Curated References
 
-Add primary references, research threads, implementation notes, or protocol links here.
+No curated references have been added for this anchor yet.
 
-Suggested format:
+## Source Notes
 
-- Title  
-  URL
-
-## Manual Notes
-
-Add any human-reviewed source notes here.
+This section is reserved for curated protocol references, implementation notes, or research context when applicable.
 <!-- MANUAL-SOURCES:END -->
