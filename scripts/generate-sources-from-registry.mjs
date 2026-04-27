@@ -22,10 +22,6 @@ function ok(message) {
   console.log(`✅ ${message}`);
 }
 
-function warn(message) {
-  console.warn(`⚠️ ${message}`);
-}
-
 function fail(message) {
   console.error(`❌ ${message}`);
   process.exitCode = 1;
@@ -57,6 +53,16 @@ function getSourcesPath(anchor) {
   return path.join(ROOT, schemaDir, "sources.md");
 }
 
+function defaultManualSection() {
+  return `## Curated References
+
+No curated references have been added for this anchor yet.
+
+## Source Notes
+
+This section is reserved for curated protocol references, implementation notes, or research context when applicable.`;
+}
+
 function extractManualSection(existingContent) {
   if (!existingContent) {
     return defaultManualSection();
@@ -78,22 +84,21 @@ function extractManualSection(existingContent) {
     return defaultManualSection();
   }
 
+  const legacyPlaceholders = [
+    "Add primary references, research threads, implementation notes, or protocol links here.",
+    "Suggested format:",
+    "Add any human-reviewed source notes here."
+  ];
+
+  const containsLegacyPlaceholder = legacyPlaceholders.some(text =>
+    manualBlock.includes(text)
+  );
+
+  if (containsLegacyPlaceholder) {
+    return defaultManualSection();
+  }
+
   return manualBlock;
-}
-
-function defaultManualSection() {
-  return `## Manual Source References
-
-Add primary references, research threads, implementation notes, or protocol links here.
-
-Suggested format:
-
-- Title  
-  URL
-
-## Manual Notes
-
-Add any human-reviewed source notes here.`;
 }
 
 function classificationMeaning(classification) {
@@ -233,7 +238,7 @@ This section is generated from \`registry.json\`.
 
 Do not manually edit the auto-generated section unless the generation script is being changed.
 
-Manual sources and notes should be placed in the protected manual section below.
+Curated references and source notes should be placed in the protected section below.
 ${AUTO_END}`;
 }
 
