@@ -1,56 +1,65 @@
 # Single-Slot Finality (SSF)
 
 **Associated ENS:** `fastfinality.eth`  
-**Canonical term:** Single-Slot Finality (SSF)  
+**Canonical term:** single-slot finality (SSF)  
 **Registry ID:** `ssf`  
 **Status:** Research  
-**Classification: repairable
+**Classification:** repairable  
 
 ---
 
 ## Summary
 
-This anchor tracks the Ethereum research surface commonly referred to as **Single-Slot Finality (SSF)**.
+This anchor tracks **Single-Slot Finality (SSF)** as an Ethereum consensus research and roadmap surface.
 
-SSF represents a research direction aimed at reducing Ethereum finality latency, targeting block finalization within a single slot or near-single-slot timeframes.
+SSF refers to efforts aimed at reducing Ethereum finality latency so that finality can be achieved within a single slot or near-single-slot timeframe.
 
-Achieving this would significantly improve confirmation guarantees and reduce the delay between block proposal and irreversible finality.
+The ENS identifier `fastfinality.eth` captures the broad direction of faster finality, but does not match the more precise term increasingly used across Ethereum research: **single-slot finality (SSF)**.
+
+For that reason, this anchor is classified as **repairable** rather than canonical.
 
 ---
 
 ## Context
 
-SSF research explores changes to:
+SSF research explores changes to Ethereum’s consensus architecture, including:
 
 - validator coordination  
 - consensus timing assumptions  
-- committee structure and size  
+- committee design  
 - signature aggregation requirements  
-- economic and security trade-offs of faster finality  
+- validator set scaling  
+- latency and security trade-offs  
 
 It is closely related to broader efforts around:
 
 - consensus efficiency  
-- validator set scaling  
-- finality guarantees under constrained latency  
+- finality guarantees  
+- validator participation  
+- aggregation performance  
+- long-term roadmap design  
+
+SSF remains a high-signal roadmap concept, but it is not currently treated in Vortik as an immediate core anchor comparable to ePBS or inclusion lists.
 
 ---
 
 ## Pipeline Position
 
-Finality
+Finality / Consensus Roadmap Surface
 
 ---
 
 ## Coordination Role
 
-SSF impacts coordination at the consensus level, particularly:
+SSF impacts coordination at the consensus level, particularly around:
 
 - validator agreement speed  
 - finality checkpoint formation  
-- timing assumptions across slots  
+- slot timing assumptions  
+- aggregation of validator signatures  
+- transition from inclusion to irreversible finality  
 
-It changes how quickly consensus transitions from probabilistic inclusion to irreversible finality.
+If achieved, SSF would change how quickly Ethereum moves from proposed blocks to final settlement.
 
 ---
 
@@ -59,17 +68,22 @@ It changes how quickly consensus transitions from probabilistic inclusion to irr
 This surface is grounded in:
 
 - Ethereum consensus-layer research on finality reduction  
-- discussions around validator set scaling  
-- EIP-7251 (validator effective balance increase) as a related enabler  
-- research on aggregation efficiency and latency constraints  
+- roadmap discussions around single-slot finality  
+- validator set scaling research  
+- signature aggregation and latency constraint research  
+- related discussions around validator effective balance and consensus efficiency  
+
+SSF should currently be treated as a roadmap and research surface rather than as a finalized protocol primitive.
 
 ---
 
 ## Semantic Stability
 
-The term **Single-Slot Finality (SSF)** is widely used across Ethereum research and has reached a relatively stable semantic meaning.
+The term **single-slot finality (SSF)** has strong semantic recognition across Ethereum research.
 
-It consistently refers to efforts aimed at achieving near-instant or single-slot finality within the consensus layer.
+It is more precise than broader descriptions such as **fast finality**.
+
+The phrase **fast finality** remains understandable, but it is increasingly less exact than SSF as the canonical research term.
 
 ---
 
@@ -80,36 +94,41 @@ SSF represents a potential shift in Ethereum’s consensus architecture, affecti
 - finality latency guarantees  
 - validator coordination models  
 - scalability constraints tied to validator set size  
+- user confirmation expectations  
+- settlement timing assumptions  
 
-If achieved, it would significantly alter the temporal dynamics of consensus and user confirmation expectations.
+If achieved, it would significantly alter the temporal dynamics of Ethereum consensus.
 
 ---
 
 ## Naming Alignment
 
 - **ENS anchor:** `fastfinality.eth`  
-- **Canonical term:** Single-Slot Finality (SSF)  
+- **Canonical term:** single-slot finality (SSF)  
 
-The ENS naming is semantically related but does not match the canonical term used in research.
+The ENS name is semantically related but does not match the canonical term used in research.
 
-"Fast finality" is a descriptive approximation, while **SSF** is the precise and widely adopted terminology.
+**Fast finality** is a descriptive approximation, while **SSF** is the more precise and widely adopted terminology.
 
-This entry is classified as **repairable** due to naming misalignment.
+This creates a naming mismatch, but not a complete semantic failure.
 
 ---
 
 ## Registry Role
 
-- Track semantic stabilization of **SSF terminology**  
-- Distinguish between canonical naming and ENS approximations  
-- Aggregate research discussing finality reduction mechanisms  
-- Provide a stable ENS anchor for this consensus evolution surface  
+- Track semantic stabilization of SSF terminology  
+- Distinguish between canonical naming and ENS approximation  
+- Document finality-reduction research as a consensus roadmap surface  
+- Monitor whether SSF continues to displace broader fast-finality language  
+- Preserve a repairable semantic surface around Ethereum finality evolution  
 
 ---
 
 ## Status
 
-Active research track within Ethereum consensus evolution with high structural relevance.
+Active research and roadmap surface within Ethereum consensus evolution.
+
+The underlying concept has high structural relevance, but the ENS label remains an approximation rather than a canonical match.
 
 ---
 
