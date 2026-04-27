@@ -57,6 +57,9 @@ jobs:
       - name: Sync schemas from registry
         run: node scripts/sync-schemas-from-registry.mjs
 
+      - name: Generate sources from registry
+        run: node scripts/generate-sources-from-registry.mjs
+
       - name: Run schema cleanup check
         run: node scripts/fix-schemas.cjs
 
