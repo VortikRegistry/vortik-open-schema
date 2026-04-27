@@ -35,6 +35,12 @@ function normalizeText(value, fallback = "Not specified") {
   return String(value);
 }
 
+function normalizeBlock(value) {
+  return String(value || "")
+    .replace(/\r\n/g, "\n")
+    .trim();
+}
+
 function getSchemaDir(anchor) {
   if (!anchor.schema || typeof anchor.schema !== "string") {
     return null;
@@ -51,6 +57,21 @@ function getSourcesPath(anchor) {
   }
 
   return path.join(ROOT, schemaDir, "sources.md");
+}
+
+function oldDefaultManualSection() {
+  return `## Manual Source References
+
+Add primary references, research threads, implementation notes, or protocol links here.
+
+Suggested format:
+
+- Title  
+  URL
+
+## Manual Notes
+
+Add any human-reviewed source notes here.`;
 }
 
 function defaultManualSection() {
@@ -84,17 +105,10 @@ function extractManualSection(existingContent) {
     return defaultManualSection();
   }
 
-  const legacyPlaceholders = [
-    "Add primary references, research threads, implementation notes, or protocol links here.",
-    "Suggested format:",
-    "Add any human-reviewed source notes here."
-  ];
+  const normalizedManual = normalizeBlock(manualBlock);
+  const normalizedOldDefault = normalizeBlock(oldDefaultManualSection());
 
-  const containsLegacyPlaceholder = legacyPlaceholders.some(text =>
-    manualBlock.includes(text)
-  );
-
-  if (containsLegacyPlaceholder) {
+  if (normalizedManual === normalizedOldDefault) {
     return defaultManualSection();
   }
 
