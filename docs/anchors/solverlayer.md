@@ -1,138 +1,172 @@
-# Solver Networks
+# Solver
 
 **Associated ENS:** `solverlayer.eth`  
-**Canonical term:** Solver Networks  
+**Canonical term:** solver (external)  
 **Registry ID:** `solverlayer`  
 **Status:** Research  
-**Classification:** Repairable
+**Classification:** external  
 
 ---
 
 ## Summary
 
-This anchor tracks **solver networks** as an emergent coordination surface responsible for **execution strategy formation** within Ethereum’s execution pipeline.
+This anchor tracks **solvers** as external coordination actors involved in intent resolution, execution strategy formation, routing, and off-protocol transaction coordination.
 
-Rather than passive intermediaries, solver networks represent competitive systems that construct and optimize transaction execution paths based on user intents.
+Solvers are relevant across intent-based systems, order-flow routing, MEV-aware execution, and off-chain coordination environments.
 
-The ENS identifier (`solverlayer.eth`) introduces a non-canonical architectural abstraction and is classified as a naming mismatch.
+However, solvers are not currently treated as core Ethereum L1 protocol roles. They operate primarily as external actors around Ethereum’s execution environment rather than as protocol-defined participants.
+
+The ENS identifier `solverlayer.eth` captures the relevant concept of **solver**, but introduces a non-canonical architectural suffix: **layer**. For that reason, this anchor is classified as **external** rather than core.
 
 ---
 
 ## Context
 
-Solver networks have emerged as part of intent-based execution systems and order flow coordination mechanisms.
+Solver systems have emerged from intent-based execution, routing markets, and off-chain coordination mechanisms.
 
-They are responsible for:
+They may be responsible for:
 
 - interpreting user intents  
 - constructing execution strategies  
 - competing to fulfill desired outcomes  
+- routing transactions or bundles through execution pathways  
+- optimizing execution quality, price, latency, or settlement outcome  
 
-This surface has developed alongside:
+This surface developed alongside:
 
-- order flow auctions (OFA)  
-- private order flow systems  
 - intent-based execution architectures  
-- MEV-aware coordination models  
+- order flow auctions  
+- private order flow systems  
+- MEV-aware routing infrastructure  
+- solver and searcher competition  
+
+Solvers are important, but they remain outside the core Ethereum L1 protocol model.
 
 ---
 
 ## Pipeline Position
 
-Order Flow → Solver Networks → Builder Markets
+External Intent Resolution / Execution Strategy Surface
 
 ---
 
 ## Coordination Role
 
-Solver networks do not merely relay transactions.
+Solvers coordinate around user goals rather than simply relaying raw transactions.
 
-They compete to:
+They may compete to:
 
 - determine how user intents are executed  
-- construct optimal execution strategies  
-- capture execution-related value  
+- construct efficient execution paths  
+- source liquidity or settlement routes  
+- optimize execution outcomes  
+- capture or redistribute execution-related value  
 
-They act as the **strategy layer** between user intent and block construction.
+In this sense, solvers act as external execution-strategy actors between user intent and downstream inclusion pathways.
 
 ---
 
 ## Strategy Dynamics
 
-Solver networks introduce competition over:
+Solver systems introduce competition over:
 
 - execution paths  
-- transaction ordering strategies  
+- routing quality  
+- liquidity access  
+- transaction ordering strategy  
 - value extraction and distribution  
+- fulfillment guarantees  
 
-Different solvers may produce distinct execution outcomes for the same intent, leading to a competitive environment over execution quality and profitability.
+Different solvers may produce different outcomes for the same user intent, creating a competitive environment around execution quality and profitability.
 
 ---
 
 ## Dependency Structure
 
-Solver networks depend on:
+Solver systems may depend on:
 
-- access to order flow (OFA and routing layers)  
-- interaction with builders for inclusion  
-- coordination infrastructure for strategy dissemination  
+- access to order flow  
+- intent architecture  
+- liquidity routes  
+- private or public routing infrastructure  
+- interaction with builders, searchers, or execution services  
+- downstream inclusion mechanisms  
 
-Their effectiveness is constrained by upstream flow control and downstream inclusion mechanisms.
+Their effectiveness is constrained by upstream flow access and downstream settlement or inclusion conditions.
 
 ---
 
 ## Protocol Grounding
 
-This surface is grounded in:
+This surface is not currently defined as an Ethereum L1 protocol role.
+
+It is grounded in:
 
 - Ethereum research on intent-based systems  
 - solver competition mechanisms  
 - off-chain execution coordination models  
-- emerging execution architectures  
+- MEV-aware execution and routing infrastructure  
+- application-layer and rollup-adjacent coordination systems  
+
+Solvers should be treated as external coordination actors rather than protocol-native L1 primitives.
 
 ---
 
 ## Structural Importance
 
-Solver networks define how value is executed within Ethereum:
+Solvers are important because they shape how user intent becomes executable action.
 
-- they determine execution pathways  
-- they shape transaction outcomes  
-- they influence how MEV is realized and distributed  
+They may influence:
 
-They represent the **execution intelligence layer** of the coordination pipeline.
+- execution pathways  
+- user outcomes  
+- routing efficiency  
+- value capture and redistribution  
+- MEV exposure or mitigation  
+- interaction between application-layer intent systems and Ethereum settlement  
+
+However, this importance is external to the core L1 protocol. The registry therefore tracks solver terminology as an external coordination surface, not as a canonical Ethereum protocol role.
 
 ---
 
 ## Naming Alignment
 
 - **ENS anchor:** `solverlayer.eth`  
-- **Canonical term:** Solver Networks  
+- **Canonical term:** solver (external)  
 
-The ENS naming introduces a non-canonical abstraction ("layer"), while the underlying concept is better described as a network of competing execution agents.
+The name has partial alignment.
 
-This entry is classified as **repairable** due to naming misalignment.
+The word **solver** maps to a real and increasingly important external coordination actor. The word **layer** introduces a broader architectural abstraction that does not currently map cleanly to Ethereum L1 protocol terminology.
+
+This makes the anchor useful for tracking external coordination, but not canonical as a protocol primitive.
 
 ---
 
 ## Semantic Stability
 
-Terminology around solver networks is stabilizing but remains tied to evolving intent-based execution models.
+The term **solver** has meaningful traction across intent-based execution and off-chain coordination systems.
+
+However, the broader phrase **solver layer** is less stable and more architectural than protocol-native.
+
+The registry therefore treats this anchor as external: relevant, monitorable, but not core to the current L1 protocol ontology.
 
 ---
 
 ## Registry Role
 
-- Track semantic stabilization of solver networks  
-- Document execution strategy formation mechanisms  
-- Distinguish solver competition from routing and inclusion layers  
-- Map execution intelligence within Ethereum’s coordination pipeline  
+- Track solver terminology as an external coordination actor  
+- Distinguish solver systems from protocol-native L1 roles  
+- Document intent-resolution and execution-strategy surfaces  
+- Monitor whether solver terminology stabilizes, fragments, or becomes absorbed into more specific application or rollup ecosystems  
+- Preserve solver-related semantics without overstating L1 protocol alignment  
 
 ---
 
 ## Status
 
-Active research surface with increasing structural importance in execution design.
+Active external research and ecosystem surface.
+
+Solvers remain relevant to Ethereum-adjacent execution systems, but they should not currently be treated as canonical L1 protocol primitives, roles, or constraints.
 
 ---
 
