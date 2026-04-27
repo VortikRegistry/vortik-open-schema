@@ -52,12 +52,12 @@
     },
     "summary": {
       "type": "string",
-      "description": "Protocol-level primitive enshrining proposer-builder separation, defining the interface between block construction and block proposal and restructuring Ethereum’s block production pipeline.",
+      "description": "Protocol-level primitive enshrining proposer-builder separation, defining the interface between block construction and block proposal and restructuring Ethereum’s block production coordination.",
       "minLength": 20
     },
     "pipeline_position": {
       "type": "array",
-      "description": "Pipeline stages where this primitive is most relevant.",
+      "description": "Interpretive coordination domains where this primitive is most relevant.",
       "minItems": 1,
       "maxItems": 2,
       "items": {
