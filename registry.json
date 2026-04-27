@@ -1,9 +1,9 @@
 {
   "registry": "vortik-semantic-registry",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Independent semantic registry indexing Ethereum protocol primitives, roles, constraints, and selected external coordination surfaces via ENS-anchored schemas.",
   "source_of_truth": "schemas",
-  "last_updated": "2026-04-21",
+  "last_updated": "2026-04-26",
   "anchors": [
     {
       "id": "epbs",
@@ -15,7 +15,7 @@
       "stage": "canonical",
       "market_priority": "high",
       "type": "primitive",
-      "role": "protocol-defined proposer-builder separation with active devnet implementation, commitment-based block production, and growing consensus-specs convergence",
+      "role": "protocol-defined proposer-builder separation with active implementation-facing relevance, commitment-based block production, signed bid flow, payload reveal semantics, and growing consensus-specs convergence",
       "schema": "schemas/epbs/1.0-draft/schema.json",
       "anchor_doc": "anchors/epbs.md",
       "market": {
@@ -53,7 +53,7 @@
       "stage": "emerging",
       "market_priority": "medium",
       "type": "primitive",
-      "role": "protocol-relevant commitment primitive used for pre-reveal coordination and bid-based block production, with naming mismatch in ENS suffix",
+      "role": "protocol-relevant commitment primitive used for pre-reveal coordination, bid-based block production, proposer-builder interaction, encrypted flow, and delayed verification patterns, with naming mismatch in ENS suffix",
       "schema": "schemas/commitmentlayer/0.1-draft/schema.json",
       "anchor_doc": "anchors/commitmentlayer.md",
       "market": {
@@ -72,7 +72,7 @@
       "stage": "research",
       "market_priority": "medium",
       "type": "external_mechanism",
-      "role": "emergent off-protocol guarantees about likely inclusion or ordering before final protocol confirmation",
+      "role": "emergent off-protocol guarantee mechanism concerning likely inclusion, ordering, or execution outcome before final protocol confirmation, with naming mismatch in ENS suffix",
       "schema": "schemas/preconflayer/0.1-draft/schema.json",
       "anchor_doc": "anchors/preconflayer.md",
       "market": {
@@ -91,7 +91,7 @@
       "stage": "research",
       "market_priority": "medium",
       "type": "primitive",
-      "role": "finality primitive targeting single-slot confirmation semantics",
+      "role": "finality primitive and roadmap surface targeting single-slot confirmation semantics, with ENS naming that approximates but does not exactly match the canonical SSF terminology",
       "schema": "schemas/ssf/0.1-research/schema.json",
       "anchor_doc": "anchors/fastfinality.md",
       "market": {
@@ -110,7 +110,7 @@
       "stage": "research",
       "market_priority": "low",
       "type": "misaligned_abstraction",
-      "role": "legacy market framing displaced by the protocol-native builder role under ePBS",
+      "role": "legacy market framing displaced by the protocol-native builder role under ePBS and more precise proposer-builder coordination terminology",
       "schema": "schemas/buildermarket/0.1-research/schema.json",
       "anchor_doc": "anchors/buildermarket.md",
       "market": {
@@ -129,7 +129,7 @@
       "stage": "research",
       "market_priority": "low",
       "type": "external_actor",
-      "role": "off-protocol actor coordinating intent resolution and routing before protocol-level block construction",
+      "role": "off-protocol actor coordinating intent resolution, execution strategy formation, routing, and settlement pathways before protocol-level block construction",
       "schema": "schemas/solverlayer/0.1-research/schema.json",
       "anchor_doc": "anchors/solverlayer.md",
       "market": {
@@ -148,7 +148,7 @@
       "stage": "research",
       "market_priority": "low",
       "type": "misaligned_abstraction",
-      "role": "non-canonical market framing that does not map cleanly to any single protocol primitive, role, or constraint",
+      "role": "non-canonical market framing that does not map cleanly to any single protocol primitive, role, constraint, or execution object, and is increasingly pressured by narrower terms such as payload, commitment, builder, inclusion list, and block access list",
       "schema": "schemas/executionmarket/0.1-research/schema.json",
       "anchor_doc": "anchors/executionmarket.md",
       "market": {
@@ -167,7 +167,7 @@
       "stage": "implemented",
       "market_priority": "medium",
       "type": "coordination_surface",
-      "role": "external order-flow routing and auction mechanisms operating before protocol-level builder coordination",
+      "role": "external order-flow routing and auction surface operating before protocol-level builder coordination, with relevance under pressure from encrypted flow, sealed transactions, and commit-before-reveal mechanisms",
       "schema": "schemas/orderflowauction/0.1-research/schema.json",
       "anchor_doc": "anchors/orderflowauction.md",
       "market": {
@@ -186,7 +186,7 @@
       "stage": "research",
       "market_priority": "medium",
       "type": "coordination_surface",
-      "role": "external proof generation and proving coordination across zk systems and rollup infrastructure",
+      "role": "external proof generation and proving coordination surface across zk systems, validity proofs, rollups, proof aggregation, and distributed proving infrastructure",
       "schema": "schemas/provingmarket/0.1-research/schema.json",
       "anchor_doc": "anchors/provingmarket.md",
       "market": {
@@ -205,7 +205,7 @@
       "stage": "research",
       "market_priority": "medium",
       "type": "coordination_surface",
-      "role": "external sequencing coordination across rollups and shared sequencing environments",
+      "role": "external transaction ordering and sequencing coordination surface across rollups, shared sequencing systems, ordering rights, cross-domain execution, and settlement-adjacent infrastructure",
       "schema": "schemas/sequencingmarket/0.1-research/schema.json",
       "anchor_doc": "anchors/sequencingmarket.md",
       "market": {
@@ -224,7 +224,7 @@
       "stage": "research",
       "market_priority": "low",
       "type": "misaligned_abstraction",
-      "role": "legacy pre-ePBS market framing increasingly displaced by protocol-native roles, commitments, and constraints",
+      "role": "legacy pre-ePBS market framing increasingly displaced by protocol-native roles, commitments, payloads, inclusion constraints, and narrower execution-resource terminology",
       "schema": "schemas/blockspacemarket/0.1-research/schema.json",
       "anchor_doc": "anchors/blockspacemarket.md",
       "market": {
@@ -232,41 +232,6 @@
         "sale_strategy": "liquidate",
         "visibility": "background"
       }
-    }
-  ],
-  "external_primitives": [
-    {
-      "id": "peerdas",
-      "name": "PeerDAS",
-      "canonical_term": "peer data availability sampling",
-      "category": "primitive",
-      "coverage_status": "external",
-      "status": "mainnet-relevant",
-      "ens_status": "unowned",
-      "desired_ens": "peerdas.eth",
-      "summary": "Peer-to-peer data availability sampling mechanism enabling scalable blob verification without full data download."
-    },
-    {
-      "id": "blobfeemarket",
-      "name": "Blob Fee Market",
-      "canonical_term": "blob fee market",
-      "category": "market",
-      "coverage_status": "external",
-      "status": "active",
-      "ens_status": "unowned",
-      "desired_ens": "blobfeemarket.eth",
-      "summary": "Economic coordination layer governing blob fee pricing and allocation."
-    },
-    {
-      "id": "crosschainintents",
-      "name": "Cross-Chain Intents",
-      "canonical_term": "cross-chain intents",
-      "category": "standard",
-      "coverage_status": "external",
-      "status": "active",
-      "ens_status": null,
-      "desired_ens": null,
-      "summary": "Intent-based coordination mechanisms across chains and rollups."
     }
   ]
 }
