@@ -100,3 +100,31 @@ No curated references have been added for this anchor yet.
 
 This section is reserved for curated protocol references, implementation notes, or research context when applicable.
 <!-- MANUAL-SOURCES:END -->
+
+## Curated References
+
+- EIP-7732 — Enshrined Proposer-Builder Separation  
+  https://eips.ethereum.org/EIPS/eip-7732
+
+- Why Enshrine Proposer-Builder Separation — A viable path to ePBS  
+  https://ethresear.ch/t/why-enshrine-proposer-builder-separation-a-viable-path-to-epbs/15710
+
+- ePBS Design Constraints  
+  https://ethresear.ch/t/epbs-design-constraints/18728
+
+## Source Notes
+
+ePBS is treated by Vortik as a core protocol-facing primitive because it maps directly to proposer-builder separation becoming part of Ethereum’s consensus-layer design.
+
+The strongest semantic objects to monitor around this anchor are:
+
+- builder
+- proposer
+- bid
+- payload
+- commitment
+- payload reveal
+- payload timeliness
+- Payload Timeliness Committee (PTC)
+
+These notes are curated to support source traceability and semantic interpretation. They should be updated only when primary protocol references, implementation materials, or Ethereum core development discussions materially change.
