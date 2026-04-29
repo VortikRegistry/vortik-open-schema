@@ -1,11 +1,11 @@
 cff-version: 1.2.0
 title: Vortik Semantic Registry
-message: "If you use this registry in research or documentation, please cite it using the metadata below."
+message: "If you use this registry in research, documentation, or semantic tooling, please cite it using the metadata below."
 type: software
 
 authors:
   - name: Vortik Registry
-    affiliation: Independent research registry
+    affiliation: Independent semantic registry
 
 repository-code: https://github.com/VortikRegistry/vortik-open-schema
 url: https://vortikregistry.github.io/vortik-open-schema/
@@ -13,27 +13,38 @@ license: MIT
 
 abstract: >
   Independent semantic registry tracking terminology convergence across
-  Ethereum coordination primitives and coordination surfaces, including
-  proposer-builder separation (ePBS), inclusion enforcement mechanisms,
-  preconfirmation systems, solver networks, order flow auctions, and
-  builder markets. The registry provides a machine-readable layer for
-  structuring emerging concepts across execution and consensus architecture.
+  Ethereum coordination primitives, roles, constraints, external coordination
+  surfaces, and deprecated or misaligned abstractions. The registry indexes
+  ENS-anchored semantic surfaces including enshrined proposer-builder
+  separation (ePBS), fork-choice enforced inclusion lists (FOCIL),
+  commitment primitives, preconfirmation mechanisms, solver actors, order
+  flow auctions, proving markets, sequencing markets, single-slot finality
+  (SSF), and legacy market-oriented terminology. Vortik provides versioned
+  schemas, human-readable anchors, interpretive maps, and generated public
+  outputs for tracking Ethereum coordination language as it stabilizes.
 
 keywords:
   - ethereum
+  - semantic registry
   - protocol research
   - proposer builder separation
+  - epbs
   - inclusion lists
+  - focil
+  - commitments
   - preconfirmations
-  - solver networks
+  - solver systems
   - order flow auctions
-  - builder markets
-  - coordination architecture
+  - proving markets
+  - sequencing markets
+  - single slot finality
   - mev
   - block building
+  - coordination architecture
+  - ens
 
-version: 0.2
-date-released: 2026-03-06
+version: 0.6.3
+date-released: 2026-04-26
 
 preferred-citation:
   type: software
@@ -43,3 +54,4 @@ preferred-citation:
   year: 2026
   url: https://vortikregistry.github.io/vortik-open-schema/
   repository-code: https://github.com/VortikRegistry/vortik-open-schema
+  version: 0.6.3
