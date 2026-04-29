@@ -1,117 +1,197 @@
 # Semantic Status
 
-This document tracks the current semantic maturity of primitives, roles, and coordination surfaces referenced by the Vortik Semantic Registry.
+This document tracks the current semantic maturity of anchors referenced by the **Vortik Semantic Registry**.
 
-Status reflects **semantic stabilization**, not implementation readiness.
+Status reflects **semantic stabilization and registry classification**, not official Ethereum protocol authority.
+
+The registry distinguishes between protocol-native terminology, repairable ENS surfaces, premature concepts, external coordination surfaces, and deprecated abstractions.
 
 ---
 
-## Protocol Primitives (High Confidence)
+## Core
 
-These primitives are grounded in protocol specifications or active EIPs.
+Core anchors are protocol-aligned anchors with strong semantic grounding.
 
-- epbs — enshrined proposer-builder separation (EIP-7732)  
-- inclusionlist — fork-choice enforced inclusion (FOCIL, EIP-7805)  
+They are the highest-confidence surfaces currently tracked by Vortik.
+
+| Anchor ID | ENS | Canonical term | Type | Status |
+|---|---|---|---|---|
+| `epbs` | `epbs.eth` | enshrined proposer-builder separation (ePBS) | primitive | implemented |
+| `inclusionlist` | `inclusionlist.eth` | fork-choice enforced inclusion lists (FOCIL) | constraint | eip-active |
 
 These represent:
 
-→ **protocol-defined coordination mechanisms**  
-→ **structurally stable primitives**
+- protocol-facing coordination primitives or constraints
+- high semantic convergence
+- strong alignment between ENS naming and technical terminology
+- priority anchors within the current registry
 
 ---
 
-## Emerging Coordination Roles and Mechanisms
+## Repairable
 
-These surfaces reflect real coordination structures, but are still stabilizing in terminology and scope.
+Repairable anchors capture a valid underlying concept, but include imperfect ENS wording, approximate terminology, or partial naming mismatch.
 
-- commitmentlayer — commitment signaling (preconfirmation-related)  
-- preconflayer — preconfirmation systems  
-- solverlayer — solver coordination  
-- orderflowauction — order flow auctions (OFA)  
+| Anchor ID | ENS | Canonical term | Type | Status |
+|---|---|---|---|---|
+| `commitmentlayer` | `commitmentlayer.eth` | commitment | primitive | research |
+| `ssf` | `fastfinality.eth` | single-slot finality (SSF) | primitive | research |
 
 These represent:
 
-→ **active coordination mechanisms**  
-→ **partially stabilized terminology surfaces**
+- useful semantic surfaces
+- concepts with meaningful technical relevance
+- naming that does not perfectly match the strongest canonical term
+- anchors that should be monitored rather than treated as fully canonical
+
+Examples:
+
+- `commitmentlayer.eth` captures the important concept of **commitment**, but the suffix `layer` is not protocol-native.
+- `fastfinality.eth` captures the direction of faster finality, but **single-slot finality (SSF)** is the more precise term.
 
 ---
 
-## Ambiguous / Premature Surfaces
+## Premature
 
-These terms appear in research and discussion, but lack clear semantic boundaries or canonical definition.
+Premature anchors track real or emerging concepts that are not yet stable enough to treat as canonical.
 
-- executionmarket — execution coordination (ambiguous term)  
+| Anchor ID | ENS | Canonical term | Type | Status |
+|---|---|---|---|---|
+| `preconflayer` | `preconflayer.eth` | preconfirmation (emergent) | external_mechanism | research |
 
 These represent:
 
-→ **unstable terminology clusters**  
-→ **non-canonical coordination abstractions**
+- meaningful but still evolving concepts
+- terminology that may converge, fragment, or be replaced
+- surfaces with technical relevance but incomplete semantic stabilization
 
-They are tracked to prevent premature standardization.
+`preconflayer.eth` is tracked because preconfirmation is a real and important Ethereum-adjacent coordination phenomenon, but the ENS suffix `layer` remains non-canonical.
 
 ---
 
-## Legacy / Degrading Abstractions
+## External
 
-These concepts were historically useful, but are losing precision due to protocol evolution.
+External anchors track Ethereum-adjacent coordination surfaces that remain outside the current Ethereum L1 protocol core.
 
-- buildermarket — builder markets / builder coordination abstraction  
+| Anchor ID | ENS | Canonical term | Type | Status |
+|---|---|---|---|---|
+| `solverlayer` | `solverlayer.eth` | solver (external) | external_actor | research |
+| `orderflowauction` | `orderflowauction.eth` | order flow auctions (OFA) | coordination_surface | research |
+| `provingmarket` | `provingmarket.eth` | proving markets | coordination_surface | research |
+| `sequencingmarket` | `sequencingmarket.eth` | sequencing markets | coordination_surface | research |
 
 These represent:
 
-→ **superseded coordination models**  
-→ **semantic drift away from protocol reality**
+- off-protocol or Ethereum-adjacent actors and mechanisms
+- rollup, intent, order-flow, proof-generation, or sequencing infrastructure
+- useful semantic surfaces that should not be overstated as Ethereum L1 core primitives
 
-In particular:
+External does not mean irrelevant.
 
-- builder is now a **protocol-defined role (ePBS)**  
-- market-based descriptions are being replaced by **role-based coordination**
+It means the anchor is relevant to Ethereum coordination or adjacent infrastructure, but not currently protocol-native at L1.
 
 ---
 
-## Consensus Research
+## Deprecated
 
-These primitives relate to long-term consensus evolution.
+Deprecated anchors preserve older, broad, or market-oriented abstractions whose precision has decreased relative to current protocol-native terminology.
 
-- ssf — single-slot finality (SSF)  
+| Anchor ID | ENS | Canonical term | Type | Status |
+|---|---|---|---|---|
+| `buildermarket` | `buildermarket.eth` | builder | misaligned_abstraction | research |
+| `executionmarket` | `executionmarket.eth` | execution (ambiguous) | misaligned_abstraction | research |
+| `blockspacemarket` | `blockspacemarket.eth` | blockspace markets | misaligned_abstraction | research |
 
 These represent:
 
-→ **high-impact research directions**  
-→ **emerging consensus-level primitives**
+- legacy ecosystem framing
+- broad market-oriented terminology
+- abstractions with weak mapping to current protocol objects
+- surfaces retained for historical and comparative interpretation
+
+They are tracked because semantic drift matters.
+
+A term can lose precision while still remaining useful for understanding the evolution of Ethereum coordination language.
 
 ---
 
-## Interpretation
+## Structural Shift
 
-The registry distinguishes between:
+Ethereum coordination is increasingly described through:
 
-- **protocol primitives** → defined or formalizing within the protocol  
-- **coordination roles and mechanisms** → observable system structures  
-- **ambiguous terminology surfaces** → unstable or overlapping concepts  
-- **legacy abstractions** → concepts losing structural relevance  
+- protocol-defined roles
+- signed bids
+- payload commitments
+- reveal behavior
+- inclusion constraints
+- validator and committee enforcement
+- external coordination surfaces
+- implementation-facing objects
+
+This weakens broad market-first terminology when that terminology does not map cleanly to protocol primitives, roles, constraints, or implementation-facing objects.
 
 ---
 
-## Structural Shift (2026)
+## Classification Summary
 
-Ethereum coordination is transitioning from:
+Vortik currently uses the following semantic classifications:
 
-→ market-based and layered descriptions  
+| Classification | Meaning |
+|---|---|
+| `core` | Strong protocol-facing semantic alignment |
+| `repairable` | Valid underlying concept with imperfect ENS naming |
+| `premature` | Real but not yet semantically stable |
+| `external` | Ethereum-adjacent surface outside current L1 core |
+| `deprecated` | Legacy or broad abstraction with reduced precision |
 
-to:
+---
 
-→ **role-based coordination**  
-→ **commitment-driven validation**  
-→ **constraint-enforced inclusion**  
-→ **asynchronous execution pipelines**
+## Interpretation Rules
 
-This shift directly impacts semantic classification.
+- Classification reflects semantic status, not official protocol status.
+- Inclusion in the registry does not imply Ethereum standardization.
+- ENS naming does not define the primitive; the canonical term does.
+- Deprecated terms may remain useful for historical comparison.
+- External terms may remain strategically important without being L1-native.
+- Watchlist signals should not become anchors without strong technical grounding.
+
+---
+
+## Relationship to Registry
+
+The current state of each anchor is indexed in:
+
+- `registry.json`
+
+Formal machine-readable definitions are maintained in:
+
+- `schemas/*`
+
+Human-readable interpretation is maintained in:
+
+- `anchors/*`
+
+Emerging watchlist signals are maintained separately in:
+
+- `maps/emerging-signals.json`
+
+---
+
+## Current Focus
+
+The current semantic focus of Vortik is:
+
+- maintaining `epbs.eth` and `inclusionlist.eth` as core anchors
+- tracking `commitmentlayer.eth` and `fastfinality.eth` as repairable but meaningful surfaces
+- treating `preconflayer.eth` as premature but relevant
+- preserving external surfaces without overstating L1 protocol alignment
+- retaining deprecated market abstractions for comparison while prioritizing protocol-native terminology
+- reducing drift across registry, schemas, anchors, maps, docs, and generated outputs
 
 ---
 
 ## Notes
 
-- Terminology evolves as research converges  
-- Classification is defined at the schema level and may change over time  
-- Inclusion does not imply protocol standardization
+- Terminology evolves as research, implementation, and protocol discussions converge.
+- Classification may change over time as stronger technical evidence appears.
+- Vortik is an independent semantic registry, not an official Ethereum specification.
