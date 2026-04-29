@@ -1,13 +1,14 @@
 {
   "registry": "vortik-semantic-registry",
-  "index_version": "1.0.0",
+  "index_version": "1.0.1",
   "generated_from": "registry.json",
-  "last_updated": "2026-04-16T05:14:20.147Z",
+  "last_updated": "2026-04-29T02:46:34.049Z",
   "summary": {
     "total": 12,
     "featured": 2,
-    "standard": 7,
-    "background": 3
+    "standard": 6,
+    "background": 4,
+    "hidden": 0
   },
   "segments": {
     "featured": [
@@ -18,7 +19,10 @@
         "priority": "high",
         "sale_strategy": "hold",
         "classification": "core",
-        "status": "core"
+        "status": "implemented",
+        "status_label": "core",
+        "stage": "canonical",
+        "type": "primitive"
       },
       {
         "id": "inclusionlist",
@@ -27,27 +31,36 @@
         "priority": "high",
         "sale_strategy": "hold",
         "classification": "core",
-        "status": "core"
+        "status": "eip-active",
+        "status_label": "core",
+        "stage": "canonical",
+        "type": "constraint"
       }
     ],
     "standard": [
       {
         "id": "commitmentlayer",
         "ens": "commitmentlayer.eth",
-        "canonical_term": "commitments",
+        "canonical_term": "commitment",
         "priority": "medium",
         "sale_strategy": "monitor",
         "classification": "repairable",
-        "status": "emerging"
+        "status": "research",
+        "status_label": "emerging",
+        "stage": "emerging",
+        "type": "primitive"
       },
       {
         "id": "preconflayer",
         "ens": "preconflayer.eth",
-        "canonical_term": "preconfirmation systems",
+        "canonical_term": "preconfirmation (emergent)",
         "priority": "medium",
         "sale_strategy": "opportunistic",
-        "classification": "repairable",
-        "status": "emerging"
+        "classification": "premature",
+        "status": "research",
+        "status_label": "emerging",
+        "stage": "research",
+        "type": "external_mechanism"
       },
       {
         "id": "ssf",
@@ -56,16 +69,10 @@
         "priority": "medium",
         "sale_strategy": "opportunistic",
         "classification": "repairable",
-        "status": "emerging"
-      },
-      {
-        "id": "solverlayer",
-        "ens": "solverlayer.eth",
-        "canonical_term": "solver networks",
-        "priority": "medium",
-        "sale_strategy": "opportunistic",
-        "classification": "repairable",
-        "status": "transitional"
+        "status": "research",
+        "status_label": "emerging",
+        "stage": "research",
+        "type": "primitive"
       },
       {
         "id": "orderflowauction",
@@ -73,8 +80,11 @@
         "canonical_term": "order flow auctions (OFA)",
         "priority": "medium",
         "sale_strategy": "opportunistic",
-        "classification": "valid",
-        "status": "transitional"
+        "classification": "external",
+        "status": "research",
+        "status_label": "external",
+        "stage": "implemented",
+        "type": "coordination_surface"
       },
       {
         "id": "provingmarket",
@@ -82,8 +92,11 @@
         "canonical_term": "proving markets",
         "priority": "medium",
         "sale_strategy": "monitor",
-        "classification": "valid",
-        "status": "emerging"
+        "classification": "external",
+        "status": "research",
+        "status_label": "external",
+        "stage": "research",
+        "type": "coordination_surface"
       },
       {
         "id": "sequencingmarket",
@@ -91,28 +104,49 @@
         "canonical_term": "sequencing markets",
         "priority": "medium",
         "sale_strategy": "monitor",
-        "classification": "valid",
-        "status": "emerging"
+        "classification": "external",
+        "status": "research",
+        "status_label": "external",
+        "stage": "research",
+        "type": "coordination_surface"
       }
     ],
     "background": [
       {
         "id": "buildermarket",
         "ens": "buildermarket.eth",
-        "canonical_term": "builder markets",
+        "canonical_term": "builder",
         "priority": "low",
         "sale_strategy": "liquidate",
-        "classification": "premature",
-        "status": "deprecated"
+        "classification": "deprecated",
+        "status": "research",
+        "status_label": "deprecated",
+        "stage": "research",
+        "type": "misaligned_abstraction"
+      },
+      {
+        "id": "solverlayer",
+        "ens": "solverlayer.eth",
+        "canonical_term": "solver (external)",
+        "priority": "low",
+        "sale_strategy": "monitor",
+        "classification": "external",
+        "status": "research",
+        "status_label": "external",
+        "stage": "research",
+        "type": "external_actor"
       },
       {
         "id": "executionmarket",
         "ens": "executionmarket.eth",
-        "canonical_term": "execution coordination (ambiguous term)",
+        "canonical_term": "execution (ambiguous)",
         "priority": "low",
         "sale_strategy": "liquidate",
-        "classification": "premature",
-        "status": "deprecated"
+        "classification": "deprecated",
+        "status": "research",
+        "status_label": "deprecated",
+        "stage": "research",
+        "type": "misaligned_abstraction"
       },
       {
         "id": "blockspacemarket",
@@ -120,8 +154,11 @@
         "canonical_term": "blockspace markets",
         "priority": "low",
         "sale_strategy": "liquidate",
-        "classification": "premature",
-        "status": "deprecated"
+        "classification": "deprecated",
+        "status": "research",
+        "status_label": "deprecated",
+        "stage": "research",
+        "type": "misaligned_abstraction"
       }
     ],
     "hidden": []
