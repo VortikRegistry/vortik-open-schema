@@ -99,4 +99,37 @@ No curated references have been added for this anchor yet.
 ## Source Notes
 
 This section is reserved for curated protocol references, implementation notes, or research context when applicable.
+
+<!-- MANUAL-SOURCES:START -->
+## Curated References
+
+- EIP-7805 — Fork-Choice Enforced Inclusion Lists  
+  https://eips.ethereum.org/EIPS/eip-7805
+
+- Ethereum Research — Inclusion Lists and FOCIL-related discussions  
+  https://ethresear.ch/
+
+## Source Notes
+
+Inclusion lists are treated by Vortik as a core protocol-facing constraint because they map directly to transaction inclusion guarantees and fork-choice enforced censorship-resistance mechanisms.
+
+This anchor is grounded in the transition from discretionary transaction inclusion toward protocol-constrained inclusion behavior.
+
+The strongest semantic objects to monitor around this anchor are:
+
+- inclusion list
+- FOCIL
+- inclusion guarantee
+- fork-choice enforcement
+- validator committee
+- censorship resistance
+- builder constraint
+- proposer constraint
+- transaction inclusion requirement
+
+The ENS anchor `inclusionlist.eth` is treated as strongly aligned because it captures the durable human-readable inclusion-list category, while the canonical term tracks the more precise FOCIL mechanism.
+
+These references and notes are curated to support source traceability and semantic interpretation.
+
+They should be updated only when primary protocol references, implementation materials, or Ethereum core development discussions materially change.
 <!-- MANUAL-SOURCES:END -->
