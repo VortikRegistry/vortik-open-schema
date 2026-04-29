@@ -486,8 +486,23 @@ Vortik should preserve:
 
 ## System Status
 
-The registry is transitioning from:
+The registry is transitioning from semantic exploration to structured semantic infrastructure.
 
-```txt
-semantic exploration
-→ structured semantic infrastructure
+Current focus:
+
+- maintaining `epbs.eth` and `inclusionlist.eth` as core anchors
+- keeping schemas aligned with the registry index
+- preserving curated source sections
+- separating stable anchors from watchlist signals
+- reducing drift across registry, schemas, anchors, maps, docs, and generated outputs
+- avoiding overexpansion into weak or unsupported terminology
+
+---
+
+## Final Note
+
+Vortik is not a protocol, official standard, governance body, market, or execution system.
+
+It is an independent semantic registry for Ethereum coordination language.
+
+Its role is to make Ethereum’s coordination terminology easier to inspect, compare, classify, and track as the protocol and its surrounding infrastructure evolve.
