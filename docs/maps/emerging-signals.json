@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-26",
+  "generated_at": "2026-04-28",
   "source": "manual_signal_watchlist",
   "description": "Emerging semantic signals under watch for Vortik. These are not canonical anchors and should not be treated as protocol-stable registry primitives yet.",
   "signals": [
@@ -11,11 +11,11 @@
       "status": "draft-core-eip",
       "confidence": "high",
       "priority": "high",
-      "summary": "Execution-layer coordination object under watch as Ethereum execution research moves toward block-level access descriptions, sidecars, state healing, proposer commitments, and execution-resource decomposition.",
+      "summary": "Execution-layer coordination object under watch as Ethereum decomposes execution into narrower protocol-facing objects such as access lists, sidecars, state-healing inputs, and execution-resource descriptions.",
       "why_it_matters": [
-        "Signals movement toward narrower execution-layer terminology rather than broad market abstractions.",
-        "May pressure umbrella names such as executionmarket.eth and blockspacemarket.eth.",
-        "Could become a durable execution-facing semantic surface if protocol and client language continues converging around BAL terminology."
+        "Signals movement toward concrete execution-layer terminology rather than broad market abstractions.",
+        "May pressure broad labels such as execution market and blockspace market.",
+        "Could become a durable execution-facing semantic surface if convergence continues."
       ],
       "related_anchors": [
         "executionmarket",
@@ -32,14 +32,115 @@
       "status": "emerging",
       "confidence": "medium",
       "priority": "high",
-      "summary": "Protocol-facing committee concept associated with ePBS timing, payload reveal accountability, and builder/proposer coordination under enshrined block building.",
+      "summary": "Protocol-facing committee concept associated with ePBS timing, payload reveal accountability, and builder/proposer coordination.",
       "why_it_matters": [
         "Directly relates to ePBS coordination and payload reveal timing.",
-        "May become an important sub-surface around builder accountability.",
-        "Strengthens the need to track roles beneath the main ePBS primitive."
+        "Could become an important sub-surface around builder accountability.",
+        "Strengthens the need to track roles below the main ePBS primitive."
       ],
       "related_anchors": [
         "epbs"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "inclusionlistcommittee",
+      "name": "Inclusion List Committee",
+      "canonical_term": "inclusion list committee",
+      "category": "role",
+      "status": "watchlist",
+      "confidence": "medium",
+      "priority": "medium",
+      "summary": "Validator committee role associated with constructing or enforcing inclusion lists in FOCIL-like designs.",
+      "why_it_matters": [
+        "Introduces a concrete role inside inclusion-list enforcement.",
+        "Separates inclusion enforcement responsibility from a single proposer.",
+        "Could become more important if FOCIL terminology continues to stabilize."
+      ],
+      "related_anchors": [
+        "inclusionlist"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "partialblockauction",
+      "name": "Partial Block Auction",
+      "canonical_term": "partial block auction",
+      "category": "mechanism",
+      "status": "watchlist",
+      "confidence": "low",
+      "priority": "medium",
+      "summary": "Auction mechanism applied to part of a block, especially where inclusion-list-constrained space coexists with competitive allocation of remaining block capacity.",
+      "why_it_matters": [
+        "Connects inclusion constraints with residual block construction markets.",
+        "May become relevant if hybrid constrained/auctioned block construction models stabilize.",
+        "Naming remains unstable and should not be treated as canonical yet."
+      ],
+      "related_anchors": [
+        "inclusionlist",
+        "buildermarket",
+        "blockspacemarket"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "slotauction",
+      "name": "Slot Auction",
+      "canonical_term": "slot auction",
+      "category": "coordination_surface",
+      "status": "watchlist",
+      "confidence": "low",
+      "priority": "medium",
+      "summary": "Time-based rights allocation surface where rights to propose, influence, or economically control a future slot may be auctioned ahead of time.",
+      "why_it_matters": [
+        "May intersect with execution tickets or proposer-rights markets.",
+        "Captures a reusable coordination pattern around future slot control.",
+        "Terminology is ambiguous and should remain watchlist-only."
+      ],
+      "related_anchors": [
+        "executionmarket",
+        "orderflowauction"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "builderfallback",
+      "name": "Builder Fallback",
+      "canonical_term": "builder fallback",
+      "category": "mechanism",
+      "status": "watchlist",
+      "confidence": "low",
+      "priority": "medium",
+      "summary": "Fallback path where proposers or protocol participants revert to alternative block-building behavior if external builders fail, censor, or do not reveal payloads.",
+      "why_it_matters": [
+        "Relevant to PBS and ePBS robustness.",
+        "Connects builder failure, liveness, and censorship resistance.",
+        "Naming remains descriptive rather than canonical."
+      ],
+      "related_anchors": [
+        "epbs",
+        "buildermarket",
+        "inclusionlist"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "basedsequencing",
+      "name": "Based Sequencing",
+      "canonical_term": "based sequencing",
+      "category": "coordination_surface",
+      "status": "watchlist",
+      "confidence": "medium",
+      "priority": "medium",
+      "summary": "Rollup sequencing model where L2 ordering is anchored to L1 proposers rather than independent external sequencers.",
+      "why_it_matters": [
+        "Important to rollup sequencing and Ethereum-adjacent ordering design.",
+        "May influence preconfirmation, sequencing, and proposer-linked coordination.",
+        "Relevant but external to the current L1 core registry."
+      ],
+      "related_anchors": [
+        "sequencingmarket",
+        "preconflayer"
       ],
       "watch_status": "active"
     },
@@ -51,11 +152,11 @@
       "status": "emerging",
       "confidence": "medium",
       "priority": "medium",
-      "summary": "Protocol-facing encrypted-orderflow signal connecting inclusion guarantees, commit-before-reveal flow, and MEV-sensitive transaction protection.",
+      "summary": "Encrypted-orderflow signal connecting inclusion guarantees, commit-before-reveal flow, and MEV-sensitive transaction protection.",
       "why_it_matters": [
-        "Connects inclusion guarantees, encrypted order flow, and commit-before-reveal execution.",
         "May strengthen the semantic importance of inclusion lists as a public-facing primitive.",
-        "Introduces pressure toward more protocol-native vocabulary than generic OFA framing."
+        "May increase relevance of commitment-oriented vocabulary.",
+        "May pressure order-flow auction language if encrypted mempool terminology wins."
       ],
       "related_anchors": [
         "inclusionlist",
@@ -73,11 +174,11 @@
       "status": "watchlist",
       "confidence": "low",
       "priority": "medium",
-      "summary": "Forward-looking execution-coordination term under watch as Ethereum execution design may continue decomposing into narrower protocol-facing objects.",
+      "summary": "Forward-looking execution coordination term under watch. Not yet treated as a canonical Vortik anchor.",
       "why_it_matters": [
-        "Appears in forward-looking infrastructure narratives.",
-        "Could become strategically important if protocol discussion converges around the term.",
-        "Still too early for canonical treatment."
+        "Could become relevant if future execution coordination work converges around the term.",
+        "Still too early for canonical treatment.",
+        "Should remain watchlist-only until stronger protocol or implementation references stabilize."
       ],
       "related_anchors": [
         "executionmarket"
@@ -92,11 +193,11 @@
       "status": "roadmap-watch",
       "confidence": "medium",
       "priority": "medium",
-      "summary": "Finality roadmap concept under watch as SSF terminology may continue to displace broader fast-finality language.",
+      "summary": "Finality roadmap concept under watch as SSF continues to pressure broader fast-finality language.",
       "why_it_matters": [
-        "May pressure fastfinality.eth if SSF remains the dominant exact term.",
+        "May pressure fastfinality.eth if SSF becomes the dominant exact term.",
         "Relevant to long-term Ethereum roadmap semantics.",
-        "Should remain watchlisted until its roadmap status becomes more concrete."
+        "Should remain watchlist-only unless the registry later adds a more exact SSF-aligned anchor."
       ],
       "related_anchors": [
         "ssf"
@@ -110,11 +211,12 @@
       "category": "role",
       "status": "emerging",
       "confidence": "low",
-      "priority": "medium",
+      "priority": "low",
       "summary": "Potential future coordination role relevant to encrypted mempool or threshold decryption systems if protected order flow becomes more protocol-shaped.",
       "why_it_matters": [
         "Could emerge as a meaningful role if encrypted transaction flow becomes more formalized.",
-        "Represents a possible future semantic surface around protected order flow."
+        "Represents a possible semantic surface around protected order flow.",
+        "Still too early for registry-level treatment."
       ],
       "related_anchors": [
         "preconflayer",
@@ -122,3 +224,22 @@
       ],
       "watch_status": "active"
     }
+  ],
+  "ignored_terms": [
+    {
+      "id": "rankingfee",
+      "name": "Ranking Fee",
+      "reason": "Too narrow and design-specific. Better treated as internal mechanism vocabulary rather than a reusable semantic anchor."
+    },
+    {
+      "id": "inclusionconstraint",
+      "name": "Inclusion Constraint",
+      "reason": "Conceptually valid but too generic. Better captured through inclusionlist and FOCIL."
+    },
+    {
+      "id": "escrowedbids",
+      "name": "Escrowed Bids",
+      "reason": "Broad financial mechanism phrase with low Ethereum-specific naming distinctiveness."
+    }
+  ]
+}
