@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "validate": "npm run validate:registry && npm run validate:integrity",
+    "validate": "npm run validate:json && npm run validate:registry && npm run validate:integrity",
+    "validate:json": "node scripts/validate-json-files.mjs",
     "validate:registry": "node scripts/validate-registry.mjs",
     "validate:integrity": "node scripts/validate-integrity.mjs",
     "fix:schemas": "node scripts/fix-schemas.cjs",
