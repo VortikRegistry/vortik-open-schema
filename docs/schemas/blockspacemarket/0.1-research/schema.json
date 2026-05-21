@@ -1,35 +1,99 @@
 {
-  "name": "blockspacemarket",
-  "version": "0.1-research",
-  "type": "market",
-  "description": "Legacy blockspace market abstraction",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/blockspacemarket/0.1-research/schema.json",
+  "title": "Vortik Open Schema — Blockspace Markets",
+  "description": "Machine-readable schema for the Blockspace Markets semantic anchor within the Vortik Semantic Registry. Research artifact; not an official protocol specification.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "version",
+    "canonical_term",
+    "classification",
+    "status",
+    "type",
+    "summary",
+    "pipeline_position",
+    "coordination_role",
+    "protocol_grounding",
+    "naming",
+    "sources"
+  ],
   "properties": {
     "id": {
       "type": "string",
-      "const": "blockspacemarket"
+      "const": "blockspacemarket",
+      "description": "Registry identifier for this semantic anchor."
+    },
+    "version": {
+      "type": "string",
+      "const": "0.1-research",
+      "description": "Schema version for this anchor."
     },
     "canonical_term": {
       "type": "string",
-      "const": "blockspace markets"
+      "const": "blockspace markets",
+      "description": "Canonical term tracked by this legacy market-oriented anchor."
     },
     "classification": {
       "type": "string",
-      "const": "deprecated"
+      "const": "deprecated",
+      "description": "Semantic classification within the Vortik registry."
     },
     "status": {
       "type": "string",
-      "const": "research"
+      "const": "research",
+      "description": "Current maturity/status of the tracked surface."
     },
     "type": {
       "type": "string",
-      "const": "misaligned_abstraction"
+      "const": "misaligned_abstraction",
+      "description": "Legacy or broad market-oriented abstraction with reduced precision relative to protocol-native terminology."
+    },
+    "summary": {
+      "type": "string",
+      "description": "Legacy blockspace market abstraction increasingly displaced by protocol-native roles, commitments, payload semantics, inclusion constraints, and narrower execution-resource terminology.",
+      "minLength": 20
+    },
+    "pipeline_position": {
+      "type": "array",
+      "description": "Interpretive coordination domains where this legacy abstraction has historically been relevant.",
+      "minItems": 1,
+      "maxItems": 2,
+      "items": {
+        "type": "string",
+        "enum": [
+          "blockspace coordination",
+          "execution coordination"
+        ]
+      }
+    },
+    "coordination_role": {
+      "type": "array",
+      "description": "Key coordination functions historically described by blockspace market terminology.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    },
+    "protocol_grounding": {
+      "type": "array",
+      "description": "Primary protocol, research, or ecosystem references grounding this legacy abstraction.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
     },
     "naming": {
       "type": "object",
       "additionalProperties": false,
       "required": [
         "ens",
-        "canonical"
+        "canonical",
+        "mismatch",
+        "notes"
       ],
       "properties": {
         "ens": {
@@ -39,7 +103,24 @@
         "canonical": {
           "type": "string",
           "const": "blockspace markets"
+        },
+        "mismatch": {
+          "type": "boolean",
+          "const": true
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 10
         }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "description": "Primary source references for this anchor.",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "format": "uri"
       }
     }
   }
