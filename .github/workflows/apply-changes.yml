@@ -3,21 +3,29 @@ name: Apply Registry Changes
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   apply-changes:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+
+      - name: Install dependencies if needed
+        run: npm install || true
+
+      - name: Validate JSON before applying changes
+        run: node scripts/validate-json-files.mjs
 
       - name: Apply requested changes
         run: node scripts/apply-changes.cjs
@@ -49,11 +57,8 @@ jobs:
       - name: Sync docs
         run: node scripts/sync-docs.mjs
 
-      - name: Validate registry
-        run: node scripts/validate-registry.mjs
-
-      - name: Validate integrity
-        run: node scripts/validate-integrity.mjs
+      - name: Run full validation
+        run: npm run validate
 
       - name: Commit generated updates if changed
         run: |
