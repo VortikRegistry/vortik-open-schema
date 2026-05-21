@@ -1,4 +1,4 @@
-ñ[
+[
   {
     "id": "epbs",
     "term": "enshrined proposer-builder separation (ePBS)",
@@ -11,13 +11,13 @@
   },
   {
     "id": "commitmentlayer",
-    "term": "preconfirmation commitments",
+    "term": "commitment",
     "classification": "repairable"
   },
   {
     "id": "preconflayer",
-    "term": "preconfirmation systems",
-    "classification": "repairable"
+    "term": "preconfirmation (emergent)",
+    "classification": "premature"
   },
   {
     "id": "ssf",
@@ -26,22 +26,37 @@
   },
   {
     "id": "buildermarket",
-    "term": "builder markets",
-    "classification": "premature"
+    "term": "builder",
+    "classification": "deprecated"
   },
   {
     "id": "solverlayer",
-    "term": "solver networks",
-    "classification": "repairable"
+    "term": "solver (external)",
+    "classification": "external"
   },
   {
     "id": "executionmarket",
-    "term": "execution coordination (ambiguous term)",
-    "classification": "premature"
+    "term": "execution (ambiguous)",
+    "classification": "deprecated"
   },
   {
     "id": "orderflowauction",
     "term": "order flow auctions (OFA)",
-    "classification": "valid"
+    "classification": "external"
+  },
+  {
+    "id": "provingmarket",
+    "term": "proving markets",
+    "classification": "external"
+  },
+  {
+    "id": "sequencingmarket",
+    "term": "sequencing markets",
+    "classification": "external"
+  },
+  {
+    "id": "blockspacemarket",
+    "term": "blockspace markets",
+    "classification": "deprecated"
   }
 ]
