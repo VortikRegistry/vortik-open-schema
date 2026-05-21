@@ -24,8 +24,11 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies (if any)
+      - name: Install dependencies if needed
         run: npm install || true
+
+      - name: Validate all JSON files
+        run: node scripts/validate-json-files.mjs
 
       - name: Validate registry.json
         run: |
