@@ -1,13 +1,10 @@
-name: Apply Changes
+name: Apply Registry Changes
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - "updates/change-request.json"
 
 jobs:
-  apply:
+  apply-changes:
     runs-on: ubuntu-latest
 
     permissions:
@@ -22,18 +19,53 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Apply changes
+      - name: Apply requested changes
         run: node scripts/apply-changes.cjs
 
-      - name: Validate after apply
+      - name: Sync schemas from registry
+        run: node scripts/sync-schemas-from-registry.mjs
+
+      - name: Generate sources from registry
+        run: node scripts/generate-sources-from-registry.mjs
+
+      - name: Fix schemas
+        run: node scripts/fix-schemas.cjs
+
+      - name: Generate anchors index
+        run: node scripts/generate-anchors-index.mjs
+
+      - name: Generate market index
+        run: node scripts/generate-market-index.mjs
+
+      - name: Generate coordination map
+        run: node scripts/generate-map.mjs
+
+      - name: Generate market document
+        run: node scripts/generate-market-doc.mjs
+
+      - name: Generate market HTML
+        run: node scripts/generate-market-html.mjs
+
+      - name: Sync docs
+        run: node scripts/sync-docs.mjs
+
+      - name: Validate registry
         run: node scripts/validate-registry.mjs
 
-      - name: Commit changes if valid
+      - name: Validate integrity
+        run: node scripts/validate-integrity.mjs
+
+      - name: Commit generated updates if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add .
+          git add registry.json
+          git add schemas/
+          git add anchors.index.json
+          git add market.index.json
+          git add maps/
+          git add docs/
 
-          git diff --cached --quiet || git commit -m "apply semantic changes"
+          git diff --cached --quiet || git commit -m "apply registry changes"
           git push
