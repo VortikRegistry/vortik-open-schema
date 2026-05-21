@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-04-28",
+  "generated_at": "2026-05-21",
   "source": "manual_signal_watchlist",
   "description": "Emerging semantic signals under watch for Vortik. These are not canonical anchors and should not be treated as protocol-stable registry primitives yet.",
   "signals": [
     {
       "id": "blockaccesslist",
-      "name": "Block Access List",
-      "canonical_term": "block access list (BAL)",
-      "category": "mechanism",
-      "status": "draft-core-eip",
+      "name": "Block-Level Access Lists",
+      "canonical_term": "block-level access lists (BALs)",
+      "category": "execution",
+      "status": "watchlist",
       "confidence": "high",
       "priority": "high",
-      "summary": "Execution-layer coordination object under watch as Ethereum decomposes execution into narrower protocol-facing objects such as access lists, sidecars, state-healing inputs, and execution-resource descriptions.",
+      "summary": "Execution-layer object under watch as Ethereum moves toward deterministic state access, execution predictability, and parallel execution.",
       "why_it_matters": [
         "Signals movement toward concrete execution-layer terminology rather than broad market abstractions.",
-        "May pressure broad labels such as execution market and blockspace market.",
-        "Could become a durable execution-facing semantic surface if convergence continues."
+        "Supports deterministic execution and parallel execution narratives.",
+        "May pressure broad labels such as execution market and blockspace market."
       ],
       "related_anchors": [
         "executionmarket",
         "blockspacemarket",
-        "preconflayer"
+        "epbs"
       ],
       "watch_status": "active"
     },
@@ -29,7 +29,7 @@
       "name": "Payload Timeliness Committee",
       "canonical_term": "payload timeliness committee (PTC)",
       "category": "role",
-      "status": "emerging",
+      "status": "watchlist",
       "confidence": "medium",
       "priority": "high",
       "summary": "Protocol-facing committee concept associated with ePBS timing, payload reveal accountability, and builder/proposer coordination.",
@@ -44,21 +44,586 @@
       "watch_status": "active"
     },
     {
-      "id": "inclusionlistcommittee",
-      "name": "Inclusion List Committee",
-      "canonical_term": "inclusion list committee",
-      "category": "role",
+      "id": "bid",
+      "name": "Bid",
+      "canonical_term": "bid",
+      "category": "context",
+      "status": "context",
+      "confidence": "high",
+      "priority": "high",
+      "summary": "Core ePBS-adjacent vocabulary around builder-proposer coordination and commitment-based block construction.",
+      "why_it_matters": [
+        "Appears directly in the shift from auction framing toward commitment semantics.",
+        "Strengthens ePBS-related terminology.",
+        "Should remain contextual because it is too generic as a standalone ENS anchor."
+      ],
+      "related_anchors": [
+        "epbs",
+        "buildermarket",
+        "orderflowauction"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "payload",
+      "name": "Payload",
+      "canonical_term": "payload",
+      "category": "context",
+      "status": "context",
+      "confidence": "high",
+      "priority": "high",
+      "summary": "Core ePBS-adjacent vocabulary around block contents, reveal behavior, and builder-produced execution data.",
+      "why_it_matters": [
+        "Payload terminology is central to ePBS and builder accountability.",
+        "It supports stronger semantic alignment around payload commitments and payload reveal.",
+        "Too broad to promote as a standalone registry anchor at this stage."
+      ],
+      "related_anchors": [
+        "epbs",
+        "executionmarket"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "payloadreveal",
+      "name": "Payload Reveal",
+      "canonical_term": "payload reveal",
+      "category": "context",
+      "status": "context",
+      "confidence": "high",
+      "priority": "high",
+      "summary": "Reveal-phase vocabulary associated with ePBS builder commitments, liveness risk, and payload timeliness.",
+      "why_it_matters": [
+        "Directly connected to no-reveal and free-option risk.",
+        "Strengthens the execution hardening narrative around ePBS.",
+        "Best tracked as contextual vocabulary below the main epbs anchor."
+      ],
+      "related_anchors": [
+        "epbs",
+        "commitmentlayer"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "executionrights",
+      "name": "Execution Rights",
+      "canonical_term": "execution rights",
+      "category": "primitive",
+      "status": "consolidate",
+      "confidence": "medium",
+      "priority": "high",
+      "summary": "Abstract authority to determine execution payload contents, ordering behavior, or execution-related coordination decisions.",
+      "why_it_matters": [
+        "Foundational abstraction behind execution tickets, future-slot markets, proposer delegation, and PBS evolution.",
+        "Stronger conceptual signal than many narrower auction variants.",
+        "Still too broad for anchor promotion without further protocol-level convergence."
+      ],
+      "related_anchors": [
+        "executionmarket",
+        "epbs",
+        "commitmentlayer"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "executionrightsmarket",
+      "name": "Execution Rights Market",
+      "canonical_term": "execution rights market",
+      "category": "coordination_surface",
+      "status": "prepare",
+      "confidence": "medium",
+      "priority": "high",
+      "summary": "Generalized market surface for buying, selling, delegating, or allocating execution authority.",
+      "why_it_matters": [
+        "May become a more precise successor framing to generic execution market language.",
+        "Connects execution tickets, slot markets, proposer rights, and execution delegation.",
+        "Should remain in emerging signals until terminology stabilizes further."
+      ],
+      "related_anchors": [
+        "executionmarket",
+        "epbs"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "executiontickets",
+      "name": "Execution Tickets",
+      "canonical_term": "execution tickets",
+      "category": "primitive",
+      "status": "prepare",
+      "confidence": "medium",
+      "priority": "high",
+      "summary": "Forward-looking execution coordination primitive involving transferable rights over future execution payload production.",
+      "why_it_matters": [
+        "One of the stronger newer terms around future execution rights.",
+        "Could become important in post-ePBS execution-rights design.",
+        "Not yet treated as a canonical Vortik anchor."
+      ],
+      "related_anchors": [
+        "executionmarket",
+        "epbs"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "slotfutures",
+      "name": "Slot Futures",
+      "canonical_term": "slot futures",
+      "category": "primitive",
+      "status": "prepare",
+      "confidence": "medium",
+      "priority": "high",
+      "summary": "Transferable claims or contracts tied to rights over future slots, including execution or sequencing authority.",
+      "why_it_matters": [
+        "Distinctive and memorable future-slot terminology.",
+        "Intersects with execution tickets and proposer-rights markets.",
+        "Still dependent on broader execution-rights architecture."
+      ],
+      "related_anchors": [
+        "executionmarket",
+        "epbs",
+        "sequencingmarket"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "executionfutures",
+      "name": "Execution Futures",
+      "canonical_term": "execution futures",
+      "category": "coordination_surface",
       "status": "watchlist",
       "confidence": "medium",
       "priority": "medium",
-      "summary": "Validator committee role associated with constructing or enforcing inclusion lists in FOCIL-like designs.",
+      "summary": "Forward market structure where rights to future execution payload production are traded ahead of the target slot.",
       "why_it_matters": [
-        "Introduces a concrete role inside inclusion-list enforcement.",
-        "Separates inclusion enforcement responsibility from a single proposer.",
-        "Could become more important if FOCIL terminology continues to stabilize."
+        "Extends execution rights into temporal pricing and hedging.",
+        "Overlaps with execution tickets and slot futures.",
+        "Naming remains broad and should remain below registry-anchor level."
       ],
       "related_anchors": [
+        "executionmarket",
+        "epbs"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "proposerrights",
+      "name": "Proposer Rights",
+      "canonical_term": "proposer rights",
+      "category": "primitive",
+      "status": "consolidate",
+      "confidence": "medium",
+      "priority": "high",
+      "summary": "Abstract set of rights associated with block proposal authority, including ordering, execution selection, and inclusion decisions.",
+      "why_it_matters": [
+        "Reusable abstraction behind PBS evolution, delegation systems, and execution markets.",
+        "Widely understandable and increasingly stable as a conceptual layer.",
+        "Better as a conceptual signal than a primary anchor for now."
+      ],
+      "related_anchors": [
+        "epbs",
+        "executionmarket",
+        "preconflayer"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "proposerlookahead",
+      "name": "Proposer Lookahead",
+      "canonical_term": "proposer lookahead",
+      "category": "primitive",
+      "status": "watchlist",
+      "confidence": "medium",
+      "priority": "medium",
+      "summary": "Advance visibility into future proposers or proposer schedules before slot execution.",
+      "why_it_matters": [
+        "Enables preconfirmations, delegation, and future-slot coordination mechanisms.",
+        "Foundational but not highly differentiated linguistically.",
+        "Importance depends on future consensus scheduling changes."
+      ],
+      "related_anchors": [
+        "epbs",
+        "preconflayer",
+        "sequencingmarket"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "proposerdelegation",
+      "name": "Proposer Delegation",
+      "canonical_term": "proposer delegation",
+      "category": "mechanism",
+      "status": "prepare",
+      "confidence": "medium",
+      "priority": "medium",
+      "summary": "Delegation of proposer-associated rights such as sequencing, execution selection, or commitment issuance to external actors.",
+      "why_it_matters": [
+        "Separates validator ownership from operational coordination functions.",
+        "Relevant across based sequencing, preconfirmation, and execution-rights designs.",
+        "Still broad and should not become a registry anchor without stronger convergence."
+      ],
+      "related_anchors": [
+        "epbs",
+        "preconflayer",
+        "sequencingmarket"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "executioncommitments",
+      "name": "Execution Commitments",
+      "canonical_term": "execution commitments",
+      "category": "mechanism",
+      "status": "watchlist",
+      "confidence": "medium",
+      "priority": "high",
+      "summary": "Commitments tied specifically to execution behavior, inclusion, ordering, or execution-related guarantees.",
+      "why_it_matters": [
+        "Separates execution guarantees from broader consensus guarantees.",
+        "Connects ePBS, preconfirmations, execution rights, and commitment-oriented infrastructure.",
+        "Overlaps with builder commitments and inclusion commitments."
+      ],
+      "related_anchors": [
+        "commitmentlayer",
+        "epbs",
+        "preconflayer",
+        "executionmarket"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "buildercommitments",
+      "name": "Builder Commitments",
+      "canonical_term": "builder commitments",
+      "category": "mechanism",
+      "status": "watchlist",
+      "confidence": "medium",
+      "priority": "high",
+      "summary": "Commitments made by builders around payload production, inclusion, ordering, reveal behavior, or execution-related guarantees.",
+      "why_it_matters": [
+        "Directly connected to ePBS reliability, payload reveal, and builder accountability.",
+        "Important bridge between commitmentlayer and epbs.",
+        "Naming remains crowded and should stay in watchlist."
+      ],
+      "related_anchors": [
+        "epbs",
+        "commitmentlayer",
+        "buildermarket"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "inclusioncommitments",
+      "name": "Inclusion Commitments",
+      "canonical_term": "inclusion commitments",
+      "category": "mechanism",
+      "status": "watchlist",
+      "confidence": "medium",
+      "priority": "high",
+      "summary": "Explicit commitments guaranteeing that transactions will be included under defined constraints.",
+      "why_it_matters": [
+        "Connects inclusion lists, preconfirmations, and commitment infrastructure.",
+        "Converts inclusion from best-effort behavior into a stronger coordination object.",
+        "Overlaps with FOCIL and preconfirmation terminology."
+      ],
+      "related_anchors": [
+        "inclusionlist",
+        "commitmentlayer",
+        "preconflayer"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "inclusionauction",
+      "name": "Inclusion Auction",
+      "canonical_term": "inclusion auction",
+      "category": "mechanism",
+      "status": "prepare",
+      "confidence": "medium",
+      "priority": "medium",
+      "summary": "Auction-like mechanism specifically allocating guaranteed inclusion capacity or inclusion priority.",
+      "why_it_matters": [
+        "More specific than generic execution auction language.",
+        "Connects inclusion rights with transaction guarantee systems.",
+        "Still not canonical and should remain a preparation signal only."
+      ],
+      "related_anchors": [
+        "inclusionlist",
+        "orderflowauction",
+        "executionmarket"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "inclusionlistpayload",
+      "name": "Inclusion List Payload",
+      "canonical_term": "inclusion list payload",
+      "category": "mechanism",
+      "status": "watchlist",
+      "confidence": "medium",
+      "priority": "medium",
+      "summary": "Portion or representation of a block payload corresponding to transactions mandated by an inclusion list.",
+      "why_it_matters": [
+        "Formalizes how inclusion constraints may materialize inside block construction.",
+        "Separates guaranteed inclusion from builder-selected transactions.",
+        "Naming is not yet converged enough for registry-anchor treatment."
+      ],
+      "related_anchors": [
+        "inclusionlist",
+        "epbs"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "payloadconstraints",
+      "name": "Payload Constraints",
+      "canonical_term": "payload constraints",
+      "category": "constraint",
+      "status": "watchlist",
+      "confidence": "medium",
+      "priority": "high",
+      "summary": "Constraint vocabulary describing rules or obligations attached to payload construction, reveal behavior, or inclusion enforcement.",
+      "why_it_matters": [
+        "Connects ePBS payload construction with FOCIL-style inclusion enforcement.",
+        "May become relevant if inclusion constraints integrate directly into builder APIs.",
+        "Still emerging terminology and not yet a canonical object."
+      ],
+      "related_anchors": [
+        "epbs",
+        "inclusionlist",
+        "commitmentlayer"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "builderobligations",
+      "name": "Builder Obligations",
+      "canonical_term": "builder obligations",
+      "category": "constraint",
+      "status": "watchlist",
+      "confidence": "medium",
+      "priority": "high",
+      "summary": "Obligation vocabulary around builders complying with payload, inclusion, reveal, or execution-related constraints.",
+      "why_it_matters": [
+        "Important for ePBS accountability and FOCIL interaction.",
+        "Signals a move from voluntary builder behavior toward explicit obligation semantics.",
+        "Could become important in builder-facing tooling and dashboards."
+      ],
+      "related_anchors": [
+        "epbs",
+        "inclusionlist",
+        "buildermarket"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "constrainedpayloads",
+      "name": "Constrained Payloads",
+      "canonical_term": "constrained payloads",
+      "category": "constraint",
+      "status": "watchlist",
+      "confidence": "low",
+      "priority": "medium",
+      "summary": "Emerging vocabulary for payloads subject to inclusion, ordering, reveal, or execution constraints.",
+      "why_it_matters": [
+        "May connect FOCIL with ePBS payload construction.",
+        "Could matter if implementation language stabilizes around constrained payload construction.",
+        "Currently too early and too descriptive for anchor treatment."
+      ],
+      "related_anchors": [
+        "epbs",
         "inclusionlist"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "executionescrow",
+      "name": "Execution Escrow",
+      "canonical_term": "execution escrow",
+      "category": "mechanism",
+      "status": "watchlist",
+      "confidence": "low",
+      "priority": "medium",
+      "summary": "Escrow structure used to economically secure execution-related guarantees or commitments before final inclusion.",
+      "why_it_matters": [
+        "Introduces enforceable collateralization into execution guarantee systems.",
+        "May connect to commitment enforcement and preconfirmation infrastructure.",
+        "Terminology is not yet standardized."
+      ],
+      "related_anchors": [
+        "commitmentlayer",
+        "preconflayer",
+        "executionmarket"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "sequencingrights",
+      "name": "Sequencing Rights",
+      "canonical_term": "sequencing rights",
+      "category": "coordination_surface",
+      "status": "watchlist",
+      "confidence": "medium",
+      "priority": "medium",
+      "summary": "Abstract right to determine transaction ordering for a block, rollup, shared sequencer, or sequencing environment.",
+      "why_it_matters": [
+        "Relevant across based sequencing, shared sequencing, delegation, and execution access systems.",
+        "Conceptually strong but not uniquely labeled.",
+        "May converge into a more specific canonical term later."
+      ],
+      "related_anchors": [
+        "sequencingmarket",
+        "preconflayer",
+        "executionmarket"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "sequencingcommitments",
+      "name": "Sequencing Commitments",
+      "canonical_term": "sequencing commitments",
+      "category": "mechanism",
+      "status": "watchlist",
+      "confidence": "low",
+      "priority": "medium",
+      "summary": "Commitments governing transaction ordering behavior or sequencing guarantees across sequencing systems.",
+      "why_it_matters": [
+        "Relevant to shared sequencing and ordering guarantees.",
+        "Overlaps with broader commitment systems.",
+        "Likely to remain implementation-specific unless naming converges."
+      ],
+      "related_anchors": [
+        "sequencingmarket",
+        "commitmentlayer",
+        "preconflayer"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "basedsequencing",
+      "name": "Based Sequencing",
+      "canonical_term": "based sequencing",
+      "category": "coordination_surface",
+      "status": "watchlist",
+      "confidence": "medium",
+      "priority": "medium",
+      "summary": "Rollup sequencing model where L2 ordering is anchored to L1 proposers rather than independent external sequencers.",
+      "why_it_matters": [
+        "Important to rollup sequencing and Ethereum-adjacent ordering design.",
+        "May influence preconfirmation, sequencing, and proposer-linked coordination.",
+        "Relevant but external to the current L1 core registry."
+      ],
+      "related_anchors": [
+        "sequencingmarket",
+        "preconflayer"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "basedpreconfirmations",
+      "name": "Based Preconfirmations",
+      "canonical_term": "based preconfirmations",
+      "category": "mechanism",
+      "status": "watchlist",
+      "confidence": "medium",
+      "priority": "medium",
+      "summary": "Preconfirmations issued under sequencing models anchored directly to Ethereum proposers rather than external centralized sequencers.",
+      "why_it_matters": [
+        "Bridges based sequencing with transaction guarantees.",
+        "May become important if proposer-native low-latency coordination grows.",
+        "Terminology remains fluid and should not be treated as canonical yet."
+      ],
+      "related_anchors": [
+        "preconflayer",
+        "sequencingmarket",
+        "commitmentlayer"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "flowmarkets",
+      "name": "Flow Markets",
+      "canonical_term": "flow markets",
+      "category": "coordination_surface",
+      "status": "watchlist",
+      "confidence": "low",
+      "priority": "medium",
+      "summary": "Emerging umbrella term for competitive allocation of order flow, routing opportunities, sequencing access, or execution access.",
+      "why_it_matters": [
+        "May capture the commercial layer around solver routing and order-flow infrastructure.",
+        "Still broad and not yet stable enough for anchor treatment.",
+        "Useful for tracking solverlayer and orderflowauction signals."
+      ],
+      "related_anchors": [
+        "solverlayer",
+        "orderflowauction",
+        "sequencingmarket",
+        "blockspacemarket"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "routingmarkets",
+      "name": "Routing Markets",
+      "canonical_term": "routing markets",
+      "category": "coordination_surface",
+      "status": "watchlist",
+      "confidence": "low",
+      "priority": "medium",
+      "summary": "Emerging vocabulary around competitive transaction routing, wallet routing, solver routing, and execution access allocation.",
+      "why_it_matters": [
+        "Relevant to wallet-routing providers, OFA systems, and solver coordination.",
+        "Could become commercially important even if not protocol-native.",
+        "Still too generic and unstable for registry-anchor treatment."
+      ],
+      "related_anchors": [
+        "solverlayer",
+        "orderflowauction",
+        "executionmarket"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "executionallocation",
+      "name": "Execution Allocation",
+      "canonical_term": "execution allocation",
+      "category": "coordination_surface",
+      "status": "watchlist",
+      "confidence": "medium",
+      "priority": "medium",
+      "summary": "Allocation vocabulary around execution access, execution opportunities, routing inventory, or execution rights.",
+      "why_it_matters": [
+        "Connects solver coordination, routing markets, sequencing access, and execution rights.",
+        "May become an umbrella concept for modular execution infrastructure.",
+        "Currently interpretive and not a canonical registry anchor."
+      ],
+      "related_anchors": [
+        "solverlayer",
+        "executionmarket",
+        "sequencingmarket",
+        "orderflowauction"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "lucid",
+      "name": "LUCID",
+      "canonical_term": "encrypted mempool / commit-before-reveal flow",
+      "category": "mechanism",
+      "status": "watchlist",
+      "confidence": "medium",
+      "priority": "medium",
+      "summary": "Encrypted-orderflow signal connecting inclusion guarantees, commit-before-reveal flow, and MEV-sensitive transaction protection.",
+      "why_it_matters": [
+        "May strengthen the semantic importance of inclusion lists as a public-facing primitive.",
+        "May increase relevance of commitment-oriented vocabulary.",
+        "May pressure order-flow auction language if encrypted mempool terminology wins."
+      ],
+      "related_anchors": [
+        "inclusionlist",
+        "commitmentlayer",
+        "orderflowauction",
+        "preconflayer"
       ],
       "watch_status": "active"
     },
@@ -125,63 +690,119 @@
       "watch_status": "active"
     },
     {
-      "id": "basedsequencing",
-      "name": "Based Sequencing",
-      "canonical_term": "based sequencing",
+      "id": "inclusionlistcommittee",
+      "name": "Inclusion List Committee",
+      "canonical_term": "inclusion list committee",
+      "category": "role",
+      "status": "watchlist",
+      "confidence": "medium",
+      "priority": "medium",
+      "summary": "Validator committee role associated with constructing or enforcing inclusion lists in FOCIL-like designs.",
+      "why_it_matters": [
+        "Introduces a concrete role inside inclusion-list enforcement.",
+        "Separates inclusion enforcement responsibility from a single proposer.",
+        "Could become more important if FOCIL terminology continues to stabilize."
+      ],
+      "related_anchors": [
+        "inclusionlist"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "neutralblockspace",
+      "name": "Neutral Blockspace",
+      "canonical_term": "neutral blockspace",
       "category": "coordination_surface",
       "status": "watchlist",
       "confidence": "medium",
       "priority": "medium",
-      "summary": "Rollup sequencing model where L2 ordering is anchored to L1 proposers rather than independent external sequencers.",
+      "summary": "Censorship-resistance and inclusion-oriented framing around transaction access to Ethereum blockspace.",
       "why_it_matters": [
-        "Important to rollup sequencing and Ethereum-adjacent ordering design.",
-        "May influence preconfirmation, sequencing, and proposer-linked coordination.",
-        "Relevant but external to the current L1 core registry."
-      ],
-      "related_anchors": [
-        "sequencingmarket",
-        "preconflayer"
-      ],
-      "watch_status": "active"
-    },
-    {
-      "id": "lucid",
-      "name": "LUCID",
-      "canonical_term": "encrypted mempool / commit-before-reveal flow",
-      "category": "mechanism",
-      "status": "emerging",
-      "confidence": "medium",
-      "priority": "medium",
-      "summary": "Encrypted-orderflow signal connecting inclusion guarantees, commit-before-reveal flow, and MEV-sensitive transaction protection.",
-      "why_it_matters": [
-        "May strengthen the semantic importance of inclusion lists as a public-facing primitive.",
-        "May increase relevance of commitment-oriented vocabulary.",
-        "May pressure order-flow auction language if encrypted mempool terminology wins."
+        "Adjacent to FOCIL and inclusion-list narratives.",
+        "May matter for public communication around censorship resistance.",
+        "Too broad and narrative-facing for registry-anchor treatment."
       ],
       "related_anchors": [
         "inclusionlist",
-        "commitmentlayer",
-        "orderflowauction",
+        "blockspacemarket"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "credibleneutrality",
+      "name": "Credible Neutrality",
+      "canonical_term": "credible neutrality",
+      "category": "coordination_surface",
+      "status": "watchlist",
+      "confidence": "medium",
+      "priority": "medium",
+      "summary": "Normative and protocol-adjacent framing around censorship resistance, neutrality guarantees, and inclusion infrastructure.",
+      "why_it_matters": [
+        "Strengthens the public narrative around inclusion lists and FOCIL.",
+        "Useful to track as a conceptual driver, not as a precise primitive.",
+        "Should not be treated as a standalone technical anchor."
+      ],
+      "related_anchors": [
+        "inclusionlist"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "gloas",
+      "name": "Gloas",
+      "canonical_term": "gloas",
+      "category": "internal_terminology",
+      "status": "watchlist",
+      "confidence": "low",
+      "priority": "low",
+      "summary": "Internal or implementation-facing terminology under watch around ePBS and fork-choice simplification discussions.",
+      "why_it_matters": [
+        "May appear in client, testing, or consensus-spec discussions.",
+        "Not ENS-grade terminology at this stage.",
+        "Should remain watchlist-only unless it stabilizes publicly."
+      ],
+      "related_anchors": [
+        "epbs"
+      ],
+      "watch_status": "active"
+    },
+    {
+      "id": "executionsafety",
+      "name": "Execution Safety",
+      "canonical_term": "execution safety",
+      "category": "context",
+      "status": "context",
+      "confidence": "medium",
+      "priority": "medium",
+      "summary": "Execution-layer safety vocabulary connected to account abstraction, authorization behavior, delegation risk, and transaction execution guarantees.",
+      "why_it_matters": [
+        "May become more important around EIP-7702-related security discussions.",
+        "Connects execution guarantees with user-facing safety constraints.",
+        "Too broad for canonical registry treatment."
+      ],
+      "related_anchors": [
+        "executionmarket",
         "preconflayer"
       ],
       "watch_status": "active"
     },
     {
-      "id": "executiontickets",
-      "name": "Execution Tickets",
-      "canonical_term": "execution tickets",
-      "category": "mechanism",
-      "status": "watchlist",
-      "confidence": "low",
+      "id": "authorizationconstraints",
+      "name": "Authorization Constraints",
+      "canonical_term": "authorization constraints",
+      "category": "constraint",
+      "status": "context",
+      "confidence": "medium",
       "priority": "medium",
-      "summary": "Forward-looking execution coordination term under watch. Not yet treated as a canonical Vortik anchor.",
+      "summary": "Constraint vocabulary around delegated execution, account authorization, and transaction-safety boundaries.",
       "why_it_matters": [
-        "Could become relevant if future execution coordination work converges around the term.",
-        "Still too early for canonical treatment.",
-        "Should remain watchlist-only until stronger protocol or implementation references stabilize."
+        "Potentially relevant to execution safety and account abstraction security.",
+        "May become important if authorization constraints become more formalized.",
+        "Currently contextual rather than registry-grade."
       ],
       "related_anchors": [
-        "executionmarket"
+        "executionmarket",
+        "preconflayer"
       ],
       "watch_status": "active"
     },
@@ -209,7 +830,7 @@
       "name": "Key Provider",
       "canonical_term": "key provider",
       "category": "role",
-      "status": "emerging",
+      "status": "watchlist",
       "confidence": "low",
       "priority": "low",
       "summary": "Potential future coordination role relevant to encrypted mempool or threshold decryption systems if protected order flow becomes more protocol-shaped.",
@@ -240,6 +861,21 @@
       "id": "escrowedbids",
       "name": "Escrowed Bids",
       "reason": "Broad financial mechanism phrase with low Ethereum-specific naming distinctiveness."
+    },
+    {
+      "id": "executionreservation",
+      "name": "Execution Reservation",
+      "reason": "Mostly descriptive usage without canonical boundaries. More likely to remain implementation terminology."
+    },
+    {
+      "id": "executionreserveprice",
+      "name": "Execution Reserve Price",
+      "reason": "Mechanism detail and auction parameter rather than reusable semantic primitive."
+    },
+    {
+      "id": "inclusionenforcement",
+      "name": "Inclusion Enforcement",
+      "reason": "Important concept, but too broad as a standalone term. Better captured through FOCIL and inclusionlist."
     }
   ]
 }
