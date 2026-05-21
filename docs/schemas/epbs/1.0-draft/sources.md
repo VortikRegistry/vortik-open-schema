@@ -14,7 +14,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 ## Registry Metadata
 
 - **Registry:** vortik-semantic-registry
-- **Registry version:** 0.6.3
+- **Registry version:** 0.6.4
 - **Registry ID:** `epbs`
 - **Associated ENS:** `epbs.eth`
 - **Canonical term:** enshrined proposer-builder separation (ePBS)
