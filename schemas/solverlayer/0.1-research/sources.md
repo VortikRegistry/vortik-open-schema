@@ -31,13 +31,13 @@ This document is a research-support artifact. It is not an official Ethereum pro
 
 ## Semantic Classification
 
-Ethereum-adjacent or external coordination surface outside the current L1 protocol core.
+Ethereum-adjacent or external coordination surface outside the current Ethereum L1 protocol core.
 
 ---
 
 ## Type Interpretation
 
-External actor or participant outside the current L1 protocol core.
+External actor or participant outside the current Ethereum L1 protocol core.
 
 ---
 

@@ -31,7 +31,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 
 ## Semantic Classification
 
-Real or emerging concept not yet stable enough to treat as canonical.
+Real or emerging concept that is not yet stable enough to treat as canonical.
 
 ---
 
