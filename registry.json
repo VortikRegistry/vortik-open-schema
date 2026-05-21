@@ -1,9 +1,9 @@
 {
   "registry": "vortik-semantic-registry",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Independent semantic registry indexing Ethereum protocol primitives, roles, constraints, and selected external coordination surfaces via ENS-anchored schemas.",
   "source_of_truth": "schemas",
-  "last_updated": "2026-04-26",
+  "last_updated": "2026-05-21",
   "anchors": [
     {
       "id": "epbs",
