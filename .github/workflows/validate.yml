@@ -105,6 +105,9 @@ jobs:
       - name: Validate integrity
         run: node scripts/validate-integrity.mjs
 
+      - name: Validate derived sync
+        run: node scripts/validate-derived-sync.mjs
+
       - name: Commit generated updates
         if: github.event_name == 'push'
         run: |
