@@ -1,11 +1,11 @@
 cff-version: 1.2.0
 title: Vortik Semantic Registry
-message: "If you use this registry in research, documentation, or semantic tooling, please cite it using the metadata below."
+message: "If you use this registry in research, documentation, semantic mapping, or tooling, please cite it using the metadata below."
 type: software
 
 authors:
   - name: Vortik Registry
-    affiliation: Independent semantic registry
+    affiliation: Independent research registry
 
 repository-code: https://github.com/VortikRegistry/vortik-open-schema
 url: https://vortikregistry.github.io/vortik-open-schema/
@@ -13,27 +13,27 @@ license: MIT
 
 abstract: >
   Independent semantic registry tracking terminology convergence across
-  Ethereum coordination primitives, roles, constraints, external coordination
-  surfaces, and deprecated or misaligned abstractions. The registry indexes
-  ENS-anchored semantic surfaces including enshrined proposer-builder
-  separation (ePBS), fork-choice enforced inclusion lists (FOCIL),
-  commitment primitives, preconfirmation mechanisms, solver actors, order
-  flow auctions, proving markets, sequencing markets, single-slot finality
-  (SSF), and legacy market-oriented terminology. Vortik provides versioned
-  schemas, human-readable anchors, interpretive maps, and generated public
-  outputs for tracking Ethereum coordination language as it stabilizes.
+  Ethereum protocol primitives, roles, constraints, external coordination
+  surfaces, and deprecated abstractions. The registry maps ENS-anchored
+  semantic entries related to proposer-builder separation (ePBS), inclusion
+  lists and FOCIL, commitment semantics, preconfirmation systems, solver
+  coordination, order-flow auctions, proving markets, sequencing markets,
+  finality research, and legacy market-oriented terminology. The project
+  provides machine-readable schemas, human-readable anchors, source notes,
+  interpretive maps, and strategic visibility indexes for Ethereum
+  coordination terminology.
 
 keywords:
   - ethereum
-  - semantic registry
   - protocol research
+  - semantic registry
   - proposer builder separation
   - epbs
   - inclusion lists
   - focil
   - commitments
   - preconfirmations
-  - solver systems
+  - solver networks
   - order flow auctions
   - proving markets
   - sequencing markets
@@ -42,9 +42,10 @@ keywords:
   - block building
   - coordination architecture
   - ens
+  - machine readable schemas
 
-version: 0.6.3
-date-released: 2026-04-26
+version: 0.6.4
+date-released: 2026-05-21
 
 preferred-citation:
   type: software
@@ -54,4 +55,4 @@ preferred-citation:
   year: 2026
   url: https://vortikregistry.github.io/vortik-open-schema/
   repository-code: https://github.com/VortikRegistry/vortik-open-schema
-  version: 0.6.3
+  version: 0.6.4
