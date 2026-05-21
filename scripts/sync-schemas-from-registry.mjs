@@ -12,107 +12,268 @@ function writeJSON(filePath, data) {
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2) + "\n");
 }
 
-function fail(message) {
-  console.error(`❌ ${message}`);
-  process.exitCode = 1;
-}
-
-function ok(message) {
-  console.log(`✅ ${message}`);
-}
-
-function warn(message) {
-  console.warn(`⚠️ ${message}`);
-}
-
-function getSchemaPath(anchor) {
-  if (!anchor.schema || typeof anchor.schema !== "string") {
-    return null;
+function ensureObject(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return {};
   }
 
-  return path.join(ROOT, anchor.schema);
+  return value;
 }
 
-function syncConstProperty(schema, key, value) {
-  if (value === undefined || value === null) return;
-
-  if (!schema.properties) {
-    schema.properties = {};
+function updateConstProperty(schema, field, value, anchorId) {
+  if (value === undefined || value === null) {
+    return false;
   }
 
-  if (!schema.properties[key]) {
-    schema.properties[key] = {
-      type: "string"
-    };
+  schema.properties = ensureObject(schema.properties);
+
+  if (!schema.properties[field] || typeof schema.properties[field] !== "object") {
+    schema.properties[field] = {};
   }
 
-  schema.properties[key].type = "string";
-  schema.properties[key].const = value;
+  const property = schema.properties[field];
+  let changed = false;
+
+  if (property.type !== "string") {
+    property.type = "string";
+    changed = true;
+  }
+
+  if (property.const !== value) {
+    console.log(
+      `Updating ${anchorId}: properties.${field}.const ${property.const} -> ${value}`
+    );
+    property.const = value;
+    changed = true;
+  }
+
+  return changed;
 }
 
-function syncNaming(schema, anchor) {
-  if (!schema.properties) {
-    schema.properties = {};
-  }
+function updateNaming(schema, anchor) {
+  schema.properties = ensureObject(schema.properties);
 
-  if (!schema.properties.naming) {
-    schema.properties.naming = {
-      type: "object",
-      additionalProperties: false,
-      required: ["ens", "canonical"],
-      properties: {}
-    };
+  if (!schema.properties.naming || typeof schema.properties.naming !== "object") {
+    schema.properties.naming = {};
   }
 
   const naming = schema.properties.naming;
+  let changed = false;
 
-  if (!naming.type) {
+  if (naming.type !== "object") {
     naming.type = "object";
+    changed = true;
   }
 
-  if (!naming.properties) {
-    naming.properties = {};
+  if (naming.additionalProperties !== false) {
+    naming.additionalProperties = false;
+    changed = true;
   }
 
   if (!Array.isArray(naming.required)) {
     naming.required = [];
+    changed = true;
   }
 
-  for (const field of ["ens", "canonical"]) {
-    if (!naming.required.includes(field)) {
-      naming.required.push(field);
+  for (const requiredField of ["ens", "canonical", "mismatch", "notes"]) {
+    if (!naming.required.includes(requiredField)) {
+      naming.required.push(requiredField);
+      changed = true;
     }
   }
 
-  if (!naming.properties.ens) {
-    naming.properties.ens = {
-      type: "string"
-    };
+  if (!naming.properties || typeof naming.properties !== "object") {
+    naming.properties = {};
+    changed = true;
   }
 
-  if (!naming.properties.canonical) {
-    naming.properties.canonical = {
-      type: "string"
-    };
+  if (!naming.properties.ens || typeof naming.properties.ens !== "object") {
+    naming.properties.ens = {};
+    changed = true;
   }
 
-  naming.properties.ens.type = "string";
-  naming.properties.ens.const = anchor.ens;
+  if (naming.properties.ens.type !== "string") {
+    naming.properties.ens.type = "string";
+    changed = true;
+  }
 
-  naming.properties.canonical.type = "string";
-  naming.properties.canonical.const = anchor.canonical_term;
+  if (naming.properties.ens.const !== anchor.ens) {
+    console.log(
+      `Updating ${anchor.id}: naming.ens.const ${naming.properties.ens.const} -> ${anchor.ens}`
+    );
+    naming.properties.ens.const = anchor.ens;
+    changed = true;
+  }
+
+  if (
+    !naming.properties.canonical ||
+    typeof naming.properties.canonical !== "object"
+  ) {
+    naming.properties.canonical = {};
+    changed = true;
+  }
+
+  if (naming.properties.canonical.type !== "string") {
+    naming.properties.canonical.type = "string";
+    changed = true;
+  }
+
+  if (naming.properties.canonical.const !== anchor.canonical_term) {
+    console.log(
+      `Updating ${anchor.id}: naming.canonical.const ${naming.properties.canonical.const} -> ${anchor.canonical_term}`
+    );
+    naming.properties.canonical.const = anchor.canonical_term;
+    changed = true;
+  }
+
+  if (
+    !naming.properties.mismatch ||
+    typeof naming.properties.mismatch !== "object"
+  ) {
+    naming.properties.mismatch = {};
+    changed = true;
+  }
+
+  if (naming.properties.mismatch.type !== "boolean") {
+    naming.properties.mismatch.type = "boolean";
+    changed = true;
+  }
+
+  if (naming.properties.mismatch.const === undefined) {
+    naming.properties.mismatch.const = anchor.ens !== `${anchor.id}.eth`;
+    changed = true;
+  }
+
+  if (!naming.properties.notes || typeof naming.properties.notes !== "object") {
+    naming.properties.notes = {};
+    changed = true;
+  }
+
+  if (naming.properties.notes.type !== "string") {
+    naming.properties.notes.type = "string";
+    changed = true;
+  }
+
+  if (!naming.properties.notes.minLength) {
+    naming.properties.notes.minLength = 5;
+    changed = true;
+  }
+
+  return changed;
 }
 
-function syncSchemaFromAnchor(schema, anchor) {
-  syncConstProperty(schema, "id", anchor.id);
-  syncConstProperty(schema, "canonical_term", anchor.canonical_term);
-  syncConstProperty(schema, "classification", anchor.classification);
-  syncConstProperty(schema, "status", anchor.status);
-  syncConstProperty(schema, "type", anchor.type);
+function ensureSchemaBasics(schema, anchor) {
+  let changed = false;
 
-  syncNaming(schema, anchor);
+  if (!schema.$schema) {
+    schema.$schema = "https://json-schema.org/draft/2020-12/schema";
+    changed = true;
+  }
 
-  return schema;
+  if (!schema.$id) {
+    schema.$id = `https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/${anchor.schema}`;
+    changed = true;
+  }
+
+  if (!schema.title) {
+    schema.title = `Vortik Open Schema — ${anchor.canonical_term}`;
+    changed = true;
+  }
+
+  if (!schema.description) {
+    schema.description = `Machine-readable schema for the ${anchor.canonical_term} semantic anchor within the Vortik Semantic Registry. Research artifact; not an official protocol specification.`;
+    changed = true;
+  }
+
+  if (schema.type !== "object") {
+    schema.type = "object";
+    changed = true;
+  }
+
+  if (schema.additionalProperties !== false) {
+    schema.additionalProperties = false;
+    changed = true;
+  }
+
+  if (!Array.isArray(schema.required)) {
+    schema.required = [];
+    changed = true;
+  }
+
+  const requiredFields = [
+    "id",
+    "version",
+    "canonical_term",
+    "classification",
+    "status",
+    "type",
+    "summary",
+    "pipeline_position",
+    "coordination_role",
+    "protocol_grounding",
+    "naming",
+    "sources"
+  ];
+
+  for (const field of requiredFields) {
+    if (!schema.required.includes(field)) {
+      schema.required.push(field);
+      changed = true;
+    }
+  }
+
+  schema.properties = ensureObject(schema.properties);
+
+  return changed;
+}
+
+function syncSchema(anchor) {
+  if (!anchor.schema || typeof anchor.schema !== "string") {
+    console.warn(`⚠️ Anchor ${anchor.id} has no schema path. Skipping.`);
+    return false;
+  }
+
+  const schemaPath = path.join(ROOT, anchor.schema);
+
+  if (!fs.existsSync(schemaPath)) {
+    console.warn(`⚠️ Schema not found for ${anchor.id}: ${anchor.schema}`);
+    return false;
+  }
+
+  const schema = readJSON(schemaPath);
+  let changed = false;
+
+  changed = ensureSchemaBasics(schema, anchor) || changed;
+
+  changed = updateConstProperty(schema, "id", anchor.id, anchor.id) || changed;
+  changed =
+    updateConstProperty(
+      schema,
+      "canonical_term",
+      anchor.canonical_term,
+      anchor.id
+    ) || changed;
+  changed =
+    updateConstProperty(
+      schema,
+      "classification",
+      anchor.classification,
+      anchor.id
+    ) || changed;
+  changed =
+    updateConstProperty(schema, "status", anchor.status, anchor.id) || changed;
+  changed = updateConstProperty(schema, "type", anchor.type, anchor.id) || changed;
+
+  changed = updateNaming(schema, anchor) || changed;
+
+  if (changed) {
+    writeJSON(schemaPath, schema);
+    console.log(`✅ Synced ${anchor.schema}`);
+  } else {
+    console.log(`✓ Already synced ${anchor.schema}`);
+  }
+
+  return changed;
 }
 
 function main() {
@@ -121,55 +282,20 @@ function main() {
   }
 
   const registry = readJSON(REGISTRY_PATH);
-  const anchors = registry.anchors || [];
 
-  if (!Array.isArray(anchors)) {
-    throw new Error("registry.json anchors must be an array");
+  if (!Array.isArray(registry.anchors)) {
+    throw new Error("registry.json must contain anchors array");
   }
 
-  console.log("🔁 Syncing schema const fields from registry.json...\n");
+  let modified = 0;
 
-  let updated = 0;
-  let skipped = 0;
-
-  for (const anchor of anchors) {
-    const schemaPath = getSchemaPath(anchor);
-
-    if (!schemaPath) {
-      fail(`Anchor ${anchor.id || "(unknown)"} is missing schema path`);
-      skipped++;
-      continue;
-    }
-
-    if (!fs.existsSync(schemaPath)) {
-      fail(`Schema not found for ${anchor.id}: ${anchor.schema}`);
-      skipped++;
-      continue;
-    }
-
-    const schema = readJSON(schemaPath);
-    const before = JSON.stringify(schema);
-
-    syncSchemaFromAnchor(schema, anchor);
-
-    const after = JSON.stringify(schema);
-
-    if (before !== after) {
-      writeJSON(schemaPath, schema);
-      ok(`Updated schema: ${anchor.schema}`);
-      updated++;
-    } else {
-      ok(`Already aligned: ${anchor.schema}`);
+  for (const anchor of registry.anchors) {
+    if (syncSchema(anchor)) {
+      modified++;
     }
   }
 
-  console.log("\n🎯 Schema sync complete.");
-  console.log(`Updated: ${updated}`);
-  console.log(`Skipped: ${skipped}`);
-
-  if (process.exitCode && process.exitCode !== 0) {
-    process.exit(process.exitCode);
-  }
+  console.log(`\nSchema sync complete. Modified files: ${modified}`);
 }
 
 main();
