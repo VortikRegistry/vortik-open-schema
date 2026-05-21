@@ -13,161 +13,72 @@ function readJSON(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
 
-function writeFile(filePath, content) {
-  fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  fs.writeFileSync(filePath, content);
-}
+function countOccurrences(content, marker) {
+  let count = 0;
+  let position = 0;
 
-function ok(message) {
-  console.log(`✅ ${message}`);
-}
-
-function fail(message) {
-  console.error(`❌ ${message}`);
-  process.exitCode = 1;
-}
-
-function normalizeText(value, fallback = "Not specified") {
-  if (value === undefined || value === null || value === "") {
-    return fallback;
+  while ((position = content.indexOf(marker, position)) !== -1) {
+    count++;
+    position += marker.length;
   }
 
-  return String(value);
+  return count;
 }
 
-function normalizeBlock(value) {
-  return String(value || "")
-    .replace(/\r\n/g, "\n")
-    .trim();
-}
-
-function getSchemaDir(anchor) {
-  if (!anchor.schema || typeof anchor.schema !== "string") {
-    return null;
-  }
-
-  return path.dirname(anchor.schema);
+function ensureDirectory(dirPath) {
+  fs.mkdirSync(dirPath, { recursive: true });
 }
 
 function getSourcesPath(anchor) {
-  const schemaDir = getSchemaDir(anchor);
-
-  if (!schemaDir) {
-    return null;
+  if (!anchor.schema || typeof anchor.schema !== "string") {
+    throw new Error(`Anchor ${anchor.id} is missing schema path`);
   }
 
-  return path.join(ROOT, schemaDir, "sources.md");
+  return path.join(ROOT, path.dirname(anchor.schema), "sources.md");
 }
 
-function oldDefaultManualSection() {
-  return `## Manual Source References
-
-Add primary references, research threads, implementation notes, or protocol links here.
-
-Suggested format:
-
-- Title  
-  URL
-
-## Manual Notes
-
-Add any human-reviewed source notes here.`;
-}
-
-function defaultManualSection() {
-  return `## Curated References
-
-No curated references have been added for this anchor yet.
-
-## Source Notes
-
-This section is reserved for curated protocol references, implementation notes, or research context when applicable.`;
-}
-
-function extractManualSection(existingContent) {
-  if (!existingContent) {
-    return defaultManualSection();
-  }
-
-  const startIndex = existingContent.indexOf(MANUAL_START);
-  const endIndex = existingContent.indexOf(MANUAL_END);
-
-  if (startIndex === -1 || endIndex === -1 || endIndex < startIndex) {
-    return defaultManualSection();
-  }
-
-  const manualBlock = existingContent.slice(
-    startIndex + MANUAL_START.length,
-    endIndex
-  ).trim();
-
-  if (!manualBlock) {
-    return defaultManualSection();
-  }
-
-  const normalizedManual = normalizeBlock(manualBlock);
-  const normalizedOldDefault = normalizeBlock(oldDefaultManualSection());
-
-  if (normalizedManual === normalizedOldDefault) {
-    return defaultManualSection();
-  }
-
-  return manualBlock;
-}
-
-function classificationMeaning(classification) {
-  const map = {
+function getClassificationDescription(classification) {
+  const descriptions = {
     core: "Protocol-aligned anchor with strong semantic grounding.",
-    repairable: "Valid underlying concept with imperfect ENS alignment or terminology mismatch.",
-    premature: "Real or emerging concept not yet stable enough to treat as canonical.",
-    external: "Ethereum-adjacent or external coordination surface outside the current L1 protocol core.",
-    deprecated: "Legacy, broad, or market-oriented abstraction with reduced precision relative to protocol-native terminology.",
-    valid: "Valid semantic surface with meaningful ecosystem or technical relevance."
+    repairable:
+      "Valid underlying concept with imperfect ENS alignment or terminology mismatch.",
+    premature:
+      "Real or emerging concept that is not yet stable enough to treat as canonical.",
+    external:
+      "Ethereum-adjacent or external coordination surface outside the current Ethereum L1 protocol core.",
+    deprecated:
+      "Legacy, broad, or market-oriented abstraction with reduced precision relative to protocol-native terminology."
   };
 
-  return map[classification] || "Classification meaning not specified.";
+  return descriptions[classification] || "Semantic classification tracked by the registry.";
 }
 
-function typeMeaning(type) {
-  const map = {
+function getTypeDescription(type) {
+  const descriptions = {
     primitive: "Protocol or research primitive tracked as a semantic object.",
-    role: "Actor or role-like semantic surface.",
     constraint: "Constraint surface affecting coordination behavior.",
-    mechanism: "Mechanism or process relevant to Ethereum coordination.",
-    coordination_surface: "Broad coordination surface across infrastructure or ecosystem behavior.",
-    external_actor: "External actor or participant outside the current L1 protocol core.",
-    external_mechanism: "External or off-protocol mechanism related to Ethereum coordination.",
-    misaligned_abstraction: "Broad abstraction retained for comparison but not treated as canonical.",
-    market: "Market-oriented abstraction or ecosystem coordination surface."
+    external_actor:
+      "External actor or participant outside the current Ethereum L1 protocol core.",
+    external_mechanism:
+      "External or off-protocol mechanism related to Ethereum coordination.",
+    coordination_surface:
+      "Broad coordination surface across infrastructure or ecosystem behavior.",
+    misaligned_abstraction:
+      "Broad abstraction retained for comparison but not treated as canonical."
   };
 
-  return map[type] || "Type meaning not specified.";
+  return descriptions[type] || "Semantic type tracked by the registry.";
 }
 
-function buildAutoSection(anchor, registry) {
-  const id = normalizeText(anchor.id);
-  const ens = normalizeText(anchor.ens);
-  const canonical = normalizeText(anchor.canonical_term);
-  const classification = normalizeText(anchor.classification);
-  const status = normalizeText(anchor.status);
-  const statusLabel = normalizeText(anchor.status_label, "Not specified");
-  const stage = normalizeText(anchor.stage, "Not specified");
-  const type = normalizeText(anchor.type);
-  const role = normalizeText(anchor.role);
-  const schema = normalizeText(anchor.schema);
-  const anchorDoc = normalizeText(anchor.anchor_doc);
-  const marketPriority = normalizeText(anchor.market_priority, "Not specified");
-  const saleStrategy = normalizeText(anchor.market?.sale_strategy, "Not specified");
-  const visibility = normalizeText(anchor.market?.visibility, "Not specified");
-
-  const title = `${canonical} — Sources`;
+function buildAutoSection(registry, anchor) {
+  const market = anchor.market || {};
 
   return `${AUTO_START}
-# ${title}
+# ${anchor.canonical_term} — Sources
 
 ## Overview
 
-This document compiles source context and terminology support for the Vortik semantic anchor associated with \`${ens}\`.
+This document compiles source context and terminology support for the Vortik semantic anchor associated with \`${anchor.ens}\`.
 
 It supports the machine-readable and human-readable layers of the **Vortik Semantic Registry**.
 
@@ -177,51 +88,51 @@ This document is a research-support artifact. It is not an official Ethereum pro
 
 ## Registry Metadata
 
-- **Registry:** ${normalizeText(registry.registry, "vortik-semantic-registry")}
-- **Registry version:** ${normalizeText(registry.version, "Not specified")}
-- **Registry ID:** \`${id}\`
-- **Associated ENS:** \`${ens}\`
-- **Canonical term:** ${canonical}
-- **Classification:** ${classification}
-- **Status:** ${status}
-- **Status label:** ${statusLabel}
-- **Stage:** ${stage}
-- **Type:** ${type}
-- **Market priority:** ${marketPriority}
-- **Sale strategy:** ${saleStrategy}
-- **Visibility:** ${visibility}
+- **Registry:** ${registry.registry}
+- **Registry version:** ${registry.version}
+- **Registry ID:** \`${anchor.id}\`
+- **Associated ENS:** \`${anchor.ens}\`
+- **Canonical term:** ${anchor.canonical_term}
+- **Classification:** ${anchor.classification}
+- **Status:** ${anchor.status}
+- **Status label:** ${anchor.status_label || "not specified"}
+- **Stage:** ${anchor.stage || "not specified"}
+- **Type:** ${anchor.type}
+- **Market priority:** ${market.priority || anchor.market_priority || "not specified"}
+- **Sale strategy:** ${market.sale_strategy || "not specified"}
+- **Visibility:** ${market.visibility || "not specified"}
 
 ---
 
 ## Semantic Classification
 
-${classificationMeaning(anchor.classification)}
+${getClassificationDescription(anchor.classification)}
 
 ---
 
 ## Type Interpretation
 
-${typeMeaning(anchor.type)}
+${getTypeDescription(anchor.type)}
 
 ---
 
 ## Registry Role
 
-${role}
+${anchor.role || "No registry role description has been provided."}
 
 ---
 
 ## Linked Files
 
-- **Anchor document:** \`${anchorDoc}\`
-- **Schema:** \`${schema}\`
+- **Anchor document:** \`${anchor.anchor_doc}\`
+- **Schema:** \`${anchor.schema}\`
 
 ---
 
 ## Naming Context
 
-- **ENS anchor:** \`${ens}\`
-- **Canonical term:** ${canonical}
+- **ENS anchor:** \`${anchor.ens}\`
+- **Canonical term:** ${anchor.canonical_term}
 
 The ENS name is treated as a semantic entry point.
 
@@ -256,16 +167,99 @@ Curated references and source notes should be placed in the protected section be
 ${AUTO_END}`;
 }
 
-function buildSourcesDocument(anchor, registry, existingContent) {
-  const autoSection = buildAutoSection(anchor, registry);
-  const manualSection = extractManualSection(existingContent);
+function buildDefaultManualSection() {
+  return `${MANUAL_START}
+## Curated References
 
-  return `${autoSection}
+No curated references have been added for this anchor yet.
 
-${MANUAL_START}
+## Source Notes
+
+This section is reserved for curated protocol references, implementation notes, or research context when applicable.
+${MANUAL_END}`;
+}
+
+function extractManualSection(existingContent, sourcesPath) {
+  const manualStartCount = countOccurrences(existingContent, MANUAL_START);
+  const manualEndCount = countOccurrences(existingContent, MANUAL_END);
+
+  if (manualStartCount === 0 && manualEndCount === 0) {
+    return buildDefaultManualSection();
+  }
+
+  if (manualStartCount !== 1 || manualEndCount !== 1) {
+    throw new Error(
+      `${path.relative(
+        ROOT,
+        sourcesPath
+      )} has malformed manual source markers: ${MANUAL_START}=${manualStartCount}, ${MANUAL_END}=${manualEndCount}`
+    );
+  }
+
+  const startIndex = existingContent.indexOf(MANUAL_START);
+  const endIndex = existingContent.indexOf(MANUAL_END);
+
+  if (endIndex < startIndex) {
+    throw new Error(
+      `${path.relative(ROOT, sourcesPath)} has misordered manual source markers`
+    );
+  }
+
+  return existingContent.slice(startIndex, endIndex + MANUAL_END.length).trim();
+}
+
+function validateAutoMarkers(existingContent, sourcesPath) {
+  const autoStartCount = countOccurrences(existingContent, AUTO_START);
+  const autoEndCount = countOccurrences(existingContent, AUTO_END);
+
+  if (autoStartCount === 0 && autoEndCount === 0) {
+    return;
+  }
+
+  if (autoStartCount !== 1 || autoEndCount !== 1) {
+    throw new Error(
+      `${path.relative(
+        ROOT,
+        sourcesPath
+      )} has malformed auto-generated markers: ${AUTO_START}=${autoStartCount}, ${AUTO_END}=${autoEndCount}`
+    );
+  }
+
+  const startIndex = existingContent.indexOf(AUTO_START);
+  const endIndex = existingContent.indexOf(AUTO_END);
+
+  if (endIndex < startIndex) {
+    throw new Error(
+      `${path.relative(ROOT, sourcesPath)} has misordered auto-generated markers`
+    );
+  }
+}
+
+function generateSourceDocument(registry, anchor) {
+  const sourcesPath = getSourcesPath(anchor);
+  const sourcesDir = path.dirname(sourcesPath);
+
+  ensureDirectory(sourcesDir);
+
+  let manualSection = buildDefaultManualSection();
+
+  if (fs.existsSync(sourcesPath)) {
+    const existingContent = fs.readFileSync(sourcesPath, "utf8");
+
+    validateAutoMarkers(existingContent, sourcesPath);
+    manualSection = extractManualSection(existingContent, sourcesPath);
+  }
+
+  const autoSection = buildAutoSection(registry, anchor);
+
+  const nextContent = `${autoSection}
+
 ${manualSection}
-${MANUAL_END}
 `;
+
+  fs.writeFileSync(sourcesPath, nextContent);
+
+  console.log(`✅ Generated ${path.relative(ROOT, sourcesPath)}`);
 }
 
 function main() {
@@ -276,66 +270,14 @@ function main() {
   const registry = readJSON(REGISTRY_PATH);
 
   if (!Array.isArray(registry.anchors)) {
-    throw new Error("registry.json does not contain a valid anchors array");
+    throw new Error("registry.json must contain an anchors array");
   }
-
-  console.log("🔁 Generating sources.md files from registry.json...\n");
-
-  let updated = 0;
-  let created = 0;
-  let skipped = 0;
 
   for (const anchor of registry.anchors) {
-    if (!anchor.id) {
-      fail("Anchor without id detected");
-      skipped++;
-      continue;
-    }
-
-    const sourcesPath = getSourcesPath(anchor);
-
-    if (!sourcesPath) {
-      fail(`Anchor ${anchor.id} is missing schema path`);
-      skipped++;
-      continue;
-    }
-
-    const schemaDir = path.dirname(sourcesPath);
-
-    if (!fs.existsSync(schemaDir)) {
-      fail(`Schema directory not found for ${anchor.id}: ${schemaDir}`);
-      skipped++;
-      continue;
-    }
-
-    const existed = fs.existsSync(sourcesPath);
-    const existingContent = existed ? fs.readFileSync(sourcesPath, "utf8") : "";
-    const nextContent = buildSourcesDocument(anchor, registry, existingContent);
-
-    if (!existed) {
-      writeFile(sourcesPath, nextContent);
-      ok(`Created sources: ${path.relative(ROOT, sourcesPath)}`);
-      created++;
-      continue;
-    }
-
-    if (existingContent !== nextContent) {
-      writeFile(sourcesPath, nextContent);
-      ok(`Updated sources: ${path.relative(ROOT, sourcesPath)}`);
-      updated++;
-    } else {
-      ok(`Already aligned: ${path.relative(ROOT, sourcesPath)}`);
-    }
+    generateSourceDocument(registry, anchor);
   }
 
-  console.log("\n🎯 Sources generation complete.");
-  console.log(`Created: ${created}`);
-  console.log(`Updated: ${updated}`);
-  console.log(`Skipped: ${skipped}`);
-
-  if (process.exitCode && process.exitCode !== 0) {
-    process.exit(process.exitCode);
-  }
+  console.log("✅ Source documents generated from registry.json");
 }
 
 main();
