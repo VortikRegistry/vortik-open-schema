@@ -1,6 +1,6 @@
 # Vortik Strategic Anchors
 
-Auto-generated from `docs/market.index.json`.  
+Auto-generated from `market.index.json`.  
 Do not edit manually.
 
 This document presents selected ENS anchors tracked by the Vortik Semantic Registry.
