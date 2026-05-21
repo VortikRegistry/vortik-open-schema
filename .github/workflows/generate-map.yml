@@ -27,7 +27,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add coordination-map.txt
+          git add maps/coordination-map.md docs/maps/coordination-map.md
 
           git diff --cached --quiet || git commit -m "auto-generate coordination map"
           git push
