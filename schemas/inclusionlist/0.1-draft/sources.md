@@ -94,15 +94,6 @@ Curated references and source notes should be placed in the protected section be
 <!-- MANUAL-SOURCES:START -->
 ## Curated References
 
-No curated references have been added for this anchor yet.
-
-## Source Notes
-
-This section is reserved for curated protocol references, implementation notes, or research context when applicable.
-
-<!-- MANUAL-SOURCES:START -->
-## Curated References
-
 - EIP-7805 — Fork-Choice Enforced Inclusion Lists  
   https://eips.ethereum.org/EIPS/eip-7805
 
