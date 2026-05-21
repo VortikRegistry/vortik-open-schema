@@ -3,7 +3,7 @@ import path from "path";
 
 const ROOT = process.cwd();
 
-const MARKET_INDEX_PATH = path.join(ROOT, "docs", "market.index.json");
+const MARKET_INDEX_PATH = path.join(ROOT, "market.index.json");
 const OUTPUT_PATH = path.join(ROOT, "docs", "market.md");
 
 function readJSON(filePath) {
@@ -55,7 +55,7 @@ function main() {
 
   const output = `# Vortik Strategic Anchors
 
-Auto-generated from \`docs/market.index.json\`.  
+Auto-generated from \`market.index.json\`.  
 Do not edit manually.
 
 This document presents selected ENS anchors tracked by the Vortik Semantic Registry.
