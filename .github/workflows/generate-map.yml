@@ -3,24 +3,44 @@ name: Generate Coordination Map
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   generate-map:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
+      - name: Install dependencies if needed
+        run: npm install || true
+
       - name: Generate coordination map
         run: node scripts/generate-map.mjs
+
+      - name: Sync docs
+        run: node scripts/sync-docs.mjs
+
+      - name: Validate all JSON files
+        run: node scripts/validate-json-files.mjs
+
+      - name: Validate registry
+        run: node scripts/validate-registry.mjs
+
+      - name: Validate integrity
+        run: node scripts/validate-integrity.mjs
+
+      - name: Validate derived sync
+        run: node scripts/validate-derived-sync.mjs
 
       - name: Commit generated map if changed
         run: |
