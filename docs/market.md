@@ -1,7 +1,11 @@
-# Vortik Market Layer
+# Vortik Strategic Anchors
 
-Auto-generated from docs/market.index.json  
+Auto-generated from `docs/market.index.json`.  
 Do not edit manually.
+
+This document presents selected ENS anchors tracked by the Vortik Semantic Registry.
+
+It is a strategic visibility layer, not an official protocol specification and not a market-price document.
 
 ---
 
@@ -11,72 +15,114 @@ Do not edit manually.
 - Featured: 2
 - Standard: 6
 - Background: 4
+- Hidden: 0
 
 ---
 
-## 🔥 Featured (High Signal)
+## Featured
+
+High-signal anchors with strong strategic visibility inside the registry.
 
 - **epbs.eth** — enshrined proposer-builder separation (ePBS)  
-  priority: high  
-  classification: core  
-  status: implemented
+  - Registry ID: `epbs`  
+  - Priority: high  
+  - Classification: core  
+  - Status: implemented  
+  - Stage: canonical  
+  - Type: primitive
 
 - **inclusionlist.eth** — fork-choice enforced inclusion lists (FOCIL)  
-  priority: high  
-  classification: core  
-  status: eip-active
+  - Registry ID: `inclusionlist`  
+  - Priority: high  
+  - Classification: core  
+  - Status: eip-active  
+  - Stage: canonical  
+  - Type: constraint
 
 ## Standard
 
+Tracked anchors with meaningful semantic or external coordination relevance.
+
 - **commitmentlayer.eth** — commitment  
-  priority: medium  
-  classification: repairable  
-  status: research
+  - Registry ID: `commitmentlayer`  
+  - Priority: medium  
+  - Classification: repairable  
+  - Status: research  
+  - Stage: emerging  
+  - Type: primitive
 
 - **preconflayer.eth** — preconfirmation (emergent)  
-  priority: medium  
-  classification: premature  
-  status: research
+  - Registry ID: `preconflayer`  
+  - Priority: medium  
+  - Classification: premature  
+  - Status: research  
+  - Stage: research  
+  - Type: external_mechanism
 
 - **fastfinality.eth** — single-slot finality (SSF)  
-  priority: medium  
-  classification: repairable  
-  status: research
+  - Registry ID: `ssf`  
+  - Priority: medium  
+  - Classification: repairable  
+  - Status: research  
+  - Stage: research  
+  - Type: primitive
 
 - **orderflowauction.eth** — order flow auctions (OFA)  
-  priority: medium  
-  classification: external  
-  status: research
+  - Registry ID: `orderflowauction`  
+  - Priority: medium  
+  - Classification: external  
+  - Status: research  
+  - Stage: implemented  
+  - Type: coordination_surface
 
 - **provingmarket.eth** — proving markets  
-  priority: medium  
-  classification: external  
-  status: research
+  - Registry ID: `provingmarket`  
+  - Priority: medium  
+  - Classification: external  
+  - Status: research  
+  - Stage: research  
+  - Type: coordination_surface
 
 - **sequencingmarket.eth** — sequencing markets  
-  priority: medium  
-  classification: external  
-  status: research
+  - Registry ID: `sequencingmarket`  
+  - Priority: medium  
+  - Classification: external  
+  - Status: research  
+  - Stage: research  
+  - Type: coordination_surface
 
 ## Background
 
+Legacy, deprecated, external, or lower-alignment anchors retained for semantic comparison and registry completeness.
+
 - **buildermarket.eth** — builder  
-  priority: low  
-  classification: deprecated  
-  status: research
+  - Registry ID: `buildermarket`  
+  - Priority: low  
+  - Classification: deprecated  
+  - Status: research  
+  - Stage: research  
+  - Type: misaligned_abstraction
 
 - **solverlayer.eth** — solver (external)  
-  priority: low  
-  classification: external  
-  status: research
+  - Registry ID: `solverlayer`  
+  - Priority: low  
+  - Classification: external  
+  - Status: research  
+  - Stage: research  
+  - Type: external_actor
 
 - **executionmarket.eth** — execution (ambiguous)  
-  priority: low  
-  classification: deprecated  
-  status: research
+  - Registry ID: `executionmarket`  
+  - Priority: low  
+  - Classification: deprecated  
+  - Status: research  
+  - Stage: research  
+  - Type: misaligned_abstraction
 
 - **blockspacemarket.eth** — blockspace markets  
-  priority: low  
-  classification: deprecated  
-  status: research
-
+  - Registry ID: `blockspacemarket`  
+  - Priority: low  
+  - Classification: deprecated  
+  - Status: research  
+  - Stage: research  
+  - Type: misaligned_abstraction
