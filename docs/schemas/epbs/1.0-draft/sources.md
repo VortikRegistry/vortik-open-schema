@@ -94,15 +94,6 @@ Curated references and source notes should be placed in the protected section be
 <!-- MANUAL-SOURCES:START -->
 ## Curated References
 
-No curated references have been added for this anchor yet.
-
-## Source Notes
-
-This section is reserved for curated protocol references, implementation notes, or research context when applicable.
-
-<!-- MANUAL-SOURCES:START -->
-## Curated References
-
 - EIP-7732 — Enshrined Proposer-Builder Separation  
   https://eips.ethereum.org/EIPS/eip-7732
 
@@ -114,7 +105,7 @@ This section is reserved for curated protocol references, implementation notes, 
 
 ## Source Notes
 
-ePBS is treated by Vortik as a core protocol-facing primitive because it maps directly to proposer-builder separation becoming part of Ethereum’s consensus-layer design.
+ePBS is treated by Vortik as a core protocol-facing primitive because it maps directly to proposer-builder separation becoming part of Ethereum's consensus-layer design.
 
 This anchor is grounded in the transition from relay-mediated proposer-builder coordination toward protocol-defined proposer-builder interaction.
 
