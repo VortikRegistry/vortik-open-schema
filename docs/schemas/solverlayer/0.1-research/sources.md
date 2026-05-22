@@ -24,7 +24,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 - **Stage:** research
 - **Type:** external_actor
 - **Market priority:** low
-- **Sale strategy:** monitor
+- **Sale strategy:** transfer_ready
 - **Visibility:** background
 
 ---

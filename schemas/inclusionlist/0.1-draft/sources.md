@@ -24,7 +24,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 - **Stage:** canonical
 - **Type:** constraint
 - **Market priority:** high
-- **Sale strategy:** hold
+- **Sale strategy:** strategic_custody
 - **Visibility:** featured
 
 ---

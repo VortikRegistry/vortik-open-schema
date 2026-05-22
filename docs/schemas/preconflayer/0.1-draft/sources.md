@@ -24,7 +24,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 - **Stage:** research
 - **Type:** external_mechanism
 - **Market priority:** medium
-- **Sale strategy:** opportunistic
+- **Sale strategy:** selective_inquiry
 - **Visibility:** standard
 
 ---
