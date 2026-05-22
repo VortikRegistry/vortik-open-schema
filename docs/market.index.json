@@ -2,7 +2,7 @@
   "registry": "vortik-semantic-registry",
   "index_version": "1.0.1",
   "generated_from": "registry.json",
-  "last_updated": "2026-05-22T01:21:04.561Z",
+  "last_updated": "2026-05-22T01:26:17.580Z",
   "summary": {
     "total": 12,
     "featured": 2,
@@ -51,30 +51,6 @@
         "type": "primitive"
       },
       {
-        "id": "preconflayer",
-        "ens": "preconflayer.eth",
-        "canonical_term": "preconfirmation (emergent)",
-        "priority": "medium",
-        "sale_strategy": "selective_inquiry",
-        "classification": "premature",
-        "status": "research",
-        "status_label": "emerging",
-        "stage": "research",
-        "type": "external_mechanism"
-      },
-      {
-        "id": "ssf",
-        "ens": "fastfinality.eth",
-        "canonical_term": "single-slot finality (SSF)",
-        "priority": "medium",
-        "sale_strategy": "selective_inquiry",
-        "classification": "repairable",
-        "status": "research",
-        "status_label": "emerging",
-        "stage": "research",
-        "type": "primitive"
-      },
-      {
         "id": "orderflowauction",
         "ens": "orderflowauction.eth",
         "canonical_term": "order flow auctions (OFA)",
@@ -85,6 +61,18 @@
         "status_label": "external",
         "stage": "implemented",
         "type": "coordination_surface"
+      },
+      {
+        "id": "preconflayer",
+        "ens": "preconflayer.eth",
+        "canonical_term": "preconfirmation (emergent)",
+        "priority": "medium",
+        "sale_strategy": "selective_inquiry",
+        "classification": "premature",
+        "status": "research",
+        "status_label": "emerging",
+        "stage": "research",
+        "type": "external_mechanism"
       },
       {
         "id": "provingmarket",
@@ -109,13 +97,49 @@
         "status_label": "external",
         "stage": "research",
         "type": "coordination_surface"
+      },
+      {
+        "id": "ssf",
+        "ens": "fastfinality.eth",
+        "canonical_term": "single-slot finality (SSF)",
+        "priority": "medium",
+        "sale_strategy": "selective_inquiry",
+        "classification": "repairable",
+        "status": "research",
+        "status_label": "emerging",
+        "stage": "research",
+        "type": "primitive"
       }
     ],
     "background": [
       {
+        "id": "blockspacemarket",
+        "ens": "blockspacemarket.eth",
+        "canonical_term": "blockspace markets",
+        "priority": "low",
+        "sale_strategy": "transfer_ready",
+        "classification": "deprecated",
+        "status": "research",
+        "status_label": "deprecated",
+        "stage": "research",
+        "type": "misaligned_abstraction"
+      },
+      {
         "id": "buildermarket",
         "ens": "buildermarket.eth",
         "canonical_term": "builder",
+        "priority": "low",
+        "sale_strategy": "transfer_ready",
+        "classification": "deprecated",
+        "status": "research",
+        "status_label": "deprecated",
+        "stage": "research",
+        "type": "misaligned_abstraction"
+      },
+      {
+        "id": "executionmarket",
+        "ens": "executionmarket.eth",
+        "canonical_term": "execution (ambiguous)",
         "priority": "low",
         "sale_strategy": "transfer_ready",
         "classification": "deprecated",
@@ -135,30 +159,6 @@
         "status_label": "external",
         "stage": "research",
         "type": "external_actor"
-      },
-      {
-        "id": "executionmarket",
-        "ens": "executionmarket.eth",
-        "canonical_term": "execution (ambiguous)",
-        "priority": "low",
-        "sale_strategy": "transfer_ready",
-        "classification": "deprecated",
-        "status": "research",
-        "status_label": "deprecated",
-        "stage": "research",
-        "type": "misaligned_abstraction"
-      },
-      {
-        "id": "blockspacemarket",
-        "ens": "blockspacemarket.eth",
-        "canonical_term": "blockspace markets",
-        "priority": "low",
-        "sale_strategy": "transfer_ready",
-        "classification": "deprecated",
-        "status": "research",
-        "status_label": "deprecated",
-        "stage": "research",
-        "type": "misaligned_abstraction"
       }
     ],
     "hidden": []

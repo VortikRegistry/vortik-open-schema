@@ -51,22 +51,6 @@ Tracked anchors with meaningful semantic or external coordination relevance.
   - Stage: emerging  
   - Type: primitive
 
-- **preconflayer.eth** — preconfirmation (emergent)  
-  - Registry ID: `preconflayer`  
-  - Priority: medium  
-  - Classification: premature  
-  - Status: research  
-  - Stage: research  
-  - Type: external_mechanism
-
-- **fastfinality.eth** — single-slot finality (SSF)  
-  - Registry ID: `ssf`  
-  - Priority: medium  
-  - Classification: repairable  
-  - Status: research  
-  - Stage: research  
-  - Type: primitive
-
 - **orderflowauction.eth** — order flow auctions (OFA)  
   - Registry ID: `orderflowauction`  
   - Priority: medium  
@@ -74,6 +58,14 @@ Tracked anchors with meaningful semantic or external coordination relevance.
   - Status: research  
   - Stage: implemented  
   - Type: coordination_surface
+
+- **preconflayer.eth** — preconfirmation (emergent)  
+  - Registry ID: `preconflayer`  
+  - Priority: medium  
+  - Classification: premature  
+  - Status: research  
+  - Stage: research  
+  - Type: external_mechanism
 
 - **provingmarket.eth** — proving markets  
   - Registry ID: `provingmarket`  
@@ -91,12 +83,36 @@ Tracked anchors with meaningful semantic or external coordination relevance.
   - Stage: research  
   - Type: coordination_surface
 
+- **fastfinality.eth** — single-slot finality (SSF)  
+  - Registry ID: `ssf`  
+  - Priority: medium  
+  - Classification: repairable  
+  - Status: research  
+  - Stage: research  
+  - Type: primitive
+
 ## Background
 
 Legacy, deprecated, external, or lower-alignment anchors retained for semantic comparison and registry completeness.
 
+- **blockspacemarket.eth** — blockspace markets  
+  - Registry ID: `blockspacemarket`  
+  - Priority: low  
+  - Classification: deprecated  
+  - Status: research  
+  - Stage: research  
+  - Type: misaligned_abstraction
+
 - **buildermarket.eth** — builder  
   - Registry ID: `buildermarket`  
+  - Priority: low  
+  - Classification: deprecated  
+  - Status: research  
+  - Stage: research  
+  - Type: misaligned_abstraction
+
+- **executionmarket.eth** — execution (ambiguous)  
+  - Registry ID: `executionmarket`  
   - Priority: low  
   - Classification: deprecated  
   - Status: research  
@@ -110,19 +126,3 @@ Legacy, deprecated, external, or lower-alignment anchors retained for semantic c
   - Status: research  
   - Stage: research  
   - Type: external_actor
-
-- **executionmarket.eth** — execution (ambiguous)  
-  - Registry ID: `executionmarket`  
-  - Priority: low  
-  - Classification: deprecated  
-  - Status: research  
-  - Stage: research  
-  - Type: misaligned_abstraction
-
-- **blockspacemarket.eth** — blockspace markets  
-  - Registry ID: `blockspacemarket`  
-  - Priority: low  
-  - Classification: deprecated  
-  - Status: research  
-  - Stage: research  
-  - Type: misaligned_abstraction
