@@ -606,15 +606,17 @@
     }
 
     .tag.core{border-color:rgba(61,220,151,.22); color:var(--core)}
-    .tag.valid{border-color:rgba(89,168,255,.22); color:var(--valid)}
     .tag.repairable{border-color:rgba(246,196,83,.22); color:var(--repairable)}
     .tag.premature{border-color:rgba(255,123,114,.22); color:var(--premature)}
     .tag.deprecated{border-color:rgba(125,133,144,.22); color:var(--deprecated)}
     .tag.external{border-color:rgba(89,168,255,.22); color:var(--valid)}
 
     .tag.status-core{border-color:rgba(61,220,151,.22); color:var(--core)}
+    .tag.status-canonical{border-color:rgba(61,220,151,.22); color:var(--core)}
     .tag.status-emerging{border-color:rgba(246,196,83,.22); color:var(--repairable)}
     .tag.status-transitional{border-color:rgba(89,168,255,.22); color:var(--valid)}
+    .tag.status-repairable{border-color:rgba(246,196,83,.22); color:var(--repairable)}
+    .tag.status-premature{border-color:rgba(255,123,114,.22); color:var(--premature)}
     .tag.status-deprecated{border-color:rgba(255,123,114,.22); color:var(--premature)}
     .tag.status-external{border-color:rgba(89,168,255,.22); color:var(--valid)}
 
@@ -627,10 +629,9 @@
     .tag.priority-medium{border-color:rgba(159,122,234,.24); color:#e0d3ff}
     .tag.priority-low{border-color:rgba(125,133,144,.22); color:#c1c7d0}
 
-    .tag.strategy-hold{border-color:rgba(61,220,151,.22); color:var(--core)}
-    .tag.strategy-monitor{border-color:rgba(246,196,83,.22); color:var(--repairable)}
-    .tag.strategy-opportunistic{border-color:rgba(89,168,255,.22); color:var(--valid)}
-    .tag.strategy-liquidate{border-color:rgba(255,123,114,.22); color:var(--premature)}
+    .tag.strategy-strategic_custody{border-color:rgba(61,220,151,.22); color:var(--core)}
+    .tag.strategy-selective_inquiry{border-color:rgba(89,168,255,.22); color:var(--valid)}
+    .tag.strategy-transfer_ready{border-color:rgba(125,133,144,.22); color:#c1c7d0}
 
     .anchor-links{
       display:flex; gap:10px; flex-wrap:wrap;
@@ -1107,8 +1108,8 @@ anchor documentation (/anchors/)</div>
       query: ""
     };
 
-    const clsOrder = ["core", "valid", "repairable", "premature", "deprecated", "external"];
-    const statusOrder = ["core", "emerging", "transitional", "deprecated", "external"];
+    const clsOrder = ["core", "repairable", "premature", "deprecated", "external"];
+    const statusOrder = ["core", "canonical", "emerging", "transitional", "repairable", "premature", "deprecated", "external"];
 
     function clsCount(anchors, cls){
       return anchors.filter(a => a.classification === cls).length;
