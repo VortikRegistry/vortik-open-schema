@@ -7,6 +7,7 @@
     "version",
     "description",
     "source_of_truth",
+    "last_updated",
     "anchors"
   ],
   "properties": {
@@ -29,10 +30,12 @@
       ]
     },
     "last_updated": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "anchors": {
       "type": "array",
+      "minItems": 1,
       "items": {
         "type": "object",
         "required": [
@@ -41,15 +44,19 @@
           "canonical_term",
           "classification",
           "status",
+          "status_label",
+          "stage",
+          "market_priority",
           "type",
           "role",
           "schema",
-          "anchor_doc"
+          "anchor_doc",
+          "market"
         ],
         "properties": {
           "id": {
             "type": "string",
-            "minLength": 1
+            "pattern": "^[a-z0-9-]+$"
           },
           "ens": {
             "type": "string",
@@ -152,10 +159,6 @@
               "sale_strategy": {
                 "type": "string",
                 "enum": [
-                  "hold",
-                  "monitor",
-                  "opportunistic",
-                  "liquidate",
                   "strategic_custody",
                   "selective_inquiry",
                   "transfer_ready"
