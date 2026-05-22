@@ -6,6 +6,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: vortik-apply-registry-changes
+  cancel-in-progress: true
+
 jobs:
   apply-changes:
     runs-on: ubuntu-latest
@@ -24,10 +28,13 @@ jobs:
       - name: Install dependencies if needed
         run: npm install || true
 
-      - name: Validate JSON before applying changes
+      - name: Validate raw JSON files before applying changes
         run: node scripts/validate-json-files.mjs
 
-      - name: Apply requested changes
+      - name: Validate registry before applying changes
+        run: node scripts/validate-registry.mjs
+
+      - name: Apply requested registry changes
         run: node scripts/apply-changes.cjs
 
       - name: Sync schemas from registry
@@ -57,20 +64,24 @@ jobs:
       - name: Sync docs
         run: node scripts/sync-docs.mjs
 
-      - name: Run full validation
+      - name: Run full validation after generation
         run: npm run validate
 
-      - name: Commit generated updates if changed
+      - name: Commit applied and generated updates
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add registry.json
-          git add schemas/
           git add anchors.index.json
           git add market.index.json
           git add maps/
+          git add schemas/
+          git add anchors/
           git add docs/
 
           git diff --cached --quiet || git commit -m "apply registry changes"
           git push
+
+      - name: Done
+        run: echo "🎯 Registry changes applied, regenerated, synced, and validated"
