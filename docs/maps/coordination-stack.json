@@ -1,88 +1,249 @@
 {
   "model": "vortik-coordination-model",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "type": "interpretive",
-  "description": "Interpretive coordination model describing how roles, commitments, and constraints interact across Ethereum coordination domains.",
-  "last_updated": "2026-04-09",
+  "description": "Interpretive coordination model describing how roles, commitments, constraints, external surfaces, and deprecated abstractions interact across Ethereum coordination domains.",
+  "last_updated": "2026-05-21",
   "principles": [
     "not strictly sequential",
     "partially overlapping",
     "role-based coordination",
     "commitment-driven validation",
-    "constraint-enforced inclusion"
+    "constraint-enforced inclusion",
+    "external surfaces are mapped separately from protocol-defined primitives",
+    "deprecated abstractions are tracked for semantic drift, not treated as canonical protocol language"
   ],
   "domains": [
     {
       "id": "orderflow",
       "name": "Order Flow Access & Routing",
-      "description": "Access to transaction flow, routing logic, and user intent entry points.",
-      "anchors": ["orderflowauction"],
+      "description": "Access to transaction flow, routing logic, order flow auctions, and user intent entry points before protocol-level block construction.",
+      "anchors": [
+        "orderflowauction"
+      ],
       "upstream": [],
-      "downstream": ["solver"],
-      "interacts_with": ["solver"]
+      "downstream": [
+        "solver",
+        "sequencing"
+      ],
+      "interacts_with": [
+        "solver",
+        "sequencing",
+        "execution",
+        "blockspace"
+      ]
     },
     {
       "id": "solver",
       "name": "Solver Coordination",
-      "description": "Coordination of execution strategies and intent resolution across competing solvers.",
-      "anchors": ["solverlayer"],
-      "upstream": ["orderflow"],
-      "downstream": ["payload"],
-      "interacts_with": ["orderflow", "payload", "execution"]
+      "description": "Coordination of execution strategies and intent resolution across competing solvers and off-protocol actors.",
+      "anchors": [
+        "solverlayer"
+      ],
+      "upstream": [
+        "orderflow"
+      ],
+      "downstream": [
+        "payload",
+        "sequencing"
+      ],
+      "interacts_with": [
+        "orderflow",
+        "payload",
+        "execution",
+        "sequencing"
+      ]
+    },
+    {
+      "id": "sequencing",
+      "name": "Sequencing Coordination",
+      "description": "External transaction ordering and sequencing coordination across rollups, ordering rights, shared sequencing systems, and cross-domain execution surfaces.",
+      "anchors": [
+        "sequencingmarket"
+      ],
+      "upstream": [
+        "orderflow",
+        "solver"
+      ],
+      "downstream": [
+        "payload",
+        "execution"
+      ],
+      "interacts_with": [
+        "orderflow",
+        "solver",
+        "payload",
+        "execution",
+        "blockspace"
+      ]
     },
     {
       "id": "payload",
       "name": "Payload Construction",
-      "description": "Aggregation of transactions and execution outcomes into candidate block payloads.",
-      "anchors": ["buildermarket"],
-      "upstream": ["solver"],
-      "downstream": ["builder"],
-      "interacts_with": ["solver", "builder"]
+      "description": "Aggregation of transactions and execution outcomes into candidate block payloads, including legacy builder-market framing under semantic drift.",
+      "anchors": [
+        "buildermarket"
+      ],
+      "upstream": [
+        "solver",
+        "sequencing"
+      ],
+      "downstream": [
+        "builder"
+      ],
+      "interacts_with": [
+        "solver",
+        "sequencing",
+        "builder",
+        "execution",
+        "blockspace"
+      ]
     },
     {
       "id": "builder",
       "name": "Proposer-Builder Separation",
-      "description": "Protocol-level separation of block construction and proposal (ePBS).",
-      "anchors": ["epbs"],
-      "upstream": ["payload"],
-      "downstream": ["inclusion"],
-      "interacts_with": ["payload", "inclusion"]
+      "description": "Protocol-level separation of block construction and proposal through ePBS and proposer-builder coordination semantics.",
+      "anchors": [
+        "epbs"
+      ],
+      "upstream": [
+        "payload"
+      ],
+      "downstream": [
+        "inclusion"
+      ],
+      "interacts_with": [
+        "payload",
+        "inclusion",
+        "commitment"
+      ]
     },
     {
       "id": "inclusion",
       "name": "Inclusion Enforcement",
-      "description": "Constraint mechanisms ensuring transaction inclusion and censorship resistance.",
-      "anchors": ["inclusionlist"],
-      "upstream": ["builder"],
-      "downstream": ["commitment"],
-      "interacts_with": ["builder", "commitment"]
+      "description": "Constraint mechanisms ensuring transaction inclusion, censorship resistance, and fork-choice enforced inclusion guarantees.",
+      "anchors": [
+        "inclusionlist"
+      ],
+      "upstream": [
+        "builder"
+      ],
+      "downstream": [
+        "commitment"
+      ],
+      "interacts_with": [
+        "builder",
+        "commitment",
+        "blockspace"
+      ]
     },
     {
       "id": "commitment",
       "name": "Commitment & Preconfirmation",
-      "description": "Coordination of early execution guarantees and commitment signaling.",
-      "anchors": ["commitmentlayer", "preconflayer"],
-      "upstream": ["inclusion"],
-      "downstream": ["finality"],
-      "interacts_with": ["inclusion", "finality"]
+      "description": "Coordination of early execution guarantees, commitment signaling, pre-reveal coordination, and preconfirmation-adjacent mechanisms.",
+      "anchors": [
+        "commitmentlayer",
+        "preconflayer"
+      ],
+      "upstream": [
+        "inclusion",
+        "builder"
+      ],
+      "downstream": [
+        "finality"
+      ],
+      "interacts_with": [
+        "builder",
+        "inclusion",
+        "finality",
+        "proving"
+      ]
+    },
+    {
+      "id": "proving",
+      "name": "Proof Generation & Proving Coordination",
+      "description": "External proof generation, proof aggregation, distributed proving infrastructure, and validity-proof coordination surfaces across zk and rollup systems.",
+      "anchors": [
+        "provingmarket"
+      ],
+      "upstream": [
+        "execution",
+        "payload",
+        "commitment"
+      ],
+      "downstream": [
+        "finality"
+      ],
+      "interacts_with": [
+        "execution",
+        "payload",
+        "commitment",
+        "sequencing",
+        "finality"
+      ]
     },
     {
       "id": "finality",
       "name": "Finality",
-      "description": "Consensus-level confirmation and irreversibility of state (SSF research direction).",
-      "anchors": ["ssf"],
-      "upstream": ["commitment"],
+      "description": "Consensus-level confirmation and irreversibility of state, including the SSF research direction and fast-finality terminology surface.",
+      "anchors": [
+        "ssf"
+      ],
+      "upstream": [
+        "commitment",
+        "proving"
+      ],
       "downstream": [],
-      "interacts_with": ["commitment"]
+      "interacts_with": [
+        "commitment",
+        "proving"
+      ]
     },
     {
       "id": "execution",
       "name": "Execution Coordination (Ambiguous)",
-      "description": "Non-canonical coordination surface spanning routing, solver activity, and payload construction.",
-      "anchors": ["executionmarket"],
-      "upstream": ["orderflow"],
-      "downstream": ["payload"],
-      "interacts_with": ["solver", "payload"]
+      "description": "Non-canonical coordination surface spanning routing, solver activity, sequencing, execution strategy, and payload construction.",
+      "anchors": [
+        "executionmarket"
+      ],
+      "upstream": [
+        "orderflow",
+        "sequencing"
+      ],
+      "downstream": [
+        "payload",
+        "proving"
+      ],
+      "interacts_with": [
+        "solver",
+        "sequencing",
+        "payload",
+        "proving",
+        "blockspace"
+      ]
+    },
+    {
+      "id": "blockspace",
+      "name": "Blockspace Allocation (Legacy / Ambiguous)",
+      "description": "Legacy blockspace-market framing increasingly displaced by protocol-native roles, payloads, commitments, inclusion constraints, and narrower execution-resource terminology.",
+      "anchors": [
+        "blockspacemarket"
+      ],
+      "upstream": [
+        "orderflow"
+      ],
+      "downstream": [
+        "payload",
+        "inclusion"
+      ],
+      "interacts_with": [
+        "orderflow",
+        "sequencing",
+        "payload",
+        "builder",
+        "inclusion",
+        "execution"
+      ]
     }
   ],
   "relationships": [
@@ -90,6 +251,16 @@
       "type": "flow",
       "from": "orderflow",
       "to": "solver"
+    },
+    {
+      "type": "flow",
+      "from": "solver",
+      "to": "sequencing"
+    },
+    {
+      "type": "flow",
+      "from": "sequencing",
+      "to": "payload"
     },
     {
       "type": "flow",
@@ -117,19 +288,88 @@
       "to": "finality"
     },
     {
-      "type": "overlap",
-      "between": ["solver", "execution"]
+      "type": "flow",
+      "from": "execution",
+      "to": "proving"
+    },
+    {
+      "type": "flow",
+      "from": "proving",
+      "to": "finality"
     },
     {
       "type": "overlap",
-      "between": ["execution", "payload"]
+      "between": [
+        "solver",
+        "execution"
+      ]
+    },
+    {
+      "type": "overlap",
+      "between": [
+        "execution",
+        "payload"
+      ]
+    },
+    {
+      "type": "overlap",
+      "between": [
+        "sequencing",
+        "orderflow"
+      ]
+    },
+    {
+      "type": "overlap",
+      "between": [
+        "sequencing",
+        "payload"
+      ]
+    },
+    {
+      "type": "overlap",
+      "between": [
+        "blockspace",
+        "payload"
+      ]
+    },
+    {
+      "type": "overlap",
+      "between": [
+        "blockspace",
+        "inclusion"
+      ]
+    },
+    {
+      "type": "overlap",
+      "between": [
+        "proving",
+        "finality"
+      ]
     }
   ],
+  "coverage": {
+    "registry_anchors_mapped": [
+      "epbs",
+      "inclusionlist",
+      "commitmentlayer",
+      "preconflayer",
+      "ssf",
+      "buildermarket",
+      "solverlayer",
+      "executionmarket",
+      "orderflowauction",
+      "provingmarket",
+      "sequencingmarket",
+      "blockspacemarket"
+    ],
+    "coverage_status": "complete_for_registry_v0.6.4"
+  },
   "notes": [
     "This model is interpretive and does not represent protocol execution order.",
     "Domains may overlap and interact dynamically.",
-    "Some domains represent transitional or ambiguous terminology surfaces.",
-    "Builder markets are modeled as a legacy abstraction within payload construction.",
-    "Execution coordination is intentionally classified as ambiguous and non-canonical."
+    "Protocol-defined primitives are separated from external, premature, repairable, and deprecated naming surfaces.",
+    "Builder markets, execution markets, and blockspace markets are tracked as legacy or non-canonical abstractions under semantic drift.",
+    "Sequencing and proving are modeled as external coordination surfaces because they are relevant to Ethereum-adjacent infrastructure without being treated here as canonical L1 protocol primitives.",
+    "All 12 registry anchors in registry v0.6.4 are represented in this map."
   ]
 }
