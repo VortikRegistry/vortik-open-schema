@@ -1,5 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Vortik Semantic Registry Schema",
   "type": "object",
   "required": [
     "registry",
@@ -10,17 +11,22 @@
   ],
   "properties": {
     "registry": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "version": {
-      "type": "string"
+      "type": "string",
+      "pattern": "^v?[0-9]+\\.[0-9]+\\.[0-9]+$"
     },
     "description": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "source_of_truth": {
       "type": "string",
-      "enum": ["schemas"]
+      "enum": [
+        "schemas"
+      ]
     },
     "last_updated": {
       "type": "string"
@@ -42,20 +48,21 @@
         ],
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "ens": {
             "type": "string",
             "pattern": "^[a-z0-9-]+\\.eth$"
           },
           "canonical_term": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "classification": {
             "type": "string",
             "enum": [
               "core",
-              "valid",
               "repairable",
               "premature",
               "deprecated",
@@ -63,14 +70,18 @@
             ]
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "status_label": {
             "type": "string",
             "enum": [
               "core",
+              "canonical",
               "emerging",
               "transitional",
+              "repairable",
+              "premature",
               "deprecated",
               "external"
             ]
@@ -81,7 +92,11 @@
               "canonical",
               "implemented",
               "emerging",
-              "research"
+              "research",
+              "transitional",
+              "external",
+              "legacy",
+              "deprecated"
             ]
           },
           "market_priority": {
@@ -107,7 +122,8 @@
             ]
           },
           "role": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "schema": {
             "type": "string",
@@ -139,7 +155,10 @@
                   "hold",
                   "monitor",
                   "opportunistic",
-                  "liquidate"
+                  "liquidate",
+                  "strategic_custody",
+                  "selective_inquiry",
+                  "transfer_ready"
                 ]
               },
               "visibility": {
@@ -174,13 +193,16 @@
         ],
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "canonical_term": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "category": {
             "type": "string",
@@ -189,23 +211,33 @@
               "market",
               "standard",
               "coordination-surface",
+              "coordination_surface",
               "mechanism"
             ]
           },
           "coverage_status": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "ens_status": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "desired_ens": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "summary": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           }
         },
         "additionalProperties": false
