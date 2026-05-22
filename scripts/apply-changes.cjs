@@ -16,25 +16,37 @@ const VALID_CLASSIFICATIONS = new Set([
   "deprecated"
 ]);
 
-const VALID_STATUSES = new Set([
-  "implemented",
-  "eip-active",
-  "research"
+const VALID_STATUS_LABELS = new Set([
+  "core",
+  "canonical",
+  "emerging",
+  "transitional",
+  "repairable",
+  "premature",
+  "deprecated",
+  "external"
 ]);
 
 const VALID_STAGES = new Set([
   "canonical",
   "implemented",
   "emerging",
-  "research"
+  "research",
+  "transitional",
+  "external",
+  "legacy",
+  "deprecated"
 ]);
 
 const VALID_TYPES = new Set([
   "primitive",
   "constraint",
-  "external_mechanism",
-  "external_actor",
+  "mechanism",
+  "market",
+  "role",
   "coordination_surface",
+  "external_actor",
+  "external_mechanism",
   "misaligned_abstraction"
 ]);
 
@@ -52,11 +64,17 @@ const VALID_PRIORITIES = new Set([
 ]);
 
 const VALID_SALE_STRATEGIES = new Set([
-  "hold",
-  "monitor",
-  "opportunistic",
-  "liquidate"
+  "strategic_custody",
+  "selective_inquiry",
+  "transfer_ready"
 ]);
+
+const LEGACY_SALE_STRATEGY_MAP = {
+  hold: "strategic_custody",
+  monitor: "selective_inquiry",
+  opportunistic: "selective_inquiry",
+  liquidate: "transfer_ready"
+};
 
 const ALLOWED_UPDATE_FIELDS = new Set([
   "id",
@@ -142,6 +160,28 @@ function validateUnknownFields(object, allowedFields, label) {
   }
 }
 
+function normalizeSaleStrategy(value, label) {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  if (VALID_SALE_STRATEGIES.has(value)) {
+    return value;
+  }
+
+  if (LEGACY_SALE_STRATEGY_MAP[value]) {
+    const normalized = LEGACY_SALE_STRATEGY_MAP[value];
+
+    console.warn(
+      `⚠️  Legacy sale_strategy "${value}" found in ${label}. Normalized to "${normalized}".`
+    );
+
+    return normalized;
+  }
+
+  return value;
+}
+
 function normalizeUpdate(rawUpdate, index) {
   if (!rawUpdate || typeof rawUpdate !== "object" || Array.isArray(rawUpdate)) {
     throw new Error(`updates[${index}] must be an object`);
@@ -177,15 +217,20 @@ function normalizeUpdate(rawUpdate, index) {
     delete update.market;
   }
 
+  update.sale_strategy = normalizeSaleStrategy(
+    update.sale_strategy,
+    `updates[${index}]`
+  );
+
   ensureAllowedValue("classification", update.classification, VALID_CLASSIFICATIONS);
-  ensureAllowedValue("status", update.status, VALID_STATUSES);
+  ensureAllowedValue("status_label", update.status_label, VALID_STATUS_LABELS);
   ensureAllowedValue("stage", update.stage, VALID_STAGES);
   ensureAllowedValue("type", update.type, VALID_TYPES);
   ensureAllowedValue("market.visibility", update.visibility, VALID_VISIBILITIES);
   ensureAllowedValue("market.priority", update.priority, VALID_PRIORITIES);
   ensureAllowedValue("market.sale_strategy", update.sale_strategy, VALID_SALE_STRATEGIES);
 
-  ensureOptionalString("status_label", update.status_label);
+  ensureOptionalString("status", update.status);
   ensureOptionalString("canonical_term", update.canonical_term);
   ensureOptionalString("role", update.role);
 
@@ -314,14 +359,21 @@ function applyUpdateToAnchor(anchor, update) {
   modified = updateIfChanged(anchor, "canonical_term", update.canonical_term, anchor.id) || modified;
   modified = updateIfChanged(anchor, "role", update.role, anchor.id) || modified;
 
-  if (!anchor.market || typeof anchor.market !== "object" || Array.isArray(anchor.market)) {
-    anchor.market = {};
-    modified = true;
-  }
+  const hasMarketUpdate =
+    update.priority !== undefined ||
+    update.sale_strategy !== undefined ||
+    update.visibility !== undefined;
 
-  modified = updateIfChanged(anchor.market, "priority", update.priority, `${anchor.id}.market`) || modified;
-  modified = updateIfChanged(anchor.market, "sale_strategy", update.sale_strategy, `${anchor.id}.market`) || modified;
-  modified = updateIfChanged(anchor.market, "visibility", update.visibility, `${anchor.id}.market`) || modified;
+  if (hasMarketUpdate) {
+    if (!anchor.market || typeof anchor.market !== "object" || Array.isArray(anchor.market)) {
+      anchor.market = {};
+      modified = true;
+    }
+
+    modified = updateIfChanged(anchor.market, "priority", update.priority, `${anchor.id}.market`) || modified;
+    modified = updateIfChanged(anchor.market, "sale_strategy", update.sale_strategy, `${anchor.id}.market`) || modified;
+    modified = updateIfChanged(anchor.market, "visibility", update.visibility, `${anchor.id}.market`) || modified;
+  }
 
   return modified;
 }
