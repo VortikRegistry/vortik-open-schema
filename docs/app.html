@@ -1,673 +1,481 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Vortik Semantic Registry — Interactive App</title>
+  <meta
+    name="description"
+    content="Interactive explorer for the Vortik Semantic Registry: Ethereum coordination anchors, domains, relations, and strategic surfaces."
+  />
   <style>
-    :root{
-      --bg:#05070a;
-      --panel:#0b0f14;
-      --panel-2:#111722;
-      --panel-3:#0d131d;
-      --line:#1e2735;
-      --soft:#8ea0b8;
-      --text:#e9eef7;
-      --muted:#a8b4c7;
-      --core:#3ddc97;
-      --valid:#59a8ff;
-      --repairable:#f6c453;
-      --premature:#ff7b72;
-      --deprecated:#7d8590;
-      --accent:#7aa2ff;
-      --accent-2:#9f7aea;
-      --glow:0 0 0 1px rgba(122,162,255,.12), 0 8px 40px rgba(0,0,0,.35);
-      --radius:20px;
-      --mono:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    :root {
+      color-scheme: dark;
+      --bg: #05070a;
+      --panel: #0b0f14;
+      --panel-2: #111722;
+      --panel-3: #151d2b;
+      --line: #223044;
+      --line-soft: rgba(142, 160, 184, 0.18);
+      --text: #e9eef7;
+      --muted: #a8b4c7;
+      --soft: #7f8fa8;
+      --core: #3ddc97;
+      --repairable: #f6c453;
+      --premature: #ff9b72;
+      --deprecated: #7d8590;
+      --external: #59a8ff;
+      --accent: #7aa2ff;
+      --accent-2: #9f7aea;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+      --max: 1180px;
     }
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:var(--sans);
-      color:var(--text);
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
       background:
-        radial-gradient(1200px 600px at 80% -10%, rgba(122,162,255,.10), transparent 60%),
-        radial-gradient(900px 500px at 10% 0%, rgba(159,122,234,.10), transparent 55%),
-        linear-gradient(180deg, #06080c 0%, #05070a 100%);
-      min-height:100vh;
+        radial-gradient(circle at 20% 0%, rgba(122, 162, 255, 0.16), transparent 38%),
+        radial-gradient(circle at 82% 8%, rgba(159, 122, 234, 0.13), transparent 34%),
+        linear-gradient(180deg, #05070a 0%, #070a0f 48%, #05070a 100%);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
     }
 
-    a{color:#d9e6ff;text-decoration:none}
-    a:hover{color:#fff}
+    a { color: inherit; text-decoration: none; }
 
-    .grid-bg{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      opacity:.08;
-      background-image:
-        linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
-      background-size:28px 28px;
-      mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
+    .shell {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
     }
 
-    .wrap{
-      width:min(1280px, calc(100% - 32px));
-      margin:0 auto;
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(16px);
+      background: rgba(5, 7, 10, 0.72);
+      border-bottom: 1px solid var(--line-soft);
     }
 
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:50;
-      backdrop-filter:blur(16px);
-      background:rgba(5,7,10,.72);
-      border-bottom:1px solid rgba(255,255,255,.05);
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0;
     }
 
-    .topbar-inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      min-height:68px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      font-weight: 760;
+      letter-spacing: -0.02em;
     }
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      font-weight:700;
-      letter-spacing:.02em;
-    }
-
-    .brand-mark{
-      width:40px;
-      height:40px;
-      border-radius:14px;
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
       background:
-        linear-gradient(135deg, rgba(122,162,255,.22), rgba(159,122,234,.18)),
-        #0b1220;
-      border:1px solid rgba(255,255,255,.08);
-      box-shadow:var(--glow);
-      display:grid;
-      place-items:center;
-      color:#d7e3ff;
-      font-family:var(--mono);
-      font-size:12px;
-      flex:0 0 auto;
-    }
-
-    .brand small{
-      display:block;
-      color:var(--soft);
-      font-weight:500;
-      letter-spacing:.04em;
-      text-transform:uppercase;
-      font-size:11px;
-      margin-top:2px;
-    }
-
-    .nav{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .nav a{
-      padding:10px 14px;
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:999px;
-      color:var(--muted);
-      background:rgba(255,255,255,.02);
-      font-size:14px;
-      transition:.18s ease;
-    }
-
-    .nav a:hover{
-      color:#fff;
-      border-color:rgba(122,162,255,.28);
-      background:rgba(122,162,255,.08);
-    }
-
-    .hero{
-      padding:42px 0 22px;
-    }
-
-    .hero-card{
-      position:relative;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.07);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015)),
-        linear-gradient(135deg, rgba(122,162,255,.08), rgba(159,122,234,.05)),
-        var(--panel);
-      border-radius:30px;
-      box-shadow:var(--glow);
-      padding:30px;
-    }
-
-    .hero-card::after{
-      content:"";
-      position:absolute;
-      inset:auto -10% -35% auto;
-      width:460px;
-      height:460px;
-      background:radial-gradient(circle, rgba(122,162,255,.20), transparent 62%);
-      pointer-events:none;
-      filter:blur(12px);
-    }
-
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(122,162,255,.18);
-      background:rgba(122,162,255,.08);
-      color:#d6e4ff;
-      font-size:12px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      font-weight:700;
-    }
-
-    h1{
-      margin:18px 0 10px;
-      font-size:clamp(30px, 5vw, 52px);
-      line-height:1.02;
-      letter-spacing:-.04em;
-      max-width:920px;
-    }
-
-    .lead{
-      font-size:clamp(15px, 1.9vw, 19px);
-      color:var(--muted);
-      max-width:920px;
-      line-height:1.65;
-    }
-
-    .hero-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      margin-top:22px;
-    }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      border-radius:14px;
-      padding:12px 16px;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.03);
-      color:#eef4ff;
-      font-weight:600;
-      box-shadow:var(--glow);
-      transition:
-        transform .18s ease,
-        border-color .18s ease,
-        box-shadow .18s ease,
-        background .18s ease;
-    }
-
-    .btn:hover{
-      transform:translateY(-2px);
-      border-color:rgba(122,162,255,.24);
-    }
-
-    .btn.primary{
-      background:linear-gradient(135deg, rgba(122,162,255,.22), rgba(159,122,234,.18));
-      border-color:rgba(122,162,255,.28);
-    }
-
-    main{padding:8px 0 80px}
-    section{margin:22px 0}
-
-    .section-head{
-      display:flex;
-      align-items:end;
-      justify-content:space-between;
-      gap:16px;
-      margin-bottom:14px;
-    }
-
-    .section-head h2{
-      margin:0;
-      font-size:clamp(22px, 3vw, 34px);
-      letter-spacing:-.03em;
-    }
-
-    .section-head p{
-      margin:0;
-      color:var(--soft);
-      max-width:760px;
-      line-height:1.55;
+        radial-gradient(circle at 35% 28%, #ffffff, transparent 14%),
+        radial-gradient(circle at 50% 50%, var(--accent), transparent 42%),
+        radial-gradient(circle at 68% 62%, var(--accent-2), transparent 52%),
+        #0b0f14;
+      box-shadow: 0 0 34px rgba(122, 162, 255, 0.35);
+      flex: 0 0 auto;
     }
-
-    .panel{
-      background:linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.015)), var(--panel);
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:var(--radius);
-      box-shadow:var(--glow);
-    }
-
-    .panel.pad{padding:24px}
 
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(5, minmax(0,1fr));
-      gap:14px;
-    }
+    .brand span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .stat{
-      padding:18px;
-      border-radius:18px;
-      background:var(--panel-2);
-      border:1px solid rgba(255,255,255,.05);
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
-    .stat .label{
-      color:var(--soft);
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:.08em;
+    .nav-links a,
+    .button-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 8px 11px;
+      border: 1px solid var(--line-soft);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(11, 15, 20, 0.68);
+      font-size: 13px;
+      transition: border-color 0.18s ease, color 0.18s ease, transform 0.18s ease, background 0.18s ease;
     }
 
-    .stat .value{
-      margin-top:10px;
-      font-size:30px;
-      font-weight:800;
-      letter-spacing:-.04em;
+    .nav-links a:hover,
+    .button-link:hover {
+      color: var(--text);
+      border-color: rgba(122, 162, 255, 0.5);
+      background: rgba(122, 162, 255, 0.1);
+      transform: translateY(-1px);
     }
 
-    .stat .sub{
-      margin-top:6px;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.45;
+    .hero {
+      padding: 72px 0 34px;
     }
 
-    .market-grid{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0,1fr));
-      gap:14px;
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
     }
 
-    .market-card{
-      padding:18px;
-      border-radius:18px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
-        var(--panel-2);
-      border:1px solid rgba(255,255,255,.06);
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--core);
+      box-shadow: 0 0 22px rgba(61, 220, 151, 0.7);
     }
 
-    .market-card h3{
-      margin:0 0 8px;
-      font-size:18px;
-      letter-spacing:-.03em;
+    h1 {
+      max-width: 960px;
+      margin: 0;
+      font-size: clamp(36px, 7vw, 76px);
+      line-height: 0.95;
+      letter-spacing: -0.065em;
     }
 
-    .market-card p{
-      margin:0;
-      color:var(--muted);
-      line-height:1.55;
-      font-size:14px;
+    .lead {
+      max-width: 790px;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 20px);
     }
 
-    .market-meta{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:14px;
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
     }
 
-    .layout{
-      display:grid;
-      grid-template-columns:minmax(0, 1.35fr) minmax(320px, .65fr);
-      gap:18px;
-      align-items:start;
+    .primary {
+      color: #07100d;
+      background: linear-gradient(135deg, var(--core), #94f2c8);
+      border-color: transparent;
+      font-weight: 760;
     }
 
-    .stack{
-      display:grid;
-      gap:18px;
+    .status-line {
+      margin-top: 18px;
+      color: var(--soft);
+      font-size: 13px;
     }
 
-    .search-row{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      align-items:center;
-      margin-bottom:16px;
+    .grid {
+      display: grid;
+      gap: 14px;
     }
 
-    .search{
-      flex:1 1 340px;
-      position:relative;
+    .stats {
+      grid-template-columns: repeat(5, 1fr);
+      margin: 26px 0 38px;
     }
 
-    .search input{
-      width:100%;
-      background:#0c1119;
-      color:#eef4ff;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:14px;
-      padding:12px 14px;
-      outline:none;
-      font-size:14px;
+    .card {
+      border: 1px solid var(--line-soft);
+      background: linear-gradient(180deg, rgba(17, 23, 34, 0.92), rgba(11, 15, 20, 0.92));
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
     }
 
-    .legend{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
+    .metric {
+      padding: 18px;
+      min-height: 132px;
     }
 
-    .legend button{
-      cursor:pointer;
-      border:1px solid rgba(255,255,255,.06);
-      background:#0d131d;
-      color:#dce7f8;
-      border-radius:999px;
-      padding:8px 12px;
-      font-size:13px;
-      transition:.18s ease;
+    .metric-label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
-    .legend button.active{
-      border-color:rgba(122,162,255,.28);
-      background:rgba(122,162,255,.12);
-      color:#fff;
+    .metric-value {
+      margin-top: 12px;
+      font-size: 38px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.04em;
     }
 
-    .context-note{
-      margin-bottom:18px;
-      color:#8ea0b8;
-      line-height:1.6;
-      font-size:14px;
+    .metric-note {
+      margin-top: 10px;
+      color: var(--soft);
+      font-size: 13px;
     }
 
-    .anchor-grid{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0,1fr));
-      gap:14px;
+    section {
+      padding: 22px 0;
+      scroll-margin-top: 88px;
     }
 
-    .anchor-card{
-      padding:18px;
-      border-radius:20px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
-        var(--panel-2);
-      border:1px solid rgba(255,255,255,.06);
-      transition:transform .18s ease, border-color .18s ease, background .18s ease;
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 16px;
     }
 
-    .anchor-card:hover{
-      transform:translateY(-2px);
-      border-color:rgba(122,162,255,.22);
-      background:
-        linear-gradient(180deg, rgba(122,162,255,.05), rgba(255,255,255,.01)),
-        var(--panel-2);
+    h2 {
+      margin: 0;
+      font-size: clamp(25px, 4vw, 38px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
     }
 
-    .anchor-top{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:flex-start;
+    .section-text {
+      max-width: 760px;
+      color: var(--muted);
+      margin: 9px 0 0;
     }
 
-    .anchor-name{
-      font-size:18px;
-      font-weight:800;
-      letter-spacing:-.03em;
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) 210px 210px;
+      gap: 10px;
+      margin-bottom: 14px;
     }
 
-    .anchor-ens{
-      margin-top:6px;
-      font-family:var(--mono);
-      font-size:13px;
-      color:#d6e3ff;
-      word-break:break-word;
+    input,
+    select {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid var(--line-soft);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      background: rgba(11, 15, 20, 0.85);
+      padding: 0 12px;
+      outline: none;
     }
 
-    .anchor-term{
-      margin-top:14px;
-      color:var(--muted);
-      line-height:1.55;
-      font-size:14px;
-      min-height:44px;
-    }
+    input:focus,
+    select:focus { border-color: rgba(122, 162, 255, 0.58); }
 
-    .anchor-meta{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:14px;
+    .anchor-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .tag{
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.07);
-      background:#0a1018;
-      font-size:12px;
-      color:#d8e4f7;
-      font-family:var(--mono);
+    .anchor-card {
+      padding: 18px;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
     }
-
-    .tag.core{border-color:rgba(61,220,151,.22); color:var(--core)}
-    .tag.valid{border-color:rgba(89,168,255,.22); color:var(--valid)}
-    .tag.repairable{border-color:rgba(246,196,83,.22); color:var(--repairable)}
-    .tag.premature{border-color:rgba(255,123,114,.22); color:var(--premature)}
-    .tag.deprecated{border-color:rgba(125,133,144,.22); color:var(--deprecated)}
-    .tag.external{border-color:rgba(89,168,255,.22); color:var(--valid)}
 
-    .tag.priority-high{border-color:rgba(122,162,255,.24); color:#cfe0ff}
-    .tag.priority-medium{border-color:rgba(159,122,234,.24); color:#e0d3ff}
-    .tag.priority-low{border-color:rgba(125,133,144,.22); color:#c1c7d0}
-
-    .tag.strategy-hold{border-color:rgba(61,220,151,.22); color:var(--core)}
-    .tag.strategy-monitor{border-color:rgba(246,196,83,.22); color:var(--repairable)}
-    .tag.strategy-opportunistic{border-color:rgba(89,168,255,.22); color:var(--valid)}
-    .tag.strategy-liquidate{border-color:rgba(255,123,114,.22); color:var(--premature)}
-
-    .anchor-links{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:16px;
+    .anchor-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    .anchor-links a{
-      font-size:13px;
-      color:#dce8ff;
-      border-bottom:1px solid rgba(220,232,255,.2);
+    .anchor-id {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+      overflow-wrap: anywhere;
     }
 
-    .empty{
-      color:var(--soft);
-      padding:10px 0 4px;
+    .ens {
+      display: inline-flex;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 13px;
+      overflow-wrap: anywhere;
     }
 
-    .side-stack{
-      display:grid;
-      gap:18px;
+    .badge-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 7px;
     }
 
-    .mini-list{
-      display:grid;
-      gap:10px;
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 25px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--line-soft);
+      background: rgba(255,255,255,0.025);
     }
 
-    .mini-item{
-      padding:14px 16px;
-      border-radius:16px;
-      background:var(--panel-3);
-      border:1px solid rgba(255,255,255,.05);
-    }
+    .badge.core { color: var(--core); border-color: rgba(61, 220, 151, 0.33); background: rgba(61, 220, 151, 0.08); }
+    .badge.repairable { color: var(--repairable); border-color: rgba(246, 196, 83, 0.34); background: rgba(246, 196, 83, 0.08); }
+    .badge.premature { color: var(--premature); border-color: rgba(255, 155, 114, 0.33); background: rgba(255, 155, 114, 0.08); }
+    .badge.deprecated { color: var(--deprecated); border-color: rgba(125, 133, 144, 0.32); background: rgba(125, 133, 144, 0.08); }
+    .badge.external { color: var(--external); border-color: rgba(89, 168, 255, 0.33); background: rgba(89, 168, 255, 0.08); }
 
-    .mini-item h3{
-      margin:0 0 6px;
-      font-size:15px;
-      letter-spacing:-.02em;
+    .anchor-term {
+      color: var(--text);
+      font-weight: 700;
+      letter-spacing: -0.01em;
     }
 
-    .mini-item p{
-      margin:0;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.5;
+    .anchor-role {
+      color: var(--muted);
+      font-size: 14px;
+      flex: 1;
     }
 
-    .mini-item .mono{
-      display:block;
-      margin-top:8px;
-      color:#dbe8fb;
-      font-size:12px;
-      font-family:var(--mono);
-      line-height:1.6;
-      word-break:break-word;
+    .mini-links {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: auto;
     }
 
-    .relations{
-      display:grid;
-      gap:10px;
+    .mini-links a {
+      font-size: 13px;
+      color: var(--accent);
+      border-bottom: 1px solid rgba(122, 162, 255, 0.35);
     }
 
-    .relation{
-      padding:12px 14px;
-      border-radius:14px;
-      background:#0b1018;
-      border:1px solid rgba(255,255,255,.05);
-      font-family:var(--mono);
-      font-size:13px;
-      color:#dce7f8;
+    .feature-grid,
+    .domain-grid,
+    .surface-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .surface-list{
-      display:grid;
-      gap:10px;
+    .info-card {
+      padding: 18px;
     }
 
-    .surface-item{
-      padding:14px 16px;
-      border-radius:16px;
-      background:var(--panel-3);
-      border:1px solid rgba(255,255,255,.05);
+    .info-card h3 {
+      margin: 0;
+      font-size: 19px;
+      letter-spacing: -0.025em;
     }
 
-    .surface-item strong{
-      display:block;
-      font-size:15px;
-      margin-bottom:6px;
+    .info-card p {
+      color: var(--muted);
+      margin: 9px 0 0;
+      font-size: 14px;
     }
 
-    .surface-item span{
-      display:block;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.5;
+    .anchor-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 13px;
     }
 
-    .surface-item code{
-      display:block;
-      margin-top:8px;
-      color:#dce7f8;
-      font-family:var(--mono);
-      font-size:12px;
-      line-height:1.6;
-      white-space:pre-wrap;
+    .chip {
+      color: var(--muted);
+      border: 1px solid var(--line-soft);
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.025);
     }
 
-    .loading, .error{
-      padding:24px;
-      border-radius:20px;
-      background:var(--panel);
-      border:1px solid rgba(255,255,255,.06);
-      box-shadow:var(--glow);
-      margin:14px 0;
+    .relations-list {
+      display: grid;
+      gap: 10px;
     }
 
-    .error{
-      border-color:rgba(255,123,114,.28);
-      color:#ffd7d5;
+    .relation-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--line-soft);
+      border-radius: var(--radius-md);
+      background: rgba(11, 15, 20, 0.72);
     }
 
-    footer{
-      padding:18px 0 60px;
-      color:var(--soft);
-      font-size:14px;
+    .relation-type {
+      color: var(--soft);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
-    .foot{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      border-top:1px solid rgba(255,255,255,.06);
-      padding-top:18px;
+    .notice {
+      padding: 16px;
+      border: 1px solid rgba(246, 196, 83, 0.28);
+      background: rgba(246, 196, 83, 0.08);
+      color: #f7d891;
+      border-radius: var(--radius-md);
+      margin: 12px 0 0;
     }
 
-    .status-dot{
-      width:8px;
-      height:8px;
-      border-radius:999px;
-      display:inline-block;
-      margin-right:8px;
-      background:var(--core);
-      box-shadow:0 0 12px rgba(61,220,151,.7);
+    .footer {
+      padding: 44px 0 54px;
+      color: var(--soft);
+      font-size: 13px;
     }
 
-    @media (max-width: 1180px){
-      .stats{grid-template-columns:repeat(3,1fr)}
-      .layout{grid-template-columns:1fr}
-      .market-grid{grid-template-columns:1fr}
+    .empty {
+      padding: 22px;
+      color: var(--muted);
+      border: 1px dashed var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,0.02);
     }
 
-    @media (max-width: 920px){
-      .anchor-grid{grid-template-columns:1fr}
-      .stats{grid-template-columns:repeat(2,1fr)}
+    @media (max-width: 980px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .anchor-grid,
+      .feature-grid,
+      .domain-grid,
+      .surface-grid { grid-template-columns: 1fr; }
+      .controls { grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 720px){
-      .topbar-inner{padding:10px 0}
-      .nav{display:none}
-      .hero{padding-top:34px}
-      .hero-card{padding:22px}
-      .stats,.market-grid{grid-template-columns:1fr}
-      .section-head{display:block}
-      .section-head p{margin-top:8px}
-      .foot{display:block}
-      .foot div + div{margin-top:10px}
+    @media (max-width: 640px) {
+      .shell { width: min(100% - 22px, var(--max)); }
+      .hero { padding-top: 48px; }
+      .nav { align-items: flex-start; flex-direction: column; }
+      .nav-links { justify-content: flex-start; }
+      .stats { grid-template-columns: 1fr; }
+      .metric { min-height: auto; }
+      .section-head { display: block; }
+      .relation-row { align-items: flex-start; flex-direction: column; }
     }
   </style>
 </head>
 <body>
-  <div class="grid-bg"></div>
-
   <header class="topbar">
-    <div class="wrap topbar-inner">
-      <div class="brand">
-        <div class="brand-mark">APP</div>
-        <div>
-          Vortik Interactive Explorer
-          <small>semantic registry application layer</small>
-        </div>
-      </div>
-      <nav class="nav">
+    <div class="shell nav">
+      <a class="brand" href="./index.html" aria-label="Vortik Semantic Registry home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Vortik Semantic Registry</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
         <a href="./index.html">Home</a>
         <a href="./market.html">Market</a>
         <a href="#signals">Signals</a>
@@ -678,54 +486,53 @@
     </div>
   </header>
 
-  <div class="wrap">
+  <main>
     <section class="hero">
-      <div class="hero-card">
-        <div class="eyebrow">Interactive Explorer</div>
-        <h1>Explore Ethereum coordination structure through anchors, domains, and machine-readable semantics.</h1>
+      <div class="shell">
+        <div class="eyebrow"><span class="pulse"></span> Interactive Explorer</div>
+        <h1>Explore Ethereum coordination structure through semantic anchors.</h1>
         <p class="lead">
-          This interactive layer renders the public registry, semantic anchors, coordination model, and strategic market layer in a navigable interface for research, infrastructure mapping, and terminology analysis.
+          This app renders the public registry, ENS-linked anchors, coordination domains, relations,
+          and strategic surface signals in one navigable research interface.
         </p>
         <div class="hero-actions">
-          <a class="btn primary" href="./index.html">Back to Registry</a>
-          <a class="btn" href="./market.html">Strategic Anchors</a>
-          <a class="btn" href="./registry.json">Open registry.json</a>
-          <a class="btn" href="https://x.com/VortikRegistry">Follow on X</a>
+          <a class="button-link primary" href="#anchors">Explore anchors</a>
+          <a class="button-link" href="./registry.json">Open registry.json</a>
+          <a class="button-link" href="./market.index.json">Open market.index.json</a>
+          <a class="button-link" href="https://x.com/VortikRegistry" rel="noopener noreferrer">Follow on X</a>
         </div>
+        <div id="loadStatus" class="status-line">Loading registry and coordination layers…</div>
       </div>
     </section>
 
-    <div id="loading" class="loading">Loading registry and coordination layers…</div>
-    <div id="error" class="error" style="display:none;"></div>
-
-    <main id="app" style="display:none;">
-      <section>
-        <div class="stats">
-          <div class="stat">
-            <div class="label">Anchors tracked</div>
-            <div class="value" id="statAnchors">0</div>
-            <div class="sub">Machine-readable anchors exposed by the registry.</div>
-          </div>
-          <div class="stat">
-            <div class="label">Core</div>
-            <div class="value" id="statCore">0</div>
-            <div class="sub">Protocol-aligned primitives with strong structural grounding.</div>
-          </div>
-          <div class="stat">
-            <div class="label">Valid</div>
-            <div class="value" id="statValid">0</div>
-            <div class="sub">Stable coordination surfaces with usable semantic precision.</div>
-          </div>
-          <div class="stat">
-            <div class="label">Repairable</div>
-            <div class="value" id="statRepairable">0</div>
-            <div class="sub">Real concepts with naming or alignment drift.</div>
-          </div>
-          <div class="stat">
-            <div class="label">Featured</div>
-            <div class="value" id="statFeatured">0</div>
-            <div class="sub">Strategic anchors surfaced by the market intelligence layer.</div>
-          </div>
+    <div class="shell">
+      <section aria-label="Registry metrics">
+        <div class="grid stats">
+          <article class="card metric">
+            <div class="metric-label">Anchors tracked</div>
+            <div id="totalCount" class="metric-value">—</div>
+            <div class="metric-note">ENS-linked semantic anchors indexed by the registry.</div>
+          </article>
+          <article class="card metric">
+            <div class="metric-label">Core</div>
+            <div id="coreCount" class="metric-value">—</div>
+            <div class="metric-note">Protocol-aligned primitives and constraints.</div>
+          </article>
+          <article class="card metric">
+            <div class="metric-label">Repairable</div>
+            <div id="repairableCount" class="metric-value">—</div>
+            <div class="metric-note">Real concepts with naming or alignment drift.</div>
+          </article>
+          <article class="card metric">
+            <div class="metric-label">External / transitional</div>
+            <div id="externalCount" class="metric-value">—</div>
+            <div class="metric-note">Off-protocol or still-emerging coordination surfaces.</div>
+          </article>
+          <article class="card metric">
+            <div class="metric-label">Featured</div>
+            <div id="featuredCount" class="metric-value">—</div>
+            <div class="metric-note">High-signal anchors surfaced by the strategic layer.</div>
+          </article>
         </div>
       </section>
 
@@ -733,376 +540,374 @@
         <div class="section-head">
           <div>
             <h2>Strategic Signals</h2>
-            <p>High-signal anchors surfaced through the market layer. This is not a marketplace. It is a positioning layer derived from protocol alignment and semantic relevance.</p>
+            <p class="section-text">
+              High-signal anchors surfaced through the strategic layer. This is not a marketplace;
+              it is a positioning view derived from protocol alignment and semantic relevance.
+            </p>
           </div>
+          <a class="button-link" href="./market.html">Open strategic view</a>
         </div>
-        <div class="market-grid" id="marketGrid"></div>
+        <div id="featureGrid" class="grid feature-grid"></div>
       </section>
 
-      <section>
-        <div class="layout">
-          <div class="stack">
-            <div class="panel pad" id="anchors">
-              <div class="section-head">
-                <div>
-                  <h2>Semantic Anchors</h2>
-                  <p>Core primitives, valid coordination surfaces, and transitional abstractions anchored via ENS and tracked through semantic schemas.</p>
-                </div>
-              </div>
-
-              <div class="context-note">
-                The registry distinguishes between protocol-aligned primitives, valid coordination surfaces,
-                repairable terminology, premature abstractions, deprecated abstractions, and a derived strategic layer that highlights
-                featured anchors without turning the registry into a marketplace.
-              </div>
-
-              <div class="search-row">
-                <div class="search">
-                  <input id="searchInput" type="text" placeholder="Search by id, ENS, canonical term, role, type, status, or market strategy..." />
-                </div>
-                <div class="legend" id="legend"></div>
-              </div>
-
-              <div class="anchor-grid" id="anchorGrid"></div>
-              <div id="anchorEmpty" class="empty" style="display:none;">No anchors match the current filters.</div>
-            </div>
+      <section id="anchors">
+        <div class="section-head">
+          <div>
+            <h2>Semantic Anchors</h2>
+            <p class="section-text">
+              Protocol primitives, constraints, repairable terms, external actors, and deprecated abstractions
+              anchored via ENS and tracked through versioned semantic schemas.
+            </p>
           </div>
-
-          <aside class="side-stack">
-            <div class="panel pad" id="domains">
-              <div class="section-head">
-                <div>
-                  <h2>Coordination Domains</h2>
-                  <p>Interpretive coordination domains derived from the canonical stack model.</p>
-                </div>
-              </div>
-              <div class="mini-list" id="domainList"></div>
-            </div>
-
-            <div class="panel pad">
-              <div class="section-head">
-                <div>
-                  <h2>Surface Layer</h2>
-                  <p>Machine-readable semantic surfaces grouped for exploration.</p>
-                </div>
-              </div>
-              <div class="surface-list" id="surfaceList"></div>
-            </div>
-
-            <div class="panel pad" id="relations">
-              <div class="section-head">
-                <div>
-                  <h2>Relations</h2>
-                  <p>Flow and overlap relations from the coordination model.</p>
-                </div>
-              </div>
-              <div class="relations" id="relationList"></div>
-            </div>
-          </aside>
         </div>
+
+        <div class="controls" aria-label="Anchor filters">
+          <input id="searchInput" type="search" placeholder="Search by ENS, term, role, type, or status…" />
+          <select id="classificationFilter" aria-label="Filter by classification">
+            <option value="all">All classifications</option>
+            <option value="core">core</option>
+            <option value="repairable">repairable</option>
+            <option value="external">external</option>
+            <option value="premature">premature</option>
+            <option value="deprecated">deprecated</option>
+          </select>
+          <select id="priorityFilter" aria-label="Filter by market priority">
+            <option value="all">All priorities</option>
+            <option value="high">high</option>
+            <option value="medium">medium</option>
+            <option value="low">low</option>
+          </select>
+        </div>
+
+        <div id="anchorGrid" class="grid anchor-grid"></div>
       </section>
-    </main>
 
-    <footer>
-      <div class="foot">
-        <div><span class="status-dot"></span>Interactive explorer over registry, maps, market intelligence, and strategic anchors</div>
-        <div>
-          <a href="./index.html">Registry</a> ·
-          <a href="./market.html">Market</a> ·
-          <a href="https://x.com/VortikRegistry">X</a>
+      <section id="domains">
+        <div class="section-head">
+          <div>
+            <h2>Coordination Domains</h2>
+            <p class="section-text">
+              Interpretive coordination domains derived from the stack model. These domains are map views,
+              not rigid protocol ontology.
+            </p>
+          </div>
+          <a class="button-link" href="./maps/coordination-stack.json">Open coordination-stack.json</a>
         </div>
-      </div>
-    </footer>
-  </div>
+        <div id="domainGrid" class="grid domain-grid"></div>
+      </section>
+
+      <section id="surfaces">
+        <div class="section-head">
+          <div>
+            <h2>Surface Layer</h2>
+            <p class="section-text">
+              Machine-readable semantic surfaces grouped for exploration across upstream flow, solver coordination,
+              block construction, inclusion, commitments, and finality.
+            </p>
+          </div>
+          <a class="button-link" href="./maps/coordination-surfaces.json">Open coordination-surfaces.json</a>
+        </div>
+        <div id="surfaceGrid" class="grid surface-grid"></div>
+      </section>
+
+      <section id="relations">
+        <div class="section-head">
+          <div>
+            <h2>Relations</h2>
+            <p class="section-text">Flow and overlap relations from the interpretive coordination model.</p>
+          </div>
+        </div>
+        <div id="relationsList" class="relations-list"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="shell">
+      <strong>Vortik Semantic Registry</strong><br />
+      Independent research artifact · Not affiliated with the Ethereum Foundation ·
+      <a href="./registry.json">Registry</a> · <a href="./market.html">Market</a> · <a href="https://github.com/VortikRegistry/vortik-open-schema" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </footer>
 
   <script>
+    const BASE = new URL("./", window.location.href);
+
     const state = {
-      registry: null,
-      model: null,
-      surfaces: null,
-      market: null,
-      filter: "all",
-      query: ""
+      anchors: [],
+      featured: [],
+      domains: [],
+      surfaces: [],
+      relations: [],
+      registryVersion: null,
+      errors: []
     };
 
-    const clsOrder = ["core", "valid", "repairable", "premature", "deprecated", "external"];
+    const $ = (selector) => document.querySelector(selector);
 
-    function esc(s){
-      return String(s ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;");
+    const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    }[char]));
+
+    const cleanClass = (value) => String(value || "unknown").toLowerCase().replace(/[^a-z0-9_-]/g, "-");
+
+    const urlFor = (path) => path ? new URL(path, BASE).href : "#";
+
+    async function fetchJson(path, required = true) {
+      const url = urlFor(path);
+      const response = await fetch(url, { cache: "no-store" });
+      if (!response.ok) {
+        const message = `${path} returned HTTP ${response.status}`;
+        if (required) throw new Error(message);
+        state.errors.push(message);
+        return null;
+      }
+      return response.json();
     }
 
-    function clsCount(anchors, cls){
-      return anchors.filter(a => a.classification === cls).length;
+    function setText(id, value) {
+      const node = document.getElementById(id);
+      if (node) node.textContent = value;
     }
 
-    function tag(cls){
-      return `<span class="tag ${esc(cls)}">${esc(cls)}</span>`;
+    function deriveFeatured(market, anchors) {
+      const fromMarket = market?.segments?.featured || [];
+      if (fromMarket.length) return fromMarket;
+      return anchors.filter((anchor) => anchor?.market?.visibility === "featured" || anchor?.market_priority === "high");
     }
 
-    function marketTag(label, value){
-      if (!value) return "";
-      return `<span class="tag ${esc(label + "-" + value)}">${esc(value)}</span>`;
+    function updateMetrics() {
+      const anchors = state.anchors;
+      const countBy = (predicate) => anchors.filter(predicate).length;
+
+      setText("totalCount", anchors.length);
+      setText("coreCount", countBy((a) => a.classification === "core"));
+      setText("repairableCount", countBy((a) => a.classification === "repairable"));
+      setText("externalCount", countBy((a) => ["external", "premature"].includes(a.classification)));
+      setText("featuredCount", state.featured.length);
     }
 
-    function linkForAnchor(anchor){
-      const doc = anchor.anchor_doc || "";
-      return doc ? `./${doc}` : "./anchors/";
-    }
+    function renderFeatured() {
+      const grid = $("#featureGrid");
+      if (!grid) return;
 
-    function schemaLink(anchor){
-      const schema = anchor.schema || "";
-      return schema ? `./${schema}` : "./schemas/";
-    }
-
-    async function loadJSON(path) {
-      const res = await fetch(path, { cache: "no-store" });
-      if (!res.ok) throw new Error(`Failed to load ${path}`);
-      return res.json();
-    }
-
-    function marketLookupById() {
-      const map = new Map();
-      const segments = state.market?.segments || {};
-      Object.values(segments).flat().forEach(item => map.set(item.id, item));
-      return map;
-    }
-
-    function renderStats() {
-      const anchors = state.registry.anchors || [];
-      document.getElementById("statAnchors").textContent = anchors.length;
-      document.getElementById("statCore").textContent = clsCount(anchors, "core");
-      document.getElementById("statValid").textContent = clsCount(anchors, "valid");
-      document.getElementById("statRepairable").textContent = clsCount(anchors, "repairable");
-      document.getElementById("statFeatured").textContent = state.market?.summary?.featured ?? 0;
-    }
-
-    function renderLegend() {
-      const el = document.getElementById("legend");
-      const classes = ["all", ...clsOrder.filter(c => state.registry.anchors.some(a => a.classification === c))];
-      el.innerHTML = classes.map(cls => `
-        <button class="${state.filter === cls ? "active" : ""}" data-filter="${cls}">
-          ${cls}
-        </button>
-      `).join("");
-
-      el.querySelectorAll("button").forEach(btn => {
-        btn.addEventListener("click", () => {
-          state.filter = btn.dataset.filter;
-          renderLegend();
-          renderAnchors();
-        });
-      });
-    }
-
-    function filteredAnchors() {
-      const q = state.query.trim().toLowerCase();
-      const marketMap = marketLookupById();
-
-      return state.registry.anchors.filter(a => {
-        const passCls = state.filter === "all" ? true : a.classification === state.filter;
-        const market = marketMap.get(a.id);
-        const hay = [
-          a.id,
-          a.ens,
-          a.canonical_term,
-          a.role,
-          a.type,
-          a.status,
-          a.classification,
-          market?.priority,
-          market?.sale_strategy
-        ].join(" ").toLowerCase();
-        const passQuery = q ? hay.includes(q) : true;
-        return passCls && passQuery;
-      });
-    }
-
-    function renderMarketSignals() {
-      const grid = document.getElementById("marketGrid");
-      const featured = state.market?.segments?.featured || [];
-
-      if (!featured.length) {
-        grid.innerHTML = `
-          <div class="market-card">
-            <h3>No featured anchors</h3>
-            <p>The market intelligence layer did not surface any featured anchors yet.</p>
-          </div>
-        `;
+      if (!state.featured.length) {
+        grid.innerHTML = `<div class="empty">No strategic signals are currently surfaced.</div>`;
         return;
       }
 
-      grid.innerHTML = featured.map(item => `
-        <article class="market-card">
-          <h3>${esc(item.ens)}</h3>
-          <p>${esc(item.canonical_term)}</p>
-          <div class="market-meta">
-            ${marketTag("priority", item.priority)}
-            ${marketTag("strategy", item.sale_strategy)}
-            ${tag(item.classification)}
-          </div>
-        </article>
-      `).join("");
-    }
-
-    function renderAnchors() {
-      const grid = document.getElementById("anchorGrid");
-      const empty = document.getElementById("anchorEmpty");
-      const marketMap = marketLookupById();
-
-      const anchors = filteredAnchors()
-        .sort((a,b) => {
-          const am = marketMap.get(a.id);
-          const bm = marketMap.get(b.id);
-
-          const ap = am?.priority === "high" ? 3 : am?.priority === "medium" ? 2 : am?.priority === "low" ? 1 : 0;
-          const bp = bm?.priority === "high" ? 3 : bm?.priority === "medium" ? 2 : bm?.priority === "low" ? 1 : 0;
-          if (ap !== bp) return bp - ap;
-
-          const ac = clsOrder.indexOf(a.classification);
-          const bc = clsOrder.indexOf(b.classification);
-          if (ac !== bc) return ac - bc;
-
-          return a.id.localeCompare(b.id);
-        });
-
-      if (!anchors.length) {
-        grid.innerHTML = "";
-        empty.style.display = "block";
-        return;
-      }
-
-      empty.style.display = "none";
-
-      grid.innerHTML = anchors.map(a => {
-        const market = marketMap.get(a.id);
-
+      grid.innerHTML = state.featured.map((item) => {
+        const anchor = state.anchors.find((entry) => entry.id === item.id) || item;
         return `
-          <article class="anchor-card">
-            <div class="anchor-top">
-              <div>
-                <div class="anchor-name">${esc(a.id)}</div>
-                <div class="anchor-ens">${esc(a.ens)}</div>
-              </div>
-              ${tag(a.classification)}
+          <article class="card info-card">
+            <div class="badge-row">
+              <span class="badge ${cleanClass(anchor.classification)}">${escapeHtml(anchor.classification)}</span>
+              <span class="badge">${escapeHtml(anchor.priority || anchor.market_priority || "priority")}</span>
+              <span class="badge">${escapeHtml(anchor.sale_strategy || anchor.market?.sale_strategy || "strategy")}</span>
             </div>
-
-            <div class="anchor-term">${esc(a.canonical_term)}</div>
-
-            <div class="anchor-meta">
-              <span class="tag">${esc(a.type)}</span>
-              <span class="tag">${esc(a.status)}</span>
-              ${market ? marketTag("priority", market.priority) : ""}
-              ${market ? marketTag("strategy", market.sale_strategy) : ""}
-            </div>
-
-            <div class="anchor-term" style="min-height:auto; margin-top:12px;">
-              ${esc(a.role)}
-            </div>
-
-            <div class="anchor-links">
-              <a href="${linkForAnchor(a)}">anchor doc</a>
-              <a href="${schemaLink(a)}">schema</a>
+            <h3 style="margin-top:12px;">${escapeHtml(anchor.ens || anchor.id)}</h3>
+            <p><strong>${escapeHtml(anchor.canonical_term || "")}</strong></p>
+            <p>${escapeHtml(anchor.role || "High-signal semantic anchor tracked by the strategic layer.")}</p>
+            <div class="mini-links">
+              ${anchor.anchor_doc ? `<a href="${urlFor(anchor.anchor_doc)}">anchor doc</a>` : ""}
+              ${anchor.schema ? `<a href="${urlFor(anchor.schema)}">schema</a>` : ""}
             </div>
           </article>
         `;
       }).join("");
     }
 
+    function anchorMatches(anchor) {
+      const query = $("#searchInput")?.value.trim().toLowerCase() || "";
+      const classification = $("#classificationFilter")?.value || "all";
+      const priority = $("#priorityFilter")?.value || "all";
+
+      const haystack = [
+        anchor.id,
+        anchor.ens,
+        anchor.canonical_term,
+        anchor.classification,
+        anchor.status,
+        anchor.status_label,
+        anchor.stage,
+        anchor.type,
+        anchor.role,
+        anchor.market_priority
+      ].join(" ").toLowerCase();
+
+      const queryMatch = !query || haystack.includes(query);
+      const classMatch = classification === "all" || anchor.classification === classification;
+      const priorityMatch = priority === "all" || anchor.market_priority === priority || anchor.market?.priority === priority;
+
+      return queryMatch && classMatch && priorityMatch;
+    }
+
+    function renderAnchors() {
+      const grid = $("#anchorGrid");
+      if (!grid) return;
+
+      const anchors = state.anchors.filter(anchorMatches);
+
+      if (!anchors.length) {
+        grid.innerHTML = `<div class="empty">No anchors match the current filters.</div>`;
+        return;
+      }
+
+      grid.innerHTML = anchors.map((anchor) => `
+        <article class="card anchor-card">
+          <div class="anchor-top">
+            <div>
+              <h3 class="anchor-id">${escapeHtml(anchor.id)}</h3>
+              <a class="ens" href="https://app.ens.domains/${encodeURIComponent(anchor.ens || "")}" rel="noopener noreferrer">${escapeHtml(anchor.ens || "")}</a>
+            </div>
+            <span class="badge ${cleanClass(anchor.classification)}">${escapeHtml(anchor.classification)}</span>
+          </div>
+
+          <div class="badge-row">
+            <span class="badge">${escapeHtml(anchor.type)}</span>
+            <span class="badge">${escapeHtml(anchor.status_label || anchor.status)}</span>
+            <span class="badge">${escapeHtml(anchor.stage)}</span>
+            <span class="badge">${escapeHtml(anchor.market_priority || anchor.market?.priority || "")}</span>
+          </div>
+
+          <div class="anchor-term">${escapeHtml(anchor.canonical_term)}</div>
+          <div class="anchor-role">${escapeHtml(anchor.role)}</div>
+
+          <div class="mini-links">
+            ${anchor.anchor_doc ? `<a href="${urlFor(anchor.anchor_doc)}">anchor doc</a>` : ""}
+            ${anchor.schema ? `<a href="${urlFor(anchor.schema)}">schema</a>` : ""}
+            <a href="./registry.json">registry</a>
+          </div>
+        </article>
+      `).join("");
+    }
+
     function renderDomains() {
-      const list = document.getElementById("domainList");
-      list.innerHTML = state.model.domains.map(d => `
-        <div class="mini-item">
-          <h3>${esc(d.name)}</h3>
-          <p>${esc(d.description)}</p>
-          <span class="mono">id: ${esc(d.id)}</span>
-          <span class="mono">anchors: ${esc((d.anchors || []).join(", "))}</span>
-          <span class="mono">upstream: ${esc((d.upstream || []).join(", ") || "—")}</span>
-          <span class="mono">downstream: ${esc((d.downstream || []).join(", ") || "—")}</span>
-        </div>
+      const grid = $("#domainGrid");
+      if (!grid) return;
+
+      if (!state.domains.length) {
+        grid.innerHTML = `<div class="empty">No coordination domains loaded.</div>`;
+        return;
+      }
+
+      grid.innerHTML = state.domains.map((domain) => `
+        <article class="card info-card">
+          <div class="badge-row">
+            <span class="badge">${escapeHtml(domain.id)}</span>
+            ${domain.upstream?.length ? `<span class="badge">upstream: ${escapeHtml(domain.upstream.join(", "))}</span>` : ""}
+            ${domain.downstream?.length ? `<span class="badge">downstream: ${escapeHtml(domain.downstream.join(", "))}</span>` : ""}
+          </div>
+          <h3 style="margin-top:12px;">${escapeHtml(domain.name)}</h3>
+          <p>${escapeHtml(domain.description)}</p>
+          <div class="anchor-chips">
+            ${(domain.anchors || []).map((anchor) => `<span class="chip">${escapeHtml(anchor)}</span>`).join("")}
+          </div>
+        </article>
       `).join("");
     }
 
     function renderSurfaces() {
-      const list = document.getElementById("surfaceList");
-      const surfaces = state.surfaces.surfaces || [];
-      const ambiguous = state.surfaces.ambiguous_surfaces || [];
+      const grid = $("#surfaceGrid");
+      if (!grid) return;
 
-      list.innerHTML = [
-        ...surfaces.map(s => `
-          <div class="surface-item">
-            <strong>${esc(s.name)}</strong>
-            <span>${esc(s.description)}</span>
-            <code>anchors: ${(s.anchors || []).map(esc).join(", ")}</code>
+      if (!state.surfaces.length) {
+        grid.innerHTML = `<div class="empty">No semantic surfaces loaded.</div>`;
+        return;
+      }
+
+      grid.innerHTML = state.surfaces.map((surface) => `
+        <article class="card info-card">
+          <div class="badge-row">
+            <span class="badge">${escapeHtml(surface.id)}</span>
+            <span class="badge">${escapeHtml(surface.category || "ambiguous")}</span>
           </div>
-        `),
-        ...ambiguous.map(s => `
-          <div class="surface-item">
-            <strong>${esc(s.name)}</strong>
-            <span>${esc(s.description)}</span>
-            <code>anchors: ${(s.anchors || []).map(esc).join(", ")}</code>
+          <h3 style="margin-top:12px;">${escapeHtml(surface.name)}</h3>
+          <p>${escapeHtml(surface.description)}</p>
+          <div class="anchor-chips">
+            ${(surface.anchors || []).map((anchor) => `<span class="chip">${escapeHtml(anchor)}</span>`).join("")}
           </div>
-        `)
-      ].join("");
+        </article>
+      `).join("");
+    }
+
+    function relationLabel(relation) {
+      if (relation.from && relation.to) return `${relation.from} → ${relation.to}`;
+      if (relation.between) return relation.between.join(" ↔ ");
+      return JSON.stringify(relation);
     }
 
     function renderRelations() {
-      const list = document.getElementById("relationList");
-      const rels = state.model.relationships || [];
+      const list = $("#relationsList");
+      if (!list) return;
 
-      list.innerHTML = rels.map(r => {
-        if (r.type === "flow") {
-          return `<div class="relation">flow: ${esc(r.from)} → ${esc(r.to)}</div>`;
-        }
-        if (r.type === "overlap") {
-          return `<div class="relation">overlap: ${esc((r.between || []).join(" ↔ "))}</div>`;
-        }
-        return `<div class="relation">${esc(JSON.stringify(r))}</div>`;
-      }).join("");
+      if (!state.relations.length) {
+        list.innerHTML = `<div class="empty">No relations loaded.</div>`;
+        return;
+      }
+
+      list.innerHTML = state.relations.map((relation) => `
+        <div class="relation-row">
+          <div>${escapeHtml(relationLabel(relation))}</div>
+          <div class="relation-type">${escapeHtml(relation.type)}</div>
+        </div>
+      `).join("");
     }
 
-    async function boot() {
+    function attachFilters() {
+      ["#searchInput", "#classificationFilter", "#priorityFilter"].forEach((selector) => {
+        const node = $(selector);
+        if (node) node.addEventListener("input", renderAnchors);
+      });
+    }
+
+    function renderAll() {
+      updateMetrics();
+      renderFeatured();
+      renderAnchors();
+      renderDomains();
+      renderSurfaces();
+      renderRelations();
+    }
+
+    async function init() {
       try {
-        const [registry, model, surfaces, market] = await Promise.all([
-          loadJSON("./registry.json"),
-          loadJSON("./maps/coordination-stack.json"),
-          loadJSON("./maps/coordination-surfaces.json"),
-          loadJSON("./market.index.json")
+        const [registry, market, stack, surfaces] = await Promise.all([
+          fetchJson("registry.json"),
+          fetchJson("market.index.json", false),
+          fetchJson("maps/coordination-stack.json", false),
+          fetchJson("maps/coordination-surfaces.json", false)
         ]);
 
-        state.registry = registry;
-        state.model = model;
-        state.surfaces = surfaces;
-        state.market = market;
+        state.anchors = Array.isArray(registry?.anchors) ? registry.anchors : [];
+        state.registryVersion = registry?.version || "unknown";
+        state.featured = deriveFeatured(market, state.anchors);
+        state.domains = Array.isArray(stack?.domains) ? stack.domains : [];
+        state.surfaces = [
+          ...(Array.isArray(surfaces?.surfaces) ? surfaces.surfaces : []),
+          ...(Array.isArray(surfaces?.ambiguous_surfaces) ? surfaces.ambiguous_surfaces : [])
+        ];
+        state.relations = Array.isArray(stack?.relationships) ? stack.relationships : [];
 
-        renderStats();
-        renderLegend();
-        renderMarketSignals();
-        renderAnchors();
-        renderDomains();
-        renderSurfaces();
-        renderRelations();
+        attachFilters();
+        renderAll();
 
-        const input = document.getElementById("searchInput");
-        input.addEventListener("input", (e) => {
-          state.query = e.target.value;
-          renderAnchors();
-        });
-
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("app").style.display = "block";
-      } catch (err) {
-        document.getElementById("loading").style.display = "none";
-        const error = document.getElementById("error");
-        error.textContent = `Error loading registry app: ${err.message}`;
-        error.style.display = "block";
+        const sourceLine = `Loaded registry v${state.registryVersion} · ${state.anchors.length} anchors`;
+        $("#loadStatus").textContent = state.errors.length
+          ? `${sourceLine} · Optional layers with warnings: ${state.errors.join("; ")}`
+          : `${sourceLine} · Coordination layers ready`;
+      } catch (error) {
+        console.error(error);
+        $("#loadStatus").innerHTML = `<span class="notice">Unable to load the registry: ${escapeHtml(error.message)}</span>`;
+        ["totalCount", "coreCount", "repairableCount", "externalCount", "featuredCount"].forEach((id) => setText(id, "—"));
       }
     }
 
-    boot();
+    init();
   </script>
 </body>
 </html>
