@@ -1,68 +1,126 @@
 {
   "model": "vortik-coordination-surfaces",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "semantic-layer",
-  "description": "Machine-readable mapping of coordination surfaces across Ethereum based on interpretive domain grouping.",
-  "last_updated": "2026-04-09",
-
+  "description": "Machine-readable mapping of coordination surfaces across Ethereum based on interpretive domain grouping, including protocol-aligned primitives, external surfaces, and deprecated abstractions.",
+  "last_updated": "2026-05-21",
   "surfaces": [
     {
       "id": "orderflow",
       "name": "Order Flow Access & Routing",
-      "anchors": ["orderflowauction"],
+      "anchors": [
+        "orderflowauction"
+      ],
       "category": "upstream",
-      "description": "Access to transaction flow, routing mechanisms, and user intent entry points."
+      "description": "Access to transaction flow, routing mechanisms, auction surfaces, and user intent entry points."
     },
     {
       "id": "solver",
       "name": "Solver Coordination",
-      "anchors": ["solverlayer"],
-      "category": "execution",
-      "description": "Coordination of execution strategies and intent resolution across competing solvers."
+      "anchors": [
+        "solverlayer"
+      ],
+      "category": "external-actor",
+      "description": "Off-protocol coordination of execution strategies, intent resolution, routing, and settlement pathways across competing solvers."
+    },
+    {
+      "id": "sequencing",
+      "name": "Sequencing Coordination",
+      "anchors": [
+        "sequencingmarket"
+      ],
+      "category": "ordering",
+      "description": "External transaction ordering and sequencing coordination across rollups, shared sequencing systems, ordering rights, and cross-domain execution."
     },
     {
       "id": "builder",
       "name": "Builder Coordination",
-      "anchors": ["buildermarket", "epbs"],
+      "anchors": [
+        "buildermarket",
+        "epbs"
+      ],
       "category": "block-construction",
-      "description": "Coordination of payload construction and proposer-builder interaction, transitioning from market-based to protocol-defined roles."
+      "description": "Coordination of payload construction and proposer-builder interaction, transitioning from market-based framing to protocol-defined roles under ePBS."
     },
     {
       "id": "inclusion",
       "name": "Inclusion",
-      "anchors": ["inclusionlist"],
+      "anchors": [
+        "inclusionlist"
+      ],
       "category": "protocol-enforcement",
-      "description": "Constraint mechanisms ensuring transaction inclusion and censorship resistance."
+      "description": "Constraint mechanisms ensuring transaction inclusion, censorship resistance, and fork-choice enforced inclusion guarantees."
     },
     {
       "id": "commitment",
       "name": "Commitments & Preconfirmations",
-      "anchors": ["commitmentlayer", "preconflayer"],
+      "anchors": [
+        "commitmentlayer",
+        "preconflayer"
+      ],
       "category": "execution-guarantees",
-      "description": "Coordination of early execution guarantees and commitment signaling prior to final inclusion."
+      "description": "Coordination of early execution guarantees, commitment signaling, pre-reveal semantics, and preconfirmation-adjacent mechanisms prior to final confirmation."
+    },
+    {
+      "id": "proving",
+      "name": "Proof Generation & Proving Coordination",
+      "anchors": [
+        "provingmarket"
+      ],
+      "category": "proof-generation",
+      "description": "External proof generation and proving coordination across zk systems, validity proofs, rollups, proof aggregation, and distributed proving infrastructure."
     },
     {
       "id": "finality",
       "name": "Finality",
-      "anchors": ["ssf"],
+      "anchors": [
+        "ssf"
+      ],
       "category": "consensus",
-      "description": "Consensus-level confirmation and irreversibility of state transitions."
+      "description": "Consensus-level confirmation and irreversibility of state transitions, including the SSF research direction."
     }
   ],
-
   "ambiguous_surfaces": [
     {
       "id": "execution",
       "name": "Execution Coordination (Ambiguous)",
-      "anchors": ["executionmarket"],
-      "description": "Non-canonical coordination surface spanning routing, solver activity, execution strategy, and payload construction."
+      "anchors": [
+        "executionmarket"
+      ],
+      "description": "Non-canonical coordination surface spanning routing, solver activity, execution strategy, sequencing, and payload construction."
+    },
+    {
+      "id": "blockspace",
+      "name": "Blockspace Allocation (Legacy / Ambiguous)",
+      "anchors": [
+        "blockspacemarket"
+      ],
+      "description": "Legacy blockspace-market framing increasingly displaced by protocol-native roles, commitments, payloads, inclusion constraints, and narrower execution-resource terminology."
     }
   ],
-
+  "coverage": {
+    "registry_anchors_mapped": [
+      "epbs",
+      "inclusionlist",
+      "commitmentlayer",
+      "preconflayer",
+      "ssf",
+      "buildermarket",
+      "solverlayer",
+      "executionmarket",
+      "orderflowauction",
+      "provingmarket",
+      "sequencingmarket",
+      "blockspacemarket"
+    ],
+    "coverage_status": "complete_for_registry_v0.6.4"
+  },
   "notes": [
     "Surfaces are interpretive groupings, not protocol-defined layers.",
     "Surfaces may overlap and interact dynamically.",
-    "Some surfaces represent transitional abstractions rather than stable primitives.",
-    "Execution coordination is explicitly tracked as an ambiguous and non-canonical surface."
+    "Some surfaces represent transitional, external, or deprecated abstractions rather than stable protocol primitives.",
+    "Execution coordination and blockspace allocation are explicitly tracked as ambiguous and non-canonical surfaces.",
+    "Sequencing and proving are represented as external coordination surfaces because they are important adjacent infrastructure categories.",
+    "All 12 registry anchors in registry v0.6.4 are represented in this surface map."
   ]
 }
