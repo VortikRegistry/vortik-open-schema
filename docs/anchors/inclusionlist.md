@@ -1,139 +1,250 @@
-# Inclusion Lists (FOCIL)
+# Enshrined Proposer-Builder Separation (ePBS)
 
-**Associated ENS:** `inclusionlist.eth`  
-**Canonical term:** fork-choice enforced inclusion lists (FOCIL)  
-**Registry ID:** `inclusionlist`  
-**Status:** EIP-active / fork-scoped relevance  
+**Associated ENS:** `epbs.eth`  
+**Canonical term:** enshrined proposer-builder separation (ePBS)  
+**Registry ID:** `epbs`  
+**Status:** implementation-facing  
 **Classification:** core  
 
 ---
 
 ## Summary
 
-This anchor tracks **Inclusion Lists**, including **Fork-Choice Enforced Inclusion Lists (FOCIL)**, as a protocol-level mechanism for enforcing **transaction inclusion constraints** within Ethereum.
+This anchor tracks **Enshrined Proposer-Builder Separation (ePBS)** as a protocol-facing coordination primitive within Ethereum.
 
-Rather than coordinating transaction selection directly, inclusion lists introduce **protocol-enforced constraints on block construction**, limiting the ability of proposers and builders to exclude specific transactions.
+ePBS formalizes the separation between block proposal and execution payload construction at the protocol design level. It moves proposer-builder coordination closer to Ethereum’s consensus boundary, replacing reliance on trusted off-protocol relay coordination with a more explicit protocol-defined interaction between proposers, builders, bids, commitments, payload reveal, and timing checks.
 
-As Ethereum coordination becomes more explicit, inclusion enforcement increasingly behaves like a first-class protocol constraint rather than a soft social expectation.
+Vortik tracks `epbs.eth` because the term **ePBS** has strong semantic alignment with the EIP-7732 coordination surface and is one of the clearest naming surfaces for protocol-facing block production changes.
+
+This document is not an official Ethereum specification. It is a registry anchor document used by Vortik to describe why the term is tracked, how it is classified, and what risks or boundaries apply.
 
 ---
 
 ## Context
 
-Inclusion lists are designed to mitigate **transaction censorship** by introducing protocol-level guarantees on inclusion.
+Proposer-Builder Separation (PBS) emerged as a way to separate block construction from block proposal. In today’s external PBS / MEV-Boost-style architecture, much of that coordination depends on relays, external infrastructure, builder markets, timing assumptions, and off-protocol trust boundaries.
 
-They ensure that certain transactions cannot be indefinitely excluded from the execution pipeline.
+Enshrined Proposer-Builder Separation extends this model by moving key parts of the proposer-builder interface into Ethereum’s protocol design.
 
-**FOCIL** extends this concept by embedding inclusion enforcement directly into **fork-choice rules**, making inclusion constraints part of **consensus behavior**, rather than optional coordination or external policy.
+The primary specification associated with this anchor is **EIP-7732**.
 
-The primary specification associated with this mechanism is **EIP-7805**.
+Vortik does not treat ePBS as a deployed mainnet feature. It is tracked as **implementation-facing** because the terminology, specification surface, and engineering discussion around ePBS have matured enough to make the term structurally important for Ethereum coordination mapping.
 
-As protocol discussion and implementation-facing work have progressed, FOCIL has strengthened the semantic position of inclusion lists as a durable constraint surface within Ethereum coordination architecture.
+The relevant semantic shift is not that Ethereum “eliminates markets” or “eliminates builders.” Builders remain important. The shift is that Ethereum increasingly defines the rules, commitments, and timing boundaries under which proposer-builder coordination happens.
 
 ---
 
 ## Pipeline Position
 
-Constraint Layer (Post-Order Flow, Pre-Finalization)
+**Block construction / proposer-builder interface**
+
+ePBS sits at the coordination boundary between:
+
+- consensus-layer proposal responsibilities
+- execution payload construction
+- builder bids
+- proposer selection
+- payload reveal
+- timing and availability checks
+- validator-facing coordination
+
+This makes ePBS a high-priority registry anchor because it connects protocol roles, commitments, payload semantics, and block production flow.
 
 ---
 
 ## Coordination Role
 
-Inclusion lists do not coordinate actors directly.
+ePBS defines a protocol-facing coordination interface between:
 
-Instead, they **constrain coordination outcomes** by:
+- proposers
+- builders
+- validators
+- payload commitments
+- execution payload reveal
+- timing or availability checks
+- consensus-facing block production rules
 
-- limiting proposer discretion over transaction inclusion  
-- restricting builder optimization strategies  
-- enforcing inclusion requirements through fork-choice dynamics  
-- introducing validator- and committee-linked enforcement surfaces around inclusion guarantees  
+The central coordination change is that proposer-builder interaction becomes more explicit inside the protocol design, rather than being mediated primarily through trusted external relay infrastructure.
 
-They redefine how transaction selection interacts with consensus by introducing **hard inclusion constraints**.
-
----
-
-## Constraint Dynamics
-
-FOCIL introduces a structural tension between:
-
-- **block value maximization** (builder incentives)  
-- **mandatory inclusion constraints** (protocol enforcement)  
-
-This results in a **constrained optimization problem**, where builders and proposers must satisfy inclusion requirements while attempting to preserve economic efficiency.
-
-Inclusion is no longer treated only as an emergent outcome of incentives, but as a protocol-facing boundary condition with growing structural importance.
+In Vortik’s ontology, ePBS is classified as a **core primitive** because it maps directly to a major protocol-facing coordination surface rather than to a vague market narrative, application-level abstraction, or off-protocol service category.
 
 ---
 
 ## Protocol Grounding
 
-This mechanism is grounded in:
+This anchor is grounded in:
 
-- EIP-7805  
-- Ethereum research on inclusion enforcement  
-- fork-choice rule modifications  
-- validator and committee-linked enforcement discussion  
-- censorship resistance and inclusion guarantees design  
+- **EIP-7732**
+- proposer-builder separation research
+- consensus-layer block production discussions
+- ePBS implementation-facing engineering work
+- payload commitment and reveal semantics
+- builder/proposer coordination design
+- Payload Timeliness Committee and related timing-check discussions
 
-It represents a **consensus-layer intervention**, not an application-layer coordination mechanism.
-
----
-
-## Structural Importance
-
-FOCIL represents a shift from:
-
-**discretionary inclusion → protocol-constrained inclusion**
-
-This transformation affects:
-
-- transaction selection authority  
-- censorship resistance guarantees  
-- proposer-builder interaction under constraints  
-- the boundary between optimization and mandatory protocol behavior  
-
-Inclusion becomes a **protocol-enforced boundary condition**, rather than an emergent coordination outcome.
+The registry uses this grounding cautiously. It does not claim that `epbs.eth` is an official Ethereum endpoint, an official protocol namespace, or an Ethereum Foundation-controlled naming surface.
 
 ---
 
 ## Semantic Stability
 
-- **"Inclusion Lists"** → durable umbrella term with strong human-readable clarity  
-- **"FOCIL"** → precise reference to fork-choice enforced implementations  
+The term **ePBS** has strong semantic stability relative to most Ethereum coordination terms.
 
-Semantic convergence is no longer just exploratory. It is increasingly tied to protocol-facing terminology, making this one of the strongest constraint surfaces in the current registry.
+Reasons:
+
+- it is directly associated with enshrined proposer-builder separation
+- it is tied to EIP-7732
+- it is short, precise, and widely recognizable in protocol discussions
+- it maps to a concrete proposer-builder coordination surface
+- it avoids weaker legacy framing such as “builder market” or “blockspace market”
+
+However, the registry should still avoid overstating finality. Protocol scope, implementation details, and fork timelines can change. Vortik therefore tracks ePBS as **implementation-facing**, not as a deployed or finalized mainnet component.
+
+---
+
+## Structural Importance
+
+ePBS is important because it changes where proposer-builder coordination is defined.
+
+The relevant transition is:
+
+```text
+relay-mediated proposer-builder coordination
+→ protocol-facing proposer-builder coordination
+```
+
+This does not remove economic competition among builders. It changes the trust and coordination boundary.
+
+The most important semantic consequences are:
+
+- builder remains a protocol-relevant role
+- proposer-builder separation becomes more explicit
+- payload commitments become structurally important
+- reveal timing and payload availability become central coordination concerns
+- relay trust is reduced as a core coordination assumption
+- block production semantics become more machine-readable and protocol-facing
+
+For Vortik, this makes ePBS a stronger semantic anchor than broader legacy terms such as `buildermarket`, `executionmarket`, or `blockspacemarket`.
 
 ---
 
 ## Naming Alignment
 
-- **ENS anchor:** `inclusionlist.eth`  
-- **Canonical term:** fork-choice enforced inclusion lists (FOCIL)  
+- **ENS anchor:** `epbs.eth`
+- **Canonical term tracked:** enshrined proposer-builder separation (ePBS)
 
-The ENS aligns with a **high-confidence semantic surface**, closely tied to protocol development and inclusion-enforcement language.
+The ENS name is strongly aligned with the technical acronym.
+
+Unlike several other anchors in the registry, `epbs.eth` does not contain a problematic suffix such as `market`, `auction`, or `layer`.
+
+This is why Vortik classifies it as:
+
+```text
+classification: core
+type: primitive
+status: implementation-facing
+stage: canonical
+```
+
+This classification means that Vortik considers the term structurally important and semantically aligned. It does not mean that Vortik defines the protocol term or controls its official meaning.
 
 ---
 
 ## Registry Role
 
-- Track semantic convergence between inclusion lists and FOCIL  
-- Document constraint-based inclusion mechanisms  
-- Distinguish inclusion enforcement from coordination layers  
-- Map inclusion constraints within Ethereum’s execution and consensus pipeline  
+Vortik uses this anchor to:
+
+- track semantic stabilization around ePBS
+- distinguish enshrined PBS from external PBS infrastructure
+- map ePBS as a protocol-facing coordination primitive
+- separate protocol-defined roles from older market-centric terminology
+- connect ePBS to payload commitments, builder bids, proposer selection, and reveal timing
+- provide machine-readable registry context for Ethereum coordination terminology
+
+The registry role is observational and interpretive.
+
+Vortik does not define Ethereum protocol rules, does not replace official specifications, and does not claim authority over Ethereum terminology.
+
+---
+
+## Boundaries and Non-Claims
+
+This anchor should not be used to claim that:
+
+- ePBS is already deployed on Ethereum mainnet
+- `epbs.eth` is an official Ethereum or Ethereum Foundation endpoint
+- Vortik is the official registry for Ethereum protocol terms
+- ePBS eliminates MEV
+- ePBS eliminates builders
+- ePBS makes execution deterministic
+- ePBS removes all external coordination
+- ePBS guarantees decentralization by itself
+
+The accurate framing is narrower:
+
+```text
+ePBS formalizes proposer-builder coordination more explicitly at the protocol boundary.
+```
+
+---
+
+## Relationship to Other Anchors
+
+### `inclusionlist.eth`
+
+`inclusionlist.eth` tracks fork-choice enforced inclusion lists / FOCIL-style inclusion constraints.
+
+Together, `epbs.eth` and `inclusionlist.eth` represent two different but complementary directions:
+
+```text
+epbs.eth → proposer-builder coordination / block production interface
+inclusionlist.eth → censorship-resistance constraint / inclusion guarantees
+```
+
+### `commitmentlayer.eth`
+
+`commitmentlayer.eth` tracks the broader term `commitment`.
+
+It is relevant because ePBS depends on commitment-like semantics around bids, headers, payload reveal, and accountability. However, `commitmentlayer.eth` remains classified as `repairable` because `layer` is not a canonical protocol suffix.
+
+### `buildermarket.eth`
+
+`buildermarket.eth` is classified as deprecated because the term “builder market” is less precise than the protocol-facing builder role and associated ePBS primitives.
+
+Builders remain economically important. The deprecated classification applies to the naming abstraction, not to the existence of builders.
 
 ---
 
 ## Status
 
-FOCIL remains tied to an active EIP process in formal specification terms, but it now carries strong fork-scoped relevance and high protocol significance.
+Current registry status:
 
-It should be understood as a core constraint surface with growing implementation and governance relevance, not merely as a loose research concept.
+```text
+implementation-facing
+```
+
+This means the anchor is relevant to active specification, implementation, and engineering-facing discussion, while avoiding the stronger and potentially misleading claim that ePBS is already fully implemented as a deployed Ethereum mainnet feature.
+
+Vortik tracks `epbs.eth` as a **core semantic anchor** because the term has strong alignment with a protocol-facing primitive and because it maps cleanly to Ethereum’s proposer-builder separation roadmap.
 
 ---
 
 ## Sources
 
-Primary research references are documented in:
+Primary source context is documented in:
 
-`schemas/inclusionlist/`
+```text
+schemas/epbs/1.0-draft/sources.md
+```
+
+Machine-readable schema:
+
+```text
+schemas/epbs/1.0-draft/schema.json
+```
+
+Registry entry:
+
+```text
+registry.json
+```
