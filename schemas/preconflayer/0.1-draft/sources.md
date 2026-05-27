@@ -31,13 +31,13 @@ This document is a research-support artifact. It is not an official Ethereum pro
 
 ## Semantic Classification
 
-Conceptual surface that may become important but currently lacks sufficient protocol maturity, naming convergence, or implementation stability.
+Real or emerging concept that is not yet stable enough to treat as canonical.
 
 ---
 
 ## Type Interpretation
 
-External or off-protocol mechanism tracked as a coordination surface adjacent to Ethereum protocol development.
+External or off-protocol mechanism related to Ethereum coordination.
 
 ---
 
