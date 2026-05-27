@@ -94,9 +94,41 @@ Curated references and source notes should be placed in the protected section be
 <!-- MANUAL-SOURCES:START -->
 ## Curated References
 
-No curated references have been added for this anchor yet.
+- **EIP-7732 — Enshrined Proposer-Builder Separation**
+  - URL: https://eips.ethereum.org/EIPS/eip-7732
+  - Relevance: Primary protocol proposal for ePBS. Supports the commitment-related context around builder bids, proposer selection, payload reveal, and protocol-facing proposer-builder coordination.
+  - Registry use: Supports `commitment` as a protocol-relevant primitive adjacent to ePBS, while preserving the `repairable` classification because `commitmentlayer.eth` contains a non-canonical `layer` suffix.
+
+- **Payload Timeliness Committee (PTC) — an ePBS design**
+  - URL: https://ethresear.ch/t/payload-timeliness-committee-ptc-an-epbs-design/16054
+  - Relevance: Research discussion describing a committee-based ePBS design for payload timeliness. Useful for understanding why reveal timing, payload availability, and commitment satisfaction matter structurally.
+  - Registry use: Supports the relationship between commitments, reveal guarantees, and validator-facing timing checks without treating `commitmentlayer.eth` as a canonical protocol term.
+
+- **Future-Proofing Preconfirmations**
+  - URL: https://ethresear.ch/t/future-proofing-preconfirmations/22618
+  - Relevance: Research discussion examining how preconfirmation protocols interact with upcoming Ethereum protocol changes and how different guarantee types may remain compatible with evolving L1 mechanics.
+  - Registry use: Supports the broader commitment context around future guarantees, while keeping preconfirmation-related semantics below core registry status.
+
+- **Auditable Builder Bids with Optimistic Attestations in ePBS**
+  - URL: https://ethresear.ch/t/auditable-builder-bids-with-optimistic-attestations-in-epbs/22224
+  - Relevance: Research discussion connecting ePBS, auditable builder bids, attestations, inclusion-list adherence, and payload/block accountability.
+  - Registry use: Supports the connection between bid-based block production, commitment accountability, and verification-facing builder behavior in Ethereum block-building research.
+
+- **Builder Bidding Behaviors in ePBS**
+  - URL: https://ethresear.ch/t/builder-bidding-behaviors-in-epbs/20129
+  - Relevance: Research discussion analyzing how builder bidding strategies change under ePBS rules and reduced latency advantages.
+  - Registry use: Provides adjacent context for bid-based block production and commitment-sensitive builder behavior without promoting `commitmentlayer.eth` to a core protocol anchor.
+
+- **Based Preconfirmations**
+  - URL: https://ethresear.ch/t/based-preconfirmations/17353
+  - Relevance: Research discussion introducing based preconfirmations as fast promises in based sequencing and rollup contexts.
+  - Registry use: Provides adjacent context for commitments as forward promises, but should not be used to promote `commitmentlayer.eth` to `core`.
 
 ## Source Notes
 
-This section is reserved for curated protocol references, implementation notes, or research context when applicable.
+`commitmentlayer.eth` is intentionally classified as `repairable`: the underlying term `commitment` is technically relevant across ePBS, payload reveal, builder accountability, bid-based block production, and preconfirmation research, but the ENS suffix `layer` is not a canonical protocol term.
+
+These references support commitment semantics as an emerging and protocol-adjacent primitive family. They do not imply that `commitmentlayer.eth` is an official Ethereum specification, an official protocol endpoint, or a canonical Ethereum naming surface.
+
+This source list should be used to support cautious technical positioning only. It should not be used to imply that Ethereum has standardized a standalone “commitment layer” as a formal protocol component.
 <!-- MANUAL-SOURCES:END -->
