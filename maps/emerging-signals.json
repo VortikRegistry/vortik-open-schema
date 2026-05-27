@@ -14,7 +14,7 @@
       "summary": "Execution-layer object under watch as Ethereum moves toward deterministic state access, execution predictability, and parallel execution.",
       "why_it_matters": [
         "Signals movement toward concrete execution-layer terminology rather than broad market abstractions.",
-        "Supports deterministic execution and parallel execution narratives.",
+        "Supports deterministic state-access, execution predictability, and parallel execution research narratives.",
         "May pressure broad labels such as execution market and blockspace market."
       ],
       "related_anchors": [
@@ -109,14 +109,14 @@
       "name": "Execution Rights",
       "canonical_term": "execution rights",
       "category": "primitive",
-      "status": "consolidate",
+      "status": "prepare",
       "confidence": "medium",
       "priority": "high",
-      "summary": "Abstract authority to determine execution payload contents, ordering behavior, or execution-related coordination decisions.",
+      "summary": "Abstract authority related to execution payload contents, ordering behavior, or execution-adjacent coordination decisions. Still tracked below registry-anchor level pending stronger protocol convergence.",
       "why_it_matters": [
         "Foundational abstraction behind execution tickets, future-slot markets, proposer delegation, and PBS evolution.",
         "Stronger conceptual signal than many narrower auction variants.",
-        "Still too broad for anchor promotion without further protocol-level convergence."
+        "Still too broad for anchor promotion and better tracked as an emerging abstraction until protocol-level convergence improves."
       ],
       "related_anchors": [
         "executionmarket",
