@@ -27,7 +27,7 @@ High-signal anchors with strong strategic visibility inside the registry.
   - Registry ID: `epbs`  
   - Priority: high  
   - Classification: core  
-  - Status: implemented  
+  - Status: implementation-facing  
   - Stage: canonical  
   - Type: primitive
 

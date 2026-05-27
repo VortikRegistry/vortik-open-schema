@@ -2,7 +2,7 @@
   "registry": "vortik-semantic-registry",
   "index_version": "1.0.1",
   "generated_from": "registry.json",
-  "last_updated": "2026-05-27T02:26:16.870Z",
+  "last_updated": "2026-05-27T02:30:48.490Z",
   "summary": {
     "total": 12,
     "featured": 2,
@@ -19,7 +19,7 @@
         "priority": "high",
         "sale_strategy": "strategic_custody",
         "classification": "core",
-        "status": "implemented",
+        "status": "implementation-facing",
         "status_label": "core",
         "stage": "canonical",
         "type": "primitive"

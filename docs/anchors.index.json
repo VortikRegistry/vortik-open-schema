@@ -2,7 +2,7 @@
   "registry": "vortik-semantic-registry",
   "index_version": "1.0.1",
   "generated_from": "registry.json",
-  "last_updated": "2026-05-27T02:26:16.819Z",
+  "last_updated": "2026-05-27T02:30:48.437Z",
   "anchors": [
     {
       "id": "blockspacemarket",
@@ -51,7 +51,7 @@
       "ens": "epbs.eth",
       "canonical_term": "enshrined proposer-builder separation (ePBS)",
       "classification": "core",
-      "status": "implemented",
+      "status": "implementation-facing",
       "status_label": "core",
       "stage": "canonical",
       "market_priority": "high",

@@ -42,7 +42,7 @@
     },
     "status": {
       "type": "string",
-      "const": "implemented",
+      "const": "implementation-facing",
       "description": "Current maturity/status of the tracked primitive."
     },
     "type": {

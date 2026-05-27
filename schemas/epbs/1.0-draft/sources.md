@@ -19,7 +19,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 - **Associated ENS:** `epbs.eth`
 - **Canonical term:** enshrined proposer-builder separation (ePBS)
 - **Classification:** core
-- **Status:** implemented
+- **Status:** implementation-facing
 - **Status label:** core
 - **Stage:** canonical
 - **Type:** primitive

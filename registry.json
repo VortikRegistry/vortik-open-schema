@@ -10,7 +10,7 @@
       "ens": "epbs.eth",
       "canonical_term": "enshrined proposer-builder separation (ePBS)",
       "classification": "core",
-      "status": "implemented",
+      "status": "implementation-facing",
       "status_label": "core",
       "stage": "canonical",
       "market_priority": "high",
