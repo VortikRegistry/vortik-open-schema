@@ -29,11 +29,11 @@ const displayNameOverrides = {
 const copyOverrides = {
   epbs: {
     canonical: "enshrined proposer-builder separation (ePBS)",
-    role: "canonical protocol-aligned naming surface for commitment-based block production"
+    role: "protocol-aligned naming surface for implementation-facing ePBS coordination"
   },
   inclusionlist: {
     canonical: "fork-choice enforced inclusion lists (FOCIL)",
-    role: "protocol-native constraint surface tied directly to inclusion enforcement"
+    role: "protocol-aligned constraint surface for inclusion-list coordination"
   },
   commitmentlayer: {
     canonical: "commitment",
@@ -45,11 +45,11 @@ const copyOverrides = {
   },
   ssf: {
     canonical: "single-slot finality (SSF)",
-    role: "finality-aligned naming surface connected to fast finality research"
+    role: "finality-aligned naming surface connected to fast-finality research"
   },
   orderflowauction: {
     canonical: "order flow auctions (OFA)",
-    role: "external coordination surface tied to routing, auction flow, and execution access"
+    role: "external coordination surface tied to routing, auction flow and execution access"
   },
   provingmarket: {
     canonical: "proving markets",
@@ -73,7 +73,7 @@ const copyOverrides = {
   },
   blockspacemarket: {
     canonical: "blockspace markets",
-    role: "blockspace-oriented naming surface tied to earlier execution market framing"
+    role: "blockspace-oriented naming surface tied to earlier execution-market framing"
   }
 };
 
@@ -110,7 +110,7 @@ function strategyLabel(strategy) {
   const labels = {
     strategic_custody: "strategic custody",
     selective_inquiry: "selective inquiry",
-    transfer_ready: "transfer-ready"
+    transfer_ready: "background anchor"
   };
 
   return labels[strategy] || "selective inquiry";
@@ -120,7 +120,7 @@ function strategyClass(strategy) {
   const classes = {
     strategic_custody: "badge-custody",
     selective_inquiry: "badge-selective",
-    transfer_ready: "badge-transfer"
+    transfer_ready: "badge-background"
   };
 
   return classes[strategy] || "badge-selective";
@@ -130,7 +130,7 @@ function cardClass(strategy) {
   const classes = {
     strategic_custody: "card-custody",
     selective_inquiry: "card-selective",
-    transfer_ready: "card-transfer"
+    transfer_ready: "card-background"
   };
 
   return classes[strategy] || "card-selective";
@@ -167,13 +167,12 @@ const background = sortAnchors(anchors.filter((a) => a.market?.visibility === "b
 
 function renderCard(anchor) {
   const strategy = normalizeSaleStrategy(anchor.market?.sale_strategy, anchor.id);
-  const badge = `<span class="badge ${strategyClass(strategy)}">${strategyLabel(strategy)}</span>`;
 
-  const pricing = strategy === "strategic_custody"
-    ? `<span class="card-note">alignment review only</span>`
+  const note = strategy === "strategic_custody"
+    ? "technical alignment review"
     : strategy === "transfer_ready"
-      ? `<span class="card-note">aligned inquiry accepted</span>`
-      : `<span class="card-note">review required</span>`;
+      ? "legacy / lower-priority context"
+      : "selective technical discussion";
 
   return `
       <div class="card ${cardClass(strategy)}">
@@ -185,8 +184,8 @@ function renderCard(anchor) {
           ${escapeHtml(getRole(anchor))}
         </div>
         <div class="card-footer">
-          ${badge}
-          ${pricing}
+          <span class="badge ${strategyClass(strategy)}">${strategyLabel(strategy)}</span>
+          <span class="card-note">${note}</span>
         </div>
       </div>`;
 }
@@ -204,30 +203,25 @@ const html = `<!DOCTYPE html>
   <title>Vortik — Strategic Anchors</title>
   <meta
     name="description"
-    content="Strategic ENS anchors indexed by Vortik against Ethereum protocol primitives, roles, constraints, and coordination mechanisms."
+    content="Strategic ENS anchors indexed by Vortik against Ethereum protocol primitives, roles, constraints and coordination mechanisms."
   />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --bg: #04060a;
       --surface-1: #080d14;
       --surface-2: #0c1320;
-      --border: rgba(255,255,255,0.06);
-      --border-bright: rgba(255,255,255,0.12);
+      --border: rgba(255,255,255,0.07);
+      --border-bright: rgba(255,255,255,0.14);
       --text: #dce8f8;
       --muted: #7a90aa;
       --dim: #4a5a6e;
       --green: #2ecc8a;
-      --green-glow: rgba(46,204,138,0.15);
       --blue: #4d9eff;
-      --blue-glow: rgba(77,158,255,0.12);
-      --white-dim: rgba(220,232,248,0.55);
-      --mono: 'DM Mono', ui-monospace, monospace;
-      --display: 'Syne', ui-sans-serif, sans-serif;
+      --violet: #9f7aea;
+      --white-dim: rgba(220,232,248,0.58);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --display: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     *, *::before, *::after {
@@ -249,19 +243,14 @@ const html = `<!DOCTYPE html>
     }
 
     body::before {
-      content: '';
+      content: "";
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(ellipse 900px 500px at 75% -5%, rgba(77,158,255,0.09) 0%, transparent 65%),
-        radial-gradient(ellipse 700px 400px at 15% 5%, rgba(46,204,138,0.06) 0%, transparent 60%);
+        radial-gradient(ellipse 900px 500px at 75% -5%, rgba(77,158,255,0.10) 0%, transparent 65%),
+        radial-gradient(ellipse 700px 400px at 15% 5%, rgba(46,204,138,0.07) 0%, transparent 60%);
       pointer-events: none;
       z-index: 0;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
     }
 
     .wrap {
@@ -269,7 +258,6 @@ const html = `<!DOCTYPE html>
       z-index: 1;
       width: min(1100px, calc(100% - 40px));
       margin: 0 auto;
-      min-width: 0;
     }
 
     .topbar {
@@ -277,7 +265,7 @@ const html = `<!DOCTYPE html>
       top: 0;
       z-index: 100;
       backdrop-filter: blur(20px);
-      background: rgba(4,6,10,0.78);
+      background: rgba(4,6,10,0.80);
       border-bottom: 1px solid var(--border);
     }
 
@@ -287,7 +275,6 @@ const html = `<!DOCTYPE html>
       justify-content: space-between;
       min-height: 64px;
       gap: 16px;
-      min-width: 0;
     }
 
     .brand {
@@ -295,7 +282,6 @@ const html = `<!DOCTYPE html>
       align-items: center;
       gap: 12px;
       text-decoration: none;
-      min-width: 0;
     }
 
     .brand-mark {
@@ -314,26 +300,22 @@ const html = `<!DOCTYPE html>
 
     .brand-text {
       font-size: 15px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text);
-      overflow-wrap: anywhere;
+      letter-spacing: -0.02em;
     }
 
     .brand-sub {
       font-family: var(--mono);
       font-size: 11px;
       color: var(--muted);
-      margin-top: 1px;
-      font-weight: 300;
-      overflow-wrap: anywhere;
+      margin-top: 2px;
     }
 
     .nav-links {
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
-      justify-content: flex-end;
-      min-width: 0;
     }
 
     .nav-links a {
@@ -341,15 +323,15 @@ const html = `<!DOCTYPE html>
       font-size: 12px;
       color: var(--muted);
       text-decoration: none;
-      padding: 6px 12px;
-      border-radius: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
       border: 1px solid transparent;
-      white-space: nowrap;
     }
 
     .nav-links a:hover {
       color: var(--text);
       border-color: var(--border);
+      background: rgba(255,255,255,0.03);
     }
 
     .hero {
@@ -359,7 +341,6 @@ const html = `<!DOCTYPE html>
     .hero-eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
       font-family: var(--mono);
       font-size: 11px;
       letter-spacing: 0.12em;
@@ -367,18 +348,18 @@ const html = `<!DOCTYPE html>
       color: var(--blue);
       margin-bottom: 24px;
       padding: 6px 12px;
-      border: 1px solid rgba(77,158,255,0.2);
+      border: 1px solid rgba(77,158,255,0.24);
       border-radius: 999px;
-      background: rgba(77,158,255,0.06);
+      background: rgba(77,158,255,0.07);
     }
 
     .hero-title {
       font-size: clamp(36px, 5.5vw, 64px);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      line-height: 1.0;
+      font-weight: 850;
+      letter-spacing: -0.05em;
+      line-height: 1.02;
       color: var(--text);
-      max-width: 820px;
+      max-width: 860px;
       margin-bottom: 20px;
     }
 
@@ -391,12 +372,11 @@ const html = `<!DOCTYPE html>
     }
 
     .hero-lead {
-      font-size: 17px;
+      font-size: 16px;
       color: var(--muted);
       max-width: 760px;
-      line-height: 1.7;
+      line-height: 1.72;
       font-family: var(--mono);
-      font-weight: 300;
       margin-bottom: 32px;
     }
 
@@ -405,7 +385,6 @@ const html = `<!DOCTYPE html>
       flex-wrap: wrap;
       gap: 12px;
       align-items: center;
-      min-width: 0;
     }
 
     .btn-primary,
@@ -419,13 +398,11 @@ const html = `<!DOCTYPE html>
       font-family: var(--mono);
       font-size: 13px;
       text-decoration: none;
-      text-align: center;
-      min-width: 0;
     }
 
     .btn-primary {
       background: linear-gradient(135deg, rgba(77,158,255,0.18), rgba(46,204,138,0.12));
-      border: 1px solid rgba(77,158,255,0.3);
+      border: 1px solid rgba(77,158,255,0.32);
       color: var(--text);
     }
 
@@ -442,19 +419,13 @@ const html = `<!DOCTYPE html>
       margin-top: 48px;
       padding-top: 32px;
       border-top: 1px solid var(--border);
-      min-width: 0;
-    }
-
-    .hero-stat {
-      min-width: 0;
     }
 
     .hero-stat-value {
       font-size: 26px;
-      font-weight: 800;
+      font-weight: 850;
       letter-spacing: -0.04em;
       color: var(--text);
-      overflow-wrap: anywhere;
     }
 
     .hero-stat-label {
@@ -463,7 +434,7 @@ const html = `<!DOCTYPE html>
       color: var(--dim);
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      overflow-wrap: anywhere;
+      margin-top: 4px;
     }
 
     .section {
@@ -477,7 +448,6 @@ const html = `<!DOCTYPE html>
       gap: 16px;
       margin-bottom: 20px;
       flex-wrap: wrap;
-      min-width: 0;
     }
 
     .section-title {
@@ -489,37 +459,32 @@ const html = `<!DOCTYPE html>
       display: flex;
       align-items: center;
       gap: 10px;
-      overflow-wrap: anywhere;
     }
 
     .section-title::before {
-      content: '';
+      content: "";
       display: block;
       width: 24px;
       height: 1px;
       background: var(--border-bright);
-      flex: 0 0 auto;
     }
 
     .section-count {
       font-family: var(--mono);
       font-size: 12px;
       color: var(--dim);
-      overflow-wrap: anywhere;
     }
 
     .grid-2 {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 12px;
-      min-width: 0;
     }
 
     .grid-3 {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
-      min-width: 0;
     }
 
     .card {
@@ -529,13 +494,11 @@ const html = `<!DOCTYPE html>
       border: 1px solid var(--border);
       border-radius: 18px;
       overflow: hidden;
-      min-width: 0;
     }
 
     .card-custody::after,
-    .card-selective::after,
-    .card-transfer::after {
-      content: '';
+    .card-selective::after {
+      content: "";
       position: absolute;
       top: -60px;
       right: -60px;
@@ -546,15 +509,15 @@ const html = `<!DOCTYPE html>
     }
 
     .card-custody::after {
-      background: radial-gradient(circle, var(--green-glow), transparent 70%);
+      background: radial-gradient(circle, rgba(46,204,138,0.15), transparent 70%);
     }
 
     .card-selective::after {
-      background: radial-gradient(circle, var(--blue-glow), transparent 70%);
+      background: radial-gradient(circle, rgba(77,158,255,0.12), transparent 70%);
     }
 
-    .card-transfer::after {
-      background: radial-gradient(circle, rgba(255,255,255,0.07), transparent 70%);
+    .card-background::after {
+      background: radial-gradient(circle, rgba(159,122,234,0.10), transparent 70%);
     }
 
     .card-top {
@@ -563,28 +526,22 @@ const html = `<!DOCTYPE html>
       justify-content: space-between;
       gap: 12px;
       margin-bottom: 14px;
-      min-width: 0;
     }
 
     .card-name {
       font-size: 19px;
-      font-weight: 800;
+      font-weight: 850;
       letter-spacing: -0.03em;
       color: var(--text);
-      overflow-wrap: anywhere;
       word-break: break-word;
-      min-width: 0;
     }
 
     .card-term {
       font-family: var(--mono);
       font-size: 12px;
-      font-weight: 300;
       color: var(--muted);
-      line-height: 1.6;
+      line-height: 1.65;
       margin-bottom: 18px;
-      overflow-wrap: anywhere;
-      word-break: break-word;
     }
 
     .card-term strong {
@@ -598,7 +555,6 @@ const html = `<!DOCTYPE html>
       justify-content: space-between;
       gap: 8px;
       flex-wrap: wrap;
-      min-width: 0;
     }
 
     .badge {
@@ -610,18 +566,14 @@ const html = `<!DOCTYPE html>
       font-family: var(--mono);
       font-size: 11px;
       border: 1px solid;
-      max-width: 100%;
-      overflow-wrap: anywhere;
-      word-break: break-word;
     }
 
     .badge::before {
-      content: '';
+      content: "";
       width: 5px;
       height: 5px;
       border-radius: 50%;
       background: currentColor;
-      flex: 0 0 auto;
     }
 
     .badge-custody {
@@ -636,9 +588,9 @@ const html = `<!DOCTYPE html>
       background: rgba(77,158,255,0.06);
     }
 
-    .badge-transfer {
+    .badge-background {
       color: var(--white-dim);
-      border-color: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.12);
       background: rgba(255,255,255,0.03);
     }
 
@@ -646,8 +598,6 @@ const html = `<!DOCTYPE html>
       font-family: var(--mono);
       font-size: 11px;
       color: var(--dim);
-      overflow-wrap: anywhere;
-      word-break: break-word;
     }
 
     .contact-section {
@@ -661,29 +611,21 @@ const html = `<!DOCTYPE html>
       justify-content: space-between;
       gap: 32px;
       flex-wrap: wrap;
-      min-width: 0;
-    }
-
-    .contact-left {
-      min-width: 0;
     }
 
     .contact-left h3 {
       font-size: 22px;
-      font-weight: 800;
+      font-weight: 850;
       letter-spacing: -0.03em;
       margin-bottom: 10px;
-      overflow-wrap: anywhere;
     }
 
     .contact-left p {
       font-family: var(--mono);
       font-size: 13px;
-      font-weight: 300;
       color: var(--muted);
-      line-height: 1.65;
+      line-height: 1.68;
       max-width: 560px;
-      overflow-wrap: anywhere;
     }
 
     .contact-right {
@@ -691,7 +633,6 @@ const html = `<!DOCTYPE html>
       flex-direction: column;
       gap: 10px;
       flex-shrink: 0;
-      min-width: 0;
     }
 
     footer {
@@ -705,21 +646,9 @@ const html = `<!DOCTYPE html>
       justify-content: space-between;
       gap: 16px;
       flex-wrap: wrap;
-      min-width: 0;
     }
 
-    .footer-copy {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--dim);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
+    .footer-copy,
     .footer-links a {
       font-family: var(--mono);
       font-size: 12px;
@@ -727,9 +656,14 @@ const html = `<!DOCTYPE html>
       text-decoration: none;
     }
 
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
     @media (max-width: 860px) {
       .grid-3 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: 1fr 1fr;
       }
 
       .nav-links {
@@ -738,14 +672,6 @@ const html = `<!DOCTYPE html>
     }
 
     @media (max-width: 580px) {
-      .wrap {
-        width: min(100% - 24px, 1100px);
-      }
-
-      .topbar-inner {
-        min-height: 58px;
-      }
-
       .grid-2,
       .grid-3 {
         grid-template-columns: 1fr;
@@ -766,7 +692,6 @@ const html = `<!DOCTYPE html>
       .contact-section {
         padding: 24px;
         flex-direction: column;
-        align-items: stretch;
       }
 
       .contact-right {
@@ -780,28 +705,6 @@ const html = `<!DOCTYPE html>
 
       .section {
         margin: 48px 0;
-      }
-
-      .card {
-        padding: 20px;
-      }
-    }
-
-    @media (max-width: 420px) {
-      .wrap {
-        width: min(100% - 18px, 1100px);
-      }
-
-      .hero-title {
-        font-size: 31px;
-      }
-
-      .card {
-        padding: 18px;
-      }
-
-      .section-title {
-        font-size: 12px;
       }
     }
   </style>
@@ -817,10 +720,10 @@ const html = `<!DOCTYPE html>
         <div class="brand-sub">Semantic Registry</div>
       </div>
     </a>
-
-    <nav class="nav-links" aria-label="Primary navigation">
+    <nav class="nav-links">
       <a href="./index.html">Registry</a>
       <a href="./app.html">App</a>
+      <a href="./market.index.json">Strategic Index</a>
       <a href="https://github.com/VortikRegistry" target="_blank" rel="noopener noreferrer">GitHub</a>
     </nav>
   </div>
@@ -828,54 +731,48 @@ const html = `<!DOCTYPE html>
 
 <div class="wrap">
   <section class="hero">
-    <div class="hero-eyebrow">Strategic Availability</div>
-
+    <div class="hero-eyebrow">Strategic Anchor Registry</div>
     <h1 class="hero-title">
-      Strategic ENS anchors<br>
-      aligned with Ethereum’s<br>
-      <em>coordination architecture</em>.
+      Ethereum coordination anchors<br>
+      mapped through <em>semantic infrastructure</em>.
     </h1>
-
     <p class="hero-lead">
-      Selected ENS anchors indexed by Vortik against Ethereum protocol primitives, roles, and coordination mechanisms.
-      Vortik is not an open marketplace. Availability means selective alignment review, not automatic public sale.
+      Selected ENS anchors indexed by Vortik against Ethereum protocol primitives, roles, constraints and coordination mechanisms.
+      This page is a strategic visibility layer for technical alignment, stewardship context and infrastructure relevance.
     </p>
-
     <div class="hero-actions">
       <a class="btn-primary" href="https://x.com/VortikRegistry" target="_blank" rel="noopener noreferrer">
-        ↗ Request alignment discussion via X
+        ↗ Request technical alignment discussion via X
       </a>
       <a class="btn-secondary" href="./index.html">
-        View registry context
+        View registry
       </a>
     </div>
-
     <div class="hero-stat-row">
       <div class="hero-stat">
         <div class="hero-stat-value">${anchors.length}</div>
-        <div class="hero-stat-label">Surfaced anchors</div>
+        <div class="hero-stat-label">Indexed anchors</div>
       </div>
       <div class="hero-stat">
         <div class="hero-stat-value">${featured.length}</div>
-        <div class="hero-stat-label">Strategic custody anchors</div>
+        <div class="hero-stat-label">Core protocol</div>
       </div>
       <div class="hero-stat">
-        <div class="hero-stat-value">${standard.length}</div>
-        <div class="hero-stat-label">Selective inquiry anchors</div>
+        <div class="hero-stat-value">EIP-7732</div>
+        <div class="hero-stat-label">ePBS reference</div>
       </div>
       <div class="hero-stat">
-        <div class="hero-stat-value">${background.length}</div>
-        <div class="hero-stat-label">Transfer-ready anchors</div>
+        <div class="hero-stat-value">EIP-7805</div>
+        <div class="hero-stat-label">Inclusion-list reference</div>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="section-header">
-      <div class="section-title">Strategic custody</div>
-      <div class="section-count">${featured.length} assets — not publicly priced</div>
+      <div class="section-title">Core Strategic Anchors</div>
+      <div class="section-count">${featured.length} anchors — strategic custody</div>
     </div>
-
     <div class="grid-2">
 ${featuredHtml}
     </div>
@@ -883,10 +780,9 @@ ${featuredHtml}
 
   <section class="section">
     <div class="section-header">
-      <div class="section-title">Selective inquiry</div>
-      <div class="section-count">${standard.length} assets — monitored, not broadly listed</div>
+      <div class="section-title">Selective / Monitored Anchors</div>
+      <div class="section-count">${standard.length} anchors — selective technical review</div>
     </div>
-
     <div class="grid-3">
 ${standardHtml}
     </div>
@@ -894,10 +790,9 @@ ${standardHtml}
 
   <section class="section">
     <div class="section-header">
-      <div class="section-title">Transfer-ready for aligned buyers</div>
-      <div class="section-count">${background.length} assets — inquiry accepted</div>
+      <div class="section-title">Background / Legacy Anchors</div>
+      <div class="section-count">${background.length} anchors — lower-priority context</div>
     </div>
-
     <div class="grid-3">
 ${backgroundHtml}
     </div>
@@ -905,17 +800,16 @@ ${backgroundHtml}
 
   <section class="contact-section">
     <div class="contact-left">
-      <h3>Request an alignment discussion</h3>
+      <h3>Technical alignment discussion</h3>
       <p>
-        Vortik does not operate as a public marketplace.
-        Strategic custody anchors are not broadly listed.
-        Transfer-ready anchors may be discussed with aligned buyers, infrastructure teams, research groups, or protocol-adjacent builders.
+        Vortik operates as an independent semantic registry.
+        Strategic custody anchors are maintained for technical alignment.
+        Background anchors document legacy, lower-priority, or less precise naming surfaces.
       </p>
     </div>
-
     <div class="contact-right">
       <a class="btn-primary" href="https://x.com/VortikRegistry" target="_blank" rel="noopener noreferrer">
-        ↗ Request alignment discussion via X
+        ↗ Request technical alignment discussion via X
       </a>
       <a class="btn-secondary" href="./index.html">
         View registry context
@@ -929,9 +823,10 @@ ${backgroundHtml}
     <div class="footer-copy">
       © 2026 Vortik — Semantic Registry
     </div>
-
     <div class="footer-links">
       <a href="./index.html">Registry</a>
+      <a href="./app.html">App</a>
+      <a href="./market.index.json">Strategic Index</a>
       <a href="https://github.com/VortikRegistry" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="https://x.com/VortikRegistry" target="_blank" rel="noopener noreferrer">X</a>
     </div>
@@ -944,8 +839,8 @@ ${backgroundHtml}
 
 fs.writeFileSync("docs/market.html", html);
 
-console.log("✅ market.html generated");
+console.log("✅ docs/market.html generated");
 console.log(`Total anchors: ${anchors.length}`);
-console.log(`Strategic custody: ${featured.length}`);
-console.log(`Selective inquiry: ${standard.length}`);
-console.log(`Transfer-ready: ${background.length}`);
+console.log(`Featured: ${featured.length}`);
+console.log(`Standard: ${standard.length}`);
+console.log(`Background: ${background.length}`);
