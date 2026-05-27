@@ -163,11 +163,11 @@ This enables:
 
 ## Design Model
 
-The system is composed of three primary layers:
+The system is composed of three primary layers.
 
 ### ENS Anchors
 
-Stable naming surfaces used as semantic entry points.
+ENS-linked naming surfaces used as semantic entry points.
 
 ### Anchor Documents
 
@@ -223,7 +223,7 @@ This should be understood as a complementary research layer, not as a protocol s
 
 ## Design Philosophy
 
-- Semantic structure precedes standardization.
+- Semantic mapping can precede formal standardization when technically grounded.
 - Canonical naming overrides ENS wording.
 - Precision is prioritized over coverage.
 - Protocol-defined primitives supersede broad market abstractions.
@@ -235,7 +235,7 @@ This should be understood as a complementary research layer, not as a protocol s
 
 ## System Status
 
-The registry is transitioning from conceptual semantic mapping to structured semantic infrastructure.
+The registry is transitioning from conceptual semantic mapping toward a more structured semantic reference layer.
 
 Current focus:
 
