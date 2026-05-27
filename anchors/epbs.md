@@ -3,115 +3,248 @@
 **Associated ENS:** `epbs.eth`  
 **Canonical term:** enshrined proposer-builder separation (ePBS)  
 **Registry ID:** `epbs`  
-**Status:** Implemented / active devnet relevance  
+**Status:** implementation-facing  
 **Classification:** core  
 
 ---
 
 ## Summary
 
-This anchor tracks **Enshrined Proposer-Builder Separation (ePBS)** as a protocol-level coordination primitive within Ethereum.
+This anchor tracks **Enshrined Proposer-Builder Separation (ePBS)** as a protocol-facing coordination primitive within Ethereum.
 
-ePBS formalizes the separation between block proposal and execution payload construction directly at the protocol level.
+ePBS formalizes the separation between block proposal and execution payload construction at the protocol design level. It moves proposer-builder coordination closer to Ethereum’s consensus boundary, replacing reliance on trusted off-protocol relay coordination with a more explicit protocol-defined interaction between proposers, builders, bids, commitments, payload reveal, and timing checks.
 
-It represents one of the clearest cases of semantic convergence toward a protocol-aligned primitive in Ethereum, especially as implementation-facing discussion increasingly converges around builder commitments, proposer selection, and protocol-native block production pathways.
+Vortik tracks `epbs.eth` because the term **ePBS** has strong semantic alignment with the EIP-7732 coordination surface and is one of the clearest naming surfaces for protocol-facing block production changes.
+
+This document is not an official Ethereum specification. It is a registry anchor document used by Vortik to describe why the term is tracked, how it is classified, and what risks or boundaries apply.
 
 ---
 
 ## Context
 
-Proposer-Builder Separation (PBS) emerged as a mechanism to separate block construction from block proposal in order to mitigate MEV concentration and improve validator neutrality.
+Proposer-Builder Separation (PBS) emerged as a way to separate block construction from block proposal. In today’s external PBS / MEV-Boost-style architecture, much of that coordination depends on relays, external infrastructure, builder markets, timing assumptions, and off-protocol trust boundaries.
 
-Enshrined Proposer-Builder Separation extends this model by integrating the separation directly into Ethereum’s protocol.
+Enshrined Proposer-Builder Separation extends this model by moving key parts of the proposer-builder interface into Ethereum’s protocol design.
 
-The primary specification associated with this primitive is **EIP-7732**.
+The primary specification associated with this anchor is **EIP-7732**.
 
-As Ethereum coordination becomes more explicit, ePBS increasingly functions not just as a research concept, but as a concrete protocol-facing surface tied to implementation, devnet iteration, and semantic convergence across the ecosystem.
+Vortik does not treat ePBS as a deployed mainnet feature. It is tracked as **implementation-facing** because the terminology, specification surface, and engineering discussion around ePBS have matured enough to make the term structurally important for Ethereum coordination mapping.
 
-By moving PBS into the protocol layer, ePBS restructures:
-
-- block construction responsibilities  
-- proposer roles  
-- execution payload selection  
-- commitment-based coordination between actors  
+The relevant semantic shift is not that Ethereum “eliminates markets” or “eliminates builders.” Builders remain important. The shift is that Ethereum increasingly defines the rules, commitments, and timing boundaries under which proposer-builder coordination happens.
 
 ---
 
 ## Pipeline Position
 
-Block Construction / Proposer-Builder Interface
+**Block construction / proposer-builder interface**
+
+ePBS sits at the coordination boundary between:
+
+- consensus-layer proposal responsibilities
+- execution payload construction
+- builder bids
+- proposer selection
+- payload reveal
+- timing and availability checks
+- validator-facing coordination
+
+This makes ePBS a high-priority registry anchor because it connects protocol roles, commitments, payload semantics, and block production flow.
 
 ---
 
 ## Coordination Role
 
-ePBS defines a protocol-level coordination interface between:
+ePBS defines a protocol-facing coordination interface between:
 
-- proposers  
-- builders  
-- execution payload selection mechanisms  
+- proposers
+- builders
+- validators
+- payload commitments
+- execution payload reveal
+- timing or availability checks
+- consensus-facing block production rules
 
-It replaces off-protocol coordination (for example, relay-based PBS) with an enshrined mechanism enforced by the protocol.
+The central coordination change is that proposer-builder interaction becomes more explicit inside the protocol design, rather than being mediated primarily through trusted external relay infrastructure.
 
-This makes ePBS one of the clearest examples of coordination moving from external infrastructure into protocol-native structure.
+In Vortik’s ontology, ePBS is classified as a **core primitive** because it maps directly to a major protocol-facing coordination surface rather than to a vague market narrative, application-level abstraction, or off-protocol service category.
 
 ---
 
 ## Protocol Grounding
 
-This primitive is grounded in:
+This anchor is grounded in:
 
-- EIP-7732  
-- Ethereum consensus-layer roadmap discussions  
-- proposer-builder separation research  
-- active implementation-facing discussion and devnet relevance for enshrined PBS  
+- **EIP-7732**
+- proposer-builder separation research
+- consensus-layer block production discussions
+- ePBS implementation-facing engineering work
+- payload commitment and reveal semantics
+- builder/proposer coordination design
+- Payload Timeliness Committee and related timing-check discussions
+
+The registry uses this grounding cautiously. It does not claim that `epbs.eth` is an official Ethereum endpoint, an official protocol namespace, or an Ethereum Foundation-controlled naming surface.
 
 ---
 
 ## Semantic Stability
 
-The term **ePBS** has reached strong semantic convergence across research, client discussions, roadmap planning, and implementation-facing protocol language.
+The term **ePBS** has strong semantic stability relative to most Ethereum coordination terms.
 
-Its coupling to **EIP-7732** and its growing role in implementation discussions make it highly likely to remain stable as a canonical primitive within Ethereum coordination architecture.
+Reasons:
+
+- it is directly associated with enshrined proposer-builder separation
+- it is tied to EIP-7732
+- it is short, precise, and widely recognizable in protocol discussions
+- it maps to a concrete proposer-builder coordination surface
+- it avoids weaker legacy framing such as “builder market” or “blockspace market”
+
+However, the registry should still avoid overstating finality. Protocol scope, implementation details, and fork timelines can change. Vortik therefore tracks ePBS as **implementation-facing**, not as a deployed or finalized mainnet component.
 
 ---
 
 ## Structural Importance
 
-ePBS represents a transition from **off-protocol coordination** to **protocol-enforced coordination**.
+ePBS is important because it changes where proposer-builder coordination is defined.
 
-This shift marks a fundamental change in Ethereum’s execution architecture, redefining how block construction, proposer roles, commitments, and payload selection interact at the consensus boundary.
+The relevant transition is:
+
+```text
+relay-mediated proposer-builder coordination
+→ protocol-facing proposer-builder coordination
+```
+
+This does not remove economic competition among builders. It changes the trust and coordination boundary.
+
+The most important semantic consequences are:
+
+- builder remains a protocol-relevant role
+- proposer-builder separation becomes more explicit
+- payload commitments become structurally important
+- reveal timing and payload availability become central coordination concerns
+- relay trust is reduced as a core coordination assumption
+- block production semantics become more machine-readable and protocol-facing
+
+For Vortik, this makes ePBS a stronger semantic anchor than broader legacy terms such as `buildermarket`, `executionmarket`, or `blockspacemarket`.
 
 ---
 
 ## Naming Alignment
 
-- **ENS anchor:** `epbs.eth`  
-- **Canonical term:** enshrined proposer-builder separation (ePBS)  
+- **ENS anchor:** `epbs.eth`
+- **Canonical term tracked:** enshrined proposer-builder separation (ePBS)
 
-Naming is aligned, stable, and widely adopted across the ecosystem.
+The ENS name is strongly aligned with the technical acronym.
+
+Unlike several other anchors in the registry, `epbs.eth` does not contain a problematic suffix such as `market`, `auction`, or `layer`.
+
+This is why Vortik classifies it as:
+
+```text
+classification: core
+type: primitive
+status: implementation-facing
+stage: canonical
+```
+
+This classification means that Vortik considers the term structurally important and semantically aligned. It does not mean that Vortik defines the protocol term or controls its official meaning.
 
 ---
 
 ## Registry Role
 
-- Track semantic stabilization of ePBS  
-- Distinguish enshrined PBS from off-protocol PBS infrastructure  
-- Provide a canonical semantic anchor for proposer-builder separation  
-- Enable machine-readable mapping of this primitive  
+Vortik uses this anchor to:
+
+- track semantic stabilization around ePBS
+- distinguish enshrined PBS from external PBS infrastructure
+- map ePBS as a protocol-facing coordination primitive
+- separate protocol-defined roles from older market-centric terminology
+- connect ePBS to payload commitments, builder bids, proposer selection, and reveal timing
+- provide machine-readable registry context for Ethereum coordination terminology
+
+The registry role is observational and interpretive.
+
+Vortik does not define Ethereum protocol rules, does not replace official specifications, and does not claim authority over Ethereum terminology.
+
+---
+
+## Boundaries and Non-Claims
+
+This anchor should not be used to claim that:
+
+- ePBS is already deployed on Ethereum mainnet
+- `epbs.eth` is an official Ethereum or Ethereum Foundation endpoint
+- Vortik is the official registry for Ethereum protocol terms
+- ePBS eliminates MEV
+- ePBS eliminates builders
+- ePBS makes execution deterministic
+- ePBS removes all external coordination
+- ePBS guarantees decentralization by itself
+
+The accurate framing is narrower:
+
+```text
+ePBS formalizes proposer-builder coordination more explicitly at the protocol boundary.
+```
+
+---
+
+## Relationship to Other Anchors
+
+### `inclusionlist.eth`
+
+`inclusionlist.eth` tracks fork-choice enforced inclusion lists / FOCIL-style inclusion constraints.
+
+Together, `epbs.eth` and `inclusionlist.eth` represent two different but complementary directions:
+
+```text
+epbs.eth → proposer-builder coordination / block production interface
+inclusionlist.eth → censorship-resistance constraint / inclusion guarantees
+```
+
+### `commitmentlayer.eth`
+
+`commitmentlayer.eth` tracks the broader term `commitment`.
+
+It is relevant because ePBS depends on commitment-like semantics around bids, headers, payload reveal, and accountability. However, `commitmentlayer.eth` remains classified as `repairable` because `layer` is not a canonical protocol suffix.
+
+### `buildermarket.eth`
+
+`buildermarket.eth` is classified as deprecated because the term “builder market” is less precise than the protocol-facing builder role and associated ePBS primitives.
+
+Builders remain economically important. The deprecated classification applies to the naming abstraction, not to the existence of builders.
 
 ---
 
 ## Status
 
-ePBS remains tied to a draft EIP process in formal specification terms, but it now has active implementation relevance and strong protocol-facing semantic stability.
+Current registry status:
 
-It should be understood as a core coordination primitive with growing implementation significance, not merely as a loose research abstraction.
+```text
+implementation-facing
+```
+
+This means the anchor is relevant to active specification, implementation, and engineering-facing discussion, while avoiding the stronger and potentially misleading claim that ePBS is already fully implemented as a deployed Ethereum mainnet feature.
+
+Vortik tracks `epbs.eth` as a **core semantic anchor** because the term has strong alignment with a protocol-facing primitive and because it maps cleanly to Ethereum’s proposer-builder separation roadmap.
 
 ---
 
 ## Sources
 
-Primary research references are documented in:
+Primary source context is documented in:
 
-`schemas/epbs/`
+```text
+schemas/epbs/1.0-draft/sources.md
+```
+
+Machine-readable schema:
+
+```text
+schemas/epbs/1.0-draft/schema.json
+```
+
+Registry entry:
+
+```text
+registry.json
+```
