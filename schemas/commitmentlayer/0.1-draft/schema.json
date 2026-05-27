@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/commitmentlayer/0.1-draft/schema.json",
-  "title": "Vortik Open Schema — Preconfirmation Commitments",
-  "description": "Machine-readable schema for the Preconfirmation Commitments semantic anchor within the Vortik Semantic Registry. Research surface; not an official protocol specification.",
+  "title": "Vortik Open Schema — Commitment",
+  "description": "Machine-readable schema for the Commitment semantic anchor within the Vortik Semantic Registry. Research-facing and protocol-adjacent surface; not an official Ethereum protocol specification.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -38,7 +38,7 @@
     "classification": {
       "type": "string",
       "const": "repairable",
-      "description": "Semantic classification within the Vortik registry."
+      "description": "Semantic classification within the Vortik registry. The underlying term is technically relevant, while the ENS suffix introduces naming mismatch."
     },
     "status": {
       "type": "string",
@@ -52,24 +52,28 @@
     },
     "summary": {
       "type": "string",
-      "description": "Short description of the surface.",
+      "description": "Short description of the commitment surface.",
       "minLength": 20
     },
     "pipeline_position": {
       "type": "array",
-      "description": "Interpretive pipeline stage where this surface is most relevant.",
+      "description": "Interpretive pipeline stages where commitment semantics are relevant.",
       "minItems": 1,
-      "maxItems": 1,
       "items": {
         "type": "string",
         "enum": [
-          "preconfirmation"
+          "pre-reveal coordination",
+          "builder-proposer coordination",
+          "payload commitment",
+          "preconfirmation",
+          "execution guarantee",
+          "research"
         ]
       }
     },
     "coordination_role": {
       "type": "array",
-      "description": "Key coordination functions performed by preconfirmation commitments.",
+      "description": "Key coordination functions associated with commitment semantics.",
       "minItems": 1,
       "items": {
         "type": "string",
@@ -78,7 +82,7 @@
     },
     "protocol_grounding": {
       "type": "array",
-      "description": "Primary protocol or research references grounding this surface.",
+      "description": "Primary protocol, implementation, or research references grounding this surface.",
       "minItems": 1,
       "items": {
         "type": "string",
@@ -97,19 +101,23 @@
       "properties": {
         "ens": {
           "type": "string",
-          "const": "commitmentlayer.eth"
+          "const": "commitmentlayer.eth",
+          "description": "ENS anchor associated with this registry entry."
         },
         "canonical": {
           "type": "string",
-          "const": "commitment"
+          "const": "commitment",
+          "description": "Canonical term tracked by the registry entry."
         },
         "mismatch": {
           "type": "boolean",
-          "const": true
+          "const": true,
+          "description": "Indicates that the ENS name contains a non-canonical suffix."
         },
         "notes": {
           "type": "string",
-          "minLength": 10
+          "minLength": 10,
+          "description": "Explanation of the naming mismatch and semantic risk."
         }
       }
     },
