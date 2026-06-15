@@ -15,6 +15,10 @@ const DIRS = [
   "anchors"
 ];
 
+const EXCLUDED_DOCS_SYNC_PATHS = new Set([
+  "maps/internal-semantic-watchlist.json"
+]);
+
 function ensureExists(targetPath, label = "path") {
   if (!fs.existsSync(targetPath)) {
     throw new Error(`Missing required ${label}: ${targetPath}`);
@@ -25,6 +29,12 @@ function copyFile(src, dest) {
   fs.mkdirSync(path.dirname(dest), { recursive: true });
   fs.copyFileSync(src, dest);
   console.log(`✓ ${src} → ${dest}`);
+}
+
+function shouldSkipDocsSync(src) {
+  const relativePath = path.relative(ROOT, src).split(path.sep).join("/");
+
+  return EXCLUDED_DOCS_SYNC_PATHS.has(relativePath);
 }
 
 function copyDir(srcDir, destDir) {
@@ -39,6 +49,10 @@ function copyDir(srcDir, destDir) {
     if (entry.isDirectory()) {
       copyDir(src, dest);
     } else {
+      if (shouldSkipDocsSync(src)) {
+        continue;
+      }
+
       copyFile(src, dest);
     }
   }
