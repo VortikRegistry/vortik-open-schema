@@ -1,6 +1,6 @@
 # Anchors
 
-This directory contains the human-readable layer of the **Vortik Semantic Registry**.
+This directory contains the human-readable documentation set of the **Vortik Semantic Registry**.
 
 Each file corresponds to a semantic anchor representing a protocol primitive, role, constraint, external coordination surface, or research-adjacent concept within Ethereum’s evolving coordination architecture.
 
@@ -129,7 +129,7 @@ Formal metadata is defined in `/schemas/`, where each anchor has a versioned JSO
 - research grounding
 - source references
 
-Schemas represent the machine-readable layer of the registry.
+Schemas represent the machine-readable schema set of the registry.
 
 They should remain aligned with `registry.json` for core structural fields such as:
 
@@ -163,7 +163,7 @@ This enables:
 
 ## Design Model
 
-The system is composed of three primary layers.
+The system is composed of three primary components.
 
 ### ENS Anchors
 
@@ -217,7 +217,7 @@ Examples include:
 
 Some anchors may relate to broader structural interpretation developed in research-oriented documentation.
 
-This should be understood as a complementary research layer, not as a protocol specification.
+This should be understood as a complementary research track, not as a protocol specification.
 
 ---
 
@@ -235,7 +235,7 @@ This should be understood as a complementary research layer, not as a protocol s
 
 ## System Status
 
-The registry is transitioning from conceptual semantic mapping toward a more structured semantic reference layer.
+The registry is transitioning from conceptual semantic mapping toward a more structured semantic reference system.
 
 Current focus:
 

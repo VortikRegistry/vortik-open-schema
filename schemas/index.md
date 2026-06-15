@@ -268,7 +268,7 @@ They should not be promoted to primary registry anchors without stronger evidenc
 - client or implementation relevance
 - roadmap visibility
 - semantic convergence
-- buyer-side or ecosystem adoption
+- independent implementation, operational, or ecosystem usage signals
 
 ---
 
