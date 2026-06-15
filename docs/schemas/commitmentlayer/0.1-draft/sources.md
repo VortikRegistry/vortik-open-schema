@@ -24,7 +24,6 @@ This document is a research-support artifact. It is not an official Ethereum pro
 - **Stage:** emerging
 - **Type:** primitive
 - **Market priority:** medium
-- **Sale strategy:** selective_inquiry
 - **Visibility:** standard
 
 ---

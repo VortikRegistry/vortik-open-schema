@@ -20,7 +20,6 @@
       "anchor_doc": "anchors/epbs.md",
       "market": {
         "priority": "high",
-        "sale_strategy": "strategic_custody",
         "visibility": "featured"
       }
     },
@@ -39,7 +38,6 @@
       "anchor_doc": "anchors/inclusionlist.md",
       "market": {
         "priority": "high",
-        "sale_strategy": "strategic_custody",
         "visibility": "featured"
       }
     },
@@ -58,7 +56,6 @@
       "anchor_doc": "anchors/commitmentlayer.md",
       "market": {
         "priority": "medium",
-        "sale_strategy": "selective_inquiry",
         "visibility": "standard"
       }
     },
@@ -77,7 +74,6 @@
       "anchor_doc": "anchors/preconflayer.md",
       "market": {
         "priority": "medium",
-        "sale_strategy": "selective_inquiry",
         "visibility": "standard"
       }
     },
@@ -96,7 +92,6 @@
       "anchor_doc": "anchors/fastfinality.md",
       "market": {
         "priority": "medium",
-        "sale_strategy": "selective_inquiry",
         "visibility": "standard"
       }
     },
@@ -115,7 +110,6 @@
       "anchor_doc": "anchors/buildermarket.md",
       "market": {
         "priority": "low",
-        "sale_strategy": "transfer_ready",
         "visibility": "background"
       }
     },
@@ -134,7 +128,6 @@
       "anchor_doc": "anchors/solverlayer.md",
       "market": {
         "priority": "low",
-        "sale_strategy": "transfer_ready",
         "visibility": "background"
       }
     },
@@ -153,7 +146,6 @@
       "anchor_doc": "anchors/executionmarket.md",
       "market": {
         "priority": "low",
-        "sale_strategy": "transfer_ready",
         "visibility": "background"
       }
     },
@@ -172,7 +164,6 @@
       "anchor_doc": "anchors/orderflowauction.md",
       "market": {
         "priority": "medium",
-        "sale_strategy": "selective_inquiry",
         "visibility": "standard"
       }
     },
@@ -191,7 +182,6 @@
       "anchor_doc": "anchors/provingmarket.md",
       "market": {
         "priority": "medium",
-        "sale_strategy": "selective_inquiry",
         "visibility": "standard"
       }
     },
@@ -210,7 +200,6 @@
       "anchor_doc": "anchors/sequencingmarket.md",
       "market": {
         "priority": "medium",
-        "sale_strategy": "selective_inquiry",
         "visibility": "standard"
       }
     },
@@ -229,7 +218,6 @@
       "anchor_doc": "anchors/blockspacemarket.md",
       "market": {
         "priority": "low",
-        "sale_strategy": "transfer_ready",
         "visibility": "background"
       }
     }

@@ -144,7 +144,6 @@
             "type": "object",
             "required": [
               "priority",
-              "sale_strategy",
               "visibility"
             ],
             "properties": {
@@ -154,14 +153,6 @@
                   "high",
                   "medium",
                   "low"
-                ]
-              },
-              "sale_strategy": {
-                "type": "string",
-                "enum": [
-                  "strategic_custody",
-                  "selective_inquiry",
-                  "transfer_ready"
                 ]
               },
               "visibility": {

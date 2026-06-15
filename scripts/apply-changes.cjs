@@ -63,18 +63,6 @@ const VALID_PRIORITIES = new Set([
   "low"
 ]);
 
-const VALID_SALE_STRATEGIES = new Set([
-  "strategic_custody",
-  "selective_inquiry",
-  "transfer_ready"
-]);
-
-const LEGACY_SALE_STRATEGY_MAP = {
-  hold: "strategic_custody",
-  monitor: "selective_inquiry",
-  opportunistic: "selective_inquiry",
-  liquidate: "transfer_ready"
-};
 
 const ALLOWED_UPDATE_FIELDS = new Set([
   "id",
@@ -86,14 +74,12 @@ const ALLOWED_UPDATE_FIELDS = new Set([
   "canonical_term",
   "role",
   "priority",
-  "sale_strategy",
   "visibility",
   "market"
 ]);
 
 const ALLOWED_MARKET_FIELDS = new Set([
   "priority",
-  "sale_strategy",
   "visibility"
 ]);
 
@@ -160,28 +146,6 @@ function validateUnknownFields(object, allowedFields, label) {
   }
 }
 
-function normalizeSaleStrategy(value, label) {
-  if (value === undefined) {
-    return undefined;
-  }
-
-  if (VALID_SALE_STRATEGIES.has(value)) {
-    return value;
-  }
-
-  if (LEGACY_SALE_STRATEGY_MAP[value]) {
-    const normalized = LEGACY_SALE_STRATEGY_MAP[value];
-
-    console.warn(
-      `⚠️  Legacy sale_strategy "${value}" found in ${label}. Normalized to "${normalized}".`
-    );
-
-    return normalized;
-  }
-
-  return value;
-}
-
 function normalizeUpdate(rawUpdate, index) {
   if (!rawUpdate || typeof rawUpdate !== "object" || Array.isArray(rawUpdate)) {
     throw new Error(`updates[${index}] must be an object`);
@@ -217,10 +181,6 @@ function normalizeUpdate(rawUpdate, index) {
     delete update.market;
   }
 
-  update.sale_strategy = normalizeSaleStrategy(
-    update.sale_strategy,
-    `updates[${index}]`
-  );
 
   ensureAllowedValue("classification", update.classification, VALID_CLASSIFICATIONS);
   ensureAllowedValue("status_label", update.status_label, VALID_STATUS_LABELS);
@@ -228,7 +188,6 @@ function normalizeUpdate(rawUpdate, index) {
   ensureAllowedValue("type", update.type, VALID_TYPES);
   ensureAllowedValue("market.visibility", update.visibility, VALID_VISIBILITIES);
   ensureAllowedValue("market.priority", update.priority, VALID_PRIORITIES);
-  ensureAllowedValue("market.sale_strategy", update.sale_strategy, VALID_SALE_STRATEGIES);
 
   ensureOptionalString("status", update.status);
   ensureOptionalString("canonical_term", update.canonical_term);
@@ -361,7 +320,6 @@ function applyUpdateToAnchor(anchor, update) {
 
   const hasMarketUpdate =
     update.priority !== undefined ||
-    update.sale_strategy !== undefined ||
     update.visibility !== undefined;
 
   if (hasMarketUpdate) {
@@ -371,7 +329,6 @@ function applyUpdateToAnchor(anchor, update) {
     }
 
     modified = updateIfChanged(anchor.market, "priority", update.priority, `${anchor.id}.market`) || modified;
-    modified = updateIfChanged(anchor.market, "sale_strategy", update.sale_strategy, `${anchor.id}.market`) || modified;
     modified = updateIfChanged(anchor.market, "visibility", update.visibility, `${anchor.id}.market`) || modified;
   }
 
