@@ -24,7 +24,6 @@ This document is a research-support artifact. It is not an official Ethereum pro
 - **Stage:** implemented
 - **Type:** coordination_surface
 - **Market priority:** medium
-- **Sale strategy:** selective_inquiry
 - **Visibility:** standard
 
 ---

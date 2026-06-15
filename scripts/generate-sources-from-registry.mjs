@@ -99,7 +99,6 @@ This document is a research-support artifact. It is not an official Ethereum pro
 - **Stage:** ${anchor.stage || "not specified"}
 - **Type:** ${anchor.type}
 - **Market priority:** ${market.priority || anchor.market_priority || "not specified"}
-- **Sale strategy:** ${market.sale_strategy || "not specified"}
 - **Visibility:** ${market.visibility || "not specified"}
 
 ---

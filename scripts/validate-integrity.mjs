@@ -337,7 +337,7 @@ function validateRegistry(registry) {
     if (!anchor.market || typeof anchor.market !== "object") {
       warn(`Anchor ${label}: missing market object`);
     } else {
-      for (const field of ["priority", "sale_strategy", "visibility"]) {
+      for (const field of ["priority", "visibility"]) {
         if (!anchor.market[field]) {
           warn(`Anchor ${label}: missing market.${field}`);
         }
