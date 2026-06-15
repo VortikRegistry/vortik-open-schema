@@ -5,7 +5,7 @@
 
 This document compiles source context and terminology support for the Vortik semantic anchor associated with `inclusionlist.eth`.
 
-It supports the machine-readable and human-readable layers of the **Vortik Semantic Registry**.
+It supports the machine-readable schema set and human-readable documentation set of the **Vortik Semantic Registry**.
 
 This document is a research-support artifact. It is not an official Ethereum protocol specification.
 
