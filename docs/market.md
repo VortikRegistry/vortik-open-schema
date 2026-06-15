@@ -5,7 +5,21 @@ Do not edit manually.
 
 This document presents selected ENS anchors tracked by the Vortik Semantic Registry.
 
-It is a strategic visibility layer, not an official protocol specification and not a market-price document.
+It is a public registry view, not an official protocol specification and not a market-price document.
+
+Strategic acquisition inquiries may be reviewed case by case.
+No public pricing is provided.
+Transfer decisions are evaluated privately.
+This registry is not an auction or public price list.
+
+---
+
+## Public inquiry policy
+
+- Inquiry status: strategic_inquiries_reviewed
+- Pricing policy: not_publicly_priced
+- Transfer policy: case_by_case_private_review
+- Contact note: Strategic acquisition inquiries may be reviewed case by case. No public pricing is provided.
 
 ---
 

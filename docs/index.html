@@ -629,10 +629,6 @@
     .tag.priority-medium{border-color:rgba(159,122,234,.24); color:#e0d3ff}
     .tag.priority-low{border-color:rgba(125,133,144,.22); color:#c1c7d0}
 
-    .tag.strategy-strategic_custody{border-color:rgba(61,220,151,.22); color:var(--core)}
-    .tag.strategy-selective_inquiry{border-color:rgba(89,168,255,.22); color:var(--valid)}
-    .tag.strategy-transfer_ready{border-color:rgba(125,133,144,.22); color:#c1c7d0}
-
     .anchor-links{
       display:flex; gap:10px; flex-wrap:wrap;
       margin-top:16px;
@@ -889,7 +885,7 @@
           <div>
             <h2>Strategic Signals</h2>
             <p>
-              High-signal anchors derived from protocol alignment and semantic convergence. This is not a marketplace. It is a positioning layer reflecting where Ethereum’s coordination language appears to be narrowing first.
+              High-signal anchors derived from protocol alignment and semantic convergence. This is not a marketplace. It is a registry view reflecting where Ethereum’s coordination language appears to be narrowing first. Strategic acquisition inquiries may be reviewed case by case. No public pricing is provided.
             </p>
           </div>
         </div>
@@ -987,7 +983,7 @@ anchor documentation (/anchors/)</div>
         <div class="panel pad">
           <div class="anchor-toolbar">
             <div class="search">
-              <input id="searchInput" type="text" placeholder="Search by id, ENS, canonical term, role, status, priority, or strategy…" />
+              <input id="searchInput" type="text" placeholder="Search by id, ENS, canonical term, role, status, or priority…" />
             </div>
             <div class="legend" id="legend"></div>
           </div>
@@ -1211,7 +1207,7 @@ anchor documentation (/anchors/)</div>
         grid.innerHTML = `
           <div class="signal-card">
             <h3>No featured signals yet</h3>
-            <p>The semantic visibility layer did not surface any featured anchors yet.</p>
+            <p>The public registry view did not surface any featured anchors yet.</p>
           </div>
         `;
         return;
@@ -1223,7 +1219,6 @@ anchor documentation (/anchors/)</div>
           <p>${esc(item.canonical_term)}</p>
           <div class="signal-meta">
             ${marketTag("priority", item.priority)}
-            ${marketTag("strategy", item.sale_strategy)}
             ${tag(item.classification)}
           </div>
         </article>
@@ -1248,8 +1243,7 @@ anchor documentation (/anchors/)</div>
           a.classification,
           a.status_label,
           a.stage,
-          market?.priority,
-          market?.sale_strategy
+          market?.priority
         ].join(" ").toLowerCase();
 
         const passQuery = q ? hay.includes(q) : true;
@@ -1309,7 +1303,6 @@ anchor documentation (/anchors/)</div>
               <span class="tag">${esc(a.type)}</span>
               <span class="tag">${esc(a.status)}</span>
               ${market ? marketTag("priority", market.priority) : ""}
-              ${market ? marketTag("strategy", market.sale_strategy) : ""}
             </div>
             <div class="anchor-term" style="min-height:auto; margin-top:12px;">
               ${esc(a.role)}

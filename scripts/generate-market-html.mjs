@@ -9,17 +9,11 @@ const priorityOrder = {
   low: 1
 };
 
-const allowedSaleStrategies = new Set([
-  "strategic_custody",
-  "selective_inquiry",
-  "transfer_ready"
-]);
-
-const legacySaleStrategyMap = {
-  hold: "strategic_custody",
-  monitor: "selective_inquiry",
-  opportunistic: "selective_inquiry",
-  liquidate: "transfer_ready"
+const publicInquiryPolicy = {
+  inquiryStatus: "Strategic inquiries reviewed",
+  pricingPolicy: "No public pricing",
+  transferPolicy: "Private case-by-case review",
+  note: "Strategic acquisition inquiries may be reviewed case by case. No public pricing is provided."
 };
 
 const displayNameOverrides = {
@@ -87,55 +81,6 @@ function escapeHtml(value) {
   }[char]));
 }
 
-function normalizeSaleStrategy(value, anchorId) {
-  if (allowedSaleStrategies.has(value)) {
-    return value;
-  }
-
-  if (legacySaleStrategyMap[value]) {
-    console.warn(
-      `⚠️  Legacy sale_strategy "${value}" found in "${anchorId}". Normalized to "${legacySaleStrategyMap[value]}".`
-    );
-    return legacySaleStrategyMap[value];
-  }
-
-  console.warn(
-    `⚠️  Missing or unknown sale_strategy "${value}" found in "${anchorId}". Defaulted to "selective_inquiry".`
-  );
-
-  return "selective_inquiry";
-}
-
-function strategyLabel(strategy) {
-  const labels = {
-    strategic_custody: "strategic custody",
-    selective_inquiry: "selective inquiry",
-    transfer_ready: "background anchor"
-  };
-
-  return labels[strategy] || "selective inquiry";
-}
-
-function strategyClass(strategy) {
-  const classes = {
-    strategic_custody: "badge-custody",
-    selective_inquiry: "badge-selective",
-    transfer_ready: "badge-background"
-  };
-
-  return classes[strategy] || "badge-selective";
-}
-
-function cardClass(strategy) {
-  const classes = {
-    strategic_custody: "card-custody",
-    selective_inquiry: "card-selective",
-    transfer_ready: "card-background"
-  };
-
-  return classes[strategy] || "card-selective";
-}
-
 function getDisplayName(anchor) {
   return displayNameOverrides[anchor.id] || anchor.ens || anchor.id;
 }
@@ -166,16 +111,8 @@ const standard = sortAnchors(anchors.filter((a) => a.market?.visibility === "sta
 const background = sortAnchors(anchors.filter((a) => a.market?.visibility === "background"));
 
 function renderCard(anchor) {
-  const strategy = normalizeSaleStrategy(anchor.market?.sale_strategy, anchor.id);
-
-  const note = strategy === "strategic_custody"
-    ? "technical alignment review"
-    : strategy === "transfer_ready"
-      ? "legacy / lower-priority context"
-      : "selective technical discussion";
-
   return `
-      <div class="card ${cardClass(strategy)}">
+      <div class="card">
         <div class="card-top">
           <div class="card-name">${escapeHtml(getDisplayName(anchor))}</div>
         </div>
@@ -184,8 +121,8 @@ function renderCard(anchor) {
           ${escapeHtml(getRole(anchor))}
         </div>
         <div class="card-footer">
-          <span class="badge ${strategyClass(strategy)}">${strategyLabel(strategy)}</span>
-          <span class="card-note">${note}</span>
+          <span class="badge badge-inquiry">${publicInquiryPolicy.inquiryStatus}</span>
+          <span class="card-note">${publicInquiryPolicy.transferPolicy}</span>
         </div>
       </div>`;
 }
@@ -496,8 +433,7 @@ const html = `<!DOCTYPE html>
       overflow: hidden;
     }
 
-    .card-custody::after,
-    .card-selective::after {
+    .card::after {
       content: "";
       position: absolute;
       top: -60px;
@@ -508,16 +444,8 @@ const html = `<!DOCTYPE html>
       pointer-events: none;
     }
 
-    .card-custody::after {
-      background: radial-gradient(circle, rgba(46,204,138,0.15), transparent 70%);
-    }
-
-    .card-selective::after {
-      background: radial-gradient(circle, rgba(77,158,255,0.12), transparent 70%);
-    }
-
-    .card-background::after {
-      background: radial-gradient(circle, rgba(159,122,234,0.10), transparent 70%);
+    .card::after {
+      background: radial-gradient(circle, rgba(77,158,255,0.10), transparent 70%);
     }
 
     .card-top {
@@ -576,22 +504,10 @@ const html = `<!DOCTYPE html>
       background: currentColor;
     }
 
-    .badge-custody {
-      color: var(--green);
-      border-color: rgba(46,204,138,0.25);
-      background: rgba(46,204,138,0.06);
-    }
-
-    .badge-selective {
+    .badge-inquiry {
       color: var(--blue);
       border-color: rgba(77,158,255,0.25);
       background: rgba(77,158,255,0.06);
-    }
-
-    .badge-background {
-      color: var(--white-dim);
-      border-color: rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.03);
     }
 
     .card-note {
@@ -738,7 +654,8 @@ const html = `<!DOCTYPE html>
     </h1>
     <p class="hero-lead">
       Selected ENS anchors indexed by Vortik against Ethereum protocol primitives, roles, constraints and coordination mechanisms.
-      This page is a strategic visibility layer for technical alignment, stewardship context and infrastructure relevance.
+      This page is a public registry view for technical alignment, stewardship context and infrastructure relevance.
+      Strategic acquisition inquiries may be reviewed case by case. No public pricing is provided.
     </p>
     <div class="hero-actions">
       <a class="btn-primary" href="https://x.com/VortikRegistry" target="_blank" rel="noopener noreferrer">
@@ -771,7 +688,7 @@ const html = `<!DOCTYPE html>
   <section class="section">
     <div class="section-header">
       <div class="section-title">Core Strategic Anchors</div>
-      <div class="section-count">${featured.length} anchors — strategic custody</div>
+      <div class="section-count">${featured.length} anchors — protocol-aligned context</div>
     </div>
     <div class="grid-2">
 ${featuredHtml}
@@ -781,7 +698,7 @@ ${featuredHtml}
   <section class="section">
     <div class="section-header">
       <div class="section-title">Selective / Monitored Anchors</div>
-      <div class="section-count">${standard.length} anchors — selective technical review</div>
+      <div class="section-count">${standard.length} anchors — monitored technical context</div>
     </div>
     <div class="grid-3">
 ${standardHtml}
@@ -803,8 +720,9 @@ ${backgroundHtml}
       <h3>Technical alignment discussion</h3>
       <p>
         Vortik operates as an independent semantic registry.
-        Strategic custody anchors are maintained for technical alignment.
-        Background anchors document legacy, lower-priority, or less precise naming surfaces.
+        Strategic acquisition inquiries may be reviewed case by case.
+        No public pricing is provided. Transfer decisions are evaluated privately.
+        This registry is not an auction or public price list.
       </p>
     </div>
     <div class="contact-right">
