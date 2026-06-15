@@ -531,7 +531,7 @@
           <article class="card metric">
             <div class="metric-label">Featured</div>
             <div id="featuredCount" class="metric-value">—</div>
-            <div class="metric-note">High-signal anchors surfaced by the strategic layer.</div>
+            <div class="metric-note">High-signal anchors surfaced by the public registry view.</div>
           </article>
         </div>
       </section>
@@ -541,7 +541,7 @@
           <div>
             <h2>Strategic Signals</h2>
             <p class="section-text">
-              High-signal anchors surfaced through the strategic layer.
+              High-signal anchors surfaced through the public registry view.
               This is a registry-oriented visibility view derived from protocol alignment and semantic relevance.
             </p>
           </div>
@@ -711,7 +711,7 @@
             </div>
             <h3 style="margin-top:12px;">${escapeHtml(anchor.ens || anchor.id)}</h3>
             <p><strong>${escapeHtml(anchor.canonical_term || "")}</strong></p>
-            <p>${escapeHtml(anchor.role || "High-signal semantic anchor tracked by the strategic layer.")}</p>
+            <p>${escapeHtml(anchor.role || "High-signal semantic anchor tracked by the public registry view.")}</p>
             <div class="mini-links">
               ${anchor.anchor_doc ? `<a href="${urlFor(anchor.anchor_doc)}">anchor doc</a>` : ""}
               ${anchor.schema ? `<a href="${urlFor(anchor.schema)}">schema</a>` : ""}
