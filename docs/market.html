@@ -300,8 +300,7 @@
       overflow: hidden;
     }
 
-    .card-custody::after,
-    .card-selective::after {
+    .card::after {
       content: "";
       position: absolute;
       top: -60px;
@@ -312,16 +311,8 @@
       pointer-events: none;
     }
 
-    .card-custody::after {
-      background: radial-gradient(circle, rgba(46,204,138,0.15), transparent 70%);
-    }
-
-    .card-selective::after {
-      background: radial-gradient(circle, rgba(77,158,255,0.12), transparent 70%);
-    }
-
-    .card-background::after {
-      background: radial-gradient(circle, rgba(159,122,234,0.10), transparent 70%);
+    .card::after {
+      background: radial-gradient(circle, rgba(77,158,255,0.10), transparent 70%);
     }
 
     .card-top {
@@ -380,22 +371,10 @@
       background: currentColor;
     }
 
-    .badge-custody {
-      color: var(--green);
-      border-color: rgba(46,204,138,0.25);
-      background: rgba(46,204,138,0.06);
-    }
-
-    .badge-selective {
+    .badge-inquiry {
       color: var(--blue);
       border-color: rgba(77,158,255,0.25);
       background: rgba(77,158,255,0.06);
-    }
-
-    .badge-background {
-      color: var(--white-dim);
-      border-color: rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.03);
     }
 
     .card-note {
@@ -542,7 +521,8 @@
     </h1>
     <p class="hero-lead">
       Selected ENS anchors indexed by Vortik against Ethereum protocol primitives, roles, constraints and coordination mechanisms.
-      This page is a strategic visibility layer for technical alignment, stewardship context and infrastructure relevance.
+      This page is a public registry view for technical alignment, stewardship context and infrastructure relevance.
+      Strategic acquisition inquiries may be reviewed case by case. No public pricing is provided.
     </p>
     <div class="hero-actions">
       <a class="btn-primary" href="https://x.com/VortikRegistry" target="_blank" rel="noopener noreferrer">
@@ -575,11 +555,11 @@
   <section class="section">
     <div class="section-header">
       <div class="section-title">Core Strategic Anchors</div>
-      <div class="section-count">2 anchors — strategic custody</div>
+      <div class="section-count">2 anchors — protocol-aligned context</div>
     </div>
     <div class="grid-2">
 
-      <div class="card card-custody">
+      <div class="card">
         <div class="card-top">
           <div class="card-name">epbs.eth</div>
         </div>
@@ -588,12 +568,12 @@
           protocol-aligned naming surface for implementation-facing ePBS coordination
         </div>
         <div class="card-footer">
-          <span class="badge badge-custody">strategic custody</span>
-          <span class="card-note">technical alignment review</span>
+          <span class="badge badge-inquiry">Strategic inquiries reviewed</span>
+          <span class="card-note">Private case-by-case review</span>
         </div>
       </div>
 
-      <div class="card card-custody">
+      <div class="card">
         <div class="card-top">
           <div class="card-name">inclusionlist.eth</div>
         </div>
@@ -602,8 +582,8 @@
           protocol-aligned constraint surface for inclusion-list coordination
         </div>
         <div class="card-footer">
-          <span class="badge badge-custody">strategic custody</span>
-          <span class="card-note">technical alignment review</span>
+          <span class="badge badge-inquiry">Strategic inquiries reviewed</span>
+          <span class="card-note">Private case-by-case review</span>
         </div>
       </div>
     </div>
@@ -612,11 +592,11 @@
   <section class="section">
     <div class="section-header">
       <div class="section-title">Selective / Monitored Anchors</div>
-      <div class="section-count">6 anchors — selective technical review</div>
+      <div class="section-count">6 anchors — monitored technical context</div>
     </div>
     <div class="grid-3">
 
-      <div class="card card-selective">
+      <div class="card">
         <div class="card-top">
           <div class="card-name">commitmentlayer.eth</div>
         </div>
@@ -625,12 +605,12 @@
           commitment-aligned naming surface with protocol relevance and naming mismatch
         </div>
         <div class="card-footer">
-          <span class="badge badge-selective">selective inquiry</span>
-          <span class="card-note">selective technical discussion</span>
+          <span class="badge badge-inquiry">Strategic inquiries reviewed</span>
+          <span class="card-note">Private case-by-case review</span>
         </div>
       </div>
 
-      <div class="card card-selective">
+      <div class="card">
         <div class="card-top">
           <div class="card-name">orderflowauction.eth</div>
         </div>
@@ -639,12 +619,12 @@
           external coordination surface tied to routing, auction flow and execution access
         </div>
         <div class="card-footer">
-          <span class="badge badge-selective">selective inquiry</span>
-          <span class="card-note">selective technical discussion</span>
+          <span class="badge badge-inquiry">Strategic inquiries reviewed</span>
+          <span class="card-note">Private case-by-case review</span>
         </div>
       </div>
 
-      <div class="card card-selective">
+      <div class="card">
         <div class="card-top">
           <div class="card-name">preconflayer.eth</div>
         </div>
@@ -653,12 +633,12 @@
           early guarantee surface connected to preconfirmation research and execution timing
         </div>
         <div class="card-footer">
-          <span class="badge badge-selective">selective inquiry</span>
-          <span class="card-note">selective technical discussion</span>
+          <span class="badge badge-inquiry">Strategic inquiries reviewed</span>
+          <span class="card-note">Private case-by-case review</span>
         </div>
       </div>
 
-      <div class="card card-selective">
+      <div class="card">
         <div class="card-top">
           <div class="card-name">provingmarket.eth</div>
         </div>
@@ -667,12 +647,12 @@
           external coordination surface aligned with proof generation and zk infrastructure
         </div>
         <div class="card-footer">
-          <span class="badge badge-selective">selective inquiry</span>
-          <span class="card-note">selective technical discussion</span>
+          <span class="badge badge-inquiry">Strategic inquiries reviewed</span>
+          <span class="card-note">Private case-by-case review</span>
         </div>
       </div>
 
-      <div class="card card-selective">
+      <div class="card">
         <div class="card-top">
           <div class="card-name">sequencingmarket.eth</div>
         </div>
@@ -681,12 +661,12 @@
           external coordination surface aligned with rollup and shared sequencing narratives
         </div>
         <div class="card-footer">
-          <span class="badge badge-selective">selective inquiry</span>
-          <span class="card-note">selective technical discussion</span>
+          <span class="badge badge-inquiry">Strategic inquiries reviewed</span>
+          <span class="card-note">Private case-by-case review</span>
         </div>
       </div>
 
-      <div class="card card-selective">
+      <div class="card">
         <div class="card-top">
           <div class="card-name">fastfinality.eth</div>
         </div>
@@ -695,8 +675,8 @@
           finality-aligned naming surface connected to fast-finality research
         </div>
         <div class="card-footer">
-          <span class="badge badge-selective">selective inquiry</span>
-          <span class="card-note">selective technical discussion</span>
+          <span class="badge badge-inquiry">Strategic inquiries reviewed</span>
+          <span class="card-note">Private case-by-case review</span>
         </div>
       </div>
     </div>
@@ -709,7 +689,7 @@
     </div>
     <div class="grid-3">
 
-      <div class="card card-background">
+      <div class="card">
         <div class="card-top">
           <div class="card-name">blockspacemarket.eth</div>
         </div>
@@ -718,12 +698,12 @@
           blockspace-oriented naming surface tied to earlier execution-market framing
         </div>
         <div class="card-footer">
-          <span class="badge badge-background">background anchor</span>
-          <span class="card-note">legacy / lower-priority context</span>
+          <span class="badge badge-inquiry">Strategic inquiries reviewed</span>
+          <span class="card-note">Private case-by-case review</span>
         </div>
       </div>
 
-      <div class="card card-background">
+      <div class="card">
         <div class="card-top">
           <div class="card-name">buildermarket.eth</div>
         </div>
@@ -732,12 +712,12 @@
           builder-aligned naming surface with legacy market framing
         </div>
         <div class="card-footer">
-          <span class="badge badge-background">background anchor</span>
-          <span class="card-note">legacy / lower-priority context</span>
+          <span class="badge badge-inquiry">Strategic inquiries reviewed</span>
+          <span class="card-note">Private case-by-case review</span>
         </div>
       </div>
 
-      <div class="card card-background">
+      <div class="card">
         <div class="card-top">
           <div class="card-name">executionmarket.eth</div>
         </div>
@@ -746,12 +726,12 @@
           broad execution-aligned naming surface with non-canonical protocol mapping
         </div>
         <div class="card-footer">
-          <span class="badge badge-background">background anchor</span>
-          <span class="card-note">legacy / lower-priority context</span>
+          <span class="badge badge-inquiry">Strategic inquiries reviewed</span>
+          <span class="card-note">Private case-by-case review</span>
         </div>
       </div>
 
-      <div class="card card-background">
+      <div class="card">
         <div class="card-top">
           <div class="card-name">solverlayer.eth</div>
         </div>
@@ -760,8 +740,8 @@
           external actor-aligned naming surface tied to intent routing and solver coordination
         </div>
         <div class="card-footer">
-          <span class="badge badge-background">background anchor</span>
-          <span class="card-note">legacy / lower-priority context</span>
+          <span class="badge badge-inquiry">Strategic inquiries reviewed</span>
+          <span class="card-note">Private case-by-case review</span>
         </div>
       </div>
     </div>
@@ -772,8 +752,9 @@
       <h3>Technical alignment discussion</h3>
       <p>
         Vortik operates as an independent semantic registry.
-        Strategic custody anchors are maintained for technical alignment.
-        Background anchors document legacy, lower-priority, or less precise naming surfaces.
+        Strategic acquisition inquiries may be reviewed case by case.
+        No public pricing is provided. Transfer decisions are evaluated privately.
+        This registry is not an auction or public price list.
       </p>
     </div>
     <div class="contact-right">
