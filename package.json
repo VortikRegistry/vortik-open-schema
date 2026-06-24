@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "validate": "npm run validate:json && npm run validate:registry && npm run validate:integrity && npm run validate:derived-sync",
+    "validate": "npm run validate:json && npm run validate:registry && npm run validate:integrity && npm run validate:derived-sync && npm run check:public-safety",
     "validate:json": "node scripts/validate-json-files.mjs",
     "validate:registry": "node scripts/validate-registry.mjs",
     "validate:integrity": "node scripts/validate-integrity.mjs",
@@ -13,6 +13,7 @@
     "generate:map": "node scripts/generate-map.mjs",
     "generate:anchors-index": "node scripts/generate-anchors-index.mjs",
     "sync:docs": "node scripts/sync-docs.mjs",
-    "check": "npm run fix:schemas && npm run validate"
+    "check": "npm run fix:schemas && npm run validate",
+    "check:public-safety": "node scripts/check-public-safety.mjs"
   }
 }
