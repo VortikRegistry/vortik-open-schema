@@ -35,6 +35,8 @@ const BLOCKED_CONCEPTS = [
   { concept: 'sale window', reason: 'sale timing belongs outside public registry data' },
   { concept: 'outreach', reason: 'outreach material belongs outside public registry data' },
   { concept: 'lead', reason: 'private lead lists belong outside public registry data' },
+  { concept: 'private lead', reason: 'private lead lists belong outside public registry data' },
+  { concept: 'lead list', reason: 'private lead lists belong outside public registry data' },
   { concept: 'target entity', reason: 'target entities belong outside public registry data' },
   { concept: 'sale_strategy', reason: 'sale strategy belongs outside public registry data' },
   { concept: 'private_strategy', reason: 'private strategy belongs outside public registry data' },
@@ -109,21 +111,35 @@ function collectFiles(target) {
   return files;
 }
 
+function isNegativePolicyLanguage(lower, termPattern) {
+  return new RegExp(`\\b(no|not|never|avoid|without|rather than|separate from|exclude|excludes|excluded|forbid|forbids|forbidden|ban|bans|banned|block|blocks|blocked|disallow|disallows|disallowed|reject|rejects|rejected|must not|do not include)\\b.{0,120}${termPattern}`).test(lower)
+    || new RegExp(`${termPattern}.{0,120}\\b(must not|is not allowed|are not allowed|should not|forbidden|banned|blocked|disallowed|rejected|outside public registry data|should not be interpreted|not be interpreted|not be used|does not imply|do not infer|separate from)\\b`).test(lower);
+}
+
+function hasPricingStrategyContext(lower) {
+  return /\bpricing\b.{0,120}\b(guidance|range|eth|floor|stretch|valuation|sale|commercial|private|strategy|negotiation)\b/.test(lower)
+    || /\b(guidance|range|eth|floor|stretch|valuation|sale|commercial|private|strategy|negotiation)\b.{0,120}\bpricing\b/.test(lower);
+}
+
 function isPolicyOrTechnicalSafe(line, concept) {
   const lower = line.toLowerCase();
 
-  if (concept === 'lead' && (/class=["'][^"']*\b[\w-]*lead\b/.test(lower) || /^\s*\.[\w-]*lead\b/.test(lower))) return true;
+  if ((concept === 'lead' || concept === 'private lead' || concept === 'lead list')
+    && (/class=["'][^"']*\b[\w-]*lead\b/.test(lower) || /^\s*\.[\w-]*lead\b/.test(lower))) return true;
 
   if (concept === 'pricing') {
+    if (hasPricingStrategyContext(lower)) return isNegativePolicyLanguage(lower, '\\bpricing\\b');
     if (/\b(no|not|avoid|without|rather than)\b.{0,100}\bpricing\b/.test(lower)) return true;
-    if (/\bpricing\b.{0,100}\b(guidance|relevance|input|claim|claims|assumption|assumptions|interpretation|surface|signal|policy)\b/.test(lower)) return true;
+    if (/\bpricing\b.{0,100}\b(relevance|input|claim|claims|assumption|assumptions|interpretation|surface|signal|policy)\b/.test(lower)) return true;
     if (/\b(gas|temporal|execution value|cryptographic proofs|proof-generation|repricing|publicly_priced|not_publicly_priced|schemas)\b/.test(lower)) return true;
   }
 
   if (concept.includes('buyer') || concept === 'buyer') {
-    if (/\b(no|not|avoid|without)\b.{0,80}\bbuyer/.test(lower)) return true;
-    if (/\bbuyer\b.{0,80}\b(targeting|demand|relevance|segment|segments|claim|claims|assumption|assumptions|intent)\b/.test(lower)) return true;
-    if (/\b(direct|confirmed)\s+buyer/.test(lower)) return true;
+    if (isNegativePolicyLanguage(lower, '\\bbuyer')) return true;
+    if (/\brather than\b.{0,120}\bbuyer segment\b/.test(lower)) return true;
+    if (/\b(should not|not) be interpreted\b.{0,120}\b(imply|implies)\b.{0,80}\bbuyer\b/.test(lower)) return true;
+    if (/\b(imply|implies)\s+buyer targeting or commercial demand\b/.test(lower)) return true;
+    if (/\b(imply|implies)\b.{0,80}\bbuyer\b/.test(lower) && isNegativePolicyLanguage(lower, '\\b(imply|implies)\\b')) return true;
   }
 
   if (concept === 'price range' && /\b(no|not|avoid|without|do not include)\b.{0,80}\bprice ranges?\b/.test(lower)) return true;
