@@ -76,6 +76,20 @@ function conceptRegex(concept) {
 
 const MATCHERS = BLOCKED_CONCEPTS.map((entry) => ({ ...entry, regex: conceptRegex(entry.concept) }));
 
+function clauses(line) {
+  return line.toLowerCase().split(/[.;,]|\band\b|\bor\b/);
+}
+
+function hasNegativePolicyBefore(line, termIndex) {
+  const segmentStart = Math.max(line.lastIndexOf(';', termIndex), line.lastIndexOf('.', termIndex));
+  const prefix = line.slice(segmentStart + 1, termIndex).toLowerCase();
+  return /\b(no|not|avoid|without|rather than|do not include|forbid|forbidden|prohibit|prohibited|imply|infer|separate from)\b/.test(prefix);
+}
+
+function isNegativePolicyClause(clause, termRegex) {
+  return /\b(no|not|avoid|without|rather than|do not include|forbid|forbidden|prohibit|prohibited|imply|infer|separate from)\b/.test(clause) && termRegex.test(clause);
+}
+
 function isExcluded(relativePath) {
   const parts = relativePath.split('/');
   return EXCLUDED_PATHS.has(relativePath)
@@ -112,18 +126,33 @@ function collectFiles(target) {
 function isPolicyOrTechnicalSafe(line, concept) {
   const lower = line.toLowerCase();
 
-  if (concept === 'lead' && (/class=["'][^"']*\b[\w-]*lead\b/.test(lower) || /^\s*\.[\w-]*lead\b/.test(lower))) return true;
+  if (concept === 'lead') {
+    return /class=["'][^"']*\blead\b/.test(lower) || /^\s*\.[a-z0-9_-]*lead\b/.test(lower);
+  }
 
   if (concept === 'pricing') {
-    if (/\b(no|not|avoid|without|rather than)\b.{0,100}\bpricing\b/.test(lower)) return true;
-    if (/\bpricing\b.{0,100}\b(guidance|relevance|input|claim|claims|assumption|assumptions|interpretation|surface|signal|policy)\b/.test(lower)) return true;
-    if (/\b(gas|temporal|execution value|cryptographic proofs|proof-generation|repricing|publicly_priced|not_publicly_priced|schemas)\b/.test(lower)) return true;
+    const commercialPricingTerms = /\b(guidance|range|eth|buyer|private|strategy|commercial|sale|acquisition|valuation|floor|stretch|target|negotiation)\b/;
+    const pricingMatches = [...lower.matchAll(/\bpricing\b/g)];
+    if (pricingMatches.some((match) => commercialPricingTerms.test(lower.slice(Math.max(0, match.index - 80), match.index + 100))
+      && !hasNegativePolicyBefore(lower, match.index)
+      && !/\bdo not include\b.{0,120}\bpricing\b/.test(lower))) return false;
+
+    if (/\bdo not include\b.{0,120}\bpricing\b/.test(lower)) return true;
+
+    const pricingClauses = clauses(line).filter((clause) => /\bpricing\b/.test(clause));
+    return pricingMatches.every((match) => hasNegativePolicyBefore(lower, match.index))
+      || pricingClauses.every((clause) => /\b(gas|fee|resource)[\s_-]+pricing\b|\bpricing[\s_-]+(gas|fee|resource)\b/.test(clause)
+        || /\b(pricing signal|temporal|execution value|cryptographic proofs|proof-generation|repricing|publicly_priced|not_publicly_priced|schemas)\b/.test(lower));
   }
 
   if (concept.includes('buyer') || concept === 'buyer') {
-    if (/\b(no|not|avoid|without)\b.{0,80}\bbuyer/.test(lower)) return true;
-    if (/\bbuyer\b.{0,80}\b(targeting|demand|relevance|segment|segments|claim|claims|assumption|assumptions|intent)\b/.test(lower)) return true;
-    if (/\b(direct|confirmed)\s+buyer/.test(lower)) return true;
+    const positiveBuyerStatement = /\b(buyer[\s_-]+(targeting|demand|relevance|segments?|claims?)|target[\s_-]+buyer|probable[\s_-]+buyer|intended[\s_-]+buyer)\b/g;
+    const positiveMatches = [...lower.matchAll(positiveBuyerStatement)];
+    if (positiveMatches.some((match) => !hasNegativePolicyBefore(lower, match.index))) return false;
+
+    const buyerMatches = [...lower.matchAll(/\bbuyer\b/g)];
+    return buyerMatches.every((match) => hasNegativePolicyBefore(lower, match.index))
+      || /\bbuyer[\s_-]+targeting\b.{0,40}\b(forbidden|prohibited|disallowed|not allowed)\b/.test(lower);
   }
 
   if (concept === 'price range' && /\b(no|not|avoid|without|do not include)\b.{0,80}\bprice ranges?\b/.test(lower)) return true;
