@@ -6,7 +6,7 @@ This audit records a conservative verification pass over candidate Ethereum and 
 
 The only accepted claims below are grounded in primary Ethereum Improvement Proposal (EIP), Ethereum Research, or ENS architecture sources reviewed on 2026-06-28. No registry anchors are added here, no existing registry entries are renamed or deleted, and this document does not change `registry.json`, `anchors/`, `schemas/`, `maps/`, generated outputs, `market.index.json`, or `anchors.index.json`.
 
-This document includes no pricing guidance. It includes no buyer targeting. No out&#114;each plan is included. It includes no custody claim, no monopoly claim, no tax guidance, no banking information, no weather information, and no personal data.
+This document includes no pricing guidance. It includes no buyer targeting. No external-contact plan is included. It includes no custody claim, no monopoly claim, no tax guidance, no banking information, no weather information, and no personal data.
 
 ## Source policy
 
