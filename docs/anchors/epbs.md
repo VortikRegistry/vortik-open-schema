@@ -86,6 +86,24 @@ The registry uses this grounding cautiously. It does not claim that `epbs.eth` i
 
 ---
 
+
+## EIP-7732 Source Notes
+
+EIP-7732 defines **Enshrined Proposer-Builder Separation (ePBS)** as a draft Core EIP that separates an Ethereum block into consensus and execution parts and adds an in-protocol mechanism for the consensus proposer to choose the execution proposer. This registry anchor treats that terminology as source-grounded while distinguishing terminology from fork finality, deployment, or mainnet activation.
+
+Within the EIP-7732 design, builders are introduced as an in-protocol entity tracked by the beacon state. PTC is introduced as the **Payload Timeliness Committee**, a subset of validators assigned to attest to whether the corresponding builder revealed the committed execution payload with the expected block hash in a timely way and whether corresponding blob data was available from their view. PTC is therefore tracked here as an ePBS role/component, not as a separate registry anchor.
+
+EIP-7732 defines the following ePBS containers and related signed containers:
+
+- `ExecutionPayloadBid`
+- `SignedExecutionPayloadBid`
+- `ExecutionPayloadEnvelope`
+- `SignedExecutionPayloadEnvelope`
+
+EIP-7732 also describes delayed validation: consensus validation and execution validation are decoupled logically and temporally. PTC members are not required to validate the execution payload before attesting to payload timeliness; execution validation is deferred until the next beacon block validation path.
+
+These notes are limited to EIP-7732-backed terminology and mechanisms. They do not claim that ePBS is active on Ethereum mainnet, do not assign a mainnet activation date, and do not imply that Vortik or `epbs.eth` is an official Ethereum namespace.
+
 ## Semantic Stability
 
 The term **ePBS** has strong semantic stability relative to most Ethereum coordination terms.
