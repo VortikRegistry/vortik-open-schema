@@ -23,6 +23,31 @@ function warn(message) {
   console.warn(`⚠️ ${message}`);
 }
 
+function formatValue(value) {
+  return value === undefined ? "<missing>" : JSON.stringify(value);
+}
+
+function assertSchemaFieldMatches(anchor, schema, fieldName) {
+  const schemaPath = anchor.schema;
+  const registryValue = anchor[fieldName];
+  const schemaValue = schema?.properties?.[fieldName]?.const;
+
+  assert(
+    registryValue !== undefined,
+    `Schema drift for "${anchor.id}" field "${fieldName}": registry value is <missing> but schema value is ${formatValue(schemaValue)} in ${schemaPath}`
+  );
+
+  assert(
+    schemaValue !== undefined,
+    `Schema drift for "${anchor.id}" field "${fieldName}": registry value is ${formatValue(registryValue)} but schema value is <missing> in ${schemaPath}`
+  );
+
+  assert(
+    registryValue === schemaValue,
+    `Schema drift for "${anchor.id}" field "${fieldName}": registry value is ${formatValue(registryValue)} but schema value is ${formatValue(schemaValue)} in ${schemaPath}`
+  );
+}
+
 function validateAnchorEntry(anchor) {
   assert(anchor.id, `Anchor missing "id": ${JSON.stringify(anchor)}`);
   assert(anchor.ens, `Anchor "${anchor.id}" missing "ens"`);
@@ -46,9 +71,6 @@ function validateAnchorEntry(anchor) {
 
   const schemaId = schema?.properties?.id?.const;
   const schemaEns = schema?.properties?.naming?.properties?.ens?.const;
-  const schemaTerm = schema?.properties?.canonical_term?.const;
-  const schemaClassification = schema?.properties?.classification?.const;
-  const schemaStatus = schema?.properties?.status?.const;
 
   assert(schemaId, `Schema "${anchor.schema}" missing properties.id.const`);
   assert(schemaEns, `Schema "${anchor.schema}" missing naming.properties.ens.const`);
@@ -63,16 +85,8 @@ function validateAnchorEntry(anchor) {
     `ENS mismatch for "${anchor.id}": registry has "${anchor.ens}" but schema has "${schemaEns}"`
   );
 
-  if (anchor.canonical_term && schemaTerm && anchor.canonical_term !== schemaTerm) {
-    warn(`canonical_term mismatch for "${anchor.id}"`);
-  }
-
-  if (anchor.classification && schemaClassification && anchor.classification !== schemaClassification) {
-    warn(`classification mismatch for "${anchor.id}"`);
-  }
-
-  if (anchor.status && schemaStatus && anchor.status !== schemaStatus) {
-    warn(`status mismatch for "${anchor.id}"`);
+  for (const fieldName of ["canonical_term", "classification", "status", "type"]) {
+    assertSchemaFieldMatches(anchor, schema, fieldName);
   }
 
   if (!anchor.ens.endsWith(".eth")) {
