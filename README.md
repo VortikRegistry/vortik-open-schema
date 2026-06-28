@@ -8,11 +8,70 @@
 
 ---
 
-Vortik is an independent semantic registry for Ethereum coordination.
+## Quickstart: what this repository is
 
-It indexes protocol primitives, roles, constraints, external coordination surfaces, and selected ENS-anchored naming surfaces as Ethereum’s coordination architecture becomes more explicit.
+Vortik is a public, independent semantic registry for selected Ethereum coordination terminology.
 
-Vortik does not define Ethereum protocol rules.
+It maps selected ENS anchors to canonical technical terms, classifications, schemas, human-readable anchor notes, and source trails. ENS anchors are naming surfaces for registry entries; they are not protocol authority and do not create Ethereum protocol truth.
+
+### What Vortik does not do
+
+Vortik does not:
+
+- define Ethereum protocol rules;
+- replace EIPs, protocol specifications, or client documentation;
+- treat ENS names as protocol authority;
+- publish private ENS or commercial strategy;
+- use AI-generated reports as authority or source of truth.
+
+### Source of truth
+
+Read the repository with this source hierarchy in mind:
+
+- `schemas/` are the formal source of truth for versioned registry definitions.
+- `registry.json` is the central index for tracked anchors and points to schemas and anchor notes.
+- `anchors/` contains human-readable interpretation for each selected ENS anchor.
+- `docs/` contains generated public interfaces and explanatory material.
+- Research documents are interpretive support; they do not automatically modify registry state.
+
+### Read this repo in order
+
+1. `README.md`
+2. `registry.json`
+3. `schemas/{anchor}/{version}/schema.json`
+4. `schemas/{anchor}/{version}/sources.md`
+5. `anchors/{anchor}.md`
+6. `docs/taxonomy-promotion-rules.md`
+
+### Worked example: `epbs.eth`
+
+| Field | Path or value |
+| --- | --- |
+| ENS anchor | `epbs.eth` |
+| Canonical term | enshrined proposer-builder separation (ePBS) |
+| Schema | `schemas/epbs/1.0-draft/schema.json` |
+| Source notes | `schemas/epbs/1.0-draft/sources.md` |
+| Anchor note | `anchors/epbs.md` |
+
+### Validate locally
+
+```bash
+npm run check:public-safety
+npm run validate
+```
+
+Validation checks JSON structure, registry/schema consistency, integrity, derived-output synchronization, and public-safety constraints.
+
+### Trust and safety references
+
+- [Vortik Registry Constitution](.specify/memory/constitution.md)
+- [Taxonomy Promotion Rules](docs/taxonomy-promotion-rules.md)
+- [Multi-Agent Verification Audit](docs/research/multi-agent-verification-2026-06-28.md)
+- [Repository Positioning and Trust Audit](docs/research/repo-positioning-trust-audit.md)
+
+---
+
+Vortik indexes protocol primitives, roles, constraints, external coordination surfaces, and selected ENS-anchored naming surfaces as Ethereum’s coordination architecture becomes more explicit.
 
 It tracks how protocol and infrastructure terminology stabilizes across:
 
