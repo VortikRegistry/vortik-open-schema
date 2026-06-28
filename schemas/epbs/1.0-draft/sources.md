@@ -104,9 +104,18 @@ Curated references and source notes should be placed in the protected section be
 
 ## Source Notes
 
-ePBS is treated by Vortik as a core protocol-facing primitive because it maps directly to proposer-builder separation becoming part of Ethereum's consensus-layer design.
+ePBS is treated by Vortik as a core protocol-facing primitive because EIP-7732 defines Enshrined Proposer-Builder Separation and maps proposer-builder separation into Ethereum's consensus-layer design. This is terminology and mechanism grounding, not a claim of mainnet activation or finalized fork deployment.
 
-This anchor is grounded in the transition from relay-mediated proposer-builder coordination toward protocol-defined proposer-builder interaction.
+This anchor is grounded in the transition from relay-mediated proposer-builder coordination toward protocol-defined proposer-builder interaction. EIP-7732 introduces in-protocol builders and the Payload Timeliness Committee (PTC); this source note treats PTC as an ePBS role/component, not as an independent registry anchor.
+
+EIP-7732 defines the following ePBS containers and signed containers:
+
+- `ExecutionPayloadBid`
+- `SignedExecutionPayloadBid`
+- `ExecutionPayloadEnvelope`
+- `SignedExecutionPayloadEnvelope`
+
+EIP-7732 describes delayed validation by decoupling consensus validation from execution validation. PTC members attest to payload timeliness without fully validating the execution payload, and execution validation is deferred until the next beacon block validation path.
 
 The strongest semantic objects to monitor around this anchor are:
 
@@ -119,6 +128,7 @@ The strongest semantic objects to monitor around this anchor are:
 - payload reveal
 - payload timeliness
 - Payload Timeliness Committee (PTC)
+- delayed validation
 
 These references and notes are curated to support source traceability and semantic interpretation.
 
