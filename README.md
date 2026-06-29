@@ -37,11 +37,12 @@ Read the repository with this source hierarchy in mind:
 ### Read this repo in order
 
 1. `README.md`
-2. `registry.json`
-3. `schemas/{anchor}/{version}/schema.json`
-4. `schemas/{anchor}/{version}/sources.md`
-5. `anchors/{anchor}.md`
-6. `docs/taxonomy-promotion-rules.md`
+2. [`docs/index.md`](docs/index.md)
+3. `registry.json`
+4. `schemas/{anchor}/{version}/schema.json`
+5. `schemas/{anchor}/{version}/sources.md`
+6. `anchors/{anchor}.md`
+7. `docs/taxonomy-promotion-rules.md`
 
 ### Worked example: `epbs.eth`
 

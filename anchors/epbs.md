@@ -26,7 +26,7 @@ Proposer-Builder Separation (PBS) emerged as a way to separate block constructio
 
 Enshrined Proposer-Builder Separation extends this model by moving key parts of the proposer-builder interface into Ethereum’s protocol design.
 
-The primary specification associated with this anchor is **EIP-7732**.
+The primary specification associated with this anchor is **EIP-7732**. EIP-7773 currently lists EIP-7732 / ePBS as **Scheduled for Inclusion** in Glamsterdam. Vortik treats that as source-state support for ePBS as a strong protocol-facing primitive while keeping scheduled inclusion separate from final deployment or live mainnet activation.
 
 Vortik does not treat ePBS as a deployed mainnet feature. It is tracked as **implementation-facing** because the terminology, specification surface, and engineering discussion around ePBS have matured enough to make the term structurally important for Ethereum coordination mapping.
 
@@ -89,7 +89,7 @@ The registry uses this grounding cautiously. It does not claim that `epbs.eth` i
 
 ## EIP-7732 Source Notes
 
-EIP-7732 defines **Enshrined Proposer-Builder Separation (ePBS)** as a draft Core EIP that separates an Ethereum block into consensus and execution parts and adds an in-protocol mechanism for the consensus proposer to choose the execution proposer. This registry anchor treats that terminology as source-grounded while distinguishing terminology from fork finality, deployment, or mainnet activation.
+EIP-7732 defines **Enshrined Proposer-Builder Separation (ePBS)** as a draft Core EIP that separates an Ethereum block into consensus and execution parts and adds an in-protocol mechanism for the consensus proposer to choose the execution proposer. This registry anchor treats that terminology as source-grounded while distinguishing terminology from fork finality, deployment, or mainnet activation. EIP-7773 lists EIP-7732 as Scheduled for Inclusion in Glamsterdam, but activation rows remain unset until client teams decide activation times; this note therefore does not claim final deployment.
 
 Within the EIP-7732 design, builders are introduced as an in-protocol entity tracked by the beacon state. PTC is introduced as the **Payload Timeliness Committee**, a subset of validators assigned to attest to whether the corresponding builder revealed the committed execution payload with the expected block hash in a timely way and whether corresponding blob data was available from their view. PTC is therefore tracked here as an ePBS role/component, not as a separate registry anchor.
 
