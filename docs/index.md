@@ -23,7 +23,7 @@ Recommended reading path:
 - [`../registry.schema.json`](../registry.schema.json) — JSON schema for the central registry index.
 - [`../schemas/`](../schemas/) — formal versioned registry definitions and source trails.
 - [`../anchors/`](../anchors/) — human-readable interpretations for selected ENS anchors.
-- [`../maps/`](../maps/) — generated or supporting maps for registry interpretation and navigation.
+- [`../maps/`](../maps/) — generated or supporting maps for registry interpretation and navigation; derived outputs do not override `registry.json`, schemas, `sources.md`, or anchor notes.
 - [`../market.index.json`](../market.index.json) — legacy or visibility index; not a source of protocol truth.
 
 ## Core docs
@@ -32,11 +32,15 @@ Recommended reading path:
 - [`trust-and-validation.md`](trust-and-validation.md) — summarizes the trust model, source-of-truth hierarchy, validation commands, drift checks, and public-safety boundaries.
 - [`taxonomy-promotion-rules.md`](taxonomy-promotion-rules.md) — defines conservative rules for promoting, holding, degrading, rejecting, or leaving terms outside registry state.
 - [`glossary.md`](glossary.md) — defines short public-facing explanations of recurring registry and protocol terms without creating registry entries.
+- [`releases/v0.6.5.md`](releases/v0.6.5.md) — public documentation, trust, and source-state release notes.
 
 ## Research notes
 
 - [`research/index.md`](research/index.md) — navigation index for public research notes and their interpretation boundaries.
 - [`research/candidate-backlog.md`](research/candidate-backlog.md) — conservative monitoring backlog for public technical candidates that are not registry entries.
+- [`research/candidate-promotion-rules.md`](research/candidate-promotion-rules.md) — conservative process for moving a candidate from monitoring to possible future registry consideration.
+- [`research/epbs-source-audit.md`](research/epbs-source-audit.md) — public source-state audit for ePBS, EIP-7732, and Glamsterdam scheduled-inclusion boundaries.
+- [`research/inclusionlist-focil-source-audit.md`](research/inclusionlist-focil-source-audit.md) — public source-state audit for inclusion lists, FOCIL, EIP-7805, and Glamsterdam declined-inclusion boundaries.
 - [`research/multi-agent-verification-2026-06-28.md`](research/multi-agent-verification-2026-06-28.md) — records a conservative verification pass over AI-surfaced Ethereum and ENS candidate terms using primary-source review.
 - [`research/repo-positioning-trust-audit.md`](research/repo-positioning-trust-audit.md) — reviews how the public repository appears to a technical Ethereum or ENS reader and identifies navigation and trust improvements.
 - [`research/bal-block-access-list-source-notes.md`](research/bal-block-access-list-source-notes.md) — records primary-source-backed notes about Block-Level Access Lists, `block_access_list_hash`, and related support surfaces.
