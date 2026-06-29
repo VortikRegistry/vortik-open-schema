@@ -91,7 +91,7 @@ All validation must pass before merge. Changes should be small, source-grounded,
 
 ## Key trust documents
 
-- [Vortik Registry Constitution](../.specify/memory/constitution.md)
+- [Vortik Registry Constitution](https://github.com/VortikRegistry/vortik-open-schema/blob/main/.specify/memory/constitution.md)
 - [Taxonomy Promotion Rules](taxonomy-promotion-rules.md)
 - [How to read this registry](how-to-read-this-registry.md)
 - [Multi-Agent Verification Audit — 2026-06-28](research/multi-agent-verification-2026-06-28.md)
