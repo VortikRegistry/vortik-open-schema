@@ -31,9 +31,12 @@ Recommended reading path:
 - [`how-to-read-this-registry.md`](how-to-read-this-registry.md) — explains how to inspect one registry entry from the central index through schema, sources, anchor notes, promotion rules, and validation.
 - [`trust-and-validation.md`](trust-and-validation.md) — summarizes the trust model, source-of-truth hierarchy, validation commands, drift checks, and public-safety boundaries.
 - [`taxonomy-promotion-rules.md`](taxonomy-promotion-rules.md) — defines conservative rules for promoting, holding, degrading, rejecting, or leaving terms outside registry state.
+- [`glossary.md`](glossary.md) — defines short public-facing explanations of recurring registry and protocol terms without creating registry entries.
 
 ## Research notes
 
+- [`research/index.md`](research/index.md) — navigation index for public research notes and their interpretation boundaries.
+- [`research/candidate-backlog.md`](research/candidate-backlog.md) — conservative monitoring backlog for public technical candidates that are not registry entries.
 - [`research/multi-agent-verification-2026-06-28.md`](research/multi-agent-verification-2026-06-28.md) — records a conservative verification pass over AI-surfaced Ethereum and ENS candidate terms using primary-source review.
 - [`research/repo-positioning-trust-audit.md`](research/repo-positioning-trust-audit.md) — reviews how the public repository appears to a technical Ethereum or ENS reader and identifies navigation and trust improvements.
 - [`research/bal-block-access-list-source-notes.md`](research/bal-block-access-list-source-notes.md) — records primary-source-backed notes about Block-Level Access Lists, `block_access_list_hash`, and related support surfaces.
