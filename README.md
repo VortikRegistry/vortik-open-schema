@@ -69,6 +69,10 @@ Validation checks JSON structure, registry/schema consistency, integrity, derive
 - [Taxonomy Promotion Rules](docs/taxonomy-promotion-rules.md)
 - [Multi-Agent Verification Audit](docs/research/multi-agent-verification-2026-06-28.md)
 - [Repository Positioning and Trust Audit](docs/research/repo-positioning-trust-audit.md)
+- [v0.6.5 Public Release Notes](docs/releases/v0.6.5.md)
+- [ePBS Source Audit](docs/research/epbs-source-audit.md)
+- [Inclusionlist / FOCIL Source Audit](docs/research/inclusionlist-focil-source-audit.md)
+- [Candidate Promotion Rules](docs/research/candidate-promotion-rules.md)
 
 ---
 

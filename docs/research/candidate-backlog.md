@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This backlog tracks public technical candidate terms that may deserve monitoring but are not registry entries.
+This backlog tracks public technical candidate terms that may deserve monitoring but are not registry entries. Candidate handling rules live in [`candidate-promotion-rules.md`](candidate-promotion-rules.md).
 
 ## Required disclaimers
 
