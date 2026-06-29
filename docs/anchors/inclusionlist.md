@@ -29,7 +29,9 @@ The relevant semantic object is the inclusion constraint itself: a mechanism by 
 
 FOCIL-style framing is tracked because it gives the broader inclusion-list concept a more precise fork-choice enforcement context.
 
-The registry status is **eip-active** because the terminology and mechanism family have active specification relevance. This status should not be read as a deployment claim, fork-scheduling claim, or commercial signal.
+EIP-7805 remains the primary EIP source for FOCIL. EIP-7773 currently lists EIP-7805 / FOCIL as **Declined for Inclusion** in Glamsterdam. That source state does not erase FOCIL as a technical term, research object, or specification object, but it does mean this repository must not imply that FOCIL is included in Glamsterdam. `inclusionlist.eth` remains a semantic anchor for the inclusion-list / FOCIL constraint surface, not a deployment claim.
+
+The registry status is **eip-active** because the terminology and mechanism family have active specification relevance. This status should not be read as a mainnet activation claim, Glamsterdam inclusion claim, official Ethereum endorsement, fork-scheduling claim, or commercial signal.
 
 ---
 

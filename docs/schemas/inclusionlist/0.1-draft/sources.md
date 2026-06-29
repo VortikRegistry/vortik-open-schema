@@ -96,12 +96,15 @@ Curated references and source notes should be placed in the protected section be
 - EIP-7805 — Fork-Choice Enforced Inclusion Lists  
   https://eips.ethereum.org/EIPS/eip-7805
 
+- EIP-7773 — Hardfork Meta: Glamsterdam  
+  https://eips.ethereum.org/EIPS/eip-7773
+
 - Ethereum Research — Inclusion Lists and FOCIL-related discussions  
   https://ethresear.ch/
 
 ## Source Notes
 
-Inclusion lists are treated by Vortik as a core protocol-facing constraint because they map directly to transaction inclusion guarantees and fork-choice enforced censorship-resistance mechanisms.
+Inclusion lists are treated by Vortik as a core protocol-facing constraint because they map directly to transaction inclusion guarantees and fork-choice enforced censorship-resistance mechanisms. EIP-7805 / FOCIL exists as a primary EIP source for this constraint surface. EIP-7773 currently lists EIP-7805 / FOCIL as Declined for Inclusion in Glamsterdam; this source state must not be read as Glamsterdam inclusion, mainnet activation, or official Ethereum endorsement.
 
 This anchor is grounded in the transition from discretionary transaction inclusion toward protocol-constrained inclusion behavior.
 
@@ -117,7 +120,7 @@ The strongest semantic objects to monitor around this anchor are:
 - proposer constraint
 - transaction inclusion requirement
 
-The ENS anchor `inclusionlist.eth` is treated as strongly aligned because it captures the durable human-readable inclusion-list category, while the canonical term tracks the more precise FOCIL mechanism.
+The ENS anchor `inclusionlist.eth` is treated as strongly aligned because it captures the durable human-readable inclusion-list category, while the canonical term tracks the more precise FOCIL mechanism. The ENS anchor is a semantic entry point for the inclusion-list / FOCIL constraint surface, not a deployment claim or protocol authority.
 
 These references and notes are curated to support source traceability and semantic interpretation.
 

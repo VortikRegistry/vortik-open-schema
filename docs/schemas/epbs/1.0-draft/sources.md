@@ -96,6 +96,9 @@ Curated references and source notes should be placed in the protected section be
 - EIP-7732 — Enshrined Proposer-Builder Separation  
   https://eips.ethereum.org/EIPS/eip-7732
 
+- EIP-7773 — Hardfork Meta: Glamsterdam  
+  https://eips.ethereum.org/EIPS/eip-7773
+
 - Why enshrine Proposer-Builder Separation? A viable path to ePBS  
   https://ethresear.ch/t/why-enshrine-proposer-builder-separation-a-viable-path-to-epbs/15710
 
@@ -104,7 +107,7 @@ Curated references and source notes should be placed in the protected section be
 
 ## Source Notes
 
-ePBS is treated by Vortik as a core protocol-facing primitive because EIP-7732 defines Enshrined Proposer-Builder Separation and maps proposer-builder separation into Ethereum's consensus-layer design. This is terminology and mechanism grounding, not a claim of mainnet activation or finalized fork deployment.
+ePBS is treated by Vortik as a core protocol-facing primitive because EIP-7732 defines Enshrined Proposer-Builder Separation and maps proposer-builder separation into Ethereum's consensus-layer design. EIP-7773 currently lists EIP-7732 / ePBS as Scheduled for Inclusion in Glamsterdam, which supports ePBS as a strong protocol-facing primitive. This is scheduled-inclusion and implementation-facing source state, not a claim of mainnet activation or finalized fork deployment.
 
 This anchor is grounded in the transition from relay-mediated proposer-builder coordination toward protocol-defined proposer-builder interaction. EIP-7732 introduces in-protocol builders and the Payload Timeliness Committee (PTC); this source note treats PTC as an ePBS role/component, not as an independent registry anchor.
 
