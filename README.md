@@ -12,7 +12,7 @@
 
 Vortik is a public, independent semantic registry for selected Ethereum coordination terminology.
 
-It maps selected ENS anchors to canonical technical terms, classifications, schemas, human-readable anchor notes, and source trails. ENS anchors are naming surfaces for registry entries; they are not protocol authority and do not create Ethereum protocol truth.
+It maps selected ENS anchors to canonical technical terms, classifications, schemas, human-readable anchor notes, and source trails. ENS anchors are naming surfaces for registry entries; they are not protocol authority and do not create Ethereum protocol truth. See [Naming and governance boundaries](docs/naming-governance-boundaries.md).
 
 ### What Vortik does not do
 
@@ -21,6 +21,7 @@ Vortik does not:
 - define Ethereum protocol rules;
 - replace EIPs, protocol specifications, or client documentation;
 - treat ENS names as protocol authority;
+- treat ENS anchors as ENS DAO governance endorsements, ENSv2 operational roots, or protocol authority claims;
 - publish private ENS or commercial strategy;
 - use AI-generated reports as authority or source of truth.
 
@@ -67,6 +68,7 @@ Validation checks JSON structure, registry/schema consistency, integrity, derive
 
 - [Vortik Registry Constitution](.specify/memory/constitution.md)
 - [Taxonomy Promotion Rules](docs/taxonomy-promotion-rules.md)
+- [Naming and Governance Boundaries](docs/naming-governance-boundaries.md)
 - [Multi-Agent Verification Audit](docs/research/multi-agent-verification-2026-06-28.md)
 - [Repository Positioning and Trust Audit](docs/research/repo-positioning-trust-audit.md)
 - [v0.6.5 Public Release Notes](docs/releases/v0.6.5.md)
