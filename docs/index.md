@@ -30,6 +30,7 @@ Recommended reading path:
 
 - [`how-to-read-this-registry.md`](how-to-read-this-registry.md) — explains how to inspect one registry entry from the central index through schema, sources, anchor notes, promotion rules, and validation.
 - [`trust-and-validation.md`](trust-and-validation.md) — summarizes the trust model, source-of-truth hierarchy, validation commands, drift checks, and public-safety boundaries.
+- [`naming-governance-boundaries.md`](naming-governance-boundaries.md) — clarifies that ENS anchors are semantic naming surfaces, not governance endorsements, operational roots, or protocol authority claims.
 - [`taxonomy-promotion-rules.md`](taxonomy-promotion-rules.md) — defines conservative rules for promoting, holding, degrading, rejecting, or leaving terms outside registry state.
 - [`glossary.md`](glossary.md) — defines short public-facing explanations of recurring registry and protocol terms without creating registry entries.
 - [`releases/v0.6.5.md`](releases/v0.6.5.md) — public documentation, trust, and source-state release notes.

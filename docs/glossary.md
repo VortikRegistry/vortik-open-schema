@@ -13,4 +13,4 @@ This public glossary explains recurring terms used in Vortik documentation. Glos
 - **commitment** — A binding reference to data or behavior, such as a payload commitment in ePBS-related flows; exact meaning depends on the cited specification.
 - **source of truth** — The authoritative file or primary source for a given claim. In this repository, schemas and `registry.json` define registry state, while EIPs and official specifications define protocol claims. See [`how-to-read-this-registry.md`](how-to-read-this-registry.md).
 - **registry anchor** — A tracked Vortik registry entry connecting an ENS anchor, canonical term, schema, source notes, and anchor documentation. Registry anchors are observational and do not define protocol truth.
-- **ENS anchor** — An ENS name used as a semantic naming surface for a registry entry. ENS anchors do not create protocol truth, official Ethereum status, or deployment claims.
+- **ENS anchor** — An ENS name used as a semantic naming surface for a registry entry. ENS anchors do not create protocol truth, official Ethereum status, or deployment claims; see [`naming-governance-boundaries.md`](naming-governance-boundaries.md).
