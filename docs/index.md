@@ -29,6 +29,7 @@ Recommended reading path:
 ## Core docs
 
 - [`how-to-read-this-registry.md`](how-to-read-this-registry.md) — explains how to inspect one registry entry from the central index through schema, sources, anchor notes, promotion rules, and validation.
+- [`maintenance-policy.md`](maintenance-policy.md) — defines the post-v0.6.5 maintenance process for source notes, registry-state changes, candidate intake, validation, and public/private boundaries.
 - [`trust-and-validation.md`](trust-and-validation.md) — summarizes the trust model, source-of-truth hierarchy, validation commands, drift checks, and public-safety boundaries.
 - [`naming-governance-boundaries.md`](naming-governance-boundaries.md) — clarifies that ENS anchors are semantic naming surfaces, not governance endorsements, operational roots, or protocol authority claims.
 - [`taxonomy-promotion-rules.md`](taxonomy-promotion-rules.md) — defines conservative rules for promoting, holding, degrading, rejecting, or leaving terms outside registry state.
