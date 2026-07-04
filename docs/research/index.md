@@ -6,6 +6,7 @@ This page is a navigation index for public Vortik Registry research notes. Resea
 
 ## Research notes
 
+- [`baseline-readiness-audit-v0.6.5.md`](baseline-readiness-audit-v0.6.5.md) — records the v0.6.5 public baseline readiness state for repository validation posture, source-of-truth boundaries, and maintenance discipline.
 - [`multi-agent-verification-2026-06-28.md`](multi-agent-verification-2026-06-28.md) — records a conservative verification pass over AI-surfaced Ethereum and ENS candidate terms using primary-source review.
 - [`repo-positioning-trust-audit.md`](repo-positioning-trust-audit.md) — reviews how the public repository appears to a technical Ethereum or ENS reader and identifies navigation and trust improvements.
 - [`bal-block-access-list-source-notes.md`](bal-block-access-list-source-notes.md) — records primary-source-backed notes about Block-Level Access Lists, `block_access_list_hash`, and related eth/71 and snap/2 support surfaces.
