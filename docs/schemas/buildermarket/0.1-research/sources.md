@@ -14,7 +14,7 @@ This document is a research-support artifact. It is not an official Ethereum pro
 ## Registry Metadata
 
 - **Registry:** vortik-semantic-registry
-- **Registry version:** 0.6.4
+- **Registry version:** 0.6.5
 - **Registry ID:** `buildermarket`
 - **Associated ENS:** `buildermarket.eth`
 - **Canonical term:** builder
