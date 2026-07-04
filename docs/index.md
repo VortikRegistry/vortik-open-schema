@@ -38,6 +38,7 @@ Recommended reading path:
 
 ## Research notes
 
+- [`research/emerging-ethereum-candidate-intake.md`](research/emerging-ethereum-candidate-intake.md) — conservative candidate-intake notes for emerging Ethereum coordination terms that require future primary-source verification.
 - [`research/baseline-readiness-audit-v0.6.5.md`](research/baseline-readiness-audit-v0.6.5.md) — records the v0.6.5 public baseline readiness state for repository validation posture and maintenance boundaries.
 - [`research/index.md`](research/index.md) — navigation index for public research notes and their interpretation boundaries.
 - [`research/candidate-backlog.md`](research/candidate-backlog.md) — conservative monitoring backlog for public technical candidates that are not registry entries.
