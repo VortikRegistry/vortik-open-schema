@@ -6,6 +6,7 @@ This page is a navigation index for public Vortik Registry research notes. Resea
 
 ## Research notes
 
+- [`emerging-ethereum-candidate-intake.md`](emerging-ethereum-candidate-intake.md) — tracks emerging Ethereum coordination terms for future primary-source verification without changing registry state.
 - [`baseline-readiness-audit-v0.6.5.md`](baseline-readiness-audit-v0.6.5.md) — records the v0.6.5 public baseline readiness state for repository validation posture, source-of-truth boundaries, and maintenance discipline.
 - [`multi-agent-verification-2026-06-28.md`](multi-agent-verification-2026-06-28.md) — records a conservative verification pass over AI-surfaced Ethereum and ENS candidate terms using primary-source review.
 - [`repo-positioning-trust-audit.md`](repo-positioning-trust-audit.md) — reviews how the public repository appears to a technical Ethereum or ENS reader and identifies navigation and trust improvements.
