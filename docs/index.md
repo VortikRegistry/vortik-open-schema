@@ -37,6 +37,7 @@ Recommended reading path:
 
 ## Research notes
 
+- [`research/baseline-readiness-audit-v0.6.5.md`](research/baseline-readiness-audit-v0.6.5.md) — records the v0.6.5 public baseline readiness state for repository validation posture and maintenance boundaries.
 - [`research/index.md`](research/index.md) — navigation index for public research notes and their interpretation boundaries.
 - [`research/candidate-backlog.md`](research/candidate-backlog.md) — conservative monitoring backlog for public technical candidates that are not registry entries.
 - [`research/candidate-promotion-rules.md`](research/candidate-promotion-rules.md) — conservative process for moving a candidate from monitoring to possible future registry consideration.
