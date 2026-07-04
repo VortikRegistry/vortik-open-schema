@@ -44,7 +44,7 @@ keywords:
   - ens
   - machine readable schemas
 
-version: 0.6.4
+version: 0.6.5
 date-released: 2026-05-21
 
 preferred-citation:
@@ -55,4 +55,4 @@ preferred-citation:
   year: 2026
   url: https://vortikregistry.github.io/vortik-open-schema/
   repository-code: https://github.com/VortikRegistry/vortik-open-schema
-  version: 0.6.4
+  version: 0.6.5
