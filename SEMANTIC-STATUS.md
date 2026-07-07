@@ -16,7 +16,7 @@ They are the highest-confidence surfaces currently tracked by Vortik.
 
 | Anchor ID | ENS | Canonical term | Type | Status |
 |---|---|---|---|---|
-| `epbs` | `epbs.eth` | enshrined proposer-builder separation (ePBS) | primitive | implemented |
+| `epbs` | `epbs.eth` | enshrined proposer-builder separation (ePBS) | primitive | implementation-facing |
 | `inclusionlist` | `inclusionlist.eth` | fork-choice enforced inclusion lists (FOCIL) | constraint | eip-active |
 
 These represent:
