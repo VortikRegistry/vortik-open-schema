@@ -39,6 +39,7 @@ Recommended reading path:
 
 ## Research notes
 
+- [`research/ensv2-l1-decision-source-note.md`](research/ensv2-l1-decision-source-note.md) — records a public ENS source about ENSv2 deployment direction, Namechain status, and naming-boundary implications without changing registry state.
 - [`research/emerging-ethereum-candidate-intake.md`](research/emerging-ethereum-candidate-intake.md) — conservative candidate-intake notes for emerging Ethereum coordination terms that require future primary-source verification.
 - [`research/baseline-readiness-audit-v0.6.5.md`](research/baseline-readiness-audit-v0.6.5.md) — records the v0.6.5 public baseline readiness state for repository validation posture and maintenance boundaries.
 - [`research/index.md`](research/index.md) — navigation index for public research notes and their interpretation boundaries.

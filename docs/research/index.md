@@ -6,6 +6,7 @@ This page is a navigation index for public Vortik Registry research notes. Resea
 
 ## Research notes
 
+- [`ensv2-l1-decision-source-note.md`](ensv2-l1-decision-source-note.md) — records a public ENS source about ENSv2 deployment direction, Namechain status, and Vortik Registry naming-boundary implications without changing registry state.
 - [`emerging-ethereum-candidate-intake.md`](emerging-ethereum-candidate-intake.md) — tracks emerging Ethereum coordination terms for future primary-source verification without changing registry state.
 - [`baseline-readiness-audit-v0.6.5.md`](baseline-readiness-audit-v0.6.5.md) — records the v0.6.5 public baseline readiness state for repository validation posture, source-of-truth boundaries, and maintenance discipline.
 - [`multi-agent-verification-2026-06-28.md`](multi-agent-verification-2026-06-28.md) — records a conservative verification pass over AI-surfaced Ethereum and ENS candidate terms using primary-source review.
