@@ -35,15 +35,15 @@ Read the repository with this source hierarchy in mind:
 - `docs/` contains generated public interfaces and explanatory material.
 - Research documents are interpretive support; they do not automatically modify registry state.
 
-### Read this repo in order
+### Recommended reading path
 
-1. `README.md`
-2. [`docs/index.md`](docs/index.md)
-3. `registry.json`
-4. `schemas/{anchor}/{version}/schema.json`
-5. `schemas/{anchor}/{version}/sources.md`
-6. `anchors/{anchor}.md`
-7. `docs/taxonomy-promotion-rules.md`
+1. Start with `README.md` for the repository scope and public/private boundaries.
+2. Read [`REGISTRY.md`](REGISTRY.md) for the registry model and source-of-truth hierarchy.
+3. Read [`SEMANTIC-STATUS.md`](SEMANTIC-STATUS.md) for the current public semantic posture of tracked anchors.
+4. Read [`PRIMITIVES.md`](PRIMITIVES.md) and [`PRIMITIVE-DOCUMENT-SPEC.md`](PRIMITIVE-DOCUMENT-SPEC.md) for primitive definitions and document structure.
+5. Read [`ARCHITECTURE.md`](ARCHITECTURE.md) for repository layout and validation flow.
+6. Read [`docs/index.md`](docs/index.md) for generated public documentation and research notes.
+7. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before proposing changes.
 
 ### Worked example: `epbs.eth`
 

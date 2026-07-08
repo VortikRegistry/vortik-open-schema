@@ -12,6 +12,13 @@ const SCAN_TARGETS = [
   'maps',
   'docs',
   'README.md',
+  'ARCHITECTURE.md',
+  'PRIMITIVES.md',
+  'REGISTRY.md',
+  'SEMANTIC-STATUS.md',
+  'PRIMITIVE-DOCUMENT-SPEC.md',
+  'CONTRIBUTING.md',
+  'registry-map.md',
   'market.index.json',
   'anchors.index.json',
 ];
