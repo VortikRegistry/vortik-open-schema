@@ -33,6 +33,7 @@ Recommended reading path:
 - [`trust-and-validation.md`](trust-and-validation.md) — summarizes the trust model, source-of-truth hierarchy, validation commands, drift checks, and public-safety boundaries.
 - [`naming-governance-boundaries.md`](naming-governance-boundaries.md) — clarifies that ENS anchors are semantic naming surfaces, not governance endorsements, operational roots, or protocol authority claims.
 - [`taxonomy-promotion-rules.md`](taxonomy-promotion-rules.md) — defines conservative rules for promoting, holding, degrading, rejecting, or leaving terms outside registry state.
+- [`taxonomy-lifecycle-bridge.md`](taxonomy-lifecycle-bridge.md) — explains the relationship between candidate evidence posture and registry semantic posture without changing registry state.
 - [`glossary.md`](glossary.md) — defines short public-facing explanations of recurring registry and protocol terms without creating registry entries.
 - [`releases/v0.6.5.md`](releases/v0.6.5.md) — public documentation, trust, and source-state release notes.
 
