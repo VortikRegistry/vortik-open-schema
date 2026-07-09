@@ -37,7 +37,7 @@ However, the term remains external to the core Ethereum L1 protocol ontology.
 
 ---
 
-## Pipeline Position
+## Coordination position
 
 External Proof Generation / ZK Infrastructure Surface
 

@@ -44,7 +44,7 @@ Solvers are important, but they remain outside the core Ethereum L1 protocol mod
 
 ---
 
-## Pipeline Position
+## Coordination position
 
 External Intent Resolution / Execution Strategy Surface
 

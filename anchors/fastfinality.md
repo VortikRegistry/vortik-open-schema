@@ -43,7 +43,7 @@ SSF remains a high-signal roadmap concept, but it is not currently treated in Vo
 
 ---
 
-## Pipeline Position
+## Coordination position
 
 Finality / Consensus Roadmap Surface
 
