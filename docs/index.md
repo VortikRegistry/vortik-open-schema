@@ -39,6 +39,7 @@ Recommended reading path:
 
 ## Research notes
 
+- [`research/final-repository-health-audit-v0.6.5.md`](research/final-repository-health-audit-v0.6.5.md) — records the final v0.6.5 public repository health posture for validation, public-safety, naming-boundary, source-of-truth, research-note, and maintenance boundaries.
 - [`research/ensv2-l1-decision-source-note.md`](research/ensv2-l1-decision-source-note.md) — records a public ENS source about ENSv2 deployment direction, Namechain status, and naming-boundary implications without changing registry state.
 - [`research/emerging-ethereum-candidate-intake.md`](research/emerging-ethereum-candidate-intake.md) — conservative candidate-intake notes for emerging Ethereum coordination terms that require future primary-source verification.
 - [`research/baseline-readiness-audit-v0.6.5.md`](research/baseline-readiness-audit-v0.6.5.md) — records the v0.6.5 public baseline readiness state for repository validation posture and maintenance boundaries.
