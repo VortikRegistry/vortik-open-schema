@@ -86,7 +86,7 @@ No generated outputs are changed.
 
 ## Remaining optional maintenance
 
-The only known optional follow-up is to review whether `maps/internal-semantic-watchlist.json` should eventually be renamed to a more public-facing name, such as `maps/protocol-signal-watchlist.json`, if references can be updated safely. This is optional maintenance, not a required blocker.
+The optional watchlist path now uses the public-facing name `maps/protocol-signal-watchlist.json`. This remains optional maintenance, not a required blocker.
 
 ## Final posture
 

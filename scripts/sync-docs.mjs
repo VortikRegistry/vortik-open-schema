@@ -16,7 +16,7 @@ const DIRS = [
 ];
 
 const EXCLUDED_DOCS_SYNC_PATHS = new Set([
-  "maps/internal-semantic-watchlist.json"
+  "maps/protocol-signal-watchlist.json"
 ]);
 
 function ensureExists(targetPath, label = "path") {
