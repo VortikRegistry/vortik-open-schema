@@ -35,7 +35,7 @@ The registry status is **eip-active** because the terminology and mechanism fami
 
 ---
 
-## Pipeline Position
+## Coordination position
 
 **Protocol-facing inclusion constraint**
 

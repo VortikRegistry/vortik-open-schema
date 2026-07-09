@@ -34,7 +34,7 @@ The relevant semantic shift is not that Ethereum “eliminates markets” or “
 
 ---
 
-## Pipeline Position
+## Coordination position
 
 **Block construction / proposer-builder interface**
 

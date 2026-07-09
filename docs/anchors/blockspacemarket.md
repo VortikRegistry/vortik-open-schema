@@ -39,7 +39,7 @@ As a result, **blockspace markets** remains understandable as a historical and e
 
 ---
 
-## Pipeline Position
+## Coordination position
 
 Legacy Economic Framing / Broad Coordination Abstraction
 

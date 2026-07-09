@@ -42,7 +42,7 @@ The concept is real, but the terminology has not fully stabilized into a protoco
 
 ---
 
-## Pipeline Position
+## Coordination position
 
 Preconfirmation / External Latency Guarantee Surface
 

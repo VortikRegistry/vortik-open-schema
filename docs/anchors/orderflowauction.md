@@ -40,7 +40,7 @@ OFA describe an important ecosystem pattern, but not a protocol-native object.
 
 ---
 
-## Pipeline Position
+## Coordination position
 
 Order Flow Access / External Routing Surface
 

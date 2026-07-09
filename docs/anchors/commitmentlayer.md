@@ -37,7 +37,7 @@ Commitments are not limited to preconfirmations. They are a broader coordination
 
 ---
 
-## Pipeline Position
+## Coordination position
 
 Commitment / Pre-Reveal Coordination
 
