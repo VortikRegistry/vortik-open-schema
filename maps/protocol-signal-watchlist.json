@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-15",
+  "generated_at": "2026-07-24",
   "source": "protocol_signal_watchlist",
   "visibility": "repository_only",
   "description": "Repository-only technical watchlist for Ethereum protocol and implementation-facing semantic signals. It is excluded from generated public docs and is not a registry source of truth, pricing guide, buyer-targeting artifact, or commercial narrative.",
@@ -8,7 +8,7 @@
     "ethereum_foundation": "Do not present Ethereum Foundation as a direct buyer.",
     "public_narrative": "Do not use this file to modify public narrative, public market pages, anchors, slugs, schemas, or registry structure.",
     "mainnet_status": "Do not claim ePBS is deployed on Ethereum mainnet unless independently verified in a future update.",
-    "fork_status": "Do not claim FOCIL is included in Glamsterdam; current operational guidance treats it as not included for Glamsterdam.",
+    "fork_status": "Do not claim FOCIL is included in Glamsterdam. EIP-7805 is Scheduled for Inclusion in Hegotá, which is not activation, deployment, or a confirmed activation date.",
     "evidence_split": "Separate verifiable protocol or implementation evidence from non-registry interpretation; keep this file technical and non-commercial.",
     "allowed_language": "Prefer prudent language such as scheduled, implementation-facing, protocol-relevant, research-aligned, candidate signal, or watch-only."
   },
@@ -79,11 +79,11 @@
       "related_eips": [
         "EIP-7805"
       ],
-      "status": "declined_for_current_fork",
+      "status": "scheduled_for_hegota",
       "evidence_level": "high",
-      "public_claim_allowed": "Research-aligned and protocol-relevant candidate signal; do not claim Glamsterdam inclusion.",
-      "internal_notes": "Track fork-choice enforced inclusion lists as an inclusion-list design signal that current operational guidance treats as not included for Glamsterdam.",
-      "risk_notes": "Main risk is overstating roadmap status or implying scheduled inclusion despite current operational guidance."
+      "public_claim_allowed": "EIP-7805 is Scheduled for Inclusion in Hegotá; do not claim Glamsterdam inclusion, activation, or deployment.",
+      "internal_notes": "Track FOCIL as scheduled for Hegotá after being declined for Glamsterdam. Ethereum Foundation updates report functional early prototypes, with multi-client interoperability and a dedicated FOCIL devnet as next steps.",
+      "risk_notes": "Do not collapse Scheduled for Inclusion into activation, deployment, guaranteed final delivery, or a confirmed testnet/mainnet date."
     },
     {
       "term": "fork-choice enforced inclusion lists",
@@ -91,11 +91,11 @@
       "related_eips": [
         "EIP-7805"
       ],
-      "status": "declined_for_current_fork",
+      "status": "scheduled_for_hegota",
       "evidence_level": "high",
-      "public_claim_allowed": "May be tracked as the expanded FOCIL term; do not claim Glamsterdam inclusion.",
-      "internal_notes": "Use as the long-form matcher for FOCIL-related inclusion-list discussions.",
-      "risk_notes": "Avoid collapsing long-form FOCIL references into generic inclusion guarantees or scheduled fork content."
+      "public_claim_allowed": "EIP-7805 is Scheduled for Inclusion in Hegotá; do not claim Glamsterdam inclusion, activation, or deployment.",
+      "internal_notes": "Track FOCIL as scheduled for Hegotá after being declined for Glamsterdam. Ethereum Foundation updates report functional early prototypes, with multi-client interoperability and a dedicated FOCIL devnet as next steps.",
+      "risk_notes": "Do not collapse Scheduled for Inclusion into activation, deployment, guaranteed final delivery, or a confirmed testnet/mainnet date."
     },
     {
       "term": "inclusion lists",
@@ -199,11 +199,11 @@
       "related_eips": [
         "EIP-7805"
       ],
-      "status": "declined_for_current_fork",
+      "status": "scheduled_for_hegota",
       "evidence_level": "high",
-      "public_claim_allowed": "FOCIL-related EIP signal; do not claim Glamsterdam inclusion.",
-      "internal_notes": "Track as the FOCIL-related EIP signal under current operational guidance that treats FOCIL as not included for Glamsterdam.",
-      "risk_notes": "Avoid presenting declined-for-current-fork status as protocol rejection in all future contexts."
+      "public_claim_allowed": "FOCIL EIP scheduled for inclusion in Hegotá; do not claim Glamsterdam inclusion or network activation.",
+      "internal_notes": "Track EIP-7805 as the primary FOCIL specification and as Scheduled for Inclusion in Hegotá under EIP-8081.",
+      "risk_notes": "Preserve fork-scoped context: declined for Glamsterdam, scheduled for Hegotá, and not yet activated."
     },
     {
       "term": "EIP-7732",
@@ -238,9 +238,9 @@
       ],
       "status": "watch_only",
       "evidence_level": "high",
-      "public_claim_allowed": "Internal technical watch signal unless tied to verified protocol status in a future update.",
-      "internal_notes": "Track as a meta-EIP and fork-context signal for Hegotá and FOCIL; keep usage as internal roadmap context unless future verification supports public claims.",
-      "risk_notes": "Do not infer scheduling beyond internal fork-context tracking, buyer relevance, pricing relevance, or public narrative from this signal alone."
+      "public_claim_allowed": "May be cited as the Draft Hegotá meta EIP; it lists EIP-7805 as Scheduled for Inclusion while activation values remain unset.",
+      "internal_notes": "Track EIP-8081 as the Hegotá fork meta and current fork-status source for FOCIL scheduling.",
+      "risk_notes": "Do not infer activation, deployment, pricing, buyer relevance, or guaranteed final delivery from the meta-EIP alone."
     },
     {
       "term": "builder/proposer roles",
@@ -344,10 +344,10 @@
         "EIP-7805"
       ],
       "status": "scheduled",
-      "evidence_level": "medium",
-      "public_claim_allowed": "Roadmap-context signal only; verify before public claims.",
-      "internal_notes": "Track as a fork-context/internal roadmap signal for Hegotá and FOCIL-related monitoring; do not treat as a public absolute claim without future verification.",
-      "risk_notes": "Do not infer pricing, buyer relevance, or EIP inclusion without future verification."
+      "evidence_level": "high",
+      "public_claim_allowed": "Roadmap and fork-context signal: EIP-8081 lists EIP-7805 / FOCIL as Scheduled for Inclusion; activation values remain unset.",
+      "internal_notes": "Track Hegotá as the post-Glamsterdam fork context for FOCIL. Official Ethereum updates report functional early prototypes and identify multi-client interoperability and a dedicated FOCIL devnet as next steps.",
+      "risk_notes": "Do not infer activation dates, deployment, pricing, buyer relevance, or inclusion of proposals not listed as Scheduled."
     }
   ]
 }
