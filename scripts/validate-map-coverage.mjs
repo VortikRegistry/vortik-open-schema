@@ -2,7 +2,6 @@ import fs from "fs";
 import path from "path";
 
 const ROOT = process.cwd();
-const REGISTRY_PATH = path.join(ROOT, "registry.json");
 
 const MAPS = [
   {
