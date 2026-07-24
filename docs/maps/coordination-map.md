@@ -133,4 +133,4 @@ Type: interpretive
 - Protocol-defined primitives are separated from external, premature, repairable, and deprecated naming surfaces.
 - Builder markets, execution markets, and blockspace markets are tracked as legacy or non-canonical abstractions under semantic drift.
 - Sequencing and proving are modeled as external coordination surfaces because they are relevant to Ethereum-adjacent infrastructure without being treated here as canonical L1 protocol primitives.
-- All 12 registry anchors in registry v0.6.4 are represented in this map.
+- All 12 registry anchors in registry v0.6.5 are represented in this map.
