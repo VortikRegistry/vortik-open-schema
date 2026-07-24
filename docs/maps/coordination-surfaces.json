@@ -113,7 +113,7 @@
       "sequencingmarket",
       "blockspacemarket"
     ],
-    "coverage_status": "complete_for_registry_v0.6.4"
+    "coverage_status": "complete_for_registry_v0.6.5"
   },
   "notes": [
     "Surfaces are interpretive groupings, not protocol-defined layers.",
@@ -121,6 +121,6 @@
     "Some surfaces represent transitional, external, or deprecated abstractions rather than stable protocol primitives.",
     "Execution coordination and blockspace allocation are explicitly tracked as ambiguous and non-canonical surfaces.",
     "Sequencing and proving are represented as external coordination surfaces because they are important adjacent infrastructure categories.",
-    "All 12 registry anchors in registry v0.6.4 are represented in this surface map."
+    "All 12 registry anchors in registry v0.6.5 are represented in this surface map."
   ]
 }
