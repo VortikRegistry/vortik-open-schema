@@ -109,7 +109,7 @@ This note does not claim that:
 - Hegotá has announced activation dates;
 - a BAL sidecar is a separate Ethereum layer;
 - BAL sidecars create a new Vortik anchor;
-- EIP-8146 changes any ENS classification, value, buyer hypothesis, or disposition strategy;
+- EIP-8146 changes any registry classification or semantic status;
 - Vortik is an official Ethereum source.
 
 ## Registry-state boundary
