@@ -17,7 +17,7 @@ Inclusion lists describe mechanisms that constrain block construction by requiri
 
 FOCIL narrows that concept toward fork-choice enforced inclusion constraints. The registry treats this as a technical constraint surface related to censorship resistance, validator coordination, proposer behavior, and block-construction rules.
 
-This document is not an official Ethereum specification. It is not pricing guidance, not buyer targeting, and not a claim that FOCIL is deployed on Ethereum mainnet or included in any specific fork.
+This document is not an official Ethereum specification. It is not pricing guidance, not buyer targeting, and not a claim that FOCIL is deployed or activated on Ethereum mainnet. Fork-scoped inclusion status is stated only where supported by the corresponding Ethereum meta EIP.
 
 ---
 
@@ -29,9 +29,9 @@ The relevant semantic object is the inclusion constraint itself: a mechanism by 
 
 FOCIL-style framing is tracked because it gives the broader inclusion-list concept a more precise fork-choice enforcement context.
 
-EIP-7805 remains the primary EIP source for FOCIL. EIP-7773 currently lists EIP-7805 / FOCIL as **Declined for Inclusion** in Glamsterdam. That source state does not erase FOCIL as a technical term, research object, or specification object, but it does mean this repository must not imply that FOCIL is included in Glamsterdam. `inclusionlist.eth` remains a semantic anchor for the inclusion-list / FOCIL constraint surface, not a deployment claim.
+EIP-7805 remains the primary EIP source for FOCIL. EIP-7773 lists EIP-7805 / FOCIL as **Declined for Inclusion** in Glamsterdam, while EIP-8081 lists it as **Scheduled for Inclusion** in Hegotá. These are fork-scoped source states, not deployment or activation claims. EIP-8081 currently provides no activation values for testnets or mainnet. `inclusionlist.eth` remains a semantic anchor for the inclusion-list / FOCIL constraint surface, not a deployment claim.
 
-The registry status is **eip-active** because the terminology and mechanism family have active specification relevance. This status should not be read as a mainnet activation claim, Glamsterdam inclusion claim, official Ethereum endorsement, fork-scheduling claim, or commercial signal.
+The registry status is **eip-active** because the terminology and mechanism family have active specification relevance. This registry status should not be read as mainnet activation, official Ethereum endorsement, or a guarantee that scheduled fork content will be deployed. Hegotá scheduling is an upstream source fact recorded separately from Vortik's registry status.
 
 ---
 
@@ -79,7 +79,7 @@ This anchor is grounded in:
 - validator-facing enforcement concepts
 - protocol-level block-construction constraints
 
-The anchor should remain technically scoped. It should not be used to claim mainnet deployment, fork inclusion, pricing relevance, buyer demand, or Ethereum Foundation purchasing intent.
+The anchor should remain technically scoped. It may report fork-scoped status from primary meta EIPs, but it should not turn scheduling into a mainnet deployment claim, pricing relevance, buyer demand, or Ethereum Foundation purchasing intent.
 
 ---
 
@@ -100,18 +100,20 @@ The ENS label `inclusionlist.eth` is treated as strongly aligned because it capt
 
 This anchor should not be interpreted as saying that:
 
-- FOCIL is deployed on Ethereum mainnet
-- FOCIL is included in Glamsterdam or any specific fork
+- FOCIL is deployed or activated on Ethereum mainnet
+- FOCIL is included in Glamsterdam
+- Scheduled for Inclusion in Hegotá is equivalent to deployment, activation, or guaranteed final delivery
+- Hegotá has an announced testnet or mainnet activation date
 - `inclusionlist.eth` is an official Ethereum endpoint
 - `inclusionlist.eth` is controlled by the Ethereum Foundation
 - inclusion lists are a pricing signal
 - inclusion lists imply buyer targeting or commercial demand
-- this anchor modifies BALs, EIPs, schemas, pricing, or internal watchlists
+- this anchor modifies BALs, EIPs, schemas, pricing, or repository-only watchlists
 
 The accurate framing is narrower:
 
 ```txt
-FOCIL tracks protocol-facing inclusion constraints and censorship-resistance semantics.
+FOCIL tracks protocol-facing inclusion constraints and censorship-resistance semantics. EIP-7805 is declined for Glamsterdam and Scheduled for Inclusion in Hegotá, without an activation claim.
 ```
 
 ---
