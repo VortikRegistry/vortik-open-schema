@@ -10,6 +10,8 @@ Primary and repository sources for this audit:
 
 - EIP-7732 — Enshrined Proposer-Builder Separation: <https://eips.ethereum.org/EIPS/eip-7732>
 - EIP-7773 — Hardfork Meta: Glamsterdam: <https://eips.ethereum.org/EIPS/eip-7773>
+- Ethereum Foundation — Protocol Cluster Updates: May 2026: <https://blog.ethereum.org/2026/05/11/protocol-update-may-26>
+- Ethereum consensus specifications: <https://github.com/ethereum/consensus-specs>
 - Existing source notes: `schemas/epbs/1.0-draft/sources.md`
 - Existing anchor documentation: `anchors/epbs.md`
 
@@ -29,19 +31,19 @@ Vortik may mention PTC and delayed validation only as EIP-7732 components and so
 
 ### Scheduled inclusion source-state
 
-EIP-7773 is the Glamsterdam meta-EIP source for fork inclusion state. As of this audit, EIP-7773 lists EIP-7732 / Enshrined Proposer-Builder Separation as Scheduled for Inclusion in Glamsterdam.
+EIP-7773 is the Glamsterdam meta-EIP source for fork inclusion state. It lists EIP-7732 / Enshrined Proposer-Builder Separation as Scheduled for Inclusion in Glamsterdam.
 
-That is a scheduled-inclusion source state, not a mainnet activation claim.
+That is a scheduled-inclusion source state, not a mainnet activation claim. EIP-7773 remains Draft, and its activation table currently provides no values for Sepolia, Holešky, or mainnet.
 
-### Implementation-facing relevance
+### Implementation-facing evidence
 
-The existing registry state describes ePBS as implementation-facing. That framing is supported by the EIP-7732 specification surface and the repository's source notes: implementers and reviewers must reason about builder bids, payload commitments, signed containers, payload reveal, PTC attestations, and delayed execution validation.
+The Ethereum Foundation's May 2026 Protocol Cluster update reports that ePBS had stabilized sufficiently for a multi-client Glamsterdam devnet to run, with an external-builders pipeline tested end-to-end across nearly all clients. The same update states that Glamsterdam devnets are live and that the immediate focus is hardening and shipping the upgrade.
 
-Implementation-facing relevance does not mean final deployment or live activation.
+The official `ethereum/consensus-specs` repository also maintains unstable Gloas specifications and tests for ePBS-related payload attestations and payload-envelope behavior. Unstable specification and devnet evidence support implementation-facing relevance; they do not establish activation or final mainnet deployment.
 
 ### Final deployment
 
-This audit does not claim final fork deployment. EIP-7773's inclusion state may inform repository source notes, but Vortik must not collapse scheduled inclusion into final deployment.
+This audit does not claim final fork deployment. EIP-7773's Scheduled for Inclusion state, implementation progress, devnet operation, and specification tests may inform repository source notes, but Vortik must not collapse any of them into final deployment.
 
 ### Live mainnet activation
 
@@ -53,6 +55,9 @@ This audit does not claim:
 
 - ePBS is active on Ethereum mainnet;
 - ePBS has reached final fork deployment;
+- a live multi-client devnet is equivalent to mainnet activation;
+- the word "stabilized" is equivalent to a Final EIP or guaranteed deployment;
+- Glamsterdam activation dates have been announced in EIP-7773;
 - Vortik is an official Ethereum source or endpoint;
 - `epbs.eth` is an official Ethereum namespace;
 - ENS names create protocol truth;
