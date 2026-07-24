@@ -18,334 +18,120 @@
       "id": "orderflow",
       "name": "Order Flow Access & Routing",
       "description": "Access to transaction flow, routing logic, order flow auctions, and user intent entry points before protocol-level block construction.",
-      "anchors": [
-        "orderflowauction"
-      ],
+      "anchors": ["orderflowauction"],
       "upstream": [],
-      "downstream": [
-        "solver",
-        "sequencing"
-      ],
-      "interacts_with": [
-        "solver",
-        "sequencing",
-        "execution",
-        "blockspace"
-      ]
+      "downstream": ["solver", "sequencing"],
+      "interacts_with": ["solver", "sequencing", "execution", "blockspace"]
     },
     {
       "id": "solver",
       "name": "Solver Coordination",
       "description": "Coordination of execution strategies and intent resolution across competing solvers and off-protocol actors.",
-      "anchors": [
-        "solverlayer"
-      ],
-      "upstream": [
-        "orderflow"
-      ],
-      "downstream": [
-        "payload",
-        "sequencing"
-      ],
-      "interacts_with": [
-        "orderflow",
-        "payload",
-        "execution",
-        "sequencing"
-      ]
+      "anchors": ["solverlayer"],
+      "upstream": ["orderflow"],
+      "downstream": ["payload", "sequencing"],
+      "interacts_with": ["orderflow", "payload", "execution", "sequencing"]
     },
     {
       "id": "sequencing",
       "name": "Sequencing Coordination",
       "description": "External transaction ordering and sequencing coordination across rollups, ordering rights, shared sequencing systems, and cross-domain execution surfaces.",
-      "anchors": [
-        "sequencingmarket"
-      ],
-      "upstream": [
-        "orderflow",
-        "solver"
-      ],
-      "downstream": [
-        "payload",
-        "execution"
-      ],
-      "interacts_with": [
-        "orderflow",
-        "solver",
-        "payload",
-        "execution",
-        "blockspace"
-      ]
+      "anchors": ["sequencingmarket"],
+      "upstream": ["orderflow", "solver"],
+      "downstream": ["payload", "execution"],
+      "interacts_with": ["orderflow", "solver", "payload", "execution", "blockspace"]
     },
     {
       "id": "payload",
       "name": "Payload Construction",
       "description": "Aggregation of transactions and execution outcomes into candidate block payloads, including legacy builder-market framing under semantic drift.",
-      "anchors": [
-        "buildermarket"
-      ],
-      "upstream": [
-        "solver",
-        "sequencing"
-      ],
-      "downstream": [
-        "builder"
-      ],
-      "interacts_with": [
-        "solver",
-        "sequencing",
-        "builder",
-        "execution",
-        "blockspace"
-      ]
+      "anchors": ["buildermarket"],
+      "upstream": ["solver", "sequencing"],
+      "downstream": ["builder"],
+      "interacts_with": ["solver", "sequencing", "builder", "execution", "blockspace"]
     },
     {
       "id": "builder",
       "name": "Proposer-Builder Separation",
       "description": "Protocol-level separation of block construction and proposal through ePBS and proposer-builder coordination semantics.",
-      "anchors": [
-        "epbs"
-      ],
-      "upstream": [
-        "payload"
-      ],
-      "downstream": [
-        "inclusion"
-      ],
-      "interacts_with": [
-        "payload",
-        "inclusion",
-        "commitment"
-      ]
+      "anchors": ["epbs"],
+      "upstream": ["payload"],
+      "downstream": ["inclusion"],
+      "interacts_with": ["payload", "inclusion", "commitment"]
     },
     {
       "id": "inclusion",
       "name": "Inclusion Enforcement",
       "description": "Constraint mechanisms ensuring transaction inclusion, censorship resistance, and fork-choice enforced inclusion guarantees.",
-      "anchors": [
-        "inclusionlist"
-      ],
-      "upstream": [
-        "builder"
-      ],
-      "downstream": [
-        "commitment"
-      ],
-      "interacts_with": [
-        "builder",
-        "commitment",
-        "blockspace"
-      ]
+      "anchors": ["inclusionlist"],
+      "upstream": ["builder"],
+      "downstream": ["commitment"],
+      "interacts_with": ["builder", "commitment", "blockspace"]
     },
     {
       "id": "commitment",
       "name": "Commitment & Preconfirmation",
       "description": "Coordination of early execution guarantees, commitment signaling, pre-reveal coordination, and preconfirmation-adjacent mechanisms.",
-      "anchors": [
-        "commitmentlayer",
-        "preconflayer"
-      ],
-      "upstream": [
-        "inclusion",
-        "builder"
-      ],
-      "downstream": [
-        "finality"
-      ],
-      "interacts_with": [
-        "builder",
-        "inclusion",
-        "finality",
-        "proving"
-      ]
+      "anchors": ["commitmentlayer", "preconflayer"],
+      "upstream": ["inclusion", "builder"],
+      "downstream": ["finality"],
+      "interacts_with": ["builder", "inclusion", "finality", "proving"]
     },
     {
       "id": "proving",
       "name": "Proof Generation & Proving Coordination",
       "description": "External proof generation, proof aggregation, distributed proving infrastructure, and validity-proof coordination surfaces across zk and rollup systems.",
-      "anchors": [
-        "provingmarket"
-      ],
-      "upstream": [
-        "execution",
-        "payload",
-        "commitment"
-      ],
-      "downstream": [
-        "finality"
-      ],
-      "interacts_with": [
-        "execution",
-        "payload",
-        "commitment",
-        "sequencing",
-        "finality"
-      ]
+      "anchors": ["provingmarket"],
+      "upstream": ["execution", "payload", "commitment"],
+      "downstream": ["finality"],
+      "interacts_with": ["execution", "payload", "commitment", "sequencing", "finality"]
     },
     {
       "id": "finality",
       "name": "Finality",
       "description": "Consensus-level confirmation and irreversibility of state, including the SSF research direction and fast-finality terminology surface.",
-      "anchors": [
-        "ssf"
-      ],
-      "upstream": [
-        "commitment",
-        "proving"
-      ],
+      "anchors": ["ssf"],
+      "upstream": ["commitment", "proving"],
       "downstream": [],
-      "interacts_with": [
-        "commitment",
-        "proving"
-      ]
+      "interacts_with": ["commitment", "proving"]
     },
     {
       "id": "execution",
       "name": "Execution Coordination (Ambiguous)",
       "description": "Non-canonical coordination surface spanning routing, solver activity, sequencing, execution strategy, and payload construction.",
-      "anchors": [
-        "executionmarket"
-      ],
-      "upstream": [
-        "orderflow",
-        "sequencing"
-      ],
-      "downstream": [
-        "payload",
-        "proving"
-      ],
-      "interacts_with": [
-        "solver",
-        "sequencing",
-        "payload",
-        "proving",
-        "blockspace"
-      ]
+      "anchors": ["executionmarket"],
+      "upstream": ["orderflow", "sequencing"],
+      "downstream": ["payload", "proving"],
+      "interacts_with": ["solver", "sequencing", "payload", "proving", "blockspace"]
     },
     {
       "id": "blockspace",
       "name": "Blockspace Allocation (Legacy / Ambiguous)",
       "description": "Legacy blockspace-market framing increasingly displaced by protocol-native roles, payloads, commitments, inclusion constraints, and narrower execution-resource terminology.",
-      "anchors": [
-        "blockspacemarket"
-      ],
-      "upstream": [
-        "orderflow"
-      ],
-      "downstream": [
-        "payload",
-        "inclusion"
-      ],
-      "interacts_with": [
-        "orderflow",
-        "sequencing",
-        "payload",
-        "builder",
-        "inclusion",
-        "execution"
-      ]
+      "anchors": ["blockspacemarket"],
+      "upstream": ["orderflow"],
+      "downstream": ["payload", "inclusion"],
+      "interacts_with": ["orderflow", "sequencing", "payload", "builder", "inclusion", "execution"]
     }
   ],
   "relationships": [
-    {
-      "type": "flow",
-      "from": "orderflow",
-      "to": "solver"
-    },
-    {
-      "type": "flow",
-      "from": "solver",
-      "to": "sequencing"
-    },
-    {
-      "type": "flow",
-      "from": "sequencing",
-      "to": "payload"
-    },
-    {
-      "type": "flow",
-      "from": "solver",
-      "to": "payload"
-    },
-    {
-      "type": "flow",
-      "from": "payload",
-      "to": "builder"
-    },
-    {
-      "type": "flow",
-      "from": "builder",
-      "to": "inclusion"
-    },
-    {
-      "type": "flow",
-      "from": "inclusion",
-      "to": "commitment"
-    },
-    {
-      "type": "flow",
-      "from": "commitment",
-      "to": "finality"
-    },
-    {
-      "type": "flow",
-      "from": "execution",
-      "to": "proving"
-    },
-    {
-      "type": "flow",
-      "from": "proving",
-      "to": "finality"
-    },
-    {
-      "type": "overlap",
-      "between": [
-        "solver",
-        "execution"
-      ]
-    },
-    {
-      "type": "overlap",
-      "between": [
-        "execution",
-        "payload"
-      ]
-    },
-    {
-      "type": "overlap",
-      "between": [
-        "sequencing",
-        "orderflow"
-      ]
-    },
-    {
-      "type": "overlap",
-      "between": [
-        "sequencing",
-        "payload"
-      ]
-    },
-    {
-      "type": "overlap",
-      "between": [
-        "blockspace",
-        "payload"
-      ]
-    },
-    {
-      "type": "overlap",
-      "between": [
-        "blockspace",
-        "inclusion"
-      ]
-    },
-    {
-      "type": "overlap",
-      "between": [
-        "proving",
-        "finality"
-      ]
-    }
+    {"type": "flow", "from": "orderflow", "to": "solver"},
+    {"type": "flow", "from": "solver", "to": "sequencing"},
+    {"type": "flow", "from": "sequencing", "to": "payload"},
+    {"type": "flow", "from": "solver", "to": "payload"},
+    {"type": "flow", "from": "payload", "to": "builder"},
+    {"type": "flow", "from": "builder", "to": "inclusion"},
+    {"type": "flow", "from": "inclusion", "to": "commitment"},
+    {"type": "flow", "from": "commitment", "to": "finality"},
+    {"type": "flow", "from": "execution", "to": "proving"},
+    {"type": "flow", "from": "proving", "to": "finality"},
+    {"type": "overlap", "between": ["solver", "execution"]},
+    {"type": "overlap", "between": ["execution", "payload"]},
+    {"type": "overlap", "between": ["sequencing", "orderflow"]},
+    {"type": "overlap", "between": ["sequencing", "payload"]},
+    {"type": "overlap", "between": ["blockspace", "payload"]},
+    {"type": "overlap", "between": ["blockspace", "inclusion"]},
+    {"type": "overlap", "between": ["proving", "finality"]}
   ],
   "coverage": {
     "registry_anchors_mapped": [
@@ -362,7 +148,7 @@
       "sequencingmarket",
       "blockspacemarket"
     ],
-    "coverage_status": "complete_for_registry_v0.6.4"
+    "coverage_status": "complete_for_registry_v0.6.5"
   },
   "notes": [
     "This model is interpretive and does not represent protocol execution order.",
@@ -370,6 +156,6 @@
     "Protocol-defined primitives are separated from external, premature, repairable, and deprecated naming surfaces.",
     "Builder markets, execution markets, and blockspace markets are tracked as legacy or non-canonical abstractions under semantic drift.",
     "Sequencing and proving are modeled as external coordination surfaces because they are relevant to Ethereum-adjacent infrastructure without being treated here as canonical L1 protocol primitives.",
-    "All 12 registry anchors in registry v0.6.4 are represented in this map."
+    "All 12 registry anchors in registry v0.6.5 are represented in this map."
   ]
 }
