@@ -40,32 +40,8 @@ jobs:
       - name: Validate registry source
         run: node scripts/validate-registry.mjs
 
-      - name: Sync schemas from registry
-        run: node scripts/sync-schemas-from-registry.mjs
-
-      - name: Generate sources from registry
-        run: node scripts/generate-sources-from-registry.mjs
-
-      - name: Fix schemas
-        run: node scripts/fix-schemas.cjs
-
-      - name: Generate anchors index
-        run: node scripts/generate-anchors-index.mjs
-
-      - name: Generate market index
-        run: node scripts/generate-market-index.mjs
-
-      - name: Generate coordination map
-        run: node scripts/generate-map.mjs
-
-      - name: Generate market document
-        run: node scripts/generate-market-doc.mjs
-
-      - name: Generate market HTML
-        run: node scripts/generate-market-html.mjs
-
-      - name: Sync docs
-        run: node scripts/sync-docs.mjs
+      - name: Generate derived registry files
+        run: npm run generate
 
       - name: Run full validation after generation
         run: npm run validate
