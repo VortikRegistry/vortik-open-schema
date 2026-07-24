@@ -42,7 +42,9 @@ npm run validate
 `npm run validate` includes:
 
 - `validate:json`
+- `validate:registry-schema`
 - `validate:registry`
+- `validate:semantic-status`
 - `validate:integrity`
 - `validate:derived-sync`
 - `check:public-safety`
@@ -50,8 +52,10 @@ npm run validate
 ## What validation protects
 
 - JSON validation protects parseable structured data.
-- Registry validation protects registry/schema consistency.
-- Integrity validation protects linked anchors, schemas, and index alignment.
+- Registry-schema validation protects the shape of `registry.json` against `registry.schema.json`.
+- Registry validation protects registry/schema consistency across anchor fields and linked files.
+- Semantic-status sync validation keeps `SEMANTIC-STATUS.md` aligned with the current registry entries.
+- Integrity validation protects linked anchors, schemas, source notes, and index alignment.
 - Derived sync validation protects generated docs and index synchronization.
 - The public-safety scan protects public registry-facing files from private or commercial-strategy leakage.
 
