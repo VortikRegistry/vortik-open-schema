@@ -99,6 +99,12 @@ Curated references and source notes should be placed in the protected section be
 - EIP-7773 — Hardfork Meta: Glamsterdam  
   https://eips.ethereum.org/EIPS/eip-7773
 
+- Ethereum Foundation — Protocol Cluster Updates: May 2026  
+  https://blog.ethereum.org/2026/05/11/protocol-update-may-26
+
+- Ethereum consensus specifications  
+  https://github.com/ethereum/consensus-specs
+
 - Why enshrine Proposer-Builder Separation? A viable path to ePBS  
   https://ethresear.ch/t/why-enshrine-proposer-builder-separation-a-viable-path-to-epbs/15710
 
@@ -107,7 +113,9 @@ Curated references and source notes should be placed in the protected section be
 
 ## Source Notes
 
-ePBS is treated by Vortik as a core protocol-facing primitive because EIP-7732 defines Enshrined Proposer-Builder Separation and maps proposer-builder separation into Ethereum's consensus-layer design. EIP-7773 currently lists EIP-7732 / ePBS as Scheduled for Inclusion in Glamsterdam, which supports ePBS as a strong protocol-facing primitive. This is scheduled-inclusion and implementation-facing source state, not a claim of mainnet activation or finalized fork deployment.
+ePBS is treated by Vortik as a core protocol-facing primitive because EIP-7732 defines Enshrined Proposer-Builder Separation and maps proposer-builder separation into Ethereum's consensus-layer design. EIP-7773 lists EIP-7732 / ePBS as Scheduled for Inclusion in Glamsterdam. EIP-7773 remains Draft and currently provides no activation values for Sepolia, Holešky, or mainnet. Scheduled inclusion is not a claim of mainnet activation or finalized fork deployment.
+
+The Ethereum Foundation's May 2026 Protocol Cluster update reports a multi-client Glamsterdam devnet with the external-builders pipeline tested end-to-end across nearly all clients. The official consensus-specs repository maintains unstable Gloas specifications and tests for ePBS-related payload attestations and payload-envelope behavior. These are implementation-facing signals, not deployment or activation claims.
 
 This anchor is grounded in the transition from relay-mediated proposer-builder coordination toward protocol-defined proposer-builder interaction. EIP-7732 introduces in-protocol builders and the Payload Timeliness Committee (PTC); this source note treats PTC as an ePBS role/component, not as an independent registry anchor.
 
@@ -131,6 +139,7 @@ The strongest semantic objects to monitor around this anchor are:
 - payload reveal
 - payload timeliness
 - Payload Timeliness Committee (PTC)
+- payload attestation
 - delayed validation
 
 These references and notes are curated to support source traceability and semantic interpretation.
