@@ -99,12 +99,30 @@ Curated references and source notes should be placed in the protected section be
 - EIP-7773 — Hardfork Meta: Glamsterdam  
   https://eips.ethereum.org/EIPS/eip-7773
 
+- EIP-8081 — Hardfork Meta: Hegotá  
+  https://eips.ethereum.org/EIPS/eip-8081
+
+- Ethereum Foundation — Checkpoint #9: Apr 2026  
+  https://blog.ethereum.org/2026/04/10/checkpoint-9
+
+- Ethereum Foundation — Soldøgn Interop Recap  
+  https://blog.ethereum.org/2026/05/02/soldogn-interop-recap
+
+- Ethereum Foundation — Protocol Cluster Updates: May 2026  
+  https://blog.ethereum.org/2026/05/11/protocol-update-may-26
+
 - Ethereum Research — Inclusion Lists and FOCIL-related discussions  
   https://ethresear.ch/
 
 ## Source Notes
 
-Inclusion lists are treated by Vortik as a core protocol-facing constraint because they map directly to transaction inclusion guarantees and fork-choice enforced censorship-resistance mechanisms. EIP-7805 / FOCIL exists as a primary EIP source for this constraint surface. EIP-7773 currently lists EIP-7805 / FOCIL as Declined for Inclusion in Glamsterdam; this source state must not be read as Glamsterdam inclusion, mainnet activation, or official Ethereum endorsement.
+Inclusion lists are treated by Vortik as a core protocol-facing constraint because they map directly to transaction inclusion guarantees and fork-choice enforced censorship-resistance mechanisms. EIP-7805 / FOCIL is the primary EIP source for this constraint surface.
+
+Fork inclusion must be read with fork-specific context. EIP-7773 lists EIP-7805 / FOCIL as Declined for Inclusion in Glamsterdam. EIP-8081 lists EIP-7805 / FOCIL as Scheduled for Inclusion in Hegotá. These states are not contradictory: they describe different network upgrades.
+
+Ethereum Foundation updates report functional early FOCIL prototypes and identify multi-client interoperability and a dedicated FOCIL devnet as immediate implementation steps. This supports implementation-facing relevance, but it does not establish deployment or activation.
+
+EIP-8081 remains a Draft meta EIP and currently provides no activation values for Sepolia, Hoodi, or mainnet. Scheduled for Inclusion must not be interpreted as activated, deployed, or guaranteed final delivery.
 
 This anchor is grounded in the transition from discretionary transaction inclusion toward protocol-constrained inclusion behavior.
 
