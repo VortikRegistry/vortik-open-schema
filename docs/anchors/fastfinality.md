@@ -1,65 +1,71 @@
-# Single-Slot Finality (SSF)
+# Single-Slot Finality (SSF) within Fast Finality
 
 **Associated ENS:** `fastfinality.eth`  
 **Canonical term:** single-slot finality (SSF)  
 **Registry ID:** `ssf`  
 **Status:** Research  
 **Classification:** repairable  
+**Type:** primitive
 
 ---
 
 ## Summary
 
-This anchor tracks **Single-Slot Finality (SSF)** as an Ethereum consensus research and roadmap surface.
+This anchor continues to track **single-slot finality (SSF)** as its canonical technical term and registry primitive.
 
-SSF refers to efforts aimed at reducing Ethereum finality latency so that finality can be achieved within a single slot or near-single-slot timeframe.
+Current Ethereum Foundation Protocol Consensus material also uses **Fast Finality** as the explicit name of a broader research area focused on significantly reducing Ethereum's finalization time while preserving dynamic availability, accountable safety, and validator-set decentralization.
 
-The ENS identifier `fastfinality.eth` captures the broad direction of faster finality, but does not match the more precise term increasingly used across Ethereum research: **single-slot finality (SSF)**.
+The source-backed relationship is therefore:
 
-For that reason, this anchor is classified as **repairable** rather than canonical.
+```text
+Fast Finality
+  = broader Ethereum consensus research objective and program surface
+
+Single-slot finality (SSF)
+  = a specific same-slot target or design family within that broader surface
+```
+
+The ENS identifier `fastfinality.eth` aligns directly with the broader research-area label, while the registry intentionally retains `single-slot finality (SSF)` as the canonical term for the current `ssf` entry. The classification remains **repairable** because the ENS label and canonical registry term have related but non-identical scope.
 
 ---
 
 ## Context
 
-SSF research explores changes to Ethereum’s consensus architecture, including:
+Fast Finality research addresses how Ethereum can reduce time to finality without abandoning the availability, safety, and decentralization properties expected from its consensus protocol.
 
-- validator coordination  
-- consensus timing assumptions  
-- committee design  
-- signature aggregation requirements  
-- validator set scaling  
-- latency and security trade-offs  
+The broader research space includes work on:
 
-It is closely related to broader efforts around:
+- decoupling the available chain from the finality protocol;
+- one-round and multi-round finality designs;
+- single-slot and three-slot finality targets;
+- validator-set management and consolidation;
+- attestation aggregation and networking constraints;
+- interactions between finality time, slot length, safety, and liveness.
 
-- consensus efficiency  
-- finality guarantees  
-- validator participation  
-- aggregation performance  
-- long-term roadmap design  
-
-SSF remains a high-signal roadmap concept, but it is not currently treated in Vortik as an immediate core anchor comparable to ePBS or inclusion lists.
+SSF is one important design target inside this wider space. Ethereum.org describes SSF as the concept of proposing and finalizing a block in the same slot and continues to classify it as research rather than a deployed feature.
 
 ---
 
 ## Coordination position
 
-Finality / Consensus Roadmap Surface
+**Fast-finality research surface / SSF primitive**
 
 ---
 
 ## Coordination Role
 
-SSF impacts coordination at the consensus level, particularly around:
+The broader Fast Finality surface affects consensus coordination around:
 
-- validator agreement speed  
-- finality checkpoint formation  
-- slot timing assumptions  
-- aggregation of validator signatures  
-- transition from inclusion to irreversible finality  
+- validator agreement speed;
+- finality checkpoint formation;
+- available-chain and finalized-chain interaction;
+- validator-set size and participation;
+- aggregation of validator signatures;
+- consensus timing, safety, and liveness trade-offs.
 
-If achieved, SSF would change how quickly Ethereum moves from proposed blocks to final settlement.
+Within that surface, SSF represents the narrower target of reaching finality within the same slot as block proposal.
+
+A faster-finality design may improve finality substantially without implementing exact same-slot finality, so Fast Finality and SSF must not be treated as exact synonyms.
 
 ---
 
@@ -67,68 +73,78 @@ If achieved, SSF would change how quickly Ethereum moves from proposed blocks to
 
 This surface is grounded in:
 
-- Ethereum consensus-layer research on finality reduction  
-- roadmap discussions around single-slot finality  
-- validator set scaling research  
-- signature aggregation and latency constraint research  
-- related discussions around validator effective balance and consensus efficiency  
+- the Ethereum Foundation Protocol Consensus **Fast Finality** research area;
+- Protocol Consensus work on decoupled consensus and incremental finality upgrades;
+- Ethereum.org roadmap material on single-slot finality;
+- EIP-8062's use of fast-finality roadmap language in the context of validator consolidation;
+- Ethereum consensus research on SSF, three-slot finality, one-round finality, aggregation, and validator-set constraints.
 
-SSF should currently be treated as a roadmap and research surface rather than as a finalized protocol primitive.
+These sources support active research significance. They do not establish fork inclusion, activation dates, deployment, or implementation convergence for Fast Finality or SSF.
 
 ---
 
 ## Semantic Stability
 
-The term **single-slot finality (SSF)** has strong semantic recognition across Ethereum research.
+Both terms now have strong and distinct source support:
 
-It is more precise than broader descriptions such as **fast finality**.
+- **Fast Finality** is an explicit umbrella research-area label used by Ethereum Foundation Protocol Consensus.
+- **Single-slot finality (SSF)** is a recognized specific timing target and design family within the wider finality research space.
 
-The phrase **fast finality** remains understandable, but it is increasingly less exact than SSF as the canonical research term.
+The previous framing that treated Fast Finality only as a less precise approximation, or suggested that SSF was displacing Fast Finality, is no longer supported by the current official terminology.
+
+The conservative registry position is to retain SSF as the canonical term for this entry while documenting Fast Finality as the broader source-backed scope.
 
 ---
 
 ## Structural Importance
 
-SSF represents a potential shift in Ethereum’s consensus architecture, affecting:
+Fast Finality research may affect:
 
-- finality latency guarantees  
-- validator coordination models  
-- scalability constraints tied to validator set size  
-- user confirmation expectations  
-- settlement timing assumptions  
+- finality latency guarantees;
+- validator coordination models;
+- available-chain and finality-protocol architecture;
+- scalability constraints tied to validator-set size;
+- application and settlement timing assumptions;
+- user confirmation and finality expectations.
 
-If achieved, it would significantly alter the temporal dynamics of Ethereum consensus.
+SSF remains one structurally important target within that broader program.
 
 ---
 
 ## Naming Alignment
 
 - **ENS anchor:** `fastfinality.eth`  
-- **Canonical term:** single-slot finality (SSF)  
+- **Canonical registry term:** single-slot finality (SSF)
+- **Broader source-backed term:** Fast Finality
 
-The ENS name is semantically related but does not match the canonical term used in research.
+The ENS name is strongly aligned with the official umbrella research-area terminology. It does not exactly match the narrower canonical term currently stored in the `ssf` registry entry.
 
-**Fast finality** is a descriptive approximation, while **SSF** is the more precise and widely adopted terminology.
-
-This creates a naming mismatch, but not a complete semantic failure.
+This is a scope mismatch rather than a claim that Fast Finality is invalid, informal, or being displaced. The current **repairable** classification and canonical term are preserved pending any future explicit registry-model decision.
 
 ---
 
 ## Registry Role
 
-- Track semantic stabilization of SSF terminology  
-- Distinguish between canonical naming and ENS approximation  
-- Document finality-reduction research as a consensus roadmap surface  
-- Monitor whether SSF continues to displace broader fast-finality language  
-- Preserve a repairable semantic surface around Ethereum finality evolution  
+- Track SSF as the canonical primitive represented by registry ID `ssf`.
+- Document Fast Finality as the broader official research-area scope.
+- Preserve the distinction between an umbrella objective and a specific finality target.
+- Monitor evolution across SSF, three-slot finality, one-round finality, decoupled consensus, and validator consolidation.
+- Avoid collapsing finality research into a rigid sequential layer model.
 
 ---
 
-## Status
+## Status and boundaries
 
-Active research and roadmap surface within Ethereum consensus evolution.
+This remains an active research and roadmap surface within Ethereum consensus evolution.
 
-The underlying concept has high structural relevance, but the ENS label remains an approximation rather than a canonical match.
+This anchor does not claim that:
+
+- Fast Finality or SSF is scheduled for a specific fork;
+- either concept has an announced activation date;
+- SSF is deployed on Ethereum mainnet;
+- EIP-8062 is a finality specification;
+- Fast Finality and SSF are exact synonyms;
+- `fastfinality.eth` is an official Ethereum namespace.
 
 ---
 
@@ -136,4 +152,4 @@ The underlying concept has high structural relevance, but the ENS label remains 
 
 Primary research references and technical material are documented in:
 
-`schemas/ssf/`
+`schemas/ssf/0.1-research/sources.md`

@@ -93,53 +93,71 @@ Curated references and source notes should be placed in the protected section be
 <!-- MANUAL-SOURCES:START -->
 ## Curated References
 
+- **Ethereum Foundation Protocol Consensus — Fast Finality**
+  - URL: https://consensus.ethereum.foundation/themes/fast-finality
+  - Relevance: Names Fast Finality as an explicit research area focused on reducing Ethereum's finalization time while preserving dynamic availability, accountable safety, and validator-set decentralization.
+  - Registry use: Supports `fast finality` as a source-backed umbrella research objective rather than merely an informal substitute for SSF.
+
+- **Ethereum Foundation Protocol Consensus — Upgrading Finality 1: Decoupling Consensus**
+  - URL: https://consensus.ethereum.foundation/blog/upgrading-finality-edition-1
+  - Relevance: Describes Fast Finality as a broad program of incremental upgrades involving consensus architecture, validator-set management, aggregation, networking, and timing.
+  - Registry use: Supports a wider scope than exact same-slot finality and reinforces the distinction between the umbrella program and a specific SSF target.
+
+- **Ethereum Foundation Protocol Consensus — Finality Stakeholder Research**
+  - URL: https://consensus.ethereum.foundation/articles/stakeholder-research
+  - Relevance: Evaluates stakeholder requirements and trade-offs for faster finality, including meaningful improvements below one minute without requiring an exact one-slot outcome.
+  - Registry use: Supports Fast Finality as a practical research and design surface with multiple possible timing targets.
+
 - **Ethereum.org — Single Slot Finality**
   - URL: https://ethereum.org/roadmap/single-slot-finality/
-  - Relevance: Ethereum.org roadmap page describing single-slot finality as the concept of proposing and finalizing blocks in the same slot.
-  - Registry use: Supports `single-slot finality (SSF)` as the canonical technical surface tracked by the registry, while preserving `fastfinality.eth` as a repairable naming approximation rather than a canonical term.
+  - Relevance: Defines SSF as proposing and finalizing blocks in the same slot and states that SSF remains in the research phase.
+  - Registry use: Supports `single-slot finality (SSF)` as the canonical technical term retained by the `ssf` registry entry and as a narrower target within the wider Fast Finality space.
 
-- **Ethereum.org — A More Secure Ethereum**
-  - URL: https://ethereum.org/roadmap/security/
-  - Relevance: Ethereum.org roadmap context explaining SSF as a way to reduce finalization delay and improve resistance to certain recent-block reorganization risks.
-  - Registry use: Supports the security and finality context for SSF without claiming that `fastfinality.eth` is an official Ethereum naming surface.
-
-- **Ethereum.org — Ethereum Roadmap**
-  - URL: https://ethereum.org/roadmap/
-  - Relevance: Ethereum.org roadmap page listing Single Slot Finality as one of Ethereum’s long-term technical upgrade areas.
-  - Registry use: Supports SSF as a roadmap-level research direction, not as a deployed protocol feature.
+- **EIP-8062 — Add sweep withdrawal fee for `0x01` validators**
+  - URL: https://eips.ethereum.org/EIPS/eip-8062
+  - Relevance: Uses explicit fast-finality roadmap language and connects that roadmap to reducing the active validator set through consolidation.
+  - Registry use: Supports Fast Finality as roadmap-level terminology while preserving that EIP-8062 is not itself a finality specification or deployment schedule.
 
 - **A Simple Single Slot Finality Protocol**
   - URL: https://ethresear.ch/t/a-simple-single-slot-finality-protocol/14920
-  - Relevance: Ethereum Research discussion presenting a simple SSF protocol and discussing economic finality / accountable safety.
-  - Registry use: Supports SSF as an active research primitive while keeping the anchor in `research` status.
+  - Relevance: Presents an SSF protocol and discusses economic finality and accountable safety.
+  - Registry use: Supports SSF as a recognized research primitive while keeping the anchor in `research` status.
 
 - **Single Slot Finality**
   - URL: https://ethresear.ch/t/single-slot-finality/16700
-  - Relevance: Ethereum Research discussion focused on SSF and design approaches for faster finality.
-  - Registry use: Supports SSF terminology directly and reinforces that the tracked canonical term is `single-slot finality (SSF)`, not `fast finality`.
+  - Relevance: Explores SSF design approaches and constraints.
+  - Registry use: Supports SSF terminology directly without implying that SSF exhausts the broader Fast Finality research area.
 
 - **Single Slot Finality Based on Discrete Deposits**
   - URL: https://ethresear.ch/t/single-slot-finality-based-on-discrete-deposits/18199
-  - Relevance: Ethereum Research discussion exploring SSF design constraints around validator sets, deposits, security, and decentralization.
-  - Registry use: Supports cautious classification by documenting that SSF remains a complex research area rather than a finalized implementation.
+  - Relevance: Explores SSF constraints around validator sets, deposits, security, and decentralization.
+  - Registry use: Supports cautious research classification rather than deployment or implementation claims.
 
 - **3-Slot-Finality: SSF Is Not About "Single" Slot**
   - URL: https://ethresear.ch/t/3-slot-finality-ssf-is-not-about-single-slot/20927
-  - Relevance: Ethereum Research discussion introducing 3-slot finality and widening the design space around faster finality.
-  - Registry use: Supports the broader finality research context while reinforcing that `fastfinality.eth` is only an approximate ENS surface and should remain `repairable`.
+  - Relevance: Widens the design space beyond exact same-slot finality and demonstrates that faster-finality work can include alternative timing targets.
+  - Registry use: Supports Fast Finality as the broader umbrella while SSF remains one design family within it.
 
-- **Topics Tagged `single-slot-finality` on Ethereum Research**
-  - URL: https://ethresear.ch/tag/single-slot-finality
-  - Relevance: Topic index collecting Ethereum Research discussions tagged with single-slot finality.
-  - Registry use: Useful as an ongoing research index for monitoring SSF-related discussion, not as a formal specification.
+- **Fast Finality source audit**
+  - Path: `docs/research/fast-finality-source-audit.md`
+  - Relevance: Records the primary-source comparison between Fast Finality and SSF and the decision boundary for this conservative update.
+  - Registry use: Documents why the public anchor framing changed without modifying registry constants or classification.
 
 ## Source Notes
 
-`fastfinality.eth` is intentionally classified as `repairable`: the underlying finality direction is technically meaningful and visible in Ethereum roadmap and research materials, but the ENS name does not match the canonical technical term `single-slot finality (SSF)`.
+The registry continues to track `single-slot finality (SSF)` as the canonical term for registry ID `ssf`, with `classification: repairable`, `status: research`, and `type: primitive` unchanged.
 
-The registry tracks `single-slot finality (SSF)` as the canonical term. The phrase `fast finality` is treated as an approximate and broader descriptive phrase, not as the formal Ethereum protocol label.
+Current official terminology distinguishes two related scopes:
 
-These references support SSF as a long-term Ethereum finality research surface. They do not imply that `fastfinality.eth` is an official Ethereum specification, an official protocol endpoint, or a canonical Ethereum naming surface.
+```text
+Fast Finality
+  = broader Ethereum consensus research objective and program surface
 
-This source list should be used to support cautious technical positioning only. It should not be used to claim that SSF has reached deployment, fork inclusion, or implementation convergence.
+Single-slot finality (SSF)
+  = a specific same-slot target or design family within that broader surface
+```
+
+`fastfinality.eth` is therefore strongly aligned with the official umbrella research-area label, while remaining non-identical in scope to the narrower canonical term stored by the registry. The retained `repairable` classification reflects that scope difference; it does not treat Fast Finality as invalid, informal, less legitimate, or displaced by SSF.
+
+These sources support active research relevance only. They do not imply fork scheduling, activation dates, mainnet deployment, implementation convergence, or official status for the ENS name.
 <!-- MANUAL-SOURCES:END -->
