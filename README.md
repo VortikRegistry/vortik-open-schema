@@ -288,7 +288,7 @@ Current registry focus:
 
 Current version:
 
-- Registry version: `0.6.4`
+- Registry version: `0.6.5`
 - Source of truth: `schemas`
 - Central index: `registry.json`
 - Public interface: GitHub Pages
