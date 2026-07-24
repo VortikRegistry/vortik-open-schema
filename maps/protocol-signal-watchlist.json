@@ -1,15 +1,15 @@
 {
   "generated_at": "2026-06-15",
-  "source": "internal_semantic_watchlist",
-  "visibility": "internal",
-  "description": "Internal technical watchlist for Ethereum protocol and implementation-facing semantic signals. This file is not a public commercial narrative, not pricing guidance, not buyer targeting, and not a registry source of truth.",
+  "source": "protocol_signal_watchlist",
+  "visibility": "repository_only",
+  "description": "Repository-only technical watchlist for Ethereum protocol and implementation-facing semantic signals. It is excluded from generated public docs and is not a registry source of truth, pricing guide, buyer-targeting artifact, or commercial narrative.",
   "claim_policy": {
     "pricing": "Do not include pricing, price ranges, valuation language, buyer targeting, or sales language.",
     "ethereum_foundation": "Do not present Ethereum Foundation as a direct buyer.",
     "public_narrative": "Do not use this file to modify public narrative, public market pages, anchors, slugs, schemas, or registry structure.",
     "mainnet_status": "Do not claim ePBS is deployed on Ethereum mainnet unless independently verified in a future update.",
     "fork_status": "Do not claim FOCIL is included in Glamsterdam; current operational guidance treats it as not included for Glamsterdam.",
-    "evidence_split": "Separate verifiable protocol or implementation evidence from internal commercial hypotheses; this file should remain technical and non-commercial.",
+    "evidence_split": "Separate verifiable protocol or implementation evidence from non-registry interpretation; keep this file technical and non-commercial.",
     "allowed_language": "Prefer prudent language such as scheduled, implementation-facing, protocol-relevant, research-aligned, candidate signal, or watch-only."
   },
   "entries": [
