@@ -39,7 +39,7 @@ Examples:
 - `epbs.eth` aligns strongly with ePBS.
 - `inclusionlist.eth` aligns strongly with the human-readable inclusion-list surface around FOCIL.
 - `commitmentlayer.eth` captures a valid primitive but includes the weaker suffix `layer`.
-- `fastfinality.eth` captures the direction of the concept, but `single-slot finality (SSF)` is the more precise canonical term.
+- `fastfinality.eth` aligns with the official Fast Finality umbrella research area, while the current `ssf` registry entry retains `single-slot finality (SSF)` as its narrower canonical term.
 - `buildermarket.eth`, `executionmarket.eth`, and `blockspacemarket.eth` preserve older market-oriented abstractions that are increasingly less precise.
 
 ---
