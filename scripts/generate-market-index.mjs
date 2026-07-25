@@ -24,6 +24,26 @@ const publicInquiryPolicy = {
   public_contact_note: "Strategic acquisition inquiries may be reviewed case by case. No public pricing is provided."
 };
 
+function registryLastUpdatedTimestamp() {
+  const value = registry.last_updated;
+
+  if (typeof value !== "string" || value.trim() === "") {
+    throw new Error("registry.json must define a non-empty last_updated value");
+  }
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return `${value}T00:00:00.000Z`;
+  }
+
+  const parsed = new Date(value);
+
+  if (Number.isNaN(parsed.getTime())) {
+    throw new Error(`registry.json last_updated is not a valid date: ${value}`);
+  }
+
+  return parsed.toISOString();
+}
+
 function normalizeVisibility(value, anchorId) {
   if (allowedVisibility.has(value)) {
     return value;
@@ -75,7 +95,7 @@ const marketIndex = {
   registry: registry.registry,
   index_version: "1.0.1",
   generated_from: "registry.json",
-  last_updated: new Date().toISOString(),
+  last_updated: registryLastUpdatedTimestamp(),
   public_inquiry_policy: publicInquiryPolicy,
   summary: {
     total: anchors.length,
