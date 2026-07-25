@@ -814,11 +814,11 @@
       "status": "roadmap-watch",
       "confidence": "medium",
       "priority": "medium",
-      "summary": "Finality roadmap concept under watch as Fast Finality is the broader research area, while SSF is a specific same-slot target within that surface.",
+      "summary": "Finality research concept under watch: Fast Finality is the broader research area, while SSF is a specific same-slot target within that surface.",
       "why_it_matters": [
-        "May pressure fastfinality.eth if SSF becomes the dominant exact term.",
+        "Clarifies that fastfinality.eth aligns with the broader Fast Finality area while the registry retains SSF as the canonical term for the specific same-slot target.",
         "Relevant to long-term Ethereum roadmap semantics.",
-        "Should remain watchlist-only unless the registry later adds a more exact SSF-aligned anchor."
+        "Should remain interpretive and must not imply that Fast Finality and SSF are exact synonyms or that either is scheduled for deployment."
       ],
       "related_anchors": [
         "ssf"
