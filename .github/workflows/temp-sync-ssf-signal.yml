@@ -25,14 +25,29 @@ jobs:
             'maps/emerging-signals.json',
             'docs/maps/emerging-signals.json'
           ];
-          const stale = 'SSF continues to pressure broader fast-finality language.';
-          const replacement = 'Fast Finality is the broader research area, while SSF is a specific same-slot target within that surface.';
+          const replacements = new Map([
+            [
+              'Finality roadmap concept under watch as SSF continues to pressure broader fast-finality language.',
+              'Finality research concept under watch: Fast Finality is the broader research area, while SSF is a specific same-slot target within that surface.'
+            ],
+            [
+              'May pressure fastfinality.eth if SSF becomes the dominant exact term.',
+              'Clarifies that fastfinality.eth aligns with the broader Fast Finality area while the registry retains SSF as the canonical term for the specific same-slot target.'
+            ],
+            [
+              'Should remain watchlist-only unless the registry later adds a more exact SSF-aligned anchor.',
+              'Should remain interpretive and must not imply that Fast Finality and SSF are exact synonyms or that either is scheduled for deployment.'
+            ]
+          ]);
           for (const file of files) {
-            const source = fs.readFileSync(file, 'utf8');
-            if (!source.includes(stale)) {
-              throw new Error(`Expected stale framing not found in ${file}`);
+            let source = fs.readFileSync(file, 'utf8');
+            for (const [stale, replacement] of replacements) {
+              if (!source.includes(stale)) {
+                throw new Error(`Expected stale framing not found in ${file}: ${stale}`);
+              }
+              source = source.replaceAll(stale, replacement);
             }
-            fs.writeFileSync(file, source.replaceAll(stale, replacement));
+            fs.writeFileSync(file, source);
           }
           NODE
 
