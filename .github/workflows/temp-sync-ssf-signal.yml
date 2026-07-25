@@ -27,7 +27,7 @@ jobs:
           ];
           const replacements = new Map([
             [
-              'Finality roadmap concept under watch as SSF continues to pressure broader fast-finality language.',
+              'Finality roadmap concept under watch as Fast Finality is the broader research area, while SSF is a specific same-slot target within that surface.',
               'Finality research concept under watch: Fast Finality is the broader research area, while SSF is a specific same-slot target within that surface.'
             ],
             [
