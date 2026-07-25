@@ -6,6 +6,74 @@ This project follows a lightweight versioning approach aligned with registry mat
 
 ---
 
+## [0.6.5] — 2026-07-25
+
+### Added
+
+- Added public release, trust, maintenance, and repository-health documentation for the `0.6.5` registry state.
+- Added primary-source research audits for:
+  - current ePBS / Glamsterdam implementation evidence;
+  - FOCIL source state across Glamsterdam and Hegotá;
+  - EIP-8146 Block Access List sidecars;
+  - Fast Finality and single-slot finality terminology.
+- Added repository-only protocol-signal coverage for:
+  - EIP-8146;
+  - Block Access List sidecars;
+  - BAL commitment;
+  - BAL availability;
+  - execution-state prefetch.
+- Added validation for:
+  - `registry.json` against `registry.schema.json`;
+  - semantic-status synchronization;
+  - exact registry coverage in coordination maps;
+  - public-safety constraints;
+  - generated and mirrored file synchronization.
+
+### Updated
+
+- Updated ePBS evidence to record EIP-7732 as Scheduled for Inclusion in Glamsterdam and to distinguish multi-client devnet progress from activation or deployment.
+- Updated FOCIL evidence to preserve its fork-scoped state:
+  - declined for Glamsterdam;
+  - Scheduled for Inclusion in Hegotá;
+  - no announced activation values.
+- Updated Fast Finality / SSF framing so:
+  - Fast Finality is the broader Ethereum consensus research area;
+  - single-slot finality is a specific same-slot target or design family within that area;
+  - `id: ssf`, its canonical term, classification, status, and type remain unchanged.
+- Updated the repository-only watchlist to distinguish EIP-7805 as Scheduled for Inclusion from EIP-8146 as Proposed for Inclusion in Hegotá.
+- Updated generated registry roles, semantic-status material, anchor indexes, source notes, and emerging-signal maps to remove stale displacement framing.
+- Updated canonical registry metadata and synchronized index timestamps through `2026-07-25`.
+
+### Automation and validation
+
+- Centralized the complete derived-output pipeline under:
+
+  ```bash
+  npm run generate
+  ```
+
+- Replaced permissive dependency installation with deterministic `npm ci`.
+- Changed the main validation workflow to read-only operation:
+  - it no longer commits or pushes generated files to `main`;
+  - it fails when generation leaves uncommitted drift.
+- Made generated anchor and market index timestamps deterministic from `registry.json.last_updated`.
+- Restricted manual mutating workflows to explicit non-default branches so their outputs remain reviewable through pull requests.
+- Added `.gitignore` coverage for `node_modules/` so dependency installation does not create false drift findings.
+
+### Registry-state boundaries
+
+- No registry entries or ENS anchors were added or removed.
+- No ENS names were bought, sold, listed, transferred, or presented as official Ethereum namespaces.
+- No schema constants were changed as part of the Fast Finality framing update.
+- Research notes, protocol-signal watchlists, generated maps, and strategic visibility documents remain separate from authoritative registry state.
+- Fork scheduling, implementation progress, deployment, and activation remain explicitly distinct source states.
+
+### Notes
+
+Version `0.6.5` is a documentation, evidence, consistency, and operational-hardening release. It improves the reliability and auditability of the existing 12-anchor registry without introducing a new registry model or promoting research candidates into authoritative anchors.
+
+---
+
 ## [0.6.4] — 2026-05-21
 
 ### Fixed
