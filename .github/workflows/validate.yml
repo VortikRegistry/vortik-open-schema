@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: vortik-registry-validation-${{ github.ref }}
@@ -16,7 +16,6 @@ concurrency:
 
 jobs:
   validate:
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     steps:
@@ -46,22 +45,16 @@ jobs:
       - name: Run full validation after generation
         run: npm run validate
 
-      - name: Commit generated updates
-        if: github.event_name == 'push'
+      - name: Verify generated files are committed
+        shell: bash
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add registry.json
-          git add anchors.index.json
-          git add market.index.json
-          git add maps/
-          git add schemas/
-          git add anchors/
-          git add docs/
-
-          git diff --cached --quiet || git commit -m "generate derived registry files"
-          git push
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo "Generated files are out of date or generation is not deterministic."
+            echo "Run 'npm run generate', review the changes, and commit them in the PR branch."
+            git status --short
+            git diff --exit-code || true
+            exit 1
+          fi
 
       - name: Done
-        run: echo "🎯 Vortik registry validation and generation completed"
+        run: echo "🎯 Vortik registry validation completed without repository writes"
