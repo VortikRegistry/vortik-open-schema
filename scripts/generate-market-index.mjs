@@ -1,6 +1,5 @@
 import fs from "fs";
 
-const OUTPUT_PATH = "market.index.json";
 const registry = JSON.parse(fs.readFileSync("registry.json", "utf8"));
 
 const anchors = registry.anchors || [];
@@ -43,34 +42,6 @@ function registryLastUpdatedTimestamp() {
   }
 
   return parsed.toISOString();
-}
-
-function withoutLastUpdated(value) {
-  const { last_updated: _lastUpdated, ...rest } = value;
-  return rest;
-}
-
-function stableLastUpdated(outputPath, nextComparable) {
-  const fallback = registryLastUpdatedTimestamp();
-
-  if (!fs.existsSync(outputPath)) {
-    return fallback;
-  }
-
-  try {
-    const existing = JSON.parse(fs.readFileSync(outputPath, "utf8"));
-    const existingComparable = withoutLastUpdated(existing);
-
-    if (JSON.stringify(existingComparable) === JSON.stringify(nextComparable)) {
-      return typeof existing.last_updated === "string" && existing.last_updated
-        ? existing.last_updated
-        : fallback;
-    }
-  } catch {
-    // Invalid or unreadable generated output is replaced deterministically below.
-  }
-
-  return fallback;
 }
 
 function normalizeVisibility(value, anchorId) {
@@ -120,10 +91,11 @@ for (const anchor of sorted) {
   });
 }
 
-const comparableIndex = {
+const marketIndex = {
   registry: registry.registry,
   index_version: "1.0.1",
   generated_from: "registry.json",
+  last_updated: registryLastUpdatedTimestamp(),
   public_inquiry_policy: publicInquiryPolicy,
   summary: {
     total: anchors.length,
@@ -135,19 +107,9 @@ const comparableIndex = {
   segments: grouped
 };
 
-const marketIndex = {
-  registry: comparableIndex.registry,
-  index_version: comparableIndex.index_version,
-  generated_from: comparableIndex.generated_from,
-  last_updated: stableLastUpdated(OUTPUT_PATH, comparableIndex),
-  public_inquiry_policy: comparableIndex.public_inquiry_policy,
-  summary: comparableIndex.summary,
-  segments: comparableIndex.segments
-};
-
 const output = JSON.stringify(marketIndex, null, 2) + "\n";
 
-fs.writeFileSync(OUTPUT_PATH, output);
+fs.writeFileSync("market.index.json", output);
 
 fs.mkdirSync("docs", { recursive: true });
 fs.writeFileSync("docs/market.index.json", output);
