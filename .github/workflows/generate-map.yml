@@ -2,52 +2,83 @@ name: Generate Coordination Map
 
 on:
   workflow_dispatch:
+    inputs:
+      target_branch:
+        description: Existing non-default branch to update
+        required: true
+        type: string
 
 permissions:
   contents: write
 
+concurrency:
+  group: vortik-generate-map-${{ inputs.target_branch }}
+  cancel-in-progress: true
+
 jobs:
   generate-map:
     runs-on: ubuntu-latest
+    env:
+      TARGET_BRANCH: ${{ inputs.target_branch }}
+      DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
 
     steps:
-      - name: Checkout repository
+      - name: Refuse default branch writes
+        shell: bash
+        run: |
+          if [[ "$TARGET_BRANCH" == "$DEFAULT_BRANCH" ]]; then
+            echo "This workflow may update only an existing non-default branch."
+            echo "Create a branch, run the workflow against it, and review the result through a pull request."
+            exit 1
+          fi
+
+      - name: Checkout target branch
         uses: actions/checkout@v4
         with:
+          ref: ${{ inputs.target_branch }}
           fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: npm
 
-      - name: Install dependencies if needed
-        run: npm install || true
+      - name: Install dependencies
+        run: npm ci
 
       - name: Generate coordination map
-        run: node scripts/generate-map.mjs
+        run: npm run generate:map
 
       - name: Sync docs
-        run: node scripts/sync-docs.mjs
+        run: npm run sync:docs
 
-      - name: Validate all JSON files
-        run: node scripts/validate-json-files.mjs
+      - name: Run full validation
+        run: npm run validate
 
-      - name: Validate registry
-        run: node scripts/validate-registry.mjs
+      - name: Reject unexpected generated changes
+        shell: bash
+        run: |
+          unexpected="$({ git status --porcelain | sed -E 's/^.. //' | grep -v -E '^(maps/coordination-map\.md|docs/maps/coordination-map\.md)$'; } || true)"
 
-      - name: Validate integrity
-        run: node scripts/validate-integrity.mjs
+          if [[ -n "$unexpected" ]]; then
+            echo "Unexpected files changed during map generation:"
+            echo "$unexpected"
+            exit 1
+          fi
 
-      - name: Validate derived sync
-        run: node scripts/validate-derived-sync.mjs
-
-      - name: Commit generated map if changed
+      - name: Commit generated map to target branch
+        shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add maps/coordination-map.md docs/maps/coordination-map.md
 
-          git diff --cached --quiet || git commit -m "auto-generate coordination map"
-          git push
+          if git diff --cached --quiet; then
+            echo "Coordination map is already up to date."
+            exit 0
+          fi
+
+          git commit -m "generate coordination map"
+          git push origin "HEAD:${TARGET_BRANCH}"
