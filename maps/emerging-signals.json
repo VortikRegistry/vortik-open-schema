@@ -814,7 +814,7 @@
       "status": "roadmap-watch",
       "confidence": "medium",
       "priority": "medium",
-      "summary": "Finality roadmap concept under watch as SSF continues to pressure broader fast-finality language.",
+      "summary": "Finality roadmap concept under watch as Fast Finality is the broader research area, while SSF is a specific same-slot target within that surface.",
       "why_it_matters": [
         "May pressure fastfinality.eth if SSF becomes the dominant exact term.",
         "Relevant to long-term Ethereum roadmap semantics.",
