@@ -42,7 +42,7 @@ Protocol or research primitive tracked as a semantic object.
 
 ## Registry Role
 
-finality primitive and roadmap surface targeting single-slot confirmation semantics, with ENS naming that approximates but does not exactly match the canonical SSF terminology
+finality research primitive tracking SSF as a specific same-slot target within the broader Fast Finality research area, with an ENS-to-canonical scope mismatch rather than invalid or displaced terminology
 
 ---
 
