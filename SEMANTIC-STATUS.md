@@ -47,7 +47,7 @@ These represent:
 Examples:
 
 - `commitmentlayer.eth` captures the important concept of **commitment**, but the suffix `layer` is not protocol-native.
-- `fastfinality.eth` captures the direction of faster finality, but **single-slot finality (SSF)** is the more precise term.
+- `fastfinality.eth` aligns with the official **Fast Finality** umbrella research area, while **single-slot finality (SSF)** remains the narrower canonical term for registry ID `ssf`.
 
 ---
 
