@@ -2,31 +2,50 @@ name: Apply Registry Changes
 
 on:
   workflow_dispatch:
+    inputs:
+      target_branch:
+        description: Existing non-default branch containing updates/change-request.json
+        required: true
+        type: string
 
 permissions:
   contents: write
 
 concurrency:
-  group: vortik-apply-registry-changes
+  group: vortik-apply-registry-changes-${{ inputs.target_branch }}
   cancel-in-progress: true
 
 jobs:
   apply-changes:
     runs-on: ubuntu-latest
+    env:
+      TARGET_BRANCH: ${{ inputs.target_branch }}
+      DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
 
     steps:
-      - name: Checkout repository
+      - name: Refuse default branch writes
+        shell: bash
+        run: |
+          if [[ "$TARGET_BRANCH" == "$DEFAULT_BRANCH" ]]; then
+            echo "This workflow may update only an existing non-default branch."
+            echo "Create a branch with the change request, run the workflow against it, and review the result through a pull request."
+            exit 1
+          fi
+
+      - name: Checkout target branch
         uses: actions/checkout@v4
         with:
+          ref: ${{ inputs.target_branch }}
           fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: npm
 
-      - name: Install dependencies if needed
-        run: npm install || true
+      - name: Install dependencies
+        run: npm ci
 
       - name: Validate raw JSON files before applying changes
         run: node scripts/validate-json-files.mjs
@@ -37,37 +56,14 @@ jobs:
       - name: Apply requested registry changes
         run: node scripts/apply-changes.cjs
 
-      - name: Sync schemas from registry
-        run: node scripts/sync-schemas-from-registry.mjs
-
-      - name: Generate sources from registry
-        run: node scripts/generate-sources-from-registry.mjs
-
-      - name: Fix schemas
-        run: node scripts/fix-schemas.cjs
-
-      - name: Generate anchors index
-        run: node scripts/generate-anchors-index.mjs
-
-      - name: Generate market index
-        run: node scripts/generate-market-index.mjs
-
-      - name: Generate coordination map
-        run: node scripts/generate-map.mjs
-
-      - name: Generate market document
-        run: node scripts/generate-market-doc.mjs
-
-      - name: Generate market HTML
-        run: node scripts/generate-market-html.mjs
-
-      - name: Sync docs
-        run: node scripts/sync-docs.mjs
+      - name: Generate derived registry files
+        run: npm run generate
 
       - name: Run full validation after generation
         run: npm run validate
 
-      - name: Commit applied and generated updates
+      - name: Commit applied changes to target branch
+        shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -80,8 +76,10 @@ jobs:
           git add anchors/
           git add docs/
 
-          git diff --cached --quiet || git commit -m "apply registry changes"
-          git push
+          if git diff --cached --quiet; then
+            echo "No registry changes were produced."
+            exit 0
+          fi
 
-      - name: Done
-        run: echo "🎯 Registry changes applied, regenerated, synced, and validated"
+          git commit -m "apply registry changes"
+          git push origin "HEAD:${TARGET_BRANCH}"
