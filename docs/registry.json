@@ -3,7 +3,7 @@
   "version": "0.6.5",
   "description": "Independent semantic registry indexing Ethereum protocol primitives, roles, constraints, and selected external coordination surfaces via ENS-anchored schemas.",
   "source_of_truth": "schemas",
-  "last_updated": "2026-05-21",
+  "last_updated": "2026-07-25",
   "anchors": [
     {
       "id": "epbs",
