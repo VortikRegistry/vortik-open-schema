@@ -11,7 +11,7 @@ async function readJson(relativePath) {
   return JSON.parse(await readFile(resolve(root, relativePath), "utf8"));
 }
 
-const feedSchema = await readJson("schemas/feeds/vortik-anchor-feed/1.0.0/schema.json");
+const feedSchema = await readJson("schemas/feeds/vortik-anchor-feed/1.0.1/schema.json");
 const epbsSchema = await readJson("schemas/epbs/1.0-draft/schema.json");
 const feed = await readJson("feeds/epbs.json");
 
@@ -46,7 +46,7 @@ if (validate(mismatchedAnchor)) {
   throw new Error("Feed contract must reject anchor metadata that does not match the ePBS instance schema");
 }
 
-console.log("feeds/epbs.json conforms to vortik-anchor-feed 1.0.0");
+console.log("feeds/epbs.json conforms to vortik-anchor-feed 1.0.1");
 console.log("EXPECTED FAIL protocol_authority=true");
 console.log("EXPECTED FAIL unsupported feed_version");
 console.log("EXPECTED FAIL mismatched anchor metadata");
