@@ -1,0 +1,27 @@
+{
+  "id": "epbs",
+  "version": "1.0-draft",
+  "canonical_term": "enshrined proposer-builder separation (ePBS)",
+  "classification": "core",
+  "status": "implemented",
+  "type": "primitive",
+  "summary": "This fixture is intentionally invalid because its status contradicts the schema constant.",
+  "pipeline_position": [
+    "builder coordination"
+  ],
+  "coordination_role": [
+    "separates block construction from proposal"
+  ],
+  "protocol_grounding": [
+    "EIP-7732"
+  ],
+  "naming": {
+    "ens": "epbs.eth",
+    "canonical": "enshrined proposer-builder separation (ePBS)",
+    "mismatch": false,
+    "notes": "The naming fields remain valid so the status mismatch is isolated."
+  },
+  "sources": [
+    "https://eips.ethereum.org/EIPS/eip-7732"
+  ]
+}
