@@ -1,0 +1,65 @@
+{
+  "feed": "vortik-anchor-feed",
+  "feed_version": "1.0.0",
+  "registry": {
+    "name": "vortik-semantic-registry",
+    "version": "0.6.5",
+    "last_updated": "2026-07-25",
+    "source_of_truth": "schemas"
+  },
+  "anchor": {
+    "id": "epbs",
+    "ens": "epbs.eth",
+    "canonical_term": "enshrined proposer-builder separation (ePBS)",
+    "classification": "core",
+    "status": "implementation-facing",
+    "stage": "canonical",
+    "type": "primitive",
+    "role": "protocol-defined proposer-builder separation with active implementation-facing relevance, commitment-based block production, signed bid flow, payload reveal semantics, and growing consensus-specs convergence",
+    "schema_path": "schemas/epbs/1.0-draft/schema.json",
+    "schema_id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/epbs/1.0-draft/schema.json",
+    "anchor_doc": "anchors/epbs.md"
+  },
+  "instance": {
+    "id": "epbs",
+    "version": "1.0-draft",
+    "canonical_term": "enshrined proposer-builder separation (ePBS)",
+    "classification": "core",
+    "status": "implementation-facing",
+    "type": "primitive",
+    "summary": "Protocol-level primitive separating block construction from proposal while preserving an enshrined coordination interface.",
+    "pipeline_position": [
+      "builder coordination",
+      "inclusion"
+    ],
+    "coordination_role": [
+      "separates block construction from proposal",
+      "defines commitment and payload reveal coordination"
+    ],
+    "protocol_grounding": [
+      "EIP-7732",
+      "Ethereum consensus specifications"
+    ],
+    "naming": {
+      "ens": "epbs.eth",
+      "canonical": "enshrined proposer-builder separation (ePBS)",
+      "mismatch": false,
+      "notes": "The ENS label directly matches the canonical ePBS abbreviation."
+    },
+    "sources": [
+      "https://eips.ethereum.org/EIPS/eip-7732",
+      "https://github.com/ethereum/consensus-specs"
+    ]
+  },
+  "authority": {
+    "registry_scope": "independent semantic registry",
+    "protocol_authority": false,
+    "ens_authority": false,
+    "note": "This feed is a Vortik semantic artifact, not an official Ethereum protocol specification."
+  },
+  "generated_from": [
+    "registry.json",
+    "schemas/epbs/1.0-draft/schema.json",
+    "examples/epbs.valid.json"
+  ]
+}
