@@ -4,7 +4,8 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const checkOnly = process.argv.includes("--check");
-const feedSchemaId = "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/feeds/vortik-anchor-feed/1.0.0/schema.json";
+const feedSchemaPath = "schemas/feeds/vortik-anchor-feed/1.0.1/schema.json";
+const feedSchemaId = `https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/${feedSchemaPath}`;
 
 async function readJson(relativePath) {
   return JSON.parse(await readFile(resolve(root, relativePath), "utf8"));
@@ -22,7 +23,7 @@ const example = await readJson("examples/epbs.valid.json");
 const feed = {
   $schema: feedSchemaId,
   feed: "vortik-anchor-feed",
-  feed_version: "1.0.0",
+  feed_version: "1.0.1",
   registry: {
     name: registry.registry,
     version: registry.version,
@@ -51,6 +52,7 @@ const feed = {
   },
   generated_from: [
     "registry.json",
+    feedSchemaPath,
     anchor.schema,
     "examples/epbs.valid.json"
   ]
