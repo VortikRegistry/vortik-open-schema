@@ -1,7 +1,7 @@
 {
-  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/feeds/vortik-anchor-feed/1.0.0/schema.json",
+  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/feeds/vortik-anchor-feed/1.0.1/schema.json",
   "feed": "vortik-anchor-feed",
-  "feed_version": "1.0.0",
+  "feed_version": "1.0.1",
   "registry": {
     "name": "vortik-semantic-registry",
     "version": "0.6.5",
@@ -60,6 +60,7 @@
   },
   "generated_from": [
     "registry.json",
+    "schemas/feeds/vortik-anchor-feed/1.0.1/schema.json",
     "schemas/epbs/1.0-draft/schema.json",
     "examples/epbs.valid.json"
   ]
