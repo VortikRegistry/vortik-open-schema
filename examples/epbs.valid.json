@@ -1,0 +1,31 @@
+{
+  "id": "epbs",
+  "version": "1.0-draft",
+  "canonical_term": "enshrined proposer-builder separation (ePBS)",
+  "classification": "core",
+  "status": "implementation-facing",
+  "type": "primitive",
+  "summary": "Protocol-level primitive separating block construction from proposal while preserving an enshrined coordination interface.",
+  "pipeline_position": [
+    "builder coordination",
+    "inclusion"
+  ],
+  "coordination_role": [
+    "separates block construction from proposal",
+    "defines commitment and payload reveal coordination"
+  ],
+  "protocol_grounding": [
+    "EIP-7732",
+    "Ethereum consensus specifications"
+  ],
+  "naming": {
+    "ens": "epbs.eth",
+    "canonical": "enshrined proposer-builder separation (ePBS)",
+    "mismatch": false,
+    "notes": "The ENS label directly matches the canonical ePBS abbreviation."
+  },
+  "sources": [
+    "https://eips.ethereum.org/EIPS/eip-7732",
+    "https://github.com/ethereum/consensus-specs"
+  ]
+}
