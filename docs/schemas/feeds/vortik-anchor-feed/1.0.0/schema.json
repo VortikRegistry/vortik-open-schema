@@ -5,11 +5,26 @@
   "description": "Versioned machine-consumable envelope for one Vortik Registry anchor and a schema-validated instance.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["$schema", "feed", "feed_version", "registry", "anchor", "instance", "authority", "generated_from"],
+  "required": [
+    "$schema",
+    "feed",
+    "feed_version",
+    "registry",
+    "anchor",
+    "instance",
+    "authority",
+    "generated_from"
+  ],
   "properties": {
-    "$schema": { "const": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/feeds/vortik-anchor-feed/1.0.0/schema.json" },
-    "feed": { "const": "vortik-anchor-feed" },
-    "feed_version": { "const": "1.0.0" },
+    "$schema": {
+      "const": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/feeds/vortik-anchor-feed/1.0.0/schema.json"
+    },
+    "feed": {
+      "const": "vortik-anchor-feed"
+    },
+    "feed_version": {
+      "const": "1.0.0"
+    },
     "registry": {
       "type": "object",
       "additionalProperties": false,
@@ -24,7 +39,19 @@
     "anchor": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "ens", "canonical_term", "classification", "status", "stage", "type", "role", "schema_path", "schema_id", "anchor_doc"],
+      "required": [
+        "id",
+        "ens",
+        "canonical_term",
+        "classification",
+        "status",
+        "stage",
+        "type",
+        "role",
+        "schema_path",
+        "schema_id",
+        "anchor_doc"
+      ],
       "properties": {
         "id": { "type": "string", "minLength": 1 },
         "ens": { "type": "string", "pattern": "^[a-z0-9-]+\\.eth$" },
@@ -39,7 +66,9 @@
         "anchor_doc": { "type": "string", "pattern": "^anchors/.+\\.md$" }
       }
     },
-    "instance": { "$ref": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/epbs/1.0-draft/schema.json" },
+    "instance": {
+      "$ref": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/epbs/1.0-draft/schema.json"
+    },
     "authority": {
       "type": "object",
       "additionalProperties": false,
