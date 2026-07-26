@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/feeds/vortik-anchor-feed/1.0.0/schema.json",
   "feed": "vortik-anchor-feed",
   "feed_version": "1.0.0",
   "registry": {
