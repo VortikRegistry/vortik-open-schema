@@ -24,29 +24,37 @@ if (!validate(feed)) {
   throw new Error(`feeds/epbs.json violates the versioned feed contract:\n${ajv.errorsText(validate.errors, { separator: "\n" })}`);
 }
 
-const unsafeAuthority = structuredClone(feed);
-unsafeAuthority.authority.protocol_authority = true;
-if (validate(unsafeAuthority)) {
-  throw new Error("Feed contract must reject protocol_authority=true");
+function expectRejected(label, mutate) {
+  const candidate = structuredClone(feed);
+  mutate(candidate);
+  if (validate(candidate)) {
+    throw new Error(`Feed contract must reject ${label}`);
+  }
 }
 
-const wrongVersion = structuredClone(feed);
-wrongVersion.feed_version = "2.0.0";
-if (validate(wrongVersion)) {
-  throw new Error("Feed contract must reject an unsupported feed_version");
-}
+expectRejected("protocol_authority=true", (candidate) => {
+  candidate.authority.protocol_authority = true;
+});
 
-const mismatchedAnchor = structuredClone(feed);
-mismatchedAnchor.anchor.id = "ssf";
-mismatchedAnchor.anchor.ens = "fastfinality.eth";
-mismatchedAnchor.anchor.schema_path = "schemas/ssf/0.1-research/schema.json";
-mismatchedAnchor.anchor.schema_id = "https://example.org/schemas/ssf/schema.json";
-mismatchedAnchor.anchor.anchor_doc = "anchors/ssf.md";
-if (validate(mismatchedAnchor)) {
-  throw new Error("Feed contract must reject anchor metadata that does not match the ePBS instance schema");
+expectRejected("an unsupported feed_version", (candidate) => {
+  candidate.feed_version = "2.0.0";
+});
+
+const anchorBindingCases = [
+  ["anchor.id", (candidate) => { candidate.anchor.id = "ssf"; }],
+  ["anchor.ens", (candidate) => { candidate.anchor.ens = "fastfinality.eth"; }],
+  ["anchor.schema_path", (candidate) => { candidate.anchor.schema_path = "schemas/ssf/0.1-research/schema.json"; }],
+  ["anchor.schema_id", (candidate) => { candidate.anchor.schema_id = "https://example.org/schemas/ssf/schema.json"; }],
+  ["anchor.anchor_doc", (candidate) => { candidate.anchor.anchor_doc = "anchors/ssf.md"; }]
+];
+
+for (const [label, mutate] of anchorBindingCases) {
+  expectRejected(`${label} that does not match the ePBS instance schema`, mutate);
 }
 
 console.log("feeds/epbs.json conforms to vortik-anchor-feed 1.0.1");
 console.log("EXPECTED FAIL protocol_authority=true");
 console.log("EXPECTED FAIL unsupported feed_version");
-console.log("EXPECTED FAIL mismatched anchor metadata");
+for (const [label] of anchorBindingCases) {
+  console.log(`EXPECTED FAIL mismatched ${label}`);
+}
