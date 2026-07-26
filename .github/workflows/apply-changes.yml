@@ -74,6 +74,7 @@ jobs:
           git add maps/
           git add schemas/
           git add anchors/
+          git add feeds/
           git add docs/
 
           if git diff --cached --quiet; then
