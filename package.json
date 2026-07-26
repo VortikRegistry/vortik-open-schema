@@ -22,6 +22,7 @@
     "example:validate": "node examples/validate-instance.mjs"
   },
   "devDependencies": {
-    "ajv": "^8.17.1"
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
   }
 }
