@@ -36,6 +36,17 @@ if (validate(wrongVersion)) {
   throw new Error("Feed contract must reject an unsupported feed_version");
 }
 
+const mismatchedAnchor = structuredClone(feed);
+mismatchedAnchor.anchor.id = "ssf";
+mismatchedAnchor.anchor.ens = "fastfinality.eth";
+mismatchedAnchor.anchor.schema_path = "schemas/ssf/0.1-research/schema.json";
+mismatchedAnchor.anchor.schema_id = "https://example.org/schemas/ssf/schema.json";
+mismatchedAnchor.anchor.anchor_doc = "anchors/ssf.md";
+if (validate(mismatchedAnchor)) {
+  throw new Error("Feed contract must reject anchor metadata that does not match the ePBS instance schema");
+}
+
 console.log("feeds/epbs.json conforms to vortik-anchor-feed 1.0.0");
 console.log("EXPECTED FAIL protocol_authority=true");
 console.log("EXPECTED FAIL unsupported feed_version");
+console.log("EXPECTED FAIL mismatched anchor metadata");
