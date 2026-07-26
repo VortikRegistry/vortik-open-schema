@@ -11,6 +11,8 @@ const SCAN_TARGETS = [
   'schemas',
   'maps',
   'docs',
+  'examples',
+  'feeds',
   'README.md',
   'ARCHITECTURE.md',
   'PRIMITIVES.md',
