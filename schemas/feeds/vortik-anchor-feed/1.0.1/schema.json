@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/feeds/vortik-anchor-feed/1.0.1/schema.json",
+  "title": "Vortik Anchor Feed 1.0.1",
+  "description": "Versioned machine-consumable envelope for the flagship ePBS anchor and a schema-validated ePBS instance.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "feed",
+    "feed_version",
+    "registry",
+    "anchor",
+    "instance",
+    "authority",
+    "generated_from"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/feeds/vortik-anchor-feed/1.0.1/schema.json"
+    },
+    "feed": {
+      "const": "vortik-anchor-feed"
+    },
+    "feed_version": {
+      "const": "1.0.1"
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "last_updated", "source_of_truth"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "last_updated": { "type": "string", "format": "date" },
+        "source_of_truth": { "const": "schemas" }
+      }
+    },
+    "anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "ens",
+        "canonical_term",
+        "classification",
+        "status",
+        "stage",
+        "type",
+        "role",
+        "schema_path",
+        "schema_id",
+        "anchor_doc"
+      ],
+      "properties": {
+        "id": { "const": "epbs" },
+        "ens": { "const": "epbs.eth" },
+        "canonical_term": { "type": "string", "minLength": 1 },
+        "classification": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "minLength": 1 },
+        "stage": { "type": "string", "minLength": 1 },
+        "type": { "type": "string", "minLength": 1 },
+        "role": { "type": "string", "minLength": 1 },
+        "schema_path": { "const": "schemas/epbs/1.0-draft/schema.json" },
+        "schema_id": { "const": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/epbs/1.0-draft/schema.json" },
+        "anchor_doc": { "const": "anchors/epbs.md" }
+      }
+    },
+    "instance": {
+      "$ref": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/epbs/1.0-draft/schema.json"
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["registry_scope", "protocol_authority", "ens_authority", "note"],
+      "properties": {
+        "registry_scope": { "const": "independent semantic registry" },
+        "protocol_authority": { "const": false },
+        "ens_authority": { "const": false },
+        "note": { "type": "string", "minLength": 1 }
+      }
+    },
+    "generated_from": {
+      "type": "array",
+      "minItems": 4,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}
