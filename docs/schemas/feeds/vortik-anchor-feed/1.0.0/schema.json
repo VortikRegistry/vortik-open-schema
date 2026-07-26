@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/feeds/vortik-anchor-feed/1.0.0/schema.json",
   "title": "Vortik Anchor Feed 1.0.0",
-  "description": "Versioned machine-consumable envelope for one Vortik Registry anchor and a schema-validated instance.",
+  "description": "Versioned machine-consumable envelope for the flagship ePBS anchor and a schema-validated ePBS instance.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -53,17 +53,17 @@
         "anchor_doc"
       ],
       "properties": {
-        "id": { "type": "string", "minLength": 1 },
-        "ens": { "type": "string", "pattern": "^[a-z0-9-]+\\.eth$" },
+        "id": { "const": "epbs" },
+        "ens": { "const": "epbs.eth" },
         "canonical_term": { "type": "string", "minLength": 1 },
         "classification": { "type": "string", "minLength": 1 },
         "status": { "type": "string", "minLength": 1 },
         "stage": { "type": "string", "minLength": 1 },
         "type": { "type": "string", "minLength": 1 },
         "role": { "type": "string", "minLength": 1 },
-        "schema_path": { "type": "string", "pattern": "^schemas/.+/schema\\.json$" },
-        "schema_id": { "type": "string", "format": "uri" },
-        "anchor_doc": { "type": "string", "pattern": "^anchors/.+\\.md$" }
+        "schema_path": { "const": "schemas/epbs/1.0-draft/schema.json" },
+        "schema_id": { "const": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/epbs/1.0-draft/schema.json" },
+        "anchor_doc": { "const": "anchors/epbs.md" }
       }
     },
     "instance": {
