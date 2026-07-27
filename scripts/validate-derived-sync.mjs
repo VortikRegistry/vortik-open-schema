@@ -143,6 +143,7 @@ function main() {
   validateExactSync("market.index.json", "docs/market.index.json");
   validateExactSync("maps/anchors-map.json", "docs/maps/anchors-map.json");
   validateExactSync("feeds/epbs.json", "docs/feeds/epbs.json");
+  validateExactSync("feeds/index.json", "docs/feeds/index.json");
 
   validateAnchorsMapAgainstRegistry();
 
