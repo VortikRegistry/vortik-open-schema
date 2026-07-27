@@ -20,6 +20,19 @@ This document is not an official Ethereum specification. It is a registry anchor
 
 ---
 
+## Machine-readable feed
+
+Vortik publishes a deterministic, contract-validated feed for this anchor:
+
+- **Public feed:** [feeds/epbs.json](https://vortikregistry.github.io/vortik-open-schema/feeds/epbs.json)
+- **Contract 1.0.1:** [vortik-anchor-feed schema](https://vortikregistry.github.io/vortik-open-schema/schemas/feeds/vortik-anchor-feed/1.0.1/schema.json)
+- **Consumption guide:** [Consume the public ePBS feed](https://vortikregistry.github.io/vortik-open-schema/guides/consume-epbs-feed.html)
+- **Executable example:** [`examples/consume-epbs-feed.mjs`](https://github.com/VortikRegistry/vortik-open-schema/blob/main/examples/consume-epbs-feed.mjs)
+
+The feed is a Vortik semantic artifact. Its authority block explicitly denies protocol authority and ENS authority. Consumers must use official Ethereum specifications for protocol rules and current activation state.
+
+---
+
 ## Context
 
 Proposer-Builder Separation (PBS) emerged as a way to separate block construction from block proposal. In today’s external PBS / MEV-Boost-style architecture, much of that coordination depends on relays, external infrastructure, builder markets, timing assumptions, and off-protocol trust boundaries.
@@ -85,7 +98,6 @@ This anchor is grounded in:
 The registry uses this grounding cautiously. It does not claim that `epbs.eth` is an official Ethereum endpoint, an official protocol namespace, or an Ethereum Foundation-controlled naming surface.
 
 ---
-
 
 ## EIP-7732 Source Notes
 
