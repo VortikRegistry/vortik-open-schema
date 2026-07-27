@@ -1,0 +1,39 @@
+{
+  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/feeds/vortik-feed-index/1.0.0/schema.json",
+  "index": "vortik-feed-index",
+  "index_version": "1.0.0",
+  "registry": {
+    "name": "vortik-semantic-registry",
+    "version": "0.6.5",
+    "last_updated": "2026-07-25",
+    "source_of_truth": "schemas"
+  },
+  "feeds": [
+    {
+      "id": "epbs",
+      "feed": "vortik-anchor-feed",
+      "feed_version": "1.0.1",
+      "canonical_term": "enshrined proposer-builder separation (ePBS)",
+      "classification": "core",
+      "status": "implementation-facing",
+      "path": "feeds/epbs.json",
+      "public_url": "https://vortikregistry.github.io/vortik-open-schema/feeds/epbs.json",
+      "anchor_doc": "anchors/epbs.md",
+      "contract": {
+        "path": "schemas/feeds/vortik-anchor-feed/1.0.1/schema.json",
+        "id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/feeds/vortik-anchor-feed/1.0.1/schema.json",
+        "public_url": "https://vortikregistry.github.io/vortik-open-schema/schemas/feeds/vortik-anchor-feed/1.0.1/schema.json"
+      }
+    }
+  ],
+  "authority": {
+    "registry_scope": "independent semantic registry",
+    "protocol_authority": false,
+    "ens_authority": false,
+    "note": "This index lists Vortik semantic feeds and does not define Ethereum protocol rules or ENS authority."
+  },
+  "generated_from": [
+    "schemas/feeds/vortik-feed-index/1.0.0/schema.json",
+    "feeds/epbs.json"
+  ]
+}

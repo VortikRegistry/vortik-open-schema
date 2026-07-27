@@ -6,6 +6,16 @@ title: Consume the public ePBS feed
 
 Vortik publishes a deterministic, versioned machine feed for the flagship ePBS anchor.
 
+## Discover feeds first
+
+Consumers that do not know the ePBS route in advance can start from the general feed index:
+
+```text
+https://vortikregistry.github.io/vortik-open-schema/feeds/index.json
+```
+
+See [Discover Vortik feeds from an agent](./discover-feeds.html) or run `npm run example:discover-feeds`.
+
 ## Public endpoint
 
 ```text
