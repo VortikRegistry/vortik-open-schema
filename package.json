@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "validate": "npm run validate:json && npm run validate:registry-schema && npm run validate:registry && npm run validate:maps && npm run validate:semantic-status && npm run validate:integrity && npm run validate:derived-sync && npm run validate:epbs-feed && npm run validate:epbs-feed-schema && npm run check:public-safety && npm run example:validate",
+    "validate": "npm run validate:json && npm run validate:registry-schema && npm run validate:registry && npm run validate:maps && npm run validate:semantic-status && npm run validate:integrity && npm run validate:derived-sync && npm run validate:epbs-feed && npm run validate:epbs-feed-schema && npm run check:public-safety && npm run example:validate && npm run example:consume-feed",
     "validate:json": "node scripts/validate-json-files.mjs",
     "validate:registry": "node scripts/validate-registry.mjs",
     "validate:maps": "node scripts/validate-map-coverage.mjs",
@@ -22,7 +22,8 @@
     "check:public-safety": "node scripts/check-public-safety.mjs",
     "validate:semantic-status": "node scripts/validate-semantic-status-sync.mjs",
     "validate:registry-schema": "node scripts/validate-registry-schema.mjs",
-    "example:validate": "node examples/validate-instance.mjs"
+    "example:validate": "node examples/validate-instance.mjs",
+    "example:consume-feed": "node examples/consume-epbs-feed.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1",
