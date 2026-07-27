@@ -1,3 +1,7 @@
+---
+title: Consume the public ePBS feed
+---
+
 # Consume the public ePBS feed
 
 Vortik publishes a deterministic, versioned machine feed for the flagship ePBS anchor.
