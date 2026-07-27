@@ -25,7 +25,7 @@
     "check:public-safety": "node scripts/check-public-safety.mjs",
     "validate:semantic-status": "node scripts/validate-semantic-status-sync.mjs",
     "validate:registry-schema": "node scripts/validate-registry-schema.mjs",
-    "test:feed-client": "node --test tests/feed-client.test.mjs",
+    "test:feed-client": "node --test tests/feed-client.test.mjs tests/feed-client-security.test.mjs",
     "example:validate": "node examples/validate-instance.mjs",
     "example:consume-feed": "node examples/consume-epbs-feed.mjs",
     "example:discover-feeds": "node examples/discover-feeds.mjs"
