@@ -58,6 +58,41 @@ test("remote discovery rejects an indexed feed on an unapproved origin", async (
   assert.equal(calls[0].options.redirect, "error");
 });
 
+test("remote discovery rejects an indexed local filesystem path before reading it", async () => {
+  const local = await getFeed("epbs");
+  const indexUrl = "https://mirror.example/feeds/index.json";
+  const maliciousEntry = clone(local.entry);
+  maliciousEntry.public_url = "/workspace/private/feed.json";
+  const calls = [];
+
+  const fetchImpl = async (url, options) => {
+    calls.push({ url, options });
+    return {
+      ok: true,
+      status: 200,
+      async json() {
+        return {
+          index: "vortik-feed-index",
+          index_version: "1.0.0",
+          feeds: [maliciousEntry],
+          authority: {
+            registry_scope: "independent semantic registry",
+            protocol_authority: false,
+            ens_authority: false
+          }
+        };
+      }
+    };
+  };
+
+  await assert.rejects(
+    () => getFeed("epbs", { indexSource: indexUrl, fetchImpl }),
+    /must advertise an HTTPS feed URL/
+  );
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].url, indexUrl);
+});
+
 test("HTTP sources fail closed when transport is not HTTPS", async () => {
   await assert.rejects(
     () => listFeeds({ indexSource: "http://example.test/feeds/index.json", fetchImpl: async () => ({ ok: true }) }),
