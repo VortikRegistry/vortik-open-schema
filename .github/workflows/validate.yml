@@ -59,6 +59,10 @@ jobs:
           retention-days: 1
           path: validation.log
 
+      - name: Remove uploaded validation diagnostic
+        if: always()
+        run: rm -f validation.log
+
       - name: Fail when full validation failed
         if: steps.full_validation.outcome != 'success'
         run: exit 1
