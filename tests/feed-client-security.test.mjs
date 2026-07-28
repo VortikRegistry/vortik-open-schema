@@ -190,16 +190,7 @@ test("callers must explicitly allow any additional remote feed origin", async ()
     status: 200,
     async json() {
       return url === indexUrl
-        ? {
-            index: "vortik-feed-index",
-            index_version: "1.0.0",
-            feeds: [entry],
-            authority: {
-              registry_scope: "independent semantic registry",
-              protocol_authority: false,
-              ens_authority: false
-            }
-          }
+        ? makeIndex(entry)
         : clone(local.feed);
     }
   });
