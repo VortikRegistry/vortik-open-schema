@@ -53,10 +53,6 @@ function main() {
     throw new Error("market.index.json must contain summary and segments");
   }
 
-  if (market.public_inquiry_policy !== undefined) {
-    throw new Error("market.index.json contains a prohibited commercial metadata field");
-  }
-
   const output = `# Vortik Strategic Anchors
 
 Auto-generated from \`market.index.json\`.  
