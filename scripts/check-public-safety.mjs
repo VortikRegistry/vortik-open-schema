@@ -135,9 +135,33 @@ function collectFiles(target) {
   return files;
 }
 
-function isNegativePolicyLanguage(lower, termPattern) {
-  return new RegExp(`\\b(no|not|never|avoid|without|rather than|separate from|exclude|excludes|excluded|forbid|forbids|forbidden|ban|bans|banned|block|blocks|blocked|disallow|disallows|disallowed|reject|rejects|rejected|must not|do not include)\\b.{0,120}${termPattern}`).test(lower)
-    || new RegExp(`${termPattern}.{0,120}\\b(must not|is not allowed|are not allowed|should not|forbidden|banned|blocked|disallowed|rejected|outside public registry data|should not be interpreted|not be interpreted|not be used|does not imply|do not infer|separate from)\\b`).test(lower);
+function matchedClause(line, matchIndex, matchLength) {
+  const separators = /[.;!?:\n]/g;
+  let start = 0;
+  let end = line.length;
+  let separator;
+
+  while ((separator = separators.exec(line)) !== null) {
+    if (separator.index < matchIndex) {
+      start = separator.index + 1;
+      continue;
+    }
+
+    if (separator.index >= matchIndex + matchLength) {
+      end = separator.index;
+      break;
+    }
+  }
+
+  return line.slice(start, end).toLowerCase();
+}
+
+function isNegativePolicyLanguage(line, matcher, match) {
+  const clause = matchedClause(line, match.index, match[0].length);
+  const termPattern = matcher.regex.source;
+  const beforeNegation = new RegExp(`\\b(no|not|never|avoid|without|rather than|separate from|exclude|excludes|excluded|forbid|forbids|forbidden|ban|bans|banned|block|blocks|blocked|disallow|disallows|disallowed|reject|rejects|rejected|must not|do not include)\\b[^.;!?:]{0,80}${termPattern}`);
+  const afterNegation = new RegExp(`${termPattern}[^.;!?:]{0,80}\\b(must not|is not allowed|are not allowed|should not|forbidden|banned|blocked|disallowed|rejected|outside public registry data|should not be interpreted|not be interpreted|not be used|does not imply|do not infer|separate from)\\b`);
+  return beforeNegation.test(clause) || afterNegation.test(clause);
 }
 
 function hasPricingStrategyContext(lower) {
@@ -145,11 +169,11 @@ function hasPricingStrategyContext(lower) {
     || /\b(guidance|range|eth|floor|stretch|valuation|sale|commercial|private|strategy|negotiation)\b.{0,120}\bpricing\b/.test(lower);
 }
 
-function isPolicyOrTechnicalSafe(line, concept) {
+function isPolicyOrTechnicalSafe(line, matcher, match) {
+  const concept = matcher.concept;
   const lower = line.toLowerCase();
-  const termPattern = conceptRegex(concept).source;
 
-  if (isNegativePolicyLanguage(lower, termPattern)) return true;
+  if (isNegativePolicyLanguage(lower, matcher, match)) return true;
 
   if ((concept === 'lead' || concept === 'private lead' || concept === 'lead list')
     && (/class=["'][^"']*\b[\w-]*lead\b/.test(lower) || /^\s*\.[\w-]*lead\b/.test(lower))) return true;
@@ -172,7 +196,16 @@ function isPolicyOrTechnicalSafe(line, concept) {
 }
 
 function unsafeMatches(line) {
-  return MATCHERS.filter((matcher) => matcher.regex.test(line) && !isPolicyOrTechnicalSafe(line, matcher.concept));
+  const findings = [];
+
+  for (const matcher of MATCHERS) {
+    const match = matcher.regex.exec(line);
+    if (match && !isPolicyOrTechnicalSafe(line, matcher, match)) {
+      findings.push(matcher);
+    }
+  }
+
+  return findings;
 }
 
 const UNSAFE_REGRESSION_SAMPLES = [
@@ -182,7 +215,8 @@ const UNSAFE_REGRESSION_SAMPLES = [
   'Private case-by-case review.',
   'Transfer decisions are evaluated privately.',
   'This name is for sale.',
-  'Price disclosed privately.'
+  'Price disclosed privately.',
+  'No public pricing; acquisition inquiries are reviewed.'
 ];
 
 for (const sample of UNSAFE_REGRESSION_SAMPLES) {
@@ -193,6 +227,7 @@ for (const sample of UNSAFE_REGRESSION_SAMPLES) {
 
 const SAFE_REGRESSION_SAMPLES = [
   'The public registry must not contain acquisition inquiries.',
+  'No acquisition inquiries are allowed in public registry data.',
   'Transfer decisions belong outside public registry data.',
   'Do not describe an ENS name as for sale in public registry data.'
 ];
