@@ -92,7 +92,7 @@ test("remote discovery rejects an indexed local filesystem path before reading i
 
   await assert.rejects(
     () => getFeed("epbs", { indexSource: indexUrl, fetchImpl }),
-    /must advertise an HTTPS feed URL/
+    /Feed index entry public_url must be a valid HTTPS URL/
   );
   assert.equal(calls.length, 1);
   assert.equal(calls[0].url, indexUrl);
