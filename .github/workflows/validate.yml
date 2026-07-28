@@ -45,6 +45,19 @@ jobs:
       - name: Run full validation after generation
         run: npm run validate
 
+      - name: Upload generated public boundary outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-public-boundary
+          if-no-files-found: error
+          retention-days: 1
+          path: |
+            market.index.json
+            docs/index.html
+            docs/market.html
+            docs/market.md
+            docs/market.index.json
+
       - name: Verify generated files are committed
         shell: bash
         run: |
