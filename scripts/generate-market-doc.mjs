@@ -54,7 +54,7 @@ function main() {
   }
 
   if (market.public_inquiry_policy !== undefined) {
-    throw new Error("market.index.json must not contain public commercial inquiry policy");
+    throw new Error("market.index.json contains a prohibited commercial metadata field");
   }
 
   const output = `# Vortik Strategic Anchors
