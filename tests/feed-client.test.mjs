@@ -14,6 +14,28 @@ function clone(value) {
   return structuredClone(value);
 }
 
+function makeIndex(entry, authority = {
+  registry_scope: "independent semantic registry",
+  protocol_authority: false,
+  ens_authority: false,
+  note: "Independent semantic data."
+}) {
+  return {
+    $schema: "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/feeds/vortik-feed-index/1.0.0/schema.json",
+    index: "vortik-feed-index",
+    index_version: "1.0.0",
+    registry: {
+      name: "vortik-semantic-registry",
+      version: "0.6.5",
+      last_updated: "2026-07-25",
+      source_of_truth: "schemas"
+    },
+    feeds: [entry],
+    authority,
+    generated_from: ["schema.json", "feed.json"]
+  };
+}
+
 test("listFeeds returns the generated ePBS index entry", async () => {
   const feeds = await listFeeds();
 
@@ -105,16 +127,7 @@ test("local discovery resolves a feed relative to the selected index mirror", as
     await mkdir(mirrorFeeds, { recursive: true });
     const mirroredFeed = clone(local.feed);
     mirroredFeed.instance.summary = "Mirror-specific fixture";
-    await writeFile(join(mirrorFeeds, "index.json"), JSON.stringify({
-      index: "vortik-feed-index",
-      index_version: "1.0.0",
-      feeds: [local.entry],
-      authority: {
-        registry_scope: "independent semantic registry",
-        protocol_authority: false,
-        ens_authority: false
-      }
-    }), "utf8");
+    await writeFile(join(mirrorFeeds, "index.json"), JSON.stringify(makeIndex(local.entry)), "utf8");
     await writeFile(join(mirrorFeeds, "epbs.json"), JSON.stringify(mirroredFeed), "utf8");
 
     const result = await getFeed("epbs", {
@@ -135,16 +148,12 @@ test("HTTP discovery rejects an authority-claiming index scope", async () => {
     ok: true,
     status: 200,
     async json() {
-      return {
-        index: "vortik-feed-index",
-        index_version: "1.0.0",
-        feeds: [local.entry],
-        authority: {
-          registry_scope: "official Ethereum registry",
-          protocol_authority: false,
-          ens_authority: false
-        }
-      };
+      return makeIndex(local.entry, {
+        registry_scope: "official Ethereum registry",
+        protocol_authority: false,
+        ens_authority: false,
+        note: "Unsafe authority fixture."
+      });
     }
   });
 
@@ -163,16 +172,7 @@ test("HTTP discovery uses injected fetch and the indexed public URL", async () =
   const fetchImpl = async (url) => {
     calls.push(url);
     const body = url === indexUrl
-      ? {
-          index: "vortik-feed-index",
-          index_version: "1.0.0",
-          feeds: [local.entry],
-          authority: {
-            registry_scope: "independent semantic registry",
-            protocol_authority: false,
-            ens_authority: false
-          }
-        }
+      ? makeIndex(local.entry)
       : local.feed;
 
     return {
