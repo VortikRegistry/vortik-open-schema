@@ -23,6 +23,9 @@ const SCAN_TARGETS = [
   'registry-map.md',
   'market.index.json',
   'anchors.index.json',
+  'scripts/generate-market-index.mjs',
+  'scripts/generate-market-doc.mjs',
+  'scripts/generate-market-html.mjs',
 ];
 
 const EXCLUDED_PATHS = new Set([
@@ -31,7 +34,7 @@ const EXCLUDED_PATHS = new Set([
 ]);
 
 const EXCLUDED_DIR_SEGMENTS = new Set(['.git', 'node_modules']);
-const TEXT_EXTENSIONS = new Set(['.json', '.md', '.html', '.htm', '.txt', '.yml', '.yaml']);
+const TEXT_EXTENSIONS = new Set(['.json', '.md', '.html', '.htm', '.txt', '.yml', '.yaml', '.mjs', '.js']);
 
 const BLOCKED_CONCEPTS = [
   { concept: 'buyer', reason: 'buyer targeting belongs outside public registry data' },
@@ -61,6 +64,18 @@ const BLOCKED_CONCEPTS = [
   { concept: 'private watchlist', reason: 'private watchlists belong outside public registry data' },
   { concept: 'sales strategy', reason: 'sales strategy belongs outside public registry data' },
   { concept: 'sales pitch', reason: 'sales pitch belongs outside public registry data' },
+  { concept: 'acquisition inquiry', reason: 'acquisition inquiries belong outside public registry data' },
+  { concept: 'acquisition inquiries', reason: 'acquisition inquiries belong outside public registry data' },
+  { concept: 'qualified acquisition inquiry', reason: 'acquisition inquiries belong outside public registry data' },
+  { concept: 'qualified acquisition inquiries', reason: 'acquisition inquiries belong outside public registry data' },
+  { concept: 'strategic inquiries reviewed', reason: 'commercial inquiry status belongs outside public registry data' },
+  { concept: 'private case by case review', reason: 'private commercial review belongs outside public registry data' },
+  { concept: 'transfer decisions', reason: 'transfer intent belongs outside public registry data' },
+  { concept: 'sale inquiry', reason: 'sale inquiries belong outside public registry data' },
+  { concept: 'sale inquiries', reason: 'sale inquiries belong outside public registry data' },
+  { concept: 'for sale', reason: 'availability belongs outside public registry data' },
+  { concept: 'price disclosed privately', reason: 'private pricing belongs outside public registry data' },
+  { concept: 'public inquiry policy', reason: 'commercial inquiry policy belongs outside public registry data' },
 ];
 
 function toPosix(filePath) {
@@ -132,28 +147,60 @@ function hasPricingStrategyContext(lower) {
 
 function isPolicyOrTechnicalSafe(line, concept) {
   const lower = line.toLowerCase();
+  const termPattern = conceptRegex(concept).source;
+
+  if (isNegativePolicyLanguage(lower, termPattern)) return true;
 
   if ((concept === 'lead' || concept === 'private lead' || concept === 'lead list')
     && (/class=["'][^"']*\b[\w-]*lead\b/.test(lower) || /^\s*\.[\w-]*lead\b/.test(lower))) return true;
 
   if (concept === 'pricing') {
-    if (hasPricingStrategyContext(lower)) return isNegativePolicyLanguage(lower, '\\bpricing\\b');
-    if (/\b(no|not|avoid|without|rather than)\b.{0,100}\bpricing\b/.test(lower)) return true;
+    if (hasPricingStrategyContext(lower)) return false;
     if (/\bpricing\b.{0,100}\b(relevance|input|claim|claims|assumption|assumptions|interpretation|surface|signal|policy)\b/.test(lower)) return true;
     if (/\b(gas|temporal|execution value|cryptographic proofs|proof-generation|repricing|publicly_priced|not_publicly_priced|schemas)\b/.test(lower)) return true;
   }
 
   if (concept.includes('buyer') || concept === 'buyer') {
-    if (isNegativePolicyLanguage(lower, '\\bbuyer')) return true;
     if (/\brather than\b.{0,120}\bbuyer segment\b/.test(lower)) return true;
     if (/\b(should not|not) be interpreted\b.{0,120}\b(imply|implies)\b.{0,80}\bbuyer\b/.test(lower)) return true;
     if (/\b(imply|implies)\s+buyer targeting or commercial demand\b/.test(lower)) return true;
-    if (/\b(imply|implies)\b.{0,80}\bbuyer\b/.test(lower) && isNegativePolicyLanguage(lower, '\\b(imply|implies)\\b')) return true;
   }
 
   if (concept === 'price range' && /\b(no|not|avoid|without|do not include)\b.{0,80}\bprice ranges?\b/.test(lower)) return true;
 
   return false;
+}
+
+function unsafeMatches(line) {
+  return MATCHERS.filter((matcher) => matcher.regex.test(line) && !isPolicyOrTechnicalSafe(line, matcher.concept));
+}
+
+const UNSAFE_REGRESSION_SAMPLES = [
+  'Strategic acquisition inquiries may be reviewed case by case.',
+  'Available for qualified acquisition inquiry.',
+  'Strategic inquiries reviewed.',
+  'Private case-by-case review.',
+  'Transfer decisions are evaluated privately.',
+  'This name is for sale.',
+  'Price disclosed privately.'
+];
+
+for (const sample of UNSAFE_REGRESSION_SAMPLES) {
+  if (unsafeMatches(sample).length === 0) {
+    throw new Error(`Public safety regression failed to reject: ${sample}`);
+  }
+}
+
+const SAFE_REGRESSION_SAMPLES = [
+  'The public registry must not contain acquisition inquiries.',
+  'Transfer decisions belong outside public registry data.',
+  'Do not describe an ENS name as for sale in public registry data.'
+];
+
+for (const sample of SAFE_REGRESSION_SAMPLES) {
+  if (unsafeMatches(sample).length !== 0) {
+    throw new Error(`Public safety regression rejected policy language: ${sample}`);
+  }
 }
 
 const files = [...new Set(SCAN_TARGETS.flatMap(collectFiles))].sort();
@@ -164,10 +211,8 @@ for (const file of files) {
   if (isExcluded(relative) || !isTextFile(file)) continue;
   const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/);
   lines.forEach((line, index) => {
-    for (const matcher of MATCHERS) {
-      if (matcher.regex.test(line) && !isPolicyOrTechnicalSafe(line, matcher.concept)) {
-        findings.push({ file: relative, line: index + 1, concept: matcher.concept, reason: matcher.reason });
-      }
+    for (const matcher of unsafeMatches(line)) {
+      findings.push({ file: relative, line: index + 1, concept: matcher.concept, reason: matcher.reason });
     }
   });
 }
