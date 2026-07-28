@@ -42,3 +42,34 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Verify deployed registry and feed artifacts
+        shell: bash
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          base_url="${PAGE_URL%/}"
+
+          for relative_path in registry.json feeds/index.json feeds/epbs.json; do
+            output="/tmp/${relative_path//\//_}"
+            verified=false
+
+            for attempt in {1..12}; do
+              if curl --fail --silent --show-error --location \
+                -H "Cache-Control: no-cache" \
+                "${base_url}/${relative_path}?deployment=${GITHUB_SHA}" \
+                --output "${output}" \
+                && cmp --silent "docs/${relative_path}" "${output}"; then
+                verified=true
+                break
+              fi
+
+              sleep 5
+            done
+
+            if [[ "${verified}" != "true" ]]; then
+              echo "Published artifact does not match docs/${relative_path}" >&2
+              exit 1
+            fi
+          done
