@@ -2,7 +2,6 @@ import fs from "fs";
 import path from "path";
 
 const ROOT = process.cwd();
-
 const MARKET_INDEX_PATH = path.join(ROOT, "market.index.json");
 const OUTPUT_PATH = path.join(ROOT, "docs", "market.md");
 
@@ -27,6 +26,7 @@ function renderSection(title, description, items) {
     return `- **${normalizeText(item.ens)}** — ${normalizeText(item.canonical_term)}  
   - Registry ID: \`${normalizeText(item.id)}\`  
   - Priority: ${normalizeText(item.priority)}  
+  - Visibility: ${normalizeText(item.visibility)}  
   - Classification: ${normalizeText(item.classification)}  
   - Status: ${normalizeText(item.status)}  
   - Stage: ${normalizeText(item.stage)}  
@@ -60,21 +60,7 @@ Do not edit manually.
 
 This document presents selected ENS anchors tracked by the Vortik Semantic Registry.
 
-It is a public registry view, not an official protocol specification and not a market-price document.
-
-Strategic acquisition inquiries may be reviewed case by case.
-No public pricing is provided.
-Transfer decisions are evaluated privately.
-This registry is not an auction or public price list.
-
----
-
-## Public inquiry policy
-
-- Inquiry status: ${normalizeText(market.public_inquiry_policy?.inquiry_status)}
-- Pricing policy: ${normalizeText(market.public_inquiry_policy?.pricing_policy)}
-- Transfer policy: ${normalizeText(market.public_inquiry_policy?.transfer_policy)}
-- Contact note: ${normalizeText(market.public_inquiry_policy?.public_contact_note)}
+It is a public technical registry view, not an official protocol specification. The document reports semantic priority, visibility, classification, status, stage and type only.
 
 ---
 
@@ -90,7 +76,7 @@ This registry is not an auction or public price list.
 
 ${renderSection(
   "Featured",
-  "High-signal anchors with strong strategic visibility inside the registry.",
+  "High-signal anchors with strong technical visibility inside the registry.",
   market.segments.featured
 )}${renderSection(
   "Standard",
@@ -102,12 +88,11 @@ ${renderSection(
   market.segments.background
 )}${renderSection(
   "Hidden",
-  "Anchors hidden from standard strategic visibility outputs.",
+  "Anchors hidden from standard technical visibility outputs.",
   market.segments.hidden
 )}`;
 
   fs.writeFileSync(OUTPUT_PATH, output.trimEnd() + "\n");
-
   console.log("✅ docs/market.md generated");
 }
 

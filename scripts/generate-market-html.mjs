@@ -9,13 +9,6 @@ const priorityOrder = {
   low: 1
 };
 
-const publicInquiryPolicy = {
-  inquiryStatus: "Strategic inquiries reviewed",
-  pricingPolicy: "No public pricing",
-  transferPolicy: "Private case-by-case review",
-  note: "Strategic acquisition inquiries may be reviewed case by case. No public pricing is provided."
-};
-
 const displayNameOverrides = {
   ssf: "fastfinality.eth"
 };
@@ -106,651 +99,174 @@ function sortAnchors(items) {
   });
 }
 
-const featured = sortAnchors(anchors.filter((a) => a.market?.visibility === "featured"));
-const standard = sortAnchors(anchors.filter((a) => a.market?.visibility === "standard"));
-const background = sortAnchors(anchors.filter((a) => a.market?.visibility === "background"));
+const featured = sortAnchors(anchors.filter((anchor) => anchor.market?.visibility === "featured"));
+const standard = sortAnchors(anchors.filter((anchor) => anchor.market?.visibility === "standard"));
+const background = sortAnchors(anchors.filter((anchor) => anchor.market?.visibility === "background"));
 
 function renderCard(anchor) {
+  const classification = escapeHtml(anchor.classification);
+  const status = escapeHtml(anchor.status_label || anchor.status);
+  const priority = escapeHtml(anchor.market?.priority || "unspecified");
+  const stage = escapeHtml(anchor.stage || "unspecified");
+
   return `
-      <div class="card">
-        <div class="card-top">
-          <div class="card-name">${escapeHtml(getDisplayName(anchor))}</div>
-        </div>
+      <article class="card">
+        <div class="card-name">${escapeHtml(getDisplayName(anchor))}</div>
         <div class="card-term">
-          <strong>${escapeHtml(getCanonical(anchor))}</strong><br>
-          ${escapeHtml(getRole(anchor))}
+          <strong>${escapeHtml(getCanonical(anchor))}</strong>
+          <span>${escapeHtml(getRole(anchor))}</span>
         </div>
-        <div class="card-footer">
-          <span class="badge badge-inquiry">${publicInquiryPolicy.inquiryStatus}</span>
-          <span class="card-note">${publicInquiryPolicy.transferPolicy}</span>
+        <div class="card-meta">
+          <span>${classification}</span>
+          <span>${status}</span>
+          <span>priority:${priority}</span>
+          <span>stage:${stage}</span>
         </div>
-      </div>`;
+      </article>`;
 }
 
-const featuredHtml = featured.map((a) => renderCard(a)).join("\n");
-const standardHtml = standard.map((a) => renderCard(a)).join("\n");
-const backgroundHtml = background.map((a) => renderCard(a)).join("\n");
+function renderSection(id, title, description, items, gridClass) {
+  if (items.length === 0) return "";
+
+  return `
+    <section class="section" id="${id}">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">${escapeHtml(title)}</div>
+          <h2>${escapeHtml(description)}</h2>
+        </div>
+        <div class="section-count">${items.length} anchors</div>
+      </div>
+      <div class="${gridClass}">${items.map(renderCard).join("\n")}
+      </div>
+    </section>`;
+}
 
 const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Vortik — Strategic Anchors</title>
-  <meta
-    name="description"
-    content="Strategic ENS anchors indexed by Vortik against Ethereum protocol primitives, roles, constraints and coordination mechanisms."
-  />
-
+  <meta name="description" content="Technical semantic prioritization of ENS-linked Ethereum coordination anchors indexed by Vortik." />
   <style>
     :root {
-      --bg: #04060a;
-      --surface-1: #080d14;
-      --surface-2: #0c1320;
-      --border: rgba(255,255,255,0.07);
-      --border-bright: rgba(255,255,255,0.14);
-      --text: #dce8f8;
-      --muted: #7a90aa;
-      --dim: #4a5a6e;
-      --green: #2ecc8a;
-      --blue: #4d9eff;
-      --violet: #9f7aea;
-      --white-dim: rgba(220,232,248,0.58);
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      --display: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --bg:#04060a;
+      --surface:#0a1018;
+      --surface-2:#0e1622;
+      --line:rgba(255,255,255,.08);
+      --text:#e7eef9;
+      --muted:#93a4b9;
+      --blue:#68a8ff;
+      --green:#45d39b;
+      --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+      --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     }
-
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: var(--display);
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      font-family:var(--sans);
       background:
-        radial-gradient(ellipse 900px 500px at 75% -5%, rgba(77,158,255,0.10) 0%, transparent 65%),
-        radial-gradient(ellipse 700px 400px at 15% 5%, rgba(46,204,138,0.07) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 0;
+        radial-gradient(900px 480px at 80% -5%,rgba(104,168,255,.11),transparent 62%),
+        radial-gradient(700px 420px at 10% 0%,rgba(69,211,155,.07),transparent 60%),
+        var(--bg);
     }
-
-    .wrap {
-      position: relative;
-      z-index: 1;
-      width: min(1100px, calc(100% - 40px));
-      margin: 0 auto;
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(1120px,calc(100% - 36px));margin:0 auto}
+    .topbar{
+      position:sticky;top:0;z-index:20;
+      background:rgba(4,6,10,.82);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--line);
     }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(20px);
-      background: rgba(4,6,10,0.80);
-      border-bottom: 1px solid var(--border);
+    .topbar-inner{min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{font-weight:800;letter-spacing:-.02em}
+    .brand small{display:block;margin-top:3px;color:var(--muted);font:11px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:10px 14px;border:1px solid var(--line);border-radius:12px;
+      color:#dce8f8;background:rgba(255,255,255,.025);font:12px var(--mono)
     }
-
-    .topbar-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 64px;
-      gap: 16px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
-
-    .brand-mark {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #0e1f38, #081424);
-      border: 1px solid rgba(77,158,255,0.25);
-      display: grid;
-      place-items: center;
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--blue);
-      flex: 0 0 auto;
-    }
-
-    .brand-text {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--text);
-      letter-spacing: -0.02em;
-    }
-
-    .brand-sub {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .nav-links a {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--muted);
-      text-decoration: none;
-      padding: 7px 12px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-    }
-
-    .nav-links a:hover {
-      color: var(--text);
-      border-color: var(--border);
-      background: rgba(255,255,255,0.03);
-    }
-
-    .hero {
-      padding: 72px 0 48px;
-    }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 24px;
-      padding: 6px 12px;
-      border: 1px solid rgba(77,158,255,0.24);
-      border-radius: 999px;
-      background: rgba(77,158,255,0.07);
-    }
-
-    .hero-title {
-      font-size: clamp(36px, 5.5vw, 64px);
-      font-weight: 850;
-      letter-spacing: -0.05em;
-      line-height: 1.02;
-      color: var(--text);
-      max-width: 860px;
-      margin-bottom: 20px;
-    }
-
-    .hero-title em {
-      font-style: normal;
-      background: linear-gradient(135deg, #4d9eff, #2ecc8a);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-lead {
-      font-size: 16px;
-      color: var(--muted);
-      max-width: 760px;
-      line-height: 1.72;
-      font-family: var(--mono);
-      margin-bottom: 32px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .btn-primary,
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 13px 22px;
-      border-radius: 12px;
-      font-family: var(--mono);
-      font-size: 13px;
-      text-decoration: none;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, rgba(77,158,255,0.18), rgba(46,204,138,0.12));
-      border: 1px solid rgba(77,158,255,0.32);
-      color: var(--text);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--muted);
-    }
-
-    .hero-stat-row {
-      display: flex;
-      gap: 32px;
-      flex-wrap: wrap;
-      margin-top: 48px;
-      padding-top: 32px;
-      border-top: 1px solid var(--border);
-    }
-
-    .hero-stat-value {
-      font-size: 26px;
-      font-weight: 850;
-      letter-spacing: -0.04em;
-      color: var(--text);
-    }
-
-    .hero-stat-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--dim);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-top: 4px;
-    }
-
-    .section {
-      margin: 56px 0;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    .section-title {
-      font-size: 13px;
-      font-family: var(--mono);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .section-title::before {
-      content: "";
-      display: block;
-      width: 24px;
-      height: 1px;
-      background: var(--border-bright);
-    }
-
-    .section-count {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--dim);
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .card {
-      position: relative;
-      padding: 22px 22px 20px;
-      background: var(--surface-1);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      overflow: hidden;
-    }
-
-    .card::after {
-      content: "";
-      position: absolute;
-      top: -60px;
-      right: -60px;
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    .card::after {
-      background: radial-gradient(circle, rgba(77,158,255,0.10), transparent 70%);
-    }
-
-    .card-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .card-name {
-      font-size: 19px;
-      font-weight: 850;
-      letter-spacing: -0.03em;
-      color: var(--text);
-      word-break: break-word;
-    }
-
-    .card-term {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.65;
-      margin-bottom: 18px;
-    }
-
-    .card-term strong {
-      color: var(--text);
-      font-weight: 500;
-    }
-
-    .card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 10px;
-      border-radius: 999px;
-      font-family: var(--mono);
-      font-size: 11px;
-      border: 1px solid;
-    }
-
-    .badge::before {
-      content: "";
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: currentColor;
-    }
-
-    .badge-inquiry {
-      color: var(--blue);
-      border-color: rgba(77,158,255,0.25);
-      background: rgba(77,158,255,0.06);
-    }
-
-    .card-note {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--dim);
-    }
-
-    .contact-section {
-      margin: 56px 0 80px;
-      padding: 36px;
-      background: var(--surface-1);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 32px;
-      flex-wrap: wrap;
-    }
-
-    .contact-left h3 {
-      font-size: 22px;
-      font-weight: 850;
-      letter-spacing: -0.03em;
-      margin-bottom: 10px;
-    }
-
-    .contact-left p {
-      font-family: var(--mono);
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.68;
-      max-width: 560px;
-    }
-
-    .contact-right {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px 0 48px;
-    }
-
-    .footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .footer-copy,
-    .footer-links a {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--dim);
-      text-decoration: none;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 20px;
-    }
-
-    @media (max-width: 860px) {
-      .grid-3 {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .nav-links {
-        display: none;
-      }
-    }
-
-    @media (max-width: 580px) {
-      .grid-2,
-      .grid-3 {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding: 48px 0 32px;
-      }
-
-      .hero-title {
-        font-size: 34px;
-      }
-
-      .hero-stat-row {
-        gap: 20px;
-      }
-
-      .contact-section {
-        padding: 24px;
-        flex-direction: column;
-      }
-
-      .contact-right {
-        width: 100%;
-      }
-
-      .btn-primary,
-      .btn-secondary {
-        width: 100%;
-      }
-
-      .section {
-        margin: 48px 0;
-      }
-    }
+    .nav a:hover,.button:hover{border-color:rgba(104,168,255,.35);background:rgba(104,168,255,.08)}
+    .hero{padding:82px 0 48px}
+    .eyebrow{color:var(--blue);font:11px var(--mono);letter-spacing:.14em;text-transform:uppercase}
+    h1{max-width:900px;margin:18px 0 18px;font-size:clamp(38px,6vw,70px);line-height:1;letter-spacing:-.055em}
+    .lead{max-width:820px;color:var(--muted);font-size:17px;line-height:1.7}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+    .button.primary{background:linear-gradient(135deg,rgba(104,168,255,.18),rgba(69,211,155,.1));border-color:rgba(104,168,255,.3)}
+    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:44px}
+    .stat{padding:18px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025)}
+    .stat strong{display:block;font-size:25px}
+    .stat span{display:block;margin-top:5px;color:var(--muted);font:11px var(--mono);text-transform:uppercase;letter-spacing:.06em}
+    .section{padding:38px 0}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:18px}
+    .section-kicker{color:var(--green);font:11px var(--mono);letter-spacing:.12em;text-transform:uppercase}
+    h2{margin:8px 0 0;font-size:clamp(23px,3vw,34px);letter-spacing:-.035em}
+    .section-count{color:var(--muted);font:12px var(--mono)}
+    .grid-2,.grid-3{display:grid;gap:14px}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .card{padding:19px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01)),var(--surface)}
+    .card-name{font:700 15px var(--mono);color:#dce9ff;word-break:break-word}
+    .card-term{margin-top:14px;color:var(--muted);font-size:14px;line-height:1.55}
+    .card-term strong{display:block;margin-bottom:6px;color:var(--text);font-size:16px}
+    .card-term span{display:block}
+    .card-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px}
+    .card-meta span{padding:6px 8px;border:1px solid var(--line);border-radius:999px;background:var(--surface-2);color:#c8d6e8;font:10px var(--mono)}
+    .notice{margin:42px 0 20px;padding:22px;border:1px solid var(--line);border-radius:18px;background:rgba(104,168,255,.045);color:var(--muted);line-height:1.65}
+    .notice strong{color:var(--text)}
+    footer{padding:34px 0 58px;color:var(--muted);font:12px var(--mono);border-top:1px solid var(--line);margin-top:42px}
+    @media(max-width:850px){.stats,.grid-3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:620px){.nav{display:none}.hero{padding-top:52px}.stats,.grid-2,.grid-3{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}}
   </style>
 </head>
 <body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="./index.html">Vortik Semantic Registry<small>technical strategic anchors</small></a>
+      <nav class="nav">
+        <a href="./index.html">Registry</a>
+        <a href="./app.html">App</a>
+        <a href="./market.index.json">Strategic index</a>
+        <a href="https://github.com/VortikRegistry/vortik-open-schema" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </header>
 
-<header class="topbar">
-  <div class="wrap topbar-inner">
-    <a class="brand" href="./index.html">
-      <div class="brand-mark">VSR</div>
-      <div>
-        <div class="brand-text">Vortik</div>
-        <div class="brand-sub">Semantic Registry</div>
+  <main class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Independent semantic infrastructure</div>
+      <h1>Ethereum coordination anchors mapped through technical registry context.</h1>
+      <p class="lead">Selected ENS-linked naming surfaces indexed against Ethereum protocol primitives, roles, constraints and external coordination mechanisms. This view reports technical semantic alignment and provenance only.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="./index.html">View registry</a>
+        <a class="button" href="./market.index.json">Open machine-readable index</a>
+        <a class="button" href="https://github.com/VortikRegistry/vortik-open-schema" target="_blank" rel="noopener noreferrer">View public repository</a>
       </div>
-    </a>
-    <nav class="nav-links">
-      <a href="./index.html">Registry</a>
-      <a href="./app.html">App</a>
-      <a href="./market.index.json">Strategic Index</a>
-      <a href="https://github.com/VortikRegistry" target="_blank" rel="noopener noreferrer">GitHub</a>
-    </nav>
-  </div>
-</header>
-
-<div class="wrap">
-  <section class="hero">
-    <div class="hero-eyebrow">Strategic Anchor Registry</div>
-    <h1 class="hero-title">
-      Ethereum coordination anchors<br>
-      mapped through <em>semantic infrastructure</em>.
-    </h1>
-    <p class="hero-lead">
-      Selected ENS anchors indexed by Vortik against Ethereum protocol primitives, roles, constraints and coordination mechanisms.
-      This page is a public registry view for technical alignment, stewardship context and infrastructure relevance.
-      Strategic acquisition inquiries may be reviewed case by case. No public pricing is provided.
-    </p>
-    <div class="hero-actions">
-      <a class="btn-primary" href="https://x.com/VortikRegistry" target="_blank" rel="noopener noreferrer">
-        ↗ Request technical alignment discussion via X
-      </a>
-      <a class="btn-secondary" href="./index.html">
-        View registry
-      </a>
-    </div>
-    <div class="hero-stat-row">
-      <div class="hero-stat">
-        <div class="hero-stat-value">${anchors.length}</div>
-        <div class="hero-stat-label">Indexed anchors</div>
+      <div class="stats">
+        <div class="stat"><strong>${anchors.length}</strong><span>Indexed anchors</span></div>
+        <div class="stat"><strong>${featured.length}</strong><span>Featured</span></div>
+        <div class="stat"><strong>${standard.length}</strong><span>Standard</span></div>
+        <div class="stat"><strong>${background.length}</strong><span>Background</span></div>
       </div>
-      <div class="hero-stat">
-        <div class="hero-stat-value">${featured.length}</div>
-        <div class="hero-stat-label">Core protocol</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-value">EIP-7732</div>
-        <div class="hero-stat-label">ePBS reference</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-value">EIP-7805</div>
-        <div class="hero-stat-label">Inclusion-list reference</div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section">
-    <div class="section-header">
-      <div class="section-title">Core Strategic Anchors</div>
-      <div class="section-count">${featured.length} anchors — protocol-aligned context</div>
-    </div>
-    <div class="grid-2">
-${featuredHtml}
-    </div>
-  </section>
+${renderSection("featured", "Featured", "Protocol-aligned technical context", featured, "grid-2")}
+${renderSection("standard", "Standard", "Monitored semantic and coordination context", standard, "grid-3")}
+${renderSection("background", "Background", "Legacy and comparison context", background, "grid-3")}
 
-  <section class="section">
-    <div class="section-header">
-      <div class="section-title">Selective / Monitored Anchors</div>
-      <div class="section-count">${standard.length} anchors — monitored technical context</div>
-    </div>
-    <div class="grid-3">
-${standardHtml}
-    </div>
-  </section>
+    <section class="notice">
+      <strong>Registry boundary.</strong> Vortik is an independent research artifact. Priority and visibility are technical editorial signals and do not confer protocol authority.
+    </section>
+  </main>
 
-  <section class="section">
-    <div class="section-header">
-      <div class="section-title">Background / Legacy Anchors</div>
-      <div class="section-count">${background.length} anchors — lower-priority context</div>
-    </div>
-    <div class="grid-3">
-${backgroundHtml}
-    </div>
-  </section>
-
-  <section class="contact-section">
-    <div class="contact-left">
-      <h3>Technical alignment discussion</h3>
-      <p>
-        Vortik operates as an independent semantic registry.
-        Strategic acquisition inquiries may be reviewed case by case.
-        No public pricing is provided. Transfer decisions are evaluated privately.
-        This registry is not an auction or public price list.
-      </p>
-    </div>
-    <div class="contact-right">
-      <a class="btn-primary" href="https://x.com/VortikRegistry" target="_blank" rel="noopener noreferrer">
-        ↗ Request technical alignment discussion via X
-      </a>
-      <a class="btn-secondary" href="./index.html">
-        View registry context
-      </a>
-    </div>
-  </section>
-</div>
-
-<footer>
-  <div class="wrap footer-inner">
-    <div class="footer-copy">
-      © 2026 Vortik — Semantic Registry
-    </div>
-    <div class="footer-links">
-      <a href="./index.html">Registry</a>
-      <a href="./app.html">App</a>
-      <a href="./market.index.json">Strategic Index</a>
-      <a href="https://github.com/VortikRegistry" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <a href="https://x.com/VortikRegistry" target="_blank" rel="noopener noreferrer">X</a>
-    </div>
-  </div>
-</footer>
-
+  <footer>
+    <div class="wrap">© 2026 Vortik Semantic Registry · Independent research artifact · Not affiliated with the Ethereum Foundation</div>
+  </footer>
 </body>
 </html>
 `;

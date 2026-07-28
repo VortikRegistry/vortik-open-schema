@@ -1,7 +1,6 @@
 import fs from "fs";
 
 const registry = JSON.parse(fs.readFileSync("registry.json", "utf8"));
-
 const anchors = registry.anchors || [];
 
 const priorityOrder = {
@@ -16,13 +15,6 @@ const allowedVisibility = new Set([
   "background",
   "hidden"
 ]);
-
-const publicInquiryPolicy = {
-  inquiry_status: "strategic_inquiries_reviewed",
-  pricing_policy: "not_publicly_priced",
-  transfer_policy: "case_by_case_private_review",
-  public_contact_note: "Strategic acquisition inquiries may be reviewed case by case. No public pricing is provided."
-};
 
 function registryLastUpdatedTimestamp() {
   const value = registry.last_updated;
@@ -83,6 +75,7 @@ for (const anchor of sorted) {
     ens: anchor.ens,
     canonical_term: anchor.canonical_term,
     priority: anchor.market?.priority,
+    visibility,
     classification: anchor.classification,
     status: anchor.status,
     status_label: anchor.status_label,
@@ -93,10 +86,10 @@ for (const anchor of sorted) {
 
 const marketIndex = {
   registry: registry.registry,
-  index_version: "1.0.1",
+  index_version: "1.1.0",
   generated_from: "registry.json",
   last_updated: registryLastUpdatedTimestamp(),
-  public_inquiry_policy: publicInquiryPolicy,
+  scope: "technical semantic prioritization only",
   summary: {
     total: anchors.length,
     featured: grouped.featured.length,
@@ -110,10 +103,9 @@ const marketIndex = {
 const output = JSON.stringify(marketIndex, null, 2) + "\n";
 
 fs.writeFileSync("market.index.json", output);
-
 fs.mkdirSync("docs", { recursive: true });
 fs.writeFileSync("docs/market.index.json", output);
 
 console.log("✅ market.index.json generated");
 console.log("✅ docs/market.index.json generated");
-console.log("✅ public_inquiry_policy added for controlled strategic inquiries");
+console.log("✅ strategic index contains technical registry metadata only");

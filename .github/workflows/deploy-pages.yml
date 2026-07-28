@@ -1,0 +1,90 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/**"
+      - ".github/workflows/deploy-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read existing GitHub Pages configuration
+        uses: actions/configure-pages@v5
+
+      - name: Stamp deployment-specific artifact
+        shell: bash
+        run: |
+          printf '{"commit":"%s","run_id":"%s"}\n' \
+            "${GITHUB_SHA}" "${GITHUB_RUN_ID}" \
+            > docs/pages-deployment.json
+
+      - name: Upload deterministic docs artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Verify deployed public artifacts
+        shell: bash
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          base_url="${PAGE_URL%/}"
+
+          for relative_path in \
+            pages-deployment.json \
+            registry.json \
+            market.index.json \
+            index.html \
+            market.html \
+            feeds/index.json \
+            feeds/epbs.json; do
+            output="/tmp/${relative_path//\//_}"
+            verified=false
+
+            for attempt in {1..12}; do
+              if curl --fail --silent --show-error --location \
+                --connect-timeout 5 \
+                --max-time 15 \
+                -H "Cache-Control: no-cache" \
+                "${base_url}/${relative_path}?deployment=${GITHUB_SHA}" \
+                --output "${output}" \
+                && cmp --silent "docs/${relative_path}" "${output}"; then
+                verified=true
+                break
+              fi
+
+              sleep 5
+            done
+
+            if [[ "${verified}" != "true" ]]; then
+              echo "Published artifact does not match docs/${relative_path}" >&2
+              exit 1
+            fi
+          done
