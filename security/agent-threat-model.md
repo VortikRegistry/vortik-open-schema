@@ -34,6 +34,8 @@ The reusable feed client:
 - parses artifacts as JSON data and never executes text as instructions;
 - requires the independent-registry authority boundary;
 - verifies feed identity, contract version, schema and duplicated semantic metadata;
+- rejects unexpected fields in index, registry metadata, entries, contracts, authority objects, feed envelopes and anchor metadata;
+- treats the schema-defined `instance` payload as untrusted inert data rather than control instructions;
 - restricts repository-relative paths to `feeds/<id>.json`;
 - requires HTTPS for remote sources;
 - rejects HTTP redirects;
