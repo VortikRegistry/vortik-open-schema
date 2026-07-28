@@ -33,6 +33,13 @@ jobs:
       - name: Read existing GitHub Pages configuration
         uses: actions/configure-pages@v5
 
+      - name: Stamp deployment-specific artifact
+        shell: bash
+        run: |
+          printf '{"commit":"%s","run_id":"%s"}\n' \
+            "${GITHUB_SHA}" "${GITHUB_RUN_ID}" \
+            > docs/pages-deployment.json
+
       - name: Upload deterministic docs artifact
         uses: actions/upload-pages-artifact@v4
         with:
@@ -42,7 +49,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Verify deployed registry and feed artifacts
+      - name: Verify deployed public artifacts
         shell: bash
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
@@ -50,7 +57,14 @@ jobs:
           set -euo pipefail
           base_url="${PAGE_URL%/}"
 
-          for relative_path in registry.json feeds/index.json feeds/epbs.json; do
+          for relative_path in \
+            pages-deployment.json \
+            registry.json \
+            market.index.json \
+            index.html \
+            market.html \
+            feeds/index.json \
+            feeds/epbs.json; do
             output="/tmp/${relative_path//\//_}"
             verified=false
 
