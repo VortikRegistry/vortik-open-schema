@@ -1,0 +1,1 @@
+trigger cleanup after the workflow exists on the branch
