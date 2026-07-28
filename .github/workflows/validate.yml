@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: vortik-registry-validation-${{ github.ref }}
@@ -19,10 +19,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout cleanup branch
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: fix/restore-pages-deployment
           fetch-depth: 0
 
       - name: Setup Node.js
@@ -46,21 +45,16 @@ jobs:
       - name: Run full validation after generation
         run: npm run validate
 
-      - name: Commit validated generated public outputs
+      - name: Verify generated files are committed
         shell: bash
         run: |
-          set -euo pipefail
-          git add market.index.json docs/index.html docs/market.html docs/market.md docs/market.index.json
-
-          if git diff --cached --quiet; then
-            echo "Generated public outputs are already synchronized."
-            exit 0
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo "Generated files are out of date or generation is not deterministic."
+            echo "Run 'npm run generate', review the changes, and commit them in the PR branch."
+            git status --short
+            git diff --exit-code || true
+            exit 1
           fi
 
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "generate: synchronize neutral public boundary outputs"
-          git push origin HEAD:fix/restore-pages-deployment
-
       - name: Done
-        run: echo "🎯 Vortik registry validation and generated-output synchronization completed"
+        run: echo "🎯 Vortik registry validation completed without repository writes"
