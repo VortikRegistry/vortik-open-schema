@@ -174,6 +174,10 @@ function assertSemanticExchange(requestValue, value) {
     throw new Error("Normalized name must exactly equal the value derived from the original submitted query");
   }
 
+  if (expectedNormalizedName === null && value.result.state !== "invalid_input") {
+    throw new Error("Unsupported or invalid normalized input must use invalid_input");
+  }
+
   if (normalizedName !== null && !ASCII_NORMALIZED_ENS.test(normalizedName)) {
     throw new Error("Normalized name is outside the currently supported fail-closed ASCII ENS subset");
   }
@@ -210,8 +214,8 @@ function assertSemanticExchange(requestValue, value) {
     if (!hasCanonicalEvidence) {
       throw new Error("Tracked result requires evidence for the exact canonical registry anchor");
     }
-  } else if (matchedAnchor && ["related_terminology", "untracked"].includes(value.result.state)) {
-    throw new Error("An exact registry match cannot be downgraded to a related or untracked result");
+  } else if (matchedAnchor) {
+    throw new Error("An exact registry match must use tracked_anchor");
   }
 
   for (const evidence of value.result.evidence) {
@@ -454,6 +458,27 @@ assertThrows(
   "valid tracked name downgraded to invalid input"
 );
 
+const exactAnchorIndeterminate = structuredClone(trackedResponse);
+exactAnchorIndeterminate.result.state = "indeterminate";
+exactAnchorIndeterminate.result.registry_entry = null;
+exactAnchorIndeterminate.result.errors = [
+  {
+    code: "indeterminate",
+    message: "The result was intentionally left unresolved."
+  }
+];
+assertThrows(
+  () => assertSemanticExchange(request, exactAnchorIndeterminate),
+  "exact tracked anchor downgraded to indeterminate"
+);
+
+const invalidAsIndeterminate = structuredClone(invalidResponse);
+invalidAsIndeterminate.result.state = "indeterminate";
+assertThrows(
+  () => assertSemanticExchange(invalidRequest, invalidAsIndeterminate),
+  "invalid normalized input represented as indeterminate"
+);
+
 const primarySourceRelated = structuredClone(sourceGroundedRelated);
 primarySourceRelated.result.evidence = [
   {
@@ -570,6 +595,8 @@ console.log("EXPECTED FAIL dangling related-term evidence");
 console.log("EXPECTED FAIL normalization redirected to unrelated tracked anchor");
 console.log("EXPECTED FAIL interpretation-only related-term evidence");
 console.log("EXPECTED FAIL valid tracked name downgraded to invalid input");
+console.log("EXPECTED FAIL exact tracked anchor downgraded to indeterminate");
+console.log("EXPECTED FAIL invalid normalized input represented as indeterminate");
 console.log("EXPECTED FAIL unallowlisted primary-source host");
 console.log("EXPECTED FAIL unreferenced unallowlisted primary source");
 console.log("EXPECTED FAIL unreferenced invalid registry evidence");
