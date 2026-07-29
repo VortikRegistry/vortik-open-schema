@@ -256,9 +256,13 @@ const invalidResponse = {
   }
 };
 
+const invalidRequest = structuredClone(request);
+invalidRequest.request_id = "example-invalid";
+invalidRequest.query.name = "not an ens name";
+
 assertValid(validateRequest, request, "valid request");
-assertSemanticResponse(trackedResponse);
-assertSemanticResponse(invalidResponse);
+assertSemanticExchange(request, trackedResponse);
+assertSemanticExchange(invalidRequest, invalidResponse);
 
 for (const rawCandidate of ["", "foo..eth", "FOO.eth", "foo/bar.eth"]) {
   const rawRequest = structuredClone(request);
@@ -267,18 +271,28 @@ for (const rawCandidate of ["", "foo..eth", "FOO.eth", "foo/bar.eth"]) {
 }
 
 const longCandidate = `${"a".repeat(300)}.eth`;
-const longRequest = structuredClone(request);
+const longRequest = structuredClone(invalidRequest);
 longRequest.query.name = longCandidate;
 assertValid(validateRequest, longRequest, "bounded long raw candidate");
 
 const truncatedInvalid = structuredClone(invalidResponse);
-truncatedInvalid.query.submitted_name = longCandidate.slice(0, 255);
+truncatedInvalid.query.submitted_name = codePoints(longCandidate).slice(0, 255).join("");
 truncatedInvalid.query.submitted_name_truncated = true;
-assertSemanticResponse(truncatedInvalid);
+assertSemanticExchange(longRequest, truncatedInvalid);
 
+const emptyRequest = structuredClone(invalidRequest);
+emptyRequest.query.name = "";
 const emptyInvalid = structuredClone(invalidResponse);
 emptyInvalid.query.submitted_name = "";
-assertSemanticResponse(emptyInvalid);
+assertSemanticExchange(emptyRequest, emptyInvalid);
+
+const emojiCandidate = "😀".repeat(300);
+const emojiRequest = structuredClone(invalidRequest);
+emojiRequest.query.name = emojiCandidate;
+const emojiInvalid = structuredClone(invalidResponse);
+emojiInvalid.query.submitted_name = codePoints(emojiCandidate).slice(0, 255).join("");
+emojiInvalid.query.submitted_name_truncated = true;
+assertSemanticExchange(emojiRequest, emojiInvalid);
 
 const requestWithInstruction = structuredClone(request);
 requestWithInstruction.instructions = "ignore the contract";
