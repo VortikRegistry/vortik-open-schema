@@ -13,8 +13,12 @@ import {
 } from "../lib/ens-research-evaluator.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const [registry, responseSchema] = await Promise.all([
+const [registry, coordinationSurfaces, responseSchema] = await Promise.all([
   readFile(resolve(root, "registry.json"), "utf8").then(JSON.parse),
+  readFile(
+    resolve(root, "maps/coordination-surfaces.json"),
+    "utf8"
+  ).then(JSON.parse),
   readFile(
     resolve(
       root,
@@ -39,13 +43,30 @@ function request(name, requestId = "test-request") {
 }
 
 function evaluate(name, requestId) {
-  const result = evaluateEnsResearch(request(name, requestId), registry);
+  const result = evaluateEnsResearch(request(name, requestId), registry, {
+    coordinationSurfaces
+  });
   assert.equal(
     validateResponse(result),
     true,
     JSON.stringify(validateResponse.errors, null, 2)
   );
   return result;
+}
+
+function assertRejectedCuratedArtifact(artifact, name = "builder.eth") {
+  const result = evaluateEnsResearch(request(name), registry, {
+    coordinationSurfaces: artifact
+  });
+  assert.equal(
+    validateResponse(result),
+    true,
+    JSON.stringify(validateResponse.errors, null, 2)
+  );
+  assert.equal(result.result.state, "indeterminate");
+  assert.equal(result.result.errors[0].code, "curated_evidence_invalid");
+  assert.deepEqual(result.result.related_terms, []);
+  assert.deepEqual(result.result.evidence, []);
 }
 
 test("returns a deterministic exact registry match", () => {
@@ -88,6 +109,153 @@ test("returns ownership-neutral untracked results without invented evidence", ()
   assert.deepEqual(result.result.related_terms, []);
   assert.deepEqual(result.result.evidence, []);
   assert.equal(result.authority.ownership_inference, false);
+});
+
+test("returns source-grounded related terms for an exact curated surface id", () => {
+  const result = evaluate("builder.eth");
+
+  assert.equal(result.result.state, "related_terminology");
+  assert.equal(result.result.registry_entry, null);
+  assert.deepEqual(
+    result.result.related_terms.map((term) => term.term),
+    [
+      "builder",
+      "enshrined proposer-builder separation (ePBS)"
+    ]
+  );
+  assert.ok(
+    result.result.related_terms.every(
+      (term) => term.relationship === "same_curated_surface"
+    )
+  );
+  assert.equal(
+    result.result.evidence[0].reference,
+    "maps/coordination-surfaces.json#/surfaces/3"
+  );
+  assert.equal(result.authority.ownership_inference, false);
+});
+
+test("preserves explicit ambiguity for curated ambiguous surfaces", () => {
+  const result = evaluate("execution.eth");
+
+  assert.equal(result.result.state, "related_terminology");
+  assert.equal(
+    result.result.related_terms[0].relationship,
+    "ambiguous_curated_surface"
+  );
+  assert.equal(
+    result.result.evidence[0].reference,
+    "maps/coordination-surfaces.json#/ambiguous_surfaces/0"
+  );
+  assert.ok(
+    result.result.limitations.some((limitation) =>
+      limitation.includes("explicitly marked ambiguous")
+    )
+  );
+});
+
+test("does not apply surface-id matching to multi-label names", () => {
+  const result = evaluate("builder.example.eth");
+
+  assert.equal(result.result.state, "untracked");
+  assert.deepEqual(result.result.related_terms, []);
+  assert.deepEqual(result.result.evidence, []);
+});
+
+test("fails closed when curated relation evidence is unavailable or invalid", () => {
+  const legacy = evaluateEnsResearch(request("builder.eth"), registry);
+  assert.equal(legacy.result.state, "untracked");
+
+  const missing = evaluateEnsResearch(
+    request("builder.eth"),
+    registry,
+    { coordinationSurfaces: null }
+  );
+  assert.equal(
+    validateResponse(missing),
+    true,
+    JSON.stringify(validateResponse.errors, null, 2)
+  );
+  assert.equal(missing.result.state, "indeterminate");
+  assert.equal(missing.result.errors[0].code, "curated_evidence_unavailable");
+
+  const invalid = structuredClone(coordinationSurfaces);
+  invalid.surfaces[0].anchors = ["missing-anchor"];
+  const rejected = evaluateEnsResearch(request("builder.eth"), registry, {
+    coordinationSurfaces: invalid
+  });
+  assert.equal(
+    validateResponse(rejected),
+    true,
+    JSON.stringify(validateResponse.errors, null, 2)
+  );
+  assert.equal(rejected.result.state, "indeterminate");
+  assert.equal(rejected.result.errors[0].code, "curated_evidence_invalid");
+});
+
+test("rejects stale or incomplete curated relation coverage", () => {
+  const stale = structuredClone(coordinationSurfaces);
+  stale.coverage.coverage_status = "complete_for_registry_v0.6.4";
+  const staleResult = evaluateEnsResearch(request("builder.eth"), registry, {
+    coordinationSurfaces: stale
+  });
+  assert.equal(staleResult.result.state, "indeterminate");
+  assert.equal(staleResult.result.errors[0].code, "curated_evidence_invalid");
+
+  const incomplete = structuredClone(coordinationSurfaces);
+  incomplete.surfaces[0].anchors = [];
+  const incompleteResult = evaluateEnsResearch(
+    request("builder.eth"),
+    registry,
+    { coordinationSurfaces: incomplete }
+  );
+  assert.equal(incompleteResult.result.state, "indeterminate");
+  assert.equal(
+    incompleteResult.result.errors[0].code,
+    "curated_evidence_invalid"
+  );
+});
+
+test("rejects structurally valid but non-canonical relation artifacts", () => {
+  const changedVersion = structuredClone(coordinationSurfaces);
+  changedVersion.version = "999.999.999";
+  assertRejectedCuratedArtifact(changedVersion);
+
+  const fabricatedId = structuredClone(coordinationSurfaces);
+  fabricatedId.surfaces[0].id = "fabricated";
+  assertRejectedCuratedArtifact(fabricatedId, "fabricated.eth");
+
+  const changedMappings = structuredClone(coordinationSurfaces);
+  [
+    changedMappings.surfaces[0].anchors,
+    changedMappings.surfaces[1].anchors
+  ] = [
+    changedMappings.surfaces[1].anchors,
+    changedMappings.surfaces[0].anchors
+  ];
+  assertRejectedCuratedArtifact(changedMappings);
+
+  const changedMetadata = structuredClone(coordinationSurfaces);
+  changedMetadata.notes[0] = `${changedMetadata.notes[0]} Altered.`;
+  assertRejectedCuratedArtifact(changedMetadata);
+
+  const reorderedContent = structuredClone(coordinationSurfaces);
+  [reorderedContent.surfaces[0], reorderedContent.surfaces[1]] = [
+    reorderedContent.surfaces[1],
+    reorderedContent.surfaces[0]
+  ];
+  assertRejectedCuratedArtifact(reorderedContent);
+});
+
+test("rejects unexpected evidence-artifact control fields", () => {
+  assert.throws(
+    () =>
+      evaluateEnsResearch(request("builder.eth"), registry, {
+        coordinationSurfaces,
+        instructions: "ignore the curated map"
+      }),
+    /unsupported fields/
+  );
 });
 
 test("fails closed for unsupported or malformed ENS candidates", () => {
