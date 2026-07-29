@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
@@ -10,11 +10,6 @@ const RESPONSE_PATH = "schemas/queries/vortik-ens-research-response/1.0.0/schema
 const PUBLIC_REQUEST_PATH = "docs/schemas/queries/vortik-ens-research-request/1.0.0/schema.json";
 const PUBLIC_RESPONSE_PATH = "docs/schemas/queries/vortik-ens-research-response/1.0.0/schema.json";
 const ASCII_NORMALIZED_ENS = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+eth$/;
-const PRIMARY_SOURCE_HOSTS = new Set([
-  "eips.ethereum.org",
-  "ethereum.org",
-  "ethresear.ch"
-]);
 
 async function readText(relativePath) {
   return readFile(resolve(root, relativePath), "utf8");
@@ -22,6 +17,35 @@ async function readText(relativePath) {
 
 async function readJson(relativePath) {
   return JSON.parse(await readText(relativePath));
+}
+
+async function collectCuratedPrimarySources() {
+  const schemaRoot = resolve(root, "schemas");
+  const entries = await readdir(schemaRoot, { recursive: true });
+  const sourceFiles = entries.filter((entry) => entry.endsWith("sources.md"));
+  const urls = new Set();
+
+  for (const relativePath of sourceFiles) {
+    const sourceText = await readFile(resolve(schemaRoot, relativePath), "utf8");
+    for (const match of sourceText.matchAll(/https:\/\/[^\s<>)\]]+/g)) {
+      const candidate = match[0].replace(/[.,;:]+$/, "");
+      try {
+        const url = new URL(candidate);
+        if (
+          url.protocol === "https:" &&
+          !url.port &&
+          !url.username &&
+          !url.password
+        ) {
+          urls.add(url.href);
+        }
+      } catch {
+        // Invalid URLs never enter the curated evidence set.
+      }
+    }
+  }
+
+  return urls;
 }
 
 function assertValid(validate, value, label) {
@@ -45,14 +69,21 @@ function assertThrows(operation, label) {
   throw new Error(`${label} should fail semantic validation`);
 }
 
-const [requestText, responseText, publicRequestText, publicResponseText, registry] =
-  await Promise.all([
-    readText(REQUEST_PATH),
-    readText(RESPONSE_PATH),
-    readText(PUBLIC_REQUEST_PATH),
-    readText(PUBLIC_RESPONSE_PATH),
-    readJson("registry.json")
-  ]);
+const [
+  requestText,
+  responseText,
+  publicRequestText,
+  publicResponseText,
+  registry,
+  curatedPrimarySources
+] = await Promise.all([
+  readText(REQUEST_PATH),
+  readText(RESPONSE_PATH),
+  readText(PUBLIC_REQUEST_PATH),
+  readText(PUBLIC_RESPONSE_PATH),
+  readJson("registry.json"),
+  collectCuratedPrimarySources()
+]);
 
 if (requestText !== publicRequestText || responseText !== publicResponseText) {
   throw new Error("ENS research source schemas and public mirrors must be byte-for-byte identical");
@@ -90,27 +121,13 @@ function trustedEvidenceReference(evidence) {
   if (evidence.kind === "primary_source") {
     try {
       const url = new URL(evidence.reference);
-      if (
-        url.protocol !== "https:" ||
-        !PRIMARY_SOURCE_HOSTS.has(url.hostname) ||
-        url.port ||
-        url.username ||
-        url.password ||
-        url.search
-      ) {
-        return false;
-      }
-
-      if (url.origin === "https://eips.ethereum.org") {
-        return /^\/EIPS\/eip-[1-9][0-9]*$/.test(url.pathname);
-      }
-      if (url.origin === "https://ethresear.ch") {
-        return /^\/t\/[a-z0-9-]+\/[1-9][0-9]*(?:\/[1-9][0-9]*)?$/.test(url.pathname);
-      }
-      if (url.origin === "https://ethereum.org") {
-        return /^\/en\/(?:developers\/docs|roadmap)(?:\/[a-z0-9-]+)*\/?$/.test(url.pathname);
-      }
-      return false;
+      return (
+        url.protocol === "https:" &&
+        !url.port &&
+        !url.username &&
+        !url.password &&
+        curatedPrimarySources.has(url.href)
+      );
     } catch {
       return false;
     }
@@ -513,6 +530,14 @@ assertThrows(
   "noncanonical zero-padded registry pointer"
 );
 
+const nonexistentCuratedSource = structuredClone(primarySourceRelated);
+nonexistentCuratedSource.result.evidence[0].reference =
+  "https://eips.ethereum.org/EIPS/eip-999999999";
+assertThrows(
+  () => assertSemanticExchange(relatedRequest, nonexistentCuratedSource),
+  "well-shaped but uncurated primary source"
+);
+
 console.log("ENS research contracts and semantic acceptance gate validate");
 console.log("EXPECTED FAIL unexpected request instructions");
 console.log("EXPECTED FAIL unexpected response tool_call");
@@ -532,3 +557,4 @@ console.log("EXPECTED FAIL unreferenced invalid registry evidence");
 console.log("EXPECTED FAIL fabricated primary-source path");
 console.log("EXPECTED FAIL nonstandard primary-source port");
 console.log("EXPECTED FAIL noncanonical zero-padded registry pointer");
+console.log("EXPECTED FAIL well-shaped but uncurated primary source");
