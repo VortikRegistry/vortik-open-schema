@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "validate": "npm run validate:json && npm run validate:registry-schema && npm run validate:registry && npm run validate:maps && npm run validate:semantic-status && npm run validate:integrity && npm run validate:derived-sync && npm run validate:epbs-feed && npm run validate:epbs-feed-schema && npm run validate:feed-index && npm run validate:feed-index-schema && npm run validate:ens-research-contracts && npm run test:ens-research-evaluator && npm run check:public-safety && npm run test:feed-client && npm run example:validate && npm run example:consume-feed && npm run example:discover-feeds",
+    "validate": "npm run validate:json && npm run validate:registry-schema && npm run validate:registry && npm run validate:maps && npm run validate:semantic-status && npm run validate:integrity && npm run validate:derived-sync && npm run validate:epbs-feed && npm run validate:epbs-feed-schema && npm run validate:feed-index && npm run validate:feed-index-schema && npm run validate:ens-research-contracts && npm run test:ens-research-evaluator && npm run test:ens-research-client && npm run check:public-safety && npm run test:feed-client && npm run example:validate && npm run example:consume-feed && npm run example:discover-feeds && npm run example:research-ens",
     "validate:json": "node scripts/validate-json-files.mjs",
     "validate:registry": "node scripts/validate-registry.mjs",
     "validate:maps": "node scripts/validate-map-coverage.mjs",
@@ -27,9 +27,11 @@
     "validate:registry-schema": "node scripts/validate-registry-schema.mjs",
     "test:feed-client": "node --test tests/feed-client.test.mjs tests/feed-client-security.test.mjs",
     "test:ens-research-evaluator": "node --test tests/ens-research-evaluator.test.mjs",
+    "test:ens-research-client": "node --test tests/ens-research-client.test.mjs",
     "example:validate": "node examples/validate-instance.mjs",
     "example:consume-feed": "node examples/consume-epbs-feed.mjs",
     "example:discover-feeds": "node examples/discover-feeds.mjs",
+    "example:research-ens": "node examples/research-ens-name.mjs",
     "validate:ens-research-contracts": "node scripts/validate-ens-research-contracts.mjs"
   },
   "devDependencies": {
