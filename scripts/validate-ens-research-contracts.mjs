@@ -379,4 +379,6 @@ console.log("EXPECTED FAIL invalid input with evidence");
 console.log("EXPECTED FAIL tracked query/anchor mismatch");
 console.log("EXPECTED FAIL fabricated registry metadata");
 console.log("EXPECTED FAIL malformed normalized output");
-console.log("EXPECTED FAIL dangling related-term evidence");\nconsole.log("EXPECTED FAIL normalization redirected to unrelated tracked anchor");\nconsole.log("EXPECTED FAIL interpretation-only related-term evidence");
+console.log("EXPECTED FAIL dangling related-term evidence");
+console.log("EXPECTED FAIL normalization redirected to unrelated tracked anchor");
+console.log("EXPECTED FAIL interpretation-only related-term evidence");
