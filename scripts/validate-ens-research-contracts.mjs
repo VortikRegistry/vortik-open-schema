@@ -4,12 +4,16 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
 
+import {
+  evaluateEnsResearch,
+  normalizeSupportedEnsName
+} from "../lib/ens-research-evaluator.mjs";
+
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const REQUEST_PATH = "schemas/queries/vortik-ens-research-request/1.0.0/schema.json";
 const RESPONSE_PATH = "schemas/queries/vortik-ens-research-response/1.0.0/schema.json";
 const PUBLIC_REQUEST_PATH = "docs/schemas/queries/vortik-ens-research-request/1.0.0/schema.json";
 const PUBLIC_RESPONSE_PATH = "docs/schemas/queries/vortik-ens-research-response/1.0.0/schema.json";
-const ASCII_NORMALIZED_ENS = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+eth$/;
 
 async function readText(relativePath) {
   return readFile(resolve(root, relativePath), "utf8");
@@ -101,19 +105,6 @@ function codePoints(value) {
   return Array.from(value);
 }
 
-function normalizeSupportedAscii(value) {
-  const candidate = value.normalize("NFC").toLowerCase();
-  if (codePoints(candidate).length > 255 || !ASCII_NORMALIZED_ENS.test(candidate)) {
-    return null;
-  }
-
-  const labels = candidate.split(".").slice(0, -1);
-  const hasReservedExtension = labels.some(
-    (label) => label.length >= 4 && label[2] === "-" && label[3] === "-"
-  );
-  return hasReservedExtension ? null : candidate;
-}
-
 function trustedEvidenceReference(evidence) {
   if (evidence.kind === "registry") {
     const match = /^registry\.json#\/anchors\/(0|[1-9][0-9]*)$/.exec(evidence.reference);
@@ -169,7 +160,7 @@ function assertSemanticExchange(requestValue, value) {
     throw new Error("Response submitted_name must match the original request");
   }
 
-  const expectedNormalizedName = normalizeSupportedAscii(rawName);
+  const expectedNormalizedName = normalizeSupportedEnsName(rawName);
   if (normalizedName !== expectedNormalizedName) {
     throw new Error("Normalized name must exactly equal the value derived from the original submitted query");
   }
@@ -178,7 +169,10 @@ function assertSemanticExchange(requestValue, value) {
     throw new Error("Unsupported or invalid normalized input must use invalid_input");
   }
 
-  if (normalizedName !== null && !ASCII_NORMALIZED_ENS.test(normalizedName)) {
+  if (
+    normalizedName !== null
+    && normalizeSupportedEnsName(normalizedName) !== normalizedName
+  ) {
     throw new Error("Normalized name is outside the currently supported fail-closed ASCII ENS subset");
   }
 
@@ -329,6 +323,13 @@ invalidRequest.query.name = "not an ens name";
 assertValid(validateRequest, request, "valid request");
 assertSemanticExchange(request, trackedResponse);
 assertSemanticExchange(invalidRequest, invalidResponse);
+
+const unicodeAliasRequest = structuredClone(invalidRequest);
+unicodeAliasRequest.query.name = "blocKspacemarket.eth";
+assertSemanticExchange(
+  unicodeAliasRequest,
+  evaluateEnsResearch(unicodeAliasRequest, registry)
+);
 
 for (const rawCandidate of ["", "foo..eth", "FOO.eth", "foo/bar.eth"]) {
   const rawRequest = structuredClone(request);
