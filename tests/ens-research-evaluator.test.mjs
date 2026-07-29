@@ -1,5 +1,9 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import { dirname, resolve } from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
+import Ajv2020 from "ajv/dist/2020.js";
 
 import {
   ENS_RESEARCH_REQUEST_SCHEMA_ID,
@@ -8,24 +12,21 @@ import {
   normalizeSupportedEnsName
 } from "../lib/ens-research-evaluator.mjs";
 
-const registry = {
-  registry: "vortik-semantic-registry",
-  version: "0.6.5",
-  source_of_truth: "schemas",
-  last_updated: "2026-07-25",
-  anchors: [
-    {
-      id: "epbs",
-      ens: "epbs.eth",
-      canonical_term: "enshrined proposer-builder separation (ePBS)",
-      classification: "core",
-      status: "implementation-facing",
-      type: "primitive",
-      schema: "schemas/epbs/1.0-draft/schema.json",
-      anchor_doc: "anchors/epbs.md"
-    }
-  ]
-};
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const [registry, responseSchema] = await Promise.all([
+  readFile(resolve(root, "registry.json"), "utf8").then(JSON.parse),
+  readFile(
+    resolve(
+      root,
+      "schemas/queries/vortik-ens-research-response/1.0.0/schema.json"
+    ),
+    "utf8"
+  ).then(JSON.parse)
+]);
+const validateResponse = new Ajv2020({
+  allErrors: true,
+  strict: false
+}).compile(responseSchema);
 
 function request(name, requestId = "test-request") {
   return {
@@ -37,6 +38,16 @@ function request(name, requestId = "test-request") {
   };
 }
 
+function evaluate(name, requestId) {
+  const result = evaluateEnsResearch(request(name, requestId), registry);
+  assert.equal(
+    validateResponse(result),
+    true,
+    JSON.stringify(validateResponse.errors, null, 2)
+  );
+  return result;
+}
+
 test("returns a deterministic exact registry match", () => {
   const input = request("epbs.eth");
   const beforeRequest = structuredClone(input);
@@ -44,6 +55,11 @@ test("returns a deterministic exact registry match", () => {
   const first = evaluateEnsResearch(input, registry);
   const second = evaluateEnsResearch(input, registry);
 
+  assert.equal(
+    validateResponse(first),
+    true,
+    JSON.stringify(validateResponse.errors, null, 2)
+  );
   assert.deepEqual(first, second);
   assert.deepEqual(input, beforeRequest);
   assert.deepEqual(registry, beforeRegistry);
@@ -57,7 +73,7 @@ test("returns a deterministic exact registry match", () => {
 });
 
 test("normalizes supported ASCII casing before exact matching", () => {
-  const result = evaluateEnsResearch(request("EPBS.ETH"), registry);
+  const result = evaluate("EPBS.ETH");
 
   assert.equal(result.query.submitted_name, "EPBS.ETH");
   assert.equal(result.query.normalized_name, "epbs.eth");
@@ -65,7 +81,7 @@ test("normalizes supported ASCII casing before exact matching", () => {
 });
 
 test("returns ownership-neutral untracked results without invented evidence", () => {
-  const result = evaluateEnsResearch(request("third-party-name.eth"), registry);
+  const result = evaluate("third-party-name.eth");
 
   assert.equal(result.result.state, "untracked");
   assert.equal(result.result.registry_entry, null);
@@ -83,7 +99,7 @@ test("fails closed for unsupported or malformed ENS candidates", () => {
     "😀.eth",
     `${"a.".repeat(130)}eth`
   ]) {
-    const result = evaluateEnsResearch(request(name), registry);
+    const result = evaluate(name);
     assert.equal(result.result.state, "invalid_input", name);
     assert.equal(result.query.normalized_name, null, name);
     assert.deepEqual(result.result.evidence, [], name);
@@ -92,7 +108,7 @@ test("fails closed for unsupported or malformed ENS candidates", () => {
 
 test("truncates overlong rejected input by Unicode code points", () => {
   const name = "😀".repeat(300);
-  const result = evaluateEnsResearch(request(name), registry);
+  const result = evaluate(name);
 
   assert.equal(result.result.state, "invalid_input");
   assert.equal(result.query.submitted_name_truncated, true);
