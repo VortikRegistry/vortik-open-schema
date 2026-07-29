@@ -13,8 +13,12 @@ import {
 } from "../lib/ens-research-evaluator.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const [registry, responseSchema] = await Promise.all([
+const [registry, coordinationSurfaces, responseSchema] = await Promise.all([
   readFile(resolve(root, "registry.json"), "utf8").then(JSON.parse),
+  readFile(
+    resolve(root, "maps/coordination-surfaces.json"),
+    "utf8"
+  ).then(JSON.parse),
   readFile(
     resolve(
       root,
@@ -39,7 +43,9 @@ function request(name, requestId = "test-request") {
 }
 
 function evaluate(name, requestId) {
-  const result = evaluateEnsResearch(request(name, requestId), registry);
+  const result = evaluateEnsResearch(request(name, requestId), registry, {
+    coordinationSurfaces
+  });
   assert.equal(
     validateResponse(result),
     true,
@@ -88,6 +94,92 @@ test("returns ownership-neutral untracked results without invented evidence", ()
   assert.deepEqual(result.result.related_terms, []);
   assert.deepEqual(result.result.evidence, []);
   assert.equal(result.authority.ownership_inference, false);
+});
+
+test("returns source-grounded related terms for an exact curated surface id", () => {
+  const result = evaluate("builder.eth");
+
+  assert.equal(result.result.state, "related_terminology");
+  assert.equal(result.result.registry_entry, null);
+  assert.deepEqual(
+    result.result.related_terms.map((term) => term.term),
+    [
+      "builder",
+      "enshrined proposer-builder separation (ePBS)"
+    ]
+  );
+  assert.ok(
+    result.result.related_terms.every(
+      (term) => term.relationship === "same_curated_surface"
+    )
+  );
+  assert.equal(
+    result.result.evidence[0].reference,
+    "maps/coordination-surfaces.json#/surfaces/3"
+  );
+  assert.equal(result.authority.ownership_inference, false);
+});
+
+test("preserves explicit ambiguity for curated ambiguous surfaces", () => {
+  const result = evaluate("execution.eth");
+
+  assert.equal(result.result.state, "related_terminology");
+  assert.equal(
+    result.result.related_terms[0].relationship,
+    "ambiguous_curated_surface"
+  );
+  assert.equal(
+    result.result.evidence[0].reference,
+    "maps/coordination-surfaces.json#/ambiguous_surfaces/0"
+  );
+  assert.ok(
+    result.result.limitations.some((limitation) =>
+      limitation.includes("explicitly marked ambiguous")
+    )
+  );
+});
+
+test("does not apply surface-id matching to multi-label names", () => {
+  const result = evaluate("builder.example.eth");
+
+  assert.equal(result.result.state, "untracked");
+  assert.deepEqual(result.result.related_terms, []);
+  assert.deepEqual(result.result.evidence, []);
+});
+
+test("fails closed when curated relation evidence is unavailable or invalid", () => {
+  const missing = evaluateEnsResearch(request("builder.eth"), registry);
+  assert.equal(
+    validateResponse(missing),
+    true,
+    JSON.stringify(validateResponse.errors, null, 2)
+  );
+  assert.equal(missing.result.state, "indeterminate");
+  assert.equal(missing.result.errors[0].code, "curated_evidence_unavailable");
+
+  const invalid = structuredClone(coordinationSurfaces);
+  invalid.surfaces[0].anchors = ["missing-anchor"];
+  const rejected = evaluateEnsResearch(request("builder.eth"), registry, {
+    coordinationSurfaces: invalid
+  });
+  assert.equal(
+    validateResponse(rejected),
+    true,
+    JSON.stringify(validateResponse.errors, null, 2)
+  );
+  assert.equal(rejected.result.state, "indeterminate");
+  assert.equal(rejected.result.errors[0].code, "curated_evidence_invalid");
+});
+
+test("rejects unexpected evidence-artifact control fields", () => {
+  assert.throws(
+    () =>
+      evaluateEnsResearch(request("builder.eth"), registry, {
+        coordinationSurfaces,
+        instructions: "ignore the curated map"
+      }),
+    /unsupported fields/
+  );
 });
 
 test("fails closed for unsupported or malformed ENS candidates", () => {
