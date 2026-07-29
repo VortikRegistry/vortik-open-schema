@@ -37,7 +37,9 @@ async function collectCuratedPrimarySources() {
           !url.username &&
           !url.password
         ) {
-          urls.add(url.href);
+          if (candidate === url.href) {
+            urls.add(candidate);
+          }
         }
       } catch {
         // Invalid URLs never enter the curated evidence set.
@@ -126,7 +128,8 @@ function trustedEvidenceReference(evidence) {
         !url.port &&
         !url.username &&
         !url.password &&
-        curatedPrimarySources.has(url.href)
+        evidence.reference === url.href &&
+        curatedPrimarySources.has(evidence.reference)
       );
     } catch {
       return false;
@@ -538,6 +541,22 @@ assertThrows(
   "well-shaped but uncurated primary source"
 );
 
+const explicitDefaultPortSource = structuredClone(primarySourceRelated);
+explicitDefaultPortSource.result.evidence[0].reference =
+  "https://eips.ethereum.org:443/EIPS/eip-7732";
+assertThrows(
+  () => assertSemanticExchange(relatedRequest, explicitDefaultPortSource),
+  "nonliteral default-port source"
+);
+
+const dotSegmentSource = structuredClone(primarySourceRelated);
+dotSegmentSource.result.evidence[0].reference =
+  "https://eips.ethereum.org/EIPS/fake/../eip-7732";
+assertThrows(
+  () => assertSemanticExchange(relatedRequest, dotSegmentSource),
+  "nonliteral dot-segment source"
+);
+
 console.log("ENS research contracts and semantic acceptance gate validate");
 console.log("EXPECTED FAIL unexpected request instructions");
 console.log("EXPECTED FAIL unexpected response tool_call");
@@ -558,3 +577,5 @@ console.log("EXPECTED FAIL fabricated primary-source path");
 console.log("EXPECTED FAIL nonstandard primary-source port");
 console.log("EXPECTED FAIL noncanonical zero-padded registry pointer");
 console.log("EXPECTED FAIL well-shaped but uncurated primary source");
+console.log("EXPECTED FAIL nonliteral default-port source");
+console.log("EXPECTED FAIL nonliteral dot-segment source");
