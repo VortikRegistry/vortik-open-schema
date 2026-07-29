@@ -54,6 +54,21 @@ function evaluate(name, requestId) {
   return result;
 }
 
+function assertRejectedCuratedArtifact(artifact, name = "builder.eth") {
+  const result = evaluateEnsResearch(request(name), registry, {
+    coordinationSurfaces: artifact
+  });
+  assert.equal(
+    validateResponse(result),
+    true,
+    JSON.stringify(validateResponse.errors, null, 2)
+  );
+  assert.equal(result.result.state, "indeterminate");
+  assert.equal(result.result.errors[0].code, "curated_evidence_invalid");
+  assert.deepEqual(result.result.related_terms, []);
+  assert.deepEqual(result.result.evidence, []);
+}
+
 test("returns a deterministic exact registry match", () => {
   const input = request("epbs.eth");
   const beforeRequest = structuredClone(input);
@@ -199,6 +214,37 @@ test("rejects stale or incomplete curated relation coverage", () => {
     incompleteResult.result.errors[0].code,
     "curated_evidence_invalid"
   );
+});
+
+test("rejects structurally valid but non-canonical relation artifacts", () => {
+  const changedVersion = structuredClone(coordinationSurfaces);
+  changedVersion.version = "999.999.999";
+  assertRejectedCuratedArtifact(changedVersion);
+
+  const fabricatedId = structuredClone(coordinationSurfaces);
+  fabricatedId.surfaces[0].id = "fabricated";
+  assertRejectedCuratedArtifact(fabricatedId, "fabricated.eth");
+
+  const changedMappings = structuredClone(coordinationSurfaces);
+  [
+    changedMappings.surfaces[0].anchors,
+    changedMappings.surfaces[1].anchors
+  ] = [
+    changedMappings.surfaces[1].anchors,
+    changedMappings.surfaces[0].anchors
+  ];
+  assertRejectedCuratedArtifact(changedMappings);
+
+  const changedMetadata = structuredClone(coordinationSurfaces);
+  changedMetadata.notes[0] = `${changedMetadata.notes[0]} Altered.`;
+  assertRejectedCuratedArtifact(changedMetadata);
+
+  const reorderedContent = structuredClone(coordinationSurfaces);
+  [reorderedContent.surfaces[0], reorderedContent.surfaces[1]] = [
+    reorderedContent.surfaces[1],
+    reorderedContent.surfaces[0]
+  ];
+  assertRejectedCuratedArtifact(reorderedContent);
 });
 
 test("rejects unexpected evidence-artifact control fields", () => {
