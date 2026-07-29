@@ -148,7 +148,14 @@ test("does not apply surface-id matching to multi-label names", () => {
 });
 
 test("fails closed when curated relation evidence is unavailable or invalid", () => {
-  const missing = evaluateEnsResearch(request("builder.eth"), registry);
+  const legacy = evaluateEnsResearch(request("builder.eth"), registry);
+  assert.equal(legacy.result.state, "untracked");
+
+  const missing = evaluateEnsResearch(
+    request("builder.eth"),
+    registry,
+    { coordinationSurfaces: null }
+  );
   assert.equal(
     validateResponse(missing),
     true,
@@ -169,6 +176,29 @@ test("fails closed when curated relation evidence is unavailable or invalid", ()
   );
   assert.equal(rejected.result.state, "indeterminate");
   assert.equal(rejected.result.errors[0].code, "curated_evidence_invalid");
+});
+
+test("rejects stale or incomplete curated relation coverage", () => {
+  const stale = structuredClone(coordinationSurfaces);
+  stale.coverage.coverage_status = "complete_for_registry_v0.6.4";
+  const staleResult = evaluateEnsResearch(request("builder.eth"), registry, {
+    coordinationSurfaces: stale
+  });
+  assert.equal(staleResult.result.state, "indeterminate");
+  assert.equal(staleResult.result.errors[0].code, "curated_evidence_invalid");
+
+  const incomplete = structuredClone(coordinationSurfaces);
+  incomplete.surfaces[0].anchors = [];
+  const incompleteResult = evaluateEnsResearch(
+    request("builder.eth"),
+    registry,
+    { coordinationSurfaces: incomplete }
+  );
+  assert.equal(incompleteResult.result.state, "indeterminate");
+  assert.equal(
+    incompleteResult.result.errors[0].code,
+    "curated_evidence_invalid"
+  );
 });
 
 test("rejects unexpected evidence-artifact control fields", () => {

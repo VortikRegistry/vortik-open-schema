@@ -172,7 +172,11 @@ function expectedSurfaceMatch(normalizedName) {
       };
 }
 
-function assertSemanticExchange(requestValue, value) {
+function assertSemanticExchange(
+  requestValue,
+  value,
+  { requireCuratedRelations = false } = {}
+) {
   assertValid(validateRequest, requestValue, "request before semantic acceptance");
   assertValid(validateResponse, value, "response before semantic acceptance");
 
@@ -312,7 +316,11 @@ function assertSemanticExchange(requestValue, value) {
         );
       }
     });
-  } else if (surfaceMatch && !matchedAnchor) {
+  } else if (
+    requireCuratedRelations
+    && surfaceMatch
+    && !matchedAnchor
+  ) {
     throw new Error(
       "An exact curated surface-id match must use related_terminology"
     );
@@ -527,12 +535,22 @@ assertThrows(
 
 const relatedRequest = structuredClone(request);
 relatedRequest.query.name = "builder.eth";
+const backwardCompatibleUntracked = evaluateEnsResearch(
+  relatedRequest,
+  registry
+);
+assertSemanticExchange(relatedRequest, backwardCompatibleUntracked);
+
 const sourceGroundedRelated = evaluateEnsResearch(
   relatedRequest,
   registry,
   { coordinationSurfaces }
 );
-assertSemanticExchange(relatedRequest, sourceGroundedRelated);
+assertSemanticExchange(
+  relatedRequest,
+  sourceGroundedRelated,
+  { requireCuratedRelations: true }
+);
 
 const fabricatedRelatedTerm = structuredClone(sourceGroundedRelated);
 fabricatedRelatedTerm.result.related_terms[0].term = "fabricated";
@@ -546,7 +564,11 @@ downgradedSurfaceMatch.result.state = "untracked";
 downgradedSurfaceMatch.result.related_terms = [];
 downgradedSurfaceMatch.result.evidence = [];
 assertThrows(
-  () => assertSemanticExchange(relatedRequest, downgradedSurfaceMatch),
+  () => assertSemanticExchange(
+    relatedRequest,
+    downgradedSurfaceMatch,
+    { requireCuratedRelations: true }
+  ),
   "curated surface match downgraded to untracked"
 );
 
