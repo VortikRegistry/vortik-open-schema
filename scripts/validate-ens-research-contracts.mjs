@@ -59,35 +59,87 @@ const ajv = new Ajv2020({ allErrors: true, strict: false });
 const validateRequest = ajv.compile(requestSchema);
 const validateResponse = ajv.compile(responseSchema);
 
-function assertSemanticResponse(value) {
+function codePoints(value) {
+  return Array.from(value);
+}
+
+function normalizeSupportedAscii(value) {
+  const candidate = value.normalize("NFC").toLowerCase();
+  return ASCII_NORMALIZED_ENS.test(candidate) ? candidate : null;
+}
+
+function trustedEvidenceReference(evidence) {
+  if (evidence.kind === "registry") {
+    const match = /^registry\.json#\/anchors\/(\d+)$/.exec(evidence.reference);
+    return Boolean(match && registry.anchors[Number(match[1])]);
+  }
+
+  if (evidence.kind === "primary_source") {
+    try {
+      const url = new URL(evidence.reference);
+      return url.protocol === "https:" && PRIMARY_SOURCE_HOSTS.has(url.hostname);
+    } catch {
+      return false;
+    }
+  }
+
+  return false;
+}
+
+function assertSemanticExchange(requestValue, value) {
+  assertValid(validateRequest, requestValue, "request before semantic acceptance");
   assertValid(validateResponse, value, "response before semantic acceptance");
 
-  const { submitted_name: submittedName, submitted_name_truncated: truncated, normalized_name: normalizedName } =
-    value.query;
+  if (requestValue.request_id !== value.request_id) {
+    throw new Error("Response request_id must match the original request");
+  }
 
-  if (truncated && (value.result.state !== "invalid_input" || submittedName.length !== 255)) {
-    throw new Error("Truncated input is allowed only as a 255-character invalid-input prefix");
+  const rawName = requestValue.query.name;
+  const rawPoints = codePoints(rawName);
+  const {
+    submitted_name: submittedName,
+    submitted_name_truncated: truncated,
+    normalized_name: normalizedName
+  } = value.query;
+
+  if (truncated) {
+    const expectedPrefix = rawPoints.slice(0, 255).join("");
+    if (
+      value.result.state !== "invalid_input" ||
+      rawPoints.length <= 255 ||
+      codePoints(submittedName).length !== 255 ||
+      submittedName !== expectedPrefix
+    ) {
+      throw new Error("Truncated input must be the exact 255-code-point prefix of an overlong rejected request");
+    }
+  } else if (submittedName !== rawName) {
+    throw new Error("Response submitted_name must match the original request");
+  }
+
+  const expectedNormalizedName = normalizeSupportedAscii(rawName);
+  if (normalizedName !== null && normalizedName !== expectedNormalizedName) {
+    throw new Error("Normalized name must be derived from the original submitted query");
   }
 
   if (normalizedName !== null && !ASCII_NORMALIZED_ENS.test(normalizedName)) {
     throw new Error("Normalized name is outside the currently supported fail-closed ASCII ENS subset");
   }
 
+  const matchedAnchor = registry.anchors.find((candidate) => candidate.ens === normalizedName);
   if (value.result.state === "tracked_anchor") {
-    const anchor = registry.anchors.find((candidate) => candidate.ens === normalizedName);
-    if (!anchor) {
+    if (!matchedAnchor) {
       throw new Error("Tracked result must exactly match an anchor in registry.json");
     }
 
     const expected = {
-      id: anchor.id,
-      ens: anchor.ens,
-      canonical_term: anchor.canonical_term,
-      classification: anchor.classification,
-      status: anchor.status,
-      type: anchor.type,
-      schema_path: anchor.schema,
-      anchor_doc: anchor.anchor_doc
+      id: matchedAnchor.id,
+      ens: matchedAnchor.ens,
+      canonical_term: matchedAnchor.canonical_term,
+      classification: matchedAnchor.classification,
+      status: matchedAnchor.status,
+      type: matchedAnchor.type,
+      schema_path: matchedAnchor.schema,
+      anchor_doc: matchedAnchor.anchor_doc
     };
 
     for (const [key, expectedValue] of Object.entries(expected)) {
@@ -95,17 +147,33 @@ function assertSemanticResponse(value) {
         throw new Error(`Tracked registry field ${key} does not match registry.json`);
       }
     }
+
+    const anchorIndex = registry.anchors.indexOf(matchedAnchor);
+    const hasCanonicalEvidence = value.result.evidence.some(
+      (evidence) =>
+        evidence.kind === "registry" &&
+        evidence.reference === `registry.json#/anchors/${anchorIndex}`
+    );
+    if (!hasCanonicalEvidence) {
+      throw new Error("Tracked result requires evidence for the exact canonical registry anchor");
+    }
+  } else if (matchedAnchor && ["related_terminology", "untracked"].includes(value.result.state)) {
+    throw new Error("An exact registry match cannot be downgraded to a related or untracked result");
   }
 
   for (const term of value.result.related_terms) {
-    for (const index of term.evidence_refs) {
+    const referencedEvidence = term.evidence_refs.map((index) => {
       if (index >= value.result.evidence.length) {
         throw new Error("Related-term evidence reference is out of bounds");
       }
+      return value.result.evidence[index];
+    });
+
+    if (!referencedEvidence.some(trustedEvidenceReference)) {
+      throw new Error("Each related term requires registry or allowlisted primary-source evidence");
     }
   }
 }
-
 const request = {
   $schema: requestSchema.$id,
   request: "vortik-ens-research-request",
@@ -238,16 +306,16 @@ assertInvalid(validateResponse, invalidWithEvidence, "invalid input with evidenc
 
 const mismatchedAnchor = structuredClone(trackedResponse);
 mismatchedAnchor.result.registry_entry.ens = "fastfinality.eth";
-assertThrows(() => assertSemanticResponse(mismatchedAnchor), "tracked query/anchor mismatch");
+assertThrows(() => assertSemanticExchange(request, mismatchedAnchor), "tracked query/anchor mismatch");
 
 const fabricatedAnchor = structuredClone(trackedResponse);
 fabricatedAnchor.result.registry_entry.canonical_term = "fabricated";
-assertThrows(() => assertSemanticResponse(fabricatedAnchor), "fabricated registry metadata");
+assertThrows(() => assertSemanticExchange(request, fabricatedAnchor), "fabricated registry metadata");
 
 const malformedNormalized = structuredClone(trackedResponse);
 malformedNormalized.query.normalized_name = "foo..eth";
 malformedNormalized.result.registry_entry.ens = "foo..eth";
-assertThrows(() => assertSemanticResponse(malformedNormalized), "malformed normalized output");
+assertThrows(() => assertSemanticExchange(request, malformedNormalized), "malformed normalized output");
 
 const relatedWithDanglingEvidence = structuredClone(trackedResponse);
 relatedWithDanglingEvidence.result.state = "related_terminology";
@@ -260,8 +328,46 @@ relatedWithDanglingEvidence.result.related_terms = [
   }
 ];
 assertThrows(
-  () => assertSemanticResponse(relatedWithDanglingEvidence),
+  () => assertSemanticExchange(request, relatedWithDanglingEvidence),
   "dangling related-term evidence"
+);
+
+const unrelatedRequest = structuredClone(request);
+unrelatedRequest.query.name = "foo.eth";
+const redirectedTracked = structuredClone(trackedResponse);
+redirectedTracked.query.submitted_name = "foo.eth";
+assertThrows(
+  () => assertSemanticExchange(unrelatedRequest, redirectedTracked),
+  "normalization redirected to unrelated tracked anchor"
+);
+
+const relatedRequest = structuredClone(request);
+relatedRequest.query.name = "unknown.eth";
+const sourceGroundedRelated = structuredClone(trackedResponse);
+sourceGroundedRelated.query.submitted_name = "unknown.eth";
+sourceGroundedRelated.query.normalized_name = "unknown.eth";
+sourceGroundedRelated.result.state = "related_terminology";
+sourceGroundedRelated.result.registry_entry = null;
+sourceGroundedRelated.result.related_terms = [
+  {
+    term: "enshrined proposer-builder separation (ePBS)",
+    relationship: "semantic context",
+    evidence_refs: [0]
+  }
+];
+assertSemanticExchange(relatedRequest, sourceGroundedRelated);
+
+const interpretationOnlyRelated = structuredClone(sourceGroundedRelated);
+interpretationOnlyRelated.result.evidence = [
+  {
+    kind: "vortik_interpretation",
+    reference: "untrusted",
+    claim: "Unsupported relationship."
+  }
+];
+assertThrows(
+  () => assertSemanticExchange(relatedRequest, interpretationOnlyRelated),
+  "interpretation-only related-term evidence"
 );
 
 console.log("ENS research contracts and semantic acceptance gate validate");
@@ -273,4 +379,4 @@ console.log("EXPECTED FAIL invalid input with evidence");
 console.log("EXPECTED FAIL tracked query/anchor mismatch");
 console.log("EXPECTED FAIL fabricated registry metadata");
 console.log("EXPECTED FAIL malformed normalized output");
-console.log("EXPECTED FAIL dangling related-term evidence");
+console.log("EXPECTED FAIL dangling related-term evidence");\nconsole.log("EXPECTED FAIL normalization redirected to unrelated tracked anchor");\nconsole.log("EXPECTED FAIL interpretation-only related-term evidence");
