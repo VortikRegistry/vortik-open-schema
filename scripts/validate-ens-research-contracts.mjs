@@ -83,14 +83,34 @@ function normalizeSupportedAscii(value) {
 
 function trustedEvidenceReference(evidence) {
   if (evidence.kind === "registry") {
-    const match = /^registry\.json#\/anchors\/(\d+)$/.exec(evidence.reference);
+    const match = /^registry\.json#\/anchors\/(0|[1-9][0-9]*)$/.exec(evidence.reference);
     return Boolean(match && registry.anchors[Number(match[1])]);
   }
 
   if (evidence.kind === "primary_source") {
     try {
       const url = new URL(evidence.reference);
-      return url.protocol === "https:" && PRIMARY_SOURCE_HOSTS.has(url.hostname);
+      if (
+        url.protocol !== "https:" ||
+        !PRIMARY_SOURCE_HOSTS.has(url.hostname) ||
+        url.port ||
+        url.username ||
+        url.password ||
+        url.search
+      ) {
+        return false;
+      }
+
+      if (url.origin === "https://eips.ethereum.org") {
+        return /^\/EIPS\/eip-[1-9][0-9]*$/.test(url.pathname);
+      }
+      if (url.origin === "https://ethresear.ch") {
+        return /^\/t\/[a-z0-9-]+\/[1-9][0-9]*(?:\/[1-9][0-9]*)?$/.test(url.pathname);
+      }
+      if (url.origin === "https://ethereum.org") {
+        return /^\/en\/(?:developers\/docs|roadmap)(?:\/[a-z0-9-]+)*\/?$/.test(url.pathname);
+      }
+      return false;
     } catch {
       return false;
     }
@@ -469,6 +489,30 @@ assertThrows(
   "unreferenced invalid registry evidence"
 );
 
+const fabricatedPrimaryPath = structuredClone(primarySourceRelated);
+fabricatedPrimaryPath.result.evidence[0].reference =
+  "https://eips.ethereum.org/not-a-source";
+assertThrows(
+  () => assertSemanticExchange(relatedRequest, fabricatedPrimaryPath),
+  "fabricated primary-source path"
+);
+
+const nonstandardPrimaryPort = structuredClone(primarySourceRelated);
+nonstandardPrimaryPort.result.evidence[0].reference =
+  "https://eips.ethereum.org:444/EIPS/eip-7732";
+assertThrows(
+  () => assertSemanticExchange(relatedRequest, nonstandardPrimaryPort),
+  "nonstandard primary-source port"
+);
+
+const zeroPaddedRegistryReference = structuredClone(trackedResponse);
+zeroPaddedRegistryReference.result.evidence[0].reference =
+  "registry.json#/anchors/00";
+assertThrows(
+  () => assertSemanticExchange(request, zeroPaddedRegistryReference),
+  "noncanonical zero-padded registry pointer"
+);
+
 console.log("ENS research contracts and semantic acceptance gate validate");
 console.log("EXPECTED FAIL unexpected request instructions");
 console.log("EXPECTED FAIL unexpected response tool_call");
@@ -485,3 +529,6 @@ console.log("EXPECTED FAIL valid tracked name downgraded to invalid input");
 console.log("EXPECTED FAIL unallowlisted primary-source host");
 console.log("EXPECTED FAIL unreferenced unallowlisted primary source");
 console.log("EXPECTED FAIL unreferenced invalid registry evidence");
+console.log("EXPECTED FAIL fabricated primary-source path");
+console.log("EXPECTED FAIL nonstandard primary-source port");
+console.log("EXPECTED FAIL noncanonical zero-padded registry pointer");
