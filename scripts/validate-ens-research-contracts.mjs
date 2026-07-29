@@ -70,7 +70,15 @@ function codePoints(value) {
 
 function normalizeSupportedAscii(value) {
   const candidate = value.normalize("NFC").toLowerCase();
-  return ASCII_NORMALIZED_ENS.test(candidate) ? candidate : null;
+  if (codePoints(candidate).length > 255 || !ASCII_NORMALIZED_ENS.test(candidate)) {
+    return null;
+  }
+
+  const labels = candidate.split(".").slice(0, -1);
+  const hasReservedExtension = labels.some(
+    (label) => label.length >= 4 && label[2] === "-" && label[3] === "-"
+  );
+  return hasReservedExtension ? null : candidate;
 }
 
 function trustedEvidenceReference(evidence) {
@@ -164,6 +172,15 @@ function assertSemanticExchange(requestValue, value) {
     }
   } else if (matchedAnchor && ["related_terminology", "untracked"].includes(value.result.state)) {
     throw new Error("An exact registry match cannot be downgraded to a related or untracked result");
+  }
+
+  for (const evidence of value.result.evidence) {
+    if (
+      ["registry", "primary_source"].includes(evidence.kind) &&
+      !trustedEvidenceReference(evidence)
+    ) {
+      throw new Error("Every declared registry or primary-source reference must be trusted");
+    }
   }
 
   for (const term of value.result.related_terms) {
@@ -414,6 +431,44 @@ assertThrows(
   "unallowlisted primary-source host"
 );
 
+const reservedExtensionRequest = structuredClone(invalidRequest);
+reservedExtensionRequest.query.name = "ab--cd.eth";
+const reservedExtensionInvalid = structuredClone(invalidResponse);
+reservedExtensionInvalid.query.submitted_name = "ab--cd.eth";
+assertSemanticExchange(reservedExtensionRequest, reservedExtensionInvalid);
+
+const overlongNormalizedCandidate = `${"a.".repeat(130)}eth`;
+const overlongNormalizedRequest = structuredClone(invalidRequest);
+overlongNormalizedRequest.query.name = overlongNormalizedCandidate;
+const overlongNormalizedInvalid = structuredClone(invalidResponse);
+overlongNormalizedInvalid.query.submitted_name = codePoints(overlongNormalizedCandidate)
+  .slice(0, 255)
+  .join("");
+overlongNormalizedInvalid.query.submitted_name_truncated = true;
+assertSemanticExchange(overlongNormalizedRequest, overlongNormalizedInvalid);
+
+const unreferencedUntrustedPrimary = structuredClone(trackedResponse);
+unreferencedUntrustedPrimary.result.evidence.push({
+  kind: "primary_source",
+  reference: "https://example.com/untrusted",
+  claim: "Untrusted source."
+});
+assertThrows(
+  () => assertSemanticExchange(request, unreferencedUntrustedPrimary),
+  "unreferenced unallowlisted primary source"
+);
+
+const unreferencedInvalidRegistry = structuredClone(trackedResponse);
+unreferencedInvalidRegistry.result.evidence.push({
+  kind: "registry",
+  reference: "registry.json#/anchors/999",
+  claim: "Missing registry anchor."
+});
+assertThrows(
+  () => assertSemanticExchange(request, unreferencedInvalidRegistry),
+  "unreferenced invalid registry evidence"
+);
+
 console.log("ENS research contracts and semantic acceptance gate validate");
 console.log("EXPECTED FAIL unexpected request instructions");
 console.log("EXPECTED FAIL unexpected response tool_call");
@@ -428,3 +483,5 @@ console.log("EXPECTED FAIL normalization redirected to unrelated tracked anchor"
 console.log("EXPECTED FAIL interpretation-only related-term evidence");
 console.log("EXPECTED FAIL valid tracked name downgraded to invalid input");
 console.log("EXPECTED FAIL unallowlisted primary-source host");
+console.log("EXPECTED FAIL unreferenced unallowlisted primary source");
+console.log("EXPECTED FAIL unreferenced invalid registry evidence");
