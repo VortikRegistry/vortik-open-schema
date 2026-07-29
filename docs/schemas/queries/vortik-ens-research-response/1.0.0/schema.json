@@ -33,13 +33,14 @@
       "additionalProperties": false,
       "required": [
         "submitted_name",
+        "submitted_name_truncated",
         "normalized_name"
       ],
       "properties": {
         "submitted_name": {
           "type": "string",
-          "minLength": 1,
-          "maxLength": 255
+          "maxLength": 255,
+          "description": "Exact submitted value when at most 255 characters; otherwise the first 255 characters."
         },
         "normalized_name": {
           "oneOf": [
@@ -47,12 +48,17 @@
               "type": "string",
               "minLength": 5,
               "maxLength": 255,
-              "pattern": "^[^\\s\\u0000-\\u001F\\u007F]+\\.eth$"
+              "pattern": "^[^\\s\\u0000-\\u001F\\u007F]+\\.eth$",
+              "description": "Candidate accepted by the implementation normalization boundary. Structural validation is not sufficient; consumers must run the semantic integrity validator."
             },
             {
               "type": "null"
             }
           ]
+        },
+        "submitted_name_truncated": {
+          "type": "boolean",
+          "description": "True only when submitted_name is a bounded prefix of a longer rejected input."
         }
       }
     },
@@ -307,6 +313,9 @@
             "properties": {
               "normalized_name": {
                 "type": "string"
+              },
+              "submitted_name_truncated": {
+                "const": false
               }
             }
           },
@@ -344,6 +353,9 @@
             "properties": {
               "normalized_name": {
                 "type": "string"
+              },
+              "submitted_name_truncated": {
+                "const": false
               }
             }
           },
@@ -384,6 +396,9 @@
             "properties": {
               "normalized_name": {
                 "type": "string"
+              },
+              "submitted_name_truncated": {
+                "const": false
               }
             }
           },
@@ -464,6 +479,13 @@
               },
               "errors": {
                 "minItems": 1
+              }
+            }
+          },
+          "query": {
+            "properties": {
+              "submitted_name_truncated": {
+                "const": false
               }
             }
           }
