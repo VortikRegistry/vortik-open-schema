@@ -79,6 +79,15 @@ This capability does not:
 - replace EIPs, specifications, client repositories, or other primary sources;
 - infer technical significance from popularity or attention alone.
 
+## Versioned machine contracts
+
+The first closed request and response contracts are:
+
+- `schemas/queries/vortik-ens-research-request/1.0.0/schema.json`;
+- `schemas/queries/vortik-ens-research-response/1.0.0/schema.json`.
+
+Their public mirrors are published under the same paths on GitHub Pages. Both contracts reject unexpected control fields. They define data shapes and state invariants only; they do not perform resolution, retrieval, evaluation, or writes.
+
 ## Phased delivery
 
 Implementation should remain split into small pull requests:
