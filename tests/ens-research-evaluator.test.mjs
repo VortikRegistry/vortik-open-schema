@@ -96,6 +96,7 @@ test("fails closed for unsupported or malformed ENS candidates", () => {
     "foo..eth",
     "foo/bar.eth",
     "ab--cd.eth",
+    "blocKspacemarket.eth",
     "😀.eth",
     `${"a.".repeat(130)}eth`
   ]) {
@@ -146,6 +147,13 @@ test("rejects malformed or ambiguous registry artifacts", () => {
     /unique ids and ENS names/
   );
 
+  const empty = structuredClone(registry);
+  empty.anchors = [];
+  assert.throws(
+    () => evaluateEnsResearch(request("epbs.eth"), empty),
+    /at least one anchor/
+  );
+
   const unsafe = structuredClone(registry);
   unsafe.anchors[0].ens = "foo..eth";
   assert.throws(
@@ -158,5 +166,6 @@ test("exports the same fail-closed normalization boundary as the evaluator", () 
   assert.equal(normalizeSupportedEnsName("EPBS.ETH"), "epbs.eth");
   assert.equal(normalizeSupportedEnsName("foo..eth"), null);
   assert.equal(normalizeSupportedEnsName("ab--cd.eth"), null);
+  assert.equal(normalizeSupportedEnsName("blocKspacemarket.eth"), null);
   assert.equal(normalizeSupportedEnsName(null), null);
 });
