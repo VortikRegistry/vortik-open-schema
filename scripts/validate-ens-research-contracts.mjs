@@ -81,6 +81,7 @@ const [
   publicRequestText,
   publicResponseText,
   registry,
+  coordinationSurfaces,
   curatedPrimarySources
 ] = await Promise.all([
   readText(REQUEST_PATH),
@@ -88,6 +89,7 @@ const [
   readText(PUBLIC_REQUEST_PATH),
   readText(PUBLIC_RESPONSE_PATH),
   readJson("registry.json"),
+  readJson("maps/coordination-surfaces.json"),
   collectCuratedPrimarySources()
 ]);
 
@@ -127,7 +129,47 @@ function trustedEvidenceReference(evidence) {
     }
   }
 
+  if (evidence.kind === "vortik_interpretation") {
+    const match =
+      /^maps\/coordination-surfaces\.json#\/(surfaces|ambiguous_surfaces)\/(0|[1-9][0-9]*)$/
+        .exec(evidence.reference);
+    return Boolean(
+      match
+      && coordinationSurfaces[match[1]]
+      && coordinationSurfaces[match[1]][Number(match[2])]
+    );
+  }
+
   return false;
+}
+
+function expectedSurfaceMatch(normalizedName) {
+  const labels = normalizedName?.split(".");
+  if (!labels || labels.length !== 2) return null;
+
+  const regularIndex = coordinationSurfaces.surfaces.findIndex(
+    (surface) => surface.id === labels[0]
+  );
+  if (regularIndex !== -1) {
+    return {
+      surface: coordinationSurfaces.surfaces[regularIndex],
+      collection: "surfaces",
+      index: regularIndex,
+      relationship: "same_curated_surface"
+    };
+  }
+
+  const ambiguousIndex = coordinationSurfaces.ambiguous_surfaces.findIndex(
+    (surface) => surface.id === labels[0]
+  );
+  return ambiguousIndex === -1
+    ? null
+    : {
+        surface: coordinationSurfaces.ambiguous_surfaces[ambiguousIndex],
+        collection: "ambiguous_surfaces",
+        index: ambiguousIndex,
+        relationship: "ambiguous_curated_surface"
+      };
 }
 
 function assertSemanticExchange(requestValue, value) {
@@ -212,12 +254,73 @@ function assertSemanticExchange(requestValue, value) {
     throw new Error("An exact registry match must use tracked_anchor");
   }
 
+  const surfaceMatch = normalizedName
+    ? expectedSurfaceMatch(normalizedName)
+    : null;
+  if (value.result.state === "related_terminology") {
+    if (!surfaceMatch) {
+      throw new Error(
+        "Related terminology requires an exact curated surface-id match"
+      );
+    }
+
+    const mapReference =
+      `maps/coordination-surfaces.json#/${surfaceMatch.collection}/${surfaceMatch.index}`;
+    const mapEvidenceIndex = value.result.evidence.findIndex(
+      (evidence) =>
+        evidence.kind === "vortik_interpretation"
+        && evidence.reference === mapReference
+    );
+    if (mapEvidenceIndex === -1) {
+      throw new Error(
+        "Related terminology requires evidence for the exact curated surface"
+      );
+    }
+
+    if (value.result.related_terms.length !== surfaceMatch.surface.anchors.length) {
+      throw new Error(
+        "Related terminology must include every anchor mapped by the curated surface"
+      );
+    }
+
+    surfaceMatch.surface.anchors.forEach((anchorId, index) => {
+      const anchorIndex = registry.anchors.findIndex(
+        (anchor) => anchor.id === anchorId
+      );
+      const anchor = registry.anchors[anchorIndex];
+      if (!anchor) {
+        throw new Error("Curated surface references an unknown registry anchor");
+      }
+      const term = value.result.related_terms[index];
+      const registryReference = `registry.json#/anchors/${anchorIndex}`;
+      const registryEvidenceIndex = value.result.evidence.findIndex(
+        (evidence) =>
+          evidence.kind === "registry"
+          && evidence.reference === registryReference
+      );
+      if (
+        !term
+        || term.term !== anchor.canonical_term
+        || term.relationship !== surfaceMatch.relationship
+        || registryEvidenceIndex === -1
+        || term.evidence_refs.length !== 2
+        || !term.evidence_refs.includes(mapEvidenceIndex)
+        || !term.evidence_refs.includes(registryEvidenceIndex)
+      ) {
+        throw new Error(
+          "Related term does not match the deterministic curated surface mapping"
+        );
+      }
+    });
+  } else if (surfaceMatch && !matchedAnchor) {
+    throw new Error(
+      "An exact curated surface-id match must use related_terminology"
+    );
+  }
+
   for (const evidence of value.result.evidence) {
-    if (
-      ["registry", "primary_source"].includes(evidence.kind) &&
-      !trustedEvidenceReference(evidence)
-    ) {
-      throw new Error("Every declared registry or primary-source reference must be trusted");
+    if (!trustedEvidenceReference(evidence)) {
+      throw new Error("Every declared evidence reference must be trusted");
     }
   }
 
@@ -229,8 +332,8 @@ function assertSemanticExchange(requestValue, value) {
       return value.result.evidence[index];
     });
 
-    if (!referencedEvidence.some(trustedEvidenceReference)) {
-      throw new Error("Each related term requires registry or allowlisted primary-source evidence");
+    if (!referencedEvidence.every(trustedEvidenceReference)) {
+      throw new Error("Each related-term evidence reference must be trusted");
     }
   }
 }
@@ -423,29 +526,32 @@ assertThrows(
 );
 
 const relatedRequest = structuredClone(request);
-relatedRequest.query.name = "unknown.eth";
-const sourceGroundedRelated = structuredClone(trackedResponse);
-sourceGroundedRelated.query.submitted_name = "unknown.eth";
-sourceGroundedRelated.query.normalized_name = "unknown.eth";
-sourceGroundedRelated.result.state = "related_terminology";
-sourceGroundedRelated.result.registry_entry = null;
-sourceGroundedRelated.result.related_terms = [
-  {
-    term: "enshrined proposer-builder separation (ePBS)",
-    relationship: "semantic context",
-    evidence_refs: [0]
-  }
-];
+relatedRequest.query.name = "builder.eth";
+const sourceGroundedRelated = evaluateEnsResearch(
+  relatedRequest,
+  registry,
+  { coordinationSurfaces }
+);
 assertSemanticExchange(relatedRequest, sourceGroundedRelated);
 
+const fabricatedRelatedTerm = structuredClone(sourceGroundedRelated);
+fabricatedRelatedTerm.result.related_terms[0].term = "fabricated";
+assertThrows(
+  () => assertSemanticExchange(relatedRequest, fabricatedRelatedTerm),
+  "fabricated curated related term"
+);
+
+const downgradedSurfaceMatch = structuredClone(sourceGroundedRelated);
+downgradedSurfaceMatch.result.state = "untracked";
+downgradedSurfaceMatch.result.related_terms = [];
+downgradedSurfaceMatch.result.evidence = [];
+assertThrows(
+  () => assertSemanticExchange(relatedRequest, downgradedSurfaceMatch),
+  "curated surface match downgraded to untracked"
+);
+
 const interpretationOnlyRelated = structuredClone(sourceGroundedRelated);
-interpretationOnlyRelated.result.evidence = [
-  {
-    kind: "vortik_interpretation",
-    reference: "untrusted",
-    claim: "Unsupported relationship."
-  }
-];
+interpretationOnlyRelated.result.evidence[0].reference = "untrusted";
 assertThrows(
   () => assertSemanticExchange(relatedRequest, interpretationOnlyRelated),
   "interpretation-only related-term evidence"
@@ -480,20 +586,19 @@ assertThrows(
   "invalid normalized input represented as indeterminate"
 );
 
-const primarySourceRelated = structuredClone(sourceGroundedRelated);
-primarySourceRelated.result.evidence = [
-  {
-    kind: "primary_source",
-    reference: "https://eips.ethereum.org/EIPS/eip-7732",
-    claim: "EIP-7732 defines enshrined proposer-builder separation."
-  }
-];
-assertSemanticExchange(relatedRequest, primarySourceRelated);
+const primarySourceTracked = structuredClone(trackedResponse);
+primarySourceTracked.result.evidence.push({
+  kind: "primary_source",
+  reference: "https://eips.ethereum.org/EIPS/eip-7732",
+  claim: "EIP-7732 defines enshrined proposer-builder separation."
+});
+assertSemanticExchange(request, primarySourceTracked);
 
-const unallowlistedPrimaryRelated = structuredClone(primarySourceRelated);
-unallowlistedPrimaryRelated.result.evidence[0].reference = "https://example.com/untrusted";
+const unallowlistedPrimaryRelated = structuredClone(primarySourceTracked);
+unallowlistedPrimaryRelated.result.evidence.at(-1).reference =
+  "https://example.com/untrusted";
 assertThrows(
-  () => assertSemanticExchange(relatedRequest, unallowlistedPrimaryRelated),
+  () => assertSemanticExchange(request, unallowlistedPrimaryRelated),
   "unallowlisted primary-source host"
 );
 
@@ -535,19 +640,19 @@ assertThrows(
   "unreferenced invalid registry evidence"
 );
 
-const fabricatedPrimaryPath = structuredClone(primarySourceRelated);
-fabricatedPrimaryPath.result.evidence[0].reference =
+const fabricatedPrimaryPath = structuredClone(primarySourceTracked);
+fabricatedPrimaryPath.result.evidence.at(-1).reference =
   "https://eips.ethereum.org/not-a-source";
 assertThrows(
-  () => assertSemanticExchange(relatedRequest, fabricatedPrimaryPath),
+  () => assertSemanticExchange(request, fabricatedPrimaryPath),
   "fabricated primary-source path"
 );
 
-const nonstandardPrimaryPort = structuredClone(primarySourceRelated);
-nonstandardPrimaryPort.result.evidence[0].reference =
+const nonstandardPrimaryPort = structuredClone(primarySourceTracked);
+nonstandardPrimaryPort.result.evidence.at(-1).reference =
   "https://eips.ethereum.org:444/EIPS/eip-7732";
 assertThrows(
-  () => assertSemanticExchange(relatedRequest, nonstandardPrimaryPort),
+  () => assertSemanticExchange(request, nonstandardPrimaryPort),
   "nonstandard primary-source port"
 );
 
@@ -559,27 +664,27 @@ assertThrows(
   "noncanonical zero-padded registry pointer"
 );
 
-const nonexistentCuratedSource = structuredClone(primarySourceRelated);
-nonexistentCuratedSource.result.evidence[0].reference =
+const nonexistentCuratedSource = structuredClone(primarySourceTracked);
+nonexistentCuratedSource.result.evidence.at(-1).reference =
   "https://eips.ethereum.org/EIPS/eip-999999999";
 assertThrows(
-  () => assertSemanticExchange(relatedRequest, nonexistentCuratedSource),
+  () => assertSemanticExchange(request, nonexistentCuratedSource),
   "well-shaped but uncurated primary source"
 );
 
-const explicitDefaultPortSource = structuredClone(primarySourceRelated);
-explicitDefaultPortSource.result.evidence[0].reference =
+const explicitDefaultPortSource = structuredClone(primarySourceTracked);
+explicitDefaultPortSource.result.evidence.at(-1).reference =
   "https://eips.ethereum.org:443/EIPS/eip-7732";
 assertThrows(
-  () => assertSemanticExchange(relatedRequest, explicitDefaultPortSource),
+  () => assertSemanticExchange(request, explicitDefaultPortSource),
   "nonliteral default-port source"
 );
 
-const dotSegmentSource = structuredClone(primarySourceRelated);
-dotSegmentSource.result.evidence[0].reference =
+const dotSegmentSource = structuredClone(primarySourceTracked);
+dotSegmentSource.result.evidence.at(-1).reference =
   "https://eips.ethereum.org/EIPS/fake/../eip-7732";
 assertThrows(
-  () => assertSemanticExchange(relatedRequest, dotSegmentSource),
+  () => assertSemanticExchange(request, dotSegmentSource),
   "nonliteral dot-segment source"
 );
 
@@ -594,6 +699,8 @@ console.log("EXPECTED FAIL fabricated registry metadata");
 console.log("EXPECTED FAIL malformed normalized output");
 console.log("EXPECTED FAIL dangling related-term evidence");
 console.log("EXPECTED FAIL normalization redirected to unrelated tracked anchor");
+console.log("EXPECTED FAIL fabricated curated related term");
+console.log("EXPECTED FAIL curated surface match downgraded to untracked");
 console.log("EXPECTED FAIL interpretation-only related-term evidence");
 console.log("EXPECTED FAIL valid tracked name downgraded to invalid input");
 console.log("EXPECTED FAIL exact tracked anchor downgraded to indeterminate");
