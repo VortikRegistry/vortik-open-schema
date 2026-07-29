@@ -88,6 +88,14 @@ The first closed request and response contracts are:
 
 Their public mirrors are published under the same paths on GitHub Pages. Both contracts reject unexpected control fields. They define data shapes and state invariants only; they do not perform resolution, retrieval, evaluation, or writes.
 
+## Reusable local client
+
+The current reusable integration is documented in [Reusable ENS research client](ens-research-client.md).
+
+`lib/ens-research-client.mjs` evaluates versioned requests only against the canonical repository copies of `registry.json` and `maps/coordination-surfaces.json`. It does not accept caller-supplied artifacts, network sources, resolver metadata, ownership information, or action instructions.
+
+The executable example is available at `examples/research-ens-name.mjs` and runs through `npm run example:research-ens`.
+
 ## Phased delivery
 
 Implementation should remain split into small pull requests:
