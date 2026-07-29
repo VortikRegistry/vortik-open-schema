@@ -10,6 +10,11 @@ const RESPONSE_PATH = "schemas/queries/vortik-ens-research-response/1.0.0/schema
 const PUBLIC_REQUEST_PATH = "docs/schemas/queries/vortik-ens-research-request/1.0.0/schema.json";
 const PUBLIC_RESPONSE_PATH = "docs/schemas/queries/vortik-ens-research-response/1.0.0/schema.json";
 const ASCII_NORMALIZED_ENS = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+eth$/;
+const PRIMARY_SOURCE_HOSTS = new Set([
+  "eips.ethereum.org",
+  "ethereum.org",
+  "ethresear.ch"
+]);
 
 async function readText(relativePath) {
   return readFile(resolve(root, relativePath), "utf8");
@@ -117,8 +122,8 @@ function assertSemanticExchange(requestValue, value) {
   }
 
   const expectedNormalizedName = normalizeSupportedAscii(rawName);
-  if (normalizedName !== null && normalizedName !== expectedNormalizedName) {
-    throw new Error("Normalized name must be derived from the original submitted query");
+  if (normalizedName !== expectedNormalizedName) {
+    throw new Error("Normalized name must exactly equal the value derived from the original submitted query");
   }
 
   if (normalizedName !== null && !ASCII_NORMALIZED_ENS.test(normalizedName)) {
@@ -384,6 +389,31 @@ assertThrows(
   "interpretation-only related-term evidence"
 );
 
+const validNameRejected = structuredClone(invalidResponse);
+validNameRejected.request_id = request.request_id;
+validNameRejected.query.submitted_name = request.query.name;
+assertThrows(
+  () => assertSemanticExchange(request, validNameRejected),
+  "valid tracked name downgraded to invalid input"
+);
+
+const primarySourceRelated = structuredClone(sourceGroundedRelated);
+primarySourceRelated.result.evidence = [
+  {
+    kind: "primary_source",
+    reference: "https://eips.ethereum.org/EIPS/eip-7732",
+    claim: "EIP-7732 defines enshrined proposer-builder separation."
+  }
+];
+assertSemanticExchange(relatedRequest, primarySourceRelated);
+
+const unallowlistedPrimaryRelated = structuredClone(primarySourceRelated);
+unallowlistedPrimaryRelated.result.evidence[0].reference = "https://example.com/untrusted";
+assertThrows(
+  () => assertSemanticExchange(relatedRequest, unallowlistedPrimaryRelated),
+  "unallowlisted primary-source host"
+);
+
 console.log("ENS research contracts and semantic acceptance gate validate");
 console.log("EXPECTED FAIL unexpected request instructions");
 console.log("EXPECTED FAIL unexpected response tool_call");
@@ -396,3 +426,5 @@ console.log("EXPECTED FAIL malformed normalized output");
 console.log("EXPECTED FAIL dangling related-term evidence");
 console.log("EXPECTED FAIL normalization redirected to unrelated tracked anchor");
 console.log("EXPECTED FAIL interpretation-only related-term evidence");
+console.log("EXPECTED FAIL valid tracked name downgraded to invalid input");
+console.log("EXPECTED FAIL unallowlisted primary-source host");
