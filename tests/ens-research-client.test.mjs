@@ -1,5 +1,9 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import test from "node:test";
+
+import mutableCoordinationSurfaces from "../maps/coordination-surfaces.json" with { type: "json" };
+import mutableRegistry from "../registry.json" with { type: "json" };
 
 import {
   DEFAULT_ENS_RESEARCH_REQUEST_ID,
@@ -89,6 +93,61 @@ test("accepts a complete request without mutating caller input", () => {
   assert.deepEqual(request, before);
   assert.deepEqual(first, second);
   assert.equal(first.result.state, "related_terminology");
+});
+
+test("isolates canonical evaluation from shared JSON module mutations", () => {
+  const originalCanonicalTerm = mutableRegistry.anchors[0].canonical_term;
+  const originalSurfaceId = mutableCoordinationSurfaces.surfaces[3].id;
+
+  try {
+    mutableRegistry.anchors[0].canonical_term = "attacker-controlled term";
+    mutableCoordinationSurfaces.surfaces[3].id = "attacker-controlled-surface";
+
+    const tracked = researchEnsName("epbs.eth");
+    assert.equal(tracked.result.state, "tracked_anchor");
+    assert.equal(tracked.result.registry_entry.canonical_term, originalCanonicalTerm);
+
+    const related = researchEnsName("builder.eth");
+    assert.equal(related.result.state, "related_terminology");
+    assert.equal(
+      related.result.evidence[0].reference,
+      "maps/coordination-surfaces.json#/surfaces/3"
+    );
+  } finally {
+    mutableRegistry.anchors[0].canonical_term = originalCanonicalTerm;
+    mutableCoordinationSurfaces.surfaces[3].id = originalSurfaceId;
+  }
+});
+
+test("ignores JSON module cache poisoning before client import", () => {
+  const script = `
+    import registry from "./registry.json" with { type: "json" };
+    import surfaces from "./maps/coordination-surfaces.json" with { type: "json" };
+
+    registry.anchors[0].canonical_term = "attacker-controlled term";
+    surfaces.surfaces[3].id = "attacker-controlled-surface";
+
+    const { researchEnsName } = await import("./lib/ens-research-client.mjs");
+    const tracked = researchEnsName("epbs.eth");
+    const related = researchEnsName("builder.eth");
+    console.log(JSON.stringify({
+      canonicalTerm: tracked.result.registry_entry.canonical_term,
+      relatedState: related.result.state,
+      evidence: related.result.evidence[0].reference
+    }));
+  `;
+  const child = spawnSync(
+    process.execPath,
+    ["--input-type=module", "--eval", script],
+    { cwd: new URL("..", import.meta.url), encoding: "utf8" }
+  );
+
+  assert.equal(child.status, 0, child.stderr);
+  assert.deepEqual(JSON.parse(child.stdout), {
+    canonicalTerm: "enshrined proposer-builder separation (ePBS)",
+    relatedState: "related_terminology",
+    evidence: "maps/coordination-surfaces.json#/surfaces/3"
+  });
 });
 
 test("rejects unsupported options and invalid request identifiers", () => {
