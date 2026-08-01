@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import test from "node:test";
 
 import mutableCoordinationSurfaces from "../maps/coordination-surfaces.json" with { type: "json" };
@@ -116,6 +117,37 @@ test("isolates canonical evaluation from shared JSON module mutations", () => {
     mutableRegistry.anchors[0].canonical_term = originalCanonicalTerm;
     mutableCoordinationSurfaces.surfaces[3].id = originalSurfaceId;
   }
+});
+
+test("ignores JSON module cache poisoning before client import", () => {
+  const script = `
+    import registry from "./registry.json" with { type: "json" };
+    import surfaces from "./maps/coordination-surfaces.json" with { type: "json" };
+
+    registry.anchors[0].canonical_term = "attacker-controlled term";
+    surfaces.surfaces[3].id = "attacker-controlled-surface";
+
+    const { researchEnsName } = await import("./lib/ens-research-client.mjs");
+    const tracked = researchEnsName("epbs.eth");
+    const related = researchEnsName("builder.eth");
+    console.log(JSON.stringify({
+      canonicalTerm: tracked.result.registry_entry.canonical_term,
+      relatedState: related.result.state,
+      evidence: related.result.evidence[0].reference
+    }));
+  `;
+  const child = spawnSync(
+    process.execPath,
+    ["--input-type=module", "--eval", script],
+    { cwd: new URL("..", import.meta.url), encoding: "utf8" }
+  );
+
+  assert.equal(child.status, 0, child.stderr);
+  assert.deepEqual(JSON.parse(child.stdout), {
+    canonicalTerm: "enshrined proposer-builder separation (ePBS)",
+    relatedState: "related_terminology",
+    evidence: "maps/coordination-surfaces.json#/surfaces/3"
+  });
 });
 
 test("rejects unsupported options and invalid request identifiers", () => {
