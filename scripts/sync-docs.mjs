@@ -13,7 +13,8 @@ const DIRS = [
   "maps",
   "schemas",
   "anchors",
-  "feeds"
+  "feeds",
+  "agents"
 ];
 
 const EXCLUDED_DOCS_SYNC_PATHS = new Set([
@@ -48,7 +49,7 @@ function copyDir(srcDir, destDir) {
     const dest = path.join(destDir, entry.name);
 
     if (entry.isDirectory()) {
-      copyDir(src, dest);
+      copyDir(src, destDir = dest);
     } else {
       if (shouldSkipDocsSync(src)) {
         continue;
