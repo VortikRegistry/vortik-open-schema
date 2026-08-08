@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { access, readFile } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
+import { access, readFile, readdir } from "node:fs/promises";
+import { dirname, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
@@ -23,10 +23,63 @@ async function requirePath(relativePath, errors) {
   }
 }
 
+async function listFiles(relativeDir) {
+  const absoluteDir = resolve(root, relativeDir);
+  const files = [];
+
+  async function walk(currentDir) {
+    const entries = await readdir(currentDir, { withFileTypes: true });
+    for (const entry of entries) {
+      const entryPath = resolve(currentDir, entry.name);
+      if (entry.isDirectory()) {
+        await walk(entryPath);
+      } else if (entry.isFile()) {
+        files.push(relative(absoluteDir, entryPath).split(sep).join("/"));
+      }
+    }
+  }
+
+  await walk(absoluteDir);
+  return files.sort();
+}
+
+function inventoryDiff(sourceFiles, publicFiles) {
+  const source = new Set(sourceFiles);
+  const published = new Set(publicFiles);
+  return {
+    missing: sourceFiles.filter((file) => !published.has(file)),
+    extra: publicFiles.filter((file) => !source.has(file))
+  };
+}
+
+async function verifyMirrorInventory(sourceDir, publicDir, label) {
+  const [sourceFiles, publicFiles] = await Promise.all([
+    listFiles(sourceDir),
+    listFiles(publicDir)
+  ]);
+  const { missing, extra } = inventoryDiff(sourceFiles, publicFiles);
+
+  if (missing.length > 0 || extra.length > 0) {
+    const details = [
+      ...missing.map((file) => `missing public mirror: ${publicDir}/${file}`),
+      ...extra.map((file) => `stale public mirror: ${publicDir}/${file}`)
+    ];
+    throw new Error(`${label} directory inventories differ:\n${details.join("\n")}`);
+  }
+
+  for (const file of sourceFiles) {
+    const [source, published] = await Promise.all([
+      readText(`${sourceDir}/${file}`),
+      readText(`${publicDir}/${file}`)
+    ]);
+    if (source !== published) {
+      throw new Error(`${label} mirror must be byte-identical: ${file}`);
+    }
+  }
+}
+
 const schemaPath = "schemas/agents/vortik-agent-discovery/1.0.0/schema.json";
 const manifestPath = "agents/discovery.json";
-const publicManifestPath = "docs/agents/discovery.json";
-const publicSchemaPath = "docs/schemas/agents/vortik-agent-discovery/1.0.0/schema.json";
 
 const [schema, manifest] = await Promise.all([
   readJson(schemaPath),
@@ -72,17 +125,15 @@ if (integrityErrors.length > 0) {
   throw new Error(`Agent discovery manifest does not match existing public capabilities:\n${integrityErrors.join("\n")}`);
 }
 
-const [sourceManifest, publicManifest, sourceSchema, publicSchema] = await Promise.all([
-  readText(manifestPath),
-  readText(publicManifestPath),
-  readText(schemaPath),
-  readText(publicSchemaPath)
-]);
-if (sourceManifest !== publicManifest) {
-  throw new Error("docs/agents/discovery.json must be byte-identical to agents/discovery.json");
-}
-if (sourceSchema !== publicSchema) {
-  throw new Error("public agent discovery schema mirror must be byte-identical to its canonical schema");
+await verifyMirrorInventory("agents", "docs/agents", "Agent discovery");
+await verifyMirrorInventory("schemas/agents", "docs/schemas/agents", "Agent discovery schema");
+
+const staleMirrorRegression = inventoryDiff(
+  ["discovery.json"],
+  ["discovery.json", "obsolete.json"]
+);
+if (staleMirrorRegression.extra.length !== 1 || staleMirrorRegression.extra[0] !== "obsolete.json") {
+  throw new Error("Agent discovery inventory validation must detect stale public mirror files");
 }
 
 for (const [label, mutate] of [
@@ -102,5 +153,6 @@ for (const [label, mutate] of [
 
 console.log(`agents/discovery.json conforms to vortik-agent-discovery 1.0.0 with ${manifest.capabilities.length} capability entries`);
 console.log("Existing feed and ENS research references verified");
-console.log("Public manifest/schema mirrors verified byte-identical");
+console.log("Public agent manifest/schema directory inventories verified complete and byte-identical");
+console.log("EXPECTED FAIL stale public agent mirror inventory");
 console.log("EXPECTED FAIL unimplemented A2A/live-network/commercial authority claims");
