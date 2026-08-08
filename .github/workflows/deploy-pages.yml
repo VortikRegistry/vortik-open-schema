@@ -64,7 +64,9 @@ jobs:
             index.html \
             market.html \
             feeds/index.json \
-            feeds/epbs.json; do
+            feeds/epbs.json \
+            agents/discovery.json \
+            schemas/agents/vortik-agent-discovery/1.0.0/schema.json; do
             output="/tmp/${relative_path//\//_}"
             verified=false
 
