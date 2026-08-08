@@ -13,7 +13,8 @@ const DIRS = [
   "maps",
   "schemas",
   "anchors",
-  "feeds"
+  "feeds",
+  "agents"
 ];
 
 const EXCLUDED_DOCS_SYNC_PATHS = new Set([
