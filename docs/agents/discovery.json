@@ -1,0 +1,54 @@
+{
+  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/agents/vortik-agent-discovery/1.0.0/schema.json",
+  "manifest": "vortik-agent-discovery",
+  "manifest_version": "1.0.0",
+  "project": {
+    "name": "Vortik Registry",
+    "description": "Independent source-grounded semantic registry and deterministic research surface for selected Ethereum coordination terminology.",
+    "repository": "https://github.com/VortikRegistry/vortik-open-schema",
+    "public_site": "https://vortikregistry.github.io/vortik-open-schema/"
+  },
+  "interaction": {
+    "mode": "discovery_only",
+    "a2a_server": false,
+    "live_network_ingress": false,
+    "agent_card_published": false,
+    "note": "This manifest describes public capabilities that already exist. It is not an A2A Agent Card and does not advertise a live agent endpoint."
+  },
+  "capabilities": [
+    {
+      "id": "discover_vortik_feeds",
+      "kind": "public_artifact",
+      "description": "Discover and verify versioned public Vortik semantic feeds without hard-coding individual feed paths.",
+      "local_entrypoint": "feeds/index.json",
+      "public_entrypoint": "https://vortikregistry.github.io/vortik-open-schema/feeds/index.json",
+      "contract": "schemas/feeds/vortik-feed-index/1.0.0/schema.json",
+      "network_required_by_repository_runtime": false
+    },
+    {
+      "id": "research_ens_semantics",
+      "kind": "local_library",
+      "description": "Evaluate an ENS-style name deterministically against canonical Vortik registry and coordination-surface artifacts.",
+      "local_entrypoint": "lib/ens-research-client.mjs",
+      "documentation": "docs/ens-research-client.md",
+      "request_contract": "schemas/queries/vortik-ens-research-request/1.0.0/schema.json",
+      "response_contract": "schemas/queries/vortik-ens-research-response/1.0.0/schema.json",
+      "network_required_by_repository_runtime": false
+    }
+  ],
+  "authority": {
+    "protocol_authority": false,
+    "ens_authority": false,
+    "ownership_inference": false,
+    "commercial_authority": false,
+    "note": "Vortik artifacts provide an independent semantic interpretation and do not define Ethereum protocol rules, ENS authority, ownership intent, or commercial relevance."
+  },
+  "trust_boundary": {
+    "canonical_artifacts_only": true,
+    "live_ens_resolution": false,
+    "external_web_retrieval": false,
+    "mcp_source_ingestion": false,
+    "external_content_trusted": false,
+    "note": "Any future live ENS resolution, web retrieval, MCP source ingestion, or A2A ingress requires a separate trust-boundary change before implementation."
+  }
+}
