@@ -49,7 +49,7 @@ function copyDir(srcDir, destDir) {
     const dest = path.join(destDir, entry.name);
 
     if (entry.isDirectory()) {
-      copyDir(src, destDir = dest);
+      copyDir(src, dest);
     } else {
       if (shouldSkipDocsSync(src)) {
         continue;
