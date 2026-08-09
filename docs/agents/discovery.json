@@ -1,7 +1,7 @@
 {
-  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/agents/vortik-agent-discovery/1.0.0/schema.json",
+  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/agents/vortik-agent-discovery/1.1.0/schema.json",
   "manifest": "vortik-agent-discovery",
-  "manifest_version": "1.0.0",
+  "manifest_version": "1.1.0",
   "project": {
     "name": "Vortik Registry",
     "description": "Independent source-grounded semantic registry and deterministic research surface for selected Ethereum coordination terminology.",
@@ -13,7 +13,7 @@
     "a2a_server": false,
     "live_network_ingress": false,
     "agent_card_published": false,
-    "note": "This manifest describes public capabilities that already exist. It is not an A2A Agent Card and does not advertise a live agent endpoint."
+    "note": "This manifest describes public capabilities and contracts that already exist. It is not an A2A Agent Card and does not advertise a live agent endpoint."
   },
   "capabilities": [
     {
@@ -33,6 +33,18 @@
       "documentation": "docs/ens-research-client.md",
       "request_contract": "schemas/queries/vortik-ens-research-request/1.0.0/schema.json",
       "response_contract": "schemas/queries/vortik-ens-research-response/1.0.0/schema.json",
+      "network_required_by_repository_runtime": false
+    },
+    {
+      "id": "inbound_ens_research_contract",
+      "kind": "public_contract",
+      "description": "Describe the closed request and response contracts an external agent may prepare for Vortik ENS semantic research without advertising a live submission endpoint.",
+      "request_contract": "schemas/queries/vortik-ens-research-request/1.0.0/schema.json",
+      "response_contract": "schemas/queries/vortik-ens-research-response/1.0.0/schema.json",
+      "public_request_contract": "https://vortikregistry.github.io/vortik-open-schema/schemas/queries/vortik-ens-research-request/1.0.0/schema.json",
+      "public_response_contract": "https://vortikregistry.github.io/vortik-open-schema/schemas/queries/vortik-ens-research-response/1.0.0/schema.json",
+      "local_execution_entrypoint": "lib/ens-research-client.mjs",
+      "submission_available": false,
       "network_required_by_repository_runtime": false
     }
   ],

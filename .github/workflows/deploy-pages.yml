@@ -66,7 +66,10 @@ jobs:
             feeds/index.json \
             feeds/epbs.json \
             agents/discovery.json \
-            schemas/agents/vortik-agent-discovery/1.0.0/schema.json; do
+            schemas/agents/vortik-agent-discovery/1.0.0/schema.json \
+            schemas/agents/vortik-agent-discovery/1.1.0/schema.json \
+            schemas/queries/vortik-ens-research-request/1.0.0/schema.json \
+            schemas/queries/vortik-ens-research-response/1.0.0/schema.json; do
             output="/tmp/${relative_path//\//_}"
             verified=false
 
