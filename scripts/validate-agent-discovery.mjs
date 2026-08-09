@@ -78,7 +78,7 @@ async function verifyMirrorInventory(sourceDir, publicDir, label) {
   }
 }
 
-const schemaPath = "schemas/agents/vortik-agent-discovery/1.0.0/schema.json";
+const schemaPath = "schemas/agents/vortik-agent-discovery/1.1.0/schema.json";
 const manifestPath = "agents/discovery.json";
 
 const [schema, manifest] = await Promise.all([
@@ -96,7 +96,8 @@ if (!validate(manifest)) {
 
 const integrityErrors = [];
 for (const capability of manifest.capabilities) {
-  await requirePath(capability.local_entrypoint, integrityErrors);
+  if (capability.local_entrypoint) await requirePath(capability.local_entrypoint, integrityErrors);
+  if (capability.local_execution_entrypoint) await requirePath(capability.local_execution_entrypoint, integrityErrors);
   if (capability.contract) await requirePath(capability.contract, integrityErrors);
   if (capability.documentation) await requirePath(capability.documentation, integrityErrors);
   if (capability.request_contract) await requirePath(capability.request_contract, integrityErrors);
@@ -121,6 +122,23 @@ if (responseContract.$id !== `https://raw.githubusercontent.com/VortikRegistry/v
   integrityErrors.push("ENS research response contract id does not match the advertised canonical path");
 }
 
+const inboundCapability = manifest.capabilities.find((entry) => entry.id === "inbound_ens_research_contract");
+if (inboundCapability.request_contract !== ensCapability.request_contract) {
+  integrityErrors.push("inbound ENS capability must reuse the canonical ENS research request contract");
+}
+if (inboundCapability.response_contract !== ensCapability.response_contract) {
+  integrityErrors.push("inbound ENS capability must reuse the canonical ENS research response contract");
+}
+if (inboundCapability.local_execution_entrypoint !== ensCapability.local_entrypoint) {
+  integrityErrors.push("inbound ENS capability must resolve to the existing ENS research client");
+}
+if (inboundCapability.public_request_contract !== `https://vortikregistry.github.io/vortik-open-schema/${inboundCapability.request_contract}`) {
+  integrityErrors.push("inbound ENS public request contract does not match the canonical Pages path");
+}
+if (inboundCapability.public_response_contract !== `https://vortikregistry.github.io/vortik-open-schema/${inboundCapability.response_contract}`) {
+  integrityErrors.push("inbound ENS public response contract does not match the canonical Pages path");
+}
+
 if (integrityErrors.length > 0) {
   throw new Error(`Agent discovery manifest does not match existing public capabilities:\n${integrityErrors.join("\n")}`);
 }
@@ -142,7 +160,10 @@ for (const [label, mutate] of [
   ["agent_card_published=true", (candidate) => { candidate.interaction.agent_card_published = true; }],
   ["live_ens_resolution=true", (candidate) => { candidate.trust_boundary.live_ens_resolution = true; }],
   ["external_web_retrieval=true", (candidate) => { candidate.trust_boundary.external_web_retrieval = true; }],
-  ["commercial_authority=true", (candidate) => { candidate.authority.commercial_authority = true; }]
+  ["commercial_authority=true", (candidate) => { candidate.authority.commercial_authority = true; }],
+  ["submission_available=true", (candidate) => {
+    candidate.capabilities.find((entry) => entry.id === "inbound_ens_research_contract").submission_available = true;
+  }]
 ]) {
   const candidate = structuredClone(manifest);
   mutate(candidate);
@@ -151,8 +172,8 @@ for (const [label, mutate] of [
   }
 }
 
-console.log(`agents/discovery.json conforms to vortik-agent-discovery 1.0.0 with ${manifest.capabilities.length} capability entries`);
-console.log("Existing feed and ENS research references verified");
+console.log(`agents/discovery.json conforms to vortik-agent-discovery 1.1.0 with ${manifest.capabilities.length} capability entries`);
+console.log("Existing feed, ENS research and inbound contract references verified");
 console.log("Public agent manifest/schema directory inventories verified complete and byte-identical");
 console.log("EXPECTED FAIL stale public agent mirror inventory");
-console.log("EXPECTED FAIL unimplemented A2A/live-network/commercial authority claims");
+console.log("EXPECTED FAIL unimplemented A2A/live-network/submission/commercial authority claims");
