@@ -27,6 +27,8 @@
     "blob_sha_required": true,
     "source_path_required": true,
     "content_digest_required": true,
+    "content_digest_verified_against_asserted_artifact_required": true,
+    "retrieved_bytes_bound_to_asserted_revision_required": true,
     "claim_binding_required": true,
     "contributor_reference_trusted": false
   },
@@ -53,6 +55,8 @@
     "verifier_version_required": true,
     "issuer_authentication_required": true,
     "issuer_key_identity_required": true,
+    "signing_key_authorization_required": true,
+    "signing_key_trust_policy_validation_required": true,
     "signature_required": true,
     "signature_validation_required": true,
     "subject_contribution_digest_required": true,
@@ -70,6 +74,7 @@
     "ens_mainnet_receipt_required": true,
     "both_receipts_required": true,
     "authenticated_receipts_required": true,
+    "authorized_signing_key_required": true,
     "same_subject_binding_required": true,
     "separate_registry_pr_required": true,
     "commercial_authority": false

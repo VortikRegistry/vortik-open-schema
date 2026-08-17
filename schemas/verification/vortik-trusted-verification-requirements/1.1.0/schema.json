@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-trusted-verification-requirements/1.1.0/schema.json",
   "title": "Vortik Trusted Verification Requirements 1.1.0",
-  "description": "Closed requirements contract for the future trusted verification bridge. It requires exact immutable primary-source identity, affirmative active ENS mainnet evidence, and authenticated receipt issuance while keeping all live verification and candidate admission disabled.",
+  "description": "Closed requirements contract for the future trusted verification bridge. It requires exact immutable primary-source identity and byte binding, affirmative active ENS mainnet evidence, and authorized authenticated receipt issuance while keeping all live verification and candidate admission disabled.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -54,6 +54,8 @@
         "blob_sha_required",
         "source_path_required",
         "content_digest_required",
+        "content_digest_verified_against_asserted_artifact_required",
+        "retrieved_bytes_bound_to_asserted_revision_required",
         "claim_binding_required",
         "contributor_reference_trusted"
       ],
@@ -90,6 +92,8 @@
         "blob_sha_required": { "const": true },
         "source_path_required": { "const": true },
         "content_digest_required": { "const": true },
+        "content_digest_verified_against_asserted_artifact_required": { "const": true },
+        "retrieved_bytes_bound_to_asserted_revision_required": { "const": true },
         "claim_binding_required": { "const": true },
         "contributor_reference_trusted": { "const": false }
       }
@@ -142,6 +146,8 @@
         "verifier_version_required",
         "issuer_authentication_required",
         "issuer_key_identity_required",
+        "signing_key_authorization_required",
+        "signing_key_trust_policy_validation_required",
         "signature_required",
         "signature_validation_required",
         "signature_covers_receipt_digest_required",
@@ -158,6 +164,8 @@
         "verifier_version_required": { "const": true },
         "issuer_authentication_required": { "const": true },
         "issuer_key_identity_required": { "const": true },
+        "signing_key_authorization_required": { "const": true },
+        "signing_key_trust_policy_validation_required": { "const": true },
         "signature_required": { "const": true },
         "signature_validation_required": { "const": true },
         "subject_contribution_digest_required": { "const": true },
@@ -179,6 +187,7 @@
         "ens_mainnet_receipt_required",
         "both_receipts_required",
         "authenticated_receipts_required",
+        "authorized_signing_key_required",
         "same_subject_binding_required",
         "separate_registry_pr_required",
         "commercial_authority"
@@ -189,6 +198,7 @@
         "ens_mainnet_receipt_required": { "const": true },
         "both_receipts_required": { "const": true },
         "authenticated_receipts_required": { "const": true },
+        "authorized_signing_key_required": { "const": true },
         "same_subject_binding_required": { "const": true },
         "separate_registry_pr_required": { "const": true },
         "commercial_authority": { "const": false }

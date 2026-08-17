@@ -38,11 +38,11 @@ It fixes all of these states closed:
 
 A structurally valid contribution or review artifact therefore cannot become trusted merely by matching this requirements contract.
 
-Version `1.1.0` closes three post-merge review gaps in the original boundary:
+Version `1.1.0` closes the review gaps in the original boundary by requiring:
 
-1. primary-source evidence must identify an exact canonical source and immutable repository revision, not only an authority class and content digest;
-2. ENS evidence must contain an affirmative, active, unexpired existence result and must reject negative, null or indeterminate lookups;
-3. receipts must be authenticated by a verifiable issuer identity and signature, not only protected by a recomputable digest.
+1. primary-source evidence to identify an exact canonical source and immutable repository revision, with the retrieved bytes and content digest bound to that same asserted artifact;
+2. ENS evidence to contain an affirmative, active, unexpired existence result, including an explicit expiry-after-observed-block-time comparison, while rejecting negative, null or indeterminate lookups;
+3. receipts to authenticate their issuer, bind the signature to the complete receipt semantics/digest, and use a signing key authorized by the verifier's configured trust policy.
 
 These are contract requirements only. This version does not implement retrieval, ENS lookup, signing, key management, trusted receipt issuance or admission.
 
@@ -61,10 +61,12 @@ The future receipt must prove at least:
 - exact blob SHA;
 - exact source path;
 - cryptographic digest of the retrieved bytes;
+- verification that the content digest corresponds to the exact asserted repository/commit/blob/path artifact;
+- binding proving that the retrieved bytes are the bytes identified by that asserted immutable revision, not unrelated bytes hashed alongside trusted-looking identifiers;
 - binding between the retrieved evidence and the semantic claim under review;
 - verifier identity and version.
 
-An authority label alone is insufficient. A digest alone is also insufficient because it does not identify which primary source and immutable revision supplied the bytes.
+An authority label alone is insufficient. A digest alone is also insufficient, and trusted-looking revision identifiers cannot be recorded independently from the bytes they are supposed to identify.
 
 The concrete repository allowlist, repository IDs, allowed paths, retrieval adapters and network defenses belong to the later verifier implementation and its trust review. Contributor-supplied URLs remain untrusted and cannot select an official source.
 
@@ -93,13 +95,14 @@ An ENS receipt must never be interpreted as ownership authorization, delegated a
 
 ## Receipt authentication and integrity
 
-A receipt digest detects accidental or malicious modification only when the expected digest is already trusted. It does not authenticate the party that created the receipt.
+A receipt digest detects accidental or malicious modification only when the expected digest is already trusted. It does not authenticate the party that created the receipt, and a mathematically valid signature does not by itself establish that its key is authorized to issue Vortik verification receipts.
 
 Future trusted receipts must therefore require:
 
 - verifier identity and version;
 - issuer authentication;
 - issuer key identity;
+- validation that the signing key is authorized by the verifier's configured trust policy;
 - a verifiable signature;
 - signature validation before admission;
 - authentication binding that covers the complete receipt semantics, not unrelated data;
@@ -110,7 +113,7 @@ Future trusted receipts must therefore require:
 - issued-at metadata;
 - replay protection.
 
-The concrete canonical serialization, signature algorithm, public-key policy, key rotation and admission-intent binding are intentionally deferred to the later offline receipt-contract PR. This requirements-only change nevertheless makes two guarantees non-optional: the issuer must be authenticated, and that authentication must bind the complete receipt semantics (including the receipt digest) rather than an unrelated signed value.
+The concrete canonical serialization, signature algorithm, authorized public-key list, key lifecycle/rotation and admission-intent binding are intentionally deferred to the later offline receipt-contract PR. This requirements-only change nevertheless makes three guarantees non-optional: the issuer must be authenticated, the signing key must be authorized by a configured trust policy, and that authenticated signature must bind the complete receipt semantics including its receipt digest.
 
 ## Dual-receipt rule
 
@@ -119,7 +122,7 @@ Future candidate admission requires **both** independently derived receipts:
 1. primary Ethereum/relevant-protocol semantic evidence; and
 2. exact-name ENS mainnet evidence.
 
-Both receipts must be authenticated and must bind to the same candidate/contribution subject. A receipt for one contribution or normalized name cannot be reused for another. One receipt cannot substitute for the other.
+Both receipts must be authenticated, must be issued by an authorized signing key, and must bind to the same candidate/contribution subject. A receipt for one contribution or normalized name cannot be reused for another. One receipt cannot substitute for the other.
 
 Even after a future verifier exists, a separate registry PR remains mandatory. Verification is evidence for admission; it is not permission to mutate the registry directly.
 
@@ -129,6 +132,6 @@ The canonical schema and requirements manifest each have a public documentation 
 
 ## WORK GATE
 
-Implementing the real verifier is a separate infrastructure and trust-boundary change. It will require selecting and constraining real external repositories and Ethereum RPC providers, handling timeouts and failures, recording provenance and content/block hashes, defining provider identity, authenticating receipt issuance, preventing replay, and testing adversarial responses.
+Implementing the real verifier is a separate infrastructure and trust-boundary change. It will require selecting and constraining real external repositories and Ethereum RPC providers, handling timeouts and failures, recording provenance and content/block hashes, defining provider identity, authenticating receipt issuance, authorizing signing keys, preventing replay, and testing adversarial responses.
 
 That work must not be represented by this requirements-only contract. Until the real verifier is separately implemented and reviewed, `admission.enabled` remains `false` and the repository-level candidate-admission gate continues to reject new anchors and ENS rebindings.
