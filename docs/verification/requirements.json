@@ -39,7 +39,10 @@
     "exact_normalized_name_binding_required": true,
     "block_number_required": true,
     "block_hash_required": true,
+    "asserted_block_number_hash_binding_required": true,
     "lookup_result_digest_required": true,
+    "lookup_result_bound_to_asserted_block_required": true,
+    "lookup_result_digest_bound_to_asserted_block_required": true,
     "provider_identity_required": true,
     "affirmative_existence_result_required": true,
     "active_registration_result_required": true,
@@ -48,6 +51,7 @@
     "contributor_ens_claim_trusted": false,
     "ownership_inference": false,
     "block_timestamp_required": true,
+    "block_timestamp_bound_to_asserted_block_required": true,
     "registration_expiry_after_block_timestamp_required": true
   },
   "receipt_integrity": {

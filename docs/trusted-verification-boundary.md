@@ -41,7 +41,7 @@ A structurally valid contribution or review artifact therefore cannot become tru
 Version `1.1.0` closes the review gaps in the original boundary by requiring:
 
 1. primary-source evidence to identify an exact canonical source and immutable repository revision, with the retrieved bytes and content digest bound to that same asserted artifact;
-2. ENS evidence to contain an affirmative, active, unexpired existence result, including an explicit expiry-after-observed-block-time comparison, while rejecting negative, null or indeterminate lookups;
+2. ENS evidence to contain an affirmative, active, unexpired existence result, with the lookup result, lookup-result digest and observed block timestamp all verified against and bound to one asserted Ethereum mainnet block number/hash;
 3. receipts to authenticate their issuer, bind the signature to the complete receipt semantics/digest, and use a signing key authorized by the verifier's configured trust policy.
 
 These are contract requirements only. This version does not implement retrieval, ENS lookup, signing, key management, trusted receipt issuance or admission.
@@ -78,16 +78,18 @@ The future receipt must be bound to:
 
 - Ethereum chain ID `1`;
 - the exact normalized ENS candidate name;
-- a concrete block number and block hash;
-- the lookup-result digest;
+- one asserted concrete block number and block hash representing the same block identity;
+- the lookup result and lookup-result digest, both verified against and bound to that same asserted block;
+- the observed block timestamp, verified against and bound to that same asserted block;
 - the identity of the provider or verification path;
 - an affirmative existence result;
-- an active registration result at the observed block;
+- an active registration result at the asserted block;
 - registration-expiry evidence sufficient to reject an already expired name;
-- the observed block timestamp;
-- an explicit requirement that registration expiry is later than that observed block timestamp;
+- an explicit requirement that registration expiry is later than the timestamp of that same asserted block;
 - explicit rejection of negative, null or indeterminate lookup results;
 - verifier identity and version.
+
+The receipt must not mix state obtained at one block with a different recorded block number, hash or timestamp. The lookup result, its digest, the block timestamp and the expiry comparison all belong to the same chain-1 block context.
 
 This contract deliberately does not yet define the concrete ENS normalization library, contract calls, finalized-block selection, dual-provider policy or lookup semantics identifier. Those are implementation decisions for the later ENS verifier PR.
 
@@ -132,6 +134,6 @@ The canonical schema and requirements manifest each have a public documentation 
 
 ## WORK GATE
 
-Implementing the real verifier is a separate infrastructure and trust-boundary change. It will require selecting and constraining real external repositories and Ethereum RPC providers, handling timeouts and failures, recording provenance and content/block hashes, defining provider identity, authenticating receipt issuance, authorizing signing keys, preventing replay, and testing adversarial responses.
+Implementing the real verifier is a separate infrastructure and trust-boundary change. It will require selecting and constraining real external repositories and Ethereum RPC providers, handling timeouts and failures, recording provenance and content/block hashes, defining provider identity, authenticating receipt issuance, authorizing signing keys, preventing cross-block evidence substitution and replay, and testing adversarial responses.
 
 That work must not be represented by this requirements-only contract. Until the real verifier is separately implemented and reviewed, `admission.enabled` remains `false` and the repository-level candidate-admission gate continues to reject new anchors and ENS rebindings.
