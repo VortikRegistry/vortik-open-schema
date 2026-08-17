@@ -41,10 +41,13 @@ A structurally valid contribution or review artifact therefore cannot become tru
 Version `1.1.0` closes the review gaps in the original boundary by requiring:
 
 1. primary-source evidence to identify an exact canonical source and immutable repository revision, with the retrieved bytes and content digest bound to that same asserted artifact;
-2. ENS evidence to contain an affirmative, active, unexpired existence result, with the lookup result, lookup-result digest and observed block timestamp all verified against and bound to one asserted Ethereum mainnet block number/hash;
-3. receipts to authenticate their issuer, bind the signature to the complete receipt semantics/digest, and use a signing key authorized by the verifier's configured trust policy.
+2. ENS evidence to contain an affirmative, active, unexpired existence result, with the lookup result, lookup-result digest and observed block timestamp all verified against and bound to one asserted **finalized** Ethereum mainnet block;
+3. that finalized block to be fresh relative to a trusted verifier issuance time, with a maximum age of `1800` seconds and no future-dated block timestamp;
+4. registration expiry to remain later than the trusted issuance time;
+5. receipts to authenticate their issuer, bind the signature to the complete receipt semantics/digest, use a signing key authorized by the verifier's configured trust policy, and expose a bounded `admission_valid_until`;
+6. future admission to reject stale or expired receipts.
 
-These are contract requirements only. This version does not implement retrieval, ENS lookup, signing, key management, trusted receipt issuance or admission.
+These are contract requirements only. This version does not implement retrieval, ENS lookup, a clock source, signing, key management, trusted receipt issuance or admission.
 
 ## Required primary-source receipt
 
@@ -78,24 +81,26 @@ The future receipt must be bound to:
 
 - Ethereum chain ID `1`;
 - the exact normalized ENS candidate name;
-- one asserted concrete block number and block hash representing the same block identity;
+- one asserted concrete **finalized** block number and block hash representing the same block identity;
 - the lookup result and lookup-result digest, both verified against and bound to that same asserted block;
 - the observed block timestamp, verified against and bound to that same asserted block;
+- a trusted verifier `issued_at` time derived from a trusted clock source;
+- a freshness rule requiring `0 <= issued_at - block_timestamp <= 1800 seconds`;
 - the identity of the provider or verification path;
 - an affirmative existence result;
 - an active registration result at the asserted block;
-- registration-expiry evidence sufficient to reject an already expired name;
-- an explicit requirement that registration expiry is later than the timestamp of that same asserted block;
+- registration-expiry evidence sufficient to reject an expired name;
+- registration expiry later than both the asserted block timestamp and the trusted verifier `issued_at`;
 - explicit rejection of negative, null or indeterminate lookup results;
 - verifier identity and version.
 
-The receipt must not mix state obtained at one block with a different recorded block number, hash or timestamp. The lookup result, its digest, the block timestamp and the expiry comparison all belong to the same chain-1 block context.
+The receipt must not mix state obtained at one block with a different recorded block number, hash or timestamp. It also must not revive historical validity by selecting an old block at which the name used to be active. A future-dated block timestamp is invalid, and a finalized block older than `1800` seconds relative to trusted `issued_at` is stale and cannot produce admissible evidence.
 
-This contract deliberately does not yet define the concrete ENS normalization library, contract calls, finalized-block selection, dual-provider policy or lookup semantics identifier. Those are implementation decisions for the later ENS verifier PR.
+This contract deliberately does not yet define the concrete ENS normalization library, contract calls, dual-provider implementation or lookup semantics identifier. Those remain implementation decisions for the later ENS verifier PR. It does, however, close the freshness policy: finalized block only, maximum block age `1800` seconds relative to trusted issuance time.
 
 An ENS receipt must never be interpreted as ownership authorization, delegated authority, sale intent or commercial representation.
 
-## Receipt authentication and integrity
+## Receipt authentication, integrity and freshness
 
 A receipt digest detects accidental or malicious modification only when the expected digest is already trusted. It does not authenticate the party that created the receipt, and a mathematically valid signature does not by itself establish that its key is authorized to issue Vortik verification receipts.
 
@@ -112,10 +117,26 @@ Future trusted receipts must therefore require:
 - subject contribution digest;
 - candidate name and exact normalized candidate name;
 - receipt digest;
-- issued-at metadata;
+- `issued_at` derived from a trusted clock source;
+- `admission_valid_until`;
+- a maximum admission-validity window of `86400` seconds from trusted `issued_at`;
+- `admission_valid_until` no later than registration expiry when the receipt depends on ENS registration validity;
 - replay protection.
 
-The concrete canonical serialization, signature algorithm, authorized public-key list, key lifecycle/rotation and admission-intent binding are intentionally deferred to the later offline receipt-contract PR. This requirements-only change nevertheless makes three guarantees non-optional: the issuer must be authenticated, the signing key must be authorized by a configured trust policy, and that authenticated signature must bind the complete receipt semantics including its receipt digest.
+The concrete canonical serialization, signature algorithm, authorized public-key list, key lifecycle/rotation and admission-intent binding are intentionally deferred to the later offline receipt-contract PR.
+
+For the requirements contract, the freshness rule is closed as:
+
+```text
+block_timestamp <= trusted_issued_at
+trusted_issued_at - block_timestamp <= 1800 seconds
+registration_expiry > trusted_issued_at
+admission_valid_until <= trusted_issued_at + 86400 seconds
+admission_valid_until <= registration_expiry
+trusted_admission_time <= admission_valid_until
+```
+
+The future admission gate must fail closed if any freshness comparison cannot be established.
 
 ## Dual-receipt rule
 
@@ -124,7 +145,7 @@ Future candidate admission requires **both** independently derived receipts:
 1. primary Ethereum/relevant-protocol semantic evidence; and
 2. exact-name ENS mainnet evidence.
 
-Both receipts must be authenticated, must be issued by an authorized signing key, and must bind to the same candidate/contribution subject. A receipt for one contribution or normalized name cannot be reused for another. One receipt cannot substitute for the other.
+Both receipts must be authenticated, must be issued by an authorized signing key, and must bind to the same candidate/contribution subject. Admission must validate their freshness and reject a receipt whose `admission_valid_until` has passed. A receipt for one contribution or normalized name cannot be reused for another. One receipt cannot substitute for the other.
 
 Even after a future verifier exists, a separate registry PR remains mandatory. Verification is evidence for admission; it is not permission to mutate the registry directly.
 
@@ -134,6 +155,6 @@ The canonical schema and requirements manifest each have a public documentation 
 
 ## WORK GATE
 
-Implementing the real verifier is a separate infrastructure and trust-boundary change. It will require selecting and constraining real external repositories and Ethereum RPC providers, handling timeouts and failures, recording provenance and content/block hashes, defining provider identity, authenticating receipt issuance, authorizing signing keys, preventing cross-block evidence substitution and replay, and testing adversarial responses.
+Implementing the real verifier is a separate infrastructure and trust-boundary change. It will require selecting and constraining real external repositories and Ethereum RPC providers, handling timeouts and failures, recording provenance and content/block hashes, defining provider identity, providing a trusted clock source, authenticating receipt issuance, authorizing signing keys, enforcing finalized-block and receipt freshness, preventing cross-block evidence substitution and replay, and testing adversarial responses.
 
 That work must not be represented by this requirements-only contract. Until the real verifier is separately implemented and reviewed, `admission.enabled` remains `false` and the repository-level candidate-admission gate continues to reject new anchors and ENS rebindings.

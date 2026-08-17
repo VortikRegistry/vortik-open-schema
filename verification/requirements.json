@@ -40,6 +40,12 @@
     "block_number_required": true,
     "block_hash_required": true,
     "asserted_block_number_hash_binding_required": true,
+    "finalized_block_required": true,
+    "block_timestamp_required": true,
+    "block_timestamp_bound_to_asserted_block_required": true,
+    "max_block_age_seconds": 1800,
+    "block_freshness_against_trusted_issued_at_required": true,
+    "block_timestamp_not_after_trusted_issued_at_required": true,
     "lookup_result_digest_required": true,
     "lookup_result_bound_to_asserted_block_required": true,
     "lookup_result_digest_bound_to_asserted_block_required": true,
@@ -47,12 +53,11 @@
     "affirmative_existence_result_required": true,
     "active_registration_result_required": true,
     "registration_expiry_required": true,
+    "registration_expiry_after_block_timestamp_required": true,
+    "registration_expiry_after_trusted_issued_at_required": true,
     "negative_null_or_indeterminate_result_rejected": true,
     "contributor_ens_claim_trusted": false,
-    "ownership_inference": false,
-    "block_timestamp_required": true,
-    "block_timestamp_bound_to_asserted_block_required": true,
-    "registration_expiry_after_block_timestamp_required": true
+    "ownership_inference": false
   },
   "receipt_integrity": {
     "verifier_identity_required": true,
@@ -63,14 +68,20 @@
     "signing_key_trust_policy_validation_required": true,
     "signature_required": true,
     "signature_validation_required": true,
+    "signature_covers_receipt_digest_required": true,
+    "complete_receipt_authentication_binding_required": true,
     "subject_contribution_digest_required": true,
     "candidate_name_required": true,
     "normalized_candidate_name_required": true,
     "receipt_digest_required": true,
     "issued_at_required": true,
-    "replay_protection_required": true,
-    "complete_receipt_authentication_binding_required": true,
-    "signature_covers_receipt_digest_required": true
+    "trusted_issued_at_required": true,
+    "trusted_clock_source_required": true,
+    "admission_valid_until_required": true,
+    "max_admission_validity_seconds": 86400,
+    "admission_valid_until_not_after_issued_at_plus_max_window_required": true,
+    "admission_valid_until_not_after_registration_expiry_required": true,
+    "replay_protection_required": true
   },
   "admission": {
     "enabled": false,
@@ -80,6 +91,8 @@
     "authenticated_receipts_required": true,
     "authorized_signing_key_required": true,
     "same_subject_binding_required": true,
+    "freshness_validation_required": true,
+    "receipt_not_expired_at_admission_required": true,
     "separate_registry_pr_required": true,
     "commercial_authority": false
   }
