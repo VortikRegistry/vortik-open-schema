@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-trusted-verification-requirements/1.1.0/schema.json",
+  "title": "Vortik Trusted Verification Requirements 1.1.0",
+  "description": "Closed requirements contract for the future trusted verification bridge. It requires exact immutable primary-source identity, affirmative active ENS mainnet evidence, and authenticated receipt issuance while keeping all live verification and candidate admission disabled.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "requirements",
+    "requirements_version",
+    "implementation_state",
+    "primary_source_verification",
+    "ens_mainnet_verification",
+    "receipt_integrity",
+    "admission"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-trusted-verification-requirements/1.1.0/schema.json"
+    },
+    "requirements": {
+      "const": "vortik-trusted-verification-requirements"
+    },
+    "requirements_version": {
+      "const": "1.1.0"
+    },
+    "implementation_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "primary_source_verifier_implemented",
+        "ens_mainnet_verifier_implemented",
+        "live_network_access",
+        "trusted_receipt_issuance"
+      ],
+      "properties": {
+        "mode": { "const": "requirements_only" },
+        "primary_source_verifier_implemented": { "const": false },
+        "ens_mainnet_verifier_implemented": { "const": false },
+        "live_network_access": { "const": false },
+        "trusted_receipt_issuance": { "const": false }
+      }
+    },
+    "primary_source_verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "independent_retrieval_required",
+        "authority_validation_required",
+        "allowed_authority_classes",
+        "canonical_source_identifier_required",
+        "repository_identity_required",
+        "immutable_revision_required",
+        "commit_sha_required",
+        "blob_sha_required",
+        "source_path_required",
+        "content_digest_required",
+        "claim_binding_required",
+        "contributor_reference_trusted"
+      ],
+      "properties": {
+        "required": { "const": true },
+        "independent_retrieval_required": { "const": true },
+        "authority_validation_required": { "const": true },
+        "allowed_authority_classes": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "eip",
+              "ethereum_spec",
+              "ethereum_official_repository",
+              "protocol_spec",
+              "protocol_official_repository"
+            ]
+          },
+          "allOf": [
+            { "contains": { "const": "eip" }, "minContains": 1, "maxContains": 1 },
+            { "contains": { "const": "ethereum_spec" }, "minContains": 1, "maxContains": 1 },
+            { "contains": { "const": "ethereum_official_repository" }, "minContains": 1, "maxContains": 1 },
+            { "contains": { "const": "protocol_spec" }, "minContains": 1, "maxContains": 1 },
+            { "contains": { "const": "protocol_official_repository" }, "minContains": 1, "maxContains": 1 }
+          ]
+        },
+        "canonical_source_identifier_required": { "const": true },
+        "repository_identity_required": { "const": true },
+        "immutable_revision_required": { "const": true },
+        "commit_sha_required": { "const": true },
+        "blob_sha_required": { "const": true },
+        "source_path_required": { "const": true },
+        "content_digest_required": { "const": true },
+        "claim_binding_required": { "const": true },
+        "contributor_reference_trusted": { "const": false }
+      }
+    },
+    "ens_mainnet_verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "chain_id",
+        "independent_lookup_required",
+        "exact_normalized_name_binding_required",
+        "block_number_required",
+        "block_hash_required",
+        "lookup_result_digest_required",
+        "provider_identity_required",
+        "affirmative_existence_result_required",
+        "active_registration_result_required",
+        "registration_expiry_required",
+        "negative_null_or_indeterminate_result_rejected",
+        "contributor_ens_claim_trusted",
+        "ownership_inference"
+      ],
+      "properties": {
+        "required": { "const": true },
+        "chain_id": { "const": 1 },
+        "independent_lookup_required": { "const": true },
+        "exact_normalized_name_binding_required": { "const": true },
+        "block_number_required": { "const": true },
+        "block_hash_required": { "const": true },
+        "lookup_result_digest_required": { "const": true },
+        "provider_identity_required": { "const": true },
+        "affirmative_existence_result_required": { "const": true },
+        "active_registration_result_required": { "const": true },
+        "registration_expiry_required": { "const": true },
+        "negative_null_or_indeterminate_result_rejected": { "const": true },
+        "contributor_ens_claim_trusted": { "const": false },
+        "ownership_inference": { "const": false }
+      }
+    },
+    "receipt_integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verifier_identity_required",
+        "verifier_version_required",
+        "issuer_authentication_required",
+        "issuer_key_identity_required",
+        "signature_required",
+        "signature_validation_required",
+        "subject_contribution_digest_required",
+        "candidate_name_required",
+        "normalized_candidate_name_required",
+        "receipt_digest_required",
+        "issued_at_required",
+        "replay_protection_required"
+      ],
+      "properties": {
+        "verifier_identity_required": { "const": true },
+        "verifier_version_required": { "const": true },
+        "issuer_authentication_required": { "const": true },
+        "issuer_key_identity_required": { "const": true },
+        "signature_required": { "const": true },
+        "signature_validation_required": { "const": true },
+        "subject_contribution_digest_required": { "const": true },
+        "candidate_name_required": { "const": true },
+        "normalized_candidate_name_required": { "const": true },
+        "receipt_digest_required": { "const": true },
+        "issued_at_required": { "const": true },
+        "replay_protection_required": { "const": true }
+      }
+    },
+    "admission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "primary_source_receipt_required",
+        "ens_mainnet_receipt_required",
+        "both_receipts_required",
+        "authenticated_receipts_required",
+        "same_subject_binding_required",
+        "separate_registry_pr_required",
+        "commercial_authority"
+      ],
+      "properties": {
+        "enabled": { "const": false },
+        "primary_source_receipt_required": { "const": true },
+        "ens_mainnet_receipt_required": { "const": true },
+        "both_receipts_required": { "const": true },
+        "authenticated_receipts_required": { "const": true },
+        "same_subject_binding_required": { "const": true },
+        "separate_registry_pr_required": { "const": true },
+        "commercial_authority": { "const": false }
+      }
+    }
+  }
+}

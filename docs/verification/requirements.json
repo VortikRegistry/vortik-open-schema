@@ -1,7 +1,7 @@
 {
-  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-trusted-verification-requirements/1.0.0/schema.json",
+  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-trusted-verification-requirements/1.1.0/schema.json",
   "requirements": "vortik-trusted-verification-requirements",
-  "requirements_version": "1.0.0",
+  "requirements_version": "1.1.0",
   "implementation_state": {
     "mode": "requirements_only",
     "primary_source_verifier_implemented": false,
@@ -20,6 +20,12 @@
       "protocol_spec",
       "protocol_official_repository"
     ],
+    "canonical_source_identifier_required": true,
+    "repository_identity_required": true,
+    "immutable_revision_required": true,
+    "commit_sha_required": true,
+    "blob_sha_required": true,
+    "source_path_required": true,
     "content_digest_required": true,
     "claim_binding_required": true,
     "contributor_reference_trusted": false
@@ -33,14 +39,23 @@
     "block_hash_required": true,
     "lookup_result_digest_required": true,
     "provider_identity_required": true,
+    "affirmative_existence_result_required": true,
+    "active_registration_result_required": true,
+    "registration_expiry_required": true,
+    "negative_null_or_indeterminate_result_rejected": true,
     "contributor_ens_claim_trusted": false,
     "ownership_inference": false
   },
   "receipt_integrity": {
     "verifier_identity_required": true,
     "verifier_version_required": true,
+    "issuer_authentication_required": true,
+    "issuer_key_identity_required": true,
+    "signature_required": true,
+    "signature_validation_required": true,
     "subject_contribution_digest_required": true,
     "candidate_name_required": true,
+    "normalized_candidate_name_required": true,
     "receipt_digest_required": true,
     "issued_at_required": true,
     "replay_protection_required": true
@@ -50,6 +65,7 @@
     "primary_source_receipt_required": true,
     "ens_mainnet_receipt_required": true,
     "both_receipts_required": true,
+    "authenticated_receipts_required": true,
     "same_subject_binding_required": true,
     "separate_registry_pr_required": true,
     "commercial_authority": false
