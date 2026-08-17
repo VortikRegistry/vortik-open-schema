@@ -1,7 +1,7 @@
 {
-  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/agents/vortik-agent-discovery/1.1.0/schema.json",
+  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/agents/vortik-agent-discovery/1.2.0/schema.json",
   "manifest": "vortik-agent-discovery",
-  "manifest_version": "1.1.0",
+  "manifest_version": "1.2.0",
   "project": {
     "name": "Vortik Registry",
     "description": "Independent source-grounded semantic registry and deterministic research surface for selected Ethereum coordination terminology.",
@@ -13,7 +13,7 @@
     "a2a_server": false,
     "live_network_ingress": false,
     "agent_card_published": false,
-    "note": "This manifest describes public capabilities and contracts that already exist. It is not an A2A Agent Card and does not advertise a live agent endpoint."
+    "note": "This manifest describes public capabilities and contribution contracts that already exist. It is not an A2A Agent Card and does not advertise a Vortik-operated live agent endpoint."
   },
   "capabilities": [
     {
@@ -46,6 +46,17 @@
       "local_execution_entrypoint": "lib/ens-research-client.mjs",
       "submission_available": false,
       "network_required_by_repository_runtime": false
+    },
+    {
+      "id": "prepare_ens_candidate_contribution",
+      "kind": "public_contract",
+      "description": "Describe the closed contribution artifact a human or external agent may prepare to propose an ENS-style candidate and supporting evidence for conservative Vortik review.",
+      "contract": "schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json",
+      "public_contract": "https://vortikregistry.github.io/vortik-open-schema/schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json",
+      "documentation": "docs/ens-candidate-contributions.md",
+      "submission_available": false,
+      "automatic_promotion": false,
+      "network_required_by_repository_runtime": false
     }
   ],
   "authority": {
@@ -53,7 +64,7 @@
     "ens_authority": false,
     "ownership_inference": false,
     "commercial_authority": false,
-    "note": "Vortik artifacts provide an independent semantic interpretation and do not define Ethereum protocol rules, ENS authority, ownership intent, or commercial relevance."
+    "note": "Vortik artifacts and external contributions provide independent semantic research inputs and do not define Ethereum protocol rules, ENS authority, ownership intent, or commercial relevance."
   },
   "trust_boundary": {
     "canonical_artifacts_only": true,
@@ -61,6 +72,6 @@
     "external_web_retrieval": false,
     "mcp_source_ingestion": false,
     "external_content_trusted": false,
-    "note": "Any future live ENS resolution, web retrieval, MCP source ingestion, or A2A ingress requires a separate trust-boundary change before implementation."
+    "note": "External contributions remain untrusted data. Any future live ENS resolution, web retrieval, MCP source ingestion, or Vortik-operated A2A ingress requires a separate trust-boundary change before implementation."
   }
 }
