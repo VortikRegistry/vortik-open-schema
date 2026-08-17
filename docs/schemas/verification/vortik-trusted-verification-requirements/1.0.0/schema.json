@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-trusted-verification-requirements/1.0.0/schema.json",
+  "title": "Vortik Trusted Verification Requirements 1.0.0",
+  "description": "Closed requirements contract for the future trusted verification bridge. It specifies what independently derived Ethereum/protocol and ENS mainnet receipts must prove while keeping all live verification and candidate admission disabled.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "requirements",
+    "requirements_version",
+    "implementation_state",
+    "primary_source_verification",
+    "ens_mainnet_verification",
+    "receipt_integrity",
+    "admission"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-trusted-verification-requirements/1.0.0/schema.json"
+    },
+    "requirements": { "const": "vortik-trusted-verification-requirements" },
+    "requirements_version": { "const": "1.0.0" },
+    "implementation_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "primary_source_verifier_implemented",
+        "ens_mainnet_verifier_implemented",
+        "live_network_access",
+        "trusted_receipt_issuance"
+      ],
+      "properties": {
+        "mode": { "const": "requirements_only" },
+        "primary_source_verifier_implemented": { "const": false },
+        "ens_mainnet_verifier_implemented": { "const": false },
+        "live_network_access": { "const": false },
+        "trusted_receipt_issuance": { "const": false }
+      }
+    },
+    "primary_source_verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "independent_retrieval_required",
+        "authority_validation_required",
+        "allowed_authority_classes",
+        "content_digest_required",
+        "claim_binding_required",
+        "contributor_reference_trusted"
+      ],
+      "properties": {
+        "required": { "const": true },
+        "independent_retrieval_required": { "const": true },
+        "authority_validation_required": { "const": true },
+        "allowed_authority_classes": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "eip",
+              "ethereum_spec",
+              "ethereum_official_repository",
+              "protocol_spec",
+              "protocol_official_repository"
+            ]
+          },
+          "allOf": [
+            { "contains": { "const": "eip" }, "minContains": 1, "maxContains": 1 },
+            { "contains": { "const": "ethereum_spec" }, "minContains": 1, "maxContains": 1 },
+            { "contains": { "const": "ethereum_official_repository" }, "minContains": 1, "maxContains": 1 },
+            { "contains": { "const": "protocol_spec" }, "minContains": 1, "maxContains": 1 },
+            { "contains": { "const": "protocol_official_repository" }, "minContains": 1, "maxContains": 1 }
+          ]
+        },
+        "content_digest_required": { "const": true },
+        "claim_binding_required": { "const": true },
+        "contributor_reference_trusted": { "const": false }
+      }
+    },
+    "ens_mainnet_verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "chain_id",
+        "independent_lookup_required",
+        "exact_normalized_name_binding_required",
+        "block_number_required",
+        "block_hash_required",
+        "lookup_result_digest_required",
+        "provider_identity_required",
+        "contributor_ens_claim_trusted",
+        "ownership_inference"
+      ],
+      "properties": {
+        "required": { "const": true },
+        "chain_id": { "const": 1 },
+        "independent_lookup_required": { "const": true },
+        "exact_normalized_name_binding_required": { "const": true },
+        "block_number_required": { "const": true },
+        "block_hash_required": { "const": true },
+        "lookup_result_digest_required": { "const": true },
+        "provider_identity_required": { "const": true },
+        "contributor_ens_claim_trusted": { "const": false },
+        "ownership_inference": { "const": false }
+      }
+    },
+    "receipt_integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verifier_identity_required",
+        "verifier_version_required",
+        "subject_contribution_digest_required",
+        "candidate_name_required",
+        "receipt_digest_required",
+        "issued_at_required",
+        "replay_protection_required"
+      ],
+      "properties": {
+        "verifier_identity_required": { "const": true },
+        "verifier_version_required": { "const": true },
+        "subject_contribution_digest_required": { "const": true },
+        "candidate_name_required": { "const": true },
+        "receipt_digest_required": { "const": true },
+        "issued_at_required": { "const": true },
+        "replay_protection_required": { "const": true }
+      }
+    },
+    "admission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "primary_source_receipt_required",
+        "ens_mainnet_receipt_required",
+        "both_receipts_required",
+        "same_subject_binding_required",
+        "separate_registry_pr_required",
+        "commercial_authority"
+      ],
+      "properties": {
+        "enabled": { "const": false },
+        "primary_source_receipt_required": { "const": true },
+        "ens_mainnet_receipt_required": { "const": true },
+        "both_receipts_required": { "const": true },
+        "same_subject_binding_required": { "const": true },
+        "separate_registry_pr_required": { "const": true },
+        "commercial_authority": { "const": false }
+      }
+    }
+  }
+}

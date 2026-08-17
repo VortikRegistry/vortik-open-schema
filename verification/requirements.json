@@ -1,0 +1,57 @@
+{
+  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-trusted-verification-requirements/1.0.0/schema.json",
+  "requirements": "vortik-trusted-verification-requirements",
+  "requirements_version": "1.0.0",
+  "implementation_state": {
+    "mode": "requirements_only",
+    "primary_source_verifier_implemented": false,
+    "ens_mainnet_verifier_implemented": false,
+    "live_network_access": false,
+    "trusted_receipt_issuance": false
+  },
+  "primary_source_verification": {
+    "required": true,
+    "independent_retrieval_required": true,
+    "authority_validation_required": true,
+    "allowed_authority_classes": [
+      "eip",
+      "ethereum_spec",
+      "ethereum_official_repository",
+      "protocol_spec",
+      "protocol_official_repository"
+    ],
+    "content_digest_required": true,
+    "claim_binding_required": true,
+    "contributor_reference_trusted": false
+  },
+  "ens_mainnet_verification": {
+    "required": true,
+    "chain_id": 1,
+    "independent_lookup_required": true,
+    "exact_normalized_name_binding_required": true,
+    "block_number_required": true,
+    "block_hash_required": true,
+    "lookup_result_digest_required": true,
+    "provider_identity_required": true,
+    "contributor_ens_claim_trusted": false,
+    "ownership_inference": false
+  },
+  "receipt_integrity": {
+    "verifier_identity_required": true,
+    "verifier_version_required": true,
+    "subject_contribution_digest_required": true,
+    "candidate_name_required": true,
+    "receipt_digest_required": true,
+    "issued_at_required": true,
+    "replay_protection_required": true
+  },
+  "admission": {
+    "enabled": false,
+    "primary_source_receipt_required": true,
+    "ens_mainnet_receipt_required": true,
+    "both_receipts_required": true,
+    "same_subject_binding_required": true,
+    "separate_registry_pr_required": true,
+    "commercial_authority": false
+  }
+}

@@ -77,4 +77,4 @@ The public review process therefore cannot authorize private commercial actions,
 
 This review model is transport-independent. Today contributions can arrive through ordinary GitHub Issues or Pull Requests. A future live agent endpoint may transport the same untrusted contribution artifacts, but it must not bypass this review/provenance gate.
 
-The next prerequisite is a trusted verification bridge. Live public agent intake must remain downstream of that bridge rather than becoming a way around it.
+The next prerequisite is the [`Trusted verification boundary`](trusted-verification-boundary.md). It defines the machine-readable requirements for independently derived Ethereum/protocol and exact-name ENS mainnet receipts while keeping all verifier, network and admission states disabled. Live public agent intake must remain downstream of that boundary rather than becoming a way around it.
