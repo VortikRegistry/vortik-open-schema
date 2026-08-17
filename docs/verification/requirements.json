@@ -44,7 +44,9 @@
     "registration_expiry_required": true,
     "negative_null_or_indeterminate_result_rejected": true,
     "contributor_ens_claim_trusted": false,
-    "ownership_inference": false
+    "ownership_inference": false,
+    "block_timestamp_required": true,
+    "registration_expiry_after_block_timestamp_required": true
   },
   "receipt_integrity": {
     "verifier_identity_required": true,
@@ -58,7 +60,9 @@
     "normalized_candidate_name_required": true,
     "receipt_digest_required": true,
     "issued_at_required": true,
-    "replay_protection_required": true
+    "replay_protection_required": true,
+    "complete_receipt_authentication_binding_required": true,
+    "signature_covers_receipt_digest_required": true
   },
   "admission": {
     "enabled": false,

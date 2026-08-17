@@ -82,6 +82,8 @@ The future receipt must be bound to:
 - an affirmative existence result;
 - an active registration result at the observed block;
 - registration-expiry evidence sufficient to reject an already expired name;
+- the observed block timestamp;
+- an explicit requirement that registration expiry is later than that observed block timestamp;
 - explicit rejection of negative, null or indeterminate lookup results;
 - verifier identity and version.
 
@@ -100,13 +102,15 @@ Future trusted receipts must therefore require:
 - issuer key identity;
 - a verifiable signature;
 - signature validation before admission;
+- authentication binding that covers the complete receipt semantics, not unrelated data;
+- signature coverage of the receipt digest so subject/evidence/result fields cannot be substituted independently;
 - subject contribution digest;
 - candidate name and exact normalized candidate name;
 - receipt digest;
 - issued-at metadata;
 - replay protection.
 
-The concrete canonical serialization, signature algorithm, public-key policy, key rotation and admission-intent binding are intentionally deferred to the later offline receipt-contract PR. This requirements-only change merely makes issuer authentication non-optional.
+The concrete canonical serialization, signature algorithm, public-key policy, key rotation and admission-intent binding are intentionally deferred to the later offline receipt-contract PR. This requirements-only change nevertheless makes two guarantees non-optional: the issuer must be authenticated, and that authentication must bind the complete receipt semantics (including the receipt digest) rather than an unrelated signed value.
 
 ## Dual-receipt rule
 

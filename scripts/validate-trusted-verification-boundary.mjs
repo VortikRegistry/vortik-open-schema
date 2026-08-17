@@ -77,6 +77,8 @@ for (const [label, mutate] of [
   ["receipt without issuer key identity", (value) => { value.receipt_integrity.issuer_key_identity_required = false; }],
   ["receipt without signature requirement", (value) => { value.receipt_integrity.signature_required = false; }],
   ["receipt without signature validation", (value) => { value.receipt_integrity.signature_validation_required = false; }],
+  ["signature not bound to complete receipt", (value) => { value.receipt_integrity.complete_receipt_authentication_binding_required = false; }],
+  ["signature not bound to receipt digest", (value) => { value.receipt_integrity.signature_covers_receipt_digest_required = false; }],
   ["admission of unauthenticated receipts", (value) => { value.admission.authenticated_receipts_required = false; }],
 
   ["primary source without canonical source identity", (value) => { value.primary_source_verification.canonical_source_identifier_required = false; }],
@@ -90,6 +92,8 @@ for (const [label, mutate] of [
   ["ENS receipt without affirmative existence", (value) => { value.ens_mainnet_verification.affirmative_existence_result_required = false; }],
   ["ENS exists-but-expired result", (value) => { value.ens_mainnet_verification.active_registration_result_required = false; }],
   ["ENS result without registration expiry", (value) => { value.ens_mainnet_verification.registration_expiry_required = false; }],
+  ["ENS result without observed block timestamp", (value) => { value.ens_mainnet_verification.block_timestamp_required = false; }],
+  ["ENS expiry not required after observed block timestamp", (value) => { value.ens_mainnet_verification.registration_expiry_after_block_timestamp_required = false; }],
 
   ["mismatched contribution/name subject acceptance", (value) => {
     value.admission.same_subject_binding_required = false;
@@ -103,6 +107,6 @@ console.log("Trusted verification requirements 1.1.0 validated");
 console.log("Public schema and requirements mirrors verified byte-identical");
 console.log("EXPECTED FAIL live verifier/network/receipt/admission claims remain closed");
 console.log("EXPECTED FAIL contributor authority, ownership and commercial inference remain closed");
-console.log("EXPECTED FAIL unauthenticated receipts and mutable/unidentified primary-source evidence remain closed");
-console.log("EXPECTED FAIL negative, null, indeterminate or expired ENS evidence remains closed");
+console.log("EXPECTED FAIL unauthenticated or partially signed receipts and mutable/unidentified primary-source evidence remain closed");
+console.log("EXPECTED FAIL negative, null, indeterminate, expired or block-time-unbound ENS evidence remains closed");
 console.log("EXPECTED FAIL cross-receipt subject mismatch and public-mirror divergence remain closed");

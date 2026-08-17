@@ -19,12 +19,8 @@
     "$schema": {
       "const": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-trusted-verification-requirements/1.1.0/schema.json"
     },
-    "requirements": {
-      "const": "vortik-trusted-verification-requirements"
-    },
-    "requirements_version": {
-      "const": "1.1.0"
-    },
+    "requirements": { "const": "vortik-trusted-verification-requirements" },
+    "requirements_version": { "const": "1.1.0" },
     "implementation_state": {
       "type": "object",
       "additionalProperties": false,
@@ -113,6 +109,8 @@
         "affirmative_existence_result_required",
         "active_registration_result_required",
         "registration_expiry_required",
+        "registration_expiry_after_block_timestamp_required",
+        "block_timestamp_required",
         "negative_null_or_indeterminate_result_rejected",
         "contributor_ens_claim_trusted",
         "ownership_inference"
@@ -131,7 +129,9 @@
         "registration_expiry_required": { "const": true },
         "negative_null_or_indeterminate_result_rejected": { "const": true },
         "contributor_ens_claim_trusted": { "const": false },
-        "ownership_inference": { "const": false }
+        "ownership_inference": { "const": false },
+        "block_timestamp_required": { "const": true },
+        "registration_expiry_after_block_timestamp_required": { "const": true }
       }
     },
     "receipt_integrity": {
@@ -144,6 +144,8 @@
         "issuer_key_identity_required",
         "signature_required",
         "signature_validation_required",
+        "signature_covers_receipt_digest_required",
+        "complete_receipt_authentication_binding_required",
         "subject_contribution_digest_required",
         "candidate_name_required",
         "normalized_candidate_name_required",
@@ -163,7 +165,9 @@
         "normalized_candidate_name_required": { "const": true },
         "receipt_digest_required": { "const": true },
         "issued_at_required": { "const": true },
-        "replay_protection_required": { "const": true }
+        "replay_protection_required": { "const": true },
+        "complete_receipt_authentication_binding_required": { "const": true },
+        "signature_covers_receipt_digest_required": { "const": true }
       }
     },
     "admission": {
