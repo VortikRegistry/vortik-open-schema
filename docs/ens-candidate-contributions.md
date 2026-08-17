@@ -34,7 +34,7 @@ A contribution contains:
 - an optional proposed canonical term and classification;
 - one or more HTTPS evidence references.
 
-Every contributor-supplied field remains untrusted research input. A claimed contributor label is not authentication. A supplied ENS name is not ownership evidence. A supplied reference is not trusted evidence until independently reviewed.
+Every contributor-supplied field remains untrusted research input. A claimed contributor label is not authentication. A supplied ENS name is not ownership evidence. A supplied reference is not trusted evidence.
 
 ## Example
 
@@ -71,13 +71,17 @@ There is no Vortik-operated live agent submission endpoint yet. A prepared contr
 
 This keeps collaboration available now without pretending that a production A2A ingress exists.
 
-## Review boundary
+## Mandatory review and verification boundary
 
-A valid contribution artifact is not registry state.
+A valid contribution artifact is not verified evidence and is not registry state.
 
-Reviewers must independently assess the candidate under the existing contribution, taxonomy and candidate-promotion rules. Allowed outcomes include keeping the item outside registry state, retaining it as research/backlog material, or opening a separate registry PR when evidence is strong enough.
+Every contribution may be processed by the review/provenance layer documented in [`ens-candidate-review.md`](ens-candidate-review.md), but that review cannot create registry eligibility. Source labels and reviewer observations are not trusted verification receipts.
 
-The contributor cannot set or bypass review state. Promotion remains a separate repository decision and requires normal validation.
+Future registry admission requires independently derived Ethereum or relevant-protocol primary-source verification plus a separate trusted Ethereum mainnet ENS lookup bound to the exact candidate. Those verification receipts are not implemented yet, so new candidate admission remains fail-closed.
+
+The review also carries a canonical digest of the full contribution. Changing any contribution field invalidates the old review and prevents provenance replay based only on a reused identifier or name.
+
+Contributor statements, AI analysis, implementation references, research discussions or secondary context may help discovery or corroboration, but cannot open the registry-admission gate.
 
 ## Commercial boundary
 
@@ -87,10 +91,10 @@ These statements are intentionally separate:
 - accepting a contribution does not endorse it;
 - registering or discussing an ENS does not prove ownership;
 - analyzing an ENS does not grant authority to represent it;
-- public registry presence does not grant permission to price, negotiate, list, transfer or sell it.
+- public registry presence does not grant authority for private commercial or asset actions.
 
 Any future bridge from public semantic registry state into private commercial representation must require separate verified ownership or delegated authority and must remain outside this public repository.
 
 ## Future live intake
 
-A Vortik-operated agent endpoint, Agent Card or other live submission transport is a separate trust-boundary change. Before such an endpoint is enabled it must define and validate authentication where needed, rate limiting, replay protection, provenance, bounded inputs, timeout behavior, abuse handling, durable review state and adversarial-input tests.
+A Vortik-operated agent endpoint, Agent Card or other live submission transport is a separate trust-boundary change. Before such an endpoint is enabled it must define and validate authentication where needed, rate limiting, replay protection, provenance, bounded inputs, timeout behavior, abuse handling, durable review state and adversarial-input tests. A future transport must preserve the same mandatory review/provenance gate rather than bypass it.
