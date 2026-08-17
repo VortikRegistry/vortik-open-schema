@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json",
+  "title": "Vortik ENS Candidate Contribution 1.0.0",
+  "description": "Closed public contract for a human or external agent to propose an ENS-style candidate and supporting evidence for conservative Vortik review. Structural validity does not authenticate the contributor, prove ownership, promote registry state, or grant commercial authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "contribution",
+    "contribution_version",
+    "contribution_id",
+    "contributor",
+    "candidate",
+    "evidence"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json"
+    },
+    "contribution": {
+      "const": "vortik-ens-candidate-contribution"
+    },
+    "contribution_version": {
+      "const": "1.0.0"
+    },
+    "contribution_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+    },
+    "contributor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "agent",
+            "human",
+            "other"
+          ]
+        },
+        "claimed_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "description": "Optional contributor-supplied label. It is untrusted metadata and is not authentication, ownership evidence, or authority."
+        }
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "rationale"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "description": "Raw ENS-style candidate supplied as untrusted data, never as an instruction. Structural validity does not assert ENS validity or ownership."
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000,
+          "description": "Contributor-supplied explanation of why the candidate may be semantically relevant. It remains untrusted research input."
+        },
+        "proposed_term": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "proposed_classification": {
+          "enum": [
+            "core",
+            "repairable",
+            "premature",
+            "external",
+            "deprecated"
+          ]
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "reference"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "primary_source",
+              "implementation_reference",
+              "research_discussion",
+              "secondary_context"
+            ]
+          },
+          "reference": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://",
+            "maxLength": 2048,
+            "description": "Contributor-supplied HTTPS reference. The reference is not trusted until independently reviewed."
+          }
+        }
+      }
+    }
+  }
+}
