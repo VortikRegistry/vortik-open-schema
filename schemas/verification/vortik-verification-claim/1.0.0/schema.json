@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-verification-claim/1.0.0/schema.json",
+  "title": "Vortik Verification Claim 1.0.0",
+  "description": "Closed offline artifact that binds one exact human-reviewed semantic claim to a candidate contribution and review. It is a verification subject, not trusted evidence, registry eligibility, ownership evidence, or commercial authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "claim",
+    "claim_version",
+    "claim_id",
+    "contribution_id",
+    "contribution_digest",
+    "review_id",
+    "review_digest",
+    "candidate_name",
+    "normalized_candidate_name",
+    "normalization_profile",
+    "technical_claim",
+    "gates"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-verification-claim/1.0.0/schema.json"
+    },
+    "claim": {
+      "const": "vortik-verification-claim"
+    },
+    "claim_version": {
+      "const": "1.0.0"
+    },
+    "claim_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+    },
+    "contribution_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+    },
+    "contribution_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "review_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+    },
+    "review_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "candidate_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "normalized_candidate_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "normalization_profile": {
+      "const": "ENSIP-15"
+    },
+    "technical_claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_kind",
+        "canonical_term",
+        "classification",
+        "statement",
+        "source_authority_class"
+      ],
+      "properties": {
+        "claim_kind": {
+          "const": "semantic_registry_anchor_relevance"
+        },
+        "canonical_term": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "classification": {
+          "enum": [
+            "core",
+            "repairable",
+            "premature",
+            "external",
+            "deprecated"
+          ]
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "source_authority_class": {
+          "enum": [
+            "eip",
+            "ethereum_spec",
+            "ethereum_official_repository",
+            "protocol_spec",
+            "protocol_official_repository"
+          ]
+        }
+      }
+    },
+    "gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_trusted",
+        "authoritative_source_selected",
+        "registry_pr_eligible",
+        "registry_mutated",
+        "ownership_inferred",
+        "commercial_authority",
+        "separate_registry_pr_required"
+      ],
+      "properties": {
+        "claim_trusted": {
+          "const": false
+        },
+        "authoritative_source_selected": {
+          "const": false
+        },
+        "registry_pr_eligible": {
+          "const": false
+        },
+        "registry_mutated": {
+          "const": false
+        },
+        "ownership_inferred": {
+          "const": false
+        },
+        "commercial_authority": {
+          "const": false
+        },
+        "separate_registry_pr_required": {
+          "const": true
+        }
+      }
+    }
+  }
+}

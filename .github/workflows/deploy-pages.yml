@@ -75,7 +75,11 @@ jobs:
             schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json \
             schemas/reviews/vortik-ens-candidate-review/1.0.0/schema.json \
             schemas/verification/vortik-trusted-verification-requirements/1.0.0/schema.json \
-            schemas/verification/vortik-trusted-verification-requirements/1.1.0/schema.json; do
+            schemas/verification/vortik-trusted-verification-requirements/1.1.0/schema.json \
+            schemas/verification/vortik-verification-claim/1.0.0/schema.json \
+            schemas/verification/vortik-admission-intent/1.0.0/schema.json \
+            schemas/verification/vortik-trusted-verification-receipt/1.0.0/schema.json \
+            schemas/verification/vortik-verification-key-policy/1.0.0/schema.json; do
             output="/tmp/${relative_path//\//_}"
             verified=false
 

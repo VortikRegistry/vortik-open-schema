@@ -1,0 +1,431 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-trusted-verification-receipt/1.0.0/schema.json",
+  "title": "Vortik Trusted Verification Receipt 1.0.0",
+  "description": "Offline signed receipt envelope for future independently derived primary-source or ENS mainnet verification evidence. Schema validity alone does not make a receipt trusted; digest, signature, key-policy, subject, temporal, and evidence semantics must also verify offline.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "receipt",
+    "receipt_version",
+    "receipt_type",
+    "receipt_id",
+    "subject",
+    "verifier",
+    "canonicalization",
+    "digest_algorithm",
+    "issued_at",
+    "trusted_issued_at",
+    "admission_valid_until",
+    "payload",
+    "receipt_digest",
+    "signature"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-trusted-verification-receipt/1.0.0/schema.json"
+    },
+    "receipt": {
+      "const": "vortik-trusted-verification-receipt"
+    },
+    "receipt_version": {
+      "const": "1.0.0"
+    },
+    "receipt_type": {
+      "enum": [
+        "primary_source",
+        "ens_mainnet"
+      ]
+    },
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contribution_digest",
+        "review_digest",
+        "claim_digest",
+        "admission_intent_digest",
+        "normalized_candidate_name"
+      ],
+      "properties": {
+        "contribution_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "review_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "claim_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "admission_intent_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "normalized_candidate_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        }
+      }
+    },
+    "verifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verifier_id",
+        "verifier_version",
+        "code_commit",
+        "key_policy_id",
+        "key_policy_version",
+        "key_policy_digest"
+      ],
+      "properties": {
+        "verifier_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+        },
+        "verifier_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "code_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "key_policy_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+        },
+        "key_policy_version": {
+          "const": "1.0.0"
+        },
+        "key_policy_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    },
+    "canonicalization": {
+      "const": "RFC8785-JCS-constrained-v1"
+    },
+    "digest_algorithm": {
+      "const": "SHA-256"
+    },
+    "issued_at": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "trusted_issued_at": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "admission_valid_until": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "payload": {
+      "type": "object"
+    },
+    "receipt_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "key_id",
+        "signature_base64url"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "Ed25519"
+        },
+        "key_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+        },
+        "signature_base64url": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$",
+          "minLength": 80,
+          "maxLength": 128
+        }
+      }
+    }
+  },
+  "$defs": {
+    "primarySourcePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authority_class",
+        "retrieval_policy_id",
+        "retrieved_independently",
+        "repository",
+        "claim_binding_digest"
+      ],
+      "properties": {
+        "authority_class": {
+          "enum": [
+            "eip",
+            "ethereum_spec",
+            "ethereum_official_repository",
+            "protocol_spec",
+            "protocol_official_repository"
+          ]
+        },
+        "retrieval_policy_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+        },
+        "retrieved_independently": {
+          "const": true
+        },
+        "repository": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "provider",
+            "repository_id",
+            "repository_full_name",
+            "commit_sha",
+            "blob_sha",
+            "path",
+            "content_sha256"
+          ],
+          "properties": {
+            "provider": {
+              "const": "github"
+            },
+            "repository_id": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "repository_full_name": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+              "maxLength": 256
+            },
+            "commit_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "blob_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            },
+            "content_sha256": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          }
+        },
+        "claim_binding_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    },
+    "ensProviderEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider_id",
+        "block_hash",
+        "state_root",
+        "timestamp",
+        "lookup_result_digest"
+      ],
+      "properties": {
+        "provider_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+        },
+        "block_hash": {
+          "type": "string",
+          "pattern": "^0x[0-9a-f]{64}$"
+        },
+        "state_root": {
+          "type": "string",
+          "pattern": "^0x[0-9a-f]{64}$"
+        },
+        "timestamp": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "lookup_result_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    },
+    "ensMainnetPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "chain_id",
+        "normalization_profile",
+        "active_definition",
+        "normalized_candidate_name",
+        "block",
+        "providers",
+        "lookup"
+      ],
+      "properties": {
+        "chain_id": {
+          "const": 1
+        },
+        "normalization_profile": {
+          "const": "ENSIP-15"
+        },
+        "active_definition": {
+          "const": "active_eth_2ld_at_finalized_block_v1"
+        },
+        "normalized_candidate_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "block": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "number",
+            "hash",
+            "state_root",
+            "parent_hash",
+            "timestamp",
+            "finalized"
+          ],
+          "properties": {
+            "number": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "hash": {
+              "type": "string",
+              "pattern": "^0x[0-9a-f]{64}$"
+            },
+            "state_root": {
+              "type": "string",
+              "pattern": "^0x[0-9a-f]{64}$"
+            },
+            "parent_hash": {
+              "type": "string",
+              "pattern": "^0x[0-9a-f]{64}$"
+            },
+            "timestamp": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "finalized": {
+              "const": true
+            }
+          }
+        },
+        "providers": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ensProviderEvidence"
+          }
+        },
+        "lookup": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "registry_record_exists",
+            "eth_registrar_owner_matches_base_registrar",
+            "base_registrar_expiry",
+            "active_registration",
+            "lookup_result_digest"
+          ],
+          "properties": {
+            "registry_record_exists": {
+              "const": true
+            },
+            "eth_registrar_owner_matches_base_registrar": {
+              "const": true
+            },
+            "base_registrar_expiry": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "active_registration": {
+              "const": true
+            },
+            "lookup_result_digest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "receipt_type": {
+            "const": "primary_source"
+          }
+        },
+        "required": [
+          "receipt_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/primarySourcePayload"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "receipt_type": {
+            "const": "ens_mainnet"
+          }
+        },
+        "required": [
+          "receipt_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/ensMainnetPayload"
+          }
+        }
+      }
+    }
+  ]
+}
