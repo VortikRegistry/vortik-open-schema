@@ -90,7 +90,7 @@ for (const [label, mutate] of [
   ["admission without trusted admission clock source", (v) => { v.admission.trusted_admission_clock_source_required = false; }],
   ["admission clock not validated by policy", (v) => { v.admission.trusted_admission_clock_source_policy_validation_required = false; }],
   ["caller-controlled trusted admission time", (v) => { v.admission.trusted_admission_time_not_caller_controlled_required = false; }],
-  ["admission time allowed before issued_at", (v) => { v.admission.trusted_admission_time_not_before_issued_at_required = false; }],
+  ["admission time allowed before trusted issued_at", (v) => { v.admission.trusted_admission_time_not_before_trusted_issued_at_required = false; }],
   ["freshness not checked against trusted admission time", (v) => { v.admission.freshness_validation_against_trusted_admission_time_required = false; }],
   ["expired receipt usable at admission", (v) => { v.admission.receipt_not_expired_at_admission_required = false; }],
   ["receipt expiry not checked at trusted admission time", (v) => { v.admission.receipt_not_expired_at_trusted_admission_time_required = false; }],
