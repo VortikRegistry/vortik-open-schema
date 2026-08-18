@@ -107,7 +107,8 @@ Every receipt binds to the same subject tuple:
 - contribution digest;
 - review digest;
 - exact claim digest;
-- admission-intent digest; and
+- admission-intent digest;
+- raw candidate name; and
 - normalized candidate name.
 
 The envelope also binds:
@@ -118,6 +119,8 @@ The envelope also binds:
 - `issued_at`;
 - `trusted_issued_at`;
 - `admission_valid_until`;
+- trusted issuance-clock source and policy digest, with policy validation and non-caller-control fixed true;
+- replay-protection domain, nonce and single-use-at-admission requirement;
 - payload;
 - canonicalization and digest algorithms.
 
@@ -143,14 +146,14 @@ These checks are offline contract checks only. PR2 does not provide the trusted 
 
 ## 5. Receipt digest and Ed25519 signature
 
-The receipt digest is calculated over the complete receipt **except** `receipt_digest` and `signature`:
+The receipt digest is calculated over all receipt semantics except the digest itself and the signature **value**. The protected signature metadata (`algorithm` and `key_id`) remains inside the digest:
 
 ```text
-unsigned_receipt = receipt minus {receipt_digest, signature}
-receipt_digest = sha256(JCS(unsigned_receipt))
+signed_receipt_semantics = receipt minus {receipt_digest, signature.signature_base64url}
+receipt_digest = sha256(JCS(signed_receipt_semantics))
 ```
 
-The Ed25519 signature then signs the exact UTF-8 `receipt_digest` string.
+The Ed25519 signature then signs the exact UTF-8 `receipt_digest` string. Changing the signing-key identity or algorithm therefore also changes the digest.
 
 This gives one unambiguous authentication relation:
 
@@ -179,11 +182,14 @@ Each authorized key contains:
 - authorization start and end times; and
 - allowed receipt types.
 
-A receipt is acceptable only when:
+The key policy passed to the offline verifier does **not** authenticate itself. Its ID/version/digest must first come from trusted repository/runtime configuration rather than from the receipt or caller. A receipt is acceptable only when:
 
+- the supplied policy matches that independently trusted policy identity;
 - its key-policy digest matches the exact policy artifact;
 - policy ID/version match;
 - the signature key ID resolves to exactly one policy key;
+- key IDs are unique and one public key cannot be aliased under multiple key identities;
+- authorization windows are non-inverted;
 - the key is `active`;
 - the receipt type is authorized for that key; and
 - trusted issuance occurs inside the key's authorization window.
@@ -197,6 +203,7 @@ The primary-source payload is designed to preserve the #97 requirements without 
 - authority class;
 - retrieval-policy ID;
 - independent-retrieval assertion;
+- a canonical source identifier recomputed from the complete repository-artifact evidence;
 - provider identity (`github`);
 - numeric repository ID;
 - exact repository full name;
@@ -204,7 +211,7 @@ The primary-source payload is designed to preserve the #97 requirements without 
 - exact blob SHA;
 - exact path;
 - SHA-256 of retrieved content; and
-- exact claim-binding digest.
+- exact claim-binding digest, which must equal the receipt subject's exact claim digest.
 
 The later primary-source verifier must derive those values itself from the approved source policy. Contributor-supplied URLs do not become trusted inputs merely because they resemble these fields.
 
@@ -216,16 +223,18 @@ The ENS payload models the evidence that the later dual-provider verifier must d
 - normalization profile `ENSIP-15`;
 - active definition `active_eth_2ld_at_finalized_block_v1`;
 - exact normalized candidate name;
+- canonical ENS Registry and Base Registrar contract addresses for the v1 active-registration definition;
 - finalized block number, hash, state root, parent hash and timestamp;
+- provider-policy identity;
 - exactly two distinct provider identities;
 - provider evidence agreeing with the same block hash, state root, timestamp and lookup-result digest;
 - affirmative ENS Registry record evidence;
 - confirmation that the `.eth` registrar owner matches the Base Registrar boundary used by the verifier;
 - Base Registrar expiry;
 - affirmative active-registration result; and
-- lookup-result digest.
+- lookup-result digest recomputed from the exact chain, normalized name, contract identities, finalized block and affirmative lookup result.
 
-Provider identities are carried explicitly but are not hard-coded to a vendor in this offline schema. Real provider policy and credentials remain PR4 infrastructure work.
+Each provider must report that same recomputed lookup digest and the same block hash/state root/timestamp. Provider identities are carried explicitly but are not hard-coded to a vendor in this offline schema. Real provider policy and credentials remain PR4 infrastructure work.
 
 ENS evidence never proves ownership and never grants commercial authority.
 
@@ -244,17 +253,20 @@ The validator checks:
 - deterministic canonicalization independent of object key order;
 - rejection of floats and negative zero;
 - admission-intent subject binding;
-- ephemeral Ed25519 signing and verification;
-- key-policy digest and authorization;
+- ephemeral Ed25519 signing and verification, including protected key-ID binding;
+- key-policy digest, externally trusted policy identity, key uniqueness and authorization;
 - both receipt payload branches;
 - same-subject dual receipts;
-- trusted issuance/validity bounds;
+- trusted issuance-clock provenance, validity bounds and replay-protection fields;
+- primary-source canonical identity and exact claim binding;
 - ENS finalized-block freshness;
-- two-provider agreement;
+- recomputed ENS lookup binding and two-provider agreement;
 - rejection of claim/admission authority escalation;
 - rejection of private-key fields in public policy;
 - rejection of tampered signed receipts;
-- rejection of revoked keys;
+- rejection of revoked, aliased or self-selected key policies;
+- rejection of caller-controlled clock claims or missing replay protection;
+- rejection of detached primary-source/ENS digests;
 - rejection of stale ENS evidence; and
 - rejection of cross-receipt subject mismatch.
 

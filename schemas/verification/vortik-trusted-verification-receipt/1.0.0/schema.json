@@ -18,7 +18,9 @@
     "issued_at",
     "trusted_issued_at",
     "admission_valid_until",
+    "trusted_issuance_clock",
     "payload",
+    "replay_protection",
     "receipt_digest",
     "signature"
   ],
@@ -50,6 +52,7 @@
         "review_digest",
         "claim_digest",
         "admission_intent_digest",
+        "candidate_name",
         "normalized_candidate_name"
       ],
       "properties": {
@@ -73,6 +76,11 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 255
+        },
+        "candidate_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
         }
       }
     },
@@ -164,6 +172,58 @@
           "maxLength": 128
         }
       }
+    },
+    "trusted_issuance_clock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "policy_id",
+        "policy_digest",
+        "policy_validated",
+        "not_caller_controlled"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+        },
+        "policy_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+        },
+        "policy_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "policy_validated": {
+          "const": true
+        },
+        "not_caller_controlled": {
+          "const": true
+        }
+      }
+    },
+    "replay_protection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "domain",
+        "nonce",
+        "single_use_admission_required"
+      ],
+      "properties": {
+        "domain": {
+          "const": "vortik-trusted-verification-receipt-v1"
+        },
+        "nonce": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "single_use_admission_required": {
+          "const": true
+        }
+      }
     }
   },
   "$defs": {
@@ -174,6 +234,7 @@
         "authority_class",
         "retrieval_policy_id",
         "retrieved_independently",
+        "canonical_source_identifier",
         "repository",
         "claim_binding_digest"
       ],
@@ -242,6 +303,10 @@
         "claim_binding_digest": {
           "type": "string",
           "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "canonical_source_identifier": {
+          "type": "string",
+          "pattern": "^github-artifact-v1:sha256:[0-9a-f]{64}$"
         }
       }
     },
@@ -287,7 +352,9 @@
         "normalization_profile",
         "active_definition",
         "normalized_candidate_name",
+        "contracts",
         "block",
+        "provider_policy_id",
         "providers",
         "lookup"
       ],
@@ -384,6 +451,26 @@
               "pattern": "^sha256:[0-9a-f]{64}$"
             }
           }
+        },
+        "contracts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ens_registry",
+            "base_registrar"
+          ],
+          "properties": {
+            "ens_registry": {
+              "const": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e"
+            },
+            "base_registrar": {
+              "const": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85"
+            }
+          }
+        },
+        "provider_policy_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
         }
       }
     }
