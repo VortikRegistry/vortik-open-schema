@@ -80,7 +80,7 @@ for (const [label, mutate] of [
   ["caller-controlled trusted issued_at", (v) => { v.receipt_integrity.trusted_issued_at_not_caller_controlled_required = false; }],
   ["receipt without admission_valid_until", (v) => { v.receipt_integrity.admission_valid_until_required = false; }],
   ["receipt admission validity longer than 24h", (v) => { v.receipt_integrity.max_admission_validity_seconds = 86401; }],
-  ["receipt validity not bounded by issued_at window", (v) => { v.receipt_integrity.admission_valid_until_not_after_issued_at_plus_max_window_required = false; }],
+  ["receipt validity not bounded by trusted_issued_at window", (v) => { v.receipt_integrity.admission_valid_until_not_after_trusted_issued_at_plus_max_window_required = false; }],
   ["receipt validity not bounded by registration expiry", (v) => { v.receipt_integrity.admission_valid_until_not_after_registration_expiry_required = false; }],
 
   ["admission of unauthenticated receipts", (v) => { v.admission.authenticated_receipts_required = false; }],

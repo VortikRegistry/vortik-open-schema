@@ -84,7 +84,7 @@
     "trusted_issued_at_not_caller_controlled_required": true,
     "admission_valid_until_required": true,
     "max_admission_validity_seconds": 86400,
-    "admission_valid_until_not_after_issued_at_plus_max_window_required": true,
+    "admission_valid_until_not_after_trusted_issued_at_plus_max_window_required": true,
     "admission_valid_until_not_after_registration_expiry_required": true,
     "replay_protection_required": true
   },

@@ -191,7 +191,7 @@
         "trusted_issued_at_not_caller_controlled_required",
         "admission_valid_until_required",
         "max_admission_validity_seconds",
-        "admission_valid_until_not_after_issued_at_plus_max_window_required",
+        "admission_valid_until_not_after_trusted_issued_at_plus_max_window_required",
         "admission_valid_until_not_after_registration_expiry_required",
         "replay_protection_required"
       ],
@@ -217,7 +217,7 @@
         "trusted_issued_at_not_caller_controlled_required": { "const": true },
         "admission_valid_until_required": { "const": true },
         "max_admission_validity_seconds": { "const": 86400 },
-        "admission_valid_until_not_after_issued_at_plus_max_window_required": { "const": true },
+        "admission_valid_until_not_after_trusted_issued_at_plus_max_window_required": { "const": true },
         "admission_valid_until_not_after_registration_expiry_required": { "const": true },
         "replay_protection_required": { "const": true }
       }
