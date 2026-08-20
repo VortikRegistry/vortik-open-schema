@@ -325,7 +325,7 @@ validateOrThrow("Vortik Trusted Verification Receipt 1.0.0", primaryReceipt);
 validateOrThrow("Vortik Trusted Verification Receipt 1.0.0", ensReceipt);
 assertReceiptTemporalSemantics(primaryReceipt);
 assertReceiptTemporalSemantics(ensReceipt);
-assertReceiptEvidenceSemantics(primaryReceipt);
+assertReceiptEvidenceSemantics(primaryReceipt, claim);
 assertReceiptEvidenceSemantics(ensReceipt);
 verifyTrustedReceiptSignature(primaryReceipt, keyPolicy, trustedPolicyIdentity);
 verifyTrustedReceiptSignature(ensReceipt, keyPolicy, trustedPolicyIdentity);
@@ -399,13 +399,17 @@ const selfSelectedPolicyIdentity = {
 assertThrows("caller-selected key-policy identity", () => verifyTrustedReceiptSignature(primaryReceipt, keyPolicy, selfSelectedPolicyIdentity));
 
 const duplicateKeyPolicy = structuredClone(keyPolicy);
-duplicateKeyPolicy.authorized_keys.push({ ...structuredClone(keyPolicy.authorized_keys[0]), key_id: "alias-key" });
+duplicateKeyPolicy.authorized_keys.push({
+  ...structuredClone(keyPolicy.authorized_keys[0]),
+  key_id: "alias-key",
+  public_key_spki_der_base64: publicKeySpki.replace(/=+$/, "")
+});
 const duplicatePolicyIdentity = {
   policy_id: duplicateKeyPolicy.policy_id,
   policy_version: duplicateKeyPolicy.policy_version,
   policy_digest: sha256CanonicalDigest(duplicateKeyPolicy)
 };
-assertThrows("public-key alias under multiple key identities", () => verifyTrustedReceiptSignature(primaryReceipt, duplicateKeyPolicy, duplicatePolicyIdentity));
+assertThrows("decoded public-key alias under multiple key identities", () => verifyTrustedReceiptSignature(primaryReceipt, duplicateKeyPolicy, duplicatePolicyIdentity));
 
 const untrustedIssuedAt = structuredClone(primaryReceipt);
 untrustedIssuedAt.issued_at -= 1;
@@ -421,11 +425,29 @@ assertThrows("receipt without replay protection", () => validateOrThrow("Vortik 
 
 const primaryClaimMismatch = structuredClone(primaryReceipt);
 primaryClaimMismatch.payload.claim_binding_digest = `sha256:${"e".repeat(64)}`;
-assertThrows("primary-source claim-binding mismatch", () => assertReceiptEvidenceSemantics(primaryClaimMismatch));
+assertThrows("primary-source claim-binding mismatch", () => assertReceiptEvidenceSemantics(primaryClaimMismatch, claim));
+
+const primaryAuthorityMismatch = signReceipt({
+  ...common,
+  receipt_type: "primary_source",
+  receipt_id: "receipt-primary-authority-mismatch",
+  replay_protection: {
+    domain: "vortik-trusted-verification-receipt-v1",
+    nonce: "3".repeat(32),
+    single_use_admission_required: true
+  },
+  payload: {
+    ...structuredClone(primaryPayload),
+    authority_class: "protocol_official_repository"
+  }
+});
+validateOrThrow("Vortik Trusted Verification Receipt 1.0.0", primaryAuthorityMismatch);
+verifyTrustedReceiptSignature(primaryAuthorityMismatch, keyPolicy, trustedPolicyIdentity);
+assertThrows("primary-source authority class mismatch", () => assertReceiptEvidenceSemantics(primaryAuthorityMismatch, claim));
 
 const primarySourceIdentityMismatch = structuredClone(primaryReceipt);
 primarySourceIdentityMismatch.payload.repository.path = "EIPS/eip-2.md";
-assertThrows("primary-source canonical identifier mismatch", () => assertReceiptEvidenceSemantics(primarySourceIdentityMismatch));
+assertThrows("primary-source canonical identifier mismatch", () => assertReceiptEvidenceSemantics(primarySourceIdentityMismatch, claim));
 
 const staleEnsReceipt = structuredClone(ensReceipt);
 staleEnsReceipt.payload.block.timestamp = ensReceipt.trusted_issued_at - 1801;
@@ -446,4 +468,4 @@ assertThrows("cross-receipt subject mismatch", () => assertSameReceiptSubject(pr
 console.log("Trusted verification offline artifacts 1.0.0 validated");
 console.log("Constrained RFC 8785/JCS canonicalization and SHA-256 digest invariants validated");
 console.log("Ed25519 receipt signature verification and key-policy authorization validated offline");
-console.log("EXPECTED FAIL authority escalation, private-key fields, key/policy substitution, tampering, caller clocks, replay gaps, detached source/ENS digests, stale evidence and subject mismatch remain closed");
+console.log("EXPECTED FAIL authority escalation, authority-class mismatch, private-key fields, decoded key aliases, key/policy substitution, tampering, caller clocks, replay gaps, detached source/ENS digests, stale evidence and subject mismatch remain closed");
