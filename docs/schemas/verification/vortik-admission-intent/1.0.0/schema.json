@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-admission-intent/1.0.0/schema.json",
+  "title": "Vortik Admission Intent 1.0.0",
+  "description": "Deterministic offline description of the exact candidate-derived registry change that future trusted receipts may authorize for a separate registry PR. The artifact never mutates registry state and admission remains disabled.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "admission_intent",
+    "admission_intent_version",
+    "intent_id",
+    "contribution_digest",
+    "review_digest",
+    "claim_digest",
+    "normalized_candidate_name",
+    "normalization_profile",
+    "proposed_registry_change",
+    "gates"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-admission-intent/1.0.0/schema.json"
+    },
+    "admission_intent": {
+      "const": "vortik-admission-intent"
+    },
+    "admission_intent_version": {
+      "const": "1.0.0"
+    },
+    "intent_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+    },
+    "contribution_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "review_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "claim_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "normalized_candidate_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "normalization_profile": {
+      "const": "ENSIP-15"
+    },
+    "proposed_registry_change": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "change_kind",
+            "anchor_id",
+            "proposed_ens",
+            "expected_base_anchor_digest",
+            "proposed_anchor_digest"
+          ],
+          "properties": {
+            "change_kind": {
+              "const": "new_anchor"
+            },
+            "anchor_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "proposed_ens": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            },
+            "expected_base_anchor_digest": {
+              "type": "null"
+            },
+            "proposed_anchor_digest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "change_kind",
+            "anchor_id",
+            "proposed_ens",
+            "expected_base_anchor_digest",
+            "proposed_anchor_digest"
+          ],
+          "properties": {
+            "change_kind": {
+              "const": "ens_rebound"
+            },
+            "anchor_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "proposed_ens": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            },
+            "expected_base_anchor_digest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            "proposed_anchor_digest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          }
+        }
+      ]
+    },
+    "gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "admission_enabled",
+        "trusted_primary_source_receipt_available",
+        "trusted_ens_receipt_available",
+        "registry_pr_eligible",
+        "registry_mutated",
+        "ownership_inferred",
+        "commercial_authority",
+        "separate_registry_pr_required"
+      ],
+      "properties": {
+        "admission_enabled": {
+          "const": false
+        },
+        "trusted_primary_source_receipt_available": {
+          "const": false
+        },
+        "trusted_ens_receipt_available": {
+          "const": false
+        },
+        "registry_pr_eligible": {
+          "const": false
+        },
+        "registry_mutated": {
+          "const": false
+        },
+        "ownership_inferred": {
+          "const": false
+        },
+        "commercial_authority": {
+          "const": false
+        },
+        "separate_registry_pr_required": {
+          "const": true
+        }
+      }
+    }
+  }
+}
