@@ -155,6 +155,62 @@ test("snapshots the validated selector before asynchronous retrieval", async () 
   assert.equal(payload.repository.path, originalSelector.path);
 });
 
+test("validates the one-time selector snapshot instead of rereading accessor values", async () => {
+  const bytes = Buffer.from("# EIP-1\n", "utf8");
+  const blobSha = gitBlobSha1(bytes);
+  let commitReads = 0;
+  const accessorSelector = {
+    repository_full_name: "ethereum/EIPs",
+    get commit_sha() {
+      commitReads += 1;
+      return commitReads === 1 ? "a".repeat(40) : "main";
+    },
+    path: "EIPS/eip-1.md"
+  };
+  const calls = [];
+  const fetchImpl = async (url, options) => {
+    calls.push({ url, options });
+    if (calls.length === 1) {
+      assert.equal(url, "https://api.github.com/repos/ethereum/EIPs");
+      return {
+        ok: true,
+        status: 200,
+        async json() {
+          return { id: 44971752, full_name: "ethereum/EIPs", archived: false };
+        }
+      };
+    }
+    if (calls.length === 2) {
+      assert.equal(
+        url,
+        `https://api.github.com/repos/ethereum/EIPs/contents/EIPS/eip-1.md?ref=${"a".repeat(40)}`
+      );
+      return {
+        ok: true,
+        status: 200,
+        async json() {
+          return {
+            type: "file",
+            path: "EIPS/eip-1.md",
+            sha: blobSha,
+            size: bytes.length,
+            encoding: "base64",
+            content: bytes.toString("base64")
+          };
+        }
+      };
+    }
+    throw new Error(`unexpected URL ${url}`);
+  };
+
+  const payload = await withRuntimeFetch(fetchImpl, () =>
+    verifyPrimarySourceFromGitHub({ claim, selector: accessorSelector })
+  );
+
+  assert.equal(commitReads, 1);
+  assert.equal(payload.repository.commit_sha, "a".repeat(40));
+});
+
 test("rejects a repository outside the trusted allowlist before network access", async () => {
   let called = false;
   await withRuntimeFetch(async () => {
