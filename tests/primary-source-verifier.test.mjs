@@ -58,6 +58,7 @@ function mockGitHubFetch(bytes = Buffer.from("# EIP-1\n", "utf8"), overrides = {
             type: "file",
             path: overrides.path ?? selector.path,
             sha: overrides.blob_sha ?? blobSha,
+            size: overrides.size ?? bytes.length,
             encoding: "base64",
             content: bytes.toString("base64")
           };
@@ -69,10 +70,20 @@ function mockGitHubFetch(bytes = Buffer.from("# EIP-1\n", "utf8"), overrides = {
   return { fetchImpl, calls, blobSha };
 }
 
+async function withRuntimeFetch(fetchImpl, operation) {
+  const previousFetch = globalThis.fetch;
+  globalThis.fetch = fetchImpl;
+  try {
+    return await operation();
+  } finally {
+    globalThis.fetch = previousFetch;
+  }
+}
+
 test("derives immutable primary-source evidence from allowlisted GitHub bytes", async () => {
   const bytes = Buffer.from("# EIP-1\n", "utf8");
   const { fetchImpl, calls, blobSha } = mockGitHubFetch(bytes);
-  const payload = await verifyPrimarySourceFromGitHub({ claim, selector, fetchImpl });
+  const payload = await withRuntimeFetch(fetchImpl, () => verifyPrimarySourceFromGitHub({ claim, selector }));
 
   assert.equal(calls.length, 2);
   assert.equal(calls[0].options.redirect, "error");
@@ -91,17 +102,15 @@ test("derives immutable primary-source evidence from allowlisted GitHub bytes", 
 
 test("rejects a repository outside the trusted allowlist before network access", async () => {
   let called = false;
-  await assert.rejects(
-    verifyPrimarySourceFromGitHub({
-      claim,
-      selector: { ...selector, repository_full_name: "attacker/repo" },
-      fetchImpl: async () => {
-        called = true;
-        throw new Error("must not fetch");
-      }
-    }),
-    /not allowlisted/
-  );
+  await withRuntimeFetch(async () => {
+    called = true;
+    throw new Error("must not fetch");
+  }, async () => {
+    await assert.rejects(
+      verifyPrimarySourceFromGitHub({ claim, selector: { ...selector, repository_full_name: "attacker/repo" } }),
+      /not allowlisted/
+    );
+  });
   assert.equal(called, false);
 });
 
@@ -109,36 +118,78 @@ test("rejects a repository that is not authorized for the claim authority class"
   const mismatchedClaim = structuredClone(claim);
   mismatchedClaim.technical_claim.source_authority_class = "ethereum_spec";
   await assert.rejects(
-    verifyPrimarySourceFromGitHub({ claim: mismatchedClaim, selector, fetchImpl: async () => { throw new Error("must not fetch"); } }),
+    verifyPrimarySourceFromGitHub({ claim: mismatchedClaim, selector }),
     /not authorized for the claim authority class/
   );
 });
 
 test("rejects path traversal and paths outside allowed prefixes", async () => {
   await assert.rejects(
-    verifyPrimarySourceFromGitHub({ claim, selector: { ...selector, path: "../README.md" }, fetchImpl: async () => {} }),
+    verifyPrimarySourceFromGitHub({ claim, selector: { ...selector, path: "../README.md" } }),
     /normalized repository-relative path/
   );
   await assert.rejects(
-    verifyPrimarySourceFromGitHub({ claim, selector: { ...selector, path: "README.md" }, fetchImpl: async () => {} }),
+    verifyPrimarySourceFromGitHub({ claim, selector: { ...selector, path: "README.md" } }),
     /outside the allowlisted repository prefixes/
   );
 });
 
 test("rejects repository identity drift", async () => {
   const { fetchImpl } = mockGitHubFetch(undefined, { repository_id: 999 });
-  await assert.rejects(
-    verifyPrimarySourceFromGitHub({ claim, selector, fetchImpl }),
-    /repository identity does not match trusted allowlist/
-  );
+  await withRuntimeFetch(fetchImpl, async () => {
+    await assert.rejects(
+      verifyPrimarySourceFromGitHub({ claim, selector }),
+      /repository identity does not match trusted allowlist/
+    );
+  });
 });
 
 test("rejects blob metadata detached from retrieved bytes", async () => {
   const { fetchImpl } = mockGitHubFetch(undefined, { blob_sha: "b".repeat(40) });
-  await assert.rejects(
-    verifyPrimarySourceFromGitHub({ claim, selector, fetchImpl }),
-    /blob SHA does not match retrieved source bytes/
-  );
+  await withRuntimeFetch(fetchImpl, async () => {
+    await assert.rejects(
+      verifyPrimarySourceFromGitHub({ claim, selector }),
+      /blob SHA does not match retrieved source bytes/
+    );
+  });
+});
+
+test("rejects decoded-size metadata mismatch", async () => {
+  const { fetchImpl } = mockGitHubFetch(undefined, { size: 1 });
+  await withRuntimeFetch(fetchImpl, async () => {
+    await assert.rejects(
+      verifyPrimarySourceFromGitHub({ claim, selector }),
+      /decoded size does not match GitHub metadata/
+    );
+  });
+});
+
+test("caller cannot replace the runtime-owned fetch or source policy per request", async () => {
+  const { fetchImpl, calls } = mockGitHubFetch();
+  let attackerFetchCalled = false;
+  await withRuntimeFetch(fetchImpl, async () => {
+    const payload = await verifyPrimarySourceFromGitHub({
+      claim,
+      selector,
+      fetchImpl: async () => {
+        attackerFetchCalled = true;
+        throw new Error("caller fetch must be ignored");
+      },
+      policy: {
+        policy_id: "vortik-primary-source-github-v1",
+        provider: "github",
+        repositories: [{
+          repository_id: 1,
+          repository_full_name: "attacker/repo",
+          authority_classes: ["eip"],
+          path_prefixes: [""]
+        }]
+      }
+    });
+    assert.equal(payload.repository.repository_full_name, "ethereum/EIPs");
+  });
+  assert.equal(attackerFetchCalled, false);
+  assert.equal(calls.length, 2);
 });
 
 test("default policy stays narrowly scoped to known Ethereum repositories", () => {
