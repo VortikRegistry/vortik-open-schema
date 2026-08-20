@@ -49,6 +49,15 @@ function mockGitHubFetch(bytes = Buffer.from("# EIP-1\n", "utf8"), overrides = {
         }
       };
     }
+    if (url === `https://api.github.com/repos/ethereum/EIPs/commits/${selector.commit_sha}`) {
+      return {
+        ok: true,
+        status: 200,
+        async json() {
+          return { sha: overrides.resolved_commit_sha ?? selector.commit_sha };
+        }
+      };
+    }
     if (url === `https://api.github.com/repos/ethereum/EIPs/contents/EIPS/eip-1.md?ref=${selector.commit_sha}`) {
       return {
         ok: true,
@@ -85,8 +94,9 @@ test("derives immutable primary-source evidence from allowlisted GitHub bytes", 
   const { fetchImpl, calls, blobSha } = mockGitHubFetch(bytes);
   const payload = await withRuntimeFetch(fetchImpl, () => verifyPrimarySourceFromGitHub({ claim, selector }));
 
-  assert.equal(calls.length, 2);
+  assert.equal(calls.length, 3);
   assert.equal(calls[0].options.redirect, "error");
+  assert.equal(calls[1].url, `https://api.github.com/repos/ethereum/EIPs/commits/${selector.commit_sha}`);
   assert.equal(payload.authority_class, "eip");
   assert.equal(payload.retrieval_policy_id, "vortik-primary-source-github-v1");
   assert.equal(payload.retrieved_independently, true);
@@ -98,6 +108,17 @@ test("derives immutable primary-source evidence from allowlisted GitHub bytes", 
   assert.equal(payload.repository.content_sha256, `sha256:${createHash("sha256").update(bytes).digest("hex")}`);
   assert.equal(payload.claim_binding_digest, sha256CanonicalDigest(claim));
   assert.match(payload.canonical_source_identifier, /^github-artifact-v1:sha256:[0-9a-f]{64}$/);
+});
+
+test("rejects a hex-shaped ref that does not resolve to the exact commit", async () => {
+  const { fetchImpl, calls } = mockGitHubFetch(undefined, { resolved_commit_sha: "b".repeat(40) });
+  await withRuntimeFetch(fetchImpl, async () => {
+    await assert.rejects(
+      verifyPrimarySourceFromGitHub({ claim, selector }),
+      /does not resolve to the requested immutable commit/
+    );
+  });
+  assert.equal(calls.length, 2);
 });
 
 test("snapshots the validated selector before asynchronous retrieval", async () => {
@@ -125,6 +146,19 @@ test("snapshots the validated selector before asynchronous retrieval", async () 
     if (calls.length === 2) {
       assert.equal(
         url,
+        `https://api.github.com/repos/ethereum/EIPs/commits/${originalSelector.commit_sha}`
+      );
+      return {
+        ok: true,
+        status: 200,
+        async json() {
+          return { sha: originalSelector.commit_sha };
+        }
+      };
+    }
+    if (calls.length === 3) {
+      assert.equal(
+        url,
         `https://api.github.com/repos/ethereum/EIPs/contents/EIPS/eip-1.md?ref=${originalSelector.commit_sha}`
       );
       return {
@@ -149,7 +183,7 @@ test("snapshots the validated selector before asynchronous retrieval", async () 
     verifyPrimarySourceFromGitHub({ claim, selector: mutableSelector })
   );
 
-  assert.equal(calls.length, 2);
+  assert.equal(calls.length, 3);
   assert.equal(payload.repository.repository_full_name, originalSelector.repository_full_name);
   assert.equal(payload.repository.commit_sha, originalSelector.commit_sha);
   assert.equal(payload.repository.path, originalSelector.path);
@@ -181,6 +215,16 @@ test("validates the one-time selector snapshot instead of rereading accessor val
       };
     }
     if (calls.length === 2) {
+      assert.equal(url, `https://api.github.com/repos/ethereum/EIPs/commits/${"a".repeat(40)}`);
+      return {
+        ok: true,
+        status: 200,
+        async json() {
+          return { sha: "a".repeat(40) };
+        }
+      };
+    }
+    if (calls.length === 3) {
       assert.equal(
         url,
         `https://api.github.com/repos/ethereum/EIPs/contents/EIPS/eip-1.md?ref=${"a".repeat(40)}`
@@ -233,6 +277,15 @@ test("snapshots the bound claim before asynchronous retrieval", async () => {
       };
     }
     if (calls.length === 2) {
+      return {
+        ok: true,
+        status: 200,
+        async json() {
+          return { sha: selector.commit_sha };
+        }
+      };
+    }
+    if (calls.length === 3) {
       return {
         ok: true,
         status: 200,
@@ -349,7 +402,7 @@ test("caller cannot replace the runtime-owned fetch or source policy per request
     assert.equal(payload.repository.repository_full_name, "ethereum/EIPs");
   });
   assert.equal(attackerFetchCalled, false);
-  assert.equal(calls.length, 2);
+  assert.equal(calls.length, 3);
 });
 
 test("default policy stays narrowly scoped to known Ethereum repositories", () => {
