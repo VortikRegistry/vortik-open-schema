@@ -5,8 +5,9 @@ import { fileURLToPath } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const SCHEMA_PATH = "schemas/verification/vortik-trusted-verification-requirements/1.1.0/schema.json";
-const PUBLIC_SCHEMA_PATH = "docs/schemas/verification/vortik-trusted-verification-requirements/1.1.0/schema.json";
+const SCHEMA_PATH = "schemas/verification/vortik-trusted-verification-requirements/1.2.0/schema.json";
+const PUBLIC_SCHEMA_PATH = "docs/schemas/verification/vortik-trusted-verification-requirements/1.2.0/schema.json";
+const HISTORICAL_SCHEMA_PATH = "schemas/verification/vortik-trusted-verification-requirements/1.1.0/schema.json";
 const REQUIREMENTS_PATH = "verification/requirements.json";
 const PUBLIC_REQUIREMENTS_PATH = "docs/verification/requirements.json";
 
@@ -27,14 +28,26 @@ function assertMirrorMismatchRejected(label, sourceText, mirrorText) {
   throw new Error(`${label} mismatch regression was not rejected`);
 }
 
-const [schemaText, publicSchemaText, requirementsText, publicRequirementsText] = await Promise.all([
-  readText(SCHEMA_PATH), readText(PUBLIC_SCHEMA_PATH), readText(REQUIREMENTS_PATH), readText(PUBLIC_REQUIREMENTS_PATH)
+const [schemaText, publicSchemaText, historicalSchemaText, requirementsText, publicRequirementsText] = await Promise.all([
+  readText(SCHEMA_PATH),
+  readText(PUBLIC_SCHEMA_PATH),
+  readText(HISTORICAL_SCHEMA_PATH),
+  readText(REQUIREMENTS_PATH),
+  readText(PUBLIC_REQUIREMENTS_PATH)
 ]);
 
 assertByteIdentical("trusted verification source schema and public mirror", schemaText, publicSchemaText);
 assertByteIdentical("trusted verification requirements and public mirror", requirementsText, publicRequirementsText);
 assertMirrorMismatchRejected("trusted verification schema mirror", schemaText, publicSchemaText);
 assertMirrorMismatchRejected("trusted verification requirements mirror", requirementsText, publicRequirementsText);
+
+const historicalSchema = JSON.parse(historicalSchemaText);
+if (historicalSchema?.properties?.requirements_version?.const !== "1.1.0" ||
+    historicalSchema?.properties?.implementation_state?.properties?.mode?.const !== "requirements_only" ||
+    historicalSchema?.properties?.implementation_state?.properties?.primary_source_verifier_implemented?.const !== false ||
+    historicalSchema?.properties?.implementation_state?.properties?.live_network_access?.const !== false) {
+  throw new Error("historical trusted verification requirements 1.1.0 semantics must remain unchanged");
+}
 
 const schema = JSON.parse(schemaText);
 const requirements = JSON.parse(requirementsText);
@@ -52,9 +65,10 @@ function assertRejected(label, mutate) {
 }
 
 for (const [label, mutate] of [
-  ["primary_source_verifier_implemented=true", (v) => { v.implementation_state.primary_source_verifier_implemented = true; }],
+  ["implementation mode regressing to requirements_only", (v) => { v.implementation_state.mode = "requirements_only"; }],
+  ["primary_source_verifier_implemented=false", (v) => { v.implementation_state.primary_source_verifier_implemented = false; }],
+  ["live_network_access=false", (v) => { v.implementation_state.live_network_access = false; }],
   ["ens_mainnet_verifier_implemented=true", (v) => { v.implementation_state.ens_mainnet_verifier_implemented = true; }],
-  ["live_network_access=true", (v) => { v.implementation_state.live_network_access = true; }],
   ["trusted_receipt_issuance=true", (v) => { v.implementation_state.trusted_receipt_issuance = true; }],
   ["admission.enabled=true", (v) => { v.admission.enabled = true; }],
   ["contributor_reference_trusted=true", (v) => { v.primary_source_verification.contributor_reference_trusted = true; }],
@@ -65,7 +79,6 @@ for (const [label, mutate] of [
   ["missing exact-name binding", (v) => { v.ens_mainnet_verification.exact_normalized_name_binding_required = false; }],
   ["missing block hash", (v) => { v.ens_mainnet_verification.block_hash_required = false; }],
   ["single-receipt admission", (v) => { v.admission.both_receipts_required = false; }],
-
   ["receipt without issuer authentication", (v) => { v.receipt_integrity.issuer_authentication_required = false; }],
   ["receipt without issuer key identity", (v) => { v.receipt_integrity.issuer_key_identity_required = false; }],
   ["receipt without signing-key authorization", (v) => { v.receipt_integrity.signing_key_authorization_required = false; }],
@@ -82,7 +95,6 @@ for (const [label, mutate] of [
   ["receipt admission validity longer than 24h", (v) => { v.receipt_integrity.max_admission_validity_seconds = 86401; }],
   ["receipt validity not bounded by trusted_issued_at window", (v) => { v.receipt_integrity.admission_valid_until_not_after_trusted_issued_at_plus_max_window_required = false; }],
   ["receipt validity not bounded by registration expiry", (v) => { v.receipt_integrity.admission_valid_until_not_after_registration_expiry_required = false; }],
-
   ["admission of unauthenticated receipts", (v) => { v.admission.authenticated_receipts_required = false; }],
   ["admission of unauthorized signing key", (v) => { v.admission.authorized_signing_key_required = false; }],
   ["admission without freshness validation", (v) => { v.admission.freshness_validation_required = false; }],
@@ -94,7 +106,6 @@ for (const [label, mutate] of [
   ["freshness not checked against trusted admission time", (v) => { v.admission.freshness_validation_against_trusted_admission_time_required = false; }],
   ["expired receipt usable at admission", (v) => { v.admission.receipt_not_expired_at_admission_required = false; }],
   ["receipt expiry not checked at trusted admission time", (v) => { v.admission.receipt_not_expired_at_trusted_admission_time_required = false; }],
-
   ["primary source without canonical source identity", (v) => { v.primary_source_verification.canonical_source_identifier_required = false; }],
   ["primary source without repository identity", (v) => { v.primary_source_verification.repository_identity_required = false; }],
   ["primary source without immutable revision", (v) => { v.primary_source_verification.immutable_revision_required = false; }],
@@ -103,7 +114,6 @@ for (const [label, mutate] of [
   ["primary source without source path", (v) => { v.primary_source_verification.source_path_required = false; }],
   ["primary source digest not verified against asserted artifact", (v) => { v.primary_source_verification.content_digest_verified_against_asserted_artifact_required = false; }],
   ["primary source bytes not bound to asserted revision", (v) => { v.primary_source_verification.retrieved_bytes_bound_to_asserted_revision_required = false; }],
-
   ["ENS negative/null/indeterminate result acceptance", (v) => { v.ens_mainnet_verification.negative_null_or_indeterminate_result_rejected = false; }],
   ["ENS receipt without affirmative existence", (v) => { v.ens_mainnet_verification.affirmative_existence_result_required = false; }],
   ["ENS exists-but-expired result", (v) => { v.ens_mainnet_verification.active_registration_result_required = false; }],
@@ -122,7 +132,6 @@ for (const [label, mutate] of [
   ["ENS block freshness not checked against trusted issued_at", (v) => { v.ens_mainnet_verification.block_freshness_against_trusted_issued_at_required = false; }],
   ["future-dated ENS block timestamp acceptance", (v) => { v.ens_mainnet_verification.block_timestamp_not_after_trusted_issued_at_required = false; }],
   ["ENS registration expiry not required after trusted issued_at", (v) => { v.ens_mainnet_verification.registration_expiry_after_trusted_issued_at_required = false; }],
-
   ["mismatched contribution/name subject acceptance", (v) => {
     v.admission.same_subject_binding_required = false;
     v.receipt_integrity.normalized_candidate_name_required = false;
@@ -131,9 +140,11 @@ for (const [label, mutate] of [
   assertRejected(label, mutate);
 }
 
-console.log("Trusted verification requirements 1.1.0 validated");
+console.log("Trusted verification requirements 1.2.0 validated");
+console.log("Historical 1.1.0 requirements-only semantics preserved");
 console.log("Public schema and requirements mirrors verified byte-identical");
-console.log("EXPECTED FAIL live verifier/network/receipt/admission claims remain closed");
+console.log("Primary-source verifier and bounded live network state are machine-readable and fixed true");
+console.log("EXPECTED FAIL ENS verifier/receipt/admission claims remain closed");
 console.log("EXPECTED FAIL contributor authority, ownership and commercial inference remain closed");
 console.log("EXPECTED FAIL unauthenticated, unauthorized, stale or partially signed receipts and mutable/unidentified primary-source evidence remain closed");
 console.log("EXPECTED FAIL negative, null, indeterminate, expired, stale, future-dated, cross-block, expiry-substituted or untrusted-clock ENS evidence remains closed");
