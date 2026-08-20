@@ -100,6 +100,61 @@ test("derives immutable primary-source evidence from allowlisted GitHub bytes", 
   assert.match(payload.canonical_source_identifier, /^github-artifact-v1:sha256:[0-9a-f]{64}$/);
 });
 
+test("snapshots the validated selector before asynchronous retrieval", async () => {
+  const bytes = Buffer.from("# EIP-1\n", "utf8");
+  const blobSha = gitBlobSha1(bytes);
+  const mutableSelector = { ...selector };
+  const originalSelector = { ...mutableSelector };
+  const calls = [];
+
+  const fetchImpl = async (url, options) => {
+    calls.push({ url, options });
+    if (calls.length === 1) {
+      assert.equal(url, "https://api.github.com/repos/ethereum/EIPs");
+      mutableSelector.repository_full_name = "attacker/repo";
+      mutableSelector.commit_sha = "b".repeat(40);
+      mutableSelector.path = "README.md";
+      return {
+        ok: true,
+        status: 200,
+        async json() {
+          return { id: 44971752, full_name: "ethereum/EIPs", archived: false };
+        }
+      };
+    }
+    if (calls.length === 2) {
+      assert.equal(
+        url,
+        `https://api.github.com/repos/ethereum/EIPs/contents/EIPS/eip-1.md?ref=${originalSelector.commit_sha}`
+      );
+      return {
+        ok: true,
+        status: 200,
+        async json() {
+          return {
+            type: "file",
+            path: originalSelector.path,
+            sha: blobSha,
+            size: bytes.length,
+            encoding: "base64",
+            content: bytes.toString("base64")
+          };
+        }
+      };
+    }
+    throw new Error(`unexpected URL ${url}`);
+  };
+
+  const payload = await withRuntimeFetch(fetchImpl, () =>
+    verifyPrimarySourceFromGitHub({ claim, selector: mutableSelector })
+  );
+
+  assert.equal(calls.length, 2);
+  assert.equal(payload.repository.repository_full_name, originalSelector.repository_full_name);
+  assert.equal(payload.repository.commit_sha, originalSelector.commit_sha);
+  assert.equal(payload.repository.path, originalSelector.path);
+});
+
 test("rejects a repository outside the trusted allowlist before network access", async () => {
   let called = false;
   await withRuntimeFetch(async () => {
