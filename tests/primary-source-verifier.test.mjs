@@ -211,6 +211,55 @@ test("validates the one-time selector snapshot instead of rereading accessor val
   assert.equal(payload.repository.commit_sha, "a".repeat(40));
 });
 
+test("snapshots the bound claim before asynchronous retrieval", async () => {
+  const bytes = Buffer.from("# EIP-1\n", "utf8");
+  const blobSha = gitBlobSha1(bytes);
+  const mutableClaim = structuredClone(claim);
+  const originalClaim = structuredClone(mutableClaim);
+  const calls = [];
+
+  const fetchImpl = async (url, options) => {
+    calls.push({ url, options });
+    if (calls.length === 1) {
+      assert.equal(url, "https://api.github.com/repos/ethereum/EIPs");
+      mutableClaim.technical_claim.source_authority_class = "ethereum_spec";
+      mutableClaim.candidate_name = "mutated.eth";
+      return {
+        ok: true,
+        status: 200,
+        async json() {
+          return { id: 44971752, full_name: "ethereum/EIPs", archived: false };
+        }
+      };
+    }
+    if (calls.length === 2) {
+      return {
+        ok: true,
+        status: 200,
+        async json() {
+          return {
+            type: "file",
+            path: selector.path,
+            sha: blobSha,
+            size: bytes.length,
+            encoding: "base64",
+            content: bytes.toString("base64")
+          };
+        }
+      };
+    }
+    throw new Error(`unexpected URL ${url}`);
+  };
+
+  const payload = await withRuntimeFetch(fetchImpl, () =>
+    verifyPrimarySourceFromGitHub({ claim: mutableClaim, selector })
+  );
+
+  assert.equal(payload.authority_class, "eip");
+  assert.equal(payload.claim_binding_digest, sha256CanonicalDigest(originalClaim));
+  assert.notEqual(payload.claim_binding_digest, sha256CanonicalDigest(mutableClaim));
+});
+
 test("rejects a repository outside the trusted allowlist before network access", async () => {
   let called = false;
   await withRuntimeFetch(async () => {
