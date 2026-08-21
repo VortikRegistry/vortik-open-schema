@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { execFileSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -7,16 +8,69 @@ import Ajv2020 from "ajv/dist/2020.js";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SCHEMA_PATH = "schemas/verification/vortik-trusted-verification-requirements/1.3.0/schema.json";
 const PUBLIC_SCHEMA_PATH = "docs/schemas/verification/vortik-trusted-verification-requirements/1.3.0/schema.json";
-const HISTORICAL_SCHEMA_PATH = "schemas/verification/vortik-trusted-verification-requirements/1.2.0/schema.json";
 const REQUIREMENTS_PATH = "verification/requirements.json";
 const PUBLIC_REQUIREMENTS_PATH = "docs/verification/requirements.json";
+const HISTORICAL_SCHEMA_PAIRS = Object.freeze([
+  Object.freeze({
+    version: "1.0.0",
+    source: "schemas/verification/vortik-trusted-verification-requirements/1.0.0/schema.json",
+    mirror: "docs/schemas/verification/vortik-trusted-verification-requirements/1.0.0/schema.json"
+  }),
+  Object.freeze({
+    version: "1.1.0",
+    source: "schemas/verification/vortik-trusted-verification-requirements/1.1.0/schema.json",
+    mirror: "docs/schemas/verification/vortik-trusted-verification-requirements/1.1.0/schema.json"
+  }),
+  Object.freeze({
+    version: "1.2.0",
+    source: "schemas/verification/vortik-trusted-verification-requirements/1.2.0/schema.json",
+    mirror: "docs/schemas/verification/vortik-trusted-verification-requirements/1.2.0/schema.json"
+  })
+]);
 
 async function readText(relativePath) {
   return readFile(resolve(root, relativePath), "utf8");
 }
 
+async function readBytes(relativePath) {
+  return readFile(resolve(root, relativePath));
+}
+
+function git(...args) {
+  return execFileSync("git", args, {
+    cwd: root,
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"]
+  }).trim();
+}
+
+function gitFileBytes(ref, relativePath) {
+  return execFileSync("git", ["show", `${ref}:${relativePath}`], {
+    cwd: root,
+    stdio: ["ignore", "pipe", "pipe"]
+  });
+}
+
+function resolveBaseRef() {
+  if (process.env.GITHUB_EVENT_NAME === "pull_request" && process.env.GITHUB_BASE_REF) {
+    const remoteBase = `origin/${process.env.GITHUB_BASE_REF}`;
+    git("rev-parse", "--verify", remoteBase);
+    return remoteBase;
+  }
+  try {
+    git("rev-parse", "--verify", "origin/main");
+    return "origin/main";
+  } catch {
+    return git("rev-parse", "HEAD^");
+  }
+}
+
 function assertByteIdentical(label, sourceText, mirrorText) {
   if (sourceText !== mirrorText) throw new Error(`${label} must be byte-identical`);
+}
+
+function assertBufferIdentical(label, currentBytes, expectedBytes) {
+  if (!currentBytes.equals(expectedBytes)) throw new Error(`${label} must remain byte-identical to the immutable base snapshot`);
 }
 
 function assertMirrorMismatchRejected(label, sourceText, mirrorText) {
@@ -28,10 +82,9 @@ function assertMirrorMismatchRejected(label, sourceText, mirrorText) {
   throw new Error(`${label} mismatch regression was not rejected`);
 }
 
-const [schemaText, publicSchemaText, historicalSchemaText, requirementsText, publicRequirementsText] = await Promise.all([
+const [schemaText, publicSchemaText, requirementsText, publicRequirementsText] = await Promise.all([
   readText(SCHEMA_PATH),
   readText(PUBLIC_SCHEMA_PATH),
-  readText(HISTORICAL_SCHEMA_PATH),
   readText(REQUIREMENTS_PATH),
   readText(PUBLIC_REQUIREMENTS_PATH)
 ]);
@@ -41,14 +94,27 @@ assertByteIdentical("trusted verification requirements and public mirror", requi
 assertMirrorMismatchRejected("trusted verification schema mirror", schemaText, publicSchemaText);
 assertMirrorMismatchRejected("trusted verification requirements mirror", requirementsText, publicRequirementsText);
 
-const historicalSchema = JSON.parse(historicalSchemaText);
-if (historicalSchema?.properties?.requirements_version?.const !== "1.2.0" ||
-    historicalSchema?.properties?.implementation_state?.properties?.mode?.const !== "primary_source_verifier" ||
-    historicalSchema?.properties?.implementation_state?.properties?.primary_source_verifier_implemented?.const !== true ||
-    historicalSchema?.properties?.implementation_state?.properties?.ens_mainnet_verifier_implemented?.const !== false ||
-    historicalSchema?.properties?.implementation_state?.properties?.live_network_access?.const !== true ||
-    historicalSchema?.properties?.implementation_state?.properties?.trusted_receipt_issuance?.const !== false) {
-  throw new Error("historical trusted verification requirements 1.2.0 semantics must remain unchanged");
+const baseRef = resolveBaseRef();
+for (const historical of HISTORICAL_SCHEMA_PAIRS) {
+  const [sourceBytes, mirrorBytes] = await Promise.all([
+    readBytes(historical.source),
+    readBytes(historical.mirror)
+  ]);
+  assertBufferIdentical(
+    `historical trusted verification ${historical.version} source/public mirror`,
+    sourceBytes,
+    mirrorBytes
+  );
+  assertBufferIdentical(
+    `historical trusted verification ${historical.version} source schema`,
+    sourceBytes,
+    gitFileBytes(baseRef, historical.source)
+  );
+  assertBufferIdentical(
+    `historical trusted verification ${historical.version} public schema`,
+    mirrorBytes,
+    gitFileBytes(baseRef, historical.mirror)
+  );
 }
 
 const schema = JSON.parse(schemaText);
@@ -143,8 +209,8 @@ for (const [label, mutate] of [
 }
 
 console.log("Trusted verification requirements 1.3.0 validated");
-console.log("Historical 1.2.0 primary-source-verifier semantics preserved");
-console.log("Public schema and requirements mirrors verified byte-identical");
+console.log(`Historical 1.0.0, 1.1.0 and 1.2.0 source/public schemas preserved byte-for-byte against ${baseRef}`);
+console.log("Public current schema and requirements mirrors verified byte-identical");
 console.log("Primary-source and ENS mainnet verifiers plus bounded live network state are machine-readable and fixed true");
 console.log("EXPECTED FAIL trusted receipt issuance and candidate admission remain closed");
 console.log("EXPECTED FAIL contributor authority, ownership and commercial inference remain closed");
