@@ -7,7 +7,6 @@ import {
 } from "../lib/ens-mainnet-verifier.mjs";
 import { computeEnsLookupResultDigest } from "../lib/trusted-verification-crypto.mjs";
 
-const ENS_REGISTRY = "0x00000000000c2e0743079c2e0743079c2e074307";
 const CANONICAL_ENS_REGISTRY = "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e";
 const BASE_REGISTRAR = "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85";
 const CANDIDATE_OWNER = "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
