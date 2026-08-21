@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Candidate Review & Provenance deliberately does not create trusted evidence. This boundary defines the machine-readable requirements that a future verifier must satisfy before Vortik may consider enabling admission for a new ENS-backed registry anchor.
+Candidate Review & Provenance deliberately does not create trusted evidence. This boundary defines the machine-readable requirements that a verifier must satisfy before Vortik may consider enabling admission for a new ENS-backed registry anchor.
 
 Canonical requirements manifest:
 
@@ -19,26 +19,26 @@ https://vortikregistry.github.io/vortik-open-schema/verification/requirements.js
 Current versioned schema:
 
 ```text
-schemas/verification/vortik-trusted-verification-requirements/1.1.0/schema.json
+schemas/verification/vortik-trusted-verification-requirements/1.2.0/schema.json
 ```
 
-Version `1.0.0` remains available as historical schema only. The canonical manifest targets `1.1.0`.
+Versions `1.0.0` and `1.1.0` remain available as historical schemas. Version `1.1.0` permanently records the earlier requirements-only state; the canonical manifest now targets `1.2.0`.
 
 ## Current implementation state
 
-Version `1.1.0` remains **requirements-only**.
+Version `1.2.0` records the bounded primary-source verifier as implemented and live network access as enabled only for that verifier's fixed GitHub policy.
 
-It fixes all of these states closed:
+It keeps these states closed:
 
-- primary-source verifier not implemented;
 - ENS mainnet verifier not implemented;
-- live network access disabled;
 - trusted receipt issuance disabled;
 - candidate admission disabled.
 
-A structurally valid contribution or review artifact therefore cannot become trusted merely by matching this requirements contract.
+The primary-source verifier is limited to its code-owned allowlist, immutable commit resolution, bounded response size and exact evidence binding. Generic network access is not implied by `live_network_access: true`.
 
-Version `1.1.0` requires:
+A structurally valid contribution or review artifact therefore still cannot become trusted merely by matching this requirements contract.
+
+Version `1.2.0` requires:
 
 1. exact canonical primary-source identity and immutable repository revision, with retrieved bytes and digest bound to that artifact;
 2. affirmative ENS evidence bound to one asserted **finalized** Ethereum mainnet block;
@@ -49,13 +49,13 @@ Version `1.1.0` requires:
 7. a bounded `admission_valid_until` no more than `86400` seconds after trusted issuance and never after ENS expiry;
 8. future admission using its own policy-validated trusted clock, never caller-controlled, to reject stale or expired receipts.
 
-These are contract requirements only. This version does not implement retrieval, ENS lookup, clock sources, signing, key management, trusted receipt issuance, or admission.
+Only the bounded primary-source retrieval capability is implemented by this version. ENS lookup, trusted clock sources, production signing/key management, trusted receipt issuance and admission remain unimplemented or disabled.
 
 ## Required primary-source receipt
 
 Before future admission can use semantic evidence, a verifier must independently retrieve the relevant Ethereum or protocol source rather than trusting the contributor's URL or classification.
 
-The future receipt must prove at least:
+The primary-source evidence contract requires at least:
 
 - validated authority class;
 - independent retrieval by the verifier;
@@ -69,7 +69,7 @@ The future receipt must prove at least:
 - verification that the content digest corresponds to the exact asserted repository/commit/blob/path artifact;
 - binding proving that the retrieved bytes are the bytes identified by that asserted immutable revision;
 - binding between the retrieved evidence and the semantic claim under review;
-- verifier identity and version.
+- verifier identity and version where a trusted receipt is later issued.
 
 Contributor-supplied URLs remain untrusted and cannot select an official source.
 
@@ -154,6 +154,6 @@ The canonical schema and requirements manifest each have a public documentation 
 
 ## WORK GATE
 
-Implementing the real verifier remains a separate infrastructure and trust-boundary change. It requires real external repositories and Ethereum RPC providers, bounded transport behavior, provider identity, trusted clock sources, signing-key management, finalized-block and receipt freshness, expiry binding, replay protection, and adversarial testing.
+The primary-source verifier is now implemented as a bounded network-backed capability. The remaining verifier work is ENS mainnet verification plus the still-disabled trusted issuance/admission path.
 
-Until that real verifier is separately implemented and reviewed, `admission.enabled` remains `false` and the repository-level candidate-admission gate continues to reject new anchors and ENS rebindings.
+`admission.enabled` remains `false`, and the repository-level candidate-admission gate continues to reject new anchors and ENS rebindings until the remaining trust boundaries are separately implemented and reviewed.
