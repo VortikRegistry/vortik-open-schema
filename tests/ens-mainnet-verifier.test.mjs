@@ -27,14 +27,28 @@ function uintWord(value) {
   return `0x${BigInt(value).toString(16).padStart(64, "0")}`;
 }
 
-function rpcResponse(id, result) {
-  const body = JSON.stringify({ jsonrpc: "2.0", id, result });
+function streamedResponse(bytes, { contentLength = bytes.byteLength } = {}) {
   return {
     ok: true,
     status: 200,
-    headers: { get: () => String(body.length) },
-    async text() { return body; }
+    headers: {
+      get(name) {
+        if (String(name).toLowerCase() !== "content-length") return null;
+        return contentLength === null ? null : String(contentLength);
+      }
+    },
+    body: new ReadableStream({
+      start(controller) {
+        controller.enqueue(bytes);
+        controller.close();
+      }
+    })
   };
+}
+
+function rpcResponse(id, result) {
+  const body = Buffer.from(JSON.stringify({ jsonrpc: "2.0", id, result }), "utf8");
+  return streamedResponse(body);
 }
 
 function createMockProvider({
@@ -108,6 +122,16 @@ function createConcurrentMockProvider(providerId) {
     provider_id: providerId,
     rpc_url: `https://${providerId}.example`,
     fetchImpl
+  };
+}
+
+function createOversizeProvider(providerId) {
+  return {
+    provider_id: providerId,
+    rpc_url: `https://${providerId}.example`,
+    async fetchImpl() {
+      return streamedResponse(new Uint8Array(2_000_001), { contentLength: null });
+    }
   };
 }
 
@@ -218,7 +242,7 @@ test("supports only the explicitly bounded ENSIP-15-valid ASCII .eth 2LD profile
   await assert.rejects(() => verifier.verify({ normalizedCandidateName: "ab--cd.eth" }), /ASCII/);
 });
 
-test("provider identities and canonical endpoints must both be distinct", () => {
+test("provider identities and canonical network authorities must both be distinct", () => {
   assert.throws(
     () => createEnsMainnetVerifierWithTrustedProviders({
       providers: [createMockProvider({ providerId: "same" }), createMockProvider({ providerId: "same" })]
@@ -230,10 +254,20 @@ test("provider identities and canonical endpoints must both be distinct", () => 
     () => createEnsMainnetVerifierWithTrustedProviders({
       providers: [
         createMockProvider({ providerId: "rpc-a", rpcUrl: "https://shared-rpc.example" }),
-        createMockProvider({ providerId: "rpc-b", rpcUrl: "https://shared-rpc.example/" })
+        createMockProvider({ providerId: "rpc-b", rpcUrl: "https://shared-rpc.example/other-path" })
       ]
     }),
-    /distinct provider endpoints/
+    /distinct provider network authorities/
+  );
+
+  assert.throws(
+    () => createEnsMainnetVerifierWithTrustedProviders({
+      providers: [
+        createMockProvider({ providerId: "rpc-a", rpcUrl: "https://shared-rpc.example/" }),
+        createMockProvider({ providerId: "rpc-b", rpcUrl: "https://shared-rpc.example./" })
+      ]
+    }),
+    /distinct provider network authorities/
   );
 
   assert.throws(
@@ -259,6 +293,16 @@ test("supports overlapping verification calls without cross-request JSON-RPC ID 
 
   assert.equal(first.normalized_candidate_name, "epbs.eth");
   assert.equal(second.normalized_candidate_name, "inclusionlist.eth");
+});
+
+test("cuts off chunked RPC responses before buffering beyond the verifier limit", async () => {
+  const verifier = createEnsMainnetVerifierWithTrustedProviders({
+    providers: [createOversizeProvider("rpc-a"), createMockProvider({ providerId: "rpc-b" })]
+  });
+  await assert.rejects(
+    () => verifier.verify({ normalizedCandidateName: "epbs.eth" }),
+    /response exceeds verifier size limit/
+  );
 });
 
 test("bounds stalled trusted RPC transports with a construction-owned timeout", async () => {
