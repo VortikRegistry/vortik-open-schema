@@ -7,6 +7,8 @@ import {
 } from "../lib/ens-mainnet-verifier.mjs";
 import { computeEnsLookupResultDigest } from "../lib/trusted-verification-crypto.mjs";
 
+const ENS_REGISTRY = "0x00000000000c2e0743079c2e0743079c2e074307";
+const CANONICAL_ENS_REGISTRY = "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e";
 const BASE_REGISTRAR = "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85";
 const CANDIDATE_OWNER = "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 const SHARED_BLOCK = {
@@ -81,6 +83,31 @@ function createMockProvider({
   return {
     provider_id: providerId,
     rpc_url: rpcUrl ?? `https://${providerId}.example`,
+    fetchImpl
+  };
+}
+
+function createConcurrentMockProvider(providerId) {
+  const fetchImpl = async (_url, options) => {
+    const request = JSON.parse(options.body);
+    await new Promise((resolve) => setTimeout(resolve, 2));
+    if (request.method === "eth_chainId") return rpcResponse(request.id, "0x1");
+    if (request.method === "eth_getBlockByNumber") return rpcResponse(request.id, SHARED_BLOCK);
+    if (request.method === "eth_call") {
+      assert.deepEqual(request.params[1], {
+        blockHash: SHARED_BLOCK.hash,
+        requireCanonical: true
+      });
+      const to = request.params[0].to.toLowerCase();
+      if (to === BASE_REGISTRAR) return rpcResponse(request.id, uintWord(EXPIRY));
+      if (to === CANONICAL_ENS_REGISTRY) return rpcResponse(request.id, addressWord(BASE_REGISTRAR));
+      throw new Error(`unexpected eth_call target ${to}`);
+    }
+    throw new Error(`unexpected RPC method ${request.method}`);
+  };
+  return {
+    provider_id: providerId,
+    rpc_url: `https://${providerId}.example`,
     fetchImpl
   };
 }
@@ -192,7 +219,7 @@ test("supports only the explicitly bounded ENSIP-15-valid ASCII .eth 2LD profile
   await assert.rejects(() => verifier.verify({ normalizedCandidateName: "ab--cd.eth" }), /ASCII/);
 });
 
-test("provider identities and exact endpoints must both be distinct", () => {
+test("provider identities and canonical endpoints must both be distinct", () => {
   assert.throws(
     () => createEnsMainnetVerifierWithTrustedProviders({
       providers: [createMockProvider({ providerId: "same" }), createMockProvider({ providerId: "same" })]
@@ -200,16 +227,39 @@ test("provider identities and exact endpoints must both be distinct", () => {
     /distinct provider identities/
   );
 
-  const sharedUrl = "https://shared-rpc.example/";
   assert.throws(
     () => createEnsMainnetVerifierWithTrustedProviders({
       providers: [
-        createMockProvider({ providerId: "rpc-a", rpcUrl: sharedUrl }),
-        createMockProvider({ providerId: "rpc-b", rpcUrl: sharedUrl })
+        createMockProvider({ providerId: "rpc-a", rpcUrl: "https://shared-rpc.example" }),
+        createMockProvider({ providerId: "rpc-b", rpcUrl: "https://shared-rpc.example/" })
       ]
     }),
     /distinct provider endpoints/
   );
+
+  assert.throws(
+    () => createEnsMainnetVerifierWithTrustedProviders({
+      providers: [
+        createMockProvider({ providerId: "rpc-a" }),
+        createMockProvider({ providerId: "rpc-b", rpcUrl: "https://rpc-b.example/?" })
+      ]
+    }),
+    /query component or empty query delimiter/
+  );
+});
+
+test("supports overlapping verification calls without cross-request JSON-RPC ID drift", async () => {
+  const verifier = createEnsMainnetVerifierWithTrustedProviders({
+    providers: [createConcurrentMockProvider("rpc-a"), createConcurrentMockProvider("rpc-b")]
+  });
+
+  const [first, second] = await Promise.all([
+    verifier.verify({ normalizedCandidateName: "epbs.eth" }),
+    verifier.verify({ normalizedCandidateName: "inclusionlist.eth" })
+  ]);
+
+  assert.equal(first.normalized_candidate_name, "epbs.eth");
+  assert.equal(second.normalized_candidate_name, "inclusionlist.eth");
 });
 
 test("bounds stalled trusted RPC transports with a construction-owned timeout", async () => {
