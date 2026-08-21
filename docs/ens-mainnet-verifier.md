@@ -20,13 +20,13 @@ This avoids adding a normalization dependency or silently approximating ENSIP-15
 
 ## Trusted provider boundary
 
-A verifier instance must be constructed with exactly two distinct provider identities, two distinct normalized HTTPS RPC endpoints, and trusted fetch transports. Relabeling the same endpoint with a second provider ID does not satisfy the 2-of-2 boundary.
+A verifier instance must be constructed with exactly two distinct provider identities, two distinct canonical HTTPS RPC endpoints, and trusted fetch transports. Relabeling the same endpoint with a second provider ID does not satisfy the 2-of-2 boundary.
+
+Endpoint identity is normalized with the URL parser before uniqueness comparison. Version 0.1 rejects every URL query component, including an empty `?` delimiter, so semantically empty query aliases cannot manufacture a second endpoint. Deployments that need authentication should inject headers through the construction-bound trusted transport or use a provider endpoint whose authenticated path is itself the configured endpoint; secrets are not emitted into evidence.
 
 Provider configuration is captured at construction. Per-request callers cannot replace provider identity, RPC URL, transport, contract addresses, chain ID, provider count, active-registration definition, or provider-policy identity.
 
-Credentials, if a deployment later needs them, belong to trusted runtime configuration and are not committed here.
-
-Each RPC request has a construction-owned deadline and bounded response size. Redirects fail closed.
+Each RPC request has a construction-owned deadline and bounded response size. JSON-RPC request IDs are captured per request before awaiting transport, so overlapping calls on one verifier instance cannot invalidate each other's response binding. Redirects fail closed.
 
 ## Finalized-block selection
 
@@ -71,7 +71,7 @@ The returned payload matches the existing `ens_mainnet` receipt payload semantic
 - canonical contract identities;
 - one shared finalized block;
 - fixed provider-policy ID;
-- exactly two distinct provider identities and exact endpoints;
+- exactly two distinct provider identities and canonical endpoints;
 - affirmative active-registration evidence; and
 - `lookup_result_digest` recomputed with `computeEnsLookupResultDigest` from the exact name, contracts, block and lookup result.
 
@@ -101,7 +101,8 @@ The regression suite covers:
 - canonical `.eth` registrar boundary enforcement;
 - mainnet chain-ID enforcement;
 - bounded ENSIP-15-valid ASCII profile rejection including `^..--` forms;
-- distinct provider identities and exact RPC endpoints; and
+- distinct provider identities and canonical RPC endpoints, including slash aliases and empty query delimiters;
+- concurrent verifier calls with request-local JSON-RPC IDs; and
 - stalled RPC timeout behavior.
 
 Tests use deterministic trusted mock RPC transports. CI does not require live provider credentials.
