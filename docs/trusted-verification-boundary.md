@@ -19,26 +19,29 @@ https://vortikregistry.github.io/vortik-open-schema/verification/requirements.js
 Current versioned schema:
 
 ```text
-schemas/verification/vortik-trusted-verification-requirements/1.2.0/schema.json
+schemas/verification/vortik-trusted-verification-requirements/1.3.0/schema.json
 ```
 
-Versions `1.0.0` and `1.1.0` remain available as historical schemas. Version `1.1.0` permanently records the earlier requirements-only state; the canonical manifest now targets `1.2.0`.
+Versions `1.0.0`, `1.1.0`, and `1.2.0` remain available as historical schemas. Version `1.1.0` permanently records the earlier requirements-only state; version `1.2.0` permanently records the bounded primary-source verifier as implemented while ENS verification remained closed; the canonical manifest now targets `1.3.0`.
 
 ## Current implementation state
 
-Version `1.2.0` records the bounded primary-source verifier as implemented and live network access as enabled only for that verifier's fixed GitHub policy.
+Version `1.3.0` records both bounded trusted verifiers as implemented:
+
+- primary-source verifier implemented;
+- ENS mainnet verifier implemented;
+- bounded live network access enabled for those code-owned verifier policies.
 
 It keeps these states closed:
 
-- ENS mainnet verifier not implemented;
 - trusted receipt issuance disabled;
 - candidate admission disabled.
 
-The primary-source verifier is limited to its code-owned allowlist, immutable commit resolution, bounded response size and exact evidence binding. Generic network access is not implied by `live_network_access: true`.
+The primary-source verifier is limited to its code-owned allowlist, immutable commit resolution, bounded response size and exact evidence binding. The ENS verifier is limited to its two construction-bound canonical network authorities, Ethereum mainnet, one shared finalized block, EIP-1898 hash-bound reads, the canonical ENS Registry/Base Registrar, and the bounded ENSIP-15-valid ASCII `.eth` 2LD profile. Generic network access is not implied by `live_network_access: true`.
 
-A structurally valid contribution or review artifact therefore still cannot become trusted merely by matching this requirements contract.
+A structurally valid contribution, review artifact, or verifier payload therefore still cannot become trusted admission evidence merely by matching this requirements contract. Production trusted receipt issuance remains disabled.
 
-Version `1.2.0` requires:
+Version `1.3.0` requires:
 
 1. exact canonical primary-source identity and immutable repository revision, with retrieved bytes and digest bound to that artifact;
 2. affirmative ENS evidence bound to one asserted **finalized** Ethereum mainnet block;
@@ -49,11 +52,11 @@ Version `1.2.0` requires:
 7. a bounded `admission_valid_until` no more than `86400` seconds after trusted issuance and never after ENS expiry;
 8. future admission using its own policy-validated trusted clock, never caller-controlled, to reject stale or expired receipts.
 
-Only the bounded primary-source retrieval capability is implemented by this version. ENS lookup, trusted clock sources, production signing/key management, trusted receipt issuance and admission remain unimplemented or disabled.
+Both bounded evidence-derivation verifiers are implemented by this version. Trusted clock sources, production signing/key management, trusted receipt issuance and candidate admission remain unimplemented or disabled and are separate gates.
 
 ## Required primary-source receipt
 
-Before future admission can use semantic evidence, a verifier must independently retrieve the relevant Ethereum or protocol source rather than trusting the contributor's URL or classification.
+Before future admission can use semantic evidence, the primary-source verifier must independently retrieve the relevant Ethereum or protocol source rather than trusting the contributor's URL or classification.
 
 The primary-source evidence contract requires at least:
 
@@ -75,9 +78,9 @@ Contributor-supplied URLs remain untrusted and cannot select an official source.
 
 ## Required ENS mainnet receipt
 
-ENS existence is separate from semantic relevance. A future ENS verifier must independently query Ethereum mainnet for the exact normalized candidate.
+ENS existence is separate from semantic relevance. The implemented bounded ENS verifier independently queries Ethereum mainnet for the exact normalized candidate, but production receipt issuance remains disabled.
 
-The future receipt must be bound to:
+Any future trusted ENS receipt must be bound to:
 
 - Ethereum chain ID `1`;
 - the exact normalized ENS candidate name;
@@ -154,6 +157,6 @@ The canonical schema and requirements manifest each have a public documentation 
 
 ## WORK GATE
 
-The primary-source verifier is now implemented as a bounded network-backed capability. The remaining verifier work is ENS mainnet verification plus the still-disabled trusted issuance/admission path.
+The bounded primary-source verifier and bounded ENS mainnet verifier are now implemented as reviewed network-backed capabilities. The remaining trusted-verification work is the still-disabled production issuance path: trusted issuance clock, signing/key policy runtime, authenticated receipt issuance, and only later the separate admission gate.
 
-`admission.enabled` remains `false`, and the repository-level candidate-admission gate continues to reject new anchors and ENS rebindings until the remaining trust boundaries are separately implemented and reviewed.
+`trusted_receipt_issuance` remains `false` and `admission.enabled` remains `false`. The repository-level candidate-admission gate continues to reject new anchors and ENS rebindings until those remaining trust boundaries are separately implemented and reviewed.
