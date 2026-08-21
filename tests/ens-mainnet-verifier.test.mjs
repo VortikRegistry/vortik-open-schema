@@ -38,6 +38,7 @@ function rpcResponse(id, result) {
 
 function createMockProvider({
   providerId,
+  rpcUrl,
   finalizedNumber = 100,
   chainId = "0x1",
   exactHash = SHARED_BLOCK.hash,
@@ -66,6 +67,10 @@ function createMockProvider({
       return rpcResponse(request.id, { ...SHARED_BLOCK, hash: exactHash });
     }
     if (request.method === "eth_call") {
+      assert.deepEqual(request.params[1], {
+        blockHash: SHARED_BLOCK.hash,
+        requireCanonical: true
+      });
       ethCallIndex += 1;
       if (ethCallIndex === 1) return rpcResponse(request.id, addressWord(candidateOwner));
       if (ethCallIndex === 2) return rpcResponse(request.id, addressWord(ethRegistrarOwner));
@@ -73,7 +78,11 @@ function createMockProvider({
     }
     throw new Error(`unexpected RPC method ${request.method}`);
   };
-  return { provider_id: providerId, rpc_url: `https://${providerId}.example`, fetchImpl };
+  return {
+    provider_id: providerId,
+    rpc_url: rpcUrl ?? `https://${providerId}.example`,
+    fetchImpl
+  };
 }
 
 test("keccak implementation matches the Ethereum empty-input vector", () => {
@@ -83,7 +92,7 @@ test("keccak implementation matches the Ethereum empty-input vector", () => {
   );
 });
 
-test("derives affirmative 2-of-2 ENS evidence at one shared finalized block", async () => {
+test("derives affirmative 2-of-2 ENS evidence at one shared finalized block hash", async () => {
   const verifier = createEnsMainnetVerifierWithTrustedProviders({
     providers: [
       createMockProvider({ providerId: "rpc-a", finalizedNumber: 100 }),
@@ -172,21 +181,34 @@ test("requires mainnet from both trusted providers", async () => {
   );
 });
 
-test("supports only the explicitly bounded normalized ASCII .eth 2LD profile", async () => {
+test("supports only the explicitly bounded ENSIP-15-valid ASCII .eth 2LD profile", async () => {
   const verifier = createEnsMainnetVerifierWithTrustedProviders({
     providers: [createMockProvider({ providerId: "rpc-a" }), createMockProvider({ providerId: "rpc-b" })]
   });
   await assert.rejects(() => verifier.verify({ normalizedCandidateName: "EPBS.eth" }), /already be normalized/);
   await assert.rejects(() => verifier.verify({ normalizedCandidateName: "sub.epbs.eth" }), /2LD names only/);
   await assert.rejects(() => verifier.verify({ normalizedCandidateName: "épbs.eth" }), /ASCII/);
+  await assert.rejects(() => verifier.verify({ normalizedCandidateName: "xn--foo.eth" }), /ASCII/);
+  await assert.rejects(() => verifier.verify({ normalizedCandidateName: "ab--cd.eth" }), /ASCII/);
 });
 
-test("provider identities must be distinct and transports are construction-owned", () => {
+test("provider identities and exact endpoints must both be distinct", () => {
   assert.throws(
     () => createEnsMainnetVerifierWithTrustedProviders({
       providers: [createMockProvider({ providerId: "same" }), createMockProvider({ providerId: "same" })]
     }),
     /distinct provider identities/
+  );
+
+  const sharedUrl = "https://shared-rpc.example/";
+  assert.throws(
+    () => createEnsMainnetVerifierWithTrustedProviders({
+      providers: [
+        createMockProvider({ providerId: "rpc-a", rpcUrl: sharedUrl }),
+        createMockProvider({ providerId: "rpc-b", rpcUrl: sharedUrl })
+      ]
+    }),
+    /distinct provider endpoints/
   );
 });
 
