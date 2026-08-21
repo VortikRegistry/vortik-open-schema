@@ -8,6 +8,7 @@ import {
 import { computeEnsLookupResultDigest } from "../lib/trusted-verification-crypto.mjs";
 
 const BASE_REGISTRAR = "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85";
+const CANDIDATE_OWNER = "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 const SHARED_BLOCK = {
   number: "0x64",
   hash: `0x${"11".repeat(32)}`,
@@ -40,7 +41,7 @@ function createMockProvider({
   finalizedNumber = 100,
   chainId = "0x1",
   exactHash = SHARED_BLOCK.hash,
-  candidateOwner = "0x1111111111111111111111111111111111111111",
+  candidateOwner = CANDIDATE_OWNER,
   ethRegistrarOwner = BASE_REGISTRAR,
   expiry = EXPIRY,
   stall = false
@@ -104,7 +105,17 @@ test("derives affirmative 2-of-2 ENS evidence at one shared finalized block", as
   assert.equal(payload.providers.length, 2);
   assert.deepEqual(payload.providers.map((provider) => provider.provider_id), ["rpc-a", "rpc-b"]);
   assert.equal(payload.lookup.lookup_result_digest, computeEnsLookupResultDigest(payload));
-  assert.equal(JSON.stringify(payload).includes("1111111111111111111111111111111111111111"), false);
+  assert.deepEqual(
+    Object.keys(payload.lookup).sort(),
+    [
+      "registry_record_exists",
+      "eth_registrar_owner_matches_base_registrar",
+      "base_registrar_expiry",
+      "active_registration",
+      "lookup_result_digest"
+    ].sort()
+  );
+  assert.equal(JSON.stringify(payload).includes(CANDIDATE_OWNER), false);
 });
 
 test("fails closed when providers disagree on the selected finalized block", async () => {
@@ -135,7 +146,7 @@ test("fails closed on negative or inactive ENS state", async () => {
 });
 
 test("fails closed when the .eth registrar boundary is not canonical", async () => {
-  const wrong = "0x2222222222222222222222222222222222222222";
+  const wrong = "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
   const verifier = createEnsMainnetVerifierWithTrustedProviders({
     providers: [
       createMockProvider({ providerId: "rpc-a", ethRegistrarOwner: wrong }),
