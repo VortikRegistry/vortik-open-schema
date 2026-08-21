@@ -77,8 +77,11 @@ function mockGitHubFetch(bytes = Buffer.from("# EIP-1\n", "utf8"), overrides = {
   return { fetchImpl, calls, blobSha };
 }
 
-function verifierFor(fetchImpl) {
-  return createPrimarySourceVerifierWithTrustedTransport({ fetchImpl });
+function verifierFor(fetchImpl, requestTimeoutMs) {
+  return createPrimarySourceVerifierWithTrustedTransport({
+    fetchImpl,
+    ...(requestTimeoutMs === undefined ? {} : { requestTimeoutMs })
+  });
 }
 
 test("derives immutable primary-source evidence from allowlisted GitHub bytes", async () => {
@@ -88,6 +91,7 @@ test("derives immutable primary-source evidence from allowlisted GitHub bytes", 
 
   assert.equal(calls.length, 3);
   assert.equal(calls[0].options.redirect, "error");
+  assert.ok(calls[0].options.signal instanceof AbortSignal);
   assert.equal(calls[1].url, `https://api.github.com/repos/ethereum/EIPs/commits/${selector.commit_sha}`);
   assert.equal(payload.authority_class, "eip");
   assert.equal(payload.retrieval_policy_id, "vortik-primary-source-github-v1");
@@ -136,6 +140,36 @@ test("requires trusted transport at construction", () => {
   assert.throws(
     () => createPrimarySourceVerifierWithTrustedTransport({ fetchImpl: null }),
     /trusted fetch transport at construction/
+  );
+});
+
+test("bounds stalled trusted transport with a construction-owned timeout", async () => {
+  let observedSignal;
+  const verifier = verifierFor((_url, options) => {
+    observedSignal = options.signal;
+    return new Promise(() => {});
+  }, 20);
+
+  await assert.rejects(
+    verifier.verify({ claim, selector }),
+    /trusted GitHub retrieval timed out after 20 ms/
+  );
+  assert.ok(observedSignal instanceof AbortSignal);
+  assert.equal(observedSignal.aborted, true);
+});
+
+test("bounds stalled response-body parsing with the same request deadline", async () => {
+  const verifier = verifierFor(async () => ({
+    ok: true,
+    status: 200,
+    json() {
+      return new Promise(() => {});
+    }
+  }), 20);
+
+  await assert.rejects(
+    verifier.verify({ claim, selector }),
+    /trusted GitHub retrieval timed out after 20 ms/
   );
 });
 
