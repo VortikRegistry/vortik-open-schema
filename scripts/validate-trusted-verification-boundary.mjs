@@ -5,9 +5,9 @@ import { fileURLToPath } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const SCHEMA_PATH = "schemas/verification/vortik-trusted-verification-requirements/1.2.0/schema.json";
-const PUBLIC_SCHEMA_PATH = "docs/schemas/verification/vortik-trusted-verification-requirements/1.2.0/schema.json";
-const HISTORICAL_SCHEMA_PATH = "schemas/verification/vortik-trusted-verification-requirements/1.1.0/schema.json";
+const SCHEMA_PATH = "schemas/verification/vortik-trusted-verification-requirements/1.3.0/schema.json";
+const PUBLIC_SCHEMA_PATH = "docs/schemas/verification/vortik-trusted-verification-requirements/1.3.0/schema.json";
+const HISTORICAL_SCHEMA_PATH = "schemas/verification/vortik-trusted-verification-requirements/1.2.0/schema.json";
 const REQUIREMENTS_PATH = "verification/requirements.json";
 const PUBLIC_REQUIREMENTS_PATH = "docs/verification/requirements.json";
 
@@ -42,11 +42,13 @@ assertMirrorMismatchRejected("trusted verification schema mirror", schemaText, p
 assertMirrorMismatchRejected("trusted verification requirements mirror", requirementsText, publicRequirementsText);
 
 const historicalSchema = JSON.parse(historicalSchemaText);
-if (historicalSchema?.properties?.requirements_version?.const !== "1.1.0" ||
-    historicalSchema?.properties?.implementation_state?.properties?.mode?.const !== "requirements_only" ||
-    historicalSchema?.properties?.implementation_state?.properties?.primary_source_verifier_implemented?.const !== false ||
-    historicalSchema?.properties?.implementation_state?.properties?.live_network_access?.const !== false) {
-  throw new Error("historical trusted verification requirements 1.1.0 semantics must remain unchanged");
+if (historicalSchema?.properties?.requirements_version?.const !== "1.2.0" ||
+    historicalSchema?.properties?.implementation_state?.properties?.mode?.const !== "primary_source_verifier" ||
+    historicalSchema?.properties?.implementation_state?.properties?.primary_source_verifier_implemented?.const !== true ||
+    historicalSchema?.properties?.implementation_state?.properties?.ens_mainnet_verifier_implemented?.const !== false ||
+    historicalSchema?.properties?.implementation_state?.properties?.live_network_access?.const !== true ||
+    historicalSchema?.properties?.implementation_state?.properties?.trusted_receipt_issuance?.const !== false) {
+  throw new Error("historical trusted verification requirements 1.2.0 semantics must remain unchanged");
 }
 
 const schema = JSON.parse(schemaText);
@@ -65,10 +67,10 @@ function assertRejected(label, mutate) {
 }
 
 for (const [label, mutate] of [
-  ["implementation mode regressing to requirements_only", (v) => { v.implementation_state.mode = "requirements_only"; }],
+  ["implementation mode regressing to primary_source_verifier", (v) => { v.implementation_state.mode = "primary_source_verifier"; }],
   ["primary_source_verifier_implemented=false", (v) => { v.implementation_state.primary_source_verifier_implemented = false; }],
+  ["ens_mainnet_verifier_implemented=false", (v) => { v.implementation_state.ens_mainnet_verifier_implemented = false; }],
   ["live_network_access=false", (v) => { v.implementation_state.live_network_access = false; }],
-  ["ens_mainnet_verifier_implemented=true", (v) => { v.implementation_state.ens_mainnet_verifier_implemented = true; }],
   ["trusted_receipt_issuance=true", (v) => { v.implementation_state.trusted_receipt_issuance = true; }],
   ["admission.enabled=true", (v) => { v.admission.enabled = true; }],
   ["contributor_reference_trusted=true", (v) => { v.primary_source_verification.contributor_reference_trusted = true; }],
@@ -140,12 +142,12 @@ for (const [label, mutate] of [
   assertRejected(label, mutate);
 }
 
-console.log("Trusted verification requirements 1.2.0 validated");
-console.log("Historical 1.1.0 requirements-only semantics preserved");
+console.log("Trusted verification requirements 1.3.0 validated");
+console.log("Historical 1.2.0 primary-source-verifier semantics preserved");
 console.log("Public schema and requirements mirrors verified byte-identical");
-console.log("Primary-source verifier and bounded live network state are machine-readable and fixed true");
-console.log("EXPECTED FAIL ENS verifier/receipt/admission claims remain closed");
+console.log("Primary-source and ENS mainnet verifiers plus bounded live network state are machine-readable and fixed true");
+console.log("EXPECTED FAIL trusted receipt issuance and candidate admission remain closed");
 console.log("EXPECTED FAIL contributor authority, ownership and commercial inference remain closed");
 console.log("EXPECTED FAIL unauthenticated, unauthorized, stale or partially signed receipts and mutable/unidentified primary-source evidence remain closed");
-console.log("EXPECTED FAIL negative, null, indeterminate, expired, stale, future-dated, cross-block, expiry-substituted or untrusted-clock ENS evidence remains closed");
+console.log("EXPECTED FAIL negative, null, indeterminate, expired, stale, future-dated, cross-block, expiry-substituted or untrusted-clock ENS evidence remain closed");
 console.log("EXPECTED FAIL cross-receipt subject mismatch and public-mirror divergence remain closed");
