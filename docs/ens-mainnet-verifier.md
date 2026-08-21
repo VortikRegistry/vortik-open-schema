@@ -6,7 +6,7 @@ This branch adds the bounded ENS mainnet verifier runtime in `lib/ens-mainnet-ve
 
 It derives the existing `ens_mainnet` evidence payload from two independently configured Ethereum JSON-RPC providers. Candidate admission remains disabled. No production signing key, trusted issuance clock, registry mutation, ownership inference, wallet operation, or commercial authority is added.
 
-The canonical trusted-verification implementation-state manifest remains unchanged in this PR. Until the runtime has passed CI and exact-head review, `ens_mainnet_verifier_implemented` remains `false`. Publishing the implementation-state transition is a separate small gate after the verifier is reviewed.
+The canonical trusted-verification implementation-state manifest remains unchanged in this PR. Until the runtime has passed CI and exact-head review without material findings, `ens_mainnet_verifier_implemented` remains `false`. Publishing the implementation-state transition is a separate small gate after the verifier is reviewed.
 
 ## Bounded name profile
 
@@ -14,11 +14,13 @@ Version 0.1 deliberately supports only normalized ASCII `.eth` second-level name
 
 This is a strict subset of names that are stable under ENSIP-15 normalization. The verifier does not claim full Unicode ENSIP-15 implementation. Uppercase names, Unicode labels, subnames, non-`.eth` names, malformed labels, and labels outside the bounded profile fail closed before network access.
 
+Within the ASCII subset, the verifier also enforces the ENSIP-15 rule that the third and fourth label characters cannot both be hyphen-minus. Reserved forms such as `xn--...` and other `^..--` labels therefore fail closed.
+
 This avoids adding a normalization dependency or silently approximating ENSIP-15.
 
 ## Trusted provider boundary
 
-A verifier instance must be constructed with exactly two distinct provider identities, HTTPS RPC endpoints, and trusted fetch transports.
+A verifier instance must be constructed with exactly two distinct provider identities, two distinct normalized HTTPS RPC endpoints, and trusted fetch transports. Relabeling the same endpoint with a second provider ID does not satisfy the 2-of-2 boundary.
 
 Provider configuration is captured at construction. Per-request callers cannot replace provider identity, RPC URL, transport, contract addresses, chain ID, provider count, active-registration definition, or provider-policy identity.
 
@@ -35,7 +37,9 @@ For every verification the runtime:
 3. chooses the lower finalized block number as the conservative common height;
 4. re-queries that exact block number from both providers;
 5. requires exact agreement on block number, hash, state root, parent hash and timestamp; and
-6. performs every ENS state read against that exact block number.
+6. performs every ENS `eth_call` against an EIP-1898 block selector containing that agreed `blockHash` with `requireCanonical: true`.
+
+The numeric height is therefore used only to discover and cross-check the shared finalized block. Contract-state evidence is bound to the agreed block hash itself. A provider that cannot serve the canonical hash-bound read fails closed.
 
 If providers disagree, verification fails closed.
 
@@ -46,7 +50,7 @@ The verifier implements the contract-layer definition `active_eth_2ld_at_finaliz
 - ENS Registry: `0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e`
 - Base Registrar: `0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85`
 
-At the shared finalized block, each provider independently supplies evidence for:
+At the shared finalized block hash, each provider independently supplies evidence for:
 
 - a non-zero ENS Registry record for the exact candidate node;
 - the `.eth` registry owner matching the canonical Base Registrar boundary;
@@ -67,11 +71,11 @@ The returned payload matches the existing `ens_mainnet` receipt payload semantic
 - canonical contract identities;
 - one shared finalized block;
 - fixed provider-policy ID;
-- exactly two distinct provider identities;
+- exactly two distinct provider identities and exact endpoints;
 - affirmative active-registration evidence; and
 - `lookup_result_digest` recomputed with `computeEnsLookupResultDigest` from the exact name, contracts, block and lookup result.
 
-Each provider evidence record carries the same block hash, state root, timestamp and recomputed lookup-result digest.
+Each provider evidence record carries the same block hash, state root, timestamp and recomputed lookup-result digest. RPC endpoint URLs remain trusted runtime configuration and are not emitted in the public evidence payload.
 
 ## Cryptography
 
@@ -91,12 +95,13 @@ The regression suite covers:
 
 - the canonical Keccak-256 vector;
 - 2-of-2 agreement when providers expose different finalized tips but share a lower finalized block;
+- EIP-1898 exact block-hash binding with canonicality required for every ENS state read;
 - exact finalized-block disagreement;
 - negative registry state;
 - canonical `.eth` registrar boundary enforcement;
 - mainnet chain-ID enforcement;
-- bounded normalized-name profile rejection;
-- distinct provider identities; and
+- bounded ENSIP-15-valid ASCII profile rejection including `^..--` forms;
+- distinct provider identities and exact RPC endpoints; and
 - stalled RPC timeout behavior.
 
 Tests use deterministic trusted mock RPC transports. CI does not require live provider credentials.
