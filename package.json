@@ -13,7 +13,7 @@
     "validate:trusted-verification-artifacts": "node scripts/validate-trusted-verification-artifacts.mjs",
     "test:primary-source-verifier": "node --test tests/primary-source-verifier.test.mjs",
     "test:ens-mainnet-verifier": "node --test tests/ens-mainnet-verifier.test.mjs",
-    "test:trusted-receipt-issuer": "node --test tests/trusted-receipt-issuer.test.mjs tests/trusted-receipt-issuer-boundary.test.mjs",
+    "test:trusted-receipt-issuer": "node --test tests/trusted-receipt-issuer.test.mjs tests/trusted-receipt-issuer-boundary.test.mjs tests/google-cloud-kms-ed25519-signer.test.mjs",
     "validate:maps": "node scripts/validate-map-coverage.mjs",
     "validate:integrity": "node scripts/validate-integrity.mjs",
     "validate:derived-sync": "node scripts/validate-derived-sync.mjs",
