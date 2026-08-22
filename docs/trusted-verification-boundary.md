@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Candidate Review & Provenance deliberately does not create trusted evidence. This boundary defines the machine-readable requirements that a verifier must satisfy before Vortik may consider enabling admission for a new ENS-backed registry anchor.
+Candidate Review & Provenance deliberately does not create trusted evidence. This boundary defines the machine-readable requirements and protected runtime components that must exist before Vortik could later consider enabling candidate admission.
 
 Canonical requirements manifest:
 
@@ -22,141 +22,133 @@ Current versioned schema:
 schemas/verification/vortik-trusted-verification-requirements/1.3.0/schema.json
 ```
 
-Versions `1.0.0`, `1.1.0`, and `1.2.0` remain available as historical schemas. Version `1.1.0` permanently records the earlier requirements-only state; version `1.2.0` permanently records the bounded primary-source verifier as implemented while ENS verification remained closed; the canonical manifest now targets `1.3.0`.
+Versions `1.0.0`, `1.1.0`, and `1.2.0` remain historical contracts. The canonical manifest targets `1.3.0`.
 
 ## Current implementation state
 
 Version `1.3.0` records both bounded trusted verifiers as implemented:
 
 - primary-source verifier implemented;
-- ENS mainnet verifier implemented;
-- bounded live network access enabled for those code-owned verifier policies.
+- ENS mainnet verifier implemented; and
+- bounded live network access enabled for their code-owned policies.
 
-It keeps these states closed:
+The repository now also contains `lib/trusted-receipt-issuer.mjs`, a protected-runtime issuer core that composes those verifier outputs with the existing receipt/key-policy cryptography.
 
-- trusted receipt issuance disabled;
-- candidate admission disabled.
+The issuer core is intentionally **not** represented by changing `trusted_receipt_issuance` to `true`. That existing flag continues to mean that real production receipt issuance is activated under protected signing/key and trusted-clock infrastructure. Production activation is still false.
 
-The primary-source verifier is limited to its code-owned allowlist, immutable commit resolution, bounded response size and exact evidence binding. The ENS verifier is limited to its two construction-bound canonical network authorities, Ethereum mainnet, one shared finalized block, EIP-1898 hash-bound reads, the canonical ENS Registry/Base Registrar, and the bounded ENSIP-15-valid ASCII `.eth` 2LD profile. Generic network access is not implied by `live_network_access: true`.
+Candidate admission also remains false.
 
-A structurally valid contribution, review artifact, or verifier payload therefore still cannot become trusted admission evidence merely by matching this requirements contract. Production trusted receipt issuance remains disabled.
+## Evidence derivation
 
-Version `1.3.0` requires:
+The primary-source verifier is limited to its code-owned GitHub allowlist, immutable commit resolution, bounded response size and exact repository/commit/blob/path/content binding.
 
-1. exact canonical primary-source identity and immutable repository revision, with retrieved bytes and digest bound to that artifact;
-2. affirmative ENS evidence bound to one asserted **finalized** Ethereum mainnet block;
-3. lookup result, lookup digest, block timestamp, and registration-expiry evidence all bound to the same normalized ENS subject and finalized block context;
-4. finalized-block freshness relative to a trusted verifier issuance time, with maximum age `1800` seconds and no future-dated block timestamp;
-5. registration expiry later than trusted issuance time;
-6. authenticated receipts using an authorized signing key and complete-receipt/digest signature binding;
-7. a bounded `admission_valid_until` no more than `86400` seconds after trusted issuance and never after ENS expiry;
-8. future admission using its own policy-validated trusted clock, never caller-controlled, to reject stale or expired receipts.
+The ENS verifier is limited to two construction-bound canonical network authorities, Ethereum mainnet, one shared finalized block, EIP-1898 hash-bound reads, the canonical ENS Registry/Base Registrar, and the bounded ENSIP-15-valid ASCII `.eth` 2LD profile.
 
-Both bounded evidence-derivation verifiers are implemented by this version. Trusted clock sources, production signing/key management, trusted receipt issuance and candidate admission remain unimplemented or disabled and are separate gates.
+Generic network access is not implied by `live_network_access: true`.
 
-## Required primary-source receipt
+The issuer core does not accept caller-supplied evidence payloads. It invokes the configured verifiers itself, so a receipt payload must originate from the bounded verifier runtime selected at protected construction.
 
-Before future admission can use semantic evidence, the primary-source verifier must independently retrieve the relevant Ethereum or protocol source rather than trusting the contributor's URL or classification.
+## Receipt issuer core
 
-The primary-source evidence contract requires at least:
+The issuer core receives only protected construction dependencies:
 
-- validated authority class;
-- independent retrieval by the verifier;
-- canonical source identifier;
-- exact repository identity;
-- immutable revision identity;
-- exact commit SHA;
-- exact blob SHA;
-- exact source path;
-- cryptographic digest of the retrieved bytes;
-- verification that the content digest corresponds to the exact asserted repository/commit/blob/path artifact;
-- binding proving that the retrieved bytes are the bytes identified by that asserted immutable revision;
-- binding between the retrieved evidence and the semantic claim under review;
-- verifier identity and version where a trusted receipt is later issued.
+- verifier instances and immutable verifier identity/version/code-commit metadata;
+- public key policy plus independently trusted policy identity;
+- Ed25519 signer interface fixed to one key ID;
+- trusted issuance-clock interface plus fixed source/policy identity; and
+- runtime randomness.
 
-Contributor-supplied URLs remain untrusted and cannot select an official source.
+Receipt requests may provide the exact claim/admission-intent artifacts and, for primary-source verification, the bounded source selector consumed by the verifier.
 
-## Required ENS mainnet receipt
+Requests cannot provide:
 
-ENS existence is separate from semantic relevance. The implemented bounded ENS verifier independently queries Ethereum mainnet for the exact normalized candidate, but production receipt issuance remains disabled.
+- verifier payload;
+- receipt ID or nonce;
+- issuance time or validity deadline;
+- signing-key identity;
+- receipt digest; or
+- signature.
 
-Any future trusted ENS receipt must be bound to:
+The core derives those values internally, checks claim/intent gates remain fail-closed, validates receipt temporal/evidence semantics, checks key-policy authorization, signs the canonical digest and then verifies the completed signature against the authorized public key before returning the receipt.
 
-- Ethereum chain ID `1`;
-- the exact normalized ENS candidate name;
-- one asserted concrete **finalized** block number and block hash;
-- the lookup result and lookup-result digest, both bound to that same block;
-- the observed block timestamp, bound to that same block;
-- registration-expiry evidence/value verified against and bound to the **same normalized name, same lookup result, and same finalized block**;
-- a trusted verifier `issued_at` derived from a policy-validated trusted clock source and not from caller-controlled input;
-- `0 <= trusted_issued_at - block_timestamp <= 1800 seconds`;
-- affirmative existence and active registration;
-- registration expiry later than both block timestamp and trusted issuance time;
-- explicit rejection of negative, null, indeterminate, mismatched, or substituted evidence.
+See [`trusted-receipt-issuer.md`](trusted-receipt-issuer.md).
 
-The receipt must not mix state, expiry, timestamps, names, or lookup results from different blocks or subjects.
+## Receipt integrity and freshness
 
-## Receipt authentication, integrity and freshness
+Trusted receipt semantics require:
 
-Future trusted receipts must require:
+1. exact subject binding to contribution/review/claim/admission-intent digests;
+2. exact normalized candidate name;
+3. verifier identity/version/code commit;
+4. independently trusted key-policy identity/digest;
+5. policy-authorized Ed25519 signing key;
+6. trusted issuance time that is not request-controlled;
+7. `issued_at == trusted_issued_at`;
+8. `admission_valid_until <= trusted_issued_at + 86400`;
+9. replay nonce and single-use-at-admission requirement; and
+10. signature verification over the complete receipt digest semantics.
 
-- verifier identity and version;
-- issuer authentication and issuer key identity;
-- signing-key authorization and trust-policy validation;
-- a verifiable signature covering the complete receipt semantics/digest;
-- subject contribution digest and exact normalized candidate name;
-- trusted `issued_at`;
-- a policy-validated trusted issuance clock source;
-- prohibition on caller-controlled `issued_at`;
-- `admission_valid_until`;
-- maximum validity of `86400` seconds from trusted issuance;
-- `admission_valid_until` no later than ENS registration expiry when the receipt depends on ENS validity;
-- replay protection.
-
-## Admission-time trust
-
-The future admission gate must not choose its own arbitrary time basis and must not accept a caller-supplied clock.
-
-It must require:
-
-- a `trusted_admission_time`;
-- a trusted admission clock source;
-- validation of that clock source against configured trust policy;
-- proof that the trusted admission time is not caller-controlled;
-- `trusted_admission_time >= trusted_issued_at`;
-- freshness evaluation against that trusted admission time;
-- `trusted_admission_time <= admission_valid_until`;
-- ENS-dependent receipt validity to remain unexpired at that trusted admission time.
-
-The closed freshness relation is:
+ENS receipts additionally require:
 
 ```text
 block_timestamp <= trusted_issued_at
 trusted_issued_at - block_timestamp <= 1800 seconds
 registration_expiry > trusted_issued_at
-admission_valid_until <= trusted_issued_at + 86400 seconds
 admission_valid_until <= registration_expiry
+```
+
+If any evidence binding, clock value, policy authorization, signature or freshness relation fails, issuance fails closed.
+
+## Production issuance remains disabled
+
+`trusted_receipt_issuance` remains `false` because the public repository intentionally does not contain the protected production material needed to make the issuer trustworthy in operation.
+
+Production activation requires at minimum:
+
+- a real Ed25519 signing key in an appropriate secret/HSM/KMS boundary;
+- a production public key-policy instance and independently trusted policy identity;
+- a policy-validated trusted issuance-clock implementation whose time is not request-controlled;
+- deployment assembly binding the real verifier instances, signer, clock and policy identities; and
+- operational signing-key rotation/revocation procedures.
+
+A generic code patch cannot truthfully invent those protected runtime dependencies. They require owner/infrastructure choices.
+
+## Admission-time trust remains separate
+
+Even after production receipt issuance is activated, candidate admission is a separate gate.
+
+Future admission must require both independently derived authenticated receipts bound to the same subject and must evaluate them against its own policy-validated trusted admission time:
+
+```text
 trusted_issued_at <= trusted_admission_time
 trusted_admission_time <= admission_valid_until
 ```
 
-If any clock source, binding, freshness comparison, or expiry comparison cannot be established, admission must fail closed.
+It must also enforce durable replay/single-use semantics and the existing separate-registry-PR rule.
 
-## Dual-receipt rule
+Verification evidence is never direct permission to mutate `registry.json`.
 
-Future candidate admission requires **both** independently derived receipts:
+## Authority boundary
 
-1. primary Ethereum/relevant-protocol semantic evidence; and
-2. exact-name ENS mainnet evidence.
+Neither verifier evidence, signed receipts nor future admission may infer:
 
-Both receipts must be authenticated, use authorized signing keys, bind to the same candidate/contribution subject, and remain valid under the trusted admission time. A separate registry PR remains mandatory. Verification is evidence for admission; it is not permission to mutate the registry directly.
+- ENS ownership;
+- authority to represent an ENS holder;
+- Ethereum protocol authority; or
+- commercial authority.
+
+The public/private commercial boundary remains unchanged.
 
 ## Public mirror invariant
 
-The canonical schema and requirements manifest each have a public documentation mirror. Validation requires each source/public pair to remain byte-identical.
+The canonical verification schemas and requirements manifest retain their existing source/public mirror invariants. This issuer-core change does not mutate historical contracts or enable admission.
 
 ## WORK GATE
 
-The bounded primary-source verifier and bounded ENS mainnet verifier are now implemented as reviewed network-backed capabilities. The remaining trusted-verification work is the still-disabled production issuance path: trusted issuance clock, signing/key policy runtime, authenticated receipt issuance, and only later the separate admission gate.
+After the issuer core is merged and reviewed, the public-code trusted-verification path is materially closed through evidence derivation, receipt construction, canonical digesting, policy authorization, signing abstraction and signature self-verification.
 
-`trusted_receipt_issuance` remains `false` and `admission.enabled` remains `false`. The repository-level candidate-admission gate continues to reject new anchors and ENS rebindings until those remaining trust boundaries are separately implemented and reviewed.
+The next step is **not** another public hardening loop and is **not** candidate admission.
+
+Production `trusted_receipt_issuance=true` is blocked on protected infrastructure/owner decisions: key custody, production key-policy identity, trusted clock implementation/policy and deployment assembly.
+
+`admission.enabled` remains `false` and must stay separate.
