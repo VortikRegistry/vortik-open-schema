@@ -48,28 +48,35 @@ index_version 1.0.0
 
 ## Zero-dependency JavaScript
 
-Modern Node.js and browsers can consume the same public artifacts without an SDK:
+Modern Node.js and browsers can consume the same public artifacts without an SDK. The following is directly runnable when saved as an ordinary `quickstart.js` under Node 20, and it also works in browser script contexts with `fetch`:
 
 ```js
-const indexUrl = "https://vortikregistry.github.io/vortik-open-schema/feeds/index.json";
-const index = await fetch(indexUrl).then((response) => {
-  if (!response.ok) throw new Error(`Vortik index HTTP ${response.status}`);
-  return response.json();
-});
+async function main() {
+  const indexUrl = "https://vortikregistry.github.io/vortik-open-schema/feeds/index.json";
+  const index = await fetch(indexUrl).then((response) => {
+    if (!response.ok) throw new Error(`Vortik index HTTP ${response.status}`);
+    return response.json();
+  });
 
-const epbsEntry = index.feeds.find((entry) => entry.id === "epbs");
-if (!epbsEntry) throw new Error("ePBS feed not advertised");
+  const epbsEntry = index.feeds.find((entry) => entry.id === "epbs");
+  if (!epbsEntry) throw new Error("ePBS feed not advertised");
 
-const feed = await fetch(epbsEntry.public_url).then((response) => {
-  if (!response.ok) throw new Error(`Vortik feed HTTP ${response.status}`);
-  return response.json();
-});
+  const feed = await fetch(epbsEntry.public_url).then((response) => {
+    if (!response.ok) throw new Error(`Vortik feed HTTP ${response.status}`);
+    return response.json();
+  });
 
-console.log({
-  anchor: feed.anchor.id,
-  canonical_term: feed.anchor.canonical_term,
-  status: feed.anchor.status,
-  protocol_authority: feed.authority.protocol_authority
+  console.log({
+    anchor: feed.anchor.id,
+    canonical_term: feed.anchor.canonical_term,
+    status: feed.anchor.status,
+    protocol_authority: feed.authority.protocol_authority
+  });
+}
+
+main().catch((error) => {
+  console.error(error);
+  if (typeof process !== "undefined") process.exitCode = 1;
 });
 ```
 
