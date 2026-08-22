@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { execFileSync } from "node:child_process";
 import { access, readFile, readdir } from "node:fs/promises";
 import { dirname, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -6,6 +7,30 @@ import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const schemaPath = "schemas/agents/vortik-agent-discovery/1.3.0/schema.json";
+const manifestPath = "agents/discovery.json";
+const contributionContractPath = "schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json";
+const publicContributionContractPath = "docs/schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json";
+const contributionTemplatePath = ".github/ISSUE_TEMPLATE/ens-candidate-contribution.md";
+const contributionSubmissionUrl = "https://github.com/VortikRegistry/vortik-open-schema/issues/new?template=ens-candidate-contribution.md";
+const historicalDiscoveryVersions = ["1.0.0", "1.1.0", "1.2.0"];
+
+function git(...args) {
+  return execFileSync("git", args, {
+    cwd: root,
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"]
+  });
+}
+
+function resolveBaseRef() {
+  if (process.env.GITHUB_EVENT_NAME === "pull_request" && process.env.GITHUB_BASE_REF) {
+    const remoteBase = `origin/${process.env.GITHUB_BASE_REF}`;
+    git("rev-parse", "--verify", remoteBase);
+    return remoteBase;
+  }
+  return git("rev-parse", "HEAD^").trim();
+}
 
 async function readText(relativePath) {
   return readFile(resolve(root, relativePath), "utf8");
@@ -78,6 +103,23 @@ async function verifyMirrorInventory(sourceDir, publicDir, label) {
   }
 }
 
+async function verifyHistoricalSchemas(baseRef) {
+  for (const version of historicalDiscoveryVersions) {
+    const sourcePath = `schemas/agents/vortik-agent-discovery/${version}/schema.json`;
+    const publicPath = `docs/schemas/agents/vortik-agent-discovery/${version}/schema.json`;
+    const [currentSource, currentPublic] = await Promise.all([
+      readText(sourcePath),
+      readText(publicPath)
+    ]);
+    const baseSource = git("show", `${baseRef}:${sourcePath}`);
+    const basePublic = git("show", `${baseRef}:${publicPath}`);
+
+    if (currentSource !== baseSource || currentPublic !== basePublic || currentSource !== currentPublic) {
+      throw new Error(`Historical agent discovery ${version} source/public contract must remain byte-identical to ${baseRef}`);
+    }
+  }
+}
+
 function assertValid(validate, value, label) {
   if (!validate(value)) {
     throw new Error(`${label} should validate:\n${JSON.stringify(validate.errors, null, 2)}`);
@@ -90,11 +132,7 @@ function assertInvalid(validate, value, label) {
   }
 }
 
-const schemaPath = "schemas/agents/vortik-agent-discovery/1.2.0/schema.json";
-const manifestPath = "agents/discovery.json";
-const contributionContractPath = "schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json";
-const publicContributionContractPath = "docs/schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json";
-
+const baseRef = resolveBaseRef();
 const [schema, manifest, contributionText, publicContributionText] = await Promise.all([
   readJson(schemaPath),
   readJson(manifestPath),
@@ -105,6 +143,8 @@ const [schema, manifest, contributionText, publicContributionText] = await Promi
 if (contributionText !== publicContributionText) {
   throw new Error("ENS candidate contribution source contract and public mirror must be byte-identical");
 }
+
+await verifyHistoricalSchemas(baseRef);
 
 const contributionSchema = JSON.parse(contributionText);
 const ajv = new Ajv2020({ allErrors: true, strict: false });
@@ -125,6 +165,7 @@ for (const capability of manifest.capabilities) {
   if (capability.request_contract) await requirePath(capability.request_contract, integrityErrors);
   if (capability.response_contract) await requirePath(capability.response_contract, integrityErrors);
 }
+await requirePath(contributionTemplatePath, integrityErrors);
 
 const feedCapability = manifest.capabilities.find((entry) => entry.id === "discover_vortik_feeds");
 const feedIndex = await readJson(feedCapability.local_entrypoint);
@@ -160,6 +201,9 @@ if (inboundCapability.public_request_contract !== `https://vortikregistry.github
 if (inboundCapability.public_response_contract !== `https://vortikregistry.github.io/vortik-open-schema/${inboundCapability.response_contract}`) {
   integrityErrors.push("inbound ENS public response contract does not match the canonical Pages path");
 }
+if (inboundCapability.submission_available !== false) {
+  integrityErrors.push("inbound ENS research remains contract-only without submission transport");
+}
 
 const contributionCapability = manifest.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution");
 if (contributionCapability.contract !== contributionContractPath) {
@@ -170,6 +214,18 @@ if (contributionCapability.public_contract !== `https://vortikregistry.github.io
 }
 if (contributionSchema.$id !== `https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/${contributionCapability.contract}`) {
   integrityErrors.push("ENS candidate contribution contract id does not match the advertised canonical path");
+}
+if (contributionCapability.submission_available !== true) {
+  integrityErrors.push("ENS candidate contribution GitHub Issue submission must be advertised available");
+}
+if (contributionCapability.submission_transport !== "github_issue") {
+  integrityErrors.push("ENS candidate contribution submission transport must be github_issue");
+}
+if (contributionCapability.submission_url !== contributionSubmissionUrl) {
+  integrityErrors.push("ENS candidate contribution submission URL must point to the canonical Issue template");
+}
+if (contributionCapability.automatic_promotion !== false) {
+  integrityErrors.push("ENS candidate contribution must never advertise automatic promotion");
 }
 
 if (integrityErrors.length > 0) {
@@ -233,8 +289,14 @@ for (const [label, mutate] of [
   ["research submission_available=true", (candidate) => {
     candidate.capabilities.find((entry) => entry.id === "inbound_ens_research_contract").submission_available = true;
   }],
-  ["contribution submission_available=true", (candidate) => {
-    candidate.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution").submission_available = true;
+  ["contribution submission_available=false", (candidate) => {
+    candidate.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution").submission_available = false;
+  }],
+  ["contribution submission_transport changed", (candidate) => {
+    candidate.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution").submission_transport = "a2a";
+  }],
+  ["contribution submission_url changed", (candidate) => {
+    candidate.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution").submission_url = "https://example.com/submit";
   }],
   ["contribution automatic_promotion=true", (candidate) => {
     candidate.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution").automatic_promotion = true;
@@ -247,9 +309,10 @@ for (const [label, mutate] of [
   }
 }
 
-console.log(`agents/discovery.json conforms to vortik-agent-discovery 1.2.0 with ${manifest.capabilities.length} capability entries`);
-console.log("Existing feed, ENS research, inbound research and collaborative contribution references verified");
+console.log(`agents/discovery.json conforms to vortik-agent-discovery 1.3.0 with ${manifest.capabilities.length} capability entries`);
+console.log(`Historical discovery 1.0.0–1.2.0 contracts preserved byte-identical to ${baseRef}`);
+console.log("Existing feed, ENS research, inbound research and GitHub contribution references verified");
 console.log("Closed ENS candidate contribution contract verified with authority, price and insecure-reference regressions");
 console.log("Public agent manifest/schema directory inventories verified complete and byte-identical");
 console.log("EXPECTED FAIL stale public agent mirror inventory");
-console.log("EXPECTED FAIL unimplemented A2A/live-network/submission/automatic-promotion/commercial authority claims");
+console.log("EXPECTED FAIL Vortik live-network/A2A/research-submission/automatic-promotion/commercial-authority claims");
