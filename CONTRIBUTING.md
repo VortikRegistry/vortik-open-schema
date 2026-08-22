@@ -12,6 +12,22 @@ It does not define Ethereum protocol standards.
 
 ---
 
+## Fast path: submit one machine-readable candidate
+
+For a new ENS-style semantic research candidate, the lowest-friction contribution path is the dedicated GitHub Issue template:
+
+https://github.com/VortikRegistry/vortik-open-schema/issues/new?template=ens-candidate-contribution.md
+
+The template contains one minimal, schema-valid JSON artifact. Edit the contribution ID, contributor kind, candidate name, rationale, and evidence URL, then submit the Issue. Optional contract fields can be added when needed.
+
+This path is designed for both humans and external agents. It does not require editing `registry.json`, learning the repository layout, or opening a registry PR.
+
+A structurally valid contribution is still **untrusted research input**. It does not authenticate the contributor, prove ENS ownership, create trusted evidence, admit a registry entry, mutate registry state, or grant commercial authority. Any later registry change remains separately reviewed and fail-closed under the trusted verification/admission boundary.
+
+For the full contract and trust model, see [`docs/ens-candidate-contributions.md`](docs/ens-candidate-contributions.md).
+
+---
+
 ## Contribution Principles
 
 Vortik operates as a research-first semantic registry.
@@ -64,14 +80,16 @@ This helps the registry track how terminology evolves across Ethereum coordinati
 
 ## Proposing New Anchors
 
-When proposing a new anchor, please include:
+For a simple machine-readable candidate, prefer the fast-path Issue template above. Use the broader `New semantic anchor` Issue or a Pull Request when the proposal needs substantial narrative context, schema changes, or source maintenance beyond one candidate artifact.
+
+When proposing a new anchor, include:
 
 - clear description of the semantic surface
-- proposed canonical term
-- proposed classification
-- proposed type
-- at least two primary or high-quality technical references when possible
-- evidence that the terminology appears across multiple relevant discussions or artifacts
+- proposed canonical term when known
+- proposed classification when known
+- proposed type when relevant
+- at least one primary or high-quality technical reference, with two or more preferred when available
+- evidence that the terminology appears across relevant discussions or artifacts when claiming broader convergence
 
 Anchors may represent:
 
