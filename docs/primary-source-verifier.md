@@ -2,11 +2,11 @@
 
 ## Status
 
-Vortik now has a bounded GitHub primary-source verifier in `lib/primary-source-verifier.mjs`.
+Vortik has a bounded GitHub primary-source verifier in `lib/primary-source-verifier.mjs`.
 
-This is the first real network-backed trusted-verification capability. It derives primary-source evidence from independently retrieved bytes at an exact immutable Git commit. It does **not** enable candidate admission, registry mutation, receipt signing with production keys, ENS mainnet verification, ownership inference, or commercial authority.
+This was the first real network-backed trusted-verification capability. It derives primary-source evidence from independently retrieved bytes at an exact immutable Git commit. It does **not** enable candidate admission, registry mutation, receipt signing with production keys, ownership inference, or commercial authority. ENS mainnet verification is now provided by the separately reviewed bounded verifier documented in [`docs/ens-mainnet-verifier.md`](ens-mainnet-verifier.md).
 
-The earlier `docs/trusted-verification-artifacts.md` remains the PR2 contract-layer reference. Its closing implementation-state block describes the state immediately after that contract layer; this document records the later PR3 runtime capability.
+The earlier `docs/trusted-verification-artifacts.md` remains the PR2 contract-layer reference. Its closing implementation-state block describes the state immediately after that contract layer; this document records the later primary-source runtime capability. The canonical current implementation state is published separately by the versioned trusted-verification requirements manifest.
 
 ## Trusted source policy
 
@@ -36,7 +36,7 @@ For one validated verification claim and one source selector, the verifier:
 10. binds the complete snapshotted claim digest; and
 11. derives the canonical primary-source identifier using the existing trusted-verification crypto helper.
 
-The resulting object is the `primary_source` payload evidence expected by the signed-receipt contract. PR3 does not itself issue a production trusted receipt.
+The resulting object is the `primary_source` payload evidence expected by the signed-receipt contract. This module does not itself issue a production trusted receipt.
 
 ## Network and trust boundary
 
@@ -74,7 +74,7 @@ Tests construct verifier instances with deterministic trusted mock transports; C
 
 ```text
 primary source verifier implemented = true
-ENS mainnet verifier implemented = false
+ENS mainnet verifier implemented = true
 production trusted receipt issuance = false
 candidate admission = false
 registry mutation = false
@@ -82,4 +82,4 @@ ownership inference = false
 commercial authority = false
 ```
 
-The next authorized architectural step is the bounded ENS mainnet verifier. It must preserve dual-provider agreement, finalized-block binding, exact normalized-name binding, no ownership inference, and admission disabled.
+Both bounded evidence verifiers are now implemented and published in the canonical trusted-verification implementation state. The next trust boundary is production trusted receipt issuance, including its policy-validated trusted clock, signing-key authorization and authentication requirements. Candidate admission remains a separate later gate and stays disabled.
