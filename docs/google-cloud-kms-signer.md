@@ -30,7 +30,9 @@ algorithm = Ed25519
 allowed receipt types = primary_source, ens_mainnet
 ```
 
-The policy contains only the public Ed25519 SPKI verification key and its bounded authorization window. No private key, service-account credential or access token is valid policy material.
+The policy contains only the public Ed25519 SPKI verification key and its bounded authorization window. CI pins both the exact provisioned public SPKI bytes and the independently recorded canonical policy digest, so substitution of another valid Ed25519 trust anchor fails validation.
+
+No private key, service-account credential or access token is valid policy material.
 
 ## Exact Google Cloud key-version binding
 
@@ -77,8 +79,11 @@ Before accepting a signature, the adapter fail-closes on:
 - failure of KMS request-data CRC32C verification;
 - an unexpected protection level;
 - malformed or noncanonical base64 signature material;
-- a signature that is not exactly 64 bytes; or
-- a returned signature CRC32C mismatch.
+- a signature that is not exactly 64 bytes;
+- a returned signature CRC32C mismatch; or
+- metadata-token / KMS transport or response-body work exceeding the construction-owned request deadline.
+
+The default request deadline is 10 seconds and is bounded to at most 30 seconds. The deadline covers access-token acquisition, KMS transport and JSON response-body parsing; the default Google metadata and KMS HTTP transports receive abort signals when their deadline closes.
 
 The resulting 64-byte Ed25519 signature is converted to base64url for the existing trusted-receipt contract. The issuer then performs its existing public-key self-verification before returning a receipt.
 
@@ -105,7 +110,9 @@ npm run check:public-safety
 npm run validate
 ```
 
-The dedicated validation confirms that the pre-provisioned public key policy conforms to the exact versioned schema, parses as Ed25519 SPKI material, preserves the expected bounded authorization window and does not change the canonical production/admission gates.
+The dedicated validation confirms that the pre-provisioned public key policy conforms to the exact versioned schema, matches the pinned SPKI and canonical policy digest, parses as Ed25519 SPKI material, preserves the expected bounded authorization window and does not change the canonical production/admission gates.
+
+The regression suite also covers stalled metadata-token retrieval, stalled token response parsing, stalled access-token acquisition, stalled KMS transport and stalled KMS response parsing.
 
 ## Activation boundary
 
