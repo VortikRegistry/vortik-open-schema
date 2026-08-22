@@ -35,6 +35,22 @@ function response({ ok = true, status = 200, headers = {}, payload = {} } = {}) 
   };
 }
 
+function stalledJsonResponse({ headers = {} } = {}) {
+  const normalizedHeaders = new Map(Object.entries(headers).map(([key, value]) => [key.toLowerCase(), value]));
+  return {
+    ok: true,
+    status: 200,
+    headers: {
+      get(name) {
+        return normalizedHeaders.get(String(name).toLowerCase()) ?? null;
+      }
+    },
+    json() {
+      return new Promise(() => {});
+    }
+  };
+}
+
 function validKmsPayload(signature = Buffer.alloc(64, 7)) {
   return {
     name: VERSION_NAME,
@@ -71,6 +87,7 @@ test("metadata access-token provider is fixed to the Google metadata identity en
   assert.equal(calls[0].options.method, "GET");
   assert.equal(calls[0].options.redirect, "error");
   assert.deepEqual(calls[0].options.headers, { "Metadata-Flavor": "Google" });
+  assert.ok(calls[0].options.signal instanceof AbortSignal);
 });
 
 test("metadata provider rejects responses without Google metadata binding", async () => {
@@ -84,6 +101,26 @@ test("metadata provider rejects responses without Google metadata binding", asyn
     })
   });
   await assert.rejects(() => provider(), /lacks Metadata-Flavor binding/);
+});
+
+test("metadata provider bounds stalled transport and stalled response-body parsing", async () => {
+  const stalledTransportProvider = createGoogleCloudMetadataAccessTokenProvider({
+    requestTimeoutMs: 10,
+    fetchImpl: async () => new Promise(() => {})
+  });
+  await assert.rejects(
+    () => stalledTransportProvider(),
+    /metadata token endpoint timed out after 10 ms/
+  );
+
+  const stalledBodyProvider = createGoogleCloudMetadataAccessTokenProvider({
+    requestTimeoutMs: 10,
+    fetchImpl: async () => stalledJsonResponse({ headers: { "Metadata-Flavor": "Google" } })
+  });
+  await assert.rejects(
+    () => stalledBodyProvider(),
+    /metadata token endpoint timed out after 10 ms/
+  );
 });
 
 test("KMS signer sends raw Vortik digest bytes with CRC32C to the exact key version", async () => {
@@ -108,11 +145,58 @@ test("KMS signer sends raw Vortik digest bytes with CRC32C to the exact key vers
   assert.equal(calls[0].options.method, "POST");
   assert.equal(calls[0].options.redirect, "error");
   assert.equal(calls[0].options.headers.Authorization, `Bearer ${ACCESS_TOKEN}`);
+  assert.ok(calls[0].options.signal instanceof AbortSignal);
 
   const body = JSON.parse(calls[0].options.body);
   assert.deepEqual(Object.keys(body).sort(), ["data", "dataCrc32c"]);
   assert.equal(Buffer.from(body.data, "base64").toString("utf8"), VALID_DIGEST);
   assert.equal(body.dataCrc32c, String(computeCrc32c(Buffer.from(VALID_DIGEST, "utf8"))));
+});
+
+test("KMS signer bounds access-token acquisition before any KMS request", async () => {
+  let networkCalls = 0;
+  const signer = createGoogleCloudKmsEd25519Signer({
+    key_id: KEY_ID,
+    cryptoKeyVersion: VERSION_NAME,
+    requestTimeoutMs: 10,
+    accessTokenProvider: async () => new Promise(() => {}),
+    fetchImpl: async () => {
+      networkCalls += 1;
+      return response({ payload: validKmsPayload() });
+    }
+  });
+
+  await assert.rejects(
+    () => signer.signDigest(VALID_DIGEST),
+    /access-token acquisition timed out after 10 ms/
+  );
+  assert.equal(networkCalls, 0);
+});
+
+test("KMS signer bounds stalled asymmetricSign transport and response-body parsing", async () => {
+  const stalledTransportSigner = createGoogleCloudKmsEd25519Signer({
+    key_id: KEY_ID,
+    cryptoKeyVersion: VERSION_NAME,
+    requestTimeoutMs: 10,
+    accessTokenProvider: async () => ACCESS_TOKEN,
+    fetchImpl: async () => new Promise(() => {})
+  });
+  await assert.rejects(
+    () => stalledTransportSigner.signDigest(VALID_DIGEST),
+    /KMS asymmetricSign timed out after 10 ms/
+  );
+
+  const stalledBodySigner = createGoogleCloudKmsEd25519Signer({
+    key_id: KEY_ID,
+    cryptoKeyVersion: VERSION_NAME,
+    requestTimeoutMs: 10,
+    accessTokenProvider: async () => ACCESS_TOKEN,
+    fetchImpl: async () => stalledJsonResponse()
+  });
+  await assert.rejects(
+    () => stalledBodySigner.signDigest(VALID_DIGEST),
+    /KMS asymmetricSign timed out after 10 ms/
+  );
 });
 
 test("KMS signer rejects noncanonical receipt digests before identity or network access", async () => {
@@ -134,6 +218,21 @@ test("KMS signer rejects noncanonical receipt digests before identity or network
   await assert.rejects(() => signer.signDigest("caller-controlled-message"), /canonical Vortik SHA-256 receipt digests/);
   assert.equal(tokenCalls, 0);
   assert.equal(networkCalls, 0);
+});
+
+test("KMS signer rejects unsafe construction-owned timeout values", () => {
+  for (const requestTimeoutMs of [0, -1, 30_001, 1.5, Number.NaN]) {
+    assert.throws(
+      () => createGoogleCloudKmsEd25519Signer({
+        key_id: KEY_ID,
+        cryptoKeyVersion: VERSION_NAME,
+        requestTimeoutMs,
+        accessTokenProvider: async () => ACCESS_TOKEN,
+        fetchImpl: async () => response({ payload: validKmsPayload() })
+      }),
+      /request timeout must be an integer/
+    );
+  }
 });
 
 test("KMS signer fails closed on response identity and transport-integrity mismatches", async () => {
