@@ -1,0 +1,23 @@
+{
+  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-verification-key-policy/1.0.0/schema.json",
+  "policy": "vortik-verification-key-policy",
+  "policy_version": "1.0.0",
+  "policy_id": "vortik-prod-receipt-signing-v1",
+  "canonicalization": "RFC8785-JCS-constrained-v1",
+  "digest_algorithm": "SHA-256",
+  "signature_algorithm": "Ed25519",
+  "authorized_keys": [
+    {
+      "key_id": "gcp-kms-vortik-receipt-ed25519-v1",
+      "algorithm": "Ed25519",
+      "public_key_spki_der_base64": "MCowBQYDK2VwAyEAhwRbk6gD5zrP06PmXnirY7jfGkLqe11RkNdS/H4KSt4=",
+      "status": "active",
+      "not_before": 1787437914,
+      "not_after": 1818973914,
+      "allowed_receipt_types": [
+        "primary_source",
+        "ens_mainnet"
+      ]
+    }
+  ]
+}
