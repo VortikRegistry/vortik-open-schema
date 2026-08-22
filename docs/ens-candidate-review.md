@@ -27,7 +27,7 @@ Before registry admission can be enabled, Vortik requires two separate trusted v
 1. a receipt derived from an independently maintained Ethereum or relevant-protocol primary-source verification path; and
 2. a receipt derived from a trusted Ethereum mainnet ENS lookup bound to the exact candidate name.
 
-Those receipts are not implemented by this contract. Until the trusted verification bridge exists, registry admission remains fail-closed.
+The bounded primary-source and ENS mainnet evidence verifiers are now implemented outside this review contract, but production trusted receipt issuance remains disabled. This review contract therefore still cannot create either trusted receipt, and registry admission remains fail-closed.
 
 Implementation references, research discussions, secondary context and AI analysis may help discovery or corroboration, but they cannot substitute for the trusted verification receipts.
 
@@ -49,7 +49,7 @@ Allowed review outcomes are intentionally limited to:
 
 ## Repository enforcement
 
-`npm run validate` includes the candidate-admission gate. On a pull request it compares `registry.json` against the actual base branch. Until trusted verification receipts are implemented, validation rejects:
+`npm run validate` includes the candidate-admission gate. On a pull request it compares `registry.json` against the actual base branch. While trusted receipt issuance and candidate admission remain disabled, validation rejects:
 
 - every new registry anchor; and
 - rebinding an existing anchor ID to another ENS name.
@@ -62,8 +62,8 @@ Ordinary maintenance of an already tracked anchor is not treated as a new candid
 
 Every review artifact fixes these states closed:
 
-- trusted primary-source receipt unavailable;
-- trusted ENS receipt unavailable;
+- trusted primary-source receipt unavailable to this review layer;
+- trusted ENS receipt unavailable to this review layer;
 - contributor input is not trusted;
 - ownership is not inferred;
 - commercial authority is not granted;
@@ -77,4 +77,4 @@ The public review process therefore cannot authorize private commercial actions,
 
 This review model is transport-independent. Today contributions can arrive through ordinary GitHub Issues or Pull Requests. A future live agent endpoint may transport the same untrusted contribution artifacts, but it must not bypass this review/provenance gate.
 
-The next prerequisite is the [`Trusted verification boundary`](trusted-verification-boundary.md). It defines the machine-readable requirements for independently derived Ethereum/protocol and exact-name ENS mainnet receipts while keeping all verifier, network and admission states disabled. Live public agent intake must remain downstream of that boundary rather than becoming a way around it.
+The [`Trusted verification boundary`](trusted-verification-boundary.md) now records both bounded evidence verifiers and bounded network access as implemented. It still keeps production trusted receipt issuance and candidate admission disabled. Live public agent intake must remain downstream of that boundary rather than becoming a way around it.

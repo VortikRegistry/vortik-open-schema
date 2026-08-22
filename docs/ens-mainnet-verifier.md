@@ -2,11 +2,11 @@
 
 ## Status
 
-This branch adds the bounded ENS mainnet verifier runtime in `lib/ens-mainnet-verifier.mjs`.
+The bounded ENS mainnet verifier runtime is implemented in `lib/ens-mainnet-verifier.mjs` and, after CI plus exact-head review of the runtime PR, is published by trusted-verification requirements `1.3.0` as canonical implementation state.
 
 It derives the existing `ens_mainnet` evidence payload from two independently configured Ethereum JSON-RPC providers. Candidate admission remains disabled. No production signing key, trusted issuance clock, registry mutation, ownership inference, wallet operation, or commercial authority is added.
 
-The canonical trusted-verification implementation-state manifest remains unchanged in this PR. Until the runtime has passed CI and exact-head review without material findings, `ens_mainnet_verifier_implemented` remains `false`. Publishing the implementation-state transition is a separate small gate after the verifier is reviewed.
+The canonical trusted-verification implementation-state manifest now records `primary_source_verifier_implemented: true` and `ens_mainnet_verifier_implemented: true`. Trusted receipt issuance and candidate admission remain separately disabled.
 
 ## Bounded name profile
 
@@ -113,7 +113,7 @@ Tests use deterministic trusted mock RPC transports. CI does not require live pr
 ```text
 primary source verifier canonical = true
 ENS mainnet verifier code present = true
-ENS mainnet verifier canonical implementation-state = false pending review
+ENS mainnet verifier canonical implementation-state = true
 production trusted receipt issuance = false
 candidate admission = false
 registry mutation = false
@@ -121,4 +121,4 @@ ownership inference = false
 commercial authority = false
 ```
 
-After CI and exact-head review are clean, the next small gate is to publish a versioned trusted-verification implementation state that marks the reviewed ENS verifier available. Production trusted clock/signing and candidate admission remain separate later gates.
+The implementation-state publication gate is complete in requirements `1.3.0`. The next trust work, if pursued, is the still-separate production trusted clock/signing and receipt-issuance path; candidate admission remains a later independent gate.

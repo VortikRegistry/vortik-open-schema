@@ -1,11 +1,11 @@
 {
-  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-trusted-verification-requirements/1.2.0/schema.json",
+  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/verification/vortik-trusted-verification-requirements/1.3.0/schema.json",
   "requirements": "vortik-trusted-verification-requirements",
-  "requirements_version": "1.2.0",
+  "requirements_version": "1.3.0",
   "implementation_state": {
-    "mode": "primary_source_verifier",
+    "mode": "trusted_verifiers",
     "primary_source_verifier_implemented": true,
-    "ens_mainnet_verifier_implemented": false,
+    "ens_mainnet_verifier_implemented": true,
     "live_network_access": true,
     "trusted_receipt_issuance": false
   },
