@@ -13,6 +13,8 @@ const POLICY_SCHEMA_PATH = "schemas/verification/vortik-verification-key-policy/
 const REQUIREMENTS_PATH = "verification/requirements.json";
 const EXPECTED_KEY_ID = "gcp-kms-vortik-receipt-ed25519-v1";
 const EXPECTED_POLICY_ID = "vortik-prod-receipt-signing-v1";
+const EXPECTED_PUBLIC_KEY_SPKI_DER_BASE64 = "MCowBQYDK2VwAyEAhwRbk6gD5zrP06PmXnirY7jfGkLqe11RkNdS/H4KSt4=";
+const EXPECTED_POLICY_DIGEST = "sha256:b7482b8150cd3775aa8c1790c920e7cc2cc4a87397a4736f2b8846affc9884c1";
 const EXPECTED_NOT_BEFORE = 1787437914;
 const EXPECTED_NOT_AFTER = 1818973914;
 
@@ -32,10 +34,17 @@ if (!validate(policy)) {
   throw new Error(`production KMS key policy violates its closed contract:\n${ajv.errorsText(validate.errors, { separator: "\n" })}`);
 }
 
+const policyDigest = sha256CanonicalDigest(policy);
+if (policyDigest !== EXPECTED_POLICY_DIGEST) {
+  throw new Error("production KMS key policy digest drifted from the independently recorded provisioning anchor");
+}
 if (policy.policy_id !== EXPECTED_POLICY_ID) throw new Error("production KMS policy_id drifted");
 if (policy.authorized_keys.length !== 1) throw new Error("production KMS policy must bind exactly one initial key version");
 const key = policy.authorized_keys[0];
 if (key.key_id !== EXPECTED_KEY_ID) throw new Error("production KMS key_id drifted");
+if (key.public_key_spki_der_base64 !== EXPECTED_PUBLIC_KEY_SPKI_DER_BASE64) {
+  throw new Error("production KMS public verification key drifted from the pre-provisioned CryptoKeyVersion");
+}
 if (key.algorithm !== "Ed25519" || key.status !== "active") throw new Error("production KMS public verification key state is invalid");
 if (key.not_before !== EXPECTED_NOT_BEFORE || key.not_after !== EXPECTED_NOT_AFTER) {
   throw new Error("production KMS key authorization window drifted");
@@ -63,6 +72,7 @@ if (requirements.admission?.commercial_authority !== false || requirements.ens_m
 }
 
 console.log(`Validated Google Cloud KMS public key policy: ${POLICY_PATH}`);
-console.log(`Policy digest: ${sha256CanonicalDigest(policy)}`);
+console.log(`Pinned public key SPKI: ${EXPECTED_PUBLIC_KEY_SPKI_DER_BASE64}`);
+console.log(`Policy digest: ${policyDigest}`);
 console.log("Production trusted receipt issuance remains disabled.");
 console.log("Candidate admission remains disabled.");
