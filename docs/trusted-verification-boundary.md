@@ -32,9 +32,15 @@ Version `1.3.0` records both bounded trusted verifiers as implemented:
 - ENS mainnet verifier implemented; and
 - bounded live network access enabled for their code-owned policies.
 
-The repository now also contains `lib/trusted-receipt-issuer.mjs`, a protected-runtime issuer core that composes those verifier outputs with the existing receipt/key-policy cryptography.
+The repository contains `lib/trusted-receipt-issuer.mjs`, a protected-runtime issuer core that composes those verifier outputs with the existing receipt/key-policy cryptography.
 
-The issuer core is intentionally **not** represented by changing `trusted_receipt_issuance` to `true`. That existing flag continues to mean that real production receipt issuance is activated under protected signing/key and trusted-clock infrastructure. Production activation is still false.
+It now also contains `lib/google-cloud-kms-ed25519-signer.mjs`, a deployment-bound signer adapter for an exact Google Cloud KMS CryptoKeyVersion, plus a pre-provisioned public Ed25519 verification policy at:
+
+```text
+verification/key-policies/vortik-prod-receipt-signing-v1.json
+```
+
+The KMS adapter and public policy do **not** change `trusted_receipt_issuance` to `true`. That flag continues to mean that real production receipt issuance is activated under a protected deployed runtime with verified signer identity, trusted policy identity and trusted clock. Production activation remains false.
 
 Candidate admission also remains false.
 
@@ -73,6 +79,18 @@ The core derives those values internally, checks claim/intent gates remain fail-
 
 See [`trusted-receipt-issuer.md`](trusted-receipt-issuer.md).
 
+## Google Cloud KMS signer boundary
+
+The initial KMS adapter is fixed to one explicit CryptoKeyVersion rather than an implicit primary version. It accepts only canonical Vortik receipt-digest strings and sends those UTF-8 bytes as Ed25519 `data` to the KMS `asymmetricSign` operation.
+
+The adapter validates request/response CRC32C integrity, exact returned key-version identity, expected protection level, canonical signature encoding and exact Ed25519 signature length before returning signature material to the issuer core.
+
+The default runtime identity path uses the Google metadata service for short-lived access tokens. No service-account JSON key, bearer token or private signing key is stored in the public repository.
+
+The intended runtime service identity has sign-only access to the receipt-signing key. Repository CI uses injected test doubles and performs no billable KMS operation.
+
+See [`google-cloud-kms-signer.md`](google-cloud-kms-signer.md).
+
 ## Receipt integrity and freshness
 
 Trusted receipt semantics require:
@@ -101,17 +119,20 @@ If any evidence binding, clock value, policy authorization, signature or freshne
 
 ## Production issuance remains disabled
 
-`trusted_receipt_issuance` remains `false` because the public repository intentionally does not contain the protected production material needed to make the issuer trustworthy in operation.
+`trusted_receipt_issuance` remains `false`.
 
-Production activation requires at minimum:
+The repository can now express the KMS signer interface and validate the initial public verification policy, but CI cannot by itself establish that an external key version, IAM binding or deployment runtime is operating as intended.
 
-- a real Ed25519 signing key in an appropriate secret/HSM/KMS boundary;
-- a production public key-policy instance and independently trusted policy identity;
+Production activation still requires at minimum:
+
+- a private Google-managed runtime bound to the intended service identity and exact CryptoKeyVersion;
+- an independently trusted runtime pin for the production key-policy identity/digest;
 - a policy-validated trusted issuance-clock implementation whose time is not request-controlled;
-- deployment assembly binding the real verifier instances, signer, clock and policy identities; and
+- protected deployment assembly binding the real verifier instances, signer, clock and policy identities;
+- an end-to-end real receipt test with independent public-key verification; and
 - operational signing-key rotation/revocation procedures.
 
-A generic code patch cannot truthfully invent those protected runtime dependencies. They require owner/infrastructure choices.
+These are deployment/infrastructure assertions and must be verified at the activation gate rather than inferred from public code.
 
 ## Admission-time trust remains separate
 
@@ -141,14 +162,14 @@ The public/private commercial boundary remains unchanged.
 
 ## Public mirror invariant
 
-The canonical verification schemas and requirements manifest retain their existing source/public mirror invariants. This issuer-core change does not mutate historical contracts or enable admission.
+The canonical verification schemas and requirements manifest retain their existing source/public mirror invariants. This KMS signer integration does not mutate historical contracts or enable admission.
 
 ## WORK GATE
 
-After the issuer core is merged and reviewed, the public-code trusted-verification path is materially closed through evidence derivation, receipt construction, canonical digesting, policy authorization, signing abstraction and signature self-verification.
+The public-code trusted-verification path is materially closed through evidence derivation, receipt construction, canonical digesting, policy authorization, a deployable KMS signing adapter and signature self-verification.
 
-The next step is **not** another public hardening loop and is **not** candidate admission.
+The next step after this adapter is **not** another public hardening loop and is **not** candidate admission.
 
-Production `trusted_receipt_issuance=true` is blocked on protected infrastructure/owner decisions: key custody, production key-policy identity, trusted clock implementation/policy and deployment assembly.
+Production `trusted_receipt_issuance=true` remains blocked on deployment verification: private runtime assembly, exact service/key-version binding, independently trusted policy identity, trusted clock implementation/policy and end-to-end receipt evidence.
 
 `admission.enabled` remains `false` and must stay separate.
