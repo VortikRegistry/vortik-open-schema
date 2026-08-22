@@ -22,6 +22,26 @@ https://vortikregistry.github.io/vortik-open-schema/schemas/queries/vortik-ens-c
 
 The contract is closed. Unknown fields are rejected structurally.
 
+## Fast path: GitHub Issue
+
+The shortest supported contribution path is the dedicated machine-readable Issue template:
+
+https://github.com/VortikRegistry/vortik-open-schema/issues/new?template=ens-candidate-contribution.md
+
+The template contains one minimal JSON artifact that already conforms to the public contribution schema. A contributor edits five things:
+
+1. a stable `contribution_id`;
+2. `contributor.kind` (`human`, `agent`, or `other`);
+3. the candidate ENS-style name;
+4. the semantic rationale; and
+5. at least one relevant HTTPS evidence reference.
+
+Optional contributor label, proposed term, proposed classification, and additional evidence may be added when useful and schema-valid.
+
+The first and only `json` fenced block in that Issue template is the machine-readable contribution artifact. Surrounding prose is guidance and is not part of the artifact.
+
+This path does not require editing `registry.json`, understanding generated files, or preparing a registry PR. A broader narrative `New semantic anchor` Issue and normal Pull Requests remain available for proposals that need more context or repository changes.
+
 ## What a contributor may provide
 
 A contribution contains:
@@ -65,19 +85,27 @@ Every contributor-supplied field remains untrusted research input. A claimed con
 
 The example is contract illustration only. It is not a registry proposal and does not create a candidate entry.
 
-## Current delivery path
+## Delivery paths
 
-There is no Vortik-operated live agent submission endpoint yet. A prepared contribution artifact may currently be supplied through the repository's ordinary GitHub Issue or Pull Request process. An agent with GitHub tooling may prepare and submit the artifact through that process; a human may also relay an artifact prepared by another agent.
+There is no Vortik-operated live agent submission endpoint. Contribution artifacts currently travel through ordinary GitHub collaboration surfaces:
 
-This keeps collaboration available now without pretending that a production A2A ingress exists.
+- the dedicated machine-readable ENS candidate Issue template;
+- the broader semantic-anchor Issue template when narrative context is needed; or
+- a Pull Request when a repository change is intentionally proposed.
+
+An agent with GitHub tooling may submit the same contract artifact through those paths; a human may also relay an artifact prepared by another agent.
+
+This keeps collaboration usable without pretending that a production A2A ingress exists.
 
 ## Mandatory review and verification boundary
 
 A valid contribution artifact is not verified evidence and is not registry state.
 
-Every contribution may be processed by the review/provenance layer documented in [`ens-candidate-review.md`](ens-candidate-review.md), but that review cannot create registry eligibility. Source labels and reviewer observations are not trusted verification receipts.
+Every contribution may be processed by the review/provenance layer documented in [`ens-candidate-review.md`](ens-candidate-review.md), but that review cannot create registry eligibility by itself. Source labels and reviewer observations are not trusted verification receipts.
 
-Future registry admission requires independently derived Ethereum or relevant-protocol primary-source verification plus a separate trusted Ethereum mainnet ENS lookup bound to the exact candidate. Those verification receipts are not implemented yet, so new candidate admission remains fail-closed.
+The bounded primary-source verifier and bounded ENS mainnet verifier are implemented. However, production authenticated trusted-receipt issuance remains disabled, and `admission.enabled` remains `false`. Contributor artifacts therefore cannot turn themselves into trusted evidence or registry admission merely because verifier runtimes exist.
+
+Future registry admission still requires the closed receipt-integrity and admission requirements: independently derived primary-source and exact-name ENS evidence, authenticated authorized receipt issuance, trusted clocks/freshness, same-subject binding, and a separate reviewed registry PR.
 
 The review also carries a canonical digest of the full contribution. Changing any contribution field invalidates the old review and prevents provenance replay based only on a reused identifier or name.
 
