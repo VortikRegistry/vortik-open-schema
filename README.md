@@ -14,6 +14,24 @@ Vortik is a public, independent semantic registry for selected Ethereum coordina
 
 It maps selected ENS anchors to canonical technical terms, classifications, schemas, human-readable anchor notes, and source trails. ENS anchors are naming surfaces for registry entries; they are not protocol authority and do not create Ethereum protocol truth. See [Naming and governance boundaries](docs/naming-governance-boundaries.md).
 
+### 30-second developer quickstart
+
+Get a real machine-readable Vortik artifact with one command. No clone, package install, wallet, RPC credential, or API key is required:
+
+```bash
+curl -fsSL https://vortikregistry.github.io/vortik-open-schema/feeds/epbs.json
+```
+
+That public read-only feed returns the canonical ePBS term, semantic status, schema binding, source trail and explicit authority boundaries. It is a Vortik semantic artifact, not an Ethereum or ENS authority claim.
+
+Discover machine-readable feeds from:
+
+```text
+https://vortikregistry.github.io/vortik-open-schema/feeds/index.json
+```
+
+For the zero-dependency JavaScript path, expected fields, versioning and stability boundary, see [`docs/developer-quickstart.md`](docs/developer-quickstart.md).
+
 ### What Vortik does not do
 
 Vortik does not:
