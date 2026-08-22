@@ -10,9 +10,12 @@ import {
   createGoogleCloudKmsEd25519Signer,
   createGoogleCloudMetadataAccessTokenProvider
 } from "../lib/google-cloud-kms-ed25519-signer.mjs";
+import { sha256CanonicalDigest } from "../lib/trusted-verification-crypto.mjs";
 
 const VERSION_NAME = "projects/vortik-registry-production/locations/southamerica-east1/keyRings/vortik-trust/cryptoKeys/vortik-receipt-ed25519/cryptoKeyVersions/1";
 const KEY_ID = "gcp-kms-vortik-receipt-ed25519-v1";
+const EXPECTED_PUBLIC_KEY_SPKI_DER_BASE64 = "MCowBQYDK2VwAyEAhwRbk6gD5zrP06PmXnirY7jfGkLqe11RkNdS/H4KSt4=";
+const EXPECTED_POLICY_DIGEST = "sha256:b7482b8150cd3775aa8c1790c920e7cc2cc4a87397a4736f2b8846affc9884c1";
 const VALID_DIGEST = `sha256:${"a".repeat(64)}`;
 const ACCESS_TOKEN = "test-access-token-abcdefghijklmnopqrstuvwxyz";
 
@@ -153,7 +156,7 @@ test("KMS signer fails closed on response identity and transport-integrity misma
   }
 });
 
-test("pre-provisioned production policy binds the observed Google KMS Ed25519 public key", async () => {
+test("pre-provisioned production policy pins the observed Google KMS Ed25519 trust anchor", async () => {
   const policy = JSON.parse(await readFile(
     new URL("../verification/key-policies/vortik-prod-receipt-signing-v1.json", import.meta.url),
     "utf8"
@@ -162,6 +165,8 @@ test("pre-provisioned production policy binds the observed Google KMS Ed25519 pu
   assert.equal(policy.authorized_keys.length, 1);
   const key = policy.authorized_keys[0];
   assert.equal(key.key_id, KEY_ID);
+  assert.equal(key.public_key_spki_der_base64, EXPECTED_PUBLIC_KEY_SPKI_DER_BASE64);
+  assert.equal(sha256CanonicalDigest(policy), EXPECTED_POLICY_DIGEST);
   assert.equal(key.algorithm, "Ed25519");
   assert.equal(key.status, "active");
   assert.deepEqual(key.allowed_receipt_types, ["primary_source", "ens_mainnet"]);
