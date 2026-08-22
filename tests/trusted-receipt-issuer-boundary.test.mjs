@@ -113,7 +113,7 @@ function ensPayload(name, { blockTimestamp, expiry }) {
   return payload;
 }
 
-function buildIssuer({ ensVerifier, readTrustedTime, keyNotAfter = 1_900_000_000 }) {
+function buildIssuer({ ensVerifier, readTrustedTime, keyNotAfter = 1_900_000_000, mutateKeyPolicy } = {}) {
   const { publicKey, privateKey } = generateKeyPairSync("ed25519");
   let signerCalls = 0;
   const keyPolicy = {
@@ -134,6 +134,7 @@ function buildIssuer({ ensVerifier, readTrustedTime, keyNotAfter = 1_900_000_000
       allowed_receipt_types: ["primary_source", "ens_mainnet"]
     }]
   };
+  if (typeof mutateKeyPolicy === "function") mutateKeyPolicy(keyPolicy);
   const trustedPolicyIdentity = {
     policy_id: keyPolicy.policy_id,
     policy_version: keyPolicy.policy_version,
@@ -141,7 +142,7 @@ function buildIssuer({ ensVerifier, readTrustedTime, keyNotAfter = 1_900_000_000
   };
   const issuer = createTrustedReceiptIssuerCore({
     primarySourceVerifier: { async verify() { throw new Error("primary verifier not used"); } },
-    ensMainnetVerifier: ensVerifier,
+    ensMainnetVerifier: ensVerifier ?? { async verify() { throw new Error("ENS verifier not used"); } },
     verifierIdentities: {
       primary_source: { verifier_id: "primary-boundary", verifier_version: "0.1.0", code_commit: "a".repeat(40) },
       ens_mainnet: { verifier_id: "ens-boundary", verifier_version: "0.1.0", code_commit: "b".repeat(40) }
@@ -160,7 +161,7 @@ function buildIssuer({ ensVerifier, readTrustedTime, keyNotAfter = 1_900_000_000
       source_id: "boundary-clock",
       policy_id: "boundary-clock-policy",
       policy_digest: sha256CanonicalDigest({ policy: "boundary-clock-policy" }),
-      readTrustedTime
+      readTrustedTime: readTrustedTime ?? (async () => 1_800_000_000)
     },
     randomBytesImpl() { return Buffer.alloc(16, 7); }
   });
@@ -179,7 +180,7 @@ test("issuer captures verifier verify method at construction", async () => {
       });
     }
   };
-  const fixture = buildIssuer({ verifier, ensVerifier: verifier, readTrustedTime: async () => 1_800_000_000 });
+  const fixture = buildIssuer({ ensVerifier: verifier, readTrustedTime: async () => 1_800_000_000 });
 
   verifier.verify = async () => {
     replacementCalls += 1;
@@ -216,4 +217,24 @@ test("issuer samples trusted issuance time after verifier completion", async () 
     /outside its authorization window/
   );
   assert.equal(fixture.getSignerCalls(), 0);
+});
+
+test("issuer rejects a protected key policy that violates its closed schema even when identity digest matches", () => {
+  assert.throws(
+    () => buildIssuer({
+      mutateKeyPolicy(policy) {
+        policy.signature_algorithm = "secp256k1";
+      }
+    }),
+    /verification key policy violates its closed versioned contract/
+  );
+
+  assert.throws(
+    () => buildIssuer({
+      mutateKeyPolicy(policy) {
+        policy.runtime_override = true;
+      }
+    }),
+    /verification key policy violates its closed versioned contract/
+  );
 });
