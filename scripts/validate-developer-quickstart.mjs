@@ -34,6 +34,8 @@ assert(readme.includes(PUBLIC_EPBS_URL), "README must expose the public ePBS fee
 assert(quickstart.includes(`curl -fsSL ${PUBLIC_EPBS_URL}`), "Quickstart must provide a one-command ePBS fetch");
 assert(quickstart.includes(`curl -fsSL ${PUBLIC_INDEX_URL}`), "Quickstart must provide the feed-index discovery command");
 assert(quickstart.includes("No package install is required"), "Quickstart must make the zero-install consumption path explicit");
+assert(quickstart.includes("async function main()"), "Quickstart JavaScript must avoid CommonJS-incompatible top-level await");
+assert(quickstart.includes("main().catch((error) =>"), "Quickstart JavaScript must invoke and handle the async entrypoint");
 
 assert(index.index === "vortik-feed-index", "Quickstart feed index contract id drifted");
 assert(index.index_version === "1.0.0", "Quickstart feed index version drifted");
@@ -58,4 +60,5 @@ for (const deployedPath of ["feeds/index.json", "feeds/epbs.json"]) {
 
 console.log("Developer quickstart contract validated");
 console.log("Zero-install public ePBS consumption path is source-bound and deployment-verified");
+console.log("Node 20 quickstart entrypoint is explicitly runnable without top-level await");
 console.log("Protocol, ENS, admission and commercial authority remain closed");
