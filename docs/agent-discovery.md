@@ -117,7 +117,7 @@ Run:
 npm run validate:agent-discovery
 ```
 
-The validator confirms:
+Repository validation and deployment checks confirm:
 
 - the closed discovery `1.3.0` schema;
 - complete historical immutability of discovery `1.0.0`–`1.2.0` against the PR base;
