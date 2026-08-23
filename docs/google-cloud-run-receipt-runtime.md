@@ -19,10 +19,10 @@ admission.enabled = false
 2. bounded dual-provider ENS mainnet verifier;
 3. pinned Google Cloud KMS Ed25519 signer;
 4. pinned public verification key policy;
-5. Google Cloud Run system-clock adapter; and
+5. non-injectable Google Cloud Run system-clock adapter; and
 6. trusted receipt issuer core.
 
-The returned runtime exposes only the two receipt-issuance methods plus non-secret runtime identity metadata. It does not expose the signer, OAuth token provider, key policy object or other protected construction dependencies.
+The returned production runtime exposes only the two receipt-issuance methods plus non-secret runtime identity metadata. It does not expose the signer, trusted clock, OAuth token provider, key policy object or other protected construction dependencies.
 
 ## Exact production profile
 
@@ -40,7 +40,23 @@ expected protection level = SOFTWARE
 network request timeout = 10000 ms
 ```
 
-A deployment must also supply the exact lowercase 40-hex source commit used to build the runtime. That commit is embedded in both verifier identities carried by issued receipts.
+## Immutable verifier identity
+
+Receipt verifier identities are not supplied by deployment configuration.
+
+The runtime pins each verifier to the reviewed commit where its current implementation was introduced, and also recomputes the Git blob SHA-1 of the verifier source bytes at runtime construction. Construction fails if the deployed bytes no longer match that reviewed implementation.
+
+```text
+primary-source verifier commit = fce2f64681cd3fae4252c373fd90c2b246a63172
+primary-source verifier blob = 6a3bb6d4aa0e84ab3718ad974c0213637b64e6b7
+
+ENS mainnet verifier commit = 0da1897130e64546ec693d631d60b071fcd9082f
+ENS mainnet verifier blob = 97ad302a793a65666ba55b78bd2251da0bedfe71
+```
+
+Those blob identities were revalidated against the referenced GitHub commits before the binding was added. A caller cannot replace the receipt `code_commit` with a merely well-shaped hash.
+
+The immutable container/revision identity remains separate deployment provenance and must still be recorded during the real Cloud Run deployment gate.
 
 ## ENS provider boundary
 
@@ -50,7 +66,7 @@ RPC endpoint selection is deployment configuration, not contributor/request inpu
 
 ## Trusted issuance clock
 
-`lib/google-cloud-run-trusted-clock.mjs` defines the initial Cloud Run clock policy:
+`lib/google-cloud-run-trusted-clock.mjs` defines the production Cloud Run clock policy:
 
 ```text
 policy_id = vortik-google-cloud-run-system-clock-v1
@@ -62,7 +78,11 @@ instance-local rollback guard = true
 external time attestation = false
 ```
 
-The adapter captures its wall-clock reader at protected construction, converts integer Unix milliseconds to Unix seconds, rejects malformed values and fails closed if time moves backwards within the same runtime instance.
+The production clock has no `nowImpl` parameter. Its wall-clock function is captured from `Date.now` when the module is initialized; the production runtime also rejects `nowImpl` and `trustedClock` substitution fields.
+
+A separate explicitly test-only clock helper accepts injected samples but uses a different source ID, policy ID and policy digest and therefore never receives the production clock trust identity.
+
+The production adapter converts integer Unix milliseconds to Unix seconds, rejects malformed values and fails closed if time moves backwards within the same runtime instance.
 
 This policy deliberately does not claim cryptographic external time attestation. The production deployment gate must verify that the code is actually running in the intended Google-managed Cloud Run environment before `trusted_receipt_issuance` can become true.
 
@@ -74,11 +94,13 @@ The production assembly expects Cloud Run service identity / metadata credential
 
 No private key, bearer token or provider credential belongs in this public repository.
 
+The production runtime rejects direct substitutions for `codeCommit`, `nowImpl`, `trustedClock`, `signer` and `keyPolicy`.
+
 ## Remaining deployment gate
 
 After this code is merged, production activation is still blocked until the infrastructure exists and is independently exercised:
 
-1. build an immutable container from an exact reviewed `main` commit;
+1. build an immutable container from an exact reviewed `main` commit and record its image digest/revision provenance;
 2. deploy it to a private Cloud Run service using the intended service account;
 3. configure exactly two approved ENS RPC authorities without publishing credentials;
 4. confirm the runtime obtains short-lived Google credentials rather than a static service-account key;
