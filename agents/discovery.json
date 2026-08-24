@@ -19,7 +19,7 @@
     "agent_card_path": "/.well-known/agent-card.json",
     "interface_path": "/a2a/v1",
     "public_base_url": null,
-    "note": "The bounded read-only A2A discovery implementation exists in the repository, but no public Agent Card or Vortik-operated A2A ingress is active until the separate deployment and activation gate passes."
+    "note": "Lifecycle state is defined exclusively by the structured interaction fields; this note does not independently assert preactivation or live network status."
   },
   "capabilities": [
     {
