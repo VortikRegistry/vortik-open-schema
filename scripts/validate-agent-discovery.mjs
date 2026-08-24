@@ -7,13 +7,13 @@ import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const schemaPath = "schemas/agents/vortik-agent-discovery/1.3.0/schema.json";
+const schemaPath = "schemas/agents/vortik-agent-discovery/1.4.0/schema.json";
 const manifestPath = "agents/discovery.json";
 const contributionContractPath = "schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json";
 const publicContributionContractPath = "docs/schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json";
 const contributionTemplatePath = ".github/ISSUE_TEMPLATE/ens-candidate-contribution.md";
 const contributionSubmissionUrl = "https://github.com/VortikRegistry/vortik-open-schema/issues/new?template=ens-candidate-contribution.md";
-const historicalDiscoveryVersions = ["1.0.0", "1.1.0", "1.2.0"];
+const historicalDiscoveryVersions = ["1.0.0", "1.1.0", "1.2.0", "1.3.0"];
 
 function git(...args) {
   return execFileSync("git", args, {
@@ -56,11 +56,8 @@ async function listFiles(relativeDir) {
     const entries = await readdir(currentDir, { withFileTypes: true });
     for (const entry of entries) {
       const entryPath = resolve(currentDir, entry.name);
-      if (entry.isDirectory()) {
-        await walk(entryPath);
-      } else if (entry.isFile()) {
-        files.push(relative(absoluteDir, entryPath).split(sep).join("/"));
-      }
+      if (entry.isDirectory()) await walk(entryPath);
+      else if (entry.isFile()) files.push(relative(absoluteDir, entryPath).split(sep).join("/"));
     }
   }
 
@@ -78,12 +75,8 @@ function inventoryDiff(sourceFiles, publicFiles) {
 }
 
 async function verifyMirrorInventory(sourceDir, publicDir, label) {
-  const [sourceFiles, publicFiles] = await Promise.all([
-    listFiles(sourceDir),
-    listFiles(publicDir)
-  ]);
+  const [sourceFiles, publicFiles] = await Promise.all([listFiles(sourceDir), listFiles(publicDir)]);
   const { missing, extra } = inventoryDiff(sourceFiles, publicFiles);
-
   if (missing.length > 0 || extra.length > 0) {
     const details = [
       ...missing.map((file) => `missing public mirror: ${publicDir}/${file}`),
@@ -97,9 +90,7 @@ async function verifyMirrorInventory(sourceDir, publicDir, label) {
       readText(`${sourceDir}/${file}`),
       readText(`${publicDir}/${file}`)
     ]);
-    if (source !== published) {
-      throw new Error(`${label} mirror must be byte-identical: ${file}`);
-    }
+    if (source !== published) throw new Error(`${label} mirror must be byte-identical: ${file}`);
   }
 }
 
@@ -107,13 +98,9 @@ async function verifyHistoricalSchemas(baseRef) {
   for (const version of historicalDiscoveryVersions) {
     const sourcePath = `schemas/agents/vortik-agent-discovery/${version}/schema.json`;
     const publicPath = `docs/schemas/agents/vortik-agent-discovery/${version}/schema.json`;
-    const [currentSource, currentPublic] = await Promise.all([
-      readText(sourcePath),
-      readText(publicPath)
-    ]);
+    const [currentSource, currentPublic] = await Promise.all([readText(sourcePath), readText(publicPath)]);
     const baseSource = git("show", `${baseRef}:${sourcePath}`);
     const basePublic = git("show", `${baseRef}:${publicPath}`);
-
     if (currentSource !== baseSource || currentPublic !== basePublic || currentSource !== currentPublic) {
       throw new Error(`Historical agent discovery ${version} source/public contract must remain byte-identical to ${baseRef}`);
     }
@@ -121,15 +108,11 @@ async function verifyHistoricalSchemas(baseRef) {
 }
 
 function assertValid(validate, value, label) {
-  if (!validate(value)) {
-    throw new Error(`${label} should validate:\n${JSON.stringify(validate.errors, null, 2)}`);
-  }
+  if (!validate(value)) throw new Error(`${label} should validate:\n${JSON.stringify(validate.errors, null, 2)}`);
 }
 
 function assertInvalid(validate, value, label) {
-  if (validate(value)) {
-    throw new Error(`${label} should fail validation`);
-  }
+  if (validate(value)) throw new Error(`${label} should fail validation`);
 }
 
 const baseRef = resolveBaseRef();
@@ -152,14 +135,14 @@ addFormats(ajv);
 const validate = ajv.compile(schema);
 const validateContribution = ajv.compile(contributionSchema);
 
-if (!validate(manifest)) {
-  throw new Error(`agents/discovery.json violates the versioned discovery contract:\n${ajv.errorsText(validate.errors, { separator: "\n" })}`);
-}
+assertValid(validate, manifest, "agents/discovery.json 1.4.0 preactivation manifest");
 
 const integrityErrors = [];
 for (const capability of manifest.capabilities) {
   if (capability.local_entrypoint) await requirePath(capability.local_entrypoint, integrityErrors);
   if (capability.local_execution_entrypoint) await requirePath(capability.local_execution_entrypoint, integrityErrors);
+  if (capability.library_entrypoint) await requirePath(capability.library_entrypoint, integrityErrors);
+  if (capability.http_entrypoint) await requirePath(capability.http_entrypoint, integrityErrors);
   if (capability.contract) await requirePath(capability.contract, integrityErrors);
   if (capability.documentation) await requirePath(capability.documentation, integrityErrors);
   if (capability.request_contract) await requirePath(capability.request_contract, integrityErrors);
@@ -186,50 +169,81 @@ if (responseContract.$id !== `https://raw.githubusercontent.com/VortikRegistry/v
 }
 
 const inboundCapability = manifest.capabilities.find((entry) => entry.id === "inbound_ens_research_contract");
-if (inboundCapability.request_contract !== ensCapability.request_contract) {
-  integrityErrors.push("inbound ENS capability must reuse the canonical ENS research request contract");
-}
-if (inboundCapability.response_contract !== ensCapability.response_contract) {
-  integrityErrors.push("inbound ENS capability must reuse the canonical ENS research response contract");
-}
-if (inboundCapability.local_execution_entrypoint !== ensCapability.local_entrypoint) {
-  integrityErrors.push("inbound ENS capability must resolve to the existing ENS research client");
-}
-if (inboundCapability.public_request_contract !== `https://vortikregistry.github.io/vortik-open-schema/${inboundCapability.request_contract}`) {
-  integrityErrors.push("inbound ENS public request contract does not match the canonical Pages path");
-}
-if (inboundCapability.public_response_contract !== `https://vortikregistry.github.io/vortik-open-schema/${inboundCapability.response_contract}`) {
-  integrityErrors.push("inbound ENS public response contract does not match the canonical Pages path");
-}
-if (inboundCapability.submission_available !== false) {
-  integrityErrors.push("inbound ENS research remains contract-only without submission transport");
-}
+if (inboundCapability.request_contract !== ensCapability.request_contract) integrityErrors.push("inbound ENS capability must reuse the canonical ENS research request contract");
+if (inboundCapability.response_contract !== ensCapability.response_contract) integrityErrors.push("inbound ENS capability must reuse the canonical ENS research response contract");
+if (inboundCapability.local_execution_entrypoint !== ensCapability.local_entrypoint) integrityErrors.push("inbound ENS capability must resolve to the existing ENS research client");
+if (inboundCapability.public_request_contract !== `https://vortikregistry.github.io/vortik-open-schema/${inboundCapability.request_contract}`) integrityErrors.push("inbound ENS public request contract does not match the canonical Pages path");
+if (inboundCapability.public_response_contract !== `https://vortikregistry.github.io/vortik-open-schema/${inboundCapability.response_contract}`) integrityErrors.push("inbound ENS public response contract does not match the canonical Pages path");
+if (inboundCapability.submission_available !== false) integrityErrors.push("inbound ENS research remains contract-only without submission transport");
 
 const contributionCapability = manifest.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution");
-if (contributionCapability.contract !== contributionContractPath) {
-  integrityErrors.push("ENS candidate contribution capability must point to the canonical contribution contract");
-}
-if (contributionCapability.public_contract !== `https://vortikregistry.github.io/vortik-open-schema/${contributionCapability.contract}`) {
-  integrityErrors.push("ENS candidate contribution public contract does not match the canonical Pages path");
-}
-if (contributionSchema.$id !== `https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/${contributionCapability.contract}`) {
-  integrityErrors.push("ENS candidate contribution contract id does not match the advertised canonical path");
-}
-if (contributionCapability.submission_available !== true) {
-  integrityErrors.push("ENS candidate contribution GitHub Issue submission must be advertised available");
-}
-if (contributionCapability.submission_transport !== "github_issue") {
-  integrityErrors.push("ENS candidate contribution submission transport must be github_issue");
-}
-if (contributionCapability.submission_url !== contributionSubmissionUrl) {
-  integrityErrors.push("ENS candidate contribution submission URL must point to the canonical Issue template");
-}
-if (contributionCapability.automatic_promotion !== false) {
-  integrityErrors.push("ENS candidate contribution must never advertise automatic promotion");
+if (contributionCapability.contract !== contributionContractPath) integrityErrors.push("ENS candidate contribution capability must point to the canonical contribution contract");
+if (contributionCapability.public_contract !== `https://vortikregistry.github.io/vortik-open-schema/${contributionCapability.contract}`) integrityErrors.push("ENS candidate contribution public contract does not match the canonical Pages path");
+if (contributionSchema.$id !== `https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/${contributionCapability.contract}`) integrityErrors.push("ENS candidate contribution contract id does not match the advertised canonical path");
+if (contributionCapability.submission_available !== true) integrityErrors.push("ENS candidate contribution GitHub Issue submission must be advertised available");
+if (contributionCapability.submission_transport !== "github_issue") integrityErrors.push("ENS candidate contribution submission transport must be github_issue");
+if (contributionCapability.submission_url !== contributionSubmissionUrl) integrityErrors.push("ENS candidate contribution submission URL must point to the canonical Issue template");
+if (contributionCapability.automatic_promotion !== false) integrityErrors.push("ENS candidate contribution must never advertise automatic promotion");
+
+const beaconCapability = manifest.capabilities.find((entry) => entry.id === "public_a2a_discovery_beacon");
+if (!beaconCapability) integrityErrors.push("A2A discovery beacon capability is missing");
+else {
+  if (beaconCapability.protocol_binding !== "HTTP+JSON" || beaconCapability.protocol_version !== "1.0") integrityErrors.push("A2A beacon must remain on HTTP+JSON protocol version 1.0");
+  if (beaconCapability.agent_card_path !== "/.well-known/agent-card.json" || beaconCapability.interface_path !== "/a2a/v1") integrityErrors.push("A2A beacon paths drifted from the versioned discovery contract");
+  if (beaconCapability.persistent_tasks !== false || beaconCapability.external_retrieval !== false || beaconCapability.network_required_by_repository_runtime !== false) integrityErrors.push("A2A beacon must remain stateless and repository-network independent");
 }
 
-if (integrityErrors.length > 0) {
-  throw new Error(`Agent discovery manifest does not match existing public capabilities:\n${integrityErrors.join("\n")}`);
+if (manifest.interaction.mode !== "a2a_preactivation" ||
+    manifest.interaction.a2a_implementation_available !== true ||
+    manifest.interaction.a2a_server !== false ||
+    manifest.interaction.live_network_ingress !== false ||
+    manifest.interaction.agent_card_published !== false ||
+    manifest.interaction.public_base_url !== null) {
+  integrityErrors.push("current agent discovery manifest must remain in truthful A2A preactivation state");
+}
+
+if (manifest.trust_boundary.arbitrary_outbound_network !== false ||
+    manifest.trust_boundary.receipt_runtime_dependency !== false ||
+    manifest.trust_boundary.dedicated_runtime_identity_required !== true ||
+    manifest.trust_boundary.caller_selected_network_destinations !== false) {
+  integrityErrors.push("A2A beacon trust-boundary declarations drifted");
+}
+
+if (integrityErrors.length > 0) throw new Error(`Agent discovery manifest does not match existing public capabilities:\n${integrityErrors.join("\n")}`);
+
+const liveManifest = structuredClone(manifest);
+liveManifest.interaction.mode = "a2a_live";
+liveManifest.interaction.a2a_server = true;
+liveManifest.interaction.live_network_ingress = true;
+liveManifest.interaction.agent_card_published = true;
+liveManifest.interaction.public_base_url = "https://beacon.example.test";
+assertValid(validate, liveManifest, "fully coupled A2A live lifecycle state");
+
+for (const [label, mutate] of [
+  ["preactivation a2a_server=true", (candidate) => { candidate.interaction.a2a_server = true; }],
+  ["preactivation live_network_ingress=true", (candidate) => { candidate.interaction.live_network_ingress = true; }],
+  ["preactivation agent_card_published=true", (candidate) => { candidate.interaction.agent_card_published = true; }],
+  ["preactivation public_base_url set", (candidate) => { candidate.interaction.public_base_url = "https://beacon.example.test"; }],
+  ["live without a2a_server", (candidate) => { candidate.interaction = structuredClone(liveManifest.interaction); candidate.interaction.a2a_server = false; }],
+  ["live without ingress", (candidate) => { candidate.interaction = structuredClone(liveManifest.interaction); candidate.interaction.live_network_ingress = false; }],
+  ["live without Agent Card", (candidate) => { candidate.interaction = structuredClone(liveManifest.interaction); candidate.interaction.agent_card_published = false; }],
+  ["live without public origin", (candidate) => { candidate.interaction = structuredClone(liveManifest.interaction); candidate.interaction.public_base_url = null; }],
+  ["live_ens_resolution=true", (candidate) => { candidate.trust_boundary.live_ens_resolution = true; }],
+  ["external_web_retrieval=true", (candidate) => { candidate.trust_boundary.external_web_retrieval = true; }],
+  ["arbitrary_outbound_network=true", (candidate) => { candidate.trust_boundary.arbitrary_outbound_network = true; }],
+  ["receipt_runtime_dependency=true", (candidate) => { candidate.trust_boundary.receipt_runtime_dependency = true; }],
+  ["caller_selected_network_destinations=true", (candidate) => { candidate.trust_boundary.caller_selected_network_destinations = true; }],
+  ["dedicated_runtime_identity_required=false", (candidate) => { candidate.trust_boundary.dedicated_runtime_identity_required = false; }],
+  ["commercial_authority=true", (candidate) => { candidate.authority.commercial_authority = true; }],
+  ["research submission_available=true", (candidate) => { candidate.capabilities.find((entry) => entry.id === "inbound_ens_research_contract").submission_available = true; }],
+  ["contribution submission_available=false", (candidate) => { candidate.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution").submission_available = false; }],
+  ["contribution submission_transport changed", (candidate) => { candidate.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution").submission_transport = "a2a"; }],
+  ["contribution submission_url changed", (candidate) => { candidate.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution").submission_url = "https://example.com/submit"; }],
+  ["contribution automatic_promotion=true", (candidate) => { candidate.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution").automatic_promotion = true; }]
+]) {
+  const candidate = structuredClone(manifest);
+  mutate(candidate);
+  assertInvalid(validate, candidate, label);
 }
 
 const contribution = {
@@ -237,22 +251,14 @@ const contribution = {
   contribution: "vortik-ens-candidate-contribution",
   contribution_version: "1.0.0",
   contribution_id: "agent-example-001",
-  contributor: {
-    kind: "agent",
-    claimed_id: "example-agent"
-  },
+  contributor: { kind: "agent", claimed_id: "example-agent" },
   candidate: {
     name: "candidate-name.eth",
     rationale: "Example contribution for contract validation only.",
     proposed_term: "candidate term",
     proposed_classification: "premature"
   },
-  evidence: [
-    {
-      kind: "primary_source",
-      reference: "https://eips.ethereum.org/EIPS/eip-7732"
-    }
-  ]
+  evidence: [{ kind: "primary_source", reference: "https://eips.ethereum.org/EIPS/eip-7732" }]
 };
 assertValid(validateContribution, contribution, "closed ENS candidate contribution");
 
@@ -271,48 +277,15 @@ assertInvalid(validateContribution, insecureEvidenceContribution, "non-HTTPS evi
 await verifyMirrorInventory("agents", "docs/agents", "Agent discovery");
 await verifyMirrorInventory("schemas/agents", "docs/schemas/agents", "Agent discovery schema");
 
-const staleMirrorRegression = inventoryDiff(
-  ["discovery.json"],
-  ["discovery.json", "obsolete.json"]
-);
-if (staleMirrorRegression.extra.length !== 1 || staleMirrorRegression.extra[0] !== "obsolete.json") {
-  throw new Error("Agent discovery inventory validation must detect stale public mirror files");
-}
+const staleMirrorRegression = inventoryDiff(["discovery.json"], ["discovery.json", "obsolete.json"]);
+if (staleMirrorRegression.extra.length !== 1 || staleMirrorRegression.extra[0] !== "obsolete.json") throw new Error("Agent discovery inventory validation must detect stale public mirror files");
 
-for (const [label, mutate] of [
-  ["a2a_server=true", (candidate) => { candidate.interaction.a2a_server = true; }],
-  ["live_network_ingress=true", (candidate) => { candidate.interaction.live_network_ingress = true; }],
-  ["agent_card_published=true", (candidate) => { candidate.interaction.agent_card_published = true; }],
-  ["live_ens_resolution=true", (candidate) => { candidate.trust_boundary.live_ens_resolution = true; }],
-  ["external_web_retrieval=true", (candidate) => { candidate.trust_boundary.external_web_retrieval = true; }],
-  ["commercial_authority=true", (candidate) => { candidate.authority.commercial_authority = true; }],
-  ["research submission_available=true", (candidate) => {
-    candidate.capabilities.find((entry) => entry.id === "inbound_ens_research_contract").submission_available = true;
-  }],
-  ["contribution submission_available=false", (candidate) => {
-    candidate.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution").submission_available = false;
-  }],
-  ["contribution submission_transport changed", (candidate) => {
-    candidate.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution").submission_transport = "a2a";
-  }],
-  ["contribution submission_url changed", (candidate) => {
-    candidate.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution").submission_url = "https://example.com/submit";
-  }],
-  ["contribution automatic_promotion=true", (candidate) => {
-    candidate.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution").automatic_promotion = true;
-  }]
-]) {
-  const candidate = structuredClone(manifest);
-  mutate(candidate);
-  if (validate(candidate)) {
-    throw new Error(`Agent discovery contract must reject ${label}`);
-  }
-}
-
-console.log(`agents/discovery.json conforms to vortik-agent-discovery 1.3.0 with ${manifest.capabilities.length} capability entries`);
-console.log(`Historical discovery 1.0.0–1.2.0 contracts preserved byte-identical to ${baseRef}`);
+console.log(`agents/discovery.json conforms to vortik-agent-discovery 1.4.0 with ${manifest.capabilities.length} capability entries`);
+console.log(`Historical discovery 1.0.0–1.3.0 contracts preserved byte-identical to ${baseRef}`);
 console.log("Existing feed, ENS research, inbound research and GitHub contribution references verified");
+console.log("A2A preactivation lifecycle and fully coupled live-state contract verified");
+console.log("A2A beacon implementation paths and fail-closed trust-boundary declarations verified");
 console.log("Closed ENS candidate contribution contract verified with authority, price and insecure-reference regressions");
 console.log("Public agent manifest/schema directory inventories verified complete and byte-identical");
 console.log("EXPECTED FAIL stale public agent mirror inventory");
-console.log("EXPECTED FAIL Vortik live-network/A2A/research-submission/automatic-promotion/commercial-authority claims");
+console.log("EXPECTED FAIL partial A2A lifecycle, external retrieval, outbound-network, automatic-promotion and authority claims");
