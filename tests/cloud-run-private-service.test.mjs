@@ -44,7 +44,7 @@ test("preactivation HTTP surface exposes only health and non-secret runtime iden
   const runtime = createGoogleCloudRunProductionReceiptRuntime();
 
   await withServer(runtime.identity, async (origin) => {
-    const health = await fetch(`${origin}/healthz`);
+    const health = await fetch(`${origin}/health`);
     assert.equal(health.status, 200);
     assert.equal(health.headers.get("cache-control"), "no-store");
     assert.equal(health.headers.get("access-control-allow-origin"), null);
@@ -82,9 +82,13 @@ test("preactivation HTTP surface does not expose receipt issuance", async () => 
     assert.equal(get.status, 404);
     assert.deepEqual(await get.json(), { error: "not_found" });
 
-    const query = await fetch(`${origin}/healthz?probe=1`);
+    const query = await fetch(`${origin}/health?probe=1`);
     assert.equal(query.status, 400);
     assert.deepEqual(await query.json(), { error: "query_or_fragment_not_allowed" });
+
+    const reservedHealthz = await fetch(`${origin}/healthz`);
+    assert.equal(reservedHealthz.status, 404);
+    assert.deepEqual(await reservedHealthz.json(), { error: "not_found" });
   });
 });
 
