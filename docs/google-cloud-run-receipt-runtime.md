@@ -36,11 +36,14 @@ region = southamerica-east1
 service account = vortik-receipt-runtime@vortik-registry-production.iam.gserviceaccount.com
 CryptoKeyVersion = projects/vortik-registry-production/locations/southamerica-east1/keyRings/vortik-trust/cryptoKeys/vortik-receipt-ed25519/cryptoKeyVersions/1
 key_id = gcp-kms-vortik-receipt-ed25519-v1
+public key SPKI DER base64 = MCowBQYDK2VwAyEAhwRbk6gD5zrPO6PmXnirY7fjGkLqe11RkNdS/H4KSt4=
 key policy = vortik-prod-receipt-signing-v1
-key policy digest = sha256:b7482b8150cd3775aa8c1790c920e7cc2cc4a87397a4736f2b8846affc9884c1
+key policy digest = sha256:49c8d1d49ba04c79ff762f4e97f810e4dc9217909b4ee6afff88abd8b215c385
 expected protection level = SOFTWARE
 network request timeout = 10000 ms
 ```
+
+During the live preactivation Job gate, KMS successfully returned an Ed25519 signature but the probe rejected it because the repository's originally transcribed public-key SPKI did not match the public key returned by the exact pinned `CryptoKeyVersion/1`. Before any trusted receipt issuance was activated, the trust anchor was re-read directly from the Google Cloud KMS `publicKey` endpoint, converted from PEM to SPKI DER, compared by exact base64 and SHA-256 fingerprint, and the repository policy was corrected to the observed key above. The failed probe therefore served as a fail-closed trust-anchor check; no receipt was accepted or issued under the incorrect anchor.
 
 ## Immutable verifier identity
 
