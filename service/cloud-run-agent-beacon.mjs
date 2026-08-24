@@ -39,11 +39,8 @@ export function createCloudRunAgentBeaconServer({
     Promise.resolve(handler(request, response)).catch(() => {
       if (!response.headersSent) {
         const body = `${JSON.stringify({
-          error: {
-            code: 500,
-            status: "INTERNAL",
-            message: "Internal beacon error"
-          }
+          code: 13,
+          message: "Internal beacon error"
         })}\n`;
         response.writeHead(500, {
           "content-type": "application/a2a+json; charset=utf-8",
