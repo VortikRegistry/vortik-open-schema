@@ -5,7 +5,10 @@ import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
 import { assertPublicBaseUrl } from "../lib/public-a2a-beacon.mjs";
-import { createCloudRunAgentBeaconServer } from "../service/cloud-run-agent-beacon.mjs";
+import {
+  buildInternalA2AErrorPayload,
+  createCloudRunAgentBeaconServer
+} from "../service/cloud-run-agent-beacon.mjs";
 
 const schemaUrl = new URL("../schemas/agents/vortik-agent-discovery/1.4.0/schema.json", import.meta.url);
 const publicSchemaUrl = new URL("../docs/schemas/agents/vortik-agent-discovery/1.4.0/schema.json", import.meta.url);
@@ -115,6 +118,16 @@ test("wrong HTTP methods retain 405 while using a canonical google.rpc.Code stat
       assert.equal(payload.error.code, 405, `${method} ${path}`);
       assert.equal(payload.error.status, "UNIMPLEMENTED", `${method} ${path}`);
       assert.equal(payload.error.status === "METHOD_NOT_ALLOWED", false, `${method} ${path}`);
+    }
+  });
+});
+
+test("Cloud Run internal fallback uses the same A2A HTTP error envelope", () => {
+  assert.deepEqual(buildInternalA2AErrorPayload(), {
+    error: {
+      code: 500,
+      status: "INTERNAL",
+      message: "Internal beacon error"
     }
   });
 });
