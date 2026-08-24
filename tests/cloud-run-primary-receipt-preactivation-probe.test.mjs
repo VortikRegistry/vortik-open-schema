@@ -5,6 +5,7 @@ import test from "node:test";
 import { GOOGLE_CLOUD_RUN_RECEIPT_RUNTIME_PROFILE } from "../lib/google-cloud-run-receipt-runtime.mjs";
 import {
   computePrimarySourceCanonicalIdentifier,
+  computeTrustedReceiptDigest,
   sha256CanonicalDigest
 } from "../lib/trusted-verification-crypto.mjs";
 import {
@@ -127,10 +128,8 @@ test("preactivation evidence assertion accepts the exact source and rejects sour
   );
 });
 
-test("direct receipt signature path verifies Ed25519 bytes independently of issuer verification helper", () => {
+test("direct receipt signature path recomputes body digest and verifies Ed25519 independently", () => {
   const { publicKey, privateKey } = generateKeyPairSync("ed25519");
-  const receiptDigest = `sha256:${"a".repeat(64)}`;
-  const signatureBase64url = sign(null, Buffer.from(receiptDigest, "utf8"), privateKey).toString("base64url");
   const keyPolicy = {
     authorized_keys: [{
       key_id: GOOGLE_CLOUD_RUN_RECEIPT_RUNTIME_PROFILE.key_id,
@@ -139,17 +138,30 @@ test("direct receipt signature path verifies Ed25519 bytes independently of issu
     }]
   };
   const receipt = {
-    receipt_digest: receiptDigest,
+    receipt: "test-receipt",
+    subject: { value: "immutable" },
+    receipt_digest: "",
     signature: {
+      algorithm: "Ed25519",
       key_id: GOOGLE_CLOUD_RUN_RECEIPT_RUNTIME_PROFILE.key_id,
-      signature_base64url: signatureBase64url
+      signature_base64url: ""
     }
   };
+  receipt.receipt_digest = computeTrustedReceiptDigest(receipt);
+  receipt.signature.signature_base64url = sign(
+    null,
+    Buffer.from(receipt.receipt_digest, "utf8"),
+    privateKey
+  ).toString("base64url");
 
   assert.equal(verifyPrimaryReceiptSignatureDirect({ receipt, keyPolicy }), true);
-  const tampered = structuredClone(receipt);
-  tampered.receipt_digest = `sha256:${"b".repeat(64)}`;
-  assert.equal(verifyPrimaryReceiptSignatureDirect({ receipt: tampered, keyPolicy }), false);
+
+  const tamperedBody = structuredClone(receipt);
+  tamperedBody.subject.value = "tampered";
+  assert.throws(
+    () => verifyPrimaryReceiptSignatureDirect({ receipt: tamperedBody, keyPolicy }),
+    /receipt digest drift/
+  );
 });
 
 test("production preactivation probe refuses static Google credentials before network access", async () => {
