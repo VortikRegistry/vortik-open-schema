@@ -10,7 +10,7 @@
     {
       "key_id": "gcp-kms-vortik-receipt-ed25519-v1",
       "algorithm": "Ed25519",
-      "public_key_spki_der_base64": "MCowBQYDK2VwAyEAhwRbk6gD5zrP06PmXnirY7jfGkLqe11RkNdS/H4KSt4=",
+      "public_key_spki_der_base64": "MCowBQYDK2VwAyEAhwRbk6gD5zrPO6PmXnirY7fjGkLqe11RkNdS/H4KSt4=",
       "status": "active",
       "not_before": 1787437914,
       "not_after": 1818973914,

@@ -13,8 +13,8 @@ const POLICY_SCHEMA_PATH = "schemas/verification/vortik-verification-key-policy/
 const REQUIREMENTS_PATH = "verification/requirements.json";
 const EXPECTED_KEY_ID = "gcp-kms-vortik-receipt-ed25519-v1";
 const EXPECTED_POLICY_ID = "vortik-prod-receipt-signing-v1";
-const EXPECTED_PUBLIC_KEY_SPKI_DER_BASE64 = "MCowBQYDK2VwAyEAhwRbk6gD5zrP06PmXnirY7jfGkLqe11RkNdS/H4KSt4=";
-const EXPECTED_POLICY_DIGEST = "sha256:b7482b8150cd3775aa8c1790c920e7cc2cc4a87397a4736f2b8846affc9884c1";
+const EXPECTED_PUBLIC_KEY_SPKI_DER_BASE64 = "MCowBQYDK2VwAyEAhwRbk6gD5zrPO6PmXnirY7fjGkLqe11RkNdS/H4KSt4=";
+const EXPECTED_POLICY_DIGEST = "sha256:49c8d1d49ba04c79ff762f4e97f810e4dc9217909b4ee6afff88abd8b215c385";
 const EXPECTED_NOT_BEFORE = 1787437914;
 const EXPECTED_NOT_AFTER = 1818973914;
 
