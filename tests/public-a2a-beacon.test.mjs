@@ -159,11 +159,34 @@ test("A2A 1.0 optional metadata and stateless configuration remain inert", () =>
 
 test("core rejects wrong roles, multiple parts, binary/structured/url parts and caller URLs", () => {
   const beacon = createPublicA2ABeacon({ publicBaseUrl: PUBLIC_BASE_URL, idFactory: sequenceIds() });
-  assert.throws(() => beacon.sendMessage(sendRequest("epbs", { message: { role: "ROLE_AGENT" } })), /ROLE_USER/);
-  assert.throws(() => beacon.sendMessage(sendRequest("epbs", { message: { parts: [{ text: "epbs" }, { text: "focil" }] } })), /exactly one/);
-  assert.throws(() => beacon.sendMessage(sendRequest("epbs", { message: { parts: [{ data: { query: "epbs" } }] })), /unsupported field/);
-  assert.throws(() => beacon.sendMessage(sendRequest("epbs", { message: { parts: [{ raw: "ZXBicw==" }] } })), /unsupported field/);
-  assert.throws(() => beacon.sendMessage(sendRequest("epbs", { message: { parts: [{ url: "https://example.com" }] } })), /unsupported field/);
+  assert.throws(
+    () => beacon.sendMessage(sendRequest("epbs", { message: { role: "ROLE_AGENT" } })),
+    /ROLE_USER/
+  );
+  assert.throws(
+    () => beacon.sendMessage(sendRequest("epbs", {
+      message: { parts: [{ text: "epbs" }, { text: "focil" }] }
+    })),
+    /exactly one/
+  );
+  assert.throws(
+    () => beacon.sendMessage(sendRequest("epbs", {
+      message: { parts: [{ data: { query: "epbs" } }] }
+    })),
+    /unsupported field/
+  );
+  assert.throws(
+    () => beacon.sendMessage(sendRequest("epbs", {
+      message: { parts: [{ raw: "ZXBicw==" }] }
+    })),
+    /unsupported field/
+  );
+  assert.throws(
+    () => beacon.sendMessage(sendRequest("epbs", {
+      message: { parts: [{ url: "https://example.com" }] }
+    })),
+    /unsupported field/
+  );
   assert.throws(() => beacon.sendMessage(sendRequest("please inspect https://example.com")), /URLs are not accepted/);
   assert.throws(() => beacon.sendMessage(sendRequest("x".repeat(513))), /1-512/);
 });
@@ -171,11 +194,15 @@ test("core rejects wrong roles, multiple parts, binary/structured/url parts and 
 test("stateless task references and push configuration fail with A2A-specific reasons", () => {
   const beacon = createPublicA2ABeacon({ publicBaseUrl: PUBLIC_BASE_URL, idFactory: sequenceIds() });
   assert.throws(
-    () => beacon.sendMessage(sendRequest("epbs", { message: { taskId: "task-1" } })),
+    () => beacon.sendMessage(sendRequest("epbs", {
+      message: { taskId: "task-1" }
+    })),
     (error) => error.a2aReason === "TASK_NOT_FOUND"
   );
   assert.throws(
-    () => beacon.sendMessage(sendRequest("epbs", { request: { configuration: { taskPushNotificationConfig: {} } } })),
+    () => beacon.sendMessage(sendRequest("epbs", {
+      request: { configuration: { taskPushNotificationConfig: {} } }
+    })),
     (error) => error.a2aReason === "PUSH_NOTIFICATION_NOT_SUPPORTED"
   );
 });
