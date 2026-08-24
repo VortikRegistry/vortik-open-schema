@@ -1,3 +1,4 @@
+import { createPublicKey, verify as verifySignature } from "node:crypto";
 import { readFileSync } from "node:fs";
 
 import {
@@ -7,8 +8,7 @@ import {
 import {
   assertReceiptEvidenceSemantics,
   assertReceiptTemporalSemantics,
-  sha256CanonicalDigest,
-  verifyTrustedReceiptSignature
+  sha256CanonicalDigest
 } from "../lib/trusted-verification-crypto.mjs";
 import { readGoogleCloudMetadataServiceAccountEmail } from "./cloud-run-kms-preactivation-probe.mjs";
 
@@ -170,6 +170,34 @@ export function assertPrimaryReceiptPreactivationEvidence(receipt, claim) {
   return true;
 }
 
+export function verifyPrimaryReceiptSignatureDirect({ receipt, keyPolicy }) {
+  if (!receipt || typeof receipt !== "object" || Array.isArray(receipt)) {
+    throw new TypeError("direct receipt verification requires a receipt object");
+  }
+  if (!keyPolicy || typeof keyPolicy !== "object" || Array.isArray(keyPolicy)) {
+    throw new TypeError("direct receipt verification requires a key policy object");
+  }
+  const keys = keyPolicy.authorized_keys?.filter((key) => key.key_id === receipt.signature?.key_id) ?? [];
+  if (keys.length !== 1 || keys[0].algorithm !== "Ed25519") {
+    throw new Error("direct receipt verification cannot resolve the exact Ed25519 key");
+  }
+  const publicKey = createPublicKey({
+    key: Buffer.from(keys[0].public_key_spki_der_base64, "base64"),
+    format: "der",
+    type: "spki"
+  });
+  const signature = Buffer.from(receipt.signature.signature_base64url, "base64url");
+  if (signature.byteLength !== 64 || signature.toString("base64url") !== receipt.signature.signature_base64url) {
+    throw new Error("direct receipt verification received a noncanonical Ed25519 signature");
+  }
+  return verifySignature(
+    null,
+    Buffer.from(receipt.receipt_digest, "utf8"),
+    publicKey,
+    signature
+  );
+}
+
 export const GOOGLE_CLOUD_RUN_PRIMARY_RECEIPT_PREACTIVATION_PROFILE = Object.freeze({
   probe_id: "vortik-cloud-run-primary-receipt-preactivation-v1",
   project_id: GOOGLE_CLOUD_RUN_RECEIPT_RUNTIME_PROFILE.project_id,
@@ -215,16 +243,11 @@ export async function runGoogleCloudRunPrimaryReceiptPreactivationProbe() {
   assertPrimaryReceiptPreactivationEvidence(receipt, fixture.claim);
 
   const keyPolicy = JSON.parse(readFileSync(KEY_POLICY_URL, "utf8"));
-  const trustedPolicyIdentity = {
-    policy_id: keyPolicy.policy_id,
-    policy_version: keyPolicy.policy_version,
-    policy_digest: GOOGLE_CLOUD_RUN_RECEIPT_RUNTIME_PROFILE.key_policy_digest
-  };
-  if (sha256CanonicalDigest(keyPolicy) !== trustedPolicyIdentity.policy_digest) {
-    throw new Error("primary receipt preactivation probe key policy drifted before independent verification");
+  if (sha256CanonicalDigest(keyPolicy) !== GOOGLE_CLOUD_RUN_RECEIPT_RUNTIME_PROFILE.key_policy_digest) {
+    throw new Error("primary receipt preactivation probe key policy drifted before direct verification");
   }
-  if (verifyTrustedReceiptSignature(receipt, keyPolicy, trustedPolicyIdentity) !== true) {
-    throw new Error("primary receipt preactivation probe independent signature verification failed");
+  if (verifyPrimaryReceiptSignatureDirect({ receipt, keyPolicy }) !== true) {
+    throw new Error("primary receipt preactivation probe direct Ed25519 verification failed");
   }
 
   return Object.freeze({
@@ -233,6 +256,7 @@ export async function runGoogleCloudRunPrimaryReceiptPreactivationProbe() {
     service_account_verified: true,
     source_evidence_verified: true,
     receipt_signature_verified: true,
+    signature_verification_path: "node-crypto-direct-spki",
     status: "PASS",
     receipt
   });
