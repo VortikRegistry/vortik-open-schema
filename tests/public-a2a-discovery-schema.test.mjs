@@ -5,10 +5,12 @@ import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
 import { assertPublicBaseUrl } from "../lib/public-a2a-beacon.mjs";
+import { createCloudRunAgentBeaconServer } from "../service/cloud-run-agent-beacon.mjs";
 
 const schemaUrl = new URL("../schemas/agents/vortik-agent-discovery/1.4.0/schema.json", import.meta.url);
 const publicSchemaUrl = new URL("../docs/schemas/agents/vortik-agent-discovery/1.4.0/schema.json", import.meta.url);
 const manifestUrl = new URL("../agents/discovery.json", import.meta.url);
+const PUBLIC_BASE_URL = "https://beacon.example.test";
 
 async function loadFixture() {
   const [schemaText, publicSchemaText, manifestText] = await Promise.all([
@@ -32,6 +34,25 @@ function liveCandidate(manifest, publicBaseUrl) {
   candidate.interaction.agent_card_published = true;
   candidate.interaction.public_base_url = publicBaseUrl;
   return candidate;
+}
+
+async function withServer(run) {
+  const server = createCloudRunAgentBeaconServer({ publicBaseUrl: PUBLIC_BASE_URL, requestBudgetLimit: 20 });
+  await new Promise((resolve, reject) => {
+    server.once("error", reject);
+    server.listen(0, "127.0.0.1", resolve);
+  });
+  const address = server.address();
+  const base = `http://127.0.0.1:${address.port}`;
+  try {
+    return await run(base);
+  } finally {
+    await new Promise((resolve) => server.close(resolve));
+  }
+}
+
+async function jsonResponse(response) {
+  return JSON.parse(await response.text());
 }
 
 test("A2A live schema accepts canonical public DNS HTTPS origins also accepted by runtime", async () => {
@@ -65,4 +86,35 @@ test("A2A live schema rejects non-public-host shapes and every origin the runtim
   }
 
   assert.throws(() => assertPublicBaseUrl("https://999.999.999.999"), /valid HTTPS URL/);
+});
+
+test("A2A live schema bounds total DNS host length and the runtime URL limit", async () => {
+  const { validate, manifest } = await loadFixture();
+  const tooLongDnsHost = Array.from({ length: 5 }, () => "a".repeat(50)).join(".");
+  assert.equal(tooLongDnsHost.length, 254);
+  const tooLongDnsOrigin = `https://${tooLongDnsHost}`;
+  assert.equal(validate(liveCandidate(manifest, tooLongDnsOrigin)), false, "DNS host longer than 253 characters must fail");
+
+  const overRuntimeLimit = `https://${Array.from({ length: 41 }, () => "a".repeat(50)).join(".")}.test`;
+  assert.ok(overRuntimeLimit.length > 2048);
+  assert.equal(validate(liveCandidate(manifest, overRuntimeLimit)), false, "origin beyond runtime URL limit must fail schema validation");
+  assert.throws(() => assertPublicBaseUrl(overRuntimeLimit), /bounded HTTPS URL/);
+});
+
+test("wrong HTTP methods retain 405 while using a canonical google.rpc.Code status name", async () => {
+  await withServer(async (base) => {
+    for (const [path, method] of [
+      ["/a2a/v1/message:send", "GET"],
+      ["/a2a/v1/tasks", "POST"],
+      ["/a2a/v1/tasks/task-1:cancel", "GET"],
+      ["/a2a/v1/tasks/task-1", "POST"]
+    ]) {
+      const response = await fetch(`${base}${path}`, { method });
+      assert.equal(response.status, 405, `${method} ${path}`);
+      const payload = await jsonResponse(response);
+      assert.equal(payload.error.code, 405, `${method} ${path}`);
+      assert.equal(payload.error.status, "UNIMPLEMENTED", `${method} ${path}`);
+      assert.equal(payload.error.status === "METHOD_NOT_ALLOWED", false, `${method} ${path}`);
+    }
+  });
 });
