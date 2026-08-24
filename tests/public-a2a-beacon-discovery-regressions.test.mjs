@@ -48,6 +48,18 @@ test("short discovery terms match on closed token boundaries", () => {
   assert.match(ens.message.parts[0].text, /ENS semantic research discovery/);
 });
 
+test("explicit contribution intent takes precedence over the semantic subject", () => {
+  const beacon = createPublicA2ABeacon({ publicBaseUrl: PUBLIC_BASE_URL, idFactory: ids() });
+  for (const query of [
+    "contribute an ENS semantic candidate",
+    "contribution for ePBS",
+    "submit semantic candidate for FOCIL inclusion list"
+  ]) {
+    const result = jsonDiscovery(beacon, query);
+    assert.equal(result.capabilityId, "ens_candidate_contribution_path", query);
+  }
+});
+
 test("discovery and Agent Card documentation links target published artifacts", () => {
   const beacon = createPublicA2ABeacon({ publicBaseUrl: PUBLIC_BASE_URL, idFactory: ids() });
   const inclusion = jsonDiscovery(beacon, "FOCIL inclusion list");
