@@ -68,7 +68,7 @@ test("Cloud Run receipt runtime binds reviewed verifier bytes and exact producti
   assert.equal(runtime.identity.service_account, "vortik-receipt-runtime@vortik-registry-production.iam.gserviceaccount.com");
   assert.equal(runtime.identity.crypto_key_version, GOOGLE_CLOUD_RUN_RECEIPT_RUNTIME_PROFILE.crypto_key_version);
   assert.equal(runtime.identity.key_id, "gcp-kms-vortik-receipt-ed25519-v1");
-  assert.equal(runtime.identity.key_policy_digest, "sha256:b7482b8150cd3775aa8c1790c920e7cc2cc4a87397a4736f2b8846affc9884c1");
+  assert.equal(runtime.identity.key_policy_digest, "sha256:49c8d1d49ba04c79ff762f4e97f810e4dc9217909b4ee6afff88abd8b215c385");
   assert.equal(runtime.identity.primary_source_verifier_code_commit, "fce2f64681cd3fae4252c373fd90c2b246a63172");
   assert.equal(runtime.identity.primary_source_verifier_blob_sha, "6a3bb6d4aa0e84ab3718ad974c0213637b64e6b7");
   assert.equal(runtime.identity.ens_mainnet_verifier_code_commit, "0da1897130e64546ec693d631d60b071fcd9082f");
