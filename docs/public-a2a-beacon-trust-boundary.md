@@ -90,7 +90,23 @@ vortik-receipt-runtime@vortik-registry-production.iam.gserviceaccount.com
 
 The beacon should require no secrets for normal operation.
 
-Its production container must be pinned by immutable image digest.
+The absence of application-level fetch calls is not a network boundary. Production must enforce deny-by-default outbound connectivity independently of handler code.
+
+The first deployment must use a dedicated isolated VPC/subnet used only as the beacon's outbound sink. The Cloud Run revision must route all outbound traffic through that isolated network path and use a dedicated network tag covered by an egress firewall rule that denies all IPv4 and IPv6 destinations. That network must have no Cloud NAT, VPC peering, VPN, Private Service Connect path, or route/connectivity to private application networks. The beacon service must not be attached to an existing application/private VPC.
+
+Before public ingress is enabled, an adversarial preactivation probe using the same immutable image, runtime identity and network policy must prove that both a fixed external HTTPS destination and a fixed private/RFC1918 destination are unreachable. The deployment evidence must also verify that the intended inbound health/discovery handler remains reachable through the controlled preactivation path. Failure of any outbound-denial assertion blocks activation.
+
+Its production container must be pinned by immutable image digest and bound to reviewed source provenance. The deployment record must include:
+
+- exact reviewed source commit SHA;
+- clean-tree source assertion before build;
+- Cloud Build identifier;
+- immutable Artifact Registry image digest;
+- build provenance or equivalent attested build metadata linking the reviewed source to that digest;
+- deployed Cloud Run revision name;
+- independently described running revision image digest matching the recorded digest.
+
+An immutable digest without the reviewed-source-to-build mapping is insufficient for activation.
 
 Cloud Run production controls should remain bounded:
 
@@ -180,6 +196,30 @@ It may return direct A2A `Message` responses for simple discovery requests and s
 
 Task-list/get/cancel endpoints may expose the stateless posture explicitly: no tasks are retained, and unknown task IDs fail closed.
 
+## Machine-readable discovery lifecycle
+
+The existing `vortik-agent-discovery` 1.3.0 contract truthfully declares that Vortik does not operate a public A2A server. Those historical bytes must not be rewritten to create the beacon.
+
+Before any Agent Card is published or any public A2A ingress is enabled, the implementation must introduce a new versioned discovery contract and update the full canonical/public discovery set atomically in one reviewed change:
+
+- next `schemas/agents/vortik-agent-discovery/<version>/schema.json`;
+- byte-identical public schema mirror;
+- `agents/discovery.json`;
+- byte-identical `docs/agents/discovery.json` mirror;
+- `scripts/validate-agent-discovery.mjs`;
+- public discovery documentation where required.
+
+The new contract must represent lifecycle state explicitly rather than turning historical 1.3.0 assertions into mutable claims. At minimum it must distinguish:
+
+```text
+preactivation: A2A implementation is reviewed, public ingress is false, Agent Card publication is false
+live: A2A implementation is deployed, public ingress is true, Agent Card publication is true
+```
+
+The implementation PR must leave the manifest in a truthful preactivation state. Historical discovery schemas 1.0.0 through 1.3.0 remain byte-identical.
+
+A later bounded activation change may transition the new manifest to `live` only after the reviewed image, dedicated identity, deny-egress policy and preactivation probes are verified. Activation is not PASS until the repository manifest/public mirror and the deployed service independently agree on the same live interface and state. If either side cannot be made consistent, the activation must fail closed rather than leaving a machine-readable live claim detached from the deployed service.
+
 ## Authority boundary
 
 A beacon response means only:
@@ -227,7 +267,12 @@ The implementation PR must cover at least:
 12. no KMS/runtime receipt dependency;
 13. no private/commercial terms in output;
 14. rate-budget fail-closed behavior;
-15. no raw caller query logging.
+15. no raw caller query logging;
+16. versioned discovery manifest/schema/mirror/validator preactivation consistency;
+17. historical discovery 1.0.0 through 1.3.0 byte preservation;
+18. reviewed-source-to-image provenance verification;
+19. running-revision digest verification;
+20. deny-egress adversarial probe for external and private destinations.
 
 ## Deployment gate
 
@@ -236,14 +281,23 @@ Code review and CI are not sufficient to make the beacon live.
 Before first public deployment, verify:
 
 - dedicated unprivileged service account;
-- immutable image digest;
-- min instances 0;
-- max instances 1;
+- exact reviewed source SHA and clean source tree;
+- Cloud Build identifier and verified source-to-image provenance;
+- immutable Artifact Registry image digest;
+- deployed revision uses that exact digest;
+- dedicated isolated outbound-sink VPC/subnet;
+- all-traffic routing through that isolated network path;
+- deny-all egress firewall policy for the beacon tag;
+- no NAT or connectivity from the isolated network to private application networks;
+- adversarial outbound-denial probe passes;
+- minimum instances 0;
+- maximum instances 1;
 - bounded concurrency and timeout;
-- public unauthenticated access only to this dedicated read-only beacon service;
-- exact Agent Card URL and A2A interface URL;
+- versioned discovery manifest is in truthful preactivation state before publication;
+- public unauthenticated access is granted only to this dedicated read-only beacon service during the explicit activation step;
+- exact Agent Card URL and A2A interface URL match the live discovery manifest;
 - no KMS IAM binding;
 - no secret environment variables;
 - no receipt-issuance or admission changes.
 
-Only after those checks may the first public beacon execution/deployment gate be considered.
+The Agent Card and live A2A ingress must not be published before the versioned discovery contract transition and the preactivation evidence above are complete. Only after those checks may the bounded live-state transition be performed and independently verified.
