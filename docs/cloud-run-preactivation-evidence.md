@@ -101,3 +101,36 @@ content sha256 = sha256:3902ae9befa4d0d382c4aba1357ad8cf8ac25f2f5d52d48fc463fca7
 The PASS output retained only bounded non-secret evidence. The complete signed receipt, signature, nonce, receipt ID and validity window remained process-local and were not emitted as probe output.
 
 The preactivation claim and admission intent remain explicitly fail-closed and are not registry mutation authorization. This successful receipt demonstrates the production primary-source receipt path only; it does not activate trusted receipt issuance, candidate admission, ENS ownership inference or commercial authority.
+
+## ENS mainnet receipt preactivation probe — PENDING
+
+`service/cloud-run-ens-receipt-preactivation-probe.mjs` is the next bounded production gate. It is designed as a one-shot Cloud Run Job command and must not be exposed through the private HTTP service.
+
+The ENS probe reuses the exact deterministic fail-closed claim and admission-intent fixture used by the successful primary-source probe. Therefore the ENS receipt is derived for the same `epbs.eth` receipt subject rather than a separately constructed semantic claim.
+
+The production runtime remains fixed to:
+
+```text
+candidate = epbs.eth
+chain_id = 1
+normalization_profile = ENSIP-15
+active_definition = active_eth_2ld_at_finalized_block_v1
+provider_policy_id = vortik-ens-mainnet-dual-rpc-v1
+provider 1 = ethereum-rpc-publicnode
+provider 2 = ethereum-drpc
+ENS Registry = 0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e
+Base Registrar = 0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85
+```
+
+Before a receipt can be signed, the reviewed ENS verifier requires both independent provider authorities to report Ethereum mainnet, converge on the same selected finalized block, and return identical hash-bound EIP-1898 ENS Registry/Base Registrar lookup evidence. The lookup must establish an existing registry record, the canonical `.eth` registrar boundary, and an active Base Registrar registration at that finalized block.
+
+The preactivation probe additionally recomputes the ENS lookup-result digest, verifies each provider evidence item is attached to the same finalized block/hash/state root/timestamp and lookup digest, checks the protected runtime/service-account/KMS/trusted-clock identities, recomputes the complete receipt digest, and performs a direct Ed25519 verification through `node:crypto` against the pinned SPKI policy.
+
+Successful probe output is bounded to non-secret verification evidence such as the receipt digest, finalized block identity, lookup digest and PASS booleans. The complete signed receipt, Ed25519 signature, nonce, receipt ID and validity window remain process-local.
+
+This section records probe readiness only. No production ENS receipt execution has yet been recorded here, and both canonical gates remain closed:
+
+```text
+trusted_receipt_issuance = false
+admission.enabled = false
+```
