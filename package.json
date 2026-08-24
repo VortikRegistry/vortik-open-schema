@@ -20,7 +20,7 @@
     "test:cloud-run-kms-preactivation-probe": "node --test tests/cloud-run-kms-preactivation-probe.test.mjs",
     "test:cloud-run-primary-receipt-preactivation-probe": "node --test tests/cloud-run-primary-receipt-preactivation-probe.test.mjs",
     "test:cloud-run-ens-receipt-preactivation-probe": "node --test tests/cloud-run-ens-receipt-preactivation-probe.test.mjs",
-    "test:public-a2a-beacon": "node --test tests/public-a2a-beacon.test.mjs tests/public-a2a-beacon-discovery-regressions.test.mjs",
+    "test:public-a2a-beacon": "node --test tests/public-a2a-beacon.test.mjs tests/public-a2a-beacon-discovery-regressions.test.mjs tests/public-a2a-discovery-schema.test.mjs",
     "validate:maps": "node scripts/validate-map-coverage.mjs",
     "validate:integrity": "node scripts/validate-integrity.mjs",
     "validate:derived-sync": "node scripts/validate-derived-sync.mjs",
