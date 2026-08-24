@@ -11,6 +11,7 @@ import {
 import {
   GOOGLE_CLOUD_RUN_PRIMARY_RECEIPT_PREACTIVATION_PROFILE,
   assertPrimaryReceiptPreactivationEvidence,
+  buildPrimaryReceiptPassEvidence,
   buildPrimaryReceiptPreactivationFixture,
   runGoogleCloudRunPrimaryReceiptPreactivationProbe,
   verifyPrimaryReceiptSignatureDirect
@@ -40,6 +41,7 @@ function makeReceiptFixture() {
     fixture,
     receipt: {
       receipt_type: "primary_source",
+      receipt_digest: `sha256:${"3".repeat(64)}`,
       subject: {
         claim_digest: sha256CanonicalDigest(fixture.claim),
         candidate_name: fixture.claim.candidate_name,
@@ -162,6 +164,29 @@ test("direct receipt signature path recomputes body digest and verifies Ed25519 
     () => verifyPrimaryReceiptSignatureDirect({ receipt: tamperedBody, keyPolicy }),
     /receipt digest drift/
   );
+});
+
+test("PASS evidence keeps the signed receipt and replay material out of logs", () => {
+  const { receipt } = makeReceiptFixture();
+  const evidence = buildPrimaryReceiptPassEvidence({
+    receipt,
+    actualServiceAccount: GOOGLE_CLOUD_RUN_RECEIPT_RUNTIME_PROFILE.service_account
+  });
+
+  assert.equal(evidence.status, "PASS");
+  assert.equal(evidence.receipt_type, "primary_source");
+  assert.equal(evidence.receipt_digest, receipt.receipt_digest);
+  assert.equal(evidence.source_content_sha256, receipt.payload.repository.content_sha256);
+  assert.equal(evidence.receipt_digest_verified, true);
+  assert.equal(evidence.receipt_signature_verified, true);
+  assert.equal("receipt" in evidence, false);
+  assert.equal("signature_base64url" in evidence, false);
+  assert.equal("nonce" in evidence, false);
+  assert.equal("receipt_id" in evidence, false);
+  assert.equal("admission_valid_until" in evidence, false);
+  const serialized = JSON.stringify(evidence);
+  assert.equal(serialized.includes(receipt.signature.signature_base64url), false);
+  assert.equal(serialized.includes(receipt.replay_protection.nonce), false);
 });
 
 test("production preactivation probe refuses static Google credentials before network access", async () => {
