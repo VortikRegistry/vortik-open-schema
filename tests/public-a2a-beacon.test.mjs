@@ -53,7 +53,7 @@ async function jsonResponse(response) {
 }
 
 function a2aReason(payload) {
-  return payload.details?.find((detail) => detail["@type"] === "type.googleapis.com/google.rpc.ErrorInfo")?.reason;
+  return payload.error?.details?.find((detail) => detail["@type"] === "type.googleapis.com/google.rpc.ErrorInfo")?.reason;
 }
 
 test("A2A Agent Card is fixed to HTTP+JSON 1.0 and read-only capabilities", () => {
@@ -209,7 +209,7 @@ test("HTTP SendMessage uses application/a2a+json and returns a direct Message", 
   });
 });
 
-test("HTTP errors are root google.rpc.Status ProtoJSON with canonical RPC codes", async () => {
+test("HTTP errors use the A2A v1.0 error envelope and preserve HTTP status codes", async () => {
   await withServer({}, async (base) => {
     const malformed = await fetch(`${base}/a2a/v1/message:send`, {
       method: "POST",
@@ -218,9 +218,9 @@ test("HTTP errors are root google.rpc.Status ProtoJSON with canonical RPC codes"
     });
     assert.equal(malformed.status, 400);
     const malformedPayload = await jsonResponse(malformed);
-    assert.equal(malformedPayload.code, 3);
-    assert.equal(typeof malformedPayload.message, "string");
-    assert.equal("error" in malformedPayload, false);
+    assert.equal(malformedPayload.error.code, 400);
+    assert.equal(malformedPayload.error.status, "INVALID_ARGUMENT");
+    assert.equal(typeof malformedPayload.error.message, "string");
 
     const oversized = await fetch(`${base}/a2a/v1/message:send`, {
       method: "POST",
@@ -228,7 +228,9 @@ test("HTTP errors are root google.rpc.Status ProtoJSON with canonical RPC codes"
       body: JSON.stringify({ payload: "x".repeat(9000) })
     });
     assert.equal(oversized.status, 413);
-    assert.equal((await jsonResponse(oversized)).code, 8);
+    const oversizedPayload = await jsonResponse(oversized);
+    assert.equal(oversizedPayload.error.code, 413);
+    assert.equal(oversizedPayload.error.status, "RESOURCE_EXHAUSTED");
 
     const wrongType = await fetch(`${base}/a2a/v1/message:send`, {
       method: "POST",
@@ -237,7 +239,8 @@ test("HTTP errors are root google.rpc.Status ProtoJSON with canonical RPC codes"
     });
     assert.equal(wrongType.status, 400);
     const wrongTypePayload = await jsonResponse(wrongType);
-    assert.equal(wrongTypePayload.code, 3);
+    assert.equal(wrongTypePayload.error.code, 400);
+    assert.equal(wrongTypePayload.error.status, "INVALID_ARGUMENT");
     assert.equal(a2aReason(wrongTypePayload), "CONTENT_TYPE_NOT_SUPPORTED");
   });
 });
@@ -251,7 +254,8 @@ test("HTTP rejects unsupported A2A versions but ignores undeclared client extens
     });
     assert.equal(wrongVersion.status, 400);
     const wrongVersionPayload = await jsonResponse(wrongVersion);
-    assert.equal(wrongVersionPayload.code, 9);
+    assert.equal(wrongVersionPayload.error.code, 400);
+    assert.equal(wrongVersionPayload.error.status, "FAILED_PRECONDITION");
     assert.equal(a2aReason(wrongVersionPayload), "VERSION_NOT_SUPPORTED");
 
     const extension = await fetch(`${base}/a2a/v1/message:send`, {
@@ -268,7 +272,8 @@ test("streaming, push-style and extended-card operations use canonical A2A failu
     const streaming = await fetch(`${base}/a2a/v1/message:stream`, { method: "POST" });
     assert.equal(streaming.status, 400);
     const streamingPayload = await jsonResponse(streaming);
-    assert.equal(streamingPayload.code, 9);
+    assert.equal(streamingPayload.error.code, 400);
+    assert.equal(streamingPayload.error.status, "FAILED_PRECONDITION");
     assert.equal(a2aReason(streamingPayload), "UNSUPPORTED_OPERATION");
 
     const subscription = await fetch(`${base}/a2a/v1/tasks/task-1:subscribe`, { method: "POST" });
@@ -295,14 +300,15 @@ test("beacon retains no tasks and task get/cancel return canonical TaskNotFound"
     const get = await fetch(`${base}/a2a/v1/tasks/task-1?historyLength=0`);
     assert.equal(get.status, 404);
     const getPayload = await jsonResponse(get);
-    assert.equal(getPayload.code, 5);
-    assert.equal("error" in getPayload, false);
+    assert.equal(getPayload.error.code, 404);
+    assert.equal(getPayload.error.status, "NOT_FOUND");
     assert.equal(a2aReason(getPayload), "TASK_NOT_FOUND");
 
     const cancel = await fetch(`${base}/a2a/v1/tasks/task-1:cancel`, { method: "POST" });
     assert.equal(cancel.status, 404);
     const cancelPayload = await jsonResponse(cancel);
-    assert.equal(cancelPayload.code, 5);
+    assert.equal(cancelPayload.error.code, 404);
+    assert.equal(cancelPayload.error.status, "NOT_FOUND");
     assert.equal(a2aReason(cancelPayload), "TASK_NOT_FOUND");
   });
 });
@@ -319,8 +325,8 @@ test("application request budget fails closed with RESOURCE_EXHAUSTED", async ()
     const second = await fetch(`${base}/a2a/v1/message:send`, options);
     assert.equal(second.status, 429);
     const payload = await jsonResponse(second);
-    assert.equal(payload.code, 8);
-    assert.equal("error" in payload, false);
+    assert.equal(payload.error.code, 429);
+    assert.equal(payload.error.status, "RESOURCE_EXHAUSTED");
   });
 });
 
