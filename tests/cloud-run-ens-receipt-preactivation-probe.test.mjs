@@ -128,28 +128,50 @@ test("ENS preactivation reuses the exact deterministic primary receipt subject f
   assert.equal(ensFixture.admissionIntent.gates.trusted_ens_receipt_available, false);
 });
 
+test("ENS preactivation evidence binds every receipt subject field to the exact fixed claim and intent", () => {
+  const { fixture, receipt } = makeEnsReceiptFixture();
+  assert.equal(assertEnsReceiptPreactivationEvidence(receipt, fixture.claim, fixture.admissionIntent), true);
+
+  for (const field of ["contribution_digest", "review_digest", "claim_digest", "admission_intent_digest"]) {
+    const drifted = structuredClone(receipt);
+    drifted.subject[field] = `sha256:${"9".repeat(64)}`;
+    assert.throws(
+      () => assertEnsReceiptPreactivationEvidence(drifted, fixture.claim, fixture.admissionIntent),
+      new RegExp(`subject field ${field} drifted`),
+      field
+    );
+  }
+
+  const differentIntent = structuredClone(fixture.admissionIntent);
+  differentIntent.intent_id = "different-intent-same-name";
+  assert.throws(
+    () => assertEnsReceiptPreactivationEvidence(receipt, fixture.claim, differentIntent),
+    /subject field admission_intent_digest drifted/
+  );
+});
+
 test("ENS preactivation evidence accepts exact finalized dual-provider evidence and rejects provider or lookup drift", () => {
   const { fixture, receipt } = makeEnsReceiptFixture();
-  assert.equal(assertEnsReceiptPreactivationEvidence(receipt, fixture.claim), true);
+  assert.equal(assertEnsReceiptPreactivationEvidence(receipt, fixture.claim, fixture.admissionIntent), true);
 
   const driftedProvider = structuredClone(receipt);
   driftedProvider.payload.providers[1].provider_id = "unexpected-rpc";
   assert.throws(
-    () => assertEnsReceiptPreactivationEvidence(driftedProvider, fixture.claim),
+    () => assertEnsReceiptPreactivationEvidence(driftedProvider, fixture.claim, fixture.admissionIntent),
     /provider identities drifted/
   );
 
   const detachedProvider = structuredClone(receipt);
   detachedProvider.payload.providers[1].block_hash = `0x${"9".repeat(64)}`;
   assert.throws(
-    () => assertEnsReceiptPreactivationEvidence(detachedProvider, fixture.claim),
+    () => assertEnsReceiptPreactivationEvidence(detachedProvider, fixture.claim, fixture.admissionIntent),
     /provider evidence detached/
   );
 
   const driftedLookup = structuredClone(receipt);
   driftedLookup.payload.lookup.base_registrar_expiry += 1;
   assert.throws(
-    () => assertEnsReceiptPreactivationEvidence(driftedLookup, fixture.claim),
+    () => assertEnsReceiptPreactivationEvidence(driftedLookup, fixture.claim, fixture.admissionIntent),
     /lookup result digest drifted/
   );
 });
