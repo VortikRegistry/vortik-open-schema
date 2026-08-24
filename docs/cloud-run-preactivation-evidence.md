@@ -102,13 +102,13 @@ The PASS output retained only bounded non-secret evidence. The complete signed r
 
 The preactivation claim and admission intent remain explicitly fail-closed and are not registry mutation authorization. This successful receipt demonstrates the production primary-source receipt path only; it does not activate trusted receipt issuance, candidate admission, ENS ownership inference or commercial authority.
 
-## ENS mainnet receipt preactivation probe — PENDING
+## ENS mainnet receipt preactivation probe — PASS
 
-`service/cloud-run-ens-receipt-preactivation-probe.mjs` is the next bounded production gate. It is designed as a one-shot Cloud Run Job command and must not be exposed through the private HTTP service.
+`service/cloud-run-ens-receipt-preactivation-probe.mjs` completed the bounded production ENS gate as a one-shot Cloud Run Job command. It was not exposed through the private HTTP service.
 
-The ENS probe reuses the exact deterministic fail-closed claim and admission-intent fixture used by the successful primary-source probe. Therefore the ENS receipt is derived for the same `epbs.eth` receipt subject rather than a separately constructed semantic claim.
+The ENS probe reused the exact deterministic fail-closed claim and admission-intent fixture used by the successful primary-source probe, so the ENS receipt was derived for the same `epbs.eth` receipt subject.
 
-The production runtime remains fixed to:
+The production runtime remained fixed to:
 
 ```text
 candidate = epbs.eth
@@ -122,13 +122,56 @@ ENS Registry = 0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e
 Base Registrar = 0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85
 ```
 
-Before a receipt can be signed, the reviewed ENS verifier requires both independent provider authorities to report Ethereum mainnet, converge on the same selected finalized block, and return identical hash-bound EIP-1898 ENS Registry/Base Registrar lookup evidence. The lookup must establish an existing registry record, the canonical `.eth` registrar boundary, and an active Base Registrar registration at that finalized block.
+Before signing, both independent provider authorities reported Ethereum mainnet, converged on the same selected finalized block, and returned identical hash-bound EIP-1898 ENS Registry/Base Registrar lookup evidence. The lookup established an existing registry record, the canonical `.eth` registrar boundary, and an active Base Registrar registration at that finalized block.
 
-The preactivation probe additionally recomputes the ENS lookup-result digest, verifies each provider evidence item is attached to the same finalized block/hash/state root/timestamp and lookup digest, checks the protected runtime/service-account/KMS/trusted-clock identities, recomputes the complete receipt digest, and performs a direct Ed25519 verification through `node:crypto` against the pinned SPKI policy.
+### Production execution evidence
 
-Successful probe output is bounded to non-secret verification evidence such as the receipt digest, finalized block identity, lookup digest and PASS booleans. The complete signed receipt, Ed25519 signature, nonce, receipt ID and validity window remain process-local.
+The exact reviewed source was rebuilt, resolved through Artifact Registry to an immutable image digest, installed on the existing bounded Job, described before execution, and then executed exactly once.
 
-This section records probe readiness only. No production ENS receipt execution has yet been recorded here, and both canonical gates remain closed:
+```text
+source main = 8bef4360409d39486e401aad2393011499f18df3
+image digest = sha256:dd384c0002cd0a3f10c97439bdb5e0cc45619fdcf9f0b39280b3f4436410349b
+execution = vortik-kms-preactivation-probe-tgddc
+service account = vortik-receipt-runtime@vortik-registry-production.iam.gserviceaccount.com
+CryptoKeyVersion = projects/vortik-registry-production/locations/southamerica-east1/keyRings/vortik-trust/cryptoKeys/vortik-receipt-ed25519/cryptoKeyVersions/1
+key policy digest = sha256:49c8d1d49ba04c79ff762f4e97f810e4dc9217909b4ee6afff88abd8b215c385
+status = PASS
+```
+
+The successful production evidence reported:
+
+```text
+service_account_verified = true
+ens_evidence_verified = true
+receipt_digest_verified = true
+receipt_signature_verified = true
+signature_verification_path = node-crypto-direct-spki
+receipt_type = ens_mainnet
+candidate_name = epbs.eth
+chain_id = 1
+provider_policy_id = vortik-ens-mainnet-dual-rpc-v1
+provider_ids = ethereum-rpc-publicnode, ethereum-drpc
+trusted_receipt_issuance = false
+admission_enabled = false
+```
+
+The finalized ENS evidence recorded by the successful execution was:
+
+```text
+finalized block number = 25822630
+finalized block hash = 0xcb9cfbbe7545c9db15d73d7b132f7e1c80382fc0c3b16214326b4e8e717c6786
+finalized state root = 0x6e69f664b99f7fee472ff18a1716264b7c04cdad51e07755dbf3122eb33da970
+finalized block timestamp = 1787545559
+lookup result digest = sha256:4fb88088e6a137db1e5881975ac562aa671753efb726031bfbe3d89748015963
+base registrar expiry = 1801969139
+receipt digest = sha256:c7e78e9c1e9423bb745e151e0f6e697dea24d8c146bbdcd4012ceed0d8ac212c
+```
+
+The probe independently recomputed the ENS lookup-result digest, verified both provider evidence items against the same finalized block/hash/state root/timestamp and lookup digest, recomputed the complete trusted receipt digest, and performed direct Ed25519 verification through `node:crypto` against the pinned SPKI policy before emitting PASS.
+
+The PASS output retained only bounded non-secret evidence. The complete signed receipt, Ed25519 signature, nonce, receipt ID and validity window remained process-local and were not emitted by the ENS probe.
+
+This successful execution closes the ENS mainnet trusted-receipt production preactivation gate. It does not activate trusted receipt issuance, candidate admission, registry mutation, ENS ownership inference or commercial authority. Both canonical gates remain closed:
 
 ```text
 trusted_receipt_issuance = false
