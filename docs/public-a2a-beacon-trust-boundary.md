@@ -6,7 +6,7 @@ This document defines the trust boundary that must exist before Vortik may expos
 
 The objective is narrow: make Vortik discoverable by independent developer agents looking for Ethereum coordination semantics and return deterministic pointers to already-public Vortik artifacts.
 
-This capability is a public discovery beacon. It is not an outreach system, autonomous sales agent, registry mutation API, trusted-receipt issuer, wallet surface, ENS authority surface, or general-purpose AI agent.
+This capability is a public discovery beacon. It is not a solicitation or commercial coordination system, autonomous sales agent, registry mutation API, trusted-receipt issuer, wallet surface, ENS authority surface, or general-purpose AI agent.
 
 ## Protocol target
 
@@ -65,7 +65,7 @@ The beacon must not:
 - call Google Cloud KMS or use the receipt-signing service account;
 - access wallets, signing keys, ENS ownership credentials or asset-transfer surfaces;
 - infer ENS ownership intent or commercial intent;
-- expose buyer names, prices, sale strategy, private intelligence or outreach strategy;
+- expose private counterparties, private pricing, monetization plans, private intelligence or solicitation strategy;
 - send unsolicited outbound messages, callbacks, notifications or webhooks;
 - crawl arbitrary URLs supplied by callers;
 - perform arbitrary web retrieval;
