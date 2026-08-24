@@ -19,17 +19,30 @@ function assertTimeoutMs(timeoutMs) {
 
 async function attemptFixedDestination({ destination, fetchImpl, timeoutMs }) {
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  let timeoutId;
+  const deadline = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => {
+      controller.abort();
+      reject(new Error("outbound-denial probe destination deadline elapsed"));
+    }, timeoutMs);
+  });
   try {
-    const response = await fetchImpl(destination.url, {
-      method: "HEAD",
-      redirect: "manual",
-      signal: controller.signal
-    });
+    const response = await Promise.race([
+      fetchImpl(destination.url, {
+        method: "HEAD",
+        redirect: "manual",
+        signal: controller.signal
+      }),
+      deadline
+    ]);
     if (!response || typeof response.status !== "number") {
       throw new Error("outbound-denial probe received an invalid HTTP response");
     }
-    await response.body?.cancel?.().catch(() => {});
+    try {
+      void Promise.resolve(response.body?.cancel?.()).catch(() => {});
+    } catch {
+      // The received HTTP response already proves reachability.
+    }
     return Object.freeze({ destination: destination.id, outcome: "reachable" });
   } catch (error) {
     if (error?.message === "outbound-denial probe received an invalid HTTP response") {

@@ -64,14 +64,12 @@ test("PASS requires both fixed destinations to be inaccessible", async () => {
   });
 });
 
-test("a hard timeout makes a hanging destination inaccessible without retry", async () => {
+test("a hard deadline bounds a transport that ignores AbortSignal without retry", { timeout: 250 }, async () => {
   let attempts = 0;
   const result = await runCloudRunAgentBeaconEgressProbe({
-    fetchImpl: async (_url, { signal }) => {
+    fetchImpl: async () => {
       attempts += 1;
-      await new Promise((resolve, reject) => {
-        signal.addEventListener("abort", () => reject(new DOMException("aborted", "AbortError")), { once: true });
-      });
+      await new Promise(() => {});
     },
     timeoutMs: 5
   });
@@ -79,6 +77,24 @@ test("a hard timeout makes a hanging destination inaccessible without retry", as
   assert.equal(attempts, 2);
   assert.equal(result.status, "PASS");
   assert.deepEqual(result.results.map(({ outcome }) => outcome), ["inaccessible", "inaccessible"]);
+});
+
+test("an unexpected response fails without waiting for body cancellation", { timeout: 250 }, async () => {
+  await assert.rejects(
+    runCloudRunAgentBeaconEgressProbe({
+      fetchImpl: async (url) => {
+        if (url === "https://example.com/") {
+          return {
+            status: 200,
+            body: { cancel: async () => new Promise(() => {}) }
+          };
+        }
+        throw new TypeError("blocked");
+      },
+      timeoutMs: 100
+    }),
+    /external_https was reachable/
+  );
 });
 
 test("any HTTP response, including an error response, rejects PASS", async () => {
