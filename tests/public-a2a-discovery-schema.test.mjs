@@ -55,6 +55,21 @@ async function withServer(run) {
   }
 }
 
+async function withBudgetedServer(requestBudgetLimit, run) {
+  const server = createCloudRunAgentBeaconServer({ publicBaseUrl: PUBLIC_BASE_URL, requestBudgetLimit });
+  await new Promise((resolve, reject) => {
+    server.once("error", reject);
+    server.listen(0, "127.0.0.1", resolve);
+  });
+  const address = server.address();
+  const base = `http://127.0.0.1:${address.port}`;
+  try {
+    return await run(base);
+  } finally {
+    await new Promise((resolve) => server.close(resolve));
+  }
+}
+
 async function jsonResponse(response) {
   return JSON.parse(await response.text());
 }
@@ -148,5 +163,28 @@ test("Cloud Run internal fallback uses the same A2A HTTP error envelope", () => 
       status: "INTERNAL",
       message: "Internal beacon error"
     }
+  });
+});
+
+test("Agent Card shares the application request budget with A2A while health remains exempt", async () => {
+  await withBudgetedServer(1, async (base) => {
+    const healthBefore = await fetch(`${base}/health`);
+    assert.equal(healthBefore.status, 200);
+
+    const card = await fetch(`${base}/.well-known/agent-card.json`);
+    assert.equal(card.status, 200);
+
+    const a2aAfterCard = await fetch(`${base}/a2a/v1/tasks`);
+    assert.equal(a2aAfterCard.status, 429);
+    const a2aPayload = await jsonResponse(a2aAfterCard);
+    assert.equal(a2aPayload.error.code, 429);
+    assert.equal(a2aPayload.error.status, "RESOURCE_EXHAUSTED");
+
+    const cardAfterBudget = await fetch(`${base}/.well-known/agent-card.json`);
+    assert.equal(cardAfterBudget.status, 429);
+    assert.deepEqual(await jsonResponse(cardAfterBudget), { error: "request_budget_exhausted" });
+
+    const healthAfter = await fetch(`${base}/health`);
+    assert.equal(healthAfter.status, 200);
   });
 });
