@@ -63,17 +63,39 @@ function assertEnsProviderEvidence(payload) {
   }
 }
 
-export function assertEnsReceiptPreactivationEvidence(receipt, claim) {
+function assertReceiptSubjectMatchesFixture(subject, claim, admissionIntent) {
+  if (!subject || typeof subject !== "object" || Array.isArray(subject) ||
+      !claim || typeof claim !== "object" || Array.isArray(claim) ||
+      !admissionIntent || typeof admissionIntent !== "object" || Array.isArray(admissionIntent)) {
+    throw new TypeError("ENS receipt preactivation probe requires the exact fixed receipt subject fixture");
+  }
+  const expected = {
+    contribution_digest: claim.contribution_digest,
+    review_digest: claim.review_digest,
+    claim_digest: sha256CanonicalDigest(claim),
+    admission_intent_digest: sha256CanonicalDigest(admissionIntent),
+    candidate_name: claim.candidate_name,
+    normalized_candidate_name: claim.normalized_candidate_name
+  };
+  for (const [field, value] of Object.entries(expected)) {
+    if (subject[field] !== value) {
+      throw new Error(`ENS receipt preactivation probe subject field ${field} drifted from the fixed fixture`);
+    }
+  }
+  if (expected.candidate_name !== CANDIDATE_NAME || expected.normalized_candidate_name !== CANDIDATE_NAME ||
+      admissionIntent.normalized_candidate_name !== CANDIDATE_NAME || admissionIntent.claim_digest !== expected.claim_digest) {
+    throw new Error("ENS receipt preactivation probe fixed fixture subject binding drifted");
+  }
+}
+
+export function assertEnsReceiptPreactivationEvidence(receipt, claim, admissionIntent) {
   if (!receipt || typeof receipt !== "object" || Array.isArray(receipt)) {
     throw new TypeError("ENS receipt preactivation probe requires a receipt object");
   }
   if (receipt.receipt_type !== "ens_mainnet") {
     throw new Error("ENS receipt preactivation probe received the wrong receipt type");
   }
-  if (receipt.subject?.candidate_name !== CANDIDATE_NAME ||
-      receipt.subject?.normalized_candidate_name !== CANDIDATE_NAME) {
-    throw new Error("ENS receipt preactivation probe subject drifted");
-  }
+  assertReceiptSubjectMatchesFixture(receipt.subject, claim, admissionIntent);
   if (receipt.verifier?.verifier_id !== "vortik-ens-mainnet" ||
       receipt.verifier?.verifier_version !== "0.1.0" ||
       receipt.verifier?.code_commit !== GOOGLE_CLOUD_RUN_RECEIPT_RUNTIME_PROFILE.ens_mainnet_verifier_code_commit) {
@@ -229,7 +251,7 @@ export async function runGoogleCloudRunEnsReceiptPreactivationProbe() {
     admissionIntent: fixture.admissionIntent
   });
 
-  assertEnsReceiptPreactivationEvidence(receipt, fixture.claim);
+  assertEnsReceiptPreactivationEvidence(receipt, fixture.claim, fixture.admissionIntent);
 
   const keyPolicy = JSON.parse(readFileSync(KEY_POLICY_URL, "utf8"));
   if (sha256CanonicalDigest(keyPolicy) !== GOOGLE_CLOUD_RUN_RECEIPT_RUNTIME_PROFILE.key_policy_digest) {
