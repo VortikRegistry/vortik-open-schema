@@ -126,7 +126,7 @@ The production runtime rejects direct substitutions for `codeCommit`, `nowImpl`,
 
 After this code is merged, production activation is still blocked until infrastructure is independently exercised:
 
-1. build the exact reviewed source, record the immutable image digest, and deploy that digest to Cloud Run;
+1. deploy the exact reviewed source through Cloud Run source deployment and record the resulting image digest and revision provenance;
 2. require authentication and use only `vortik-receipt-runtime@vortik-registry-production.iam.gserviceaccount.com` as the service identity;
 3. verify `/health` and `/v1/runtime-identity` through an authenticated invocation;
 4. verify the deployed identity reports the pinned CryptoKeyVersion, key-policy digest, verifier blobs and provider pair;
