@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { generateKeyPairSync, sign } from "node:crypto";
 import test from "node:test";
 
 import { GOOGLE_CLOUD_RUN_RECEIPT_RUNTIME_PROFILE } from "../lib/google-cloud-run-receipt-runtime.mjs";
@@ -10,7 +11,8 @@ import {
   GOOGLE_CLOUD_RUN_PRIMARY_RECEIPT_PREACTIVATION_PROFILE,
   assertPrimaryReceiptPreactivationEvidence,
   buildPrimaryReceiptPreactivationFixture,
-  runGoogleCloudRunPrimaryReceiptPreactivationProbe
+  runGoogleCloudRunPrimaryReceiptPreactivationProbe,
+  verifyPrimaryReceiptSignatureDirect
 } from "../service/cloud-run-primary-receipt-preactivation-probe.mjs";
 
 function makeReceiptFixture() {
@@ -123,6 +125,31 @@ test("preactivation evidence assertion accepts the exact source and rejects sour
     () => assertPrimaryReceiptPreactivationEvidence(driftedKey, fixture.claim),
     /signing identity drifted/
   );
+});
+
+test("direct receipt signature path verifies Ed25519 bytes independently of issuer verification helper", () => {
+  const { publicKey, privateKey } = generateKeyPairSync("ed25519");
+  const receiptDigest = `sha256:${"a".repeat(64)}`;
+  const signatureBase64url = sign(null, Buffer.from(receiptDigest, "utf8"), privateKey).toString("base64url");
+  const keyPolicy = {
+    authorized_keys: [{
+      key_id: GOOGLE_CLOUD_RUN_RECEIPT_RUNTIME_PROFILE.key_id,
+      algorithm: "Ed25519",
+      public_key_spki_der_base64: publicKey.export({ format: "der", type: "spki" }).toString("base64")
+    }]
+  };
+  const receipt = {
+    receipt_digest: receiptDigest,
+    signature: {
+      key_id: GOOGLE_CLOUD_RUN_RECEIPT_RUNTIME_PROFILE.key_id,
+      signature_base64url: signatureBase64url
+    }
+  };
+
+  assert.equal(verifyPrimaryReceiptSignatureDirect({ receipt, keyPolicy }), true);
+  const tampered = structuredClone(receipt);
+  tampered.receipt_digest = `sha256:${"b".repeat(64)}`;
+  assert.equal(verifyPrimaryReceiptSignatureDirect({ receipt: tampered, keyPolicy }), false);
 });
 
 test("production preactivation probe refuses static Google credentials before network access", async () => {
