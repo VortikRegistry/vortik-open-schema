@@ -65,7 +65,7 @@ The beacon must not:
 - call Google Cloud KMS or use the receipt-signing service account;
 - access wallets, signing keys, ENS ownership credentials or asset-transfer surfaces;
 - infer ENS ownership intent or commercial intent;
-- expose private counterparties, private pricing, monetization plans, private intelligence or solicitation strategy;
+- expose private counterparties, private transaction terms, monetization plans, private intelligence or solicitation strategy;
 - send unsolicited outbound messages, callbacks, notifications or webhooks;
 - crawl arbitrary URLs supplied by callers;
 - perform arbitrary web retrieval;
