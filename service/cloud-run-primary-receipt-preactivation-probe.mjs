@@ -217,6 +217,28 @@ export const GOOGLE_CLOUD_RUN_PRIMARY_RECEIPT_PREACTIVATION_PROFILE = Object.fre
   admission_enabled: false
 });
 
+export function buildPrimaryReceiptPassEvidence({ receipt, actualServiceAccount }) {
+  if (!receipt || typeof receipt !== "object" || Array.isArray(receipt)) {
+    throw new TypeError("primary receipt PASS evidence requires a receipt object");
+  }
+  if (actualServiceAccount !== GOOGLE_CLOUD_RUN_RECEIPT_RUNTIME_PROFILE.service_account) {
+    throw new Error("primary receipt PASS evidence requires the expected service account");
+  }
+  return Object.freeze({
+    ...GOOGLE_CLOUD_RUN_PRIMARY_RECEIPT_PREACTIVATION_PROFILE,
+    service_account: actualServiceAccount,
+    service_account_verified: true,
+    source_evidence_verified: true,
+    receipt_digest_verified: true,
+    receipt_signature_verified: true,
+    signature_verification_path: "node-crypto-direct-spki",
+    receipt_type: receipt.receipt_type,
+    receipt_digest: receipt.receipt_digest,
+    source_content_sha256: receipt.payload?.repository?.content_sha256,
+    status: "PASS"
+  });
+}
+
 export async function runGoogleCloudRunPrimaryReceiptPreactivationProbe() {
   if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
     throw new Error("primary receipt preactivation probe refuses static GOOGLE_APPLICATION_CREDENTIALS");
@@ -255,16 +277,7 @@ export async function runGoogleCloudRunPrimaryReceiptPreactivationProbe() {
     throw new Error("primary receipt preactivation probe direct Ed25519 verification failed");
   }
 
-  return Object.freeze({
-    ...GOOGLE_CLOUD_RUN_PRIMARY_RECEIPT_PREACTIVATION_PROFILE,
-    service_account: actualServiceAccount,
-    service_account_verified: true,
-    source_evidence_verified: true,
-    receipt_signature_verified: true,
-    signature_verification_path: "node-crypto-direct-spki",
-    status: "PASS",
-    receipt
-  });
+  return buildPrimaryReceiptPassEvidence({ receipt, actualServiceAccount });
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
