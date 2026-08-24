@@ -28,6 +28,16 @@ function resolvePublicBaseUrl(rawUrl) {
   return rawUrl;
 }
 
+export function buildInternalA2AErrorPayload() {
+  return Object.freeze({
+    error: Object.freeze({
+      code: 500,
+      status: "INTERNAL",
+      message: "Internal beacon error"
+    })
+  });
+}
+
 export function createCloudRunAgentBeaconServer({
   publicBaseUrl,
   requestBudgetLimit = 60,
@@ -38,10 +48,7 @@ export function createCloudRunAgentBeaconServer({
   return createServer((request, response) => {
     Promise.resolve(handler(request, response)).catch(() => {
       if (!response.headersSent) {
-        const body = `${JSON.stringify({
-          code: 13,
-          message: "Internal beacon error"
-        })}\n`;
+        const body = `${JSON.stringify(buildInternalA2AErrorPayload())}\n`;
         response.writeHead(500, {
           "content-type": "application/a2a+json; charset=utf-8",
           "cache-control": "no-store",
