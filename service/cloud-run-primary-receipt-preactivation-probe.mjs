@@ -8,6 +8,7 @@ import {
 import {
   assertReceiptEvidenceSemantics,
   assertReceiptTemporalSemantics,
+  computeTrustedReceiptDigest,
   sha256CanonicalDigest
 } from "../lib/trusted-verification-crypto.mjs";
 import { readGoogleCloudMetadataServiceAccountEmail } from "./cloud-run-kms-preactivation-probe.mjs";
@@ -177,6 +178,10 @@ export function verifyPrimaryReceiptSignatureDirect({ receipt, keyPolicy }) {
   if (!keyPolicy || typeof keyPolicy !== "object" || Array.isArray(keyPolicy)) {
     throw new TypeError("direct receipt verification requires a key policy object");
   }
+  const recomputedDigest = computeTrustedReceiptDigest(receipt);
+  if (recomputedDigest !== receipt.receipt_digest) {
+    throw new Error("direct receipt verification detected receipt digest drift");
+  }
   const keys = keyPolicy.authorized_keys?.filter((key) => key.key_id === receipt.signature?.key_id) ?? [];
   if (keys.length !== 1 || keys[0].algorithm !== "Ed25519") {
     throw new Error("direct receipt verification cannot resolve the exact Ed25519 key");
@@ -192,7 +197,7 @@ export function verifyPrimaryReceiptSignatureDirect({ receipt, keyPolicy }) {
   }
   return verifySignature(
     null,
-    Buffer.from(receipt.receipt_digest, "utf8"),
+    Buffer.from(recomputedDigest, "utf8"),
     publicKey,
     signature
   );
