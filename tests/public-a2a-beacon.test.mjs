@@ -175,7 +175,7 @@ test("stateless task references and push configuration fail with A2A-specific re
     (error) => error.a2aReason === "TASK_NOT_FOUND"
   );
   assert.throws(
-    () => beacon.sendMessage(sendRequest("epbs", { request: { configuration: { taskPushNotificationConfig: {} } } })),
+    () => beacon.sendMessage(sendRequest("epbs", { request: { configuration: { taskPushNotificationConfig: {} } })),
     (error) => error.a2aReason === "PUSH_NOTIFICATION_NOT_SUPPORTED"
   );
 });
@@ -327,6 +327,22 @@ test("application request budget fails closed with RESOURCE_EXHAUSTED", async ()
     const payload = await jsonResponse(second);
     assert.equal(payload.error.code, 429);
     assert.equal(payload.error.status, "RESOURCE_EXHAUSTED");
+  });
+});
+
+test("every non-health request shares the application budget while health remains exempt", async () => {
+  await withServer({ requestBudgetLimit: 1 }, async (base) => {
+    const arbitrary = await fetch(`${base}/random`);
+    assert.equal(arbitrary.status, 404);
+
+    const card = await fetch(`${base}/.well-known/agent-card.json`);
+    assert.equal(card.status, 429);
+    assert.deepEqual(await jsonResponse(card), { error: "request_budget_exhausted" });
+
+    const health = await fetch(`${base}/health`);
+    assert.equal(health.status, 200);
+    const healthPayload = await jsonResponse(health);
+    assert.equal(healthPayload.status, "ready");
   });
 });
 
