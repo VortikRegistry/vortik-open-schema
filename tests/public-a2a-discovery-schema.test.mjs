@@ -14,6 +14,7 @@ const schemaUrl = new URL("../schemas/agents/vortik-agent-discovery/1.4.0/schema
 const publicSchemaUrl = new URL("../docs/schemas/agents/vortik-agent-discovery/1.4.0/schema.json", import.meta.url);
 const manifestUrl = new URL("../agents/discovery.json", import.meta.url);
 const PUBLIC_BASE_URL = "https://beacon.example.test";
+const LIFECYCLE_NOTE = "Lifecycle state is defined exclusively by the structured interaction fields; this note does not independently assert preactivation or live network status.";
 
 async function loadFixture() {
   const [schemaText, publicSchemaText, manifestText] = await Promise.all([
@@ -67,6 +68,24 @@ test("A2A live schema accepts canonical public DNS HTTPS origins also accepted b
   ]) {
     assert.equal(validate(liveCandidate(manifest, origin)), true, JSON.stringify(validate.errors));
     assert.equal(assertPublicBaseUrl(origin), new URL(origin).origin);
+  }
+});
+
+test("A2A lifecycle note is state-neutral and contradictory lifecycle prose fails closed", async () => {
+  const { validate, manifest } = await loadFixture();
+  assert.equal(manifest.interaction.note, LIFECYCLE_NOTE);
+  assert.equal(validate(manifest), true, JSON.stringify(validate.errors));
+
+  const live = liveCandidate(manifest, PUBLIC_BASE_URL);
+  assert.equal(live.interaction.note, LIFECYCLE_NOTE);
+  assert.equal(validate(live), true, JSON.stringify(validate.errors));
+
+  for (const [label, candidate] of [
+    ["preactivation stale prose", structuredClone(manifest)],
+    ["live stale preactivation prose", liveCandidate(manifest, PUBLIC_BASE_URL)]
+  ]) {
+    candidate.interaction.note = "No public Agent Card or ingress is active.";
+    assert.equal(validate(candidate), false, label);
   }
 });
 
