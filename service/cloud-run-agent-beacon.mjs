@@ -28,11 +28,14 @@ function resolvePublicBaseUrl(rawUrl) {
   return rawUrl;
 }
 
-function isAgentCardRequest(request) {
+function classifyBudgetingPath(request) {
   try {
-    return new URL(request.url ?? "/", "http://vortik-a2a.internal").pathname === "/.well-known/agent-card.json";
+    const pathname = new URL(request.url ?? "/", "http://vortik-a2a.internal").pathname;
+    if (pathname === "/health") return "health";
+    if (pathname.startsWith("/a2a/v1")) return "a2a";
+    return "wrapper";
   } catch {
-    return false;
+    return "wrapper";
   }
 }
 
@@ -65,7 +68,8 @@ export function createCloudRunAgentBeaconServer({
   const budget = createFixedWindowBudget({ limit: requestBudgetLimit, windowMs: 60_000 });
   const handler = createPublicA2AHttpHandler({ publicBaseUrl, budget, idFactory });
   return createServer((request, response) => {
-    if (isAgentCardRequest(request) && !budget.consume()) {
+    const budgetingPath = classifyBudgetingPath(request);
+    if (budgetingPath === "wrapper" && !budget.consume()) {
       writeDiscoveryBudgetExhausted(response);
       return;
     }
