@@ -102,9 +102,11 @@ This policy deliberately does not claim cryptographic external time attestation.
 The HTTP surface is intentionally read-only and contains only:
 
 ```text
-GET /healthz
+GET /health
 GET /v1/runtime-identity
 ```
+
+The health path deliberately does not end in `z`. Cloud Run reserves some URL paths ending in `z`, so the deployed service avoids that namespace rather than relying on an application route that the Google frontend may intercept before the request reaches the container.
 
 It exposes no receipt-issuance route, no signer route, no KMS proxy and no admission route. Non-GET methods are rejected and query strings are rejected. Responses use `Cache-Control: no-store`; no CORS policy is enabled by the application.
 
@@ -124,9 +126,9 @@ The production runtime rejects direct substitutions for `codeCommit`, `nowImpl`,
 
 After this code is merged, production activation is still blocked until infrastructure is independently exercised:
 
-1. deploy the exact reviewed source through Cloud Run source deployment and record the resulting image digest and revision provenance;
+1. build the exact reviewed source, record the immutable image digest, and deploy that digest to Cloud Run;
 2. require authentication and use only `vortik-receipt-runtime@vortik-registry-production.iam.gserviceaccount.com` as the service identity;
-3. verify `/healthz` and `/v1/runtime-identity` through an authenticated invocation;
+3. verify `/health` and `/v1/runtime-identity` through an authenticated invocation;
 4. verify the deployed identity reports the pinned CryptoKeyVersion, key-policy digest, verifier blobs and provider pair;
 5. confirm the runtime obtains short-lived Google credentials rather than a static service-account key;
 6. confirm only the intended service identity can use KMS CryptoKeyVersion `1` for signing;
