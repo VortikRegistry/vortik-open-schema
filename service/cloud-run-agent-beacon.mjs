@@ -38,11 +38,18 @@ export function createCloudRunAgentBeaconServer({
   return createServer((request, response) => {
     Promise.resolve(handler(request, response)).catch(() => {
       if (!response.headersSent) {
-        const body = '{"type":"urn:vortik:a2a:error:internal","title":"Internal beacon error","status":500,"code":"internal"}\n';
+        const body = `${JSON.stringify({
+          error: {
+            code: 500,
+            status: "INTERNAL",
+            message: "Internal beacon error"
+          }
+        })}\n`;
         response.writeHead(500, {
-          "content-type": "application/problem+json; charset=utf-8",
+          "content-type": "application/a2a+json; charset=utf-8",
           "cache-control": "no-store",
           "x-content-type-options": "nosniff",
+          "a2a-version": "1.0",
           "content-length": Buffer.byteLength(body)
         });
         response.end(body);
