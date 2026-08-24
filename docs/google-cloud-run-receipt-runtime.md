@@ -22,7 +22,9 @@ admission.enabled = false
 5. non-injectable Google Cloud Run system-clock adapter; and
 6. trusted receipt issuer core.
 
-The returned production runtime exposes only the two receipt-issuance methods plus non-secret runtime identity metadata. It does not expose the signer, trusted clock, OAuth token provider, key policy object or other protected construction dependencies.
+The returned runtime contains receipt-issuance methods plus non-secret runtime identity metadata. Protected construction dependencies such as the signer, trusted clock, OAuth token provider and key policy object are not exposed.
+
+The preactivation HTTP service does **not** expose the receipt-issuance methods. It receives only the runtime identity snapshot and serves health/identity inspection while canonical issuance remains disabled.
 
 ## Exact production profile
 
@@ -60,9 +62,16 @@ The immutable container/revision identity remains separate deployment provenance
 
 ## ENS provider boundary
 
-Deployment requires exactly two protected ENS RPC provider definitions with distinct provider identities and distinct network authorities. The underlying ENS verifier retains its existing requirements: HTTPS, Ethereum mainnet, shared finalized-block evidence, EIP-1898 hash-bound reads and exact ENS Registry/Base Registrar checks.
+The production wrapper no longer accepts provider selection from deployment configuration. It pins exactly two public Ethereum mainnet authorities:
 
-RPC endpoint selection is deployment configuration, not contributor/request input. Provider selection must be completed before the real end-to-end activation test.
+```text
+ethereum-rpc-publicnode = https://ethereum-rpc.publicnode.com/
+ethereum-drpc           = https://eth.drpc.org/
+```
+
+Before this binding was introduced, both endpoints were exercised against the same finalized Ethereum mainnet block and returned matching block number, hash, state root, parent hash and timestamp. Both also returned the same ENS Registry `owner(namehash("eth"))` result using an EIP-1898 `eth_call` bound to that finalized block hash with `requireCanonical=true`.
+
+The underlying ENS verifier still independently enforces HTTPS, Ethereum mainnet chain ID, distinct network authorities, shared finalized-block evidence, EIP-1898 hash-bound reads and exact ENS Registry/Base Registrar checks. A request cannot choose or replace either provider.
 
 ## Trusted issuance clock
 
@@ -86,28 +95,44 @@ The production adapter converts integer Unix milliseconds to Unix seconds, rejec
 
 This policy deliberately does not claim cryptographic external time attestation. The production deployment gate must verify that the code is actually running in the intended Google-managed Cloud Run environment before `trusted_receipt_issuance` can become true.
 
-Google documents its compute infrastructure as using synchronized system clocks and recommends Google-managed time synchronization for workloads that depend on stable time. The Vortik policy remains narrower: it records only the runtime wall clock and the fact that it is not request-controlled.
+## Preactivation HTTP surface
+
+`service/cloud-run-private-service.mjs` is the buildpack-compatible Cloud Run entrypoint (`npm start`). It listens on the Cloud Run `PORT` and constructs the zero-argument production runtime wrapper.
+
+The HTTP surface is intentionally read-only and contains only:
+
+```text
+GET /healthz
+GET /v1/runtime-identity
+```
+
+It exposes no receipt-issuance route, no signer route, no KMS proxy and no admission route. Non-GET methods are rejected and query strings are rejected. Responses use `Cache-Control: no-store`; no CORS policy is enabled by the application.
+
+This application-level narrow surface is not a substitute for Cloud Run IAM. Deployment must still require authentication and must not grant `allUsers` the Cloud Run Invoker role.
 
 ## Identity and secret handling
 
 The production assembly expects Cloud Run service identity / metadata credentials for KMS access. It does not require or accept a service-account JSON key as repository material.
 
-No private key, bearer token or provider credential belongs in this public repository.
+No private key, bearer token or provider credential belongs in this public repository. The two pinned RPC endpoints are public and require no repository secret.
 
-The production runtime rejects direct substitutions for `codeCommit`, `nowImpl`, `trustedClock`, `signer` and `keyPolicy`.
+The production runtime rejects direct substitutions for `codeCommit`, `nowImpl`, `trustedClock`, `signer` and `keyPolicy`; the zero-argument production wrapper also fixes the ENS provider pair.
+
+`ajv` is declared as a production dependency because the trusted receipt issuer compiles the closed claim, intent, receipt and key-policy schemas at runtime. Development-only validators remain outside the production dependency set.
 
 ## Remaining deployment gate
 
-After this code is merged, production activation is still blocked until the infrastructure exists and is independently exercised:
+After this code is merged, production activation is still blocked until infrastructure is independently exercised:
 
-1. build an immutable container from an exact reviewed `main` commit and record its image digest/revision provenance;
-2. deploy it to a private Cloud Run service using the intended service account;
-3. configure exactly two approved ENS RPC authorities without publishing credentials;
-4. confirm the runtime obtains short-lived Google credentials rather than a static service-account key;
-5. confirm only the intended identity can call KMS CryptoKeyVersion `1` for signing;
-6. execute a real primary-source and ENS receipt path through the deployed runtime;
-7. independently verify the returned Ed25519 signatures against the pinned public policy; and
-8. re-run CI and exact-head Codex review for any deployment-support code changes.
+1. deploy the exact reviewed source through Cloud Run source deployment and record the resulting image digest and revision provenance;
+2. require authentication and use only `vortik-receipt-runtime@vortik-registry-production.iam.gserviceaccount.com` as the service identity;
+3. verify `/healthz` and `/v1/runtime-identity` through an authenticated invocation;
+4. verify the deployed identity reports the pinned CryptoKeyVersion, key-policy digest, verifier blobs and provider pair;
+5. confirm the runtime obtains short-lived Google credentials rather than a static service-account key;
+6. confirm only the intended service identity can use KMS CryptoKeyVersion `1` for signing;
+7. run a separate bounded preactivation end-to-end receipt probe using the reviewed runtime without exposing issuance through the HTTP service;
+8. independently verify the resulting Ed25519 receipt signatures against the pinned public policy; and
+9. re-run CI and exact-head Codex review for any deployment-support changes.
 
 Only after those checks pass may a separate, explicit activation change consider `trusted_receipt_issuance = true`.
 
