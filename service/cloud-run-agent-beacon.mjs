@@ -28,6 +28,25 @@ function resolvePublicBaseUrl(rawUrl) {
   return rawUrl;
 }
 
+function isAgentCardRequest(request) {
+  try {
+    return new URL(request.url ?? "/", "http://vortik-a2a.internal").pathname === "/.well-known/agent-card.json";
+  } catch {
+    return false;
+  }
+}
+
+function writeDiscoveryBudgetExhausted(response) {
+  const body = `${JSON.stringify({ error: "request_budget_exhausted" })}\n`;
+  response.writeHead(429, {
+    "content-type": "application/json; charset=utf-8",
+    "cache-control": "no-store",
+    "x-content-type-options": "nosniff",
+    "content-length": Buffer.byteLength(body)
+  });
+  response.end(body);
+}
+
 export function buildInternalA2AErrorPayload() {
   return Object.freeze({
     error: Object.freeze({
@@ -46,6 +65,11 @@ export function createCloudRunAgentBeaconServer({
   const budget = createFixedWindowBudget({ limit: requestBudgetLimit, windowMs: 60_000 });
   const handler = createPublicA2AHttpHandler({ publicBaseUrl, budget, idFactory });
   return createServer((request, response) => {
+    if (isAgentCardRequest(request) && !budget.consume()) {
+      writeDiscoveryBudgetExhausted(response);
+      return;
+    }
+
     Promise.resolve(handler(request, response)).catch(() => {
       if (!response.headersSent) {
         const body = `${JSON.stringify(buildInternalA2AErrorPayload())}\n`;
