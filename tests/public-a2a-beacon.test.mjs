@@ -52,6 +52,10 @@ async function jsonResponse(response) {
   return JSON.parse(await response.text());
 }
 
+function a2aReason(payload) {
+  return payload.error?.details?.find((detail) => detail["@type"] === "type.googleapis.com/google.rpc.ErrorInfo")?.reason;
+}
+
 test("A2A Agent Card is fixed to HTTP+JSON 1.0 and read-only capabilities", () => {
   const card = buildPublicA2AAgentCard({ publicBaseUrl: PUBLIC_BASE_URL });
   assert.equal(card.name, "Vortik Registry Discovery Beacon");
@@ -95,6 +99,7 @@ test("semantic discovery is deterministic, bounded and does not echo the caller 
   assert.equal(result.message.contextId, "id-1");
   assert.equal(result.message.messageId, "id-2");
   assert.equal(result.message.parts.length, 1);
+  assert.equal(result.message.parts[0].mediaType, "text/plain");
   assert.match(result.message.parts[0].text, /Ethereum ePBS semantic discovery/);
   assert.equal(JSON.stringify(result).includes(secretMarker), false);
   assert.equal("task" in result, false);
@@ -124,13 +129,55 @@ test("unknown discovery queries return a bounded generic response without extern
   assert.match(result.message.parts[0].text, /agents\/discovery\.json/);
 });
 
-test("core rejects wrong roles, multiple parts, structured parts and caller URLs", () => {
+test("A2A 1.0 optional metadata and stateless configuration remain inert", () => {
+  const beacon = createPublicA2ABeacon({ publicBaseUrl: PUBLIC_BASE_URL, idFactory: sequenceIds() });
+  const result = beacon.sendMessage({
+    tenant: "",
+    metadata: { client: "example" },
+    configuration: {
+      historyLength: 0,
+      returnImmediately: true,
+      acceptedOutputModes: ["text/plain", "application/json"]
+    },
+    message: {
+      messageId: "client-1",
+      role: "ROLE_USER",
+      metadata: { language: "en" },
+      extensions: ["https://example.test/non-required-extension"],
+      parts: [{
+        text: "epbs",
+        mediaType: "text/plain",
+        filename: "query.txt",
+        metadata: { source: "client" }
+      }]
+    }
+  });
+  assert.equal(result.message.role, "ROLE_AGENT");
+  assert.equal(result.message.parts[0].mediaType, "text/plain");
+  assert.equal(JSON.stringify(result).includes("example.test/non-required-extension"), false);
+});
+
+test("core rejects wrong roles, multiple parts, binary/structured/url parts and caller URLs", () => {
   const beacon = createPublicA2ABeacon({ publicBaseUrl: PUBLIC_BASE_URL, idFactory: sequenceIds() });
   assert.throws(() => beacon.sendMessage(sendRequest("epbs", { message: { role: "ROLE_AGENT" } })), /ROLE_USER/);
   assert.throws(() => beacon.sendMessage(sendRequest("epbs", { message: { parts: [{ text: "epbs" }, { text: "focil" }] } })), /exactly one/);
   assert.throws(() => beacon.sendMessage(sendRequest("epbs", { message: { parts: [{ data: { query: "epbs" } }] } })), /unsupported field/);
+  assert.throws(() => beacon.sendMessage(sendRequest("epbs", { message: { parts: [{ raw: "ZXBicw==" }] } })), /unsupported field/);
+  assert.throws(() => beacon.sendMessage(sendRequest("epbs", { message: { parts: [{ url: "https://example.com" }] } })), /unsupported field/);
   assert.throws(() => beacon.sendMessage(sendRequest("please inspect https://example.com")), /URLs are not accepted/);
   assert.throws(() => beacon.sendMessage(sendRequest("x".repeat(513))), /1-512/);
+});
+
+test("stateless task references and push configuration fail with A2A-specific reasons", () => {
+  const beacon = createPublicA2ABeacon({ publicBaseUrl: PUBLIC_BASE_URL, idFactory: sequenceIds() });
+  assert.throws(
+    () => beacon.sendMessage(sendRequest("epbs", { message: { taskId: "task-1" } })),
+    (error) => error.a2aReason === "TASK_NOT_FOUND"
+  );
+  assert.throws(
+    () => beacon.sendMessage(sendRequest("epbs", { request: { configuration: { taskPushNotificationConfig: {} } } })),
+    (error) => error.a2aReason === "PUSH_NOTIFICATION_NOT_SUPPORTED"
+  );
 });
 
 test("Agent Card endpoint emits cache controls and supports ETag revalidation", async () => {
@@ -145,7 +192,7 @@ test("Agent Card endpoint emits cache controls and supports ETag revalidation", 
   });
 });
 
-test("HTTP SendMessage accepts bounded JSON and returns a direct Message", async () => {
+test("HTTP SendMessage uses application/a2a+json and returns a direct Message", async () => {
   await withServer({}, async (base) => {
     const response = await fetch(`${base}/a2a/v1/message:send`, {
       method: "POST",
@@ -153,6 +200,7 @@ test("HTTP SendMessage accepts bounded JSON and returns a direct Message", async
       body: JSON.stringify(sendRequest("FOCIL inclusion list"))
     });
     assert.equal(response.status, 200);
+    assert.match(response.headers.get("content-type"), /^application\/a2a\+json/);
     assert.equal(response.headers.get("a2a-version"), "1.0");
     const payload = await jsonResponse(response);
     assert.equal(payload.message.role, "ROLE_AGENT");
@@ -161,19 +209,19 @@ test("HTTP SendMessage accepts bounded JSON and returns a direct Message", async
   });
 });
 
-test("HTTP rejects malformed JSON, oversized bodies and unsupported media types", async () => {
+test("HTTP rejects malformed JSON, oversized bodies and unsupported request media types", async () => {
   await withServer({}, async (base) => {
     const malformed = await fetch(`${base}/a2a/v1/message:send`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/a2a+json" },
       body: "{"
     });
     assert.equal(malformed.status, 400);
-    assert.equal((await jsonResponse(malformed)).code, "invalid_json");
+    assert.equal((await jsonResponse(malformed)).error.status, "INVALID_ARGUMENT");
 
     const oversized = await fetch(`${base}/a2a/v1/message:send`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/a2a+json" },
       body: JSON.stringify({ payload: "x".repeat(9000) })
     });
     assert.equal(oversized.status, 413);
@@ -183,58 +231,68 @@ test("HTTP rejects malformed JSON, oversized bodies and unsupported media types"
       headers: { "content-type": "text/plain" },
       body: "epbs"
     });
-    assert.equal(wrongType.status, 415);
+    assert.equal(wrongType.status, 400);
+    assert.equal(a2aReason(await jsonResponse(wrongType)), "CONTENT_TYPE_NOT_SUPPORTED");
   });
 });
 
-test("HTTP rejects unsupported A2A versions and extensions before body processing", async () => {
+test("HTTP rejects unsupported A2A versions but ignores undeclared client extension hints", async () => {
   await withServer({}, async (base) => {
     const wrongVersion = await fetch(`${base}/a2a/v1/message:send`, {
       method: "POST",
-      headers: { "content-type": "application/json", "a2a-version": "9.9" },
+      headers: { "content-type": "application/a2a+json", "a2a-version": "9.9" },
       body: JSON.stringify(sendRequest("epbs"))
     });
     assert.equal(wrongVersion.status, 400);
-    assert.equal((await jsonResponse(wrongVersion)).code, "unsupported_version");
+    assert.equal(a2aReason(await jsonResponse(wrongVersion)), "VERSION_NOT_SUPPORTED");
 
     const extension = await fetch(`${base}/a2a/v1/message:send`, {
       method: "POST",
-      headers: { "content-type": "application/json", "a2a-extensions": "urn:example" },
+      headers: { "content-type": "application/a2a+json", "a2a-extensions": "https://example.test/non-required-extension" },
       body: JSON.stringify(sendRequest("epbs"))
     });
-    assert.equal(extension.status, 400);
-    assert.equal((await jsonResponse(extension)).code, "unsupported_extension");
+    assert.equal(extension.status, 200);
   });
 });
 
-test("streaming, push-style and extended-card operations remain disabled", async () => {
+test("streaming, push-style and extended-card operations use canonical A2A failure classes", async () => {
   await withServer({}, async (base) => {
-    for (const path of [
-      "/a2a/v1/message:stream",
-      "/a2a/v1/tasks/task-1:subscribe",
-      "/a2a/v1/tasks/task-1/pushNotificationConfig",
-      "/a2a/v1/extendedAgentCard"
-    ]) {
-      const response = await fetch(`${base}${path}`, { method: "POST" });
-      assert.equal(response.status, 501, path);
-      assert.equal((await jsonResponse(response)).code, "unsupported_operation");
-    }
+    const streaming = await fetch(`${base}/a2a/v1/message:stream`, { method: "POST" });
+    assert.equal(streaming.status, 400);
+    assert.equal(a2aReason(await jsonResponse(streaming)), "UNSUPPORTED_OPERATION");
+
+    const subscription = await fetch(`${base}/a2a/v1/tasks/task-1:subscribe`, { method: "POST" });
+    assert.equal(subscription.status, 400);
+    assert.equal(a2aReason(await jsonResponse(subscription)), "UNSUPPORTED_OPERATION");
+
+    const push = await fetch(`${base}/a2a/v1/tasks/task-1/pushNotificationConfigs`, { method: "GET" });
+    assert.equal(push.status, 400);
+    assert.equal(a2aReason(await jsonResponse(push)), "PUSH_NOTIFICATION_NOT_SUPPORTED");
+
+    const extended = await fetch(`${base}/a2a/v1/extendedAgentCard`);
+    assert.equal(extended.status, 400);
+    assert.equal(a2aReason(await jsonResponse(extended)), "EXTENDED_AGENT_CARD_NOT_CONFIGURED");
   });
 });
 
-test("beacon retains no tasks and task get/cancel fail closed", async () => {
+test("beacon retains no tasks and task get/cancel return canonical TaskNotFound", async () => {
   await withServer({}, async (base) => {
-    const list = await fetch(`${base}/a2a/v1/tasks?pageSize=10`);
+    const list = await fetch(`${base}/a2a/v1/tasks?pageSize=10&historyLength=0&includeArtifacts=false`);
     assert.equal(list.status, 200);
+    assert.match(list.headers.get("content-type"), /^application\/a2a\+json/);
     assert.deepEqual(await jsonResponse(list), { tasks: [], nextPageToken: "", pageSize: 10, totalSize: 0 });
 
-    const get = await fetch(`${base}/a2a/v1/tasks/task-1`);
+    const get = await fetch(`${base}/a2a/v1/tasks/task-1?historyLength=0`);
     assert.equal(get.status, 404);
-    assert.equal((await jsonResponse(get)).code, "task_not_found");
+    const getPayload = await jsonResponse(get);
+    assert.equal(getPayload.error.status, "NOT_FOUND");
+    assert.equal(a2aReason(getPayload), "TASK_NOT_FOUND");
 
     const cancel = await fetch(`${base}/a2a/v1/tasks/task-1:cancel`, { method: "POST" });
     assert.equal(cancel.status, 404);
-    assert.equal((await jsonResponse(cancel)).code, "task_not_found");
+    const cancelPayload = await jsonResponse(cancel);
+    assert.equal(cancelPayload.error.status, "NOT_FOUND");
+    assert.equal(a2aReason(cancelPayload), "TASK_NOT_FOUND");
   });
 });
 
@@ -242,14 +300,14 @@ test("application request budget fails closed", async () => {
   await withServer({ requestBudgetLimit: 1 }, async (base) => {
     const options = {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/a2a+json" },
       body: JSON.stringify(sendRequest("epbs"))
     };
     const first = await fetch(`${base}/a2a/v1/message:send`, options);
     assert.equal(first.status, 200);
     const second = await fetch(`${base}/a2a/v1/message:send`, options);
     assert.equal(second.status, 429);
-    assert.equal((await jsonResponse(second)).code, "request_budget_exhausted");
+    assert.equal((await jsonResponse(second)).error.status, "RESOURCE_EXHAUSTED");
   });
 });
 
