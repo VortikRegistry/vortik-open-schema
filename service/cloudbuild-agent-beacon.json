@@ -1,0 +1,36 @@
+{
+  "steps": [
+    {
+      "name": "gcr.io/k8s-skaffold/pack@sha256:12bdb2979fc30751c4064a69684058dc4936b78ddf005d594369ca2f9b584993",
+      "entrypoint": "pack",
+      "args": [
+        "build",
+        "southamerica-east1-docker.pkg.dev/${PROJECT_ID}/vortik-agent-beacon/vortik-agent-beacon:pack-${_SOURCE_SHA}-${BUILD_ID}",
+        "--builder",
+        "gcr.io/buildpacks/builder@sha256:0ab20f18ca3f835f4c26ae32bafd1a55cda2adf025528356b80491cb3cf72e3c",
+        "--network",
+        "cloudbuild",
+        "--publish"
+      ]
+    },
+    {
+      "name": "gcr.io/cloud-builders/docker@sha256:661e95acd923514f71f47ce7b390e06a8d31b15febecf772e506babf62960528",
+      "args": [
+        "pull",
+        "southamerica-east1-docker.pkg.dev/${PROJECT_ID}/vortik-agent-beacon/vortik-agent-beacon:pack-${_SOURCE_SHA}-${BUILD_ID}"
+      ]
+    },
+    {
+      "name": "gcr.io/cloud-builders/docker@sha256:661e95acd923514f71f47ce7b390e06a8d31b15febecf772e506babf62960528",
+      "args": [
+        "tag",
+        "southamerica-east1-docker.pkg.dev/${PROJECT_ID}/vortik-agent-beacon/vortik-agent-beacon:pack-${_SOURCE_SHA}-${BUILD_ID}",
+        "southamerica-east1-docker.pkg.dev/${PROJECT_ID}/vortik-agent-beacon/vortik-agent-beacon:approved-${_SOURCE_SHA}-${BUILD_ID}"
+      ]
+    }
+  ],
+  "images": [
+    "southamerica-east1-docker.pkg.dev/${PROJECT_ID}/vortik-agent-beacon/vortik-agent-beacon:approved-${_SOURCE_SHA}-${BUILD_ID}"
+  ],
+  "timeout": "600s"
+}
