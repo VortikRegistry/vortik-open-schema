@@ -34,19 +34,19 @@ function liveCandidate(manifest, publicBaseUrl) {
   return candidate;
 }
 
-test("A2A live schema accepts the same canonical HTTPS origin shape used by the runtime", async () => {
+test("A2A live schema accepts canonical public DNS HTTPS origins also accepted by runtime", async () => {
   const { validate, manifest } = await loadFixture();
   for (const origin of [
     "https://beacon.example.test",
     "https://beacon.example.test:443",
-    "https://127.0.0.1:8443"
+    "https://vortik-beacon-abc123.sa-east1.run.app"
   ]) {
     assert.equal(validate(liveCandidate(manifest, origin)), true, JSON.stringify(validate.errors));
     assert.equal(assertPublicBaseUrl(origin), new URL(origin).origin);
   }
 });
 
-test("A2A live schema rejects credentials, paths, query, fragments and non-HTTPS origins", async () => {
+test("A2A live schema rejects non-public-host shapes and every origin the runtime cannot parse", async () => {
   const { validate, manifest } = await loadFixture();
   for (const invalidOrigin of [
     "http://beacon.example.test",
@@ -57,8 +57,12 @@ test("A2A live schema rejects credentials, paths, query, fragments and non-HTTPS
     "https://beacon.example.test?mode=live",
     "https://beacon.example.test#card",
     "https://beacon.example.test:0",
-    "https://beacon.example.test:65536"
+    "https://beacon.example.test:65536",
+    "https://999.999.999.999",
+    "https://127.0.0.1:8443"
   ]) {
     assert.equal(validate(liveCandidate(manifest, invalidOrigin)), false, invalidOrigin);
   }
+
+  assert.throws(() => assertPublicBaseUrl("https://999.999.999.999"), /valid HTTPS URL/);
 });
