@@ -1,316 +1,396 @@
 # Vortik — Ethereum Semantic Registry
 
 [![Live Registry](https://img.shields.io/badge/live-registry-0b0f14?style=flat-square&logo=githubpages&logoColor=white)](https://vortikregistry.github.io/vortik-open-schema/)
-[![Interactive App](https://img.shields.io/badge/explore-app-111722?style=flat-square&logo=vercel&logoColor=white)](https://vortikregistry.github.io/vortik-open-schema/app.html)
-[![Strategic Anchors](https://img.shields.io/badge/strategic-anchors-0d131d?style=flat-square&logo=ethereum&logoColor=white)](https://vortikregistry.github.io/vortik-open-schema/market.html)
-[![Registry JSON](https://img.shields.io/badge/source-registry.json-0b1220?style=flat-square&logo=json&logoColor=white)](https://vortikregistry.github.io/vortik-open-schema/registry.json)
-[![Pipeline](https://img.shields.io/badge/pipeline-active-1e2735?style=flat-square&logo=githubactions&logoColor=white)](https://github.com/VortikRegistry/vortik-open-schema/actions)
+[![Machine-readable Feeds](https://img.shields.io/badge/machine--readable-feeds-162033?style=flat-square&logo=json&logoColor=white)](https://vortikregistry.github.io/vortik-open-schema/feeds/index.json)
+[![Discovery Manifest](https://img.shields.io/badge/public-discovery-1b2433?style=flat-square&logo=json&logoColor=white)](https://vortikregistry.github.io/vortik-open-schema/agents/discovery.json)
+[![Schemas](https://img.shields.io/badge/versioned-schemas-111722?style=flat-square&logo=json&logoColor=white)](https://github.com/VortikRegistry/vortik-open-schema/tree/main/schemas)
+[![Validation](https://img.shields.io/badge/validation-GitHub_Actions-1e2735?style=flat-square&logo=githubactions&logoColor=white)](https://github.com/VortikRegistry/vortik-open-schema/actions)
+
+Vortik is a public, independent semantic registry and discovery surface for selected Ethereum coordination terminology.
+
+The repository is not a directory of ENS names. It is a versioned public system that publishes:
+
+- a semantic registry;
+- machine-readable feeds;
+- versioned schemas;
+- source trails;
+- explicit authority boundaries;
+- public discovery metadata;
+- deterministic research contracts; and
+- a contribution path for evidence and corrections.
+
+ENS names are used as **semantic anchors inside that system**. They help bind selected naming surfaces to technical terminology and public artifacts, but they do not create protocol truth, governance authority, ownership inference or commercial authority.
+
+For a technical reader, the useful property is that Vortik can be **inspected, consumed, discussed and verified** from public artifacts.
 
 ---
 
-## Quickstart: what this repository is
+## Public surfaces available today
 
-Vortik is a public, independent semantic registry for selected Ethereum coordination terminology.
+| Surface | State | Purpose |
+| --- | --- | --- |
+| Semantic registry | **Live** | Canonical index of tracked anchors, classifications and schema bindings. |
+| Public schemas | **Live** | Versioned machine-readable contracts and semantic definitions. |
+| Source trails | **Live** | Human-readable and generated source references attached to registry definitions. |
+| Semantic feeds | **Live** | Read-only machine-consumable outputs, currently including the ePBS feed and feed index. |
+| Discovery manifest | **Live metadata** | Machine-readable description of Vortik public capabilities and lifecycle state. It does not claim a live A2A listener. |
+| Interactive explorer | **Live** | Human-readable browsing surface for registry entries and semantic structure. |
+| ENS semantic research library | **Implemented** | Deterministic local evaluation against canonical Vortik artifacts. No live public submission endpoint is claimed. |
+| ENS candidate contribution path | **Live via GitHub Issues** | Schema-bound public contribution path for evidence and corrections. Promotion is never automatic. |
+| A2A discovery beacon | **Implemented / preactivation** | A2A 1.0 HTTP+JSON implementation exists, but public ingress and Agent Card publication remain closed. |
+| Beacon outbound-denial probe | **Implemented / not yet production-proven** | One-shot fixed-destination probe exists for the future isolated runtime gate; no production PASS is claimed. |
+| Trusted receipt issuance | **Disabled** | Pre-activation infrastructure has been exercised, but issuance is not active. |
+| Candidate admission | **Disabled** | No automatic registry mutation or admission authority is active. |
 
-It maps selected ENS anchors to canonical technical terms, classifications, schemas, human-readable anchor notes, and source trails. ENS anchors are naming surfaces for registry entries; they are not protocol authority and do not create Ethereum protocol truth. See [Naming and governance boundaries](docs/naming-governance-boundaries.md).
+---
 
-### 30-second developer quickstart
+## 30-second developer quickstart
 
-Get a real machine-readable Vortik artifact with one command. No clone, package install, wallet, RPC credential, or API key is required:
+Fetch a real machine-readable Vortik artifact with one command:
 
 ```bash
 curl -fsSL https://vortikregistry.github.io/vortik-open-schema/feeds/epbs.json
 ```
 
-That public read-only feed returns the canonical ePBS term, semantic status, schema binding, source trail and explicit authority boundaries. It is a Vortik semantic artifact, not an Ethereum or ENS authority claim.
-
-Discover machine-readable feeds from:
+Discover the available feeds:
 
 ```text
 https://vortikregistry.github.io/vortik-open-schema/feeds/index.json
 ```
 
-For the zero-dependency JavaScript path, expected fields, versioning and stability boundary, see [`docs/developer-quickstart.md`](docs/developer-quickstart.md).
+Inspect the public discovery manifest:
 
-### What Vortik does not do
-
-Vortik does not:
-
-- define Ethereum protocol rules;
-- replace EIPs, protocol specifications, or client documentation;
-- treat ENS names as protocol authority;
-- treat ENS anchors as ENS DAO governance endorsements, ENSv2 operational roots, or protocol authority claims;
-- publish private ENS or commercial strategy;
-- use AI-generated reports as authority or source of truth.
-
-### Source of truth
-
-Read the repository with this source hierarchy in mind:
-
-- `schemas/` are the formal source of truth for versioned registry definitions.
-- `registry.json` is the central index for tracked anchors and points to schemas and anchor notes.
-- `anchors/` contains human-readable interpretation for each selected ENS anchor.
-- `docs/` contains generated public interfaces and explanatory material.
-- Research documents are interpretive support; they do not automatically modify registry state.
-
-### Recommended reading path
-
-1. Start with `README.md` for the repository scope and public/private boundaries.
-2. Read [`REGISTRY.md`](REGISTRY.md) for the registry model and source-of-truth hierarchy.
-3. Read [`SEMANTIC-STATUS.md`](SEMANTIC-STATUS.md) for the current public semantic posture of tracked anchors.
-4. Read [`PRIMITIVES.md`](PRIMITIVES.md) and [`PRIMITIVE-DOCUMENT-SPEC.md`](PRIMITIVE-DOCUMENT-SPEC.md) for primitive definitions and document structure.
-5. Read [`ARCHITECTURE.md`](ARCHITECTURE.md) for repository layout and validation flow.
-6. Read [`docs/index.md`](docs/index.md) for generated public documentation and research notes.
-7. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before proposing changes.
-
-### Worked example: `epbs.eth`
-
-| Field | Path or value |
-| --- | --- |
-| ENS anchor | `epbs.eth` |
-| Canonical term | enshrined proposer-builder separation (ePBS) |
-| Schema | `schemas/epbs/1.0-draft/schema.json` |
-| Source notes | `schemas/epbs/1.0-draft/sources.md` |
-| Anchor note | `anchors/epbs.md` |
-
-### Validate locally
-
-```bash
-npm run check:public-safety
-npm run validate
+```text
+https://vortikregistry.github.io/vortik-open-schema/agents/discovery.json
 ```
 
-Validation checks JSON structure, registry/schema consistency, integrity, derived-output synchronization, and public-safety constraints.
+No wallet, API key or RPC credential is required for those public read-only artifacts.
 
-### Trust and safety references
-
-- [Vortik Registry Constitution](.specify/memory/constitution.md)
-- [Taxonomy Promotion Rules](docs/taxonomy-promotion-rules.md)
-- [Naming and Governance Boundaries](docs/naming-governance-boundaries.md)
-- [Multi-Agent Verification Audit](docs/research/multi-agent-verification-2026-06-28.md)
-- [Repository Positioning and Trust Audit](docs/research/repo-positioning-trust-audit.md)
-- [v0.6.5 Public Release Notes](docs/releases/v0.6.5.md)
-- [ePBS Source Audit](docs/research/epbs-source-audit.md)
-- [Inclusionlist / FOCIL Source Audit](docs/research/inclusionlist-focil-source-audit.md)
-- [Candidate Promotion Rules](docs/research/candidate-promotion-rules.md)
+For the zero-dependency JavaScript path, expected fields, versioning and stability boundary, see [`docs/developer-quickstart.md`](docs/developer-quickstart.md).
 
 ---
 
-Vortik indexes protocol primitives, roles, constraints, external coordination surfaces, and selected ENS-anchored naming surfaces as Ethereum’s coordination architecture becomes more explicit.
+## How public discovery works today
 
-It tracks how protocol and infrastructure terminology stabilizes across:
+Vortik exposes discovery in layers rather than claiming one universal agent endpoint.
 
-- primitives
-- roles
-- constraints
-- external coordination surfaces
-- deprecated or misaligned abstractions
+### 1. Registry discovery
+
+Developers can inspect the canonical registry directly:
+
+```text
+https://vortikregistry.github.io/vortik-open-schema/registry.json
+```
+
+The registry links ENS anchors to canonical terms, classifications, schemas and human-readable notes.
+
+### 2. Feed discovery
+
+Agents and applications can discover available machine-readable feeds from:
+
+```text
+https://vortikregistry.github.io/vortik-open-schema/feeds/index.json
+```
+
+Feed consumers do not need to hard-code every topic artifact independently.
+
+### 3. Schema discovery
+
+Formal contracts live under:
+
+```text
+schemas/
+```
+
+These include registry definitions, feed contracts, ENS research request/response contracts, contribution contracts, review contracts and verification contracts.
+
+### 4. Source trails
+
+Registry definitions link to source notes and public evidence paths. Source trails are intended to make semantic claims inspectable rather than opaque.
+
+### 5. Agent discovery metadata
+
+The canonical machine-readable agent manifest is:
+
+```text
+agents/discovery.json
+```
+
+Its public mirror is published through GitHub Pages.
+
+The manifest describes what Vortik can expose or prepare without silently upgrading preactivation capabilities into live services.
+
+### 6. Public contribution path
+
+External contributors can prepare schema-bound ENS candidate contributions through GitHub Issues. Contributions remain untrusted inputs until reviewed.
 
 ---
 
-## Explore Vortik
+## A2A discovery beacon
 
-Vortik can be explored through three public entry points.
+Vortik now contains a bounded read-only Agent2Agent discovery implementation intended for agents and developer tooling that need to locate selected public Vortik artifacts.
 
-### Registry
+The implementation targets **A2A 1.0 HTTP+JSON** and maps selected Ethereum coordination queries to allowlisted public references.
 
-The canonical public interface.
+Canonical lifecycle state is currently:
 
-Use it to understand the registry, its semantic model, and how Ethereum coordination surfaces are indexed.
+```text
+mode = a2a_preactivation
+a2a_implementation_available = true
+a2a_server = false
+live_network_ingress = false
+agent_card_published = false
+public_base_url = null
+```
 
-→ https://vortikregistry.github.io/vortik-open-schema/
+That means the code exists, but Vortik does **not** currently claim:
 
-### Interactive App
+- a public A2A listener;
+- a published Agent Card;
+- live A2A network ingress; or
+- a public A2A base URL.
 
-A navigable exploration interface.
+The implementation is deliberately bounded. It does not perform open-ended web retrieval, live ENS resolution, arbitrary tool execution, persistent tasks, registry mutation or caller-selected network access.
 
-Use it to browse anchors, domains, classifications, status, schema links, and semantic structure.
+The repository also contains a one-shot outbound-denial probe for the future dedicated runtime boundary. The probe is implemented and tested locally, but this README does not claim that the production network-isolation gate has passed.
 
-→ https://vortikregistry.github.io/vortik-open-schema/app.html
+See:
 
-### Strategic Anchors
-
-The strategic visibility interface for selected ENS naming surfaces.
-
-Use it to explore protocol-aligned and externally relevant anchors connected to Ethereum’s evolving coordination architecture.
-
-→ https://vortikregistry.github.io/vortik-open-schema/market.html
+- [`docs/public-a2a-beacon.md`](docs/public-a2a-beacon.md)
+- [`docs/public-a2a-beacon-trust-boundary.md`](docs/public-a2a-beacon-trust-boundary.md)
 
 ---
 
-## Strategic Anchors
+## What can be inspected and verified
+
+A Vortik entry is designed to be traceable across multiple public layers:
+
+```text
+ENS anchor
+   ↓
+registry.json
+   ↓
+versioned schema
+   ↓
+source trail
+   ↓
+human-readable anchor note
+   ↓
+optional generated feed / map / discovery reference
+```
+
+This makes it possible to inspect:
+
+- which canonical term an anchor maps to;
+- how Vortik classifies that term;
+- which schema defines the public shape;
+- which source trail supports the interpretation;
+- which authority claims are explicitly excluded; and
+- which machine-readable surfaces expose the result.
+
+A Vortik artifact is therefore an independent semantic research output, not a substitute for Ethereum specifications or ENS authority.
+
+---
+
+## ENS anchors inside the system
+
+Selected ENS names are used as semantic anchors for registry entries.
+
+Examples include:
 
 ### Core
-
-Protocol-aligned anchors with strong semantic grounding.
 
 - **epbs.eth** — enshrined proposer-builder separation (ePBS)
 - **inclusionlist.eth** — fork-choice enforced inclusion lists (FOCIL)
 
 ### Repairable
 
-Valid underlying concept, but with imperfect ENS alignment or terminology mismatch.
-
 - **commitmentlayer.eth** — commitment
 - **fastfinality.eth** — single-slot finality (SSF)
 
-### Premature
+### Emerging
 
-Real or emerging concept, but not yet stable enough to treat as canonical.
+- **preconflayer.eth** — preconfirmation
 
-- **preconflayer.eth** — preconfirmation (emergent)
+### External coordination surfaces
 
-### External
-
-External or Ethereum-adjacent coordination surfaces that remain outside the current Ethereum L1 protocol core.
-
-- **solverlayer.eth** — solver (external)
+- **solverlayer.eth** — solver
 - **orderflowauction.eth** — order flow auctions (OFA)
 - **provingmarket.eth** — proving markets
 - **sequencingmarket.eth** — sequencing markets
 
-### Deprecated
-
-Legacy, broad, or market-oriented abstractions with reduced precision relative to current protocol-native terminology.
+### Deprecated or reduced-precision abstractions
 
 - **buildermarket.eth** — builder
 - **executionmarket.eth** — execution (ambiguous)
 - **blockspacemarket.eth** — blockspace markets
 
----
-
-## Why this matters
-
-Ethereum is undergoing a structural shift.
-
-Block production and coordination are increasingly described through:
-
-- protocol-defined roles
-- signed bids
-- payload commitments
-- reveal behavior
-- inclusion constraints
-- validator and committee enforcement
-- external coordination surfaces
-
-This makes precise terminology more important.
-
-Broad market abstractions are becoming less useful when they do not map cleanly to protocol primitives, roles, constraints, or implementation-facing objects.
+These classifications describe Vortik's semantic posture. They are not protocol status, governance status, ownership intent or commercial relevance.
 
 ---
 
-## What Vortik does
+## Worked example: `epbs.eth`
 
-Vortik indexes and preserves semantic relationships between:
+| Layer | Path or value |
+| --- | --- |
+| ENS anchor | `epbs.eth` |
+| Canonical term | enshrined proposer-builder separation (ePBS) |
+| Registry entry | `registry.json` |
+| Schema | `schemas/epbs/1.0-draft/schema.json` |
+| Source trail | `schemas/epbs/1.0-draft/sources.md` |
+| Human-readable note | `anchors/epbs.md` |
+| Public feed | `feeds/epbs.json` |
 
-- ENS anchors
-- canonical technical terms
-- classifications
-- protocol or external status
-- schema definitions
-- human-readable anchor documents
-- interpretive maps
-- generated public interfaces
-
-It is designed to help distinguish:
-
-- protocol-native terminology
-- external infrastructure terminology
-- emerging research terminology
-- deprecated or misaligned abstractions
+The ENS name is only one layer. The useful object is the complete public chain of registry metadata, schema, sources and machine-readable output.
 
 ---
 
-## What Vortik does not do
+## Authority boundaries
 
-Vortik does not:
+Vortik is independent and does **not**:
 
-- define Ethereum protocol rules
-- replace EIPs or specifications
-- claim official protocol authority
-- treat every ecosystem term as canonical
-- convert watchlist signals into anchors without strong technical grounding
+- define Ethereum protocol rules;
+- replace EIPs, consensus specifications, execution specifications or client documentation;
+- claim Ethereum Foundation, ENS Labs or ENS DAO authority;
+- treat ENS names as protocol authority;
+- infer ownership intent from an ENS name;
+- treat external contributions as trusted evidence by default;
+- grant automatic candidate admission;
+- expose the trusted-receipt signer or Google Cloud KMS through the public discovery beacon;
+- make AI-generated reports a source of protocol truth.
 
----
+The public discovery layer and the trusted verification runtime are deliberately separate security domains.
 
-## System Structure
-
-The system is organized as follows:
-
-- `registry.json` — central index for tracked anchors
-- `schemas/*` — versioned machine-readable definitions and formal source of truth
-- `anchors/*` — human-readable semantic interpretation
-- `maps/*` — interpretive views and emerging signal maps
-- `docs/*` — public GitHub Pages interface
-- `scripts/*` — generation, synchronization, and validation tooling
-
-Generated files should not be edited manually unless explicitly intended.
+See [`docs/naming-governance-boundaries.md`](docs/naming-governance-boundaries.md).
 
 ---
 
-## Automation
+## Trusted verification state
 
-The registry pipeline currently supports automated generation and synchronization for:
+Vortik contains a separate trusted-verification path for bounded primary-source and ENS-mainnet evidence.
 
-- schema structural fields
-- `sources.md` auto-generated metadata sections
-- `anchors.index.json`
-- `market.index.json`
-- public `docs/*` synchronization
-- integrity validation
+Production-preactivation evidence records PASS for:
 
-Manual source references should be added only inside the protected manual section of each `sources.md` file.
+- the pinned Google Cloud KMS Ed25519 signing path;
+- a bounded primary-source receipt probe for the canonical ePBS fixture; and
+- a bounded dual-provider Ethereum-mainnet / ENS receipt probe for `epbs.eth`.
 
----
+Those results verify specific preactivation paths. They do not activate authority.
 
-## Machine-readable outputs
+Canonical gates remain:
 
-- https://vortikregistry.github.io/vortik-open-schema/registry.json
-- https://vortikregistry.github.io/vortik-open-schema/anchors.index.json
-- https://vortikregistry.github.io/vortik-open-schema/market.index.json
-- https://vortikregistry.github.io/vortik-open-schema/maps/coordination-stack.json
-- https://vortikregistry.github.io/vortik-open-schema/maps/coordination-surfaces.json
+```text
+trusted_receipt_issuance = false
+admission.enabled = false
+```
 
----
+See:
 
-## Core Model
-
-Ethereum coordination can be read through recurring semantic categories:
-
-- primitive
-- role
-- constraint
-- external actor
-- external mechanism
-- coordination surface
-- misaligned abstraction
-
-Vortik tracks these categories without treating interpretive maps as protocol specifications.
+- [`docs/cloud-run-preactivation-evidence.md`](docs/cloud-run-preactivation-evidence.md)
+- [`docs/google-cloud-run-receipt-runtime.md`](docs/google-cloud-run-receipt-runtime.md)
 
 ---
 
-## Current Focus
+## Source of truth
 
-Current registry focus:
+Read the repository with this hierarchy in mind:
 
-- ePBS as a core proposer-builder separation primitive
-- inclusion lists / FOCIL as a core protocol-facing constraint
-- commitment as a repairable but important semantic primitive
-- preconfirmation as an emergent external mechanism
-- solver, proving, sequencing, and order-flow systems as external coordination surfaces
-- market-based abstractions as deprecated where protocol-native terminology is more precise
+1. `schemas/` — formal source of truth for versioned semantic definitions and contracts.
+2. `registry.json` — central index for tracked anchors.
+3. `anchors/` — human-readable semantic interpretation.
+4. `feeds/` — machine-readable semantic outputs.
+5. `agents/` — machine-readable discovery and lifecycle state.
+6. `maps/` — interpretive coordination views.
+7. `docs/` — generated public mirrors, evidence records and explanatory material.
+8. Research documents — interpretive support; they do not automatically modify registry state.
+
+Generated files should not be edited manually unless explicitly intended by the repository workflow.
 
 ---
 
-## Status
+## Public collaboration
 
-Current version:
+The repository supports public evidence and correction workflows through GitHub.
+
+Before proposing changes, read [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+For ENS candidate contributions, see [`docs/ens-candidate-contributions.md`](docs/ens-candidate-contributions.md).
+
+A submitted contribution:
+
+- remains untrusted input;
+- does not become a registry entry automatically;
+- does not establish protocol or ENS authority; and
+- requires conservative review before any later promotion decision.
+
+---
+
+## Public entry points
+
+```text
+Registry
+https://vortikregistry.github.io/vortik-open-schema/
+
+Interactive explorer
+https://vortikregistry.github.io/vortik-open-schema/app.html
+
+Registry JSON
+https://vortikregistry.github.io/vortik-open-schema/registry.json
+
+Feed discovery
+https://vortikregistry.github.io/vortik-open-schema/feeds/index.json
+
+Agent discovery manifest
+https://vortikregistry.github.io/vortik-open-schema/agents/discovery.json
+
+Coordination stack
+https://vortikregistry.github.io/vortik-open-schema/maps/coordination-stack.json
+
+Coordination surfaces
+https://vortikregistry.github.io/vortik-open-schema/maps/coordination-surfaces.json
+```
+
+---
+
+## Validation and reproducibility
+
+Run locally:
+
+```bash
+npm run check:public-safety
+npm run validate
+```
+
+Validation covers JSON structure, registry/schema consistency, integrity, derived-output synchronization, discovery lifecycle constraints, public-safety checks and repository regression tests.
+
+GitHub Actions validates pull requests and pushes to `main`.
+
+---
+
+## Recommended reading path
+
+1. [`REGISTRY.md`](REGISTRY.md) — registry model and source-of-truth hierarchy.
+2. [`SEMANTIC-STATUS.md`](SEMANTIC-STATUS.md) — current public semantic posture.
+3. [`docs/developer-quickstart.md`](docs/developer-quickstart.md) — machine-readable developer path.
+4. [`docs/agent-discovery.md`](docs/agent-discovery.md) — public discovery contract.
+5. [`docs/public-a2a-beacon.md`](docs/public-a2a-beacon.md) — A2A implementation and lifecycle.
+6. [`docs/public-a2a-beacon-trust-boundary.md`](docs/public-a2a-beacon-trust-boundary.md) — runtime/network boundary required before activation.
+7. [`docs/naming-governance-boundaries.md`](docs/naming-governance-boundaries.md) — ENS naming and authority boundaries.
+8. [`CONTRIBUTING.md`](CONTRIBUTING.md) — contribution rules.
+
+---
+
+## Repository status
 
 - Registry version: `0.6.5`
-- Source of truth: `schemas`
+- Formal source of truth: `schemas/`
 - Central index: `registry.json`
 - Public interface: GitHub Pages
-- Validation: GitHub Actions
+- Public feeds: live
+- Public discovery metadata: live
+- A2A beacon: implemented, preactivation
+- Trusted receipt issuance: disabled
+- Candidate admission: disabled
 
 ---
 
