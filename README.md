@@ -195,7 +195,7 @@ Interpretive maps and classifications are Vortik research outputs, not protocol 
 - **executionmarket.eth** — execution (ambiguous)
 - **blockspacemarket.eth** — blockspace markets
 
-Classification describes Vortik's semantic posture. It is not an ownership, price, buyer-interest or sale signal.
+Classification describes Vortik's semantic posture only; it is not an ownership or commercial-interest signal.
 
 ---
 
@@ -272,7 +272,7 @@ Vortik does **not**:
 - treat ENS names as protocol authority;
 - infer ownership intent from an ENS name;
 - expose private ENS strategy or commercial workflow;
-- operate as a marketplace, price oracle or buyer-discovery service;
+- operate as a marketplace, price oracle or commercial counterparty-discovery service;
 - grant automatic candidate admission;
 - expose the trusted-receipt signer or KMS through the public beacon;
 - use AI-generated reports as authority or source of truth.
