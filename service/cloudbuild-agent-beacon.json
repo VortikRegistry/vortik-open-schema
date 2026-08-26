@@ -1,11 +1,11 @@
 {
   "steps": [
     {
-      "name": "gcr.io/k8s-skaffold/pack@sha256:12bdb2979fc30751c4064a69684058dc4936b78ddf005d594369ca2f9b584993",
+      "name": "gcr.io/cloud-builders/git@sha256:8cae9507238f715abbefb6d9e13826340b8f265312fdae5b99e699fe1289a02c",
       "entrypoint": "/bin/sh",
       "args": [
         "-ceu",
-        "expected=\"$${1}\"\nif [ \"$${#expected}\" -ne 40 ]; then\n  echo \"COMMIT_SHA must be a full 40-character revision\" >&2\n  exit 1\nfi\ncase \"$${expected}\" in\n  *[!0-9a-f]*)\n    echo \"COMMIT_SHA must be lowercase hexadecimal\" >&2\n    exit 1\n    ;;\nesac\nif [ ! -f .git/HEAD ]; then\n  echo \"Git source metadata is required\" >&2\n  exit 1\nfi\nactual=$$(tr -d '\\r\\n' < .git/HEAD)\ncase \"$${actual}\" in\n  \"ref: \"*)\n    ref=$${actual#ref: }\n    if [ ! -f \".git/$${ref}\" ]; then\n      echo \"Git source ref is not directly resolved\" >&2\n      exit 1\n    fi\n    actual=$$(tr -d '\\r\\n' < \".git/$${ref}\")\n    ;;\nesac\nif [ \"$${actual}\" != \"$${expected}\" ]; then\n  echo \"Cloud Build source revision does not match COMMIT_SHA\" >&2\n  exit 1\nfi",
+        "expected=\"$${1}\"\nif [ \"$${#expected}\" -ne 40 ]; then\n  echo \"COMMIT_SHA must be a full 40-character revision\" >&2\n  exit 1\nfi\ncase \"$${expected}\" in\n  *[!0-9a-f]*)\n    echo \"COMMIT_SHA must be lowercase hexadecimal\" >&2\n    exit 1\n    ;;\nesac\nif ! actual=$$(git rev-parse --verify HEAD 2>/dev/null); then\n  echo \"Git source metadata is required\" >&2\n  exit 1\nfi\nif [ \"$${actual}\" != \"$${expected}\" ]; then\n  echo \"Cloud Build source revision does not match COMMIT_SHA\" >&2\n  exit 1\nfi\nif ! git diff --quiet --exit-code -- || ! git diff --cached --quiet --exit-code --; then\n  echo \"Git source worktree and index must be clean\" >&2\n  exit 1\nfi\nif ! untracked=$$(git ls-files --others); then\n  echo \"Unable to verify additional build inputs\" >&2\n  exit 1\nfi\nif [ -n \"$${untracked}\" ]; then\n  echo \"Git source contains additional build inputs\" >&2\n  exit 1\nfi",
         "verify-source",
         "$COMMIT_SHA"
       ]
