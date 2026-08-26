@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
-import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -25,23 +25,47 @@ async function loadConfig() {
 test("beacon build verifies the checked-out Git revision before publication", async () => {
   const config = await loadConfig();
   const [verifySourceStep] = config.steps;
-  const expected = "0123456789abcdef0123456789abcdef01234567";
   const directory = await mkdtemp(join(tmpdir(), "vortik-beacon-source-"));
 
   try {
-    await mkdir(join(directory, ".git"));
-    await writeFile(join(directory, ".git", "HEAD"), `${expected}\n`);
+    await writeFile(join(directory, ".gitignore"), "ignored-input.txt\n");
+    await writeFile(join(directory, "tracked-input.txt"), "reviewed\n");
+    await runFile("git", ["init", "--quiet"], { cwd: directory });
+    await runFile("git", ["add", ".gitignore", "tracked-input.txt"], {
+      cwd: directory,
+    });
+    await runFile(
+      "git",
+      [
+        "-c",
+        "user.name=Vortik Test",
+        "-c",
+        "user.email=vortik-test@example.invalid",
+        "commit",
+        "--quiet",
+        "-m",
+        "reviewed source",
+      ],
+      { cwd: directory },
+    );
+    const { stdout } = await runFile("git", ["rev-parse", "HEAD"], {
+      cwd: directory,
+    });
+    const expected = stdout.trim();
 
     assert.match(
       verifySourceStep.name,
-      /^gcr\.io\/k8s-skaffold\/pack@sha256:[a-f0-9]{64}$/u,
+      /^gcr\.io\/cloud-builders\/git@sha256:[a-f0-9]{64}$/u,
     );
     assert.equal(verifySourceStep.entrypoint, "/bin/sh");
     assert.deepEqual(verifySourceStep.args.slice(-2), [
       "verify-source",
       "$COMMIT_SHA",
     ]);
-    assert.match(verifySourceStep.args[1], /\.git\/HEAD/u);
+    assert.match(verifySourceStep.args[1], /git rev-parse --verify HEAD/u);
+    assert.match(verifySourceStep.args[1], /git diff --quiet --exit-code/u);
+    assert.match(verifySourceStep.args[1], /git diff --cached --quiet/u);
+    assert.match(verifySourceStep.args[1], /git ls-files --others/u);
 
     const renderedScript = verifySourceStep.args[1].replaceAll("$$", "$");
     await runFile("/bin/sh", [
@@ -71,7 +95,58 @@ test("beacon build verifies the checked-out Git revision before publication", as
       /COMMIT_SHA must be lowercase hexadecimal/u,
     );
 
-    await rm(join(directory, ".git", "HEAD"));
+    await writeFile(join(directory, "tracked-input.txt"), "modified\n");
+    await assert.rejects(
+      runFile("/bin/sh", [
+        "-ceu",
+        renderedScript,
+        "verify-source",
+        expected,
+      ], { cwd: directory }),
+      /Git source worktree and index must be clean/u,
+    );
+    await runFile("git", ["restore", "tracked-input.txt"], { cwd: directory });
+
+    await writeFile(join(directory, "staged-input.txt"), "staged\n");
+    await runFile("git", ["add", "staged-input.txt"], { cwd: directory });
+    await assert.rejects(
+      runFile("/bin/sh", [
+        "-ceu",
+        renderedScript,
+        "verify-source",
+        expected,
+      ], { cwd: directory }),
+      /Git source worktree and index must be clean/u,
+    );
+    await runFile("git", ["reset", "--hard", "--quiet", "HEAD"], {
+      cwd: directory,
+    });
+
+    await writeFile(join(directory, "untracked-input.txt"), "untracked\n");
+    await assert.rejects(
+      runFile("/bin/sh", [
+        "-ceu",
+        renderedScript,
+        "verify-source",
+        expected,
+      ], { cwd: directory }),
+      /Git source contains additional build inputs/u,
+    );
+    await rm(join(directory, "untracked-input.txt"));
+
+    await writeFile(join(directory, "ignored-input.txt"), "ignored\n");
+    await assert.rejects(
+      runFile("/bin/sh", [
+        "-ceu",
+        renderedScript,
+        "verify-source",
+        expected,
+      ], { cwd: directory }),
+      /Git source contains additional build inputs/u,
+    );
+    await rm(join(directory, "ignored-input.txt"));
+
+    await rm(join(directory, ".git"), { recursive: true });
     await assert.rejects(
       runFile("/bin/sh", [
         "-ceu",
