@@ -60,6 +60,27 @@ test("beacon build verifies the checked-out Git revision before publication", as
       ], { cwd: directory }),
       /Cloud Build source revision does not match COMMIT_SHA/u,
     );
+
+    await assert.rejects(
+      runFile("/bin/sh", [
+        "-ceu",
+        renderedScript,
+        "verify-source",
+        expected.toUpperCase(),
+      ], { cwd: directory }),
+      /COMMIT_SHA must be lowercase hexadecimal/u,
+    );
+
+    await rm(join(directory, ".git", "HEAD"));
+    await assert.rejects(
+      runFile("/bin/sh", [
+        "-ceu",
+        renderedScript,
+        "verify-source",
+        expected,
+      ], { cwd: directory }),
+      /Git source metadata is required/u,
+    );
   } finally {
     await rm(directory, { recursive: true, force: true });
   }
