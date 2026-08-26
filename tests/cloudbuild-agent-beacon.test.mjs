@@ -82,6 +82,7 @@ test("beacon build verifies the checked-out Git revision before publication", as
     ]);
     assert.match(verifySourceStep.args[1], /git rev-parse --verify HEAD/u);
     assert.match(verifySourceStep.args[1], /git cat-file blob/u);
+    assert.match(verifySourceStep.args[1], /GIT_NO_REPLACE_OBJECTS=1/u);
     assert.match(
       verifySourceStep.args[1],
       /service\/materialize-reviewed-agent-beacon-source\.sh/u,
@@ -92,6 +93,8 @@ test("beacon build verifies the checked-out Git revision before publication", as
     assert.match(materializerScript, /git ls-tree -rz --full-tree/u);
     assert.match(materializerScript, /git cat-file blob/u);
     assert.match(materializerScript, /git hash-object --no-filters/u);
+    assert.match(materializerScript, /GIT_NO_REPLACE_OBJECTS=1/u);
+    assert.match(materializerScript, /git replace -l/u);
 
     const renderedScript = verifySourceStep.args[1].replaceAll("$$", "$");
     await runFile(verifySourceStep.entrypoint, [
@@ -105,6 +108,40 @@ test("beacon build verifies the checked-out Git revision before publication", as
       "reviewed\n",
     );
     await rm(join(directory, CANONICAL_CONTEXT), { recursive: true });
+
+    const { stdout: materializerObjectOutput } = await runFile(
+      "git",
+      ["rev-parse", "HEAD:service/materialize-reviewed-agent-beacon-source.sh"],
+      { cwd: directory },
+    );
+    await writeFile(
+      join(directory, "replacement-materializer.sh"),
+      "#!/usr/bin/env bash\nexit 0\n",
+    );
+    const { stdout: replacementObjectOutput } = await runFile(
+      "git",
+      ["hash-object", "-w", "replacement-materializer.sh"],
+      { cwd: directory },
+    );
+    await rm(join(directory, "replacement-materializer.sh"));
+    const materializerObject = materializerObjectOutput.trim();
+    await runFile(
+      "git",
+      ["replace", materializerObject, replacementObjectOutput.trim()],
+      { cwd: directory },
+    );
+    await assert.rejects(
+      runFile(verifySourceStep.entrypoint, [
+        "-ceu",
+        renderedScript,
+        "bootstrap-source",
+        expected,
+      ], { cwd: directory }),
+      /Git replacement objects are not permitted/u,
+    );
+    await runFile("git", ["replace", "-d", materializerObject], {
+      cwd: directory,
+    });
 
     await assert.rejects(
       runFile(verifySourceStep.entrypoint, [
