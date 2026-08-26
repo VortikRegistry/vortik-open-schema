@@ -2,12 +2,24 @@
   "steps": [
     {
       "name": "gcr.io/k8s-skaffold/pack@sha256:12bdb2979fc30751c4064a69684058dc4936b78ddf005d594369ca2f9b584993",
+      "entrypoint": "/bin/sh",
+      "args": [
+        "-ceu",
+        "expected=\"$${1}\"\nif [ \"$${#expected}\" -ne 40 ]; then\n  echo \"COMMIT_SHA must be a full 40-character revision\" >&2\n  exit 1\nfi\ncase \"$${expected}\" in\n  *[!0-9a-f]*)\n    echo \"COMMIT_SHA must be lowercase hexadecimal\" >&2\n    exit 1\n    ;;\nesac\nif [ ! -f .git/HEAD ]; then\n  echo \"Git source metadata is required\" >&2\n  exit 1\nfi\nactual=$$(tr -d '\\r\\n' < .git/HEAD)\ncase \"$${actual}\" in\n  \"ref: \"*)\n    ref=$${actual#ref: }\n    if [ ! -f \".git/$${ref}\" ]; then\n      echo \"Git source ref is not directly resolved\" >&2\n      exit 1\n    fi\n    actual=$$(tr -d '\\r\\n' < \".git/$${ref}\")\n    ;;\nesac\nif [ \"$${actual}\" != \"$${expected}\" ]; then\n  echo \"Cloud Build source revision does not match COMMIT_SHA\" >&2\n  exit 1\nfi",
+        "verify-source",
+        "$COMMIT_SHA"
+      ]
+    },
+    {
+      "name": "gcr.io/k8s-skaffold/pack@sha256:12bdb2979fc30751c4064a69684058dc4936b78ddf005d594369ca2f9b584993",
       "entrypoint": "pack",
       "args": [
         "build",
-        "southamerica-east1-docker.pkg.dev/${PROJECT_ID}/vortik-agent-beacon/vortik-agent-beacon:pack-${_SOURCE_SHA}-${BUILD_ID}",
+        "southamerica-east1-docker.pkg.dev/${PROJECT_ID}/vortik-agent-beacon/vortik-agent-beacon:pack-${COMMIT_SHA}-${BUILD_ID}",
         "--builder",
         "gcr.io/buildpacks/builder@sha256:0ab20f18ca3f835f4c26ae32bafd1a55cda2adf025528356b80491cb3cf72e3c",
+        "--env",
+        "GOOGLE_ENTRYPOINT=node service/cloud-run-agent-beacon.mjs",
         "--network",
         "cloudbuild",
         "--publish"
@@ -17,20 +29,20 @@
       "name": "gcr.io/cloud-builders/docker@sha256:661e95acd923514f71f47ce7b390e06a8d31b15febecf772e506babf62960528",
       "args": [
         "pull",
-        "southamerica-east1-docker.pkg.dev/${PROJECT_ID}/vortik-agent-beacon/vortik-agent-beacon:pack-${_SOURCE_SHA}-${BUILD_ID}"
+        "southamerica-east1-docker.pkg.dev/${PROJECT_ID}/vortik-agent-beacon/vortik-agent-beacon:pack-${COMMIT_SHA}-${BUILD_ID}"
       ]
     },
     {
       "name": "gcr.io/cloud-builders/docker@sha256:661e95acd923514f71f47ce7b390e06a8d31b15febecf772e506babf62960528",
       "args": [
         "tag",
-        "southamerica-east1-docker.pkg.dev/${PROJECT_ID}/vortik-agent-beacon/vortik-agent-beacon:pack-${_SOURCE_SHA}-${BUILD_ID}",
-        "southamerica-east1-docker.pkg.dev/${PROJECT_ID}/vortik-agent-beacon/vortik-agent-beacon:approved-${_SOURCE_SHA}-${BUILD_ID}"
+        "southamerica-east1-docker.pkg.dev/${PROJECT_ID}/vortik-agent-beacon/vortik-agent-beacon:pack-${COMMIT_SHA}-${BUILD_ID}",
+        "southamerica-east1-docker.pkg.dev/${PROJECT_ID}/vortik-agent-beacon/vortik-agent-beacon:approved-${COMMIT_SHA}-${BUILD_ID}"
       ]
     }
   ],
   "images": [
-    "southamerica-east1-docker.pkg.dev/${PROJECT_ID}/vortik-agent-beacon/vortik-agent-beacon:approved-${_SOURCE_SHA}-${BUILD_ID}"
+    "southamerica-east1-docker.pkg.dev/${PROJECT_ID}/vortik-agent-beacon/vortik-agent-beacon:approved-${COMMIT_SHA}-${BUILD_ID}"
   ],
   "timeout": "600s"
 }
