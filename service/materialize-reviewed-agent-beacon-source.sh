@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
+export GIT_NO_REPLACE_OBJECTS=1
 
 expected="${1:-}"
 if [[ ${#expected} -ne 40 ]]; then
@@ -18,6 +19,15 @@ if ! actual=$(git rev-parse --verify HEAD 2>/dev/null); then
 fi
 if [[ $actual != "$expected" ]]; then
   echo "Cloud Build source revision does not match COMMIT_SHA" >&2
+  exit 1
+fi
+
+if ! replacement_refs=$(git replace -l); then
+  echo "Unable to verify Git replacement objects" >&2
+  exit 1
+fi
+if [[ -n $replacement_refs ]]; then
+  echo "Git replacement objects are not permitted" >&2
   exit 1
 fi
 
