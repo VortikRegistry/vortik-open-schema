@@ -63,9 +63,12 @@ test("beacon build verifies the checked-out Git revision before publication", as
       "$COMMIT_SHA",
     ]);
     assert.match(verifySourceStep.args[1], /git rev-parse --verify HEAD/u);
-    assert.match(verifySourceStep.args[1], /git diff --quiet --exit-code/u);
-    assert.match(verifySourceStep.args[1], /git diff --cached --quiet/u);
+    assert.match(verifySourceStep.args[1], /git write-tree/u);
+    assert.match(verifySourceStep.args[1], /git ls-files -v/u);
     assert.match(verifySourceStep.args[1], /git ls-files --others/u);
+    assert.match(verifySourceStep.args[1], /GIT_INDEX_FILE/u);
+    assert.match(verifySourceStep.args[1], /git read-tree/u);
+    assert.match(verifySourceStep.args[1], /git add -A/u);
 
     const renderedScript = verifySourceStep.args[1].replaceAll("$$", "$");
     await runFile("/bin/sh", [
@@ -103,7 +106,51 @@ test("beacon build verifies the checked-out Git revision before publication", as
         "verify-source",
         expected,
       ], { cwd: directory }),
-      /Git source worktree and index must be clean/u,
+      /Git source worktree must match the reviewed commit/u,
+    );
+    await runFile("git", ["restore", "tracked-input.txt"], { cwd: directory });
+
+    await runFile(
+      "git",
+      ["update-index", "--skip-worktree", "tracked-input.txt"],
+      { cwd: directory },
+    );
+    await writeFile(join(directory, "tracked-input.txt"), "modified\n");
+    await assert.rejects(
+      runFile("/bin/sh", [
+        "-ceu",
+        renderedScript,
+        "verify-source",
+        expected,
+      ], { cwd: directory }),
+      /Git source index flags must be canonical/u,
+    );
+    await runFile(
+      "git",
+      ["update-index", "--no-skip-worktree", "tracked-input.txt"],
+      { cwd: directory },
+    );
+    await runFile("git", ["restore", "tracked-input.txt"], { cwd: directory });
+
+    await runFile(
+      "git",
+      ["update-index", "--assume-unchanged", "tracked-input.txt"],
+      { cwd: directory },
+    );
+    await writeFile(join(directory, "tracked-input.txt"), "modified\n");
+    await assert.rejects(
+      runFile("/bin/sh", [
+        "-ceu",
+        renderedScript,
+        "verify-source",
+        expected,
+      ], { cwd: directory }),
+      /Git source index flags must be canonical/u,
+    );
+    await runFile(
+      "git",
+      ["update-index", "--no-assume-unchanged", "tracked-input.txt"],
+      { cwd: directory },
     );
     await runFile("git", ["restore", "tracked-input.txt"], { cwd: directory });
 
@@ -116,7 +163,7 @@ test("beacon build verifies the checked-out Git revision before publication", as
         "verify-source",
         expected,
       ], { cwd: directory }),
-      /Git source worktree and index must be clean/u,
+      /Git source index must match the reviewed commit/u,
     );
     await runFile("git", ["reset", "--hard", "--quiet", "HEAD"], {
       cwd: directory,
