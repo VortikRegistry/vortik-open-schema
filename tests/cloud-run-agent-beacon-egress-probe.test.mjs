@@ -37,11 +37,30 @@ function captureStream() {
   };
 }
 
+function runProbe(options = {}) {
+  return runCloudRunAgentBeaconEgressProbe({
+    networkSettleWaitImpl: async () => {},
+    readinessResolver: {
+      resolveTxt: async () => [["vortik-agent-beacon-vpc-ready-v1"]],
+      cancel: () => {}
+    },
+    ...options
+  });
+}
+
 test("egress probe profile fixes HTTPS and private TCP destinations with no retries, secrets or KMS", () => {
+  assert.deepEqual(CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE.direct_vpc_readiness, {
+    id: "direct_vpc_private_dns",
+    protocol: "dns_txt",
+    hostname: "ready.beacon-readiness.vortik.internal",
+    expected_value: "vortik-agent-beacon-vpc-ready-v1"
+  });
   assert.deepEqual(CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE.destinations, [
     { id: "external_https", protocol: "https", url: "https://example.com/" },
     { id: "private_rfc1918", protocol: "tcp", host: "10.255.255.1", port: 443 }
   ]);
+  assert.equal(CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE.network_settle_ms, 180_000);
+  assert.equal(CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE.readiness_attempts, 1);
   assert.equal(CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE.attempts_per_destination, 1);
   assert.equal(CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE.retries, 0);
   assert.equal(CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE.secrets_required, false);
@@ -52,7 +71,7 @@ test("egress probe profile fixes HTTPS and private TCP destinations with no retr
 test("PASS requires the fixed HTTPS and private TCP destinations to be inaccessible", async () => {
   const httpsCalls = [];
   const tcpCalls = [];
-  const result = await runCloudRunAgentBeaconEgressProbe({
+  const result = await runProbe({
     fetchImpl: async (url, options) => {
       httpsCalls.push({ url, options });
       throw networkError("ETIMEDOUT");
@@ -72,6 +91,12 @@ test("PASS requires the fixed HTTPS and private TCP destinations to be inaccessi
   assert.deepEqual(result, {
     probe_id: "vortik-cloud-run-agent-beacon-egress-denial-v1",
     status: "PASS",
+    network_settle_ms: 180_000,
+    direct_vpc_readiness: {
+      id: "direct_vpc_private_dns",
+      outcome: "ready"
+    },
+    readiness_attempts: 1,
     attempts_per_destination: 1,
     retries: 0,
     results: [
@@ -81,10 +106,116 @@ test("PASS requires the fixed HTTPS and private TCP destinations to be inaccessi
   });
 });
 
+test("the one-shot transports start only after the fixed network-settle phase", async () => {
+  let releaseSettle;
+  const settleGate = new Promise((resolve) => { releaseSettle = resolve; });
+  const events = [];
+
+  const execution = runCloudRunAgentBeaconEgressProbe({
+    networkSettleWaitImpl: async (delayMs) => {
+      events.push(`settle:${delayMs}`);
+      await settleGate;
+    },
+    readinessResolver: {
+      resolveTxt: async (hostname) => {
+        events.push(`dns:${hostname}`);
+        return [["vortik-agent-beacon-vpc-ready-v1"]];
+      },
+      cancel: () => {}
+    },
+    fetchImpl: async () => {
+      events.push("https");
+      throw networkError("ETIMEDOUT");
+    },
+    privateConnectImpl: () => {
+      events.push("tcp");
+      return eventSocket("error", networkError("ETIMEDOUT"));
+    },
+    timeoutMs: 100
+  });
+
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(events, ["settle:180000"]);
+
+  releaseSettle();
+  const result = await execution;
+  assert.deepEqual(events, [
+    "settle:180000",
+    "dns:ready.beacon-readiness.vortik.internal",
+    "https",
+    "tcp"
+  ]);
+  assert.equal(result.status, "PASS");
+});
+
+test("a failed network-settle phase fails closed without any destination attempt", async () => {
+  let attempts = 0;
+  await assert.rejects(
+    runCloudRunAgentBeaconEgressProbe({
+      networkSettleWaitImpl: async () => { throw new Error("variable platform detail"); },
+      fetchImpl: async () => { attempts += 1; },
+      privateConnectImpl: () => { attempts += 1; },
+      timeoutMs: 100
+    }),
+    /network-settle phase failed/
+  );
+  assert.equal(attempts, 0);
+});
+
+test("missing, mismatched or failed private DNS readiness blocks destination attempts", async () => {
+  for (const resolveTxt of [
+    async () => [],
+    async () => [["wrong-network"]],
+    async () => { throw networkError("ENOTFOUND"); }
+  ]) {
+    let attempts = 0;
+    await assert.rejects(
+      runCloudRunAgentBeaconEgressProbe({
+        networkSettleWaitImpl: async () => {},
+        readinessResolver: { resolveTxt, cancel: () => {} },
+        fetchImpl: async () => { attempts += 1; },
+        privateConnectImpl: () => { attempts += 1; },
+        timeoutMs: 100
+      }),
+      /Direct VPC readiness was indeterminate/
+    );
+    assert.equal(attempts, 0);
+  }
+});
+
+test("the private DNS readiness deadline cancels a live resolver handle", { timeout: 250 }, async () => {
+  let destinationAttempts = 0;
+  let pendingTimer;
+  let cancelCalls = 0;
+  await assert.rejects(
+    runCloudRunAgentBeaconEgressProbe({
+      networkSettleWaitImpl: async () => {},
+      readinessResolver: {
+        resolveTxt: async () => new Promise((resolve) => {
+          pendingTimer = setTimeout(
+            () => resolve([["vortik-agent-beacon-vpc-ready-v1"]]),
+            1_000
+          );
+        }),
+        cancel: () => {
+          cancelCalls += 1;
+          clearTimeout(pendingTimer);
+        }
+      },
+      fetchImpl: async () => { destinationAttempts += 1; },
+      privateConnectImpl: () => { destinationAttempts += 1; },
+      timeoutMs: 5
+    }),
+    /Direct VPC readiness was indeterminate/
+  );
+  assert.equal(cancelCalls, 1);
+  assert.equal(destinationAttempts, 0);
+});
+
 test("hard deadlines bound HTTPS and TCP transports that never settle", { timeout: 250 }, async () => {
   let httpsAttempts = 0;
   let tcpAttempts = 0;
-  const result = await runCloudRunAgentBeaconEgressProbe({
+  const result = await runProbe({
     fetchImpl: async () => {
       httpsAttempts += 1;
       await new Promise(() => {});
@@ -106,7 +237,7 @@ test("hard deadlines bound HTTPS and TCP transports that never settle", { timeou
 
 test("an HTTPS response fails without waiting for body cancellation", { timeout: 250 }, async () => {
   await assert.rejects(
-    runCloudRunAgentBeaconEgressProbe({
+    runProbe({
       fetchImpl: async () => ({
         status: 200,
         body: { cancel: async () => new Promise(() => {}) }
@@ -120,7 +251,7 @@ test("an HTTPS response fails without waiting for body cancellation", { timeout:
 
 test("any external HTTP response, including an error response, rejects PASS", async () => {
   await assert.rejects(
-    runCloudRunAgentBeaconEgressProbe({
+    runProbe({
       fetchImpl: async () => new Response(null, { status: 503 }),
       privateConnectImpl: blockedPrivateConnect(),
       timeoutMs: 100
@@ -135,7 +266,7 @@ test("private TCP connect and refusal both prove reachability below TLS", async 
     () => eventSocket("error", networkError("ECONNREFUSED"))
   ]) {
     await assert.rejects(
-      runCloudRunAgentBeaconEgressProbe({
+      runProbe({
         fetchImpl: blockedFetch(),
         privateConnectImpl,
         timeoutMs: 100
@@ -150,7 +281,7 @@ test("TLS and unknown private errors fail closed as indeterminate", async () => 
     cause: networkError("CERT_HAS_EXPIRED")
   });
   await assert.rejects(
-    runCloudRunAgentBeaconEgressProbe({
+    runProbe({
       fetchImpl: async () => { throw tlsError; },
       privateConnectImpl: blockedPrivateConnect(),
       timeoutMs: 100
@@ -159,7 +290,7 @@ test("TLS and unknown private errors fail closed as indeterminate", async () => 
   );
 
   await assert.rejects(
-    runCloudRunAgentBeaconEgressProbe({
+    runProbe({
       fetchImpl: blockedFetch(),
       privateConnectImpl: () => eventSocket("error", networkError("UNKNOWN")),
       timeoutMs: 100
@@ -170,7 +301,7 @@ test("TLS and unknown private errors fail closed as indeterminate", async () => 
 
 test("invalid transport responses fail closed instead of being counted as denial", async () => {
   await assert.rejects(
-    runCloudRunAgentBeaconEgressProbe({
+    runProbe({
       fetchImpl: async () => ({}),
       privateConnectImpl: blockedPrivateConnect(),
       timeoutMs: 100
@@ -178,7 +309,7 @@ test("invalid transport responses fail closed instead of being counted as denial
     /invalid HTTP response/
   );
   await assert.rejects(
-    runCloudRunAgentBeaconEgressProbe({
+    runProbe({
       fetchImpl: blockedFetch(),
       privateConnectImpl: () => ({}),
       timeoutMs: 100

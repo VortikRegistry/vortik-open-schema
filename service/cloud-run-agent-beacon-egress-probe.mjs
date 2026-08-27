@@ -1,4 +1,12 @@
+import { Resolver as DnsResolver } from "node:dns/promises";
 import { connect as connectTcp } from "node:net";
+
+const DIRECT_VPC_READINESS = Object.freeze({
+  id: "direct_vpc_private_dns",
+  protocol: "dns_txt",
+  hostname: "ready.beacon-readiness.vortik.internal",
+  expected_value: "vortik-agent-beacon-vpc-ready-v1"
+});
 
 const EXTERNAL_HTTPS_DESTINATION = Object.freeze({
   id: "external_https",
@@ -19,6 +27,7 @@ const FIXED_DESTINATIONS = Object.freeze([
 ]);
 
 const DEFAULT_TIMEOUT_MS = 3_000;
+const NETWORK_SETTLE_MS = 180_000;
 const INACCESSIBLE_NETWORK_CODES = new Set([
   "EACCES",
   "EPERM",
@@ -33,6 +42,53 @@ const REACHABLE_NETWORK_CODES = new Set(["ECONNREFUSED", "ECONNRESET"]);
 function assertTimeoutMs(timeoutMs) {
   if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 10_000) {
     throw new TypeError("outbound-denial probe timeout must be an integer from 1 to 10000 milliseconds");
+  }
+}
+
+function waitForNetworkSettle(delayMs) {
+  return new Promise((resolve) => setTimeout(resolve, delayMs));
+}
+
+function createDirectVpcReadinessResolver() {
+  const resolver = new DnsResolver();
+  return Object.freeze({
+    resolveTxt: resolver.resolveTxt.bind(resolver),
+    cancel: resolver.cancel.bind(resolver)
+  });
+}
+
+async function assertDirectVpcReady({ resolver, timeoutMs }) {
+  const deadlineError = new Error("outbound-denial probe Direct VPC readiness deadline elapsed");
+  let timeoutId;
+  const deadline = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => {
+      reject(deadlineError);
+      try {
+        resolver.cancel();
+      } catch {
+        // The deadline remains authoritative even if resolver cleanup fails.
+      }
+    }, timeoutMs);
+  });
+
+  try {
+    const records = await Promise.race([
+      resolver.resolveTxt(DIRECT_VPC_READINESS.hostname),
+      deadline
+    ]);
+    if (
+      !Array.isArray(records)
+      || records.length !== 1
+      || !Array.isArray(records[0])
+      || records[0].length !== 1
+      || records[0][0] !== DIRECT_VPC_READINESS.expected_value
+    ) {
+      throw new Error("outbound-denial probe Direct VPC readiness response mismatch");
+    }
+  } catch {
+    throw new Error("outbound-denial probe Direct VPC readiness was indeterminate");
+  } finally {
+    clearTimeout(timeoutId);
   }
 }
 
@@ -150,7 +206,10 @@ function attemptFixedPrivateTcp({ connectImpl, timeoutMs }) {
 
 export const CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE = Object.freeze({
   probe_id: "vortik-cloud-run-agent-beacon-egress-denial-v1",
+  direct_vpc_readiness: DIRECT_VPC_READINESS,
   destinations: FIXED_DESTINATIONS,
+  network_settle_ms: NETWORK_SETTLE_MS,
+  readiness_attempts: 1,
   timeout_ms: DEFAULT_TIMEOUT_MS,
   attempts_per_destination: 1,
   retries: 0,
@@ -162,6 +221,8 @@ export const CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE = Object.freeze({
 export async function runCloudRunAgentBeaconEgressProbe({
   fetchImpl = globalThis.fetch,
   privateConnectImpl = connectTcp,
+  networkSettleWaitImpl = waitForNetworkSettle,
+  readinessResolver = createDirectVpcReadinessResolver(),
   timeoutMs = DEFAULT_TIMEOUT_MS
 } = {}) {
   if (typeof fetchImpl !== "function") {
@@ -170,7 +231,27 @@ export async function runCloudRunAgentBeaconEgressProbe({
   if (typeof privateConnectImpl !== "function") {
     throw new TypeError("outbound-denial probe requires a TCP connect implementation");
   }
+  if (typeof networkSettleWaitImpl !== "function") {
+    throw new TypeError("outbound-denial probe requires a network-settle wait implementation");
+  }
+  if (
+    typeof readinessResolver?.resolveTxt !== "function"
+    || typeof readinessResolver?.cancel !== "function"
+  ) {
+    throw new TypeError("outbound-denial probe requires a cancellable Direct VPC readiness resolver");
+  }
   assertTimeoutMs(timeoutMs);
+
+  try {
+    await networkSettleWaitImpl(NETWORK_SETTLE_MS);
+  } catch {
+    throw new Error("outbound-denial probe network-settle phase failed");
+  }
+
+  await assertDirectVpcReady({
+    resolver: readinessResolver,
+    timeoutMs
+  });
 
   const results = await Promise.all([
     attemptFixedExternalHttps({ fetchImpl, timeoutMs }),
@@ -185,6 +266,12 @@ export async function runCloudRunAgentBeaconEgressProbe({
   return Object.freeze({
     probe_id: CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE.probe_id,
     status: "PASS",
+    network_settle_ms: NETWORK_SETTLE_MS,
+    direct_vpc_readiness: Object.freeze({
+      id: DIRECT_VPC_READINESS.id,
+      outcome: "ready"
+    }),
+    readiness_attempts: 1,
     attempts_per_destination: 1,
     retries: 0,
     results: Object.freeze(results)
