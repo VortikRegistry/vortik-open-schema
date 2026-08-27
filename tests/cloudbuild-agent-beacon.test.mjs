@@ -14,12 +14,16 @@ const materializerUrl = new URL(
   "../service/materialize-reviewed-agent-beacon-source.sh",
   import.meta.url,
 );
+const procfileUrl = new URL("../Procfile", import.meta.url);
 
 const EXPECTED_REPOSITORY =
   "southamerica-east1-docker.pkg.dev/${PROJECT_ID}/vortik-agent-beacon/vortik-agent-beacon";
 const STAGE_IMAGE = `${EXPECTED_REPOSITORY}:pack-\${COMMIT_SHA}-\${BUILD_ID}`;
 const APPROVED_IMAGE = `${EXPECTED_REPOSITORY}:approved-\${COMMIT_SHA}-\${BUILD_ID}`;
-const BEACON_ENTRYPOINT = "node service/cloud-run-agent-beacon.mjs";
+const BEACON_PROCESSES = [
+  "web: node service/cloud-run-agent-beacon.mjs",
+  "egressprobe: node service/cloud-run-agent-beacon-egress-probe.mjs",
+];
 const CANONICAL_CONTEXT = ".vortik-reviewed-source";
 const runFile = promisify(execFile);
 
@@ -293,12 +297,14 @@ test("beacon build verifies the checked-out Git revision before publication", as
   }
 });
 
-test("beacon image has an explicit public runtime entrypoint", async () => {
+test("beacon image exposes launcher-backed public and probe processes", async () => {
   const config = await loadConfig();
   const [, packStep] = config.steps;
+  const procfile = await readFile(procfileUrl, "utf8");
 
   assert.match(packStep.name, /^gcr\.io\/k8s-skaffold\/pack@sha256:[a-f0-9]{64}$/u);
   assert.equal(packStep.entrypoint, "pack");
+  assert.equal(procfile, `${BEACON_PROCESSES.join("\n")}\n`);
   assert.deepEqual(packStep.args, [
     "build",
     STAGE_IMAGE,
@@ -306,12 +312,11 @@ test("beacon image has an explicit public runtime entrypoint", async () => {
     `/workspace/${CANONICAL_CONTEXT}`,
     "--builder",
     "gcr.io/buildpacks/builder@sha256:0ab20f18ca3f835f4c26ae32bafd1a55cda2adf025528356b80491cb3cf72e3c",
-    "--env",
-    `GOOGLE_ENTRYPOINT=${BEACON_ENTRYPOINT}`,
     "--network",
     "cloudbuild",
     "--publish",
   ]);
+  assert.doesNotMatch(JSON.stringify(packStep), /GOOGLE_ENTRYPOINT/u);
 });
 
 test("beacon build publishes each immutable tag only once", async () => {

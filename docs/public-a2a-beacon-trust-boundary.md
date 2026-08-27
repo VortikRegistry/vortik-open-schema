@@ -108,6 +108,8 @@ Its production container must be pinned by immutable image digest and bound to r
 
 An immutable digest without the reviewed-source-to-build mapping is insufficient for activation.
 
+When one Buildpacks image serves both the HTTP beacon and the one-shot probe, it must expose distinct named process types through the Buildpacks launcher. The Cloud Run service uses the default `web` process and the job invokes the `egressprobe` process. A deployment must not replace the launcher with a raw language-runtime command because doing so bypasses the launch environment assembled by the buildpacks.
+
 Cloud Run production controls should remain bounded:
 
 - minimum instances: 0;
