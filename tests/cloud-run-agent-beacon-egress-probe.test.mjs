@@ -40,16 +40,24 @@ function captureStream() {
 function runProbe(options = {}) {
   return runCloudRunAgentBeaconEgressProbe({
     networkSettleWaitImpl: async () => {},
+    readinessResolveTxtImpl: async () => [["vortik-agent-beacon-vpc-ready-v1"]],
     ...options
   });
 }
 
 test("egress probe profile fixes HTTPS and private TCP destinations with no retries, secrets or KMS", () => {
+  assert.deepEqual(CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE.direct_vpc_readiness, {
+    id: "direct_vpc_private_dns",
+    protocol: "dns_txt",
+    hostname: "ready.beacon-readiness.vortik.internal",
+    expected_value: "vortik-agent-beacon-vpc-ready-v1"
+  });
   assert.deepEqual(CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE.destinations, [
     { id: "external_https", protocol: "https", url: "https://example.com/" },
     { id: "private_rfc1918", protocol: "tcp", host: "10.255.255.1", port: 443 }
   ]);
   assert.equal(CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE.network_settle_ms, 180_000);
+  assert.equal(CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE.readiness_attempts, 1);
   assert.equal(CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE.attempts_per_destination, 1);
   assert.equal(CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE.retries, 0);
   assert.equal(CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE.secrets_required, false);
@@ -81,6 +89,11 @@ test("PASS requires the fixed HTTPS and private TCP destinations to be inaccessi
     probe_id: "vortik-cloud-run-agent-beacon-egress-denial-v1",
     status: "PASS",
     network_settle_ms: 180_000,
+    direct_vpc_readiness: {
+      id: "direct_vpc_private_dns",
+      outcome: "ready"
+    },
+    readiness_attempts: 1,
     attempts_per_destination: 1,
     retries: 0,
     results: [
@@ -100,6 +113,10 @@ test("the one-shot transports start only after the fixed network-settle phase", 
       events.push(`settle:${delayMs}`);
       await settleGate;
     },
+    readinessResolveTxtImpl: async (hostname) => {
+      events.push(`dns:${hostname}`);
+      return [["vortik-agent-beacon-vpc-ready-v1"]];
+    },
     fetchImpl: async () => {
       events.push("https");
       throw networkError("ETIMEDOUT");
@@ -116,7 +133,12 @@ test("the one-shot transports start only after the fixed network-settle phase", 
 
   releaseSettle();
   const result = await execution;
-  assert.deepEqual(events, ["settle:180000", "https", "tcp"]);
+  assert.deepEqual(events, [
+    "settle:180000",
+    "dns:ready.beacon-readiness.vortik.internal",
+    "https",
+    "tcp"
+  ]);
   assert.equal(result.status, "PASS");
 });
 
@@ -132,6 +154,42 @@ test("a failed network-settle phase fails closed without any destination attempt
     /network-settle phase failed/
   );
   assert.equal(attempts, 0);
+});
+
+test("missing, mismatched or failed private DNS readiness blocks destination attempts", async () => {
+  for (const readinessResolveTxtImpl of [
+    async () => [],
+    async () => [["wrong-network"]],
+    async () => { throw networkError("ENOTFOUND"); }
+  ]) {
+    let attempts = 0;
+    await assert.rejects(
+      runCloudRunAgentBeaconEgressProbe({
+        networkSettleWaitImpl: async () => {},
+        readinessResolveTxtImpl,
+        fetchImpl: async () => { attempts += 1; },
+        privateConnectImpl: () => { attempts += 1; },
+        timeoutMs: 100
+      }),
+      /Direct VPC readiness was indeterminate/
+    );
+    assert.equal(attempts, 0);
+  }
+});
+
+test("the private DNS readiness attempt has the same hard deadline", { timeout: 250 }, async () => {
+  let destinationAttempts = 0;
+  await assert.rejects(
+    runCloudRunAgentBeaconEgressProbe({
+      networkSettleWaitImpl: async () => {},
+      readinessResolveTxtImpl: async () => new Promise(() => {}),
+      fetchImpl: async () => { destinationAttempts += 1; },
+      privateConnectImpl: () => { destinationAttempts += 1; },
+      timeoutMs: 5
+    }),
+    /Direct VPC readiness was indeterminate/
+  );
+  assert.equal(destinationAttempts, 0);
 });
 
 test("hard deadlines bound HTTPS and TCP transports that never settle", { timeout: 250 }, async () => {
