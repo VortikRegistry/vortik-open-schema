@@ -40,7 +40,10 @@ function captureStream() {
 function runProbe(options = {}) {
   return runCloudRunAgentBeaconEgressProbe({
     networkSettleWaitImpl: async () => {},
-    readinessResolveTxtImpl: async () => [["vortik-agent-beacon-vpc-ready-v1"]],
+    readinessResolver: {
+      resolveTxt: async () => [["vortik-agent-beacon-vpc-ready-v1"]],
+      cancel: () => {}
+    },
     ...options
   });
 }
@@ -113,9 +116,12 @@ test("the one-shot transports start only after the fixed network-settle phase", 
       events.push(`settle:${delayMs}`);
       await settleGate;
     },
-    readinessResolveTxtImpl: async (hostname) => {
-      events.push(`dns:${hostname}`);
-      return [["vortik-agent-beacon-vpc-ready-v1"]];
+    readinessResolver: {
+      resolveTxt: async (hostname) => {
+        events.push(`dns:${hostname}`);
+        return [["vortik-agent-beacon-vpc-ready-v1"]];
+      },
+      cancel: () => {}
     },
     fetchImpl: async () => {
       events.push("https");
@@ -157,7 +163,7 @@ test("a failed network-settle phase fails closed without any destination attempt
 });
 
 test("missing, mismatched or failed private DNS readiness blocks destination attempts", async () => {
-  for (const readinessResolveTxtImpl of [
+  for (const resolveTxt of [
     async () => [],
     async () => [["wrong-network"]],
     async () => { throw networkError("ENOTFOUND"); }
@@ -166,7 +172,7 @@ test("missing, mismatched or failed private DNS readiness blocks destination att
     await assert.rejects(
       runCloudRunAgentBeaconEgressProbe({
         networkSettleWaitImpl: async () => {},
-        readinessResolveTxtImpl,
+        readinessResolver: { resolveTxt, cancel: () => {} },
         fetchImpl: async () => { attempts += 1; },
         privateConnectImpl: () => { attempts += 1; },
         timeoutMs: 100
@@ -177,18 +183,32 @@ test("missing, mismatched or failed private DNS readiness blocks destination att
   }
 });
 
-test("the private DNS readiness attempt has the same hard deadline", { timeout: 250 }, async () => {
+test("the private DNS readiness deadline cancels a live resolver handle", { timeout: 250 }, async () => {
   let destinationAttempts = 0;
+  let pendingTimer;
+  let cancelCalls = 0;
   await assert.rejects(
     runCloudRunAgentBeaconEgressProbe({
       networkSettleWaitImpl: async () => {},
-      readinessResolveTxtImpl: async () => new Promise(() => {}),
+      readinessResolver: {
+        resolveTxt: async () => new Promise((resolve) => {
+          pendingTimer = setTimeout(
+            () => resolve([["vortik-agent-beacon-vpc-ready-v1"]]),
+            1_000
+          );
+        }),
+        cancel: () => {
+          cancelCalls += 1;
+          clearTimeout(pendingTimer);
+        }
+      },
       fetchImpl: async () => { destinationAttempts += 1; },
       privateConnectImpl: () => { destinationAttempts += 1; },
       timeoutMs: 5
     }),
     /Direct VPC readiness was indeterminate/
   );
+  assert.equal(cancelCalls, 1);
   assert.equal(destinationAttempts, 0);
 });
 

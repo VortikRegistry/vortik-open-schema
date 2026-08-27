@@ -1,5 +1,5 @@
+import { Resolver as DnsResolver } from "node:dns/promises";
 import { connect as connectTcp } from "node:net";
-import { resolveTxt as resolveTxtDns } from "node:dns/promises";
 
 const DIRECT_VPC_READINESS = Object.freeze({
   id: "direct_vpc_private_dns",
@@ -49,16 +49,31 @@ function waitForNetworkSettle(delayMs) {
   return new Promise((resolve) => setTimeout(resolve, delayMs));
 }
 
-async function assertDirectVpcReady({ resolveTxtImpl, timeoutMs }) {
+function createDirectVpcReadinessResolver() {
+  const resolver = new DnsResolver();
+  return Object.freeze({
+    resolveTxt: resolver.resolveTxt.bind(resolver),
+    cancel: resolver.cancel.bind(resolver)
+  });
+}
+
+async function assertDirectVpcReady({ resolver, timeoutMs }) {
   const deadlineError = new Error("outbound-denial probe Direct VPC readiness deadline elapsed");
   let timeoutId;
   const deadline = new Promise((_, reject) => {
-    timeoutId = setTimeout(() => reject(deadlineError), timeoutMs);
+    timeoutId = setTimeout(() => {
+      reject(deadlineError);
+      try {
+        resolver.cancel();
+      } catch {
+        // The deadline remains authoritative even if resolver cleanup fails.
+      }
+    }, timeoutMs);
   });
 
   try {
     const records = await Promise.race([
-      resolveTxtImpl(DIRECT_VPC_READINESS.hostname),
+      resolver.resolveTxt(DIRECT_VPC_READINESS.hostname),
       deadline
     ]);
     if (
@@ -207,7 +222,7 @@ export async function runCloudRunAgentBeaconEgressProbe({
   fetchImpl = globalThis.fetch,
   privateConnectImpl = connectTcp,
   networkSettleWaitImpl = waitForNetworkSettle,
-  readinessResolveTxtImpl = resolveTxtDns,
+  readinessResolver = createDirectVpcReadinessResolver(),
   timeoutMs = DEFAULT_TIMEOUT_MS
 } = {}) {
   if (typeof fetchImpl !== "function") {
@@ -219,8 +234,11 @@ export async function runCloudRunAgentBeaconEgressProbe({
   if (typeof networkSettleWaitImpl !== "function") {
     throw new TypeError("outbound-denial probe requires a network-settle wait implementation");
   }
-  if (typeof readinessResolveTxtImpl !== "function") {
-    throw new TypeError("outbound-denial probe requires a Direct VPC readiness resolver");
+  if (
+    typeof readinessResolver?.resolveTxt !== "function"
+    || typeof readinessResolver?.cancel !== "function"
+  ) {
+    throw new TypeError("outbound-denial probe requires a cancellable Direct VPC readiness resolver");
   }
   assertTimeoutMs(timeoutMs);
 
@@ -231,7 +249,7 @@ export async function runCloudRunAgentBeaconEgressProbe({
   }
 
   await assertDirectVpcReady({
-    resolveTxtImpl: readinessResolveTxtImpl,
+    resolver: readinessResolver,
     timeoutMs
   });
 
