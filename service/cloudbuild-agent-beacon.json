@@ -20,8 +20,6 @@
         "/workspace/.vortik-reviewed-source",
         "--builder",
         "gcr.io/buildpacks/builder@sha256:0ab20f18ca3f835f4c26ae32bafd1a55cda2adf025528356b80491cb3cf72e3c",
-        "--env",
-        "GOOGLE_ENTRYPOINT=node service/cloud-run-agent-beacon.mjs",
         "--network",
         "cloudbuild",
         "--publish"
