@@ -19,6 +19,7 @@ const FIXED_DESTINATIONS = Object.freeze([
 ]);
 
 const DEFAULT_TIMEOUT_MS = 3_000;
+const NETWORK_SETTLE_MS = 180_000;
 const INACCESSIBLE_NETWORK_CODES = new Set([
   "EACCES",
   "EPERM",
@@ -34,6 +35,10 @@ function assertTimeoutMs(timeoutMs) {
   if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 10_000) {
     throw new TypeError("outbound-denial probe timeout must be an integer from 1 to 10000 milliseconds");
   }
+}
+
+function waitForNetworkSettle(delayMs) {
+  return new Promise((resolve) => setTimeout(resolve, delayMs));
 }
 
 function resultFor(destination, outcome) {
@@ -151,6 +156,7 @@ function attemptFixedPrivateTcp({ connectImpl, timeoutMs }) {
 export const CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE = Object.freeze({
   probe_id: "vortik-cloud-run-agent-beacon-egress-denial-v1",
   destinations: FIXED_DESTINATIONS,
+  network_settle_ms: NETWORK_SETTLE_MS,
   timeout_ms: DEFAULT_TIMEOUT_MS,
   attempts_per_destination: 1,
   retries: 0,
@@ -162,6 +168,7 @@ export const CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE = Object.freeze({
 export async function runCloudRunAgentBeaconEgressProbe({
   fetchImpl = globalThis.fetch,
   privateConnectImpl = connectTcp,
+  networkSettleWaitImpl = waitForNetworkSettle,
   timeoutMs = DEFAULT_TIMEOUT_MS
 } = {}) {
   if (typeof fetchImpl !== "function") {
@@ -170,7 +177,16 @@ export async function runCloudRunAgentBeaconEgressProbe({
   if (typeof privateConnectImpl !== "function") {
     throw new TypeError("outbound-denial probe requires a TCP connect implementation");
   }
+  if (typeof networkSettleWaitImpl !== "function") {
+    throw new TypeError("outbound-denial probe requires a network-settle wait implementation");
+  }
   assertTimeoutMs(timeoutMs);
+
+  try {
+    await networkSettleWaitImpl(NETWORK_SETTLE_MS);
+  } catch {
+    throw new Error("outbound-denial probe network-settle phase failed");
+  }
 
   const results = await Promise.all([
     attemptFixedExternalHttps({ fetchImpl, timeoutMs }),
@@ -185,6 +201,7 @@ export async function runCloudRunAgentBeaconEgressProbe({
   return Object.freeze({
     probe_id: CLOUD_RUN_AGENT_BEACON_EGRESS_PROBE_PROFILE.probe_id,
     status: "PASS",
+    network_settle_ms: NETWORK_SETTLE_MS,
     attempts_per_destination: 1,
     retries: 0,
     results: Object.freeze(results)
