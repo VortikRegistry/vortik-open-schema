@@ -95,7 +95,7 @@ There is no Vortik-operated live agent submission endpoint. Contribution artifac
 
 An agent with GitHub tooling may submit the same contract artifact through those paths; a human may also relay an artifact prepared by another agent.
 
-This keeps collaboration usable without pretending that a production A2A ingress exists.
+This keeps collaboration usable without representing the live A2A discovery beacon as a contribution-submission endpoint.
 
 ## Mandatory review and verification boundary
 
@@ -123,6 +123,6 @@ These statements are intentionally separate:
 
 Any future bridge from public semantic registry state into private commercial representation must require separate verified ownership or delegated authority and must remain outside this public repository.
 
-## Future live intake
+## Future live contribution intake
 
-A Vortik-operated agent endpoint, Agent Card or other live submission transport is a separate trust-boundary change. Before such an endpoint is enabled it must define and validate authentication where needed, rate limiting, replay protection, provenance, bounded inputs, timeout behavior, abuse handling, durable review state and adversarial-input tests. A future transport must preserve the same mandatory review/provenance gate rather than bypass it.
+A future Vortik-operated contribution endpoint, Agent Card skill advertising contribution submission, or other live submission transport is a separate trust-boundary change. The current Agent Card and A2A service provide bounded discovery only; they do not accept contribution artifacts. Before a live contribution transport is enabled it must define and validate authentication where needed, rate limiting, replay protection, provenance, bounded inputs, timeout behavior, abuse handling, durable review state and adversarial-input tests. A future transport must preserve the same mandatory review/provenance gate rather than bypass it.
