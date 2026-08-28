@@ -134,18 +134,20 @@ The tests use only ephemeral Ed25519 keys and deterministic test doubles. They c
 
 No production key or secret is committed.
 
-## Production activation STOP boundary
+## V1 decision and production activation STOP boundary
 
-After this core exists, production `trusted_receipt_issuance` cannot truthfully be enabled by another public-code-only patch.
+The issuer core is complete for the V1 trust boundary, but production `trusted_receipt_issuance` is explicitly deferred from V1 and remains `false`. V1 exposes no receipt-issuance route.
 
-Activation requires owner/infrastructure decisions and protected runtime material outside this repository, including at minimum:
+The production-preactivation evidence demonstrates bounded use of the protected runtime and pinned KMS key for fixed primary-source and ENS-mainnet receipt fixtures. Those PASS results are evidence for the preactivation path, not permission to enable a service.
 
-- a real Ed25519 signing key held in an appropriate secret/HSM/KMS boundary;
+Any post-V1 activation requires a separate reviewed change plus current owner/infrastructure decisions, including at minimum:
+
+- the exact authorized Ed25519 signing key held in the approved KMS boundary;
 - a public key-policy instance anchored as trusted runtime/repository configuration;
 - a policy-validated issuance clock source whose time is not request-controlled;
 - deployment assembly binding the real verifier instances, signer, clock and policy identities; and
 - an operational rotation/revocation procedure for signing keys.
 
-Those are external/protected infrastructure dependencies. They are intentionally not synthesized, committed or guessed by this public repository.
+Those are external/protected operational dependencies. They are intentionally not synthesized, committed or guessed by this public repository, and historical probe evidence must be revalidated at the later activation gate.
 
 Candidate admission remains a later and separate gate even after production receipt issuance is activated.
