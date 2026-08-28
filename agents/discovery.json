@@ -18,7 +18,7 @@
     "protocol_version": "1.0",
     "agent_card_path": "/.well-known/agent-card.json",
     "interface_path": "/a2a/v1",
-    "public_base_url": "https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app",
+    "public_base_url": "https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app",
     "note": "Lifecycle state is defined exclusively by the structured interaction fields; this note does not independently assert preactivation or live network status."
   },
   "capabilities": [

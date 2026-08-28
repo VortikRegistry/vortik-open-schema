@@ -13,14 +13,14 @@ a2a_implementation_available = true
 a2a_server = true
 live_network_ingress = true
 agent_card_published = true
-public_base_url = https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app
+public_base_url = https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app
 ```
 
 Canonical public endpoints:
 
 ```text
-Agent Card: https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/.well-known/agent-card.json
-A2A interface: https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/a2a/v1
+Agent Card: https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app/.well-known/agent-card.json
+A2A interface: https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app/a2a/v1
 ```
 
 The deployment uses the reviewed bounded read-only implementation and remains independent from trusted-receipt issuance and candidate admission.
