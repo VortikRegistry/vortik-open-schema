@@ -4,6 +4,8 @@
 
 This runtime assembly is a pre-activation infrastructure component. Its presence does not activate trusted receipt issuance or candidate admission.
 
+For V1, production receipt issuance and candidate admission are explicitly deferred. The bounded runtime and probe evidence are complete preactivation groundwork, not a partially advertised V1 service.
+
 Canonical state remains:
 
 ```text
@@ -125,20 +127,17 @@ The production runtime rejects direct substitutions for `codeCommit`, `nowImpl`,
 
 `ajv` is declared as a production dependency because the trusted receipt issuer compiles the closed claim, intent, receipt and key-policy schemas at runtime. Development-only validators remain outside the production dependency set.
 
-## Remaining deployment gate
+## V1 closure and post-V1 activation boundary
 
-After this code is merged, production activation is still blocked until infrastructure is independently exercised:
+The production-preactivation evidence records successful bounded Cloud Run Jobs for the pinned KMS signing path, primary-source receipt path and ENS-mainnet receipt path. Those executions close the V1 preactivation evidence gate without exposing receipt issuance through HTTP.
 
-1. deploy the exact reviewed source through Cloud Run source deployment and record the resulting image digest and revision provenance;
-2. require authentication and use only `vortik-receipt-runtime@vortik-registry-production.iam.gserviceaccount.com` as the service identity;
-3. verify `/health` and `/v1/runtime-identity` through an authenticated invocation;
-4. verify the deployed identity reports the pinned CryptoKeyVersion, key-policy digest, verifier blobs and provider pair;
-5. confirm the runtime obtains short-lived Google credentials rather than a static service-account key;
-6. confirm only the intended service identity can use KMS CryptoKeyVersion `1` for signing;
-7. run a separate bounded preactivation end-to-end receipt probe using the reviewed runtime without exposing issuance through the HTTP service;
-8. independently verify the resulting Ed25519 receipt signatures against the pinned public policy; and
-9. re-run CI and exact-head Codex review for any deployment-support changes.
+Canonical V1 state remains:
 
-Only after those checks pass may a separate, explicit activation change consider `trusted_receipt_issuance = true`.
+```text
+trusted_receipt_issuance = false
+admission.enabled = false
+```
+
+Any post-V1 activation must use a separate explicit PR and infrastructure gate. It must revalidate the current reviewed source, immutable deployment provenance, service identity, IAM, exact CryptoKeyVersion, policy digest, verifier identities, trusted clock, short-lived credentials and independent signature evidence. It must also define the operational issuance surface, authentication, abuse limits, key rotation/revocation and failure rollback before changing the canonical flag.
 
 Candidate admission remains a later, independent gate even after receipt issuance is activated.
