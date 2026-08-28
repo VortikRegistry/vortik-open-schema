@@ -13,6 +13,7 @@ const contributionContractPath = "schemas/queries/vortik-ens-candidate-contribut
 const publicContributionContractPath = "docs/schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json";
 const contributionTemplatePath = ".github/ISSUE_TEMPLATE/ens-candidate-contribution.md";
 const contributionSubmissionUrl = "https://github.com/VortikRegistry/vortik-open-schema/issues/new?template=ens-candidate-contribution.md";
+const publicA2ABaseUrl = "https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app";
 const historicalDiscoveryVersions = ["1.0.0", "1.1.0", "1.2.0", "1.3.0"];
 
 function git(...args) {
@@ -135,7 +136,7 @@ addFormats(ajv);
 const validate = ajv.compile(schema);
 const validateContribution = ajv.compile(contributionSchema);
 
-assertValid(validate, manifest, "agents/discovery.json 1.4.0 preactivation manifest");
+assertValid(validate, manifest, "agents/discovery.json 1.4.0 live manifest");
 
 const integrityErrors = [];
 for (const capability of manifest.capabilities) {
@@ -193,13 +194,13 @@ else {
   if (beaconCapability.persistent_tasks !== false || beaconCapability.external_retrieval !== false || beaconCapability.network_required_by_repository_runtime !== false) integrityErrors.push("A2A beacon must remain stateless and repository-network independent");
 }
 
-if (manifest.interaction.mode !== "a2a_preactivation" ||
+if (manifest.interaction.mode !== "a2a_live" ||
     manifest.interaction.a2a_implementation_available !== true ||
-    manifest.interaction.a2a_server !== false ||
-    manifest.interaction.live_network_ingress !== false ||
-    manifest.interaction.agent_card_published !== false ||
-    manifest.interaction.public_base_url !== null) {
-  integrityErrors.push("current agent discovery manifest must remain in truthful A2A preactivation state");
+    manifest.interaction.a2a_server !== true ||
+    manifest.interaction.live_network_ingress !== true ||
+    manifest.interaction.agent_card_published !== true ||
+    manifest.interaction.public_base_url !== publicA2ABaseUrl) {
+  integrityErrors.push("current agent discovery manifest must match the reviewed live A2A deployment");
 }
 
 if (manifest.trust_boundary.arbitrary_outbound_network !== false ||
@@ -211,12 +212,15 @@ if (manifest.trust_boundary.arbitrary_outbound_network !== false ||
 
 if (integrityErrors.length > 0) throw new Error(`Agent discovery manifest does not match existing public capabilities:\n${integrityErrors.join("\n")}`);
 
+const preactivationManifest = structuredClone(manifest);
+preactivationManifest.interaction.mode = "a2a_preactivation";
+preactivationManifest.interaction.a2a_server = false;
+preactivationManifest.interaction.live_network_ingress = false;
+preactivationManifest.interaction.agent_card_published = false;
+preactivationManifest.interaction.public_base_url = null;
+assertValid(validate, preactivationManifest, "fully coupled A2A preactivation lifecycle state");
+
 const liveManifest = structuredClone(manifest);
-liveManifest.interaction.mode = "a2a_live";
-liveManifest.interaction.a2a_server = true;
-liveManifest.interaction.live_network_ingress = true;
-liveManifest.interaction.agent_card_published = true;
-liveManifest.interaction.public_base_url = "https://beacon.example.test";
 assertValid(validate, liveManifest, "fully coupled A2A live lifecycle state");
 
 for (const [label, mutate] of [
@@ -241,7 +245,7 @@ for (const [label, mutate] of [
   ["contribution submission_url changed", (candidate) => { candidate.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution").submission_url = "https://example.com/submit"; }],
   ["contribution automatic_promotion=true", (candidate) => { candidate.capabilities.find((entry) => entry.id === "prepare_ens_candidate_contribution").automatic_promotion = true; }]
 ]) {
-  const candidate = structuredClone(manifest);
+  const candidate = structuredClone(label.startsWith("preactivation ") ? preactivationManifest : liveManifest);
   mutate(candidate);
   assertInvalid(validate, candidate, label);
 }
@@ -283,7 +287,7 @@ if (staleMirrorRegression.extra.length !== 1 || staleMirrorRegression.extra[0] !
 console.log(`agents/discovery.json conforms to vortik-agent-discovery 1.4.0 with ${manifest.capabilities.length} capability entries`);
 console.log(`Historical discovery 1.0.0–1.3.0 contracts preserved byte-identical to ${baseRef}`);
 console.log("Existing feed, ENS research, inbound research and GitHub contribution references verified");
-console.log("A2A preactivation lifecycle and fully coupled live-state contract verified");
+console.log("A2A live lifecycle and fully coupled preactivation-state contract verified");
 console.log("A2A beacon implementation paths and fail-closed trust-boundary declarations verified");
 console.log("Closed ENS candidate contribution contract verified with authority, price and insecure-reference regressions");
 console.log("Public agent manifest/schema directory inventories verified complete and byte-identical");
