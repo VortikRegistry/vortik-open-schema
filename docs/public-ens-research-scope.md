@@ -2,7 +2,9 @@
 
 ## Status
 
-This document defines the first public design boundary for researching ENS-style names through Vortik Registry. It is a scope contract, not an API specification, implementation, registry-state change, or claim about Ethereum or ENS protocol behavior.
+This document defines the V1 public boundary for researching ENS-style names through Vortik Registry. The V1 capability is complete as a deterministic local library backed by versioned public request and response contracts. It is not a remote execution endpoint, registry-state change, or claim about Ethereum or ENS protocol behavior.
+
+The live A2A discovery beacon may direct callers to these public artifacts, but it does not execute the ENS research client on behalf of a remote caller.
 
 ## Purpose
 
@@ -20,7 +22,7 @@ The same method must apply to names regardless of ownership. Ownership does not 
 
 ## Required result states
 
-A future machine-readable contract should distinguish at least these outcomes:
+The implemented machine-readable contracts and local client distinguish these outcomes:
 
 - **tracked anchor** — the normalized name exactly matches an entry in the validated registry;
 - **related terminology** — public, source-grounded registry material supports a relationship, but the queried name is not itself a tracked anchor;
@@ -52,7 +54,7 @@ The research path must preserve the rules in [Naming and governance boundaries](
 
 ## Security boundary
 
-The initial capability should operate only on curated Vortik data. It must not require live resolver lookups or ingestion of arbitrary external content.
+The V1 capability operates only on curated Vortik data. It does not require live resolver lookups or ingestion of arbitrary external content.
 
 If later phases add external resolution or evidence retrieval, all returned metadata and linked content must be treated as untrusted data. Future implementations must use:
 
@@ -96,22 +98,22 @@ The current reusable integration is documented in [Reusable ENS research client]
 
 The executable example is available at `examples/research-ens-name.mjs` and runs through `npm run example:research-ens`.
 
-## Phased delivery
+## V1 delivery status
 
-Implementation should remain split into small pull requests:
+The bounded V1 delivery is complete:
 
-1. define this public scope and trust boundary;
-2. define versioned request and response schemas;
-3. implement deterministic evaluation against curated registry artifacts;
-4. add evidence, confidence, ambiguity, and related-term handling;
-5. integrate the capability with the reusable client and public discovery surfaces;
-6. add adversarial tests, documentation, and non-authoritative examples.
+1. the public scope and trust boundary are defined;
+2. versioned request and response schemas are published;
+3. deterministic evaluation uses only curated registry artifacts;
+4. evidence, ambiguity and related-term handling fail closed;
+5. the reusable local client and public discovery surfaces are integrated; and
+6. adversarial tests, documentation and non-authoritative examples are present.
 
-Each later phase must preserve backward compatibility or provide explicit versioning. Registry-state changes, new anchors, and source updates remain separate reviewable work.
+A remote research execution or submission endpoint is not required for V1. Any later transport is a separate versioned trust-boundary change. Registry-state changes, new anchors and source updates remain separate reviewable work.
 
-## Acceptance criteria for later implementation
+## V1 closure criteria
 
-A conforming implementation should:
+The current implementation must continue to:
 
 - produce the same semantic method for names owned by Vortik, third parties, or unknown holders;
 - return an explicit untracked or indeterminate state instead of inventing evidence;
