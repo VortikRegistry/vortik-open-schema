@@ -73,8 +73,8 @@ Every review artifact fixes these states closed:
 
 The public review process therefore cannot authorize private commercial actions, asset operations, wallet actions or representation of an ENS name.
 
-## Relationship to live agent intake
+## Relationship to live contribution intake
 
-This review model is transport-independent. Today contributions can arrive through ordinary GitHub Issues or Pull Requests. A future live agent endpoint may transport the same untrusted contribution artifacts, but it must not bypass this review/provenance gate.
+This review model is transport-independent. Today contributions can arrive through ordinary GitHub Issues or Pull Requests. A future live contribution endpoint may transport the same untrusted contribution artifacts, but it must not bypass this review/provenance gate. The current public A2A beacon is discovery-only and does not provide that transport.
 
-The [`Trusted verification boundary`](trusted-verification-boundary.md) now records both bounded evidence verifiers and bounded network access as implemented. It still keeps production trusted receipt issuance and candidate admission disabled. Live public agent intake must remain downstream of that boundary rather than becoming a way around it.
+The [`Trusted verification boundary`](trusted-verification-boundary.md) now records both bounded evidence verifiers and bounded network access as implemented. It still keeps production trusted receipt issuance and candidate admission disabled. Any future live contribution intake must remain downstream of that boundary rather than becoming a way around it.
