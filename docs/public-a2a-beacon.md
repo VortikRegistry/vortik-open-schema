@@ -2,21 +2,28 @@
 
 ## Status
 
-The Vortik public A2A discovery beacon is implemented in the repository and remains in **preactivation**.
+The Vortik public A2A discovery beacon is implemented and the canonical activation state is **live**.
 
 Machine-readable state:
 
 ```text
 manifest_version = 1.4.0
-mode = a2a_preactivation
+mode = a2a_live
 a2a_implementation_available = true
-a2a_server = false
-live_network_ingress = false
-agent_card_published = false
-public_base_url = null
+a2a_server = true
+live_network_ingress = true
+agent_card_published = true
+public_base_url = https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app
 ```
 
-No public A2A listener or Agent Card is claimed by this repository state.
+Canonical public endpoints:
+
+```text
+Agent Card: https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/.well-known/agent-card.json
+A2A interface: https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/a2a/v1
+```
+
+The deployment uses the reviewed bounded read-only implementation and remains independent from trusted-receipt issuance and candidate admission.
 
 ## Purpose
 
@@ -38,7 +45,7 @@ Unknown queries receive a generic bounded Vortik discovery response rather than 
 
 The implementation targets Agent2Agent Protocol 1.0 with the HTTP+JSON binding.
 
-Planned live paths are:
+Live paths are:
 
 ```text
 GET  /.well-known/agent-card.json
@@ -82,13 +89,15 @@ Every discovery response retains explicit non-authority semantics. Vortik does n
 
 The beacon code has no dependency on the trusted-receipt runtime or Google Cloud KMS signer.
 
-A future production deployment must use a dedicated unprivileged runtime identity and the network controls defined in [`public-a2a-beacon-trust-boundary.md`](public-a2a-beacon-trust-boundary.md).
+The production deployment uses the dedicated unprivileged runtime identity and network controls defined in [`public-a2a-beacon-trust-boundary.md`](public-a2a-beacon-trust-boundary.md).
 
-Live activation requires independent evidence that outbound Internet and private-network destinations are unreachable from the deployed revision, while the intended inbound discovery surface remains reachable through the controlled activation path.
+The production activation gate verified that the reviewed immutable image runs through the dedicated Direct VPC path and that the bounded outbound-denial probe succeeds only when both the fixed external HTTPS destination and fixed private/RFC1918 destination are inaccessible after Direct VPC readiness is established.
+
+That evidence does not grant receipt, admission, ENS, protocol or commercial authority.
 
 ## Request budget
 
-The HTTP surface includes a bounded process-level fixed-window request budget. Cloud Run deployment must additionally retain bounded instances, concurrency and timeout settings.
+The HTTP surface includes a bounded process-level fixed-window request budget. Cloud Run deployment additionally retains bounded instances, concurrency and timeout settings.
 
 The application budget is defense in depth. It does not replace infrastructure limits or the deny-egress boundary.
 
@@ -100,18 +109,18 @@ The canonical source of truth is:
 agents/discovery.json
 ```
 
-Version `1.4.0` introduces explicit lifecycle states:
+Version `1.4.0` defines explicit lifecycle states:
 
 - `a2a_preactivation`: implementation exists; public ingress, Agent Card publication and public base URL remain closed;
-- `a2a_live`: the dedicated service has passed its deployment gate and the manifest has been atomically updated to the exact live HTTPS origin.
+- `a2a_live`: the dedicated service has passed its deployment gate and the manifest records the exact live HTTPS origin.
 
 Historical discovery contracts `1.0.0` through `1.3.0` remain immutable.
 
-The implementation PR must remain in `a2a_preactivation`. Deployment alone does not permit the manifest to claim `a2a_live`.
+The implementation originally remained in `a2a_preactivation` until the reviewed deployment, immutable digest, dedicated identity, deny-egress policy, outbound-denial probe and authenticated functional acceptance were verified. The canonical manifest may claim `a2a_live` only while those production conditions and the published endpoint remain true.
 
-## Activation requirements
+## Activation evidence requirements
 
-Before the first live transition, the deployment evidence must bind:
+The live transition is grounded in deployment evidence binding:
 
 1. the exact reviewed source commit;
 2. the Cloud Build execution and provenance;
@@ -119,14 +128,14 @@ Before the first live transition, the deployment evidence must bind:
 4. the running Cloud Run revision and exact image digest;
 5. the dedicated runtime identity;
 6. the isolated deny-egress network posture;
-7. successful adversarial outbound-denial probes;
+7. successful adversarial outbound-denial probe evidence;
 8. the exact HTTPS base URL used by the Agent Card;
 9. the canonical and public discovery manifest mirrors.
 
-If the deployed service and machine-readable discovery state cannot be made consistent, activation fails closed.
+If the deployed service and machine-readable discovery state cease to be consistent, the live claim must fail closed or be rolled back rather than remain detached from reality.
 
 ## Independent gates
 
 The A2A beacon is independent from trusted-receipt issuance and candidate admission.
 
-Beacon implementation or activation must not alter those separate gates.
+Beacon activation does not alter those separate gates.
