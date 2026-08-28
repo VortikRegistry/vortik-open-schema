@@ -57,19 +57,19 @@ protocol_binding: HTTP+JSON
 protocol_version: 1.0
 agent_card_path: /.well-known/agent-card.json
 interface_path: /a2a/v1
-public_base_url: https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app
+public_base_url: https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app
 ```
 
 Agent Card:
 
 ```text
-https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/.well-known/agent-card.json
+https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app/.well-known/agent-card.json
 ```
 
 A2A base interface:
 
 ```text
-https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/a2a/v1
+https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app/a2a/v1
 ```
 
 The distinction between implementation and live state remains deliberate: the schema still rejects partial transitions, and the live claim is valid only while the dedicated deployment and canonical/public manifest mirrors agree on the same HTTPS origin and lifecycle state.

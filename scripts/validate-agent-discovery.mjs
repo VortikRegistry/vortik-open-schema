@@ -13,7 +13,7 @@ const contributionContractPath = "schemas/queries/vortik-ens-candidate-contribut
 const publicContributionContractPath = "docs/schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json";
 const contributionTemplatePath = ".github/ISSUE_TEMPLATE/ens-candidate-contribution.md";
 const contributionSubmissionUrl = "https://github.com/VortikRegistry/vortik-open-schema/issues/new?template=ens-candidate-contribution.md";
-const publicA2ABaseUrl = "https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app";
+const publicA2ABaseUrl = "https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app";
 const historicalDiscoveryVersions = ["1.0.0", "1.1.0", "1.2.0", "1.3.0"];
 
 function git(...args) {

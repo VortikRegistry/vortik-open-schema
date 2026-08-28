@@ -67,7 +67,7 @@ https://vortikregistry.github.io/vortik-open-schema/agents/discovery.json
 Discover the live A2A agent directly:
 
 ```text
-https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/.well-known/agent-card.json
+https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app/.well-known/agent-card.json
 ```
 
 No wallet, API key or RPC credential is required for those public read-only artifacts and discovery surfaces.
@@ -131,13 +131,13 @@ The manifest records the current live A2A lifecycle state, exact public origin a
 External agents can discover the bounded public beacon through:
 
 ```text
-https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/.well-known/agent-card.json
+https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app/.well-known/agent-card.json
 ```
 
 The interface is A2A 1.0 HTTP+JSON at:
 
 ```text
-https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/a2a/v1
+https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app/a2a/v1
 ```
 
 ### 7. Public contribution path
@@ -160,13 +160,13 @@ a2a_implementation_available = true
 a2a_server = true
 live_network_ingress = true
 agent_card_published = true
-public_base_url = https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app
+public_base_url = https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app
 ```
 
 Public Agent Card:
 
 ```text
-https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/.well-known/agent-card.json
+https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app/.well-known/agent-card.json
 ```
 
 The implementation is deliberately bounded. It does not perform open-ended web retrieval, live ENS resolution, arbitrary tool execution, persistent tasks, registry mutation or caller-selected network access.
@@ -365,10 +365,10 @@ Agent discovery manifest
 https://vortikregistry.github.io/vortik-open-schema/agents/discovery.json
 
 A2A Agent Card
-https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/.well-known/agent-card.json
+https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app/.well-known/agent-card.json
 
 A2A interface
-https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/a2a/v1
+https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app/a2a/v1
 
 Coordination stack
 https://vortikregistry.github.io/vortik-open-schema/maps/coordination-stack.json
