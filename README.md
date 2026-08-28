@@ -39,8 +39,8 @@ For a technical reader, the useful property is that Vortik can be **inspected, c
 | ENS candidate contribution path | **Live via GitHub Issues** | Schema-bound public contribution path for evidence and corrections. Promotion is never automatic. |
 | A2A discovery beacon | **Live** | Bounded read-only A2A 1.0 HTTP+JSON discovery service with a public Agent Card and canonical HTTPS origin. |
 | Beacon outbound-denial probe | **Production PASS** | Fixed-destination one-shot probe verified the dedicated Direct VPC deny-egress boundary before live activation. |
-| Trusted receipt issuance | **Disabled** | Pre-activation infrastructure has been exercised, but issuance is not active. |
-| Candidate admission | **Disabled** | No automatic registry mutation or admission authority is active. |
+| Trusted receipt issuance | **Deferred from V1 / Disabled** | Production-preactivation paths passed, but V1 exposes no receipt-issuance service. |
+| Candidate admission | **Deferred from V1 / Disabled** | V1 performs no automatic registry mutation and grants no admission authority. |
 
 ---
 
@@ -303,6 +303,8 @@ trusted_receipt_issuance = false
 admission.enabled = false
 ```
 
+For V1 these are explicit, non-blocking deferrals rather than partially advertised capabilities. The implemented verifier, receipt-core and production-preactivation evidence remain available for a separately reviewed post-V1 activation, but V1 exposes no receipt-issuance route and does not admit candidates automatically.
+
 See:
 
 - [`docs/cloud-run-preactivation-evidence.md`](docs/cloud-run-preactivation-evidence.md)
@@ -414,8 +416,8 @@ GitHub Actions validates pull requests and pushes to `main`.
 - Public feeds: live
 - Public discovery metadata: live
 - A2A beacon: live / bounded / deny-egress verified
-- Trusted receipt issuance: disabled
-- Candidate admission: disabled
+- Trusted receipt issuance: deferred from V1 / disabled
+- Candidate admission: deferred from V1 / disabled
 
 ---
 
