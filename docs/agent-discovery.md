@@ -45,24 +45,34 @@ docs/public-a2a-beacon.md
 
 ## A2A lifecycle state
 
-The beacon is implemented but **not live** in the current manifest.
+The canonical manifest records the beacon as **live** at the dedicated Cloud Run origin:
 
 ```text
-mode: a2a_preactivation
+mode: a2a_live
 a2a_implementation_available: true
-a2a_server: false
-live_network_ingress: false
-agent_card_published: false
+a2a_server: true
+live_network_ingress: true
+agent_card_published: true
 protocol_binding: HTTP+JSON
 protocol_version: 1.0
 agent_card_path: /.well-known/agent-card.json
 interface_path: /a2a/v1
-public_base_url: null
+public_base_url: https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app
 ```
 
-This distinction is deliberate. Repository code may exist and pass review before any public network claim is true.
+Agent Card:
 
-A later `a2a_live` transition is valid only when the dedicated deployment has passed the reviewed deployment gate and the canonical/public manifest mirrors can record the exact live HTTPS origin consistently.
+```text
+https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/.well-known/agent-card.json
+```
+
+A2A base interface:
+
+```text
+https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/a2a/v1
+```
+
+The distinction between implementation and live state remains deliberate: the schema still rejects partial transitions, and the live claim is valid only while the dedicated deployment and canonical/public manifest mirrors agree on the same HTTPS origin and lifecycle state.
 
 ## Read-only beacon behavior
 
@@ -119,9 +129,11 @@ The discovery manifest, beacon responses and candidate contributions are metadat
 - evidence of ownership intent;
 - permission to transact, sign, list or transfer anything.
 
-The beacon has no trusted-receipt runtime dependency. Its production service requires a dedicated unprivileged identity and an independently enforced deny-egress network boundary before any live transition.
+The beacon has no trusted-receipt runtime dependency. Its production service uses a dedicated unprivileged identity and independently enforced deny-egress network boundary.
 
-The beacon also remains separate from trusted-receipt issuance and candidate admission. Those gates are not changed by agent discovery work.
+Before the live transition, the reviewed immutable image was exercised through the same dedicated identity and isolated network path. The bounded outbound-denial probe completed successfully only after Direct VPC readiness and with both the fixed external HTTPS target and the fixed RFC1918 target inaccessible.
+
+The beacon remains separate from trusted-receipt issuance and candidate admission. Those gates are not changed by the A2A activation.
 
 ## Validation
 
@@ -134,12 +146,13 @@ npm run test:public-a2a-beacon
 
 Repository validation confirms:
 
-- the current discovery `1.4.0` schema and preactivation manifest;
+- the current discovery `1.4.0` schema and live manifest;
 - complete historical immutability of discovery `1.0.0`–`1.3.0` against the PR base;
 - canonical/public agent manifest and schema mirror equality;
 - exact reuse of existing feed, ENS research and contribution references;
 - existence of the A2A implementation entry points;
-- valid preactivation and fully coupled live lifecycle states;
+- valid fully coupled preactivation and live lifecycle states;
 - fail-closed rejection of partial lifecycle transitions;
+- exact canonical live base URL enforcement;
 - fail-closed trust and authority boundaries; and
 - adversarial A2A request behavior, stateless task posture and bounded request handling.
