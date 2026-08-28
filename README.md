@@ -33,12 +33,12 @@ For a technical reader, the useful property is that Vortik can be **inspected, c
 | Public schemas | **Live** | Versioned machine-readable contracts and semantic definitions. |
 | Source trails | **Live** | Human-readable and generated source references attached to registry definitions. |
 | Semantic feeds | **Live** | Read-only machine-consumable outputs, currently including the ePBS feed and feed index. |
-| Discovery manifest | **Live metadata** | Machine-readable description of Vortik public capabilities and lifecycle state. It does not claim a live A2A listener. |
+| Discovery manifest | **Live metadata** | Machine-readable description of Vortik public capabilities and lifecycle state, including the canonical live A2A origin. |
 | Interactive explorer | **Live** | Human-readable browsing surface for registry entries and semantic structure. |
-| ENS semantic research library | **Implemented** | Deterministic local evaluation against canonical Vortik artifacts. No live public submission endpoint is claimed. |
+| ENS semantic research library | **Implemented** | Deterministic local evaluation against canonical Vortik artifacts. No live public research execution endpoint is claimed. |
 | ENS candidate contribution path | **Live via GitHub Issues** | Schema-bound public contribution path for evidence and corrections. Promotion is never automatic. |
-| A2A discovery beacon | **Implemented / preactivation** | A2A 1.0 HTTP+JSON implementation exists, but public ingress and Agent Card publication remain closed. |
-| Beacon outbound-denial probe | **Implemented / not yet production-proven** | One-shot fixed-destination probe exists for the future isolated runtime gate; no production PASS is claimed. |
+| A2A discovery beacon | **Live** | Bounded read-only A2A 1.0 HTTP+JSON discovery service with a public Agent Card and canonical HTTPS origin. |
+| Beacon outbound-denial probe | **Production PASS** | Fixed-destination one-shot probe verified the dedicated Direct VPC deny-egress boundary before live activation. |
 | Trusted receipt issuance | **Disabled** | Pre-activation infrastructure has been exercised, but issuance is not active. |
 | Candidate admission | **Disabled** | No automatic registry mutation or admission authority is active. |
 
@@ -64,7 +64,13 @@ Inspect the public discovery manifest:
 https://vortikregistry.github.io/vortik-open-schema/agents/discovery.json
 ```
 
-No wallet, API key or RPC credential is required for those public read-only artifacts.
+Discover the live A2A agent directly:
+
+```text
+https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/.well-known/agent-card.json
+```
+
+No wallet, API key or RPC credential is required for those public read-only artifacts and discovery surfaces.
 
 For the zero-dependency JavaScript path, expected fields, versioning and stability boundary, see [`docs/developer-quickstart.md`](docs/developer-quickstart.md).
 
@@ -72,7 +78,7 @@ For the zero-dependency JavaScript path, expected fields, versioning and stabili
 
 ## How public discovery works today
 
-Vortik exposes discovery in layers rather than claiming one universal agent endpoint.
+Vortik exposes discovery in layers rather than treating one agent endpoint as the whole product.
 
 ### 1. Registry discovery
 
@@ -118,9 +124,23 @@ agents/discovery.json
 
 Its public mirror is published through GitHub Pages.
 
-The manifest describes what Vortik can expose or prepare without silently upgrading preactivation capabilities into live services.
+The manifest records the current live A2A lifecycle state, exact public origin and authority boundaries without upgrading unrelated gated capabilities.
 
-### 6. Public contribution path
+### 6. Live A2A discovery beacon
+
+External agents can discover the bounded public beacon through:
+
+```text
+https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/.well-known/agent-card.json
+```
+
+The interface is A2A 1.0 HTTP+JSON at:
+
+```text
+https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/a2a/v1
+```
+
+### 7. Public contribution path
 
 External contributors can prepare schema-bound ENS candidate contributions through GitHub Issues. Contributions remain untrusted inputs until reviewed.
 
@@ -128,31 +148,30 @@ External contributors can prepare schema-bound ENS candidate contributions throu
 
 ## A2A discovery beacon
 
-Vortik now contains a bounded read-only Agent2Agent discovery implementation intended for agents and developer tooling that need to locate selected public Vortik artifacts.
+Vortik operates a bounded read-only Agent2Agent discovery service intended for agents and developer tooling that need to locate selected public Vortik artifacts.
 
 The implementation targets **A2A 1.0 HTTP+JSON** and maps selected Ethereum coordination queries to allowlisted public references.
 
-Canonical lifecycle state is currently:
+Canonical lifecycle state is:
 
 ```text
-mode = a2a_preactivation
+mode = a2a_live
 a2a_implementation_available = true
-a2a_server = false
-live_network_ingress = false
-agent_card_published = false
-public_base_url = null
+a2a_server = true
+live_network_ingress = true
+agent_card_published = true
+public_base_url = https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app
 ```
 
-That means the code exists, but Vortik does **not** currently claim:
+Public Agent Card:
 
-- a public A2A listener;
-- a published Agent Card;
-- live A2A network ingress; or
-- a public A2A base URL.
+```text
+https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/.well-known/agent-card.json
+```
 
 The implementation is deliberately bounded. It does not perform open-ended web retrieval, live ENS resolution, arbitrary tool execution, persistent tasks, registry mutation or caller-selected network access.
 
-The repository also contains a one-shot outbound-denial probe for the future dedicated runtime boundary. The probe is implemented and tested locally, but this README does not claim that the production network-isolation gate has passed.
+The production service uses a dedicated unprivileged runtime identity, isolated Direct VPC egress and a deny-all outbound firewall boundary. Before live activation, the reviewed immutable image completed the fixed-destination outbound-denial probe successfully: Direct VPC readiness was established and both the fixed external HTTPS destination and fixed RFC1918 destination were inaccessible. The probe does not grant any receipt, admission, protocol, ENS or commercial authority.
 
 See:
 
@@ -343,6 +362,12 @@ https://vortikregistry.github.io/vortik-open-schema/feeds/index.json
 Agent discovery manifest
 https://vortikregistry.github.io/vortik-open-schema/agents/discovery.json
 
+A2A Agent Card
+https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/.well-known/agent-card.json
+
+A2A interface
+https://vortik-agent-beacon-dtcdh3ioxu-rj.a.run.app/a2a/v1
+
 Coordination stack
 https://vortikregistry.github.io/vortik-open-schema/maps/coordination-stack.json
 
@@ -373,8 +398,8 @@ GitHub Actions validates pull requests and pushes to `main`.
 2. [`SEMANTIC-STATUS.md`](SEMANTIC-STATUS.md) — current public semantic posture.
 3. [`docs/developer-quickstart.md`](docs/developer-quickstart.md) — machine-readable developer path.
 4. [`docs/agent-discovery.md`](docs/agent-discovery.md) — public discovery contract.
-5. [`docs/public-a2a-beacon.md`](docs/public-a2a-beacon.md) — A2A implementation and lifecycle.
-6. [`docs/public-a2a-beacon-trust-boundary.md`](docs/public-a2a-beacon-trust-boundary.md) — runtime/network boundary required before activation.
+5. [`docs/public-a2a-beacon.md`](docs/public-a2a-beacon.md) — live A2A implementation and lifecycle.
+6. [`docs/public-a2a-beacon-trust-boundary.md`](docs/public-a2a-beacon-trust-boundary.md) — runtime/network boundary enforced for activation.
 7. [`docs/naming-governance-boundaries.md`](docs/naming-governance-boundaries.md) — ENS naming and authority boundaries.
 8. [`CONTRIBUTING.md`](CONTRIBUTING.md) — contribution rules.
 
@@ -388,7 +413,7 @@ GitHub Actions validates pull requests and pushes to `main`.
 - Public interface: GitHub Pages
 - Public feeds: live
 - Public discovery metadata: live
-- A2A beacon: implemented, preactivation
+- A2A beacon: live / bounded / deny-egress verified
 - Trusted receipt issuance: disabled
 - Candidate admission: disabled
 
