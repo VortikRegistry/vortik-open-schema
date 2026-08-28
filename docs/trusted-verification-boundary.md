@@ -117,13 +117,15 @@ admission_valid_until <= registration_expiry
 
 If any evidence binding, clock value, policy authorization, signature or freshness relation fails, issuance fails closed.
 
-## Production issuance remains disabled
+## V1 decision — production issuance deferred
 
 `trusted_receipt_issuance` remains `false`.
 
-The repository can now express the KMS signer interface and validate the initial public verification policy, but CI cannot by itself establish that an external key version, IAM binding or deployment runtime is operating as intended.
+For V1 this is an explicit final scope decision, not an unfinished public capability. V1 includes the bounded verifiers, receipt contracts, issuer core, KMS adapter, public verification policy and recorded production-preactivation evidence. It does not expose a receipt-issuance route or advertise receipt issuance as a public service.
 
-Production activation still requires at minimum:
+The production-preactivation evidence records successful bounded KMS signing, primary-source receipt and ENS-mainnet receipt probes. Those PASS results verify the exercised paths but do not create an operational issuance service or authority.
+
+Any post-V1 activation must be a separate reviewed change that revalidates the then-current protected components and operations:
 
 - a private Google-managed runtime bound to the intended service identity and exact CryptoKeyVersion;
 - an independently trusted runtime pin for the production key-policy identity/digest;
@@ -132,7 +134,7 @@ Production activation still requires at minimum:
 - an end-to-end real receipt test with independent public-key verification; and
 - operational signing-key rotation/revocation procedures.
 
-These are deployment/infrastructure assertions and must be verified at the activation gate rather than inferred from public code.
+These remain activation-time deployment and operational assertions. They must not be inferred from public code or from historical preactivation evidence.
 
 ## Admission-time trust remains separate
 
@@ -166,10 +168,12 @@ The canonical verification schemas and requirements manifest retain their existi
 
 ## WORK GATE
 
-The public-code trusted-verification path is materially closed through evidence derivation, receipt construction, canonical digesting, policy authorization, a deployable KMS signing adapter and signature self-verification.
+The public-code trusted-verification path and its production-preactivation evidence are materially closed for V1 through evidence derivation, receipt construction, canonical digesting, policy authorization, a deployable KMS signing adapter and signature self-verification.
 
-The next step after this adapter is **not** another public hardening loop and is **not** candidate admission.
+The V1 decision is explicit:
 
-Production `trusted_receipt_issuance=true` remains blocked on deployment verification: private runtime assembly, exact service/key-version binding, independently trusted policy identity, trusted clock implementation/policy and end-to-end receipt evidence.
+- `trusted_receipt_issuance=false` is deferred from V1;
+- `admission.enabled=false` is deferred from V1; and
+- neither deferral blocks the bounded public V1 registry and discovery surfaces.
 
-`admission.enabled` remains `false` and must stay separate.
+The next step is **not** another public hardening loop and is **not** candidate admission. Any activation belongs to a separate post-V1 gate.
