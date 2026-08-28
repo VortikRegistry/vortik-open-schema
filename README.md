@@ -35,9 +35,9 @@ For a technical reader, the useful property is that Vortik can be **inspected, c
 | Semantic feeds | **Live** | Read-only machine-consumable outputs, currently including the ePBS feed and feed index. |
 | Discovery manifest | **Live metadata** | Machine-readable description of Vortik public capabilities and lifecycle state, including the canonical live A2A origin. |
 | Interactive explorer | **Live** | Human-readable browsing surface for registry entries and semantic structure. |
-| ENS semantic research library | **Implemented** | Deterministic local evaluation against canonical Vortik artifacts. No live public research execution endpoint is claimed. |
+| ENS semantic research | **Live through Reception** | Deterministic evaluation of one normalized ENS-style name against canonical Vortik artifacts, with no live ENS resolution or external retrieval. |
 | ENS candidate contribution path | **Live via GitHub Issues** | Schema-bound public contribution path for evidence and corrections. Promotion is never automatic. |
-| A2A discovery beacon | **Live** | Bounded read-only A2A 1.0 HTTP+JSON discovery service with a public Agent Card and canonical HTTPS origin. |
+| A2A Reception beacon | **Live** | Bounded read-only A2A 1.0 HTTP+JSON intent router, ENS research and public discovery service with a canonical HTTPS origin. |
 | Beacon outbound-denial probe | **Production PASS** | Fixed-destination one-shot probe verified the dedicated Direct VPC deny-egress boundary before live activation. |
 | Trusted receipt issuance | **Deferred from V1 / Disabled** | Production-preactivation paths passed, but V1 exposes no receipt-issuance service. |
 | Candidate admission | **Deferred from V1 / Disabled** | V1 performs no automatic registry mutation and grants no admission authority. |
@@ -126,7 +126,7 @@ Its public mirror is published through GitHub Pages.
 
 The manifest records the current live A2A lifecycle state, exact public origin and authority boundaries without upgrading unrelated gated capabilities.
 
-### 6. Live A2A discovery beacon
+### 6. Live A2A Reception beacon
 
 External agents can discover the bounded public beacon through:
 
@@ -146,11 +146,11 @@ External contributors can prepare schema-bound ENS candidate contributions throu
 
 ---
 
-## A2A discovery beacon
+## A2A Reception beacon
 
-Vortik operates a bounded read-only Agent2Agent discovery service intended for agents and developer tooling that need to locate selected public Vortik artifacts.
+Vortik operates a bounded read-only Agent2Agent Reception service for agents and developer tooling that need deterministic public routing, ENS semantic research or selected public Vortik artifacts.
 
-The implementation targets **A2A 1.0 HTTP+JSON** and maps selected Ethereum coordination queries to allowlisted public references.
+The implementation targets **A2A 1.0 HTTP+JSON**. It classifies a closed intent set, evaluates one normalized ENS-style name against immutable canonical snapshots, and maps other supported queries to allowlisted public references.
 
 Canonical lifecycle state is:
 
@@ -169,7 +169,7 @@ Public Agent Card:
 https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app/.well-known/agent-card.json
 ```
 
-The implementation is deliberately bounded. It does not perform open-ended web retrieval, live ENS resolution, arbitrary tool execution, persistent tasks, registry mutation or caller-selected network access.
+The implementation is deliberately bounded. It does not perform open-ended web retrieval, live ENS resolution, arbitrary tool execution, persistent tasks, registry mutation or caller-selected network access. Contribution intents remain on GitHub Issues, while sanitized interest signals do not disclose terms or enable private handoff.
 
 The production service uses a dedicated unprivileged runtime identity, isolated Direct VPC egress and a deny-all outbound firewall boundary. Before live activation, the reviewed immutable image completed the fixed-destination outbound-denial probe successfully: Direct VPC readiness was established and both the fixed external HTTPS destination and fixed RFC1918 destination were inaccessible. The probe does not grant any receipt, admission, protocol, ENS or commercial authority.
 
@@ -275,7 +275,7 @@ Vortik is independent and does **not**:
 - infer ownership intent from an ENS name;
 - treat external contributions as trusted evidence by default;
 - grant automatic candidate admission;
-- expose the trusted-receipt signer or Google Cloud KMS through the public discovery beacon;
+- expose the trusted-receipt signer or Google Cloud KMS through the public Reception beacon;
 - make AI-generated reports a source of protocol truth.
 
 The public discovery layer and the trusted verification runtime are deliberately separate security domains.

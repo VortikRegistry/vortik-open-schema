@@ -10,8 +10,8 @@ import {
   createCloudRunAgentBeaconServer
 } from "../service/cloud-run-agent-beacon.mjs";
 
-const schemaUrl = new URL("../schemas/agents/vortik-agent-discovery/1.4.0/schema.json", import.meta.url);
-const publicSchemaUrl = new URL("../docs/schemas/agents/vortik-agent-discovery/1.4.0/schema.json", import.meta.url);
+const schemaUrl = new URL("../schemas/agents/vortik-agent-discovery/1.5.0/schema.json", import.meta.url);
+const publicSchemaUrl = new URL("../docs/schemas/agents/vortik-agent-discovery/1.5.0/schema.json", import.meta.url);
 const manifestUrl = new URL("../agents/discovery.json", import.meta.url);
 const PUBLIC_BASE_URL = "https://beacon.example.test";
 const LIFECYCLE_NOTE = "Lifecycle state is defined exclusively by the structured interaction fields; this note does not independently assert preactivation or live network status.";
@@ -22,7 +22,7 @@ async function loadFixture() {
     readFile(publicSchemaUrl, "utf8"),
     readFile(manifestUrl, "utf8")
   ]);
-  assert.equal(publicSchemaText, schemaText, "source and public 1.4.0 schemas must be byte-identical");
+  assert.equal(publicSchemaText, schemaText, "source and public 1.5.0 schemas must be byte-identical");
   const schema = JSON.parse(schemaText);
   const manifest = JSON.parse(manifestText);
   const ajv = new Ajv2020({ allErrors: true, strict: false });

@@ -7,14 +7,14 @@ import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const schemaPath = "schemas/agents/vortik-agent-discovery/1.4.0/schema.json";
+const schemaPath = "schemas/agents/vortik-agent-discovery/1.5.0/schema.json";
 const manifestPath = "agents/discovery.json";
 const contributionContractPath = "schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json";
 const publicContributionContractPath = "docs/schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json";
 const contributionTemplatePath = ".github/ISSUE_TEMPLATE/ens-candidate-contribution.md";
 const contributionSubmissionUrl = "https://github.com/VortikRegistry/vortik-open-schema/issues/new?template=ens-candidate-contribution.md";
 const publicA2ABaseUrl = "https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app";
-const historicalDiscoveryVersions = ["1.0.0", "1.1.0", "1.2.0", "1.3.0"];
+const historicalDiscoveryVersions = ["1.0.0", "1.1.0", "1.2.0", "1.3.0", "1.4.0"];
 
 function git(...args) {
   return execFileSync("git", args, {
@@ -136,7 +136,7 @@ addFormats(ajv);
 const validate = ajv.compile(schema);
 const validateContribution = ajv.compile(contributionSchema);
 
-assertValid(validate, manifest, "agents/discovery.json 1.4.0 live manifest");
+assertValid(validate, manifest, "agents/discovery.json 1.5.0 live manifest");
 
 const integrityErrors = [];
 for (const capability of manifest.capabilities) {
@@ -144,6 +144,7 @@ for (const capability of manifest.capabilities) {
   if (capability.local_execution_entrypoint) await requirePath(capability.local_execution_entrypoint, integrityErrors);
   if (capability.library_entrypoint) await requirePath(capability.library_entrypoint, integrityErrors);
   if (capability.http_entrypoint) await requirePath(capability.http_entrypoint, integrityErrors);
+  if (capability.router_entrypoint) await requirePath(capability.router_entrypoint, integrityErrors);
   if (capability.contract) await requirePath(capability.contract, integrityErrors);
   if (capability.documentation) await requirePath(capability.documentation, integrityErrors);
   if (capability.request_contract) await requirePath(capability.request_contract, integrityErrors);
@@ -186,12 +187,15 @@ if (contributionCapability.submission_transport !== "github_issue") integrityErr
 if (contributionCapability.submission_url !== contributionSubmissionUrl) integrityErrors.push("ENS candidate contribution submission URL must point to the canonical Issue template");
 if (contributionCapability.automatic_promotion !== false) integrityErrors.push("ENS candidate contribution must never advertise automatic promotion");
 
-const beaconCapability = manifest.capabilities.find((entry) => entry.id === "public_a2a_discovery_beacon");
-if (!beaconCapability) integrityErrors.push("A2A discovery beacon capability is missing");
+const beaconCapability = manifest.capabilities.find((entry) => entry.id === "public_a2a_reception_beacon");
+if (!beaconCapability) integrityErrors.push("A2A Reception beacon capability is missing");
 else {
   if (beaconCapability.protocol_binding !== "HTTP+JSON" || beaconCapability.protocol_version !== "1.0") integrityErrors.push("A2A beacon must remain on HTTP+JSON protocol version 1.0");
   if (beaconCapability.agent_card_path !== "/.well-known/agent-card.json" || beaconCapability.interface_path !== "/a2a/v1") integrityErrors.push("A2A beacon paths drifted from the versioned discovery contract");
   if (beaconCapability.persistent_tasks !== false || beaconCapability.external_retrieval !== false || beaconCapability.network_required_by_repository_runtime !== false) integrityErrors.push("A2A beacon must remain stateless and repository-network independent");
+  if (beaconCapability.router_entrypoint !== "lib/public-reception-router.mjs" || beaconCapability.remote_ens_research !== true) integrityErrors.push("A2A Reception must bind the reviewed router and deterministic remote ENS research");
+  if (beaconCapability.commercial_signal_mode !== "sanitized_no_handoff" || beaconCapability.private_handoff !== false) integrityErrors.push("A2A Reception commercial signals must remain sanitized with private handoff disabled");
+  if (beaconCapability.contribution_transport !== "github_issue_only") integrityErrors.push("A2A Reception contribution routing must remain GitHub-Issue-only");
 }
 
 if (manifest.interaction.mode !== "a2a_live" ||
@@ -284,11 +288,11 @@ await verifyMirrorInventory("schemas/agents", "docs/schemas/agents", "Agent disc
 const staleMirrorRegression = inventoryDiff(["discovery.json"], ["discovery.json", "obsolete.json"]);
 if (staleMirrorRegression.extra.length !== 1 || staleMirrorRegression.extra[0] !== "obsolete.json") throw new Error("Agent discovery inventory validation must detect stale public mirror files");
 
-console.log(`agents/discovery.json conforms to vortik-agent-discovery 1.4.0 with ${manifest.capabilities.length} capability entries`);
-console.log(`Historical discovery 1.0.0–1.3.0 contracts preserved byte-identical to ${baseRef}`);
+console.log(`agents/discovery.json conforms to vortik-agent-discovery 1.5.0 with ${manifest.capabilities.length} capability entries`);
+console.log(`Historical discovery 1.0.0–1.4.0 contracts preserved byte-identical to ${baseRef}`);
 console.log("Existing feed, ENS research, inbound research and GitHub contribution references verified");
 console.log("A2A live lifecycle and fully coupled preactivation-state contract verified");
-console.log("A2A beacon implementation paths and fail-closed trust-boundary declarations verified");
+console.log("A2A Reception implementation paths, deterministic ENS research and fail-closed trust-boundary declarations verified");
 console.log("Closed ENS candidate contribution contract verified with authority, price and insecure-reference regressions");
 console.log("Public agent manifest/schema directory inventories verified complete and byte-identical");
 console.log("EXPECTED FAIL stale public agent mirror inventory");

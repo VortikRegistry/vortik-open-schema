@@ -1,7 +1,7 @@
 {
-  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/agents/vortik-agent-discovery/1.4.0/schema.json",
+  "$schema": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/agents/vortik-agent-discovery/1.5.0/schema.json",
   "manifest": "vortik-agent-discovery",
-  "manifest_version": "1.4.0",
+  "manifest_version": "1.5.0",
   "project": {
     "name": "Vortik Registry",
     "description": "Independent source-grounded semantic registry and deterministic research surface for selected Ethereum coordination terminology.",
@@ -67,12 +67,13 @@
       "network_required_by_repository_runtime": false
     },
     {
-      "id": "public_a2a_discovery_beacon",
+      "id": "public_a2a_reception_beacon",
       "kind": "local_service",
-      "description": "Bounded read-only A2A discovery service that maps selected Ethereum coordination queries to allowlisted public Vortik artifacts without external retrieval or persistent tasks.",
+      "description": "Bounded read-only A2A Reception service that classifies public intents, executes deterministic ENS semantic research, and routes discovery or GitHub contribution paths without external retrieval or persistent tasks.",
       "local_entrypoint": "service/cloud-run-agent-beacon.mjs",
       "library_entrypoint": "lib/public-a2a-beacon.mjs",
       "http_entrypoint": "lib/public-a2a-http.mjs",
+      "router_entrypoint": "lib/public-reception-router.mjs",
       "documentation": "docs/public-a2a-beacon.md",
       "protocol_binding": "HTTP+JSON",
       "protocol_version": "1.0",
@@ -80,6 +81,10 @@
       "interface_path": "/a2a/v1",
       "persistent_tasks": false,
       "external_retrieval": false,
+      "remote_ens_research": true,
+      "commercial_signal_mode": "sanitized_no_handoff",
+      "private_handoff": false,
+      "contribution_transport": "github_issue_only",
       "network_required_by_repository_runtime": false
     }
   ],

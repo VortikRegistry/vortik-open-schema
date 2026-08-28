@@ -19,26 +19,27 @@ agents/discovery.json
 Current contract:
 
 ```text
-schemas/agents/vortik-agent-discovery/1.4.0/schema.json
+schemas/agents/vortik-agent-discovery/1.5.0/schema.json
 ```
 
-Historical discovery contracts `1.0.0` through `1.3.0` remain versioned and unchanged.
+Historical discovery contracts `1.0.0` through `1.4.0` remain versioned and unchanged.
 
 ## Current capabilities
 
-Version `1.4.0` advertises five implemented repository capabilities:
+Version `1.5.0` advertises five implemented repository capabilities:
 
 1. `discover_vortik_feeds` — discovery and verification of versioned public semantic feeds through `feeds/index.json`.
 2. `research_ens_semantics` — deterministic local ENS-style semantic research through `lib/ens-research-client.mjs` and the existing versioned request/response contracts.
 3. `inbound_ens_research_contract` — a contract-only declaration that tells an external agent which existing ENS research request and response schemas to prepare.
 4. `prepare_ens_candidate_contribution` — a closed public contribution contract plus the repository's GitHub Issue collaboration path for submitting one machine-readable ENS-style candidate artifact for conservative Vortik review.
-5. `public_a2a_discovery_beacon` — a bounded read-only A2A 1.0 implementation for deterministic discovery of allowlisted public Vortik artifacts.
+5. `public_a2a_reception_beacon` — a bounded read-only A2A 1.0 Reception implementation for deterministic intent routing, local ENS semantic research and discovery of allowlisted public Vortik artifacts.
 
 The A2A implementation uses:
 
 ```text
 lib/public-a2a-beacon.mjs
 lib/public-a2a-http.mjs
+lib/public-reception-router.mjs
 service/cloud-run-agent-beacon.mjs
 docs/public-a2a-beacon.md
 ```
@@ -74,9 +75,11 @@ https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app/a2a/v1
 
 The distinction between implementation and live state remains deliberate: the schema still rejects partial transitions, and the live claim is valid only while the dedicated deployment and canonical/public manifest mirrors agree on the same HTTPS origin and lifecycle state.
 
-## Read-only beacon behavior
+## Read-only Reception behavior
 
-The beacon accepts one bounded textual discovery message and maps it to fixed public references for selected themes such as:
+The beacon accepts one bounded textual message. The Reception router classifies capability discovery, registry lookup, technical context, ENS research, evidence contribution, candidate submission, sanitized interest and unsupported requests.
+
+For one normalized ENS-style identifier, Reception executes the existing deterministic research client against immutable canonical snapshots. Other public routes map to fixed references for selected themes such as:
 
 - ePBS and proposer-builder separation;
 - inclusion-list and FOCIL terminology;
@@ -84,7 +87,7 @@ The beacon accepts one bounded textual discovery message and maps it to fixed pu
 - Vortik feeds, schemas and registry artifacts;
 - the public ENS candidate contribution path.
 
-Unknown queries return a generic bounded discovery response.
+Contribution routes remain GitHub-Issue-only. Sanitized interest signals do not enable private handoff. Unknown or multi-identifier requests return a bounded unsupported response.
 
 The beacon does not perform external retrieval, live ENS resolution, arbitrary tool execution, registry mutation or persistent task processing. Caller content remains untrusted data, never instructions.
 
@@ -118,7 +121,7 @@ automatic_promotion: false
 
 GitHub Issue submission remains ordinary repository collaboration. It does not authenticate a contributor, prove ENS ownership, create registry state or grant authority.
 
-The inbound ENS research contract remains `submission_available: false`; the A2A beacon discovers that public contract but does not execute the ENS research client on behalf of a remote caller.
+The inbound ENS research contract remains `submission_available: false` because the service does not accept that JSON contract as a direct submission transport. The A2A Reception text interface separately executes the same deterministic evaluator for one normalized ENS-style identifier.
 
 ## Trust and authority boundary
 
@@ -146,11 +149,11 @@ npm run test:public-a2a-beacon
 
 Repository validation confirms:
 
-- the current discovery `1.4.0` schema and live manifest;
-- complete historical immutability of discovery `1.0.0`–`1.3.0` against the PR base;
+- the current discovery `1.5.0` schema and live manifest;
+- complete historical immutability of discovery `1.0.0`–`1.4.0` against the PR base;
 - canonical/public agent manifest and schema mirror equality;
 - exact reuse of existing feed, ENS research and contribution references;
-- existence of the A2A implementation entry points;
+- existence of the A2A and Reception implementation entry points;
 - valid fully coupled preactivation and live lifecycle states;
 - fail-closed rejection of partial lifecycle transitions;
 - exact canonical live base URL enforcement;

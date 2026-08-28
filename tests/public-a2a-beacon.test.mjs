@@ -58,8 +58,8 @@ function a2aReason(payload) {
 
 test("A2A Agent Card is fixed to HTTP+JSON 1.0 and read-only capabilities", () => {
   const card = buildPublicA2AAgentCard({ publicBaseUrl: PUBLIC_BASE_URL });
-  assert.equal(card.name, "Vortik Registry Discovery Beacon");
-  assert.equal(card.version, "0.1.0");
+  assert.equal(card.name, "Vortik Registry Reception Beacon");
+  assert.equal(card.version, "0.2.0");
   assert.deepEqual(card.supportedInterfaces, [{
     url: "https://beacon.example.test/a2a/v1",
     protocolBinding: A2A_PROTOCOL_BINDING,
@@ -72,7 +72,8 @@ test("A2A Agent Card is fixed to HTTP+JSON 1.0 and read-only capabilities", () =
   });
   assert.deepEqual(card.defaultInputModes, ["text/plain"]);
   assert.deepEqual(card.defaultOutputModes, ["text/plain", "application/json"]);
-  assert.equal(card.skills.length, 4);
+  assert.equal(card.skills.length, 5);
+  assert.ok(card.skills.some((skill) => skill.id === "vortik-public-reception"));
 });
 
 test("public base URL must be an HTTPS origin and cannot be inferred from requests", async () => {
@@ -377,6 +378,9 @@ test("beacon implementation has no fetch or trusted-receipt/KMS runtime dependen
   const paths = [
     new URL("../lib/public-a2a-beacon.mjs", import.meta.url),
     new URL("../lib/public-a2a-http.mjs", import.meta.url),
+    new URL("../lib/public-reception-router.mjs", import.meta.url),
+    new URL("../lib/ens-research-client.mjs", import.meta.url),
+    new URL("../lib/ens-research-evaluator.mjs", import.meta.url),
     new URL("../service/cloud-run-agent-beacon.mjs", import.meta.url)
   ];
   const texts = await Promise.all(paths.map((path) => readFile(path, "utf8")));
