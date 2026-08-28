@@ -34,7 +34,7 @@ Recommended reading path:
 - [`naming-governance-boundaries.md`](naming-governance-boundaries.md) — clarifies that ENS anchors are semantic naming surfaces, not governance endorsements, operational roots, or protocol authority claims.
 - [`public-ens-research-scope.md`](public-ens-research-scope.md) — defines the ownership-neutral public research states, evidence boundaries, non-goals, and trust model for ENS-style name queries.
 - [`ens-research-client.md`](ens-research-client.md) — documents the reusable local client, versioned request flow, executable example, result states, and non-authoritative trust boundary.
-- [`agent-discovery.md`](agent-discovery.md) — documents the machine-readable public discovery manifest, currently advertised capabilities, and the explicit pre-A2A trust boundary.
+- [`agent-discovery.md`](agent-discovery.md) — documents the machine-readable public discovery manifest, currently advertised capabilities, and the live bounded A2A lifecycle and trust boundary.
 - [`taxonomy-promotion-rules.md`](taxonomy-promotion-rules.md) — defines conservative rules for promoting, holding, degrading, rejecting, or leaving terms outside registry state.
 - [`taxonomy-lifecycle-bridge.md`](taxonomy-lifecycle-bridge.md) — explains the relationship between candidate evidence posture and registry semantic posture without changing registry state.
 - [`glossary.md`](glossary.md) — defines short public-facing explanations of recurring registry and protocol terms without creating registry entries.
