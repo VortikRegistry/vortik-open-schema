@@ -51,6 +51,31 @@ test("parsed caller-controlled host forms fail closed", () => {
   }
 });
 
+test("supported spaced EIP references are not mistaken for numeric IPv4", () => {
+  const beacon = createPublicA2ABeacon({
+    publicBaseUrl: PUBLIC_BASE_URL,
+    idFactory: () => "eip-regression-id"
+  });
+
+  for (const text of ["EIP 7732", "EIP 7805"]) {
+    assert.doesNotThrow(
+      () => routePublicReception({ text, requestId: "eip-regression" }),
+      text
+    );
+    assert.doesNotThrow(() => beacon.sendMessage(sendRequest(text)), text);
+  }
+
+  for (const text of [
+    "research EIP 7732 epbs.eth",
+    "research EIP 7805 epbs.eth"
+  ]) {
+    const direct = routePublicReception({ text, requestId: "eip-ens-regression" });
+    assert.equal(direct.intent, "ens_research", text);
+    assert.equal(direct.identifier, "epbs.eth", text);
+    assert.doesNotThrow(() => beacon.sendMessage(sendRequest(text)), text);
+  }
+});
+
 test("supported ENS, sentence punctuation and explicit schema versions remain accepted", () => {
   for (const text of [
     "research epbs.eth",
