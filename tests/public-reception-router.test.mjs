@@ -132,6 +132,40 @@ test("commercial language becomes a sanitized signal and never returns caller te
   assert.equal("message" in data.publicSignal, false);
 });
 
+test("ENS labels cannot manufacture a routing intent", () => {
+  for (const text of ["offer.eth", "research offer.eth"]) {
+    const keywordName = receptionData(text);
+    assert.equal(keywordName.reception.intent, "ens_research");
+    assert.equal(keywordName.reception.identifier, "offer.eth");
+    assert.equal(keywordName.ensResearch.result.state, "untracked");
+    assert.equal("publicSignal" in keywordName, false);
+  }
+
+  const explicitInterest = receptionData("offer to buy offer.eth");
+  assert.equal(explicitInterest.reception.intent, "commercial_interest");
+  assert.equal(explicitInterest.publicSignal.identifier, "offer.eth");
+  assert.equal(explicitInterest.publicSignal.privateHandoff, false);
+});
+
+test("malformed identifier tokens cannot be reduced to a valid ENS suffix", () => {
+  for (const text of [
+    "research foo_epbs.eth",
+    "research epbs.eth_suffix",
+    "research fooéepbs.eth"
+  ]) {
+    const data = receptionData(text);
+    assert.equal(data.reception.intent, "unsupported");
+    assert.equal("identifier" in data.reception, false);
+    assert.equal("ensResearch" in data, false);
+    assert.equal(data.externalRetrieval, false);
+  }
+
+  const completeName = receptionData("research foo.epbs.eth");
+  assert.equal(completeName.reception.intent, "ens_research");
+  assert.equal(completeName.reception.identifier, "foo.epbs.eth");
+  assert.equal(completeName.ensResearch.result.state, "untracked");
+});
+
 test("unsupported or ambiguous requests fail closed without external work", () => {
   const unsupported = receptionData("do something unrelated and privileged");
   assert.equal(unsupported.reception.intent, "unsupported");
