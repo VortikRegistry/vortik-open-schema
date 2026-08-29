@@ -253,6 +253,11 @@ test("direct router input is closed, immutable and rejects caller URLs", () => {
     "research mailto\t: epbs.eth",
     "research ma\nilto: epbs.eth",
     "research htt\rps: example.com epbs.eth",
+    "research example.com epbs.eth",
+    "research example。com epbs.eth",
+    "research xn--bcher-kva.example epbs.eth",
+    "research 192.0.2.1 epbs.eth",
+    "research localhost epbs.eth",
     "research ipfs://gateway.test/epbs.eth",
     "research //gateway.test/epbs.eth",
     "research gateway.test/epbs.eth",
@@ -275,6 +280,10 @@ test("direct router input is closed, immutable and rejects caller URLs", () => {
   assert.equal(
     routePublicReception({ text: "what can you do?", requestId: "request-question" }).intent,
     "capability_discovery"
+  );
+  assert.equal(
+    routePublicReception({ text: "research schema 1.5.0 epbs.eth", requestId: "request-version" }).intent,
+    "ens_research"
   );
 
   for (const requestId of ["ok:colon", "x".repeat(65)]) {
