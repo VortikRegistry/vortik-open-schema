@@ -199,6 +199,7 @@ test("core rejects wrong roles, multiple parts, binary/structured/url parts and 
     "research //gateway.test/epbs.eth",
     "research gateway.test/epbs.eth",
     "research mailto:epbs.eth",
+    "research mailto: epbs.eth",
     "research .mailto:epbs.eth",
     "research -mailto:epbs.eth",
     "research _mailto:epbs.eth",
