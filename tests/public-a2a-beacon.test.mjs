@@ -202,6 +202,17 @@ test("core rejects wrong roles, multiple parts, binary/structured/url parts and 
     "research example。com epbs.eth",
     "research xn--bcher-kva.example epbs.eth",
     "research 192.0.2.1 epbs.eth",
+    "research 127.1 epbs.eth",
+    "research 127.0.1 epbs.eth",
+    "research 0177.1 epbs.eth",
+    "research 0x7f.1 epbs.eth",
+    "research 127%2e1 epbs.eth",
+    "research 2130706433 epbs.eth",
+    "research 0x7f000001 epbs.eth",
+    "research example%2ecom epbs.eth",
+    "research xn--bcher-kva%2Eexample epbs.eth",
+    "research example%E3%80%82com epbs.eth",
+    "research [::1] epbs.eth",
     "research localhost epbs.eth",
     "research ipfs://gateway.test/epbs.eth",
     "research //gateway.test/epbs.eth",
@@ -215,6 +226,15 @@ test("core rejects wrong roles, multiple parts, binary/structured/url parts and 
     "research gateway.test?name=epbs.eth"
   ]) {
     assert.throws(() => beacon.sendMessage(sendRequest(text)), /URLs are not accepted/);
+  }
+  for (const text of [
+    "research schema 1.5.0-beta epbs.eth",
+    "research schema v1.5.0-rc1 epbs.eth"
+  ]) {
+    const response = beacon.sendMessage(sendRequest(text, {
+      request: { configuration: { acceptedOutputModes: ["application/json"] } }
+    }));
+    assert.equal(response.message.parts[0].data.reception.intent, "ens_research");
   }
   assert.throws(() => beacon.sendMessage(sendRequest("x".repeat(513))), /1-512/);
 });
