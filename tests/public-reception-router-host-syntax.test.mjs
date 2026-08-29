@@ -25,7 +25,13 @@ test("parsed multi-label hosts with non-DNS label syntax fail closed", () => {
     idFactory: () => "host-regression-id"
   });
 
-  for (const host of ["foo_bar.com", "-foo.com", "foo-.com"]) {
+  for (const host of [
+    "foo_bar.com",
+    "-foo.com",
+    "foo-.com",
+    "foo。eth_bar.com",
+    "foo｡eth_bar.com"
+  ]) {
     const text = `research ${host} epbs.eth`;
     assert.throws(
       () => routePublicReception({ text, requestId: "host-regression" }),
