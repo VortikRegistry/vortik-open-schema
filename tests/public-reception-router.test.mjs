@@ -151,7 +151,10 @@ test("malformed identifier tokens cannot be reduced to a valid ENS suffix", () =
   for (const text of [
     "research foo_epbs.eth",
     "research epbs.eth_suffix",
-    "research fooéepbs.eth"
+    "research fooéepbs.eth",
+    "research foo\u0301epbs.eth",
+    "research foo\u203fepbs.eth",
+    "research foo\u200depbs.eth"
   ]) {
     const data = receptionData(text);
     assert.equal(data.reception.intent, "unsupported");
