@@ -208,6 +208,33 @@ test("stateless task references and push configuration fail with A2A-specific re
   );
 });
 
+test("generated identifiers use the stricter ENS-compatible contract", () => {
+  for (const generatedId of ["ok:colon", "x".repeat(65)]) {
+    const beacon = createPublicA2ABeacon({
+      publicBaseUrl: PUBLIC_BASE_URL,
+      idFactory: () => generatedId
+    });
+    assert.throws(
+      () => beacon.sendMessage(sendRequest("research epbs.eth")),
+      /ENS-compatible generated identifier contract/
+    );
+    assert.throws(
+      () => beacon.sendMessage(sendRequest("capabilities")),
+      /ENS-compatible generated identifier contract/
+    );
+  }
+
+  const accepted = createPublicA2ABeacon({
+    publicBaseUrl: PUBLIC_BASE_URL,
+    idFactory: () => `a${"b".repeat(63)}`
+  }).sendMessage(sendRequest("research epbs.eth", {
+    message: { contextId: "caller:context" }
+  }));
+  assert.equal(accepted.message.contextId, "caller:context");
+  assert.equal(accepted.message.messageId.length, 64);
+  assert.equal(accepted.message.parts[0].mediaType, "text/plain");
+});
+
 test("Agent Card endpoint emits cache controls and supports ETag revalidation", async () => {
   await withServer({}, async (base) => {
     const first = await fetch(`${base}/.well-known/agent-card.json`);
