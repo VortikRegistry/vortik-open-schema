@@ -194,6 +194,10 @@ test("core rejects wrong roles, multiple parts, binary/structured/url parts and 
     "research //gateway.test/epbs.eth",
     "research gateway.test/epbs.eth",
     "research mailto:epbs.eth",
+    "research .mailto:epbs.eth",
+    "research -mailto:epbs.eth",
+    "research _mailto:epbs.eth",
+    "research xmailto:epbs.eth",
     "research gateway.test?name=epbs.eth"
   ]) {
     assert.throws(() => beacon.sendMessage(sendRequest(text)), /URLs are not accepted/);

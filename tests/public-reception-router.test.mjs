@@ -238,6 +238,10 @@ test("direct router input is closed, immutable and rejects caller URLs", () => {
     "research gateway.test/epbs.eth",
     "research gateway.test\\epbs.eth",
     "research mailto:epbs.eth",
+    "research .mailto:epbs.eth",
+    "research -mailto:epbs.eth",
+    "research _mailto:epbs.eth",
+    "research xmailto:epbs.eth",
     "research urn:ens:epbs.eth",
     "research gateway.test?name=epbs.eth",
     "research gateway.test#epbs.eth"
