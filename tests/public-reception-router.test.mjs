@@ -180,6 +180,18 @@ test("malformed identifier tokens cannot be reduced to a valid ENS suffix", () =
   assert.equal(sentenceEllipsis.ensResearch.result.state, "tracked_anchor");
 });
 
+test("ENS research rejects names outside the evaluator's canonical subset", () => {
+  const oversizedName = `${"a".repeat(63)}.${"b".repeat(63)}.${"c".repeat(63)}.${"d".repeat(63)}.eth`;
+  for (const name of ["xn--secret.eth", "ab--cd.eth", oversizedName]) {
+    const data = receptionData(`research ${name}`);
+    assert.equal(data.reception.intent, "unsupported", name);
+    assert.equal(data.reception.status, "not_supported", name);
+    assert.equal("identifier" in data.reception, false, name);
+    assert.equal("ensResearch" in data, false, name);
+    assert.equal(data.externalRetrieval, false, name);
+  }
+});
+
 test("unsupported or ambiguous requests fail closed without external work", () => {
   const unsupported = receptionData("do something unrelated and privileged");
   assert.equal(unsupported.reception.intent, "unsupported");
@@ -233,6 +245,8 @@ test("direct router input is closed, immutable and rejects caller URLs", () => {
   for (const text of [
     "research https：／／example.test/epbs.eth",
     "research www．example.test/epbs.eth",
+    "research www。example.com epbs.eth",
+    "research www｡example.com epbs.eth",
     "research ipfs://gateway.test/epbs.eth",
     "research //gateway.test/epbs.eth",
     "research gateway.test/epbs.eth",

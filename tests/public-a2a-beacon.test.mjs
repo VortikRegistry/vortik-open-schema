@@ -190,6 +190,8 @@ test("core rejects wrong roles, multiple parts, binary/structured/url parts and 
   );
   for (const text of [
     "please inspect https://example.com",
+    "research www。example.com epbs.eth",
+    "research www｡example.com epbs.eth",
     "research ipfs://gateway.test/epbs.eth",
     "research //gateway.test/epbs.eth",
     "research gateway.test/epbs.eth",
