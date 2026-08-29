@@ -164,6 +164,11 @@ test("malformed identifier tokens cannot be reduced to a valid ENS suffix", () =
   assert.equal(completeName.reception.intent, "ens_research");
   assert.equal(completeName.reception.identifier, "foo.epbs.eth");
   assert.equal(completeName.ensResearch.result.state, "untracked");
+
+  const sentencePunctuation = receptionData("research epbs.eth.");
+  assert.equal(sentencePunctuation.reception.intent, "ens_research");
+  assert.equal(sentencePunctuation.reception.identifier, "epbs.eth");
+  assert.equal(sentencePunctuation.ensResearch.result.state, "tracked_anchor");
 });
 
 test("unsupported or ambiguous requests fail closed without external work", () => {
