@@ -155,6 +155,10 @@ test("malformed identifier tokens cannot be reduced to a valid ENS suffix", () =
     "research foo\u0301epbs.eth",
     "research foo\u203fepbs.eth",
     "research foo\u200depbs.eth",
+    "research 💩_epbs.eth",
+    "research ⒜epbs.eth",
+    "research ⁺epbs.eth",
+    "research \u0080epbs.eth",
     "research epbs.eth..suffix"
   ]) {
     const data = receptionData(text);
@@ -168,6 +172,10 @@ test("malformed identifier tokens cannot be reduced to a valid ENS suffix", () =
   assert.equal(completeName.reception.intent, "ens_research");
   assert.equal(completeName.reception.identifier, "foo.epbs.eth");
   assert.equal(completeName.ensResearch.result.state, "untracked");
+
+  const nfkcCompleteName = receptionData("research ｅｐｂｓ.eth");
+  assert.equal(nfkcCompleteName.reception.intent, "ens_research");
+  assert.equal(nfkcCompleteName.reception.identifier, "epbs.eth");
 
   const sentencePunctuation = receptionData("research epbs.eth.");
   assert.equal(sentencePunctuation.reception.intent, "ens_research");
@@ -272,6 +280,10 @@ test("direct router input is closed, immutable and rejects caller URLs", () => {
     "research example.💩 epbs.eth",
     "research (💩.com) epbs.eth",
     "research foo=💩.com epbs.eth",
+    "research 💩epbs.eth",
+    "research %F0%9F%92%A9epbs.eth",
+    "research epbs.eth💩",
+    "research epbs.eth%F0%9F%92%A9",
     "research [::1] epbs.eth",
     "research localhost epbs.eth",
     "research ipfs://gateway.test/epbs.eth",
