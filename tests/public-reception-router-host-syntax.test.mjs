@@ -19,7 +19,7 @@ function sendRequest(text) {
   };
 }
 
-test("parsed multi-label hosts with non-DNS label syntax fail closed", () => {
+test("parsed caller-controlled host forms fail closed", () => {
   const beacon = createPublicA2ABeacon({
     publicBaseUrl: PUBLIC_BASE_URL,
     idFactory: () => "host-regression-id"
@@ -30,7 +30,12 @@ test("parsed multi-label hosts with non-DNS label syntax fail closed", () => {
     "-foo.com",
     "foo-.com",
     "foo。eth_bar.com",
-    "foo｡eth_bar.com"
+    "foo｡eth_bar.com",
+    "127",
+    "0177",
+    "0x7f",
+    "example.",
+    "example．"
   ]) {
     const text = `research ${host} epbs.eth`;
     assert.throws(
@@ -46,9 +51,10 @@ test("parsed multi-label hosts with non-DNS label syntax fail closed", () => {
   }
 });
 
-test("supported ENS and explicit schema versions remain accepted", () => {
+test("supported ENS, sentence punctuation and explicit schema versions remain accepted", () => {
   for (const text of [
     "research epbs.eth",
+    "research epbs.eth.",
     "research schema 1.5.0 epbs.eth",
     "research schema 1.5.0-beta epbs.eth",
     "research schema v1.5.0-rc1 epbs.eth"
