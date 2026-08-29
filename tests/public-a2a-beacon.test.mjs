@@ -188,7 +188,16 @@ test("core rejects wrong roles, multiple parts, binary/structured/url parts and 
     })),
     /unsupported field/
   );
-  assert.throws(() => beacon.sendMessage(sendRequest("please inspect https://example.com")), /URLs are not accepted/);
+  for (const text of [
+    "please inspect https://example.com",
+    "research ipfs://gateway.test/epbs.eth",
+    "research //gateway.test/epbs.eth",
+    "research gateway.test/epbs.eth",
+    "research mailto:epbs.eth",
+    "research gateway.test?name=epbs.eth"
+  ]) {
+    assert.throws(() => beacon.sendMessage(sendRequest(text)), /URLs are not accepted/);
+  }
   assert.throws(() => beacon.sendMessage(sendRequest("x".repeat(513))), /1-512/);
 });
 

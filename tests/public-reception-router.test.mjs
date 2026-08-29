@@ -232,13 +232,25 @@ test("direct router input is closed, immutable and rejects caller URLs", () => {
   );
   for (const text of [
     "research https：／／example.test/epbs.eth",
-    "research www．example.test/epbs.eth"
+    "research www．example.test/epbs.eth",
+    "research ipfs://gateway.test/epbs.eth",
+    "research //gateway.test/epbs.eth",
+    "research gateway.test/epbs.eth",
+    "research gateway.test\\epbs.eth",
+    "research mailto:epbs.eth",
+    "research urn:ens:epbs.eth",
+    "research gateway.test?name=epbs.eth",
+    "research gateway.test#epbs.eth"
   ]) {
     assert.throws(
       () => routePublicReception({ text, requestId: "request-unicode-url" }),
       /URLs are not accepted/
     );
   }
+  assert.equal(
+    routePublicReception({ text: "what can you do?", requestId: "request-question" }).intent,
+    "capability_discovery"
+  );
 
   for (const requestId of ["ok:colon", "x".repeat(65)]) {
     for (const text of ["capabilities", "research epbs.eth"]) {
