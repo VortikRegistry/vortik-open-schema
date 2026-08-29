@@ -230,4 +230,23 @@ test("direct router input is closed, immutable and rejects caller URLs", () => {
     }),
     /URLs are not accepted/
   );
+
+  for (const requestId of ["ok:colon", "x".repeat(65)]) {
+    for (const text of ["capabilities", "research epbs.eth"]) {
+      assert.throws(
+        () => routePublicReception({ text, requestId }),
+        /ENS-compatible identifier contract/
+      );
+    }
+  }
+
+  const maxLength = `a${"b".repeat(63)}`;
+  assert.equal(
+    routePublicReception({ text: "capabilities", requestId: maxLength }).intent,
+    "capability_discovery"
+  );
+  assert.equal(
+    routePublicReception({ text: "research epbs.eth", requestId: maxLength }).intent,
+    "ens_research"
+  );
 });
