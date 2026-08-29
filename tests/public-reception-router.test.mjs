@@ -230,6 +230,15 @@ test("direct router input is closed, immutable and rejects caller URLs", () => {
     }),
     /URLs are not accepted/
   );
+  for (const text of [
+    "research https：／／example.test/epbs.eth",
+    "research www．example.test/epbs.eth"
+  ]) {
+    assert.throws(
+      () => routePublicReception({ text, requestId: "request-unicode-url" }),
+      /URLs are not accepted/
+    );
+  }
 
   for (const requestId of ["ok:colon", "x".repeat(65)]) {
     for (const text of ["capabilities", "research epbs.eth"]) {
