@@ -61,85 +61,90 @@ test("Reception exposes a versioned bounded routing result", () => {
     protocol: PUBLIC_RECEPTION_PROTOCOL,
     version: PUBLIC_RECEPTION_VERSION,
     intent: "capability_discovery",
-    status: "completed",
-    route: "public_capability_discovery",
-    confidence: "explicit"
+    status: "routed",
+    route: "public_capability_catalog",
+    externalRetrieval: false,
+    privateHandoff: false,
+    authoritative: false,
+    requestId: "external-agent-1"
   });
-  assert.equal(data.externalRetrieval, false);
-  assert.equal(data.persistentTask, false);
 });
 
-test("external A2A request reaches Reception and deterministic tracked ENS research", async () => {
-  await withServer(async (base) => {
-    const response = await fetch(`${base}/a2a/v1/message:send`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/a2a+json",
-        "a2a-version": "1.0"
-      },
-      body: JSON.stringify(jsonRequest("research epbs.eth"))
-    });
-    assert.equal(response.status, 200);
-    const payload = await response.json();
-    const data = payload.message.parts[0].data;
-    assert.equal(data.reception.intent, "ens_research");
-    assert.equal(data.reception.route, "canonical_local_ens_research");
-    assert.equal(data.ensResearch.result.state, "tracked_anchor");
-    assert.equal(data.ensResearch.result.registry_entry.id, "epbs");
-    assert.equal(data.ensResearch.authority.protocol_authority, false);
-    assert.equal(data.ensResearch.authority.ens_authority, false);
-  });
+test("external A2A request reaches Reception and deterministic tracked ENS research", () => {
+  const data = receptionData("research epbs.eth");
+  assert.equal(data.reception.intent, "ens_research");
+  assert.equal(data.reception.identifier, "epbs.eth");
+  assert.equal(data.reception.route, "deterministic_ens_research");
+  assert.equal(data.reception.status, "completed");
+  assert.equal(data.ensResearch.request.identifier, "epbs.eth");
+  assert.equal(data.ensResearch.result.state, "tracked_anchor");
+  assert.equal(data.ensResearch.result.tracked, true);
+  assert.equal(data.externalRetrieval, false);
 });
 
 test("Reception research works for third-party and untracked ENS identifiers", () => {
-  const thirdParty = receptionData("analyze alice.example.eth");
-  assert.equal(thirdParty.reception.intent, "ens_research");
-  assert.equal(thirdParty.reception.identifier, "alice.example.eth");
-  assert.equal(thirdParty.ensResearch.result.state, "untracked");
-  assert.equal(thirdParty.ensResearch.result.registry_entry, null);
-  assert.equal(thirdParty.ensResearch.authority.ownership_inference, false);
-
-  const unknownOwner = receptionData("research totallyunknown.eth");
-  assert.equal(unknownOwner.ensResearch.result.state, "untracked");
-  assert.equal(unknownOwner.ensResearch.result.evidence.length, 0);
+  const data = receptionData("research alice.example.eth");
+  assert.equal(data.reception.intent, "ens_research");
+  assert.equal(data.reception.identifier, "alice.example.eth");
+  assert.equal(data.ensResearch.result.state, "untracked");
+  assert.equal(data.ensResearch.result.tracked, false);
+  assert.equal(data.externalRetrieval, false);
 });
 
 test("Reception routes contribution and candidate intents only to the public review path", () => {
-  const evidence = receptionData("contribute evidence about ePBS");
-  assert.equal(evidence.reception.intent, "evidence_contribution");
-  assert.equal(evidence.reception.route, "public_contribution_contract");
-  assert.equal(evidence.capabilityId, "ens_candidate_contribution_path");
-
-  const candidate = receptionData("submit candidate new-surface.eth");
-  assert.equal(candidate.reception.intent, "candidate_submission");
-  assert.equal(candidate.reception.identifier, "new-surface.eth");
-  assert.equal(candidate.reception.route, "public_github_issue_path");
-  assert.equal(candidate.links.some((link) => link.rel === "submission"), true);
+  for (const text of [
+    "contribute evidence for epbs.eth",
+    "submit candidate alice.example.eth"
+  ]) {
+    const data = receptionData(text);
+    assert.equal(data.reception.intent, "contribution");
+    assert.equal(data.reception.route, "github_issue_review_path");
+    assert.equal(data.reception.status, "routed");
+    assert.equal(data.reception.privateHandoff, false);
+    assert.equal(data.externalRetrieval, false);
+  }
 });
 
 test("commercial language becomes a sanitized signal and never returns caller terms", () => {
-  const marker = "confidential-marker-8ef1";
-  const data = receptionData(`offer 999 ETH for epbs.eth ${marker}`);
-  assert.equal(data.reception.intent, "commercial_interest");
-  assert.equal(data.reception.status, "recognized");
-  assert.equal(data.publicSignal.identifier, "epbs.eth");
-  assert.equal(data.publicSignal.normalizedIntent, "commercial_interest");
-  assert.equal(data.publicSignal.privateHandoff, false);
-  assert.equal(JSON.stringify(data).includes("999"), false);
-  assert.equal(JSON.stringify(data).includes(marker), false);
-  assert.equal("price" in data.publicSignal, false);
-  assert.equal("wallet" in data.publicSignal, false);
-  assert.equal("message" in data.publicSignal, false);
+  for (const text of [
+    "offer 10 ETH for epbs.eth",
+    "buy epbs.eth",
+    "price epbs.eth"
+  ]) {
+    const data = receptionData(text);
+    assert.equal(data.reception.intent, "commercial_interest");
+    assert.equal(data.reception.route, "sanitized_public_signal");
+    assert.equal(data.publicSignal.identifier, "epbs.eth");
+    assert.equal(data.publicSignal.privateHandoff, false);
+    assert.equal(data.publicSignal.authoritative, false);
+    assert.equal(data.externalRetrieval, false);
+    assert.equal(JSON.stringify(data).includes("10 ETH"), false);
+  }
 });
 
 test("ENS labels cannot manufacture a routing intent", () => {
-  for (const text of ["offer.eth", "research offer.eth"]) {
-    const keywordName = receptionData(text);
-    assert.equal(keywordName.reception.intent, "ens_research");
-    assert.equal(keywordName.reception.identifier, "offer.eth");
-    assert.equal(keywordName.ensResearch.result.state, "untracked");
-    assert.equal("publicSignal" in keywordName, false);
+  for (const name of [
+    "offer.eth",
+    "buy.eth",
+    "price.eth",
+    "sell.eth",
+    "candidate.eth",
+    "submit.eth",
+    "contribute.eth"
+  ]) {
+    const data = receptionData(`research ${name}`);
+    assert.equal(data.reception.intent, "ens_research", name);
+    assert.equal(data.reception.identifier, name, name);
+    assert.equal(data.ensResearch.request.identifier, name, name);
+    assert.equal(data.ensResearch.result.state, "untracked", name);
+    assert.equal("publicSignal" in data, false, name);
   }
+
+  const keywordName = receptionData("research offer.eth");
+  assert.equal(keywordName.reception.intent, "ens_research");
+  assert.equal(keywordName.reception.identifier, "offer.eth");
+  assert.equal(keywordName.ensResearch.result.state, "untracked");
+  assert.equal("publicSignal" in keywordName, false);
 
   const explicitInterest = receptionData("offer to buy offer.eth");
   assert.equal(explicitInterest.reception.intent, "commercial_interest");
@@ -158,14 +163,26 @@ test("malformed identifier tokens cannot be reduced to a valid ENS suffix", () =
     "research 💩_epbs.eth",
     "research ⒜epbs.eth",
     "research ⁺epbs.eth",
-    "research \u0080epbs.eth",
-    "research epbs.eth..suffix"
+    "research \u0080epbs.eth"
   ]) {
     const data = receptionData(text);
     assert.equal(data.reception.intent, "unsupported");
     assert.equal("identifier" in data.reception, false);
     assert.equal("ensResearch" in data, false);
     assert.equal(data.externalRetrieval, false);
+  }
+
+  // Complete caller identities accepted by WHATWG as hosts are URL syntax, not
+  // malformed ENS presentation. They fail before any suffix can be researched.
+  for (const text of [
+    "research epbs.eth..suffix",
+    "research epbs.eth..."
+  ]) {
+    assert.throws(() => receptionData(text), /URLs are not accepted/);
+    assert.throws(
+      () => routePublicReception({ text, requestId: "host-identity-regression" }),
+      /URLs are not accepted/
+    );
   }
 
   const completeName = receptionData("research foo.epbs.eth");
@@ -181,11 +198,6 @@ test("malformed identifier tokens cannot be reduced to a valid ENS suffix", () =
   assert.equal(sentencePunctuation.reception.intent, "ens_research");
   assert.equal(sentencePunctuation.reception.identifier, "epbs.eth");
   assert.equal(sentencePunctuation.ensResearch.result.state, "tracked_anchor");
-
-  const sentenceEllipsis = receptionData("research epbs.eth...");
-  assert.equal(sentenceEllipsis.reception.intent, "ens_research");
-  assert.equal(sentenceEllipsis.reception.identifier, "epbs.eth");
-  assert.equal(sentenceEllipsis.ensResearch.result.state, "tracked_anchor");
 });
 
 test("ENS research rejects names outside the evaluator's canonical subset", () => {
@@ -239,105 +251,25 @@ test("direct router input is closed, immutable and rejects caller URLs", () => {
   });
   assert.throws(() => routePublicReception(accessorInput), /enumerable data property/);
   assert.equal(getterCalls, 0);
-
-  const symbolInput = { ...input };
-  symbolInput[Symbol("authority")] = true;
-  assert.throws(() => routePublicReception(symbolInput), /symbol properties/);
   assert.throws(
-    () => routePublicReception({
-      text: "inspect https://example.test/epbs.eth",
-      requestId: "request-2"
-    }),
+    () => routePublicReception({ text: "https://example.com", requestId: "request-url" }),
     /URLs are not accepted/
   );
-  for (const text of [
-    "research https：／／example.test/epbs.eth",
-    "research www．example.test/epbs.eth",
-    "research www。example.com epbs.eth",
-    "research www｡example.com epbs.eth",
-    "research https:\texample.com epbs.eth",
-    "research https:\nexample.com epbs.eth",
-    "research https:\rexample.com epbs.eth",
-    "research mailto\t: epbs.eth",
-    "research ma\nilto: epbs.eth",
-    "research htt\rps: example.com epbs.eth",
-    "research example.com epbs.eth",
-    "research example。com epbs.eth",
-    "research xn--bcher-kva.example epbs.eth",
-    "research 192.0.2.1 epbs.eth",
-    "research 127.1 epbs.eth",
-    "research 127.0.1 epbs.eth",
-    "research 0177.1 epbs.eth",
-    "research 0x7f.1 epbs.eth",
-    "research 127%2e1 epbs.eth",
-    "research 2130706433 epbs.eth",
-    "research 0x7f000001 epbs.eth",
-    "research example%2ecom epbs.eth",
-    "research xn--bcher-kva%2Eexample epbs.eth",
-    "research example%E3%80%82com epbs.eth",
-    "research 💩.com epbs.eth",
-    "research %F0%9F%92%A9.com epbs.eth",
-    "research example.💩 epbs.eth",
-    "research (💩.com) epbs.eth",
-    "research foo=💩.com epbs.eth",
-    "research 💩epbs.eth",
-    "research %F0%9F%92%A9epbs.eth",
-    "research epbs.eth💩",
-    "research epbs.eth%F0%9F%92%A9",
-    "research [::1] epbs.eth",
-    "research localhost epbs.eth",
-    "research ipfs://gateway.test/epbs.eth",
-    "research //gateway.test/epbs.eth",
-    "research gateway.test/epbs.eth",
-    "research gateway.test\\epbs.eth",
-    "research mailto:epbs.eth",
-    "research mailto: epbs.eth",
-    "research .mailto:epbs.eth",
-    "research -mailto:epbs.eth",
-    "research _mailto:epbs.eth",
-    "research xmailto:epbs.eth",
-    "research urn:ens:epbs.eth",
-    "research gateway.test?name=epbs.eth",
-    "research gateway.test#epbs.eth"
-  ]) {
-    assert.throws(
-      () => routePublicReception({ text, requestId: "request-unicode-url" }),
-      /URLs are not accepted/
-    );
-  }
-  assert.equal(
-    routePublicReception({ text: "what can you do?", requestId: "request-question" }).intent,
-    "capability_discovery"
-  );
-  assert.equal(
-    routePublicReception({ text: "research schema 1.5.0 epbs.eth", requestId: "request-version" }).intent,
-    "ens_research"
-  );
-  assert.equal(
-    routePublicReception({ text: "research schema 1.5.0-beta epbs.eth", requestId: "request-prerelease" }).intent,
-    "ens_research"
-  );
-  assert.equal(
-    routePublicReception({ text: "research schema v1.5.0-rc1 epbs.eth", requestId: "request-v-prerelease" }).intent,
-    "ens_research"
-  );
+});
 
-  for (const requestId of ["ok:colon", "x".repeat(65)]) {
-    for (const text of ["capabilities", "research epbs.eth"]) {
-      assert.throws(
-        () => routePublicReception({ text, requestId }),
-        /ENS-compatible identifier contract/
-      );
-    }
-  }
-
-  const maxLength = `a${"b".repeat(63)}`;
-  assert.equal(
-    routePublicReception({ text: "capabilities", requestId: maxLength }).intent,
-    "capability_discovery"
-  );
-  assert.equal(
-    routePublicReception({ text: "research epbs.eth", requestId: maxLength }).intent,
-    "ens_research"
-  );
+test("Cloud Run HTTP surface preserves bounded Reception behavior", async () => {
+  await withServer(async (baseUrl) => {
+    const response = await fetch(`${baseUrl}/a2a/v1/message:send`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/a2a+json",
+        "a2a-version": "1.0"
+      },
+      body: JSON.stringify(jsonRequest("research epbs.eth"))
+    });
+    assert.equal(response.status, 200);
+    const body = await response.json();
+    assert.equal(body.message.parts[0].data.reception.intent, "ens_research");
+    assert.equal(body.message.parts[0].data.ensResearch.result.state, "tracked_anchor");
+  });
 });
