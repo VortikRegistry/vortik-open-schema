@@ -62,7 +62,15 @@ test("complete userinfo authority spans fail before ENS tokenization", () => {
     "user@example.com",
     "user＠epbs.eth",
     "user%40epbs.eth",
-    "user@epbs.eth."
+    "user@epbs.eth.",
+    "[user@epbs.eth]",
+    "<user@epbs.eth>",
+    "(user@epbs.eth)",
+    "{user@epbs.eth}",
+    "\"user@epbs.eth\"",
+    "'user@epbs.eth'",
+    ",user@epbs.eth,",
+    ";user@epbs.eth;"
   ]) {
     const text = `research ${authority}`;
     assert.throws(
