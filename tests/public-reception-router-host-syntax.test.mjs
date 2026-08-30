@@ -51,6 +51,33 @@ test("parsed caller-controlled host forms fail closed", () => {
   }
 });
 
+test("complete userinfo authority spans fail before ENS tokenization", () => {
+  const beacon = createPublicA2ABeacon({
+    publicBaseUrl: PUBLIC_BASE_URL,
+    idFactory: () => "userinfo-regression-id"
+  });
+
+  for (const authority of [
+    "user@epbs.eth",
+    "user@example.com",
+    "user＠epbs.eth",
+    "user%40epbs.eth",
+    "user@epbs.eth."
+  ]) {
+    const text = `research ${authority}`;
+    assert.throws(
+      () => routePublicReception({ text, requestId: "userinfo-regression" }),
+      /URLs are not accepted/,
+      authority
+    );
+    assert.throws(
+      () => beacon.sendMessage(sendRequest(text)),
+      /URLs are not accepted/,
+      authority
+    );
+  }
+});
+
 test("percent-decoded host identity cannot inherit the malformed ENS exemption", () => {
   const beacon = createPublicA2ABeacon({
     publicBaseUrl: PUBLIC_BASE_URL,
