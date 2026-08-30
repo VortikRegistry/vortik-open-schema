@@ -14,7 +14,7 @@ const schemaUrl = new URL("../schemas/agents/vortik-agent-discovery/1.5.0/schema
 const publicSchemaUrl = new URL("../docs/schemas/agents/vortik-agent-discovery/1.5.0/schema.json", import.meta.url);
 const manifestUrl = new URL("../agents/discovery.json", import.meta.url);
 const PUBLIC_BASE_URL = "https://beacon.example.test";
-const LIFECYCLE_NOTE = "Lifecycle state is defined exclusively by the structured interaction fields; this note does not independently assert preactivation or live network status.";
+const LIFECYCLE_NOTE = "Lifecycle state is defined exclusively by the structured interaction fields; runtime capability availability is resolved from the live Agent Card rather than asserted by this static manifest.";
 
 async function loadFixture() {
   const [schemaText, publicSchemaText, manifestText] = await Promise.all([
