@@ -125,6 +125,46 @@ test("authority-like chunks never expose an ENS suffix to a child tokenizer", ()
   }
 });
 
+test("punctuated host chunks are classified before child ENS spans", () => {
+  const beacon = createPublicA2ABeacon({
+    publicBaseUrl: PUBLIC_BASE_URL,
+    idFactory: () => "punctuated-host-id"
+  });
+
+  for (const host of [
+    "foo!epbs.eth",
+    "foo\"epbs.eth",
+    "foo$epbs.eth",
+    "foo&epbs.eth",
+    "foo'epbs.eth",
+    "foo(epbs.eth",
+    "foo)epbs.eth",
+    "foo*epbs.eth",
+    "foo+epbs.eth",
+    "foo,epbs.eth",
+    "foo;epbs.eth",
+    "foo=epbs.eth",
+    "foo`epbs.eth",
+    "foo{epbs.eth",
+    "foo}epbs.eth",
+    "foo~epbs.eth",
+    "(foo!epbs.eth)",
+    "\"foo!epbs.eth\""
+  ]) {
+    const text = `research ${host}`;
+    assert.throws(
+      () => routePublicReception({ text, requestId: "punctuated-host" }),
+      /URLs are not accepted/,
+      host
+    );
+    assert.throws(
+      () => beacon.sendMessage(sendRequest(text)),
+      /URLs are not accepted/,
+      host
+    );
+  }
+});
+
 test("percent-decoded host identity cannot inherit the malformed ENS exemption", () => {
   const beacon = createPublicA2ABeacon({
     publicBaseUrl: PUBLIC_BASE_URL,
@@ -199,6 +239,8 @@ test("supported ENS, sentence punctuation and explicit schema versions remain ac
   for (const text of [
     "research epbs.eth",
     "research epbs.eth.",
+    "research (epbs.eth)",
+    "research \"epbs.eth\"",
     "research schema 1.5.0 epbs.eth",
     "research schema 1.5.0-beta epbs.eth",
     "research schema v1.5.0-rc1 epbs.eth"
