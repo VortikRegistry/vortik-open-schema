@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/agents/vortik-agent-discovery/1.5.0/schema.json",
   "title": "Vortik Agent Discovery Manifest 1.5.0",
-  "description": "Versioned machine-readable discovery manifest for implemented public Vortik capabilities, including an explicit preactivation/live lifecycle for a bounded read-only A2A Reception beacon.",
+  "description": "Versioned machine-readable discovery manifest for implemented public Vortik capabilities, with live runtime capability availability delegated to the Agent Card.",
   "type": "object",
   "additionalProperties": false,
   "required": ["$schema", "manifest", "manifest_version", "project", "interaction", "capabilities", "authority", "trust_boundary"],
@@ -24,13 +24,14 @@
     "interaction": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["mode", "a2a_implementation_available", "a2a_server", "live_network_ingress", "agent_card_published", "protocol_binding", "protocol_version", "agent_card_path", "interface_path", "public_base_url", "note"],
+      "required": ["mode", "a2a_implementation_available", "a2a_server", "live_network_ingress", "agent_card_published", "runtime_capabilities_source", "protocol_binding", "protocol_version", "agent_card_path", "interface_path", "public_base_url", "note"],
       "properties": {
         "mode": {"enum": ["a2a_preactivation", "a2a_live"]},
         "a2a_implementation_available": {"const": true},
         "a2a_server": {"type": "boolean"},
         "live_network_ingress": {"type": "boolean"},
         "agent_card_published": {"type": "boolean"},
+        "runtime_capabilities_source": {"const": "agent_card"},
         "protocol_binding": {"const": "HTTP+JSON"},
         "protocol_version": {"const": "1.0"},
         "agent_card_path": {"const": "/.well-known/agent-card.json"},
@@ -41,7 +42,7 @@
             {"type": "string", "format": "uri", "maxLength": 2048, "pattern": "^https://(?=[^:]{1,253}(?::(?:[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$)(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.)+[A-Za-z](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?::(?:[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$"}
           ]
         },
-        "note": {"const": "Lifecycle state is defined exclusively by the structured interaction fields; this note does not independently assert preactivation or live network status."}
+        "note": {"const": "Lifecycle state is defined exclusively by the structured interaction fields; runtime capability availability is resolved from the live Agent Card rather than asserted by this static manifest."}
       },
       "allOf": [
         {
@@ -141,7 +142,7 @@
           {
             "type": "object",
             "additionalProperties": false,
-            "required": ["id", "kind", "description", "local_entrypoint", "library_entrypoint", "http_entrypoint", "router_entrypoint", "documentation", "protocol_binding", "protocol_version", "agent_card_path", "interface_path", "persistent_tasks", "external_retrieval", "remote_ens_research", "commercial_signal_mode", "private_handoff", "contribution_transport", "network_required_by_repository_runtime"],
+            "required": ["id", "kind", "description", "local_entrypoint", "library_entrypoint", "http_entrypoint", "router_entrypoint", "documentation", "protocol_binding", "protocol_version", "agent_card_path", "interface_path", "persistent_tasks", "external_retrieval", "remote_ens_research_implemented", "runtime_availability_source", "commercial_signal_mode", "private_handoff", "contribution_transport", "network_required_by_repository_runtime"],
             "properties": {
               "id": {"const": "public_a2a_reception_beacon"},
               "kind": {"const": "local_service"},
@@ -157,7 +158,8 @@
               "interface_path": {"const": "/a2a/v1"},
               "persistent_tasks": {"const": false},
               "external_retrieval": {"const": false},
-              "remote_ens_research": {"const": true},
+              "remote_ens_research_implemented": {"const": true},
+              "runtime_availability_source": {"const": "agent_card"},
               "commercial_signal_mode": {"const": "sanitized_no_handoff"},
               "private_handoff": {"const": false},
               "contribution_transport": {"const": "github_issue_only"},
