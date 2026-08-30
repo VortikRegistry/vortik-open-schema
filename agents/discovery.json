@@ -14,12 +14,13 @@
     "a2a_server": true,
     "live_network_ingress": true,
     "agent_card_published": true,
+    "runtime_capabilities_source": "agent_card",
     "protocol_binding": "HTTP+JSON",
     "protocol_version": "1.0",
     "agent_card_path": "/.well-known/agent-card.json",
     "interface_path": "/a2a/v1",
     "public_base_url": "https://vortik-agent-beacon-dtdch3ioxa-rj.a.run.app",
-    "note": "Lifecycle state is defined exclusively by the structured interaction fields; this note does not independently assert preactivation or live network status."
+    "note": "Lifecycle state is defined exclusively by the structured interaction fields; runtime capability availability is resolved from the live Agent Card rather than asserted by this static manifest."
   },
   "capabilities": [
     {
@@ -69,7 +70,7 @@
     {
       "id": "public_a2a_reception_beacon",
       "kind": "local_service",
-      "description": "Bounded read-only A2A Reception service that classifies public intents, executes deterministic ENS semantic research, and routes discovery or GitHub contribution paths without external retrieval or persistent tasks.",
+      "description": "Implemented bounded read-only A2A Reception service for public intent classification, deterministic ENS semantic research, discovery and GitHub contribution routing. Runtime availability of these capabilities is advertised only by the live Agent Card.",
       "local_entrypoint": "service/cloud-run-agent-beacon.mjs",
       "library_entrypoint": "lib/public-a2a-beacon.mjs",
       "http_entrypoint": "lib/public-a2a-http.mjs",
@@ -81,7 +82,8 @@
       "interface_path": "/a2a/v1",
       "persistent_tasks": false,
       "external_retrieval": false,
-      "remote_ens_research": true,
+      "remote_ens_research_implemented": true,
+      "runtime_availability_source": "agent_card",
       "commercial_signal_mode": "sanitized_no_handoff",
       "private_handoff": false,
       "contribution_transport": "github_issue_only",
@@ -105,6 +107,6 @@
     "receipt_runtime_dependency": false,
     "dedicated_runtime_identity_required": true,
     "caller_selected_network_destinations": false,
-    "note": "Caller content remains untrusted data. The A2A beacon is limited to deterministic discovery over allowlisted public Vortik references and requires a separate isolated runtime identity and deny-egress deployment boundary before live activation."
+    "note": "Caller content remains untrusted data. The A2A beacon is limited to deterministic discovery over allowlisted public Vortik references; runtime capability availability is taken only from the Agent Card served by the isolated deny-egress deployment."
   }
 }
