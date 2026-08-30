@@ -149,7 +149,13 @@ test("punctuated host chunks are classified before child ENS spans", () => {
     "foo}epbs.eth",
     "foo~epbs.eth",
     "(foo!epbs.eth)",
-    "\"foo!epbs.eth\""
+    "\"foo!epbs.eth\"",
+    "!epbs.eth",
+    "epbs.eth!",
+    "$epbs.eth",
+    "epbs.eth$",
+    "~epbs.eth",
+    "epbs.eth~"
   ]) {
     const text = `research ${host}`;
     assert.throws(
