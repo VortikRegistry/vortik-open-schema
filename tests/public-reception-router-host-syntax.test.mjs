@@ -69,6 +69,12 @@ test("complete userinfo authority spans fail before ENS tokenization", () => {
     "user＠＠epbs.eth",
     "user%40%40epbs.eth",
     "user%40@epbs.eth",
+    "user@!epbs.eth",
+    "user@$epbs.eth",
+    "user@&epbs.eth",
+    "user@+epbs.eth",
+    "user@_epbs.eth",
+    "user@%21epbs.eth",
     "[user@epbs.eth]",
     "<user@epbs.eth>",
     "(user@epbs.eth)",
@@ -92,7 +98,7 @@ test("complete userinfo authority spans fail before ENS tokenization", () => {
   }
 });
 
-test("authority-like spans never expose an ENS suffix to a second tokenizer", () => {
+test("authority-like chunks never expose an ENS suffix to a child tokenizer", () => {
   const beacon = createPublicA2ABeacon({
     publicBaseUrl: PUBLIC_BASE_URL,
     idFactory: () => "authority-identity-id"
@@ -101,24 +107,21 @@ test("authority-like spans never expose an ENS suffix to a second tokenizer", ()
   for (const text of [
     "research @@epbs.eth",
     "research user@@@epbs.eth",
-    "research user%40%40epbs.eth"
+    "research user%40%40epbs.eth",
+    "research user@!epbs.eth",
+    "research user@$epbs.eth",
+    "research user@%21epbs.eth"
   ]) {
-    try {
-      const direct = routePublicReception({ text, requestId: "authority-identity" });
-      assert.notEqual(direct.intent, "ens_research", text);
-      assert.equal(Object.hasOwn(direct, "identifier"), false, text);
-    } catch (error) {
-      assert.match(error.message, /URLs are not accepted/, text);
-    }
-
-    try {
-      const response = beacon.sendMessage(sendRequest(text));
-      const reception = response.message.parts[0].data.reception;
-      assert.notEqual(reception.intent, "ens_research", text);
-      assert.equal(Object.hasOwn(reception, "identifier"), false, text);
-    } catch (error) {
-      assert.match(error.message, /URLs are not accepted/, text);
-    }
+    assert.throws(
+      () => routePublicReception({ text, requestId: "authority-identity" }),
+      /URLs are not accepted/,
+      text
+    );
+    assert.throws(
+      () => beacon.sendMessage(sendRequest(text)),
+      /URLs are not accepted/,
+      text
+    );
   }
 });
 
