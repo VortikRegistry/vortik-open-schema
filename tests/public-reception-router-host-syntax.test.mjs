@@ -56,6 +56,52 @@ test("parsed caller-controlled host forms fail closed", () => {
   }
 });
 
+test("ASCII URL controls remain identity token boundaries", () => {
+  const beacon = createPublicA2ABeacon({
+    publicBaseUrl: PUBLIC_BASE_URL,
+    idFactory: () => "control-boundary-id"
+  });
+
+  for (const boundary of ["\t", "\n", "\r"]) {
+    const multipleText = `research foo.eth${boundary}bar.eth`;
+    const directMultiple = routePublicReception({
+      text: multipleText,
+      requestId: "control-boundary-multiple"
+    });
+    assert.equal(directMultiple.intent, "unsupported", JSON.stringify(boundary));
+    assert.equal(
+      directMultiple.status,
+      "multiple_identifiers_not_supported",
+      JSON.stringify(boundary)
+    );
+    assert.equal("identifier" in directMultiple, false, JSON.stringify(boundary));
+    assert.equal("ensResearch" in directMultiple, false, JSON.stringify(boundary));
+
+    const a2aMultiple = beacon.sendMessage(sendRequest(multipleText));
+    const a2aMultipleData = a2aMultiple.message.parts[0].data;
+    assert.equal(a2aMultipleData.reception.intent, "unsupported", JSON.stringify(boundary));
+    assert.equal(
+      a2aMultipleData.reception.status,
+      "multiple_identifiers_not_supported",
+      JSON.stringify(boundary)
+    );
+    assert.equal("ensResearch" in a2aMultipleData, false, JSON.stringify(boundary));
+
+    const separatedText = `research foo${boundary}epbs.eth`;
+    const directSeparated = routePublicReception({
+      text: separatedText,
+      requestId: "control-boundary-single"
+    });
+    assert.equal(directSeparated.intent, "ens_research", JSON.stringify(boundary));
+    assert.equal(directSeparated.identifier, "epbs.eth", JSON.stringify(boundary));
+
+    const a2aSeparated = beacon.sendMessage(sendRequest(separatedText));
+    const a2aSeparatedData = a2aSeparated.message.parts[0].data;
+    assert.equal(a2aSeparatedData.reception.intent, "ens_research", JSON.stringify(boundary));
+    assert.equal(a2aSeparatedData.reception.identifier, "epbs.eth", JSON.stringify(boundary));
+  }
+});
+
 test("complete userinfo authority spans fail before ENS tokenization", () => {
   const beacon = createPublicA2ABeacon({
     publicBaseUrl: PUBLIC_BASE_URL,
@@ -244,6 +290,41 @@ test("advertised EIP references route to technical discovery without becoming IP
     assert.equal(direct.identifier, "epbs.eth", text);
     assert.doesNotThrow(() => beacon.sendMessage(sendRequest(text)), text);
   }
+});
+
+test("balanced presentation wrappers preserve closed scalar exemptions", () => {
+  const beacon = createPublicA2ABeacon({
+    publicBaseUrl: PUBLIC_BASE_URL,
+    idFactory: () => "wrapped-scalar-id"
+  });
+
+  for (const text of [
+    "research schema (1.5.0) epbs.eth",
+    "research EIP (7732) epbs.eth"
+  ]) {
+    const direct = routePublicReception({ text, requestId: "wrapped-scalar" });
+    assert.equal(direct.intent, "ens_research", text);
+    assert.equal(direct.identifier, "epbs.eth", text);
+
+    const response = beacon.sendMessage(sendRequest(text));
+    const data = response.message.parts[0].data;
+    assert.equal(data.reception.intent, "ens_research", text);
+    assert.equal(data.reception.identifier, "epbs.eth", text);
+  }
+
+  const commercialText = "offer 999 (ETH) for epbs.eth";
+  const directCommercial = routePublicReception({
+    text: commercialText,
+    requestId: "wrapped-eth-cue"
+  });
+  assert.equal(directCommercial.intent, "commercial_interest");
+  assert.equal(directCommercial.publicSignal.identifier, "epbs.eth");
+
+  const commercialResponse = beacon.sendMessage(sendRequest(commercialText));
+  const commercialData = commercialResponse.message.parts[0].data;
+  assert.equal(commercialData.reception.intent, "commercial_interest");
+  assert.equal(commercialData.publicSignal.identifier, "epbs.eth");
+  assert.equal(JSON.stringify(commercialData).includes("999"), false);
 });
 
 test("supported ENS, sentence punctuation and explicit schema versions remain accepted", () => {
