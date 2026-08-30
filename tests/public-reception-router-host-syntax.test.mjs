@@ -292,6 +292,34 @@ test("advertised EIP references route to technical discovery without becoming IP
   }
 });
 
+test("unbalanced punctuation cannot grant child scalar exemptions", () => {
+  const beacon = createPublicA2ABeacon({
+    publicBaseUrl: PUBLIC_BASE_URL,
+    idFactory: () => "closed-scalar-boundary-id"
+  });
+
+  for (const text of [
+    "research EIP 7732! epbs.eth",
+    "research EIP !7732 epbs.eth",
+    "research schema 1.5.0! epbs.eth",
+    "research schema !1.5.0 epbs.eth",
+    "offer 999! ETH for epbs.eth",
+    "offer !999 ETH for epbs.eth",
+    "offer 999 ETH! for epbs.eth"
+  ]) {
+    assert.throws(
+      () => routePublicReception({ text, requestId: "closed-scalar-boundary" }),
+      /URLs are not accepted/,
+      text
+    );
+    assert.throws(
+      () => beacon.sendMessage(sendRequest(text)),
+      /URLs are not accepted/,
+      text
+    );
+  }
+});
+
 test("balanced presentation wrappers preserve closed scalar exemptions", () => {
   const beacon = createPublicA2ABeacon({
     publicBaseUrl: PUBLIC_BASE_URL,
