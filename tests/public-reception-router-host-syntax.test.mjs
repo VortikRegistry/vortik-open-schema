@@ -35,7 +35,12 @@ test("parsed caller-controlled host forms fail closed", () => {
     "0177",
     "0x7f",
     "example.",
-    "example．"
+    "example．",
+    ".epbs.eth",
+    "..epbs.eth",
+    "．epbs.eth",
+    "%2Eepbs.eth",
+    "epbs.eth.."
   ]) {
     const text = `research ${host} epbs.eth`;
     assert.throws(
