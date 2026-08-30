@@ -155,9 +155,6 @@ test("malformed identifier tokens cannot be reduced to a valid ENS suffix", () =
     "research foo\u0301epbs.eth",
     "research foo\u203fepbs.eth",
     "research foo\u200depbs.eth",
-    "research 💩_epbs.eth",
-    "research ⒜epbs.eth",
-    "research ⁺epbs.eth",
     "research \u0080epbs.eth"
   ]) {
     const data = receptionData(text);
@@ -169,7 +166,10 @@ test("malformed identifier tokens cannot be reduced to a valid ENS suffix", () =
 
   for (const text of [
     "research epbs.eth..suffix",
-    "research epbs.eth..."
+    "research epbs.eth...",
+    "research 💩_epbs.eth",
+    "research ⒜epbs.eth",
+    "research ⁺epbs.eth"
   ]) {
     assert.throws(() => receptionData(text), /URLs are not accepted/);
     assert.throws(
