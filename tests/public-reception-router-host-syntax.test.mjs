@@ -51,18 +51,27 @@ test("parsed caller-controlled host forms fail closed", () => {
   }
 });
 
-test("supported spaced EIP references are not mistaken for numeric IPv4", () => {
+test("advertised EIP references route to technical discovery without becoming IPv4", () => {
   const beacon = createPublicA2ABeacon({
     publicBaseUrl: PUBLIC_BASE_URL,
     idFactory: () => "eip-regression-id"
   });
 
-  for (const text of ["EIP 7732", "EIP 7805"]) {
-    assert.doesNotThrow(
-      () => routePublicReception({ text, requestId: "eip-regression" }),
-      text
-    );
-    assert.doesNotThrow(() => beacon.sendMessage(sendRequest(text)), text);
+  for (const [text, capabilityId] of [
+    ["EIP 7732", "ethereum_epbs_semantics"],
+    ["EIP-7732", "ethereum_epbs_semantics"],
+    ["EIP 7805", "ethereum_inclusion_list_semantics"],
+    ["EIP-7805", "ethereum_inclusion_list_semantics"]
+  ]) {
+    const direct = routePublicReception({ text, requestId: "eip-regression" });
+    assert.equal(direct.intent, "technical_context", text);
+    assert.equal(direct.status, "routed", text);
+    assert.equal(direct.route, "allowlisted_public_artifacts", text);
+
+    const response = beacon.sendMessage(sendRequest(text));
+    const data = response.message.parts[0].data;
+    assert.equal(data.reception.intent, "technical_context", text);
+    assert.equal(data.capabilityId, capabilityId, text);
   }
 
   for (const text of [
