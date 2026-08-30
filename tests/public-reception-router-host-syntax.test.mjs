@@ -63,6 +63,12 @@ test("complete userinfo authority spans fail before ENS tokenization", () => {
     "user＠epbs.eth",
     "user%40epbs.eth",
     "user@epbs.eth.",
+    "user@@epbs.eth",
+    "user@@example.com",
+    "user@@@epbs.eth",
+    "user＠＠epbs.eth",
+    "user%40%40epbs.eth",
+    "user%40@epbs.eth",
     "[user@epbs.eth]",
     "<user@epbs.eth>",
     "(user@epbs.eth)",
@@ -83,6 +89,36 @@ test("complete userinfo authority spans fail before ENS tokenization", () => {
       /URLs are not accepted/,
       authority
     );
+  }
+});
+
+test("authority-like spans never expose an ENS suffix to a second tokenizer", () => {
+  const beacon = createPublicA2ABeacon({
+    publicBaseUrl: PUBLIC_BASE_URL,
+    idFactory: () => "authority-identity-id"
+  });
+
+  for (const text of [
+    "research @@epbs.eth",
+    "research user@@@epbs.eth",
+    "research user%40%40epbs.eth"
+  ]) {
+    try {
+      const direct = routePublicReception({ text, requestId: "authority-identity" });
+      assert.notEqual(direct.intent, "ens_research", text);
+      assert.equal(Object.hasOwn(direct, "identifier"), false, text);
+    } catch (error) {
+      assert.match(error.message, /URLs are not accepted/, text);
+    }
+
+    try {
+      const response = beacon.sendMessage(sendRequest(text));
+      const reception = response.message.parts[0].data.reception;
+      assert.notEqual(reception.intent, "ens_research", text);
+      assert.equal(Object.hasOwn(reception, "identifier"), false, text);
+    } catch (error) {
+      assert.match(error.message, /URLs are not accepted/, text);
+    }
   }
 });
 
