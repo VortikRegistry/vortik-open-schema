@@ -320,6 +320,35 @@ test("unbalanced punctuation cannot grant child scalar exemptions", () => {
   }
 });
 
+test("whole chunks own scalar authority across ASCII and NFKC punctuation", () => {
+  const beacon = createPublicA2ABeacon({
+    publicBaseUrl: PUBLIC_BASE_URL,
+    idFactory: () => "whole-chunk-scalar-id"
+  });
+
+  for (const text of [
+    "research EIP 7732!x epbs.eth",
+    "research EIP x!7732 epbs.eth",
+    "offer 999!x ETH for epbs.eth",
+    "offer x!999 ETH for epbs.eth",
+    "research EIP 7732！ epbs.eth",
+    "research EIP 7732！x epbs.eth",
+    "offer 999！ ETH for epbs.eth",
+    "offer 999！x ETH for epbs.eth"
+  ]) {
+    assert.throws(
+      () => routePublicReception({ text, requestId: "whole-chunk-scalar" }),
+      /URLs are not accepted/,
+      text
+    );
+    assert.throws(
+      () => beacon.sendMessage(sendRequest(text)),
+      /URLs are not accepted/,
+      text
+    );
+  }
+});
+
 test("balanced presentation wrappers preserve closed scalar exemptions", () => {
   const beacon = createPublicA2ABeacon({
     publicBaseUrl: PUBLIC_BASE_URL,
