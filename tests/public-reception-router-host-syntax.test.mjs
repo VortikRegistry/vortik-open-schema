@@ -51,6 +51,42 @@ test("parsed caller-controlled host forms fail closed", () => {
   }
 });
 
+test("percent-decoded host identity cannot inherit the malformed ENS exemption", () => {
+  const beacon = createPublicA2ABeacon({
+    publicBaseUrl: PUBLIC_BASE_URL,
+    idFactory: () => "percent-host-regression-id"
+  });
+
+  for (const host of [
+    "foo.eth%5fbar.com",
+    "foo.eth%5Fbar.com",
+    "foo%2eeth%5fbar.com",
+    "epbs%2eeth"
+  ]) {
+    const text = `research ${host}`;
+    assert.throws(
+      () => routePublicReception({ text, requestId: "percent-host-regression" }),
+      /URLs are not accepted/,
+      host
+    );
+    assert.throws(
+      () => beacon.sendMessage(sendRequest(text)),
+      /URLs are not accepted/,
+      host
+    );
+  }
+
+  const literalMalformed = routePublicReception({
+    text: "research foo_epbs.eth",
+    requestId: "literal-malformed-ens"
+  });
+  assert.equal(literalMalformed.intent, "unsupported");
+  assert.equal(literalMalformed.status, "not_supported");
+
+  const literalMalformedA2A = beacon.sendMessage(sendRequest("research foo_epbs.eth"));
+  assert.equal(literalMalformedA2A.message.parts[0].data.reception.intent, "unsupported");
+});
+
 test("advertised EIP references route to technical discovery without becoming IPv4", () => {
   const beacon = createPublicA2ABeacon({
     publicBaseUrl: PUBLIC_BASE_URL,
