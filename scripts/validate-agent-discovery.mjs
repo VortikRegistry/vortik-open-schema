@@ -136,7 +136,7 @@ addFormats(ajv);
 const validate = ajv.compile(schema);
 const validateContribution = ajv.compile(contributionSchema);
 
-assertValid(validate, manifest, "agents/discovery.json 1.5.0 live manifest");
+assertValid(validate, manifest, "agents/discovery.json 1.5.0 live-service manifest with Agent Card runtime capability delegation");
 
 const integrityErrors = [];
 for (const capability of manifest.capabilities) {
@@ -193,7 +193,8 @@ else {
   if (beaconCapability.protocol_binding !== "HTTP+JSON" || beaconCapability.protocol_version !== "1.0") integrityErrors.push("A2A beacon must remain on HTTP+JSON protocol version 1.0");
   if (beaconCapability.agent_card_path !== "/.well-known/agent-card.json" || beaconCapability.interface_path !== "/a2a/v1") integrityErrors.push("A2A beacon paths drifted from the versioned discovery contract");
   if (beaconCapability.persistent_tasks !== false || beaconCapability.external_retrieval !== false || beaconCapability.network_required_by_repository_runtime !== false) integrityErrors.push("A2A beacon must remain stateless and repository-network independent");
-  if (beaconCapability.router_entrypoint !== "lib/public-reception-router.mjs" || beaconCapability.remote_ens_research !== true) integrityErrors.push("A2A Reception must bind the reviewed router and deterministic remote ENS research");
+  if (beaconCapability.router_entrypoint !== "lib/public-reception-router.mjs" || beaconCapability.remote_ens_research_implemented !== true) integrityErrors.push("A2A Reception must bind the reviewed router and implement deterministic remote ENS research");
+  if (beaconCapability.runtime_availability_source !== "agent_card") integrityErrors.push("A2A Reception runtime availability must be delegated exclusively to the live Agent Card");
   if (beaconCapability.commercial_signal_mode !== "sanitized_no_handoff" || beaconCapability.private_handoff !== false) integrityErrors.push("A2A Reception commercial signals must remain sanitized with private handoff disabled");
   if (beaconCapability.contribution_transport !== "github_issue_only") integrityErrors.push("A2A Reception contribution routing must remain GitHub-Issue-only");
 }
@@ -203,8 +204,9 @@ if (manifest.interaction.mode !== "a2a_live" ||
     manifest.interaction.a2a_server !== true ||
     manifest.interaction.live_network_ingress !== true ||
     manifest.interaction.agent_card_published !== true ||
+    manifest.interaction.runtime_capabilities_source !== "agent_card" ||
     manifest.interaction.public_base_url !== publicA2ABaseUrl) {
-  integrityErrors.push("current agent discovery manifest must match the reviewed live A2A deployment");
+  integrityErrors.push("current agent discovery manifest must match the existing live A2A service while delegating runtime capability truth to its Agent Card");
 }
 
 if (manifest.trust_boundary.arbitrary_outbound_network !== false ||
@@ -236,6 +238,8 @@ for (const [label, mutate] of [
   ["live without ingress", (candidate) => { candidate.interaction = structuredClone(liveManifest.interaction); candidate.interaction.live_network_ingress = false; }],
   ["live without Agent Card", (candidate) => { candidate.interaction = structuredClone(liveManifest.interaction); candidate.interaction.agent_card_published = false; }],
   ["live without public origin", (candidate) => { candidate.interaction = structuredClone(liveManifest.interaction); candidate.interaction.public_base_url = null; }],
+  ["runtime capabilities sourced from manifest", (candidate) => { candidate.interaction.runtime_capabilities_source = "manifest"; }],
+  ["Reception runtime availability sourced from manifest", (candidate) => { candidate.capabilities.find((entry) => entry.id === "public_a2a_reception_beacon").runtime_availability_source = "manifest"; }],
   ["live_ens_resolution=true", (candidate) => { candidate.trust_boundary.live_ens_resolution = true; }],
   ["external_web_retrieval=true", (candidate) => { candidate.trust_boundary.external_web_retrieval = true; }],
   ["arbitrary_outbound_network=true", (candidate) => { candidate.trust_boundary.arbitrary_outbound_network = true; }],
@@ -292,8 +296,9 @@ console.log(`agents/discovery.json conforms to vortik-agent-discovery 1.5.0 with
 console.log(`Historical discovery 1.0.0–1.4.0 contracts preserved byte-identical to ${baseRef}`);
 console.log("Existing feed, ENS research, inbound research and GitHub contribution references verified");
 console.log("A2A live lifecycle and fully coupled preactivation-state contract verified");
+console.log("Agent Card is the exclusive source of runtime A2A capability availability");
 console.log("A2A Reception implementation paths, deterministic ENS research and fail-closed trust-boundary declarations verified");
 console.log("Closed ENS candidate contribution contract verified with authority, price and insecure-reference regressions");
 console.log("Public agent manifest/schema directory inventories verified complete and byte-identical");
 console.log("EXPECTED FAIL stale public agent mirror inventory");
-console.log("EXPECTED FAIL partial A2A lifecycle, external retrieval, outbound-network, automatic-promotion and authority claims");
+console.log("EXPECTED FAIL partial A2A lifecycle, static runtime-capability claims, external retrieval, outbound-network, automatic-promotion and authority claims");
