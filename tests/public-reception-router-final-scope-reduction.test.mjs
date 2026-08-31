@@ -32,6 +32,30 @@ function assertUrlRejectedByBoth(beacon, text) {
   );
 }
 
+function assertUrlOrUnsupportedByBoth(beacon, text) {
+  let direct;
+  try {
+    direct = routePublicReception({ text, requestId: "nfkc-presentation" });
+  } catch (error) {
+    assert.match(error.message, /URLs are not accepted/, text);
+  }
+  if (direct) {
+    assert.equal(direct.intent, "unsupported", text);
+    assert.equal(direct.status, "not_supported", text);
+  }
+
+  let a2aData;
+  try {
+    a2aData = beacon.sendMessage(sendRequest(text)).message.parts[0].data;
+  } catch (error) {
+    assert.match(error.message, /URLs are not accepted/, text);
+  }
+  if (a2aData) {
+    assert.equal(a2aData.reception.intent, "unsupported", text);
+    assert.equal(a2aData.reception.status, "not_supported", text);
+  }
+}
+
 test("wrapped inner tokens retain complete-host authority", () => {
   const beacon = createPublicA2ABeacon({
     publicBaseUrl: PUBLIC_BASE_URL,
@@ -41,6 +65,22 @@ test("wrapped inner tokens retain complete-host authority", () => {
   for (const text of [
     "research EIP (7732!x) epbs.eth",
     "offer (999!x) ETH for epbs.eth"
+  ]) {
+    assertUrlRejectedByBoth(beacon, text);
+  }
+});
+
+test("numeric IPv4 authorities with ports fail closed", () => {
+  const beacon = createPublicA2ABeacon({
+    publicBaseUrl: PUBLIC_BASE_URL,
+    idFactory: () => "numeric-ipv4-port"
+  });
+
+  for (const text of [
+    "research 127:80 epbs.eth",
+    "research 2130706433:443 epbs.eth",
+    "research 0x7f:80 epbs.eth",
+    "research 0177:80 epbs.eth"
   ]) {
     assertUrlRejectedByBoth(beacon, text);
   }
@@ -57,11 +97,7 @@ test("NFKC does not manufacture presentation authority", () => {
     "research ［epbs.eth］",
     "research epbs.eth．"
   ]) {
-    assert.throws(
-      () => routePublicReception({ text, requestId: "nfkc-presentation" }),
-      /URLs are not accepted|not_supported|unsupported/i,
-      text
-    );
+    assertUrlOrUnsupportedByBoth(beacon, text);
   }
 });
 
