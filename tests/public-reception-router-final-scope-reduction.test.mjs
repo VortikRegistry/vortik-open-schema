@@ -144,6 +144,26 @@ test("hyphen-punctuated numeric host chunks fail closed", () => {
   }
 });
 
+test("numeric-hyphen matcher stays bounded on rejected ambiguous-looking chunks", () => {
+  const beacon = createPublicA2ABeacon({
+    publicBaseUrl: PUBLIC_BASE_URL,
+    idFactory: () => "numeric-ipv4-hyphen-bounded"
+  });
+  const adversarialChunk = `${"00-".repeat(25)}x`;
+  const text = `research ${adversarialChunk} epbs.eth`;
+  const startedAt = process.hrtime.bigint();
+
+  const direct = routePublicReception({ text, requestId: "numeric-ipv4-hyphen-bounded" });
+  const a2aData = beacon.sendMessage(sendRequest(text)).message.parts[0].data;
+  const elapsedMs = Number(process.hrtime.bigint() - startedAt) / 1e6;
+
+  assert.equal(direct.intent, "ens_research");
+  assert.equal(direct.identifier, "epbs.eth");
+  assert.equal(a2aData.reception.intent, "ens_research");
+  assert.equal(a2aData.reception.identifier, "epbs.eth");
+  assert.ok(elapsedMs < 1500, `numeric-hyphen classification took ${elapsedMs.toFixed(1)} ms`);
+});
+
 test("NFKC does not manufacture presentation authority", () => {
   const beacon = createPublicA2ABeacon({
     publicBaseUrl: PUBLIC_BASE_URL,
