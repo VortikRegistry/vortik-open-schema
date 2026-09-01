@@ -124,7 +124,13 @@ test("hyphen-punctuated numeric host chunks fail closed", () => {
     "research -0177 epbs.eth",
     "research 0x7f- epbs.eth",
     "research -127? epbs.eth",
-    "research 2130706433-# epbs.eth"
+    "research 2130706433-# epbs.eth",
+    "research -127:80 epbs.eth",
+    "research 127-:80 epbs.eth",
+    "research -0177: epbs.eth",
+    "research 0x7f-: epbs.eth",
+    "research -127:80? epbs.eth",
+    "research 2130706433-:# epbs.eth"
   ]) {
     assertUrlRejectedByBoth(beacon, text);
   }
