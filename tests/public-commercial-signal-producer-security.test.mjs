@@ -1,0 +1,102 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+
+import {
+  createAuthenticatedCommercialSignalEnvelope,
+  createSanitizedCommercialSignal
+} from "../lib/public-commercial-signal-producer.mjs";
+import { routePublicReception } from "../lib/public-reception-router.mjs";
+
+const NOW = new Date("2026-09-04T04:00:00.000Z");
+
+function fixedBytes(byte) {
+  return (size) => Buffer.alloc(size, byte);
+}
+
+function reception() {
+  return routePublicReception({
+    text: "offer to buy epbs.eth",
+    requestId: "block-b-security"
+  });
+}
+
+function signal() {
+  return createSanitizedCommercialSignal(reception(), {
+    clock: () => new Date(NOW),
+    randomBytesFactory: fixedBytes(0xab)
+  });
+}
+
+const envelopeOptions = Object.freeze({
+  keyId: "key:vortik-public-reception-001",
+  clock: () => new Date(NOW),
+  randomBytesFactory: fixedBytes(0xcd),
+  sign: () => "signature_value_0123456789abcdef"
+});
+
+test("producer rejects prototype and accessor Reception objects without invoking getters", () => {
+  assert.throws(
+    () => createSanitizedCommercialSignal(Object.assign(Object.create(null), reception())),
+    /Object\.prototype/
+  );
+
+  let getterCalls = 0;
+  const forged = {};
+  Object.defineProperty(forged, "protocol", {
+    enumerable: true,
+    get() {
+      getterCalls += 1;
+      return "vortik-public-reception";
+    }
+  });
+  assert.throws(
+    () => createSanitizedCommercialSignal(forged),
+    /enumerable data property/
+  );
+  assert.equal(getterCalls, 0);
+});
+
+test("envelope builder rejects non-canonical timestamps and oversized ENS before signing", async () => {
+  let signCalls = 0;
+  const options = {
+    ...envelopeOptions,
+    sign() {
+      signCalls += 1;
+      return "signature_value_0123456789abcdef";
+    }
+  };
+
+  await assert.rejects(
+    createAuthenticatedCommercialSignalEnvelope({
+      ...signal(),
+      observed_at: "2026-02-30T04:00:00.000Z"
+    }, options),
+    /invalid or non-canonical timestamp/
+  );
+
+  await assert.rejects(
+    createAuthenticatedCommercialSignalEnvelope({
+      ...signal(),
+      identifier: `${"a".repeat(252)}.eth`
+    }, options),
+    /private Block B contract/
+  );
+  assert.equal(signCalls, 0);
+});
+
+test("envelope builder rejects accessor-backed signal fields without invoking them", async () => {
+  const forged = { ...signal() };
+  let getterCalls = 0;
+  Object.defineProperty(forged, "identifier", {
+    enumerable: true,
+    get() {
+      getterCalls += 1;
+      return "epbs.eth";
+    }
+  });
+  await assert.rejects(
+    createAuthenticatedCommercialSignalEnvelope(forged, envelopeOptions),
+    /enumerable data property/
+  );
+  assert.equal(getterCalls, 0);
+});
