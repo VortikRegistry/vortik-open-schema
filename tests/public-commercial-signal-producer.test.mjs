@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 import {
@@ -12,6 +13,7 @@ import {
 import { routePublicReception } from "../lib/public-reception-router.mjs";
 
 const FIXED_NOW = new Date("2026-09-04T04:00:00.000Z");
+const VECTOR_URL = new URL("./fixtures/block-b-sanitized-signal-v1.json", import.meta.url);
 
 function fixedBytes(byte) {
   return (size) => Buffer.alloc(size, byte);
@@ -64,6 +66,15 @@ test("public producer emits exactly the private Block B wire fields and nothing 
     assert.equal(forbidden in signal, false, forbidden);
   }
   assert.equal(Object.isFrozen(signal), true);
+});
+
+test("public producer exactly reproduces the shared cross-repo Block B vector", async () => {
+  const vector = JSON.parse(await readFile(VECTOR_URL, "utf8"));
+  const signal = createSanitizedCommercialSignal(recognizedCommercialReception(), {
+    clock: () => new Date(FIXED_NOW),
+    randomBytesFactory: fixedBytes(0xab)
+  });
+  assert.deepEqual(signal, vector);
 });
 
 test("public producer emits nothing for ambiguous or non-commercial Reception results", () => {
