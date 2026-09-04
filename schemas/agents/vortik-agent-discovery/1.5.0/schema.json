@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/agents/vortik-agent-discovery/1.5.0/schema.json",
+  "title": "Vortik Agent Discovery Manifest 1.5.0",
+  "description": "Versioned machine-readable discovery manifest for implemented public Vortik capabilities, with live runtime capability availability delegated to the Agent Card.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "manifest", "manifest_version", "project", "interaction", "capabilities", "authority", "trust_boundary"],
+  "properties": {
+    "$schema": {"const": "https://raw.githubusercontent.com/VortikRegistry/vortik-open-schema/main/schemas/agents/vortik-agent-discovery/1.5.0/schema.json"},
+    "manifest": {"const": "vortik-agent-discovery"},
+    "manifest_version": {"const": "1.5.0"},
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "description", "repository", "public_site"],
+      "properties": {
+        "name": {"const": "Vortik Registry"},
+        "description": {"type": "string", "minLength": 1},
+        "repository": {"const": "https://github.com/VortikRegistry/vortik-open-schema"},
+        "public_site": {"const": "https://vortikregistry.github.io/vortik-open-schema/"}
+      }
+    },
+    "interaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "a2a_implementation_available", "a2a_server", "live_network_ingress", "agent_card_published", "runtime_capabilities_source", "protocol_binding", "protocol_version", "agent_card_path", "interface_path", "public_base_url", "note"],
+      "properties": {
+        "mode": {"enum": ["a2a_preactivation", "a2a_live"]},
+        "a2a_implementation_available": {"const": true},
+        "a2a_server": {"type": "boolean"},
+        "live_network_ingress": {"type": "boolean"},
+        "agent_card_published": {"type": "boolean"},
+        "runtime_capabilities_source": {"const": "agent_card"},
+        "protocol_binding": {"const": "HTTP+JSON"},
+        "protocol_version": {"const": "1.0"},
+        "agent_card_path": {"const": "/.well-known/agent-card.json"},
+        "interface_path": {"const": "/a2a/v1"},
+        "public_base_url": {
+          "oneOf": [
+            {"type": "null"},
+            {"type": "string", "format": "uri", "maxLength": 2048, "pattern": "^https://(?=[^:]{1,253}(?::(?:[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$)(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.)+[A-Za-z](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?::(?:[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$"}
+          ]
+        },
+        "note": {"const": "Lifecycle state is defined exclusively by the structured interaction fields; runtime capability availability is resolved from the live Agent Card rather than asserted by this static manifest."}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"mode": {"const": "a2a_preactivation"}}, "required": ["mode"]},
+          "then": {
+            "properties": {
+              "a2a_server": {"const": false},
+              "live_network_ingress": {"const": false},
+              "agent_card_published": {"const": false},
+              "public_base_url": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"mode": {"const": "a2a_live"}}, "required": ["mode"]},
+          "then": {
+            "properties": {
+              "a2a_server": {"const": true},
+              "live_network_ingress": {"const": true},
+              "agent_card_published": {"const": true},
+              "public_base_url": {"type": "string", "format": "uri", "maxLength": 2048, "pattern": "^https://(?=[^:]{1,253}(?::(?:[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$)(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.)+[A-Za-z](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?::(?:[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$"}
+            }
+          }
+        }
+      ]
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "kind", "description", "local_entrypoint", "public_entrypoint", "contract", "network_required_by_repository_runtime"],
+            "properties": {
+              "id": {"const": "discover_vortik_feeds"},
+              "kind": {"const": "public_artifact"},
+              "description": {"type": "string", "minLength": 1},
+              "local_entrypoint": {"const": "feeds/index.json"},
+              "public_entrypoint": {"const": "https://vortikregistry.github.io/vortik-open-schema/feeds/index.json"},
+              "contract": {"const": "schemas/feeds/vortik-feed-index/1.0.0/schema.json"},
+              "network_required_by_repository_runtime": {"const": false}
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "kind", "description", "local_entrypoint", "documentation", "request_contract", "response_contract", "network_required_by_repository_runtime"],
+            "properties": {
+              "id": {"const": "research_ens_semantics"},
+              "kind": {"const": "local_library"},
+              "description": {"type": "string", "minLength": 1},
+              "local_entrypoint": {"const": "lib/ens-research-client.mjs"},
+              "documentation": {"const": "docs/ens-research-client.md"},
+              "request_contract": {"const": "schemas/queries/vortik-ens-research-request/1.0.0/schema.json"},
+              "response_contract": {"const": "schemas/queries/vortik-ens-research-response/1.0.0/schema.json"},
+              "network_required_by_repository_runtime": {"const": false}
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "kind", "description", "request_contract", "response_contract", "public_request_contract", "public_response_contract", "local_execution_entrypoint", "submission_available", "network_required_by_repository_runtime"],
+            "properties": {
+              "id": {"const": "inbound_ens_research_contract"},
+              "kind": {"const": "public_contract"},
+              "description": {"type": "string", "minLength": 1},
+              "request_contract": {"const": "schemas/queries/vortik-ens-research-request/1.0.0/schema.json"},
+              "response_contract": {"const": "schemas/queries/vortik-ens-research-response/1.0.0/schema.json"},
+              "public_request_contract": {"const": "https://vortikregistry.github.io/vortik-open-schema/schemas/queries/vortik-ens-research-request/1.0.0/schema.json"},
+              "public_response_contract": {"const": "https://vortikregistry.github.io/vortik-open-schema/schemas/queries/vortik-ens-research-response/1.0.0/schema.json"},
+              "local_execution_entrypoint": {"const": "lib/ens-research-client.mjs"},
+              "submission_available": {"const": false},
+              "network_required_by_repository_runtime": {"const": false}
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "kind", "description", "contract", "public_contract", "documentation", "submission_available", "submission_transport", "submission_url", "automatic_promotion", "network_required_by_repository_runtime"],
+            "properties": {
+              "id": {"const": "prepare_ens_candidate_contribution"},
+              "kind": {"const": "public_contract"},
+              "description": {"type": "string", "minLength": 1},
+              "contract": {"const": "schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json"},
+              "public_contract": {"const": "https://vortikregistry.github.io/vortik-open-schema/schemas/queries/vortik-ens-candidate-contribution/1.0.0/schema.json"},
+              "documentation": {"const": "docs/ens-candidate-contributions.md"},
+              "submission_available": {"const": true},
+              "submission_transport": {"const": "github_issue"},
+              "submission_url": {"const": "https://github.com/VortikRegistry/vortik-open-schema/issues/new?template=ens-candidate-contribution.md"},
+              "automatic_promotion": {"const": false},
+              "network_required_by_repository_runtime": {"const": false}
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "kind", "description", "local_entrypoint", "library_entrypoint", "http_entrypoint", "router_entrypoint", "documentation", "protocol_binding", "protocol_version", "agent_card_path", "interface_path", "persistent_tasks", "external_retrieval", "remote_ens_research_implemented", "runtime_availability_source", "commercial_signal_mode", "private_handoff", "contribution_transport", "network_required_by_repository_runtime"],
+            "properties": {
+              "id": {"const": "public_a2a_reception_beacon"},
+              "kind": {"const": "local_service"},
+              "description": {"type": "string", "minLength": 1},
+              "local_entrypoint": {"const": "service/cloud-run-agent-beacon.mjs"},
+              "library_entrypoint": {"const": "lib/public-a2a-beacon.mjs"},
+              "http_entrypoint": {"const": "lib/public-a2a-http.mjs"},
+              "router_entrypoint": {"const": "lib/public-reception-router.mjs"},
+              "documentation": {"const": "docs/public-a2a-beacon.md"},
+              "protocol_binding": {"const": "HTTP+JSON"},
+              "protocol_version": {"const": "1.0"},
+              "agent_card_path": {"const": "/.well-known/agent-card.json"},
+              "interface_path": {"const": "/a2a/v1"},
+              "persistent_tasks": {"const": false},
+              "external_retrieval": {"const": false},
+              "remote_ens_research_implemented": {"const": true},
+              "runtime_availability_source": {"const": "agent_card"},
+              "commercial_signal_mode": {"const": "sanitized_no_handoff"},
+              "private_handoff": {"const": false},
+              "contribution_transport": {"const": "github_issue_only"},
+              "network_required_by_repository_runtime": {"const": false}
+            }
+          }
+        ]
+      },
+      "allOf": [
+        {"contains": {"type": "object", "properties": {"id": {"const": "discover_vortik_feeds"}}, "required": ["id"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"id": {"const": "research_ens_semantics"}}, "required": ["id"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"id": {"const": "inbound_ens_research_contract"}}, "required": ["id"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"id": {"const": "prepare_ens_candidate_contribution"}}, "required": ["id"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"id": {"const": "public_a2a_reception_beacon"}}, "required": ["id"]}, "minContains": 1, "maxContains": 1}
+      ]
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocol_authority", "ens_authority", "ownership_inference", "commercial_authority", "note"],
+      "properties": {
+        "protocol_authority": {"const": false},
+        "ens_authority": {"const": false},
+        "ownership_inference": {"const": false},
+        "commercial_authority": {"const": false},
+        "note": {"type": "string", "minLength": 1}
+      }
+    },
+    "trust_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["canonical_artifacts_only", "live_ens_resolution", "external_web_retrieval", "mcp_source_ingestion", "external_content_trusted", "arbitrary_outbound_network", "receipt_runtime_dependency", "dedicated_runtime_identity_required", "caller_selected_network_destinations", "note"],
+      "properties": {
+        "canonical_artifacts_only": {"const": true},
+        "live_ens_resolution": {"const": false},
+        "external_web_retrieval": {"const": false},
+        "mcp_source_ingestion": {"const": false},
+        "external_content_trusted": {"const": false},
+        "arbitrary_outbound_network": {"const": false},
+        "receipt_runtime_dependency": {"const": false},
+        "dedicated_runtime_identity_required": {"const": true},
+        "caller_selected_network_destinations": {"const": false},
+        "note": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

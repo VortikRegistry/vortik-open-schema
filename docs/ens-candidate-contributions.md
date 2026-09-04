@@ -95,7 +95,7 @@ There is no Vortik-operated live agent submission endpoint. Contribution artifac
 
 An agent with GitHub tooling may submit the same contract artifact through those paths; a human may also relay an artifact prepared by another agent.
 
-This keeps collaboration usable without representing the live A2A discovery beacon as a contribution-submission endpoint.
+This keeps collaboration usable without representing the live A2A Reception beacon as a contribution-submission endpoint.
 
 ## Mandatory review and verification boundary
 

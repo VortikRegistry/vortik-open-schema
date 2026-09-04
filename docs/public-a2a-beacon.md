@@ -1,13 +1,13 @@
-# Public A2A discovery beacon
+# Public A2A Reception beacon
 
 ## Status
 
-The Vortik public A2A discovery beacon is implemented and the canonical activation state is **live**.
+The Vortik public A2A Reception beacon is implemented and the canonical activation state is **live**.
 
 Machine-readable state:
 
 ```text
-manifest_version = 1.4.0
+manifest_version = 1.5.0
 mode = a2a_live
 a2a_implementation_available = true
 a2a_server = true
@@ -27,19 +27,22 @@ The deployment uses the reviewed bounded read-only implementation and remains in
 
 ## Purpose
 
-The beacon is a bounded read-only discovery surface for agents and developer tools that are looking for selected Ethereum coordination semantics or public Vortik artifacts.
+The beacon is a bounded read-only Reception surface for agents and developer tools. It classifies a closed set of public intents and routes each request to deterministic public behavior.
 
-It maps a small allowlisted vocabulary to already-public Vortik references. It does not perform open-ended reasoning, external retrieval, live ENS resolution, arbitrary tool execution, registry mutation or persistent task processing.
+For one normalized ENS-style identifier, Reception can execute the existing local ENS semantic research evaluator against immutable Vortik registry and coordination-surface snapshots. It does not perform open-ended reasoning, external retrieval, live ENS resolution, arbitrary tool execution, registry mutation or persistent task processing.
 
 Examples of supported discovery themes include:
 
 - ePBS and proposer-builder separation;
 - inclusion-list and FOCIL terminology;
+- deterministic ENS semantic research for a single normalized name;
 - ENS semantic research contracts;
 - Vortik feeds, schemas and registry artifacts;
 - the public ENS candidate contribution contract and GitHub collaboration path.
 
-Unknown queries receive a generic bounded Vortik discovery response rather than triggering external search.
+Contribution and candidate-submission intents are directed only to the existing public GitHub Issue path. Unknown or multi-identifier requests receive a bounded unsupported response rather than triggering external search.
+
+Explicit commercial-interest language may produce only a sanitized public signal containing a normalized intent and, when unambiguous, one ENS identifier. It does not disclose terms, assert availability, enable a private handoff or grant action authority.
 
 ## A2A interface
 
@@ -55,7 +58,7 @@ GET  /a2a/v1/tasks/{id}
 POST /a2a/v1/tasks/{id}:cancel
 ```
 
-The first implementation does not enable streaming, push notifications, authenticated extended cards or persistent tasks.
+The current implementation does not enable streaming, push notifications, authenticated extended cards or persistent tasks.
 
 Simple discovery requests return a direct A2A `Message` response.
 
@@ -79,9 +82,11 @@ Caller content is untrusted data and is never interpreted as an instruction to e
 
 ## Output boundary
 
-Responses contain only deterministic text or structured discovery data assembled from fixed allowlisted public references.
+Responses contain only deterministic text or structured data assembled from fixed allowlisted public references and immutable local snapshots. Structured responses include a versioned `reception` result identifying the classified intent, route, status and confidence.
 
-The response does not echo the raw caller query. It does not include credentials, environment values, signed trusted-receipt material or private repository information.
+ENS research responses may additionally include the existing closed `vortik-ens-research-response` artifact. Sanitized interest responses may include only the single normalized identifier, normalized intent, bounded routing reason, confidence and a `privateHandoff: false` declaration.
+
+The response does not echo the raw caller query or surrounding terms. A validated normalized ENS identifier may be returned when it is the subject of research or sanitized routing. Responses do not include credentials, environment values, signed trusted-receipt material or private repository information.
 
 Every discovery response retains explicit non-authority semantics. Vortik does not claim Ethereum protocol authority, ENS authority or ownership inference through this endpoint.
 
@@ -109,12 +114,12 @@ The canonical source of truth is:
 agents/discovery.json
 ```
 
-Version `1.4.0` defines explicit lifecycle states:
+Version `1.5.0` retains the explicit lifecycle states and binds the live interface to the reviewed Reception router:
 
 - `a2a_preactivation`: implementation exists; public ingress, Agent Card publication and public base URL remain closed;
 - `a2a_live`: the dedicated service has passed its deployment gate and the manifest records the exact live HTTPS origin.
 
-Historical discovery contracts `1.0.0` through `1.3.0` remain immutable.
+Historical discovery contracts `1.0.0` through `1.4.0` remain immutable. Version `1.4.0` records the original bounded discovery-only activation; version `1.5.0` adds deterministic Reception and remote ENS research while preserving the same network and authority boundaries.
 
 The implementation originally remained in `a2a_preactivation` until the reviewed deployment, immutable digest, dedicated identity, deny-egress policy, outbound-denial probe and authenticated functional acceptance were verified. The canonical manifest may claim `a2a_live` only while those production conditions and the published endpoint remain true.
 

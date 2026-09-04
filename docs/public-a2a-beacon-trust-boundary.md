@@ -1,12 +1,12 @@
-# Public A2A beacon trust boundary v0.1
+# Public A2A Reception trust boundary v0.2
 
 ## Purpose
 
-This document defines the trust boundary enforced by Vortik's live public agent-to-agent discovery listener.
+This document defines the trust boundary enforced by Vortik's live public agent-to-agent Reception listener.
 
-The objective is narrow: make Vortik discoverable by independent developer agents looking for Ethereum coordination semantics and return deterministic pointers to already-public Vortik artifacts.
+The objective is narrow: classify a closed public intent set, execute deterministic ENS semantic research over immutable Vortik snapshots, and return fixed pointers to already-public Vortik artifacts.
 
-This capability is a public discovery beacon. It is not a solicitation or commercial coordination system, autonomous sales agent, registry mutation API, trusted-receipt issuer, wallet surface, ENS authority surface, or general-purpose AI agent.
+This capability is a public Reception beacon. It is not a solicitation or commercial coordination system, autonomous sales agent, registry mutation API, trusted-receipt issuer, wallet surface, ENS authority surface, or general-purpose AI agent.
 
 ## Protocol target
 
@@ -34,7 +34,7 @@ https://a2a-protocol.org/latest/specification/
 
 ## Allowed purpose
 
-The beacon may accept a bounded discovery query such as:
+The beacon may accept a bounded Reception query such as:
 
 - `ePBS`
 - `proposer builder separation`
@@ -43,8 +43,11 @@ The beacon may accept a bounded discovery query such as:
 - `ENS semantic research`
 - `Ethereum coordination terminology`
 - `Vortik feeds`
+- `research epbs.eth`
+- `capabilities`
+- `submit candidate candidate-name.eth`
 
-It may respond only with deterministic, allowlisted public metadata and links describing relevant Vortik capabilities and artifacts.
+It may respond only with deterministic public metadata, local ENS research results, sanitized routing metadata and allowlisted links describing relevant Vortik capabilities and artifacts.
 
 The beacon may guide another agent toward:
 
@@ -52,6 +55,7 @@ The beacon may guide another agent toward:
 - the public ePBS feed;
 - public registry/schema/anchor artifacts;
 - the deterministic ENS semantic research contracts;
+- one deterministic ENS semantic research result derived from immutable canonical snapshots;
 - the public candidate-contribution contract and GitHub Issue collaboration path;
 - public documentation describing trusted-verification preactivation evidence.
 
@@ -64,7 +68,8 @@ The beacon must not:
 - activate or perform trusted receipt issuance;
 - call Google Cloud KMS or use the receipt-signing service account;
 - access wallets, signing keys, ENS ownership credentials or asset-transfer surfaces;
-- infer ENS ownership intent or commercial intent;
+- infer ENS ownership or infer commercial intent beyond explicit bounded interest language;
+- forward raw caller language or enable private handoff from the public-only signal;
 - expose private counterparties, private transaction terms, monetization plans, private intelligence or solicitation strategy;
 - send unsolicited outbound messages, callbacks, notifications or webhooks;
 - crawl arbitrary URLs supplied by callers;
@@ -127,12 +132,12 @@ For `message:send`:
 
 - request body size must be bounded;
 - only `ROLE_USER` messages are accepted;
-- only textual or narrowly structured discovery input is accepted;
+- exactly one bounded textual input part is accepted;
 - file bytes and caller-controlled URLs are rejected;
 - malformed JSON is rejected;
 - unsupported A2A versions are rejected;
 - requests that attempt task continuation against nonexistent tasks are rejected;
-- input is normalized only for deterministic keyword matching;
+- input is normalized only for deterministic intent matching and one-name ENS research;
 - raw caller content is not written to application logs.
 
 No caller field may select an internal file path, network destination, repository, signing key, command, module, environment variable or execution function.
@@ -147,6 +152,9 @@ A successful response may contain:
 - public HTTPS URLs already approved by the repository;
 - capability identifiers;
 - semantic tags;
+- a versioned Reception route result;
+- a closed deterministic ENS research result;
+- a sanitized interest signal with private handoff disabled;
 - explicit authority/trust disclaimers.
 
 Responses must not contain:
@@ -167,12 +175,13 @@ The implementation may map normalized terms to capability groups, for example:
 ```text
 epbs / proposer-builder separation -> public ePBS feed + registry artifacts
 inclusion list / FOCIL -> public registry/schema artifacts
+one normalized *.eth identifier -> deterministic local ENS semantic research
 ens / semantic research -> ENS research contracts and documentation
 feed / registry / schema -> public feed index and registry entry points
 contribute / candidate -> candidate-contribution contract and GitHub Issue path
 ```
 
-Unknown queries should return a bounded generic discovery response rather than attempting external search.
+Unknown or multi-identifier queries should return a bounded unsupported Reception result rather than attempting external search.
 
 ## Rate and cost boundary
 
@@ -194,7 +203,7 @@ pushNotifications = false
 extendedAgentCard = false
 ```
 
-It returns direct A2A `Message` responses for simple discovery requests and does not create persistent tasks.
+It returns direct A2A `Message` responses for bounded Reception requests and does not create persistent tasks.
 
 Task-list/get/cancel endpoints may expose the stateless posture explicitly: no tasks are retained, and unknown task IDs fail closed.
 
@@ -219,6 +228,8 @@ live: A2A implementation is deployed, public ingress is true, Agent Card publica
 ```
 
 The implementation PR left the manifest in a truthful preactivation state. Historical discovery schemas 1.0.0 through 1.3.0 remain byte-identical.
+
+Version 1.5.0 adds the bounded Reception router and deterministic remote ENS semantic research while preserving the same lifecycle coupling, dedicated runtime identity, deny-egress posture and non-authority boundary. Historical discovery schemas 1.0.0 through 1.4.0 remain byte-identical.
 
 After the reviewed image, dedicated identity, deny-egress policy and final authorized preactivation probe were verified, the bounded activation change transitioned the manifest to `live`. The canonical manifest, public mirror and deployed Agent Card now agree on the same live HTTPS origin and A2A interface. Any later change must preserve that agreement or fail closed rather than leave a machine-readable live claim detached from the deployed service.
 

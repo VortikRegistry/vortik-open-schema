@@ -4,7 +4,7 @@
 
 This document defines the V1 public boundary for researching ENS-style names through Vortik Registry. The V1 capability is complete as a deterministic local library backed by versioned public request and response contracts. It is not a remote execution endpoint, registry-state change, or claim about Ethereum or ENS protocol behavior.
 
-The live A2A discovery beacon may direct callers to these public artifacts, but it does not execute the ENS research client on behalf of a remote caller.
+The live A2A Reception beacon may execute the deterministic ENS research client for one normalized name on behalf of a remote caller. The execution remains local to immutable canonical Vortik snapshots and performs no live ENS resolution or external retrieval.
 
 ## Purpose
 

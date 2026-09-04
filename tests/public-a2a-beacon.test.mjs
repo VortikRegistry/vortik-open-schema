@@ -58,8 +58,8 @@ function a2aReason(payload) {
 
 test("A2A Agent Card is fixed to HTTP+JSON 1.0 and read-only capabilities", () => {
   const card = buildPublicA2AAgentCard({ publicBaseUrl: PUBLIC_BASE_URL });
-  assert.equal(card.name, "Vortik Registry Discovery Beacon");
-  assert.equal(card.version, "0.1.0");
+  assert.equal(card.name, "Vortik Registry Reception Beacon");
+  assert.equal(card.version, "0.2.0");
   assert.deepEqual(card.supportedInterfaces, [{
     url: "https://beacon.example.test/a2a/v1",
     protocolBinding: A2A_PROTOCOL_BINDING,
@@ -72,7 +72,8 @@ test("A2A Agent Card is fixed to HTTP+JSON 1.0 and read-only capabilities", () =
   });
   assert.deepEqual(card.defaultInputModes, ["text/plain"]);
   assert.deepEqual(card.defaultOutputModes, ["text/plain", "application/json"]);
-  assert.equal(card.skills.length, 4);
+  assert.equal(card.skills.length, 5);
+  assert.ok(card.skills.some((skill) => skill.id === "vortik-public-reception"));
 });
 
 test("public base URL must be an HTTPS origin and cannot be inferred from requests", async () => {
@@ -187,7 +188,63 @@ test("core rejects wrong roles, multiple parts, binary/structured/url parts and 
     })),
     /unsupported field/
   );
-  assert.throws(() => beacon.sendMessage(sendRequest("please inspect https://example.com")), /URLs are not accepted/);
+  for (const text of [
+    "please inspect https://example.com",
+    "research www。example.com epbs.eth",
+    "research www｡example.com epbs.eth",
+    "research https:\texample.com epbs.eth",
+    "research https:\nexample.com epbs.eth",
+    "research https:\rexample.com epbs.eth",
+    "research mailto\t: epbs.eth",
+    "research ma\nilto: epbs.eth",
+    "research htt\rps: example.com epbs.eth",
+    "research example.com epbs.eth",
+    "research example。com epbs.eth",
+    "research xn--bcher-kva.example epbs.eth",
+    "research 192.0.2.1 epbs.eth",
+    "research 127.1 epbs.eth",
+    "research 127.0.1 epbs.eth",
+    "research 0177.1 epbs.eth",
+    "research 0x7f.1 epbs.eth",
+    "research 127%2e1 epbs.eth",
+    "research 2130706433 epbs.eth",
+    "research 0x7f000001 epbs.eth",
+    "research example%2ecom epbs.eth",
+    "research xn--bcher-kva%2Eexample epbs.eth",
+    "research example%E3%80%82com epbs.eth",
+    "research 💩.com epbs.eth",
+    "research %F0%9F%92%A9.com epbs.eth",
+    "research example.💩 epbs.eth",
+    "research (💩.com) epbs.eth",
+    "research foo=💩.com epbs.eth",
+    "research 💩epbs.eth",
+    "research %F0%9F%92%A9epbs.eth",
+    "research epbs.eth💩",
+    "research epbs.eth%F0%9F%92%A9",
+    "research [::1] epbs.eth",
+    "research localhost epbs.eth",
+    "research ipfs://gateway.test/epbs.eth",
+    "research //gateway.test/epbs.eth",
+    "research gateway.test/epbs.eth",
+    "research mailto:epbs.eth",
+    "research mailto: epbs.eth",
+    "research .mailto:epbs.eth",
+    "research -mailto:epbs.eth",
+    "research _mailto:epbs.eth",
+    "research xmailto:epbs.eth",
+    "research gateway.test?name=epbs.eth"
+  ]) {
+    assert.throws(() => beacon.sendMessage(sendRequest(text)), /URLs are not accepted/);
+  }
+  for (const text of [
+    "research schema 1.5.0-beta epbs.eth",
+    "research schema v1.5.0-rc1 epbs.eth"
+  ]) {
+    const response = beacon.sendMessage(sendRequest(text, {
+      request: { configuration: { acceptedOutputModes: ["application/json"] } }
+    }));
+    assert.equal(response.message.parts[0].data.reception.intent, "ens_research");
+  }
   assert.throws(() => beacon.sendMessage(sendRequest("x".repeat(513))), /1-512/);
 });
 
@@ -205,6 +262,33 @@ test("stateless task references and push configuration fail with A2A-specific re
     })),
     (error) => error.a2aReason === "PUSH_NOTIFICATION_NOT_SUPPORTED"
   );
+});
+
+test("generated identifiers use the stricter ENS-compatible contract", () => {
+  for (const generatedId of ["ok:colon", "x".repeat(65)]) {
+    const beacon = createPublicA2ABeacon({
+      publicBaseUrl: PUBLIC_BASE_URL,
+      idFactory: () => generatedId
+    });
+    assert.throws(
+      () => beacon.sendMessage(sendRequest("research epbs.eth")),
+      /ENS-compatible generated identifier contract/
+    );
+    assert.throws(
+      () => beacon.sendMessage(sendRequest("capabilities")),
+      /ENS-compatible generated identifier contract/
+    );
+  }
+
+  const accepted = createPublicA2ABeacon({
+    publicBaseUrl: PUBLIC_BASE_URL,
+    idFactory: () => `a${"b".repeat(63)}`
+  }).sendMessage(sendRequest("research epbs.eth", {
+    message: { contextId: "caller:context" }
+  }));
+  assert.equal(accepted.message.contextId, "caller:context");
+  assert.equal(accepted.message.messageId.length, 64);
+  assert.equal(accepted.message.parts[0].mediaType, "text/plain");
 });
 
 test("Agent Card endpoint emits cache controls and supports ETag revalidation", async () => {
@@ -377,6 +461,9 @@ test("beacon implementation has no fetch or trusted-receipt/KMS runtime dependen
   const paths = [
     new URL("../lib/public-a2a-beacon.mjs", import.meta.url),
     new URL("../lib/public-a2a-http.mjs", import.meta.url),
+    new URL("../lib/public-reception-router.mjs", import.meta.url),
+    new URL("../lib/ens-research-client.mjs", import.meta.url),
+    new URL("../lib/ens-research-evaluator.mjs", import.meta.url),
     new URL("../service/cloud-run-agent-beacon.mjs", import.meta.url)
   ];
   const texts = await Promise.all(paths.map((path) => readFile(path, "utf8")));

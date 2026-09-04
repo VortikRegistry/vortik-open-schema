@@ -105,7 +105,7 @@ export function startCloudRunAgentBeacon({
   server.maxRequestsPerSocket = 100;
 
   server.listen(port, "0.0.0.0", () => {
-    process.stdout.write(`Vortik public A2A discovery beacon listening on ${port}\n`);
+    process.stdout.write(`Vortik public A2A Reception beacon listening on ${port}\n`);
   });
 
   const shutdown = () => {
