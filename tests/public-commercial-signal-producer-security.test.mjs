@@ -100,3 +100,29 @@ test("envelope builder rejects accessor-backed signal fields without invoking th
   );
   assert.equal(getterCalls, 0);
 });
+
+test("envelope builder serializes only captured validated primitives from a changing Proxy", async () => {
+  const trusted = signal();
+  const allowedKeys = Object.keys(trusted);
+  let ownKeysCalls = 0;
+  const target = { ...trusted, raw_text: "must-not-cross" };
+  const forged = new Proxy(target, {
+    getPrototypeOf() {
+      return Object.prototype;
+    },
+    ownKeys() {
+      ownKeysCalls += 1;
+      return ownKeysCalls === 1 ? allowedKeys : [...allowedKeys, "raw_text"];
+    },
+    getOwnPropertyDescriptor(object, key) {
+      return Object.getOwnPropertyDescriptor(object, key);
+    }
+  });
+
+  const envelope = await createAuthenticatedCommercialSignalEnvelope(forged, envelopeOptions);
+  const body = JSON.parse(envelope.body);
+  assert.deepEqual(body, trusted);
+  assert.equal("raw_text" in body, false);
+  assert.equal(envelope.body.includes("must-not-cross"), false);
+  assert.equal(ownKeysCalls, 1);
+});
