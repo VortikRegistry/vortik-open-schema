@@ -146,6 +146,7 @@ test("authenticated envelope matches the existing private ingress signing contra
     "version", "key_id", "channel", "issued_at", "expires_at",
     "nonce", "body", "signature"
   ]);
+  assert.equal(Object.getPrototypeOf(envelope), null);
   assert.equal(envelope.version, "1.0");
   assert.equal(envelope.key_id, "key:vortik-public-reception-001");
   assert.equal(envelope.channel, "agent");
@@ -169,6 +170,49 @@ test("authenticated envelope matches the existing private ingress signing contra
   });
   assert.equal(JSON.stringify(envelope).includes("confidential-marker"), false);
   assert.equal(Object.isFrozen(envelope), true);
+});
+
+test("transport serialization cannot inherit a polluted Object.prototype.toJSON", async () => {
+  const signal = createSanitizedCommercialSignal(recognizedCommercialReception(), {
+    clock: () => new Date(FIXED_NOW),
+    randomBytesFactory: fixedBytes(0xab)
+  });
+  const priorDescriptor = Object.getOwnPropertyDescriptor(Object.prototype, "toJSON");
+  let signedPayloadText = null;
+
+  try {
+    Object.defineProperty(Object.prototype, "toJSON", {
+      configurable: true,
+      writable: true,
+      value() {
+        return { raw_text: "prototype-pollution-marker" };
+      }
+    });
+
+    const envelope = await createAuthenticatedCommercialSignalEnvelope(signal, {
+      keyId: "key:vortik-public-reception-001",
+      clock: () => new Date(FIXED_NOW),
+      randomBytesFactory: fixedBytes(0xef),
+      sign(request) {
+        signedPayloadText = request.signed_payload;
+        return "signature_value_0123456789abcdef";
+      }
+    });
+
+    assert.equal(Object.getPrototypeOf(envelope), null);
+    const serialized = JSON.stringify(envelope);
+    assert.equal(serialized.includes("prototype-pollution-marker"), false);
+    assert.equal(serialized.includes("raw_text"), false);
+    assert.deepEqual(Object.keys(JSON.parse(serialized)), [
+      "version", "key_id", "channel", "issued_at", "expires_at",
+      "nonce", "body", "signature"
+    ]);
+    assert.equal(signedPayloadText.includes("prototype-pollution-marker"), false);
+    assert.equal(signedPayloadText.includes("raw_text"), false);
+  } finally {
+    if (priorDescriptor === undefined) delete Object.prototype.toJSON;
+    else Object.defineProperty(Object.prototype, "toJSON", priorDescriptor);
+  }
 });
 
 test("transport retries can reuse one immutable signal correlation while nonce stays envelope-local", async () => {
