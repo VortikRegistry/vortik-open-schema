@@ -40,7 +40,7 @@
     "generate:feed-index": "node scripts/generate-feed-index.mjs",
     "sync:docs": "node scripts/sync-docs.mjs",
     "check": "npm run fix:schemas && npm run validate",
-    "check:public-safety": "node scripts/check-public-safety.mjs",
+    "check:public-safety": "node scripts/check-repo-hygiene.mjs && node scripts/check-public-safety.mjs",
     "validate:semantic-status": "node scripts/validate-semantic-status-sync.mjs",
     "validate:registry-schema": "node scripts/validate-registry-schema.mjs",
     "test:feed-client": "node --test tests/feed-client.test.mjs tests/feed-client-security.test.mjs",
