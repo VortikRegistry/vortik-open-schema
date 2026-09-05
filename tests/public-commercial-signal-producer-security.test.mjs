@@ -56,6 +56,38 @@ test("producer rejects prototype and accessor Reception objects without invoking
   assert.equal(getterCalls, 0);
 });
 
+test("producer validates commercial eligibility and closure from one Reception snapshot", () => {
+  const trusted = reception();
+  const allowedKeys = Object.keys(trusted);
+  let ownKeysCalls = 0;
+  const target = { ...trusted, widened: "must-not-cross" };
+  const forged = new Proxy(target, {
+    getPrototypeOf() {
+      return Object.prototype;
+    },
+    ownKeys() {
+      ownKeysCalls += 1;
+      return ownKeysCalls <= 2 ? [...allowedKeys, "widened"] : allowedKeys;
+    },
+    getOwnPropertyDescriptor(object, key) {
+      const descriptor = Object.getOwnPropertyDescriptor(object, key);
+      if (key === "route" && ownKeysCalls > 2) {
+        return { ...descriptor, value: "unsupported" };
+      }
+      return descriptor;
+    }
+  });
+
+  assert.throws(
+    () => createSanitizedCommercialSignal(forged, {
+      clock: () => new Date(NOW),
+      randomBytesFactory: fixedBytes(0xab)
+    }),
+    /unknown fields: widened/
+  );
+  assert.equal(ownKeysCalls, 1);
+});
+
 test("envelope builder rejects non-canonical timestamps and oversized ENS before signing", async () => {
   let signCalls = 0;
   const options = {
@@ -101,7 +133,7 @@ test("envelope builder rejects accessor-backed signal fields without invoking th
   assert.equal(getterCalls, 0);
 });
 
-test("envelope builder serializes only captured validated primitives from a changing Proxy", async () => {
+test("envelope builder serializes only captured primitives without re-enumerating a changing Proxy", async () => {
   const trusted = signal();
   const allowedKeys = Object.keys(trusted);
   let ownKeysCalls = 0;
@@ -112,7 +144,7 @@ test("envelope builder serializes only captured validated primitives from a chan
     },
     ownKeys() {
       ownKeysCalls += 1;
-      return ownKeysCalls <= 2 ? allowedKeys : [...allowedKeys, "raw_text"];
+      return ownKeysCalls === 1 ? allowedKeys : [...allowedKeys, "raw_text"];
     },
     getOwnPropertyDescriptor(object, key) {
       return Object.getOwnPropertyDescriptor(object, key);
@@ -124,5 +156,5 @@ test("envelope builder serializes only captured validated primitives from a chan
   assert.deepEqual(body, trusted);
   assert.equal("raw_text" in body, false);
   assert.equal(envelope.body.includes("must-not-cross"), false);
-  assert.equal(ownKeysCalls, 2);
+  assert.equal(ownKeysCalls, 1);
 });
