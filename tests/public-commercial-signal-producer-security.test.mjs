@@ -88,6 +88,38 @@ test("producer validates commercial eligibility and closure from one Reception s
   assert.equal(ownKeysCalls, 1);
 });
 
+test("producer reuses Reception's canonical ENS normalization boundary", () => {
+  const multiLabel = routePublicReception({
+    text: "offer to buy foo.bar.eth",
+    requestId: "block-b-multilabel"
+  });
+  const produced = createSanitizedCommercialSignal(multiLabel, {
+    clock: () => new Date(NOW),
+    randomBytesFactory: fixedBytes(0xab)
+  });
+  assert.equal(produced.identifier, "foo.bar.eth");
+
+  const trusted = reception();
+  for (const identifier of ["-bad.eth", "bad-.eth", "foo..eth", `${"a".repeat(64)}.eth`]) {
+    const forged = {
+      ...trusted,
+      identifier,
+      publicSignal: {
+        ...trusted.publicSignal,
+        identifier
+      }
+    };
+    assert.throws(
+      () => createSanitizedCommercialSignal(forged, {
+        clock: () => new Date(NOW),
+        randomBytesFactory: fixedBytes(0xab)
+      }),
+      /supported normalized ENS identifier/,
+      identifier
+    );
+  }
+});
+
 test("envelope builder rejects non-canonical timestamps and oversized ENS before signing", async () => {
   let signCalls = 0;
   const options = {
@@ -157,4 +189,37 @@ test("envelope builder serializes only captured primitives without re-enumeratin
   assert.equal("raw_text" in body, false);
   assert.equal(envelope.body.includes("must-not-cross"), false);
   assert.equal(ownKeysCalls, 1);
+});
+
+test("envelope serialization ignores inherited Object.prototype.toJSON hooks", async () => {
+  const prior = Object.getOwnPropertyDescriptor(Object.prototype, "toJSON");
+  let signedPayload;
+  Object.defineProperty(Object.prototype, "toJSON", {
+    configurable: true,
+    value() {
+      return { raw_text: "prototype-pollution-must-not-cross" };
+    }
+  });
+
+  try {
+    const envelope = await createAuthenticatedCommercialSignalEnvelope(signal(), {
+      ...envelopeOptions,
+      sign(request) {
+        signedPayload = request.signed_payload;
+        return "signature_value_0123456789abcdef";
+      }
+    });
+    const body = JSON.parse(envelope.body);
+    assert.equal(body.identifier, "epbs.eth");
+    assert.equal("raw_text" in body, false);
+    assert.equal(envelope.body.includes("prototype-pollution-must-not-cross"), false);
+    assert.equal(signedPayload.includes("prototype-pollution-must-not-cross"), false);
+    assert.equal(JSON.parse(signedPayload)[7], envelope.body);
+  } finally {
+    if (prior === undefined) {
+      delete Object.prototype.toJSON;
+    } else {
+      Object.defineProperty(Object.prototype, "toJSON", prior);
+    }
+  }
 });
