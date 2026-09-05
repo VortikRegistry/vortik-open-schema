@@ -56,6 +56,51 @@ test("producer rejects prototype and accessor Reception objects without invoking
   assert.equal(getterCalls, 0);
 });
 
+test("producer rejects accessor descriptors even when Object.prototype.value is polluted", () => {
+  const trusted = reception();
+  const priorValue = Object.getOwnPropertyDescriptor(Object.prototype, "value");
+  const valuesByGetter = new WeakMap();
+  let fieldGetterCalls = 0;
+  const forged = {};
+
+  for (const [key, value] of Object.entries(trusted)) {
+    const getter = function forgedFieldGetter() {
+      fieldGetterCalls += 1;
+      return value;
+    };
+    valuesByGetter.set(getter, value);
+    Object.defineProperty(forged, key, {
+      enumerable: true,
+      configurable: true,
+      get: getter
+    });
+  }
+
+  Object.defineProperty(Object.prototype, "value", {
+    configurable: true,
+    get() {
+      return valuesByGetter.get(this.get);
+    }
+  });
+
+  try {
+    assert.throws(
+      () => createSanitizedCommercialSignal(forged, {
+        clock: () => new Date(NOW),
+        randomBytesFactory: fixedBytes(0xab)
+      }),
+      /enumerable data property/
+    );
+    assert.equal(fieldGetterCalls, 0);
+  } finally {
+    if (priorValue === undefined) {
+      delete Object.prototype.value;
+    } else {
+      Object.defineProperty(Object.prototype, "value", priorValue);
+    }
+  }
+});
+
 test("producer validates commercial eligibility and closure from one Reception snapshot", () => {
   const trusted = reception();
   const allowedKeys = Object.keys(trusted);
