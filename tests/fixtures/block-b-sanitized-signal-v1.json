@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "source": "agent",
+  "producer": "vortik-public-reception",
+  "correlation_id": "sig_abababababababababababababababab",
+  "identifier": "epbs.eth",
+  "intent": "commercial_interest",
+  "routing_reason": "explicit_interest_language_with_single_ens_identifier",
+  "confidence": "high",
+  "observed_at": "2026-09-04T04:00:00.000Z",
+  "public_route": "sanitized_signal_only"
+}

@@ -22,7 +22,7 @@
     "test:cloud-run-ens-receipt-preactivation-probe": "node --test tests/cloud-run-ens-receipt-preactivation-probe.test.mjs",
     "test:cloud-run-agent-beacon-egress-probe": "node --test tests/cloud-run-agent-beacon-egress-probe.test.mjs",
     "test:cloudbuild-agent-beacon": "node --test tests/cloudbuild-agent-beacon.test.mjs",
-    "test:public-a2a-beacon": "node --test tests/public-a2a-beacon.test.mjs tests/public-a2a-beacon-discovery-regressions.test.mjs tests/public-a2a-discovery-schema.test.mjs tests/public-reception-router.test.mjs tests/public-reception-router-host-syntax.test.mjs tests/public-reception-router-whole-chunk-authority.test.mjs tests/public-reception-router-final-scope-reduction.test.mjs",
+    "test:public-a2a-beacon": "node --test tests/public-a2a-beacon.test.mjs tests/public-a2a-beacon-discovery-regressions.test.mjs tests/public-a2a-discovery-schema.test.mjs tests/public-reception-router.test.mjs tests/public-reception-router-host-syntax.test.mjs tests/public-reception-router-whole-chunk-authority.test.mjs tests/public-reception-router-final-scope-reduction.test.mjs tests/public-commercial-signal-producer.test.mjs tests/public-commercial-signal-producer-security.test.mjs",
     "validate:maps": "node scripts/validate-map-coverage.mjs",
     "validate:integrity": "node scripts/validate-integrity.mjs",
     "validate:derived-sync": "node scripts/validate-derived-sync.mjs",
