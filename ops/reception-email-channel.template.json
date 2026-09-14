@@ -1,0 +1,9 @@
+{
+  "type": "email",
+  "displayName": "Vortik Reception Alerts",
+  "description": "Private notification channel for high-priority Vortik Reception business signals.",
+  "enabled": true,
+  "labels": {
+    "email_address": "ALERT_EMAIL"
+  }
+}

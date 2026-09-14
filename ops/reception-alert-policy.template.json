@@ -1,0 +1,31 @@
+{
+  "displayName": "Vortik Reception - high-priority business signal",
+  "documentation": {
+    "content": "Vortik public Reception detected a high-priority business signal.\n\nIntent: ${log.extracted_label.intent}\nENS: ${log.extracted_label.identifier}\nEvent: ${log.extracted_label.event_id}\n\nReview the authorized Cloud Logging event before any commercial action. This alert does not authorize pricing, outreach, negotiation, listing, acceptance, transfer or sale.",
+    "mimeType": "text/markdown"
+  },
+  "conditions": [
+    {
+      "displayName": "High-priority Reception observation",
+      "conditionMatchedLog": {
+        "filter": "resource.type=\"cloud_run_revision\" AND resource.labels.service_name=\"vortik-agent-beacon\" AND jsonPayload.schema=\"vortik_reception_observation/1.0.0\" AND jsonPayload.priority=\"high\"",
+        "labelExtractors": {
+          "event_id": "EXTRACT(jsonPayload.event_id)",
+          "intent": "EXTRACT(jsonPayload.intent)",
+          "identifier": "EXTRACT(jsonPayload.identifier)"
+        }
+      }
+    }
+  ],
+  "combiner": "OR",
+  "alertStrategy": {
+    "notificationRateLimit": {
+      "period": "60s"
+    },
+    "autoClose": "1800s"
+  },
+  "notificationChannels": [
+    "projects/PROJECT_ID/notificationChannels/CHANNEL_ID"
+  ],
+  "enabled": true
+}
