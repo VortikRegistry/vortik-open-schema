@@ -1,68 +1,90 @@
 # ePBS source audit
 
-## Purpose
+**Reviewed:** 2026-09-13  
+**Registry anchor:** `epbs.eth` / `epbs`  
+**Purpose:** public primary-source audit for the current implementation-facing ePBS state.
 
-This public audit records the source state for enshrined proposer-builder separation (ePBS) as tracked by Vortik without changing registry state. It does not add an anchor, alter `registry.json`, modify schemas, create a separate PTC anchor, or claim official Ethereum status.
+## Boundary
 
-## Sources reviewed
+This document records source state. It does not make Vortik an Ethereum protocol authority, does not claim mainnet activation, and does not treat an ENS name as an official Ethereum namespace.
 
-Primary and repository sources for this audit:
+## Primary sources reviewed
 
-- EIP-7732 — Enshrined Proposer-Builder Separation: <https://eips.ethereum.org/EIPS/eip-7732>
-- EIP-7773 — Hardfork Meta: Glamsterdam: <https://eips.ethereum.org/EIPS/eip-7773>
-- Ethereum Foundation — Protocol Cluster Updates: May 2026: <https://blog.ethereum.org/2026/05/11/protocol-update-may-26>
-- Ethereum consensus specifications: <https://github.com/ethereum/consensus-specs>
-- Existing source notes: `schemas/epbs/1.0-draft/sources.md`
-- Existing anchor documentation: `anchors/epbs.md`
+- EIP-7732 — Enshrined Proposer-Builder Separation: https://eips.ethereum.org/EIPS/eip-7732
+- EIP-7773 — Hardfork Meta: Glamsterdam: https://eips.ethereum.org/EIPS/eip-7773
+- EIP-8282 — Builder Execution Requests: https://eips.ethereum.org/EIPS/eip-8282
+- Ethereum consensus specifications: https://github.com/ethereum/consensus-specs
+- Ethereum Foundation — Announcing the Platåberget Testnet: https://blog.ethereum.org/2026/08/17/plataberget-testnet
+- ethPandaOps — Glamsterdam devnet-9: https://notes.ethereum.org/@ethpandaops/glamsterdam-devnet-9
+- ethereum.org — Glamsterdam roadmap: https://ethereum.org/roadmap/glamsterdam/
 
-## How Vortik tracks ePBS
+## Findings
 
-Vortik tracks `epbs.eth` as the registry anchor for the canonical term "enshrined proposer-builder separation (ePBS)". The registry treats ePBS as a protocol-facing coordination primitive because the term maps to proposer-builder separation, builder bids, payload commitments, payload reveal, PTC timing checks, and delayed validation in the EIP-7732 design.
+### 1. EIP-7732 status
 
-The ENS anchor is a semantic entry point for a registry record. It is not protocol authority and does not create Ethereum protocol truth.
+EIP-7732 is currently a **Review** Standards Track Core EIP. Older Vortik text describing it as Draft was stale and has been corrected.
 
-## Source-state distinctions
+EIP-7773 lists EIP-7732 as **Scheduled for Inclusion** in Glamsterdam. This is a fork inclusion state, not a mainnet activation claim.
 
-### Primary specification source
+### 2. Public testnet evidence — Platåberget
 
-EIP-7732 is the primary ePBS specification source for this repository. It defines ePBS as a Draft Core EIP, describes separating an Ethereum block into consensus and execution parts, introduces in-protocol builders, defines signed bid and payload-envelope containers, and describes the Payload Timeliness Committee (PTC) and delayed validation as components of the design.
+Ethereum Foundation Protocol DevOps announced Platåberget on 2026-08-17 as Glamsterdam's early testing ground open to public participation.
 
-Vortik may mention PTC and delayed validation only as EIP-7732 components and source-supported ePBS design elements. This audit does not create a separate PTC anchor.
+The announcement explicitly warns application developers that tooling which depends on a hard-capped maximum gas limit can break. This matters to Vortik because Glamsterdam is no longer only a specification/research surface; public infrastructure is exercising post-Glamsterdam assumptions.
 
-### Scheduled inclusion source-state
+Platåberget is testnet evidence, not production-mainnet evidence.
 
-EIP-7773 is the Glamsterdam meta-EIP source for fork inclusion state. It lists EIP-7732 / Enshrined Proposer-Builder Separation as Scheduled for Inclusion in Glamsterdam.
+### 3. Glamsterdam devnet-9
 
-That is a scheduled-inclusion source state, not a mainnet activation claim. EIP-7773 remains Draft, and its activation table currently provides no values for Sepolia, Holešky, or mainnet.
+The ethPandaOps devnet-9 specification records:
 
-### Implementation-facing evidence
+- genesis: 2026-09-01 15:00 UTC;
+- Gloas fork: 2026-09-02 15:00 UTC;
+- a large pre-fork state at genesis;
+- non-finality testing and recovery;
+- trunk client images;
+- EIP-7732 and EIP-7928 in the tested fork surface;
+- EIP-7610 removed from Glamsterdam.
 
-The Ethereum Foundation's May 2026 Protocol Cluster update reports that ePBS had stabilized sufficiently for a multi-client Glamsterdam devnet to run, with an external-builders pipeline tested end-to-end across nearly all clients. The same update states that Glamsterdam devnets are live and that the immediate focus is hardening and shipping the upgrade.
+This provides current multi-client implementation-facing evidence while remaining devnet scope.
 
-The official `ethereum/consensus-specs` repository also maintains unstable Gloas specifications and tests for ePBS-related payload attestations and payload-envelope behavior. Unstable specification and devnet evidence support implementation-facing relevance; they do not establish activation or final mainnet deployment.
+### 4. Builder lifecycle — EIP-8282
 
-### Final deployment
+EIP-8282 is a **Review** Core EIP and is Scheduled for Inclusion in Glamsterdam under EIP-7773.
 
-This audit does not claim final fork deployment. EIP-7773's Scheduled for Inclusion state, implementation progress, devnet operation, and specification tests may inform repository source notes, but Vortik must not collapse any of them into final deployment.
+It introduces dedicated EIP-7685 request types and predeploys for EIP-7732 builder deposits/top-ups and exits. This strengthens the semantic case that `builder` is becoming a protocol-explicit role under ePBS rather than only an external market label.
 
-### Live mainnet activation
+### 5. Block-Level Access Lists and gas/state changes
 
-This audit does not claim that ePBS is live on Ethereum mainnet. It does not assign a mainnet activation date and does not imply that activation has occurred.
+EIP-7928 — Block-Level Access Lists is Scheduled for Inclusion in Glamsterdam and appears in current testing. BAL is distinct from ePBS, but it interacts with the wider block-production and execution-state architecture.
 
-## Non-claims
+EIP-8037 and EIP-8038 affect state/gas cost assumptions. They should not be described as ePBS itself. Platåberget's fixed-gas-limit warning is application-facing evidence that execution assumptions around Glamsterdam require active testing.
 
-This audit does not claim:
+### 6. Roadmap timing
 
-- ePBS is active on Ethereum mainnet;
-- ePBS has reached final fork deployment;
-- a live multi-client devnet is equivalent to mainnet activation;
-- the word "stabilized" is equivalent to a Final EIP or guaranteed deployment;
-- Glamsterdam activation dates have been announced in EIP-7773;
-- Vortik is an official Ethereum source or endpoint;
-- `epbs.eth` is an official Ethereum namespace;
-- ENS names create protocol truth;
-- ePBS creates a nontechnical ENS valuation claim.
+As reviewed on 2026-09-13, ethereum.org describes Glamsterdam as **testing on devnets**, lists the next milestone as **Sepolia fork — 2026-10-06**, and says mainnet is expected in Q4 2026 with the date not yet confirmed.
 
-## Registry-state boundary
+The Sepolia date is a public roadmap target and must not be described as a guaranteed activation date. No confirmed Glamsterdam mainnet date is asserted by Vortik.
 
-No registry state changes are made by this audit. Any future change to registry status, classification, type, schema fields, schema `const` values, or anchors requires a separate PR and validation.
+## Cross-anchor check
+
+`inclusionlist.eth` remains correctly scoped. EIP-7805 / FOCIL is **Declined for Inclusion** in Glamsterdam and **Scheduled for Inclusion** in Hegotá under EIP-8081. Hegotá activation values remain unset.
+
+EIP-8146 — Block Access List Sidecars remains **Proposed for Inclusion** in Hegotá, not Scheduled.
+
+No semantic classification change is required for the existing v0.6.5 ENS anchor set as part of this freshness pass.
+
+## Audit result
+
+**PASS — protocol freshness update required, ontology redesign not required.**
+
+The ePBS anchor remains:
+
+```text
+classification: core
+status: implementation-facing
+stage: canonical
+type: primitive
+```
+
+The material corrections are source freshness, current EIP status, current public implementation evidence, current Glamsterdam composition, and clearer testnet/mainnet boundaries.

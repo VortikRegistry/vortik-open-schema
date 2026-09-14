@@ -93,56 +93,35 @@ Curated references and source notes should be placed in the protected section be
 <!-- MANUAL-SOURCES:START -->
 ## Curated References
 
+Primary and implementation-facing sources reviewed on **2026-09-13**:
+
 - EIP-7732 — Enshrined Proposer-Builder Separation  
   https://eips.ethereum.org/EIPS/eip-7732
-
 - EIP-7773 — Hardfork Meta: Glamsterdam  
   https://eips.ethereum.org/EIPS/eip-7773
-
-- Ethereum Foundation — Protocol Cluster Updates: May 2026  
-  https://blog.ethereum.org/2026/05/11/protocol-update-may-26
-
+- EIP-8282 — Builder Execution Requests  
+  https://eips.ethereum.org/EIPS/eip-8282
 - Ethereum consensus specifications  
   https://github.com/ethereum/consensus-specs
-
-- Why enshrine Proposer-Builder Separation? A viable path to ePBS  
-  https://ethresear.ch/t/why-enshrine-proposer-builder-separation-a-viable-path-to-epbs/15710
-
-- ePBS Design Constraints  
-  https://ethresear.ch/t/epbs-design-constraints/18728
+- Ethereum Foundation — Announcing the Platåberget Testnet (2026-08-17)  
+  https://blog.ethereum.org/2026/08/17/plataberget-testnet
+- ethPandaOps — Glamsterdam devnet-9 specification  
+  https://notes.ethereum.org/@ethpandaops/glamsterdam-devnet-9
+- ethereum.org — Glamsterdam roadmap  
+  https://ethereum.org/roadmap/glamsterdam/
 
 ## Source Notes
 
-ePBS is treated by Vortik as a core protocol-facing primitive because EIP-7732 defines Enshrined Proposer-Builder Separation and maps proposer-builder separation into Ethereum's consensus-layer design. EIP-7773 lists EIP-7732 / ePBS as Scheduled for Inclusion in Glamsterdam. EIP-7773 remains Draft and currently provides no activation values for Sepolia, Holešky, or mainnet. Scheduled inclusion is not a claim of mainnet activation or finalized fork deployment.
+### Source state as of 2026-09-13
 
-The Ethereum Foundation's May 2026 Protocol Cluster update reports a multi-client Glamsterdam devnet with the external-builders pipeline tested end-to-end across nearly all clients. The official consensus-specs repository maintains unstable Gloas specifications and tests for ePBS-related payload attestations and payload-envelope behavior. These are implementation-facing signals, not deployment or activation claims.
+- EIP-7732 is a **Review** Standards Track Core EIP. It is no longer accurately described as Draft.
+- EIP-7773 lists EIP-7732 as **Scheduled for Inclusion** in Glamsterdam. Scheduled inclusion is not mainnet activation.
+- Platåberget is an Ethereum Foundation-announced, public early testing ground for Glamsterdam. It provides public implementation evidence for post-Glamsterdam behavior and explicitly exposes breaking assumptions around hard-capped gas limits.
+- Glamsterdam devnet-9 began on 2026-09-01, forked to Gloas on 2026-09-02, and exercises a large pre-fork state plus non-finality recovery. Its EIP list includes EIP-7732 and EIP-7928 and records EIP-7610 as removed.
+- EIP-8282 is a Review Core EIP Scheduled for Inclusion in Glamsterdam. It adds dedicated builder deposit and exit request types and contracts for EIP-7732 builders, making builder lifecycle coordination more explicit.
+- ethereum.org currently describes Glamsterdam as testing on devnets, with a **Sepolia fork target of 2026-10-06** and mainnet expected in Q4 2026 with no confirmed mainnet date.
 
-This anchor is grounded in the transition from relay-mediated proposer-builder coordination toward protocol-defined proposer-builder interaction. EIP-7732 introduces in-protocol builders and the Payload Timeliness Committee (PTC); this source note treats PTC as an ePBS role/component, not as an independent registry anchor.
+### Interpretation boundary
 
-EIP-7732 defines the following ePBS containers and signed containers:
-
-- `ExecutionPayloadBid`
-- `SignedExecutionPayloadBid`
-- `ExecutionPayloadEnvelope`
-- `SignedExecutionPayloadEnvelope`
-
-EIP-7732 describes delayed validation by decoupling consensus validation from execution validation. PTC members attest to payload timeliness without fully validating the execution payload, and execution validation is deferred until the next beacon block validation path.
-
-The strongest semantic objects to monitor around this anchor are:
-
-- builder
-- proposer
-- bid
-- payload
-- commitment
-- signed bid
-- payload reveal
-- payload timeliness
-- Payload Timeliness Committee (PTC)
-- payload attestation
-- delayed validation
-
-These references and notes are curated to support source traceability and semantic interpretation.
-
-They should be updated only when primary protocol references, implementation materials, or Ethereum core development discussions materially change.
+These sources support `epbs.eth` as an implementation-facing semantic anchor. They do **not** establish that ePBS is active on Ethereum mainnet, that Vortik has protocol authority, or that `epbs.eth` is an official Ethereum namespace.
 <!-- MANUAL-SOURCES:END -->
