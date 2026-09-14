@@ -5,6 +5,7 @@
 **Registry ID:** `epbs`  
 **Status:** implementation-facing  
 **Classification:** core  
+**Protocol freshness reviewed:** 2026-09-13
 
 ---
 
@@ -12,269 +13,236 @@
 
 This anchor tracks **Enshrined Proposer-Builder Separation (ePBS)** as a protocol-facing coordination primitive within Ethereum.
 
-ePBS formalizes the separation between block proposal and execution payload construction at the protocol design level. It moves proposer-builder coordination closer to Ethereum’s consensus boundary, replacing reliance on trusted off-protocol relay coordination with a more explicit protocol-defined interaction between proposers, builders, bids, commitments, payload reveal, and timing checks.
+ePBS formalizes the separation between block proposal and execution-payload construction at the protocol boundary. Under the current EIP-7732 design, builders become an in-protocol actor, builder bids and proposer selection become explicit protocol objects, execution-payload reveal is separated from the consensus block, and validators gain payload-timeliness duties.
 
-Vortik tracks `epbs.eth` because the term **ePBS** has strong semantic alignment with the EIP-7732 coordination surface and is one of the clearest naming surfaces for protocol-facing block production changes.
+`epbs.eth` is used by Vortik as a semantic anchor because the label aligns directly with the technical acronym. It is not an official Ethereum endpoint or namespace.
 
-This document is not an official Ethereum specification. It is a registry anchor document used by Vortik to describe why the term is tracked, how it is classified, and what risks or boundaries apply.
-
----
-
-## Machine-readable feed
-
-Vortik publishes a deterministic, contract-validated feed for this anchor:
-
-- **Public feed:** [feeds/epbs.json](https://vortikregistry.github.io/vortik-open-schema/feeds/epbs.json)
-- **Contract 1.0.1:** [vortik-anchor-feed schema](https://vortikregistry.github.io/vortik-open-schema/schemas/feeds/vortik-anchor-feed/1.0.1/schema.json)
-- **Consumption guide:** [Consume the public ePBS feed](https://vortikregistry.github.io/vortik-open-schema/guides/consume-epbs-feed.html)
-- **Executable example:** [`examples/consume-epbs-feed.mjs`](https://github.com/VortikRegistry/vortik-open-schema/blob/main/examples/consume-epbs-feed.mjs)
-
-The feed is a Vortik semantic artifact. Its authority block explicitly denies protocol authority and ENS authority. Consumers must use official Ethereum specifications for protocol rules and current activation state.
+Vortik is an independent semantic registry. This document is not an Ethereum specification and must not be used as a substitute for the current EIP, consensus specifications, client documentation, or fork activation sources.
 
 ---
 
-## Context
+## Current upstream state — 2026-09-13
 
-Proposer-Builder Separation (PBS) emerged as a way to separate block construction from block proposal. In today’s external PBS / MEV-Boost-style architecture, much of that coordination depends on relays, external infrastructure, builder markets, timing assumptions, and off-protocol trust boundaries.
+The primary specification is **EIP-7732**.
 
-Enshrined Proposer-Builder Separation extends this model by moving key parts of the proposer-builder interface into Ethereum’s protocol design.
+As of this review:
 
-The primary specification associated with this anchor is **EIP-7732**. EIP-7773 currently lists EIP-7732 / ePBS as **Scheduled for Inclusion** in Glamsterdam. Vortik treats that as source-state support for ePBS as a strong protocol-facing primitive while keeping scheduled inclusion separate from final deployment or live mainnet activation.
+- EIP-7732 is a **Review** Standards Track Core EIP.
+- EIP-7773 lists EIP-7732 as **Scheduled for Inclusion** in Glamsterdam.
+- Glamsterdam is in active testing; this does not mean ePBS is deployed on Ethereum mainnet.
+- ethereum.org lists the next Glamsterdam milestone as a **Sepolia fork target on 2026-10-06** and describes mainnet as expected in Q4 2026 with no confirmed mainnet date.
+- **EIP-8282 — Builder Execution Requests** is also in Review and Scheduled for Inclusion in Glamsterdam. It gives EIP-7732 builders dedicated deposit and exit request paths.
 
-Vortik does not treat ePBS as a deployed mainnet feature. It is tracked as **implementation-facing** because the terminology, specification surface, and engineering discussion around ePBS have matured enough to make the term structurally important for Ethereum coordination mapping.
+These are source states, not Vortik judgments about activation.
 
-The relevant semantic shift is not that Ethereum “eliminates markets” or “eliminates builders.” Builders remain important. The shift is that Ethereum increasingly defines the rules, commitments, and timing boundaries under which proposer-builder coordination happens.
+---
+
+## Public implementation evidence
+
+### Platåberget
+
+On 2026-08-17, Ethereum Foundation Protocol DevOps announced **Platåberget** as Glamsterdam's early testing ground open to public participation.
+
+Platåberget matters to this anchor because it moves ePBS-related assumptions out of specification-only discussion and into a public testing environment. The announced network also highlights application-facing breaking changes, including the need to remove assumptions that Ethereum has a permanently hard-capped maximum gas limit.
+
+Vortik treats Platåberget as **public implementation evidence**, not as mainnet activation evidence.
+
+### Glamsterdam devnet-9
+
+ethPandaOps documents Glamsterdam devnet-9 with:
+
+- genesis on **2026-09-01 15:00 UTC**;
+- the Gloas fork on **2026-09-02 15:00 UTC**;
+- trunk client images;
+- a large pre-fork validator state;
+- explicit non-finality testing;
+- EIP-7732 and EIP-7928 in the tested fork surface;
+- EIP-7610 recorded as removed from Glamsterdam.
+
+This is stronger implementation-facing evidence than the earlier registry snapshot, while still remaining devnet evidence.
 
 ---
 
 ## Coordination position
 
-**Block construction / proposer-builder interface**
+ePBS sits at the boundary between:
 
-ePBS sits at the coordination boundary between:
+- beacon-block proposal;
+- execution-payload construction;
+- builder bidding;
+- proposer selection;
+- payload commitments;
+- execution-payload reveal;
+- blob/data availability checks;
+- payload-timeliness attestations;
+- fork-choice and validator duties.
 
-- consensus-layer proposal responsibilities
-- execution payload construction
-- builder bids
-- proposer selection
-- payload reveal
-- timing and availability checks
-- validator-facing coordination
+The important transition is:
 
-This makes ePBS a high-priority registry anchor because it connects protocol roles, commitments, payload semantics, and block production flow.
+```text
+relay-mediated proposer-builder coordination
+→ protocol-defined proposer-builder coordination
+```
 
----
-
-## Coordination Role
-
-ePBS defines a protocol-facing coordination interface between:
-
-- proposers
-- builders
-- validators
-- payload commitments
-- execution payload reveal
-- timing or availability checks
-- consensus-facing block production rules
-
-The central coordination change is that proposer-builder interaction becomes more explicit inside the protocol design, rather than being mediated primarily through trusted external relay infrastructure.
-
-In Vortik’s ontology, ePBS is classified as a **core primitive** because it maps directly to a major protocol-facing coordination surface rather than to a vague market narrative, application-level abstraction, or off-protocol service category.
+That transition reduces reliance on trusted middleware in the critical proposer-builder exchange. It does **not** remove builders, economic competition, MEV, or all external infrastructure.
 
 ---
 
-## Protocol Grounding
+## Protocol objects and roles
 
-This anchor is grounded in:
-
-- **EIP-7732**
-- proposer-builder separation research
-- consensus-layer block production discussions
-- ePBS implementation-facing engineering work
-- payload commitment and reveal semantics
-- builder/proposer coordination design
-- Payload Timeliness Committee and related timing-check discussions
-
-The registry uses this grounding cautiously. It does not claim that `epbs.eth` is an official Ethereum endpoint, an official protocol namespace, or an Ethereum Foundation-controlled naming surface.
-
----
-
-## EIP-7732 Source Notes
-
-EIP-7732 defines **Enshrined Proposer-Builder Separation (ePBS)** as a draft Core EIP that separates an Ethereum block into consensus and execution parts and adds an in-protocol mechanism for the consensus proposer to choose the execution proposer. This registry anchor treats that terminology as source-grounded while distinguishing terminology from fork finality, deployment, or mainnet activation. EIP-7773 lists EIP-7732 as Scheduled for Inclusion in Glamsterdam, but activation rows remain unset until client teams decide activation times; this note therefore does not claim final deployment.
-
-Within the EIP-7732 design, builders are introduced as an in-protocol entity tracked by the beacon state. PTC is introduced as the **Payload Timeliness Committee**, a subset of validators assigned to attest to whether the corresponding builder revealed the committed execution payload with the expected block hash in a timely way and whether corresponding blob data was available from their view. PTC is therefore tracked here as an ePBS role/component, not as a separate registry anchor.
-
-EIP-7732 defines the following ePBS containers and related signed containers:
+Current EIP-7732 terminology includes protocol objects and duties such as:
 
 - `ExecutionPayloadBid`
 - `SignedExecutionPayloadBid`
 - `ExecutionPayloadEnvelope`
 - `SignedExecutionPayloadEnvelope`
+- builders as an in-protocol staked actor
+- proposer selection of an execution proposer
+- the Payload Timeliness Committee (PTC)
+- payload-timeliness attestations
+- delayed/decoupled execution validation
 
-EIP-7732 also describes delayed validation: consensus validation and execution validation are decoupled logically and temporally. PTC members are not required to validate the execution payload before attesting to payload timeliness; execution validation is deferred until the next beacon block validation path.
-
-These notes are limited to EIP-7732-backed terminology and mechanisms. They do not claim that ePBS is active on Ethereum mainnet, do not assign a mainnet activation date, and do not imply that Vortik or `epbs.eth` is an official Ethereum namespace.
-
-## Semantic Stability
-
-The term **ePBS** has strong semantic stability relative to most Ethereum coordination terms.
-
-Reasons:
-
-- it is directly associated with enshrined proposer-builder separation
-- it is tied to EIP-7732
-- it is short, precise, and widely recognizable in protocol discussions
-- it maps to a concrete proposer-builder coordination surface
-- it avoids weaker legacy framing such as “builder market” or “blockspace market”
-
-However, the registry should still avoid overstating finality. Protocol scope, implementation details, and fork timelines can change. Vortik therefore tracks ePBS as **implementation-facing**, not as a deployed or finalized mainnet component.
+For semantic purposes, this makes **bids, commitments, payload reveal, timeliness, builder lifecycle, and validator/builder coordination** more precise terms than older generic “builder market” framing.
 
 ---
 
-## Structural Importance
+## Builder lifecycle and EIP-8282
 
-ePBS is important because it changes where proposer-builder coordination is defined.
+EIP-8282 adds two EIP-7685 request types and corresponding predeploy contracts for EIP-7732 builders:
 
-The relevant transition is:
+- builder deposit / top-up requests;
+- builder exit requests.
+
+Its motivation is to stop reusing validator lifecycle paths for builders after the fork and make the builder actor explicit at the request-type level.
+
+Vortik treats EIP-8282 as supporting evidence for the semantic stabilization of the **builder** role under ePBS. It does not create a separate registry anchor in this update.
+
+---
+
+## Relationship to Block-Level Access Lists
+
+**EIP-7928 — Block-Level Access Lists (BALs)** is Scheduled for Inclusion in Glamsterdam and appears alongside ePBS in current testing.
+
+BALs and ePBS are distinct primitives:
 
 ```text
-relay-mediated proposer-builder coordination
-→ protocol-facing proposer-builder coordination
+ePBS
+→ proposer / builder / bid / payload-reveal coordination
+
+BAL
+→ execution-state access declaration and block-level execution/state surface
 ```
 
-This does not remove economic competition among builders. It changes the trust and coordination boundary.
+They interact in the broader Glamsterdam block-production architecture, but Vortik does not collapse them into one concept.
 
-The most important semantic consequences are:
-
-- builder remains a protocol-relevant role
-- proposer-builder separation becomes more explicit
-- payload commitments become structurally important
-- reveal timing and payload availability become central coordination concerns
-- relay trust is reduced as a core coordination assumption
-- block production semantics become more machine-readable and protocol-facing
-
-For Vortik, this makes ePBS a stronger semantic anchor than broader legacy terms such as `buildermarket`, `executionmarket`, or `blockspacemarket`.
+EIP-8146, currently Proposed for Inclusion in Hegotá, further explores BAL sidecars and a BAL commitment inside `ExecutionPayloadBid`. That proposal is post-Glamsterdam context and must not be described as already Scheduled or activated.
 
 ---
 
-## Naming Alignment
+## Relationship to Inclusion Lists
 
-- **ENS anchor:** `epbs.eth`
-- **Canonical term tracked:** enshrined proposer-builder separation (ePBS)
+`inclusionlist.eth` tracks **Fork-choice Enforced Inclusion Lists (FOCIL)** / EIP-7805.
 
-The ENS name is strongly aligned with the technical acronym.
+The fork states remain distinct:
 
-Unlike several other anchors in the registry, `epbs.eth` does not contain a problematic suffix such as `market`, `auction`, or `layer`.
+- EIP-7805 / FOCIL is **Declined for Inclusion** in Glamsterdam.
+- EIP-8081 lists EIP-7805 as **Scheduled for Inclusion** in Hegotá.
+- Hegotá activation rows remain unset.
 
-This is why Vortik classifies it as:
+ePBS and FOCIL remain semantically complementary:
+
+```text
+epbs.eth
+→ proposer-builder coordination / block-production interface
+
+inclusionlist.eth
+→ protocol-facing inclusion constraint / censorship-resistance surface
+```
+
+---
+
+## Gas-limit and repricing context
+
+Glamsterdam also contains execution-layer changes that affect assumptions around gas and state costs, including EIP-8037 and EIP-8038.
+
+Platåberget's public announcement explicitly warns application developers that tooling which assumes a fixed maximum gas limit can break.
+
+Vortik tracks this as surrounding execution context. Gas repricing is **not** part of the definition of ePBS and should not be conflated with EIP-7732.
+
+---
+
+## Machine-readable feed
+
+Vortik publishes a deterministic public feed for this anchor:
+
+- `https://vortikregistry.github.io/vortik-open-schema/feeds/epbs.json`
+- contract: `schemas/feeds/vortik-anchor-feed/1.0.1/schema.json`
+- source trail: `schemas/epbs/1.0-draft/sources.md`
+
+The feed is a Vortik semantic artifact and explicitly denies protocol and ENS authority.
+
+---
+
+## Semantic stability
+
+The term **ePBS** remains one of the registry's strongest semantic matches because:
+
+- it maps directly to EIP-7732;
+- the ENS label matches the technical acronym;
+- the mechanism has concrete protocol objects and validator/builder duties;
+- it is Scheduled for Inclusion in Glamsterdam;
+- public testnet and devnet implementation evidence now exists;
+- related builder lifecycle work is becoming more explicit through EIP-8282.
+
+The registry therefore retains:
 
 ```text
 classification: core
-type: primitive
 status: implementation-facing
 stage: canonical
+type: primitive
 ```
 
-This classification means that Vortik considers the term structurally important and semantically aligned. It does not mean that Vortik defines the protocol term or controls its official meaning.
+No stronger deployment claim is implied.
 
 ---
 
-## Registry Role
+## Boundaries and non-claims
 
-Vortik uses this anchor to:
+This anchor must not be used to claim that:
 
-- track semantic stabilization around ePBS
-- distinguish enshrined PBS from external PBS infrastructure
-- map ePBS as a protocol-facing coordination primitive
-- separate protocol-defined roles from older market-centric terminology
-- connect ePBS to payload commitments, builder bids, proposer selection, and reveal timing
-- provide machine-readable registry context for Ethereum coordination terminology
+- ePBS is already active on Ethereum mainnet;
+- Sepolia's roadmap target is a guaranteed activation date;
+- Glamsterdam's mainnet date is confirmed;
+- `epbs.eth` is controlled by Ethereum Foundation, ENS Labs, or ENS DAO;
+- Vortik defines Ethereum protocol terminology;
+- ePBS eliminates MEV, builders, or every external relay/infrastructure role;
+- a devnet or Platåberget result is equivalent to mainnet production evidence.
 
-The registry role is observational and interpretive.
-
-Vortik does not define Ethereum protocol rules, does not replace official specifications, and does not claim authority over Ethereum terminology.
-
----
-
-## Boundaries and Non-Claims
-
-This anchor should not be used to claim that:
-
-- ePBS is already deployed on Ethereum mainnet
-- `epbs.eth` is an official Ethereum or Ethereum Foundation endpoint
-- Vortik is the official registry for Ethereum protocol terms
-- ePBS eliminates MEV
-- ePBS eliminates builders
-- ePBS makes execution deterministic
-- ePBS removes all external coordination
-- ePBS guarantees decentralization by itself
-
-The accurate framing is narrower:
+The accurate framing is:
 
 ```text
-ePBS formalizes proposer-builder coordination more explicitly at the protocol boundary.
+ePBS is a protocol-facing proposer-builder coordination primitive,
+Scheduled for Inclusion in Glamsterdam and backed by active public
+testnet/devnet implementation evidence as of 2026-09-13.
 ```
-
----
-
-## Relationship to Other Anchors
-
-### `inclusionlist.eth`
-
-`inclusionlist.eth` tracks fork-choice enforced inclusion lists / FOCIL-style inclusion constraints.
-
-Together, `epbs.eth` and `inclusionlist.eth` represent two different but complementary directions:
-
-```text
-epbs.eth → proposer-builder coordination / block production interface
-inclusionlist.eth → censorship-resistance constraint / inclusion guarantees
-```
-
-### `commitmentlayer.eth`
-
-`commitmentlayer.eth` tracks the broader term `commitment`.
-
-It is relevant because ePBS depends on commitment-like semantics around bids, headers, payload reveal, and accountability. However, `commitmentlayer.eth` remains classified as `repairable` because `layer` is not a canonical protocol suffix.
-
-### `buildermarket.eth`
-
-`buildermarket.eth` is classified as deprecated because the term “builder market” is less precise than the protocol-facing builder role and associated ePBS primitives.
-
-Builders remain economically important. The deprecated classification applies to the naming abstraction, not to the existence of builders.
-
----
-
-## Status
-
-Current registry status:
-
-```text
-implementation-facing
-```
-
-This means the anchor is relevant to active specification, implementation, and engineering-facing discussion, while avoiding the stronger and potentially misleading claim that ePBS is already fully implemented as a deployed Ethereum mainnet feature.
-
-Vortik tracks `epbs.eth` as a **core semantic anchor** because the term has strong alignment with a protocol-facing primitive and because it maps cleanly to Ethereum’s proposer-builder separation roadmap.
 
 ---
 
 ## Sources
 
-Primary source context is documented in:
+Primary source context is maintained in:
 
 ```text
 schemas/epbs/1.0-draft/sources.md
 ```
 
-Machine-readable schema:
+Current high-value references include:
 
-```text
-schemas/epbs/1.0-draft/schema.json
-```
-
-Registry entry:
-
-```text
-registry.json
-```
+- https://eips.ethereum.org/EIPS/eip-7732
+- https://eips.ethereum.org/EIPS/eip-7773
+- https://eips.ethereum.org/EIPS/eip-8282
+- https://github.com/ethereum/consensus-specs
+- https://blog.ethereum.org/2026/08/17/plataberget-testnet
+- https://notes.ethereum.org/@ethpandaops/glamsterdam-devnet-9
+- https://ethereum.org/roadmap/glamsterdam/
