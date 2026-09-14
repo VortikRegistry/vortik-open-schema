@@ -181,6 +181,90 @@ test("producer never reflects attacker-controlled field names in rejection error
   }
 });
 
+test("producer replaces proxy reflection invariant errors with fixed failures", () => {
+  const attackerField = "wallet-0xfeedface@example.com";
+  const trusted = reception();
+  const target = { ...trusted };
+  Object.defineProperty(target, attackerField, {
+    value: "must-not-cross",
+    enumerable: true,
+    configurable: false,
+    writable: false
+  });
+  const forged = new Proxy(target, {
+    getPrototypeOf() {
+      return Object.prototype;
+    },
+    ownKeys(object) {
+      return Reflect.ownKeys(object);
+    },
+    getOwnPropertyDescriptor(object, key) {
+      if (key === attackerField) {
+        return {
+          value: "changed",
+          enumerable: true,
+          configurable: true,
+          writable: true
+        };
+      }
+      return Reflect.getOwnPropertyDescriptor(object, key);
+    }
+  });
+
+  assert.throws(
+    () => createSanitizedCommercialSignal(forged, {
+      clock: () => new Date(NOW),
+      randomBytesFactory: fixedBytes(0xab)
+    }),
+    (error) => {
+      assert.equal(error.message, "Reception result could not be safely inspected");
+      assert.equal(error.message.includes(attackerField), false);
+      assert.equal(error.message.includes("must-not-cross"), false);
+      return true;
+    }
+  );
+
+  const nestedTarget = { ...trusted.publicSignal };
+  Object.defineProperty(nestedTarget, attackerField, {
+    value: "must-not-cross",
+    enumerable: true,
+    configurable: false,
+    writable: false
+  });
+  const nestedProxy = new Proxy(nestedTarget, {
+    getPrototypeOf() {
+      return Object.prototype;
+    },
+    ownKeys(object) {
+      return Reflect.ownKeys(object);
+    },
+    getOwnPropertyDescriptor(object, key) {
+      if (key === attackerField) {
+        return {
+          value: "changed",
+          enumerable: true,
+          configurable: true,
+          writable: true
+        };
+      }
+      return Reflect.getOwnPropertyDescriptor(object, key);
+    }
+  });
+
+  assert.throws(
+    () => createSanitizedCommercialSignal({ ...trusted, publicSignal: nestedProxy }, {
+      clock: () => new Date(NOW),
+      randomBytesFactory: fixedBytes(0xab)
+    }),
+    (error) => {
+      assert.equal(error.message, "Reception publicSignal could not be safely inspected");
+      assert.equal(error.message.includes(attackerField), false);
+      assert.equal(error.message.includes("must-not-cross"), false);
+      return true;
+    }
+  );
+});
+
 test("producer reuses Reception's canonical ENS normalization boundary", () => {
   const multiLabel = routePublicReception({
     text: "offer to buy foo.bar.eth",
