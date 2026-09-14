@@ -1,0 +1,93 @@
+name: Protocol Watch Agent
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/protocol-watch.mjs"
+      - "tests/protocol-watch.test.mjs"
+      - "config/protocol-watch.json"
+      - "protocol-watch/**"
+      - ".github/workflows/protocol-watch.yml"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: vortik-protocol-watch
+  cancel-in-progress: false
+
+jobs:
+  boundary-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Test watcher boundary
+        run: node --test tests/protocol-watch.test.mjs
+
+  watch:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Inspect allowlisted protocol sources
+        id: watch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/protocol-watch.mjs --write-candidate --github-output "$GITHUB_OUTPUT"
+
+      - name: Open bounded draft evidence PR
+        if: steps.watch.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          existing="$(gh pr list --state open --json title --jq '[.[] | select(.title | startswith("Protocol watch alert"))] | length')"
+          if [[ "$existing" != "0" ]]; then
+            echo "A protocol watch alert PR is already open; refusing to create a duplicate."
+            exit 0
+          fi
+
+          branch="automation/protocol-watch-${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add protocol-watch/candidate.json protocol-watch/report.md
+          git commit -m "protocol watch: record upstream change evidence"
+          git push origin "$branch"
+
+          gh pr create \
+            --draft \
+            --base main \
+            --head "$branch" \
+            --title "Protocol watch alert — upstream change detected" \
+            --body-file protocol-watch/report.md
