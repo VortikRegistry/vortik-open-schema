@@ -1,5 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+
+import Ajv from "ajv";
+import addFormats from "ajv-formats";
 
 import { createPublicA2ABeacon } from "../lib/observed-public-a2a-beacon.mjs";
 import {
@@ -9,6 +13,14 @@ import {
   createStructuredReceptionLogger,
   deriveObservedReception
 } from "../lib/reception-observability.mjs";
+
+const schema = JSON.parse(readFileSync(
+  new URL("../schemas/observability/vortik-reception-observation/1.0.0/schema.json", import.meta.url),
+  "utf8"
+));
+const ajv = new Ajv({ allErrors: true, strict: true });
+addFormats(ajv);
+const validateObservation = ajv.compile(schema);
 
 const commercialReception = Object.freeze({
   intent: "commercial_interest",
@@ -28,6 +40,7 @@ test("commercial reception becomes a high-priority sanitized observation", () =>
     eventId: "event-123"
   });
 
+  assert.equal(validateObservation(observation), true, JSON.stringify(validateObservation.errors));
   assert.equal(observation.priority, "high");
   assert.equal(observation.severity, "WARNING");
   assert.equal(observation.commercial_signal, true);
@@ -100,6 +113,7 @@ test("observed A2A beacon records a business proposal without persisting raw tex
 
   assert.equal(response.message.messageId, "response-id");
   assert.equal(observations.length, 1);
+  assert.equal(validateObservation(observations[0]), true, JSON.stringify(validateObservation.errors));
   assert.equal(observations[0].intent, "business_proposal");
   assert.equal(observations[0].priority, "high");
   assert.equal(observations[0].identifier, "epbs.eth");
