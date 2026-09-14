@@ -1,0 +1,17 @@
+{
+  "baseline_version": "1.0.0",
+  "reviewed_through": "2026-09-13",
+  "note": "Fingerprints were reviewed during the 2026-09-13 Protocol Freshness Update. Moving this baseline requires human review of the upstream diff and any required Vortik freshness changes.",
+  "sources": [
+    {"id":"eip-7732","fingerprint":"fec48f74c51e61d966bb6c5e431c54c66ca5c11f","status":"Review"},
+    {"id":"eip-7773-glamsterdam-meta","fingerprint":"abdea2079ddee8c8aef4c957c867ce82e547f4b2","status":"Review"},
+    {"id":"eip-7805-focil","fingerprint":"0a3955d9e8772b7666f560402b2d81ae032a3d06","status":"Draft"},
+    {"id":"eip-7928-bal","fingerprint":"f834f0004aa5110a5f1ac0d6b80e3dc4b842d040","status":"Review"},
+    {"id":"eip-8081-hegota-meta","fingerprint":"4b07e6f2fd8799217846735cd04b9b69208376ed","status":"Draft"},
+    {"id":"eip-8282-builder-requests","fingerprint":"45e570a246207d5b1fb095e259e3f98bb0922639","status":"Review"},
+    {"id":"ethereum-org-glamsterdam-roadmap","fingerprint":"c4cb88c67359458495d3550212e60bc82808b4fe"},
+    {"id":"consensus-gloas-beacon-chain","fingerprint":"a13fb1b550cb9a1c98468788fa0b4a042af0f9ac"},
+    {"id":"consensus-gloas-p2p","fingerprint":"0b38f9de1b149485cc304bc71147d56f9a0af437"},
+    {"id":"glamsterdam-devnets-head","fingerprint":"42166f755d6aedca08e4747d2df94e2a6e4199dd"}
+  ]
+}

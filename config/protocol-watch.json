@@ -1,0 +1,28 @@
+{
+  "watch_version": "1.0.0",
+  "max_source_bytes": 1000000,
+  "policy": {
+    "fail_closed": true,
+    "canonical_registry_mutation": false,
+    "auto_merge": false,
+    "pull_request_mode": "draft_evidence_alert"
+  },
+  "allowed_repositories": [
+    "ethereum/EIPs",
+    "ethereum/ethereum-org-website",
+    "ethereum/consensus-specs",
+    "ethpandaops/glamsterdam-devnets"
+  ],
+  "sources": [
+    {"id":"eip-7732","kind":"github_file","repository":"ethereum/EIPs","path":"EIPS/eip-7732.md","authority":"eip","relevance":["epbs.eth","Glamsterdam","builder-proposer coordination"]},
+    {"id":"eip-7773-glamsterdam-meta","kind":"github_file","repository":"ethereum/EIPs","path":"EIPS/eip-7773.md","authority":"eip_meta","relevance":["Glamsterdam","epbs.eth","BAL","gas repricing"]},
+    {"id":"eip-7805-focil","kind":"github_file","repository":"ethereum/EIPs","path":"EIPS/eip-7805.md","authority":"eip","relevance":["inclusionlist.eth","FOCIL"]},
+    {"id":"eip-7928-bal","kind":"github_file","repository":"ethereum/EIPs","path":"EIPS/eip-7928.md","authority":"eip","relevance":["Glamsterdam","Block-Level Access Lists"]},
+    {"id":"eip-8081-hegota-meta","kind":"github_file","repository":"ethereum/EIPs","path":"EIPS/eip-8081.md","authority":"eip_meta","relevance":["inclusionlist.eth","FOCIL","Hegota"]},
+    {"id":"eip-8282-builder-requests","kind":"github_file","repository":"ethereum/EIPs","path":"EIPS/eip-8282.md","authority":"eip","relevance":["epbs.eth","builder lifecycle","Glamsterdam"]},
+    {"id":"ethereum-org-glamsterdam-roadmap","kind":"github_file","repository":"ethereum/ethereum-org-website","path":"public/content/roadmap/glamsterdam/index.md","authority":"ethereum_org","relevance":["Glamsterdam roadmap","testnet milestones","public protocol communication"]},
+    {"id":"consensus-gloas-beacon-chain","kind":"github_file","repository":"ethereum/consensus-specs","path":"specs/gloas/beacon-chain.md","authority":"ethereum_spec","relevance":["epbs.eth","Gloas consensus specification"]},
+    {"id":"consensus-gloas-p2p","kind":"github_file","repository":"ethereum/consensus-specs","path":"specs/gloas/p2p-interface.md","authority":"ethereum_spec","relevance":["epbs.eth","payload and bid propagation"]},
+    {"id":"glamsterdam-devnets-head","kind":"github_repo_head","repository":"ethpandaops/glamsterdam-devnets","authority":"ethereum_devnet_ops","relevance":["Glamsterdam devnets","implementation evidence"]}
+  ]
+}
