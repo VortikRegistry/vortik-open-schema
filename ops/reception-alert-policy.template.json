@@ -20,7 +20,7 @@
   "combiner": "OR",
   "alertStrategy": {
     "notificationRateLimit": {
-      "period": "60s"
+      "period": "300s"
     },
     "autoClose": "1800s"
   },
