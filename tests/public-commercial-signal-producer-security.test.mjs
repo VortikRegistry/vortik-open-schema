@@ -51,7 +51,7 @@ test("producer rejects prototype and accessor Reception objects without invoking
   });
   assert.throws(
     () => createSanitizedCommercialSignal(forged),
-    /enumerable data property/
+    /enumerable data propert/
   );
   assert.equal(getterCalls, 0);
 });
@@ -89,7 +89,7 @@ test("producer rejects accessor descriptors even when Object.prototype.value is 
         clock: () => new Date(NOW),
         randomBytesFactory: fixedBytes(0xab)
       }),
-      /enumerable data property/
+      /enumerable data propert/
     );
     assert.equal(fieldGetterCalls, 0);
   } finally {
@@ -128,9 +128,57 @@ test("producer validates commercial eligibility and closure from one Reception s
       clock: () => new Date(NOW),
       randomBytesFactory: fixedBytes(0xab)
     }),
-    /unknown fields: widened/
+    /contains unknown fields/
   );
   assert.equal(ownKeysCalls, 1);
+});
+
+test("producer never reflects attacker-controlled field names in rejection errors", () => {
+  const attackerFields = [
+    "buyer@example.com",
+    "price-999-eth",
+    "wallet-0x0123456789abcdef"
+  ];
+
+  for (const attackerField of attackerFields) {
+    const topLevel = {
+      ...reception(),
+      [attackerField]: "must-not-cross"
+    };
+    assert.throws(
+      () => createSanitizedCommercialSignal(topLevel, {
+        clock: () => new Date(NOW),
+        randomBytesFactory: fixedBytes(0xab)
+      }),
+      (error) => {
+        assert.match(error.message, /eligible Reception result contains unknown fields/);
+        assert.equal(error.message.includes(attackerField), false);
+        assert.equal(error.message.includes("must-not-cross"), false);
+        return true;
+      }
+    );
+
+    const trusted = reception();
+    const nested = {
+      ...trusted,
+      publicSignal: {
+        ...trusted.publicSignal,
+        [attackerField]: "must-not-cross"
+      }
+    };
+    assert.throws(
+      () => createSanitizedCommercialSignal(nested, {
+        clock: () => new Date(NOW),
+        randomBytesFactory: fixedBytes(0xab)
+      }),
+      (error) => {
+        assert.match(error.message, /Reception publicSignal contains unknown fields/);
+        assert.equal(error.message.includes(attackerField), false);
+        assert.equal(error.message.includes("must-not-cross"), false);
+        return true;
+      }
+    );
+  }
 });
 
 test("producer reuses Reception's canonical ENS normalization boundary", () => {
@@ -205,7 +253,7 @@ test("envelope builder rejects accessor-backed signal fields without invoking th
   });
   await assert.rejects(
     createAuthenticatedCommercialSignalEnvelope(forged, envelopeOptions),
-    /enumerable data property/
+    /enumerable data propert/
   );
   assert.equal(getterCalls, 0);
 });
