@@ -13,8 +13,7 @@ on:
       - ".github/workflows/protocol-watch.yml"
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 concurrency:
   group: vortik-protocol-watch
@@ -38,6 +37,9 @@ jobs:
 
   watch:
     if: github.event_name != 'pull_request'
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
