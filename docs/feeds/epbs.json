@@ -5,7 +5,7 @@
   "registry": {
     "name": "vortik-semantic-registry",
     "version": "0.6.5",
-    "last_updated": "2026-07-25",
+    "last_updated": "2026-09-13",
     "source_of_truth": "schemas"
   },
   "anchor": {
@@ -28,18 +28,22 @@
     "classification": "core",
     "status": "implementation-facing",
     "type": "primitive",
-    "summary": "Protocol-level primitive separating block construction from proposal while preserving an enshrined coordination interface.",
+    "summary": "Protocol-level primitive separating block construction from proposal while preserving an enshrined coordination interface, now backed by public Glamsterdam testnet and devnet implementation evidence.",
     "pipeline_position": [
       "builder coordination",
       "inclusion"
     ],
     "coordination_role": [
       "separates block construction from proposal",
-      "defines commitment and payload reveal coordination"
+      "defines signed builder-bid, proposer-selection, payload-reveal, and payload-timeliness coordination"
     ],
     "protocol_grounding": [
-      "EIP-7732",
-      "Ethereum consensus specifications"
+      "EIP-7732 (Review)",
+      "EIP-7773 Glamsterdam inclusion state",
+      "EIP-8282 builder execution requests",
+      "Ethereum consensus specifications",
+      "Platåberget public Glamsterdam testnet",
+      "Glamsterdam devnet-9"
     ],
     "naming": {
       "ens": "epbs.eth",
@@ -49,7 +53,11 @@
     },
     "sources": [
       "https://eips.ethereum.org/EIPS/eip-7732",
-      "https://github.com/ethereum/consensus-specs"
+      "https://eips.ethereum.org/EIPS/eip-7773",
+      "https://eips.ethereum.org/EIPS/eip-8282",
+      "https://github.com/ethereum/consensus-specs",
+      "https://blog.ethereum.org/2026/08/17/plataberget-testnet",
+      "https://notes.ethereum.org/@ethpandaops/glamsterdam-devnet-9"
     ]
   },
   "authority": {
