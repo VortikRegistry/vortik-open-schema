@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
-import Ajv from "ajv";
+import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
 import { createPublicA2ABeacon } from "../lib/observed-public-a2a-beacon.mjs";
@@ -18,7 +18,7 @@ const schema = JSON.parse(readFileSync(
   new URL("../schemas/observability/vortik-reception-observation/1.0.0/schema.json", import.meta.url),
   "utf8"
 ));
-const ajv = new Ajv({ allErrors: true, strict: true });
+const ajv = new Ajv2020({ allErrors: true, strict: true });
 addFormats(ajv);
 const validateObservation = ajv.compile(schema);
 
