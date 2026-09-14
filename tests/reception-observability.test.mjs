@@ -5,7 +5,10 @@ import { readFileSync } from "node:fs";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
-import { createPublicA2ABeacon } from "../lib/observed-public-a2a-beacon.mjs";
+import {
+  createPublicA2ABeacon,
+  PUBLIC_HUMAN_FOLLOW_UP
+} from "../lib/observed-public-a2a-beacon.mjs";
 import {
   classifyBusinessProposalText,
   classifyReceptionPriority,
@@ -29,6 +32,22 @@ const commercialReception = Object.freeze({
   confidence: "high",
   identifier: "epbs.eth"
 });
+
+function a2aRequest(text, {
+  messageId = "external-agent-42",
+  contextId = "context-42",
+  output = "application/json"
+} = {}) {
+  return {
+    message: {
+      messageId,
+      contextId,
+      role: "ROLE_USER",
+      parts: [{ text, mediaType: "text/plain" }]
+    },
+    configuration: { acceptedOutputModes: [output] }
+  };
+}
 
 test("commercial reception becomes a high-priority sanitized observation", () => {
   const observation = createReceptionObservation({
@@ -101,15 +120,7 @@ test("observed A2A beacon records a business proposal without persisting raw tex
   });
 
   const rawText = "We have a strategic partnership proposal for epbs.eth";
-  const response = beacon.sendMessage({
-    message: {
-      messageId: "external-agent-42",
-      contextId: "context-42",
-      role: "ROLE_USER",
-      parts: [{ text: rawText, mediaType: "text/plain" }]
-    },
-    configuration: { acceptedOutputModes: ["application/json"] }
-  });
+  const response = beacon.sendMessage(a2aRequest(rawText));
 
   assert.equal(response.message.messageId, "response-id");
   assert.equal(observations.length, 1);
@@ -119,4 +130,57 @@ test("observed A2A beacon records a business proposal without persisting raw tex
   assert.equal(observations[0].identifier, "epbs.eth");
   assert.equal(JSON.stringify(observations[0]).includes(rawText), false);
   assert.equal(JSON.stringify(observations[0]).includes("external-agent-42"), false);
+  assert.deepEqual(response.message.parts[0].data.humanFollowUp, PUBLIC_HUMAN_FOLLOW_UP);
+});
+
+test("recognized commercial interest receives a voluntary machine-readable human follow-up channel", () => {
+  const beacon = createPublicA2ABeacon({
+    publicBaseUrl: "https://example.test",
+    idFactory: () => "response-id",
+    observationLogger: null
+  });
+
+  const response = beacon.sendMessage(a2aRequest("We want to acquire epbs.eth and discuss an offer"));
+  const followUp = response.message.parts[0].data.humanFollowUp;
+
+  assert.deepEqual(followUp, PUBLIC_HUMAN_FOLLOW_UP);
+  assert.equal(followUp.channel, "email");
+  assert.equal(followUp.address, "vortik.art+registry@gmail.com");
+  assert.equal(followUp.voluntary, true);
+  assert.equal(followUp.human_authorization_required, true);
+  assert.equal(followUp.beacon_stores_contact, false);
+});
+
+test("recognized commercial interest receives the same follow-up channel in text mode", () => {
+  const beacon = createPublicA2ABeacon({
+    publicBaseUrl: "https://example.test",
+    idFactory: () => "response-id",
+    observationLogger: null
+  });
+
+  const response = beacon.sendMessage(a2aRequest(
+    "We are interested in buying epbs.eth",
+    { output: "text/plain" }
+  ));
+  const text = response.message.parts[0].text;
+
+  assert.match(text, /Optional human follow-up: vortik\.art\+registry@gmail\.com/u);
+  assert.match(text, /does not retain your contact details/u);
+});
+
+test("ordinary ENS research does not expose the follow-up channel", () => {
+  const beacon = createPublicA2ABeacon({
+    publicBaseUrl: "https://example.test",
+    idFactory: () => "response-id",
+    observationLogger: null
+  });
+
+  const jsonResponse = beacon.sendMessage(a2aRequest("research epbs.eth"));
+  assert.equal(Object.hasOwn(jsonResponse.message.parts[0].data, "humanFollowUp"), false);
+
+  const textResponse = beacon.sendMessage(a2aRequest(
+    "research epbs.eth",
+    { output: "text/plain" }
+  ));
+  assert.equal(textResponse.message.parts[0].text.includes(PUBLIC_HUMAN_FOLLOW_UP.address), false);
 });
