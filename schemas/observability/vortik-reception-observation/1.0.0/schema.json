@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vortikregistry.github.io/vortik-open-schema/schemas/observability/vortik-reception-observation/1.0.0/schema.json",
+  "title": "Vortik Reception Observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "event_id",
+    "observed_at",
+    "surface",
+    "intent",
+    "status",
+    "route",
+    "confidence",
+    "priority",
+    "commercial_signal",
+    "identifier",
+    "inbound_message_id_digest",
+    "context_id_digest",
+    "response_message_id_digest"
+  ],
+  "properties": {
+    "schema": { "const": "vortik_reception_observation/1.0.0" },
+    "event_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "observed_at": { "type": "string", "format": "date-time" },
+    "surface": { "const": "public_a2a_reception" },
+    "intent": {
+      "enum": [
+        "candidate_submission",
+        "evidence_contribution",
+        "commercial_interest",
+        "business_proposal",
+        "ens_research",
+        "capability_discovery",
+        "registry_lookup",
+        "technical_context",
+        "unsupported"
+      ]
+    },
+    "status": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "route": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "confidence": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "priority": { "enum": ["normal", "high"] },
+    "commercial_signal": { "type": "boolean" },
+    "identifier": {
+      "oneOf": [
+        { "type": "null" },
+        { "type": "string", "minLength": 1, "maxLength": 255, "pattern": "^[a-z0-9-]+(?:\\.[a-z0-9-]+)+$" }
+      ]
+    },
+    "inbound_message_id_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "context_id_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "response_message_id_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+  }
+}
