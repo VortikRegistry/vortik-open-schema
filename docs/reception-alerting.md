@@ -1,13 +1,13 @@
 # Vortik Reception Alerting
 
-High-priority Reception events are operational alerts, not autonomous commercial actions.
+High-priority Reception events are operational alerts, not autonomous external actions.
 
 Current high-priority intents:
 
 - `commercial_interest`: explicit purchase/acquisition/offer language recognized by the public Reception router;
-- `business_proposal`: explicit proposal/partnership/business-deal language recognized by the public Reception router.
+- `business_proposal`: explicit proposal/partnership/business-deal language recognized by the observability layer.
 
-A high-priority event MUST remain sanitized. It may identify the normalized ENS subject when the public router already exposes it, but it must not contain raw caller text, offer values, contact details, IP addresses, arbitrary headers, credentials, or private buyer intelligence.
+A high-priority event MUST remain sanitized. It may identify the normalized ENS subject when the public router already exposes it, but it must not contain raw caller text, proposal contents, contact details, IP addresses, arbitrary headers, credentials, or private identity intelligence.
 
 ## Notification boundary
 
@@ -29,4 +29,4 @@ A notification should contain only:
 - confidence;
 - link/instruction to inspect the corresponding Cloud Logging event under authorized access.
 
-No notification may itself authorize negotiation, pricing, outreach, listing, acceptance, transfer, or sale.
+No notification may itself authorize any external or asset-changing action.
