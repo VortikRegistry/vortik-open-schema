@@ -7,10 +7,10 @@ The Observatory records **sanitized structured events** for successful Reception
 - how many A2A interactions occurred;
 - which bounded intent class was recognized;
 - which ENS identifier was the subject when the public router already permits that identifier in the response;
-- whether an interaction was classified as high-priority commercial interest;
+- whether an interaction was classified as a high-priority signal;
 - whether the same opaque message/context identifiers recur, using one-way digests rather than raw IDs.
 
-The Observatory MUST NOT record raw caller text, prompts, arbitrary metadata, IP addresses, authentication material, headers, pricing, offer terms or private buyer data.
+The Observatory MUST NOT record raw caller text, prompts, arbitrary metadata, IP addresses, authentication material, headers, financial terms, proposal contents or private identity data.
 
 ## Event contract
 
@@ -25,7 +25,7 @@ The Observatory MUST NOT record raw caller text, prompts, arbitrary metadata, IP
 - normalized ENS identifier when the existing public Reception result already exposes one;
 - domain-separated SHA-256 digests of inbound message ID, context ID, and generated response message ID.
 
-High priority currently means explicit `commercial_interest`. Business-proposal language that is not yet part of the closed Reception classifier must be added through a separate reviewed classifier change rather than inferred by the logger.
+High priority currently means explicit `commercial_interest` or a bounded explicit `business_proposal`. Additional intent classes must be introduced through reviewed, closed classifier changes rather than inferred by the logger.
 
 ## Storage and notification model
 
@@ -40,4 +40,4 @@ The notification channel belongs to the private operations layer. It MUST NOT re
 
 ## Public/private boundary
 
-This observability layer does not activate Block B, does not perform a private handoff, does not alter `privateHandoff: false`, and does not contact buyers. It records a minimized operational event only.
+This observability layer does not activate Block B, does not perform a private handoff, does not alter `privateHandoff: false`, and does not initiate external contact. It records a minimized operational event only.
