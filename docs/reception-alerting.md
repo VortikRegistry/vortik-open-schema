@@ -30,3 +30,5 @@ A notification should contain only:
 - link/instruction to inspect the corresponding Cloud Logging event under authorized access.
 
 No notification may itself authorize any external or asset-changing action.
+
+The separate `vortik_sanitized_commercial_signal_log/1.0.0` event is reserved for a future platform-mediated private intake path. An alert policy must not be treated as that transport, and no Production Logging sink or Pub/Sub route is authorized by this document.

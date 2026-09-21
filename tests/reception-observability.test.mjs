@@ -133,6 +133,43 @@ test("observed A2A beacon records a business proposal without persisting raw tex
   assert.deepEqual(response.message.parts[0].data.humanFollowUp, PUBLIC_HUMAN_FOLLOW_UP);
 });
 
+test("recognized commercial interest emits one closed platform transport candidate", () => {
+  const observations = [];
+  const transportCandidates = [];
+  const beacon = createPublicA2ABeacon({
+    publicBaseUrl: "https://example.test",
+    idFactory: () => "response-id",
+    observationLogger: Object.freeze({ record: (event) => observations.push(event) }),
+    sanitizedSignalLogger: Object.freeze({ record: (event) => transportCandidates.push(event) })
+  });
+
+  const rawText = "We want to acquire epbs.eth for 999 ETH confidential-marker";
+  beacon.sendMessage(a2aRequest(rawText));
+
+  assert.equal(observations.length, 1);
+  assert.equal(transportCandidates.length, 1);
+  const event = transportCandidates[0];
+  assert.equal(event.schema, "vortik_sanitized_commercial_signal_log/1.0.0");
+  assert.equal(event.signal.identifier, "epbs.eth");
+  assert.equal(event.signal.intent, "commercial_interest");
+  assert.equal(JSON.stringify(event).includes(rawText), false);
+  assert.equal(JSON.stringify(event).includes("999"), false);
+  assert.equal(JSON.stringify(event).includes("confidential-marker"), false);
+});
+
+test("ordinary research emits no platform transport candidate", () => {
+  const transportCandidates = [];
+  const beacon = createPublicA2ABeacon({
+    publicBaseUrl: "https://example.test",
+    idFactory: () => "response-id",
+    observationLogger: null,
+    sanitizedSignalLogger: Object.freeze({ record: (event) => transportCandidates.push(event) })
+  });
+
+  beacon.sendMessage(a2aRequest("research epbs.eth"));
+  assert.equal(transportCandidates.length, 0);
+});
+
 test("recognized commercial interest receives a voluntary machine-readable human follow-up channel", () => {
   const beacon = createPublicA2ABeacon({
     publicBaseUrl: "https://example.test",

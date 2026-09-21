@@ -1,6 +1,6 @@
 # Vortik Reception Observatory
 
-Status: proposed bounded observability layer for the public A2A Reception beacon.
+Status: implemented bounded observability layer for the public A2A Reception beacon.
 
 The Observatory records **sanitized structured events** for successful Reception classifications. It is designed to answer operational questions such as:
 
@@ -31,6 +31,8 @@ High priority currently means explicit `commercial_interest` or a bounded explic
 
 The Cloud Run service emits one-line JSON events to stdout. Cloud Run / Cloud Logging supplies infrastructure retention and queryability without adding a new database or expanding public-beacon egress.
 
+For a recognized, unambiguous `commercial_interest`, the same stdout-only path may also emit `vortik_sanitized_commercial_signal_log/1.0.0`. That event wraps exactly the closed ten-field public/private signal contract. It contains no raw caller text, contact data, price, buyer identity, wallet, prompt or conversation material. Emission to stdout is not a private handoff: no Logging sink, Pub/Sub topic, private consumer, signing identity or private boundary is created or enabled by this repository change.
+
 A production alert SHOULD match only high-priority events, for example:
 
 - `jsonPayload.schema="vortik_reception_observation/1.0.0"`
@@ -40,4 +42,4 @@ The notification channel belongs to the private operations layer. It MUST NOT re
 
 ## Public/private boundary
 
-This observability layer does not activate Block B, does not perform a private handoff, does not alter `privateHandoff: false`, and does not initiate external contact. It records a minimized operational event only.
+This observability layer does not activate runtime transport, does not perform a direct private handoff, does not alter `privateHandoff: false`, and does not initiate external contact. It records minimized operational events only. Any future platform-mediated routing remains a separately authorized Production gate.
