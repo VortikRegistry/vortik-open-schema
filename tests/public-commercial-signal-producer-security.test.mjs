@@ -3,6 +3,7 @@ import test from "node:test";
 
 import {
   createAuthenticatedCommercialSignalEnvelope,
+  createSanitizedCommercialSignalLogEvent,
   createSanitizedCommercialSignal
 } from "../lib/public-commercial-signal-producer.mjs";
 import { routePublicReception } from "../lib/public-reception-router.mjs";
@@ -32,6 +33,30 @@ const envelopeOptions = Object.freeze({
   clock: () => new Date(NOW),
   randomBytesFactory: fixedBytes(0xcd),
   sign: () => "signature_value_0123456789abcdef"
+});
+
+test("platform log wrapper resists Object.prototype.toJSON pollution", () => {
+  const priorToJSON = Object.getOwnPropertyDescriptor(Object.prototype, "toJSON");
+  Object.defineProperty(Object.prototype, "toJSON", {
+    configurable: true,
+    value() {
+      return { raw_text: "prototype-private-marker" };
+    }
+  });
+
+  try {
+    const event = createSanitizedCommercialSignalLogEvent(signal());
+    assert.equal(Object.getPrototypeOf(event), null);
+    const serialized = JSON.stringify(event);
+    assert.equal(serialized.includes("prototype-private-marker"), false);
+    assert.equal(JSON.parse(serialized).schema, "vortik_sanitized_commercial_signal_log/1.0.0");
+  } finally {
+    if (priorToJSON === undefined) {
+      delete Object.prototype.toJSON;
+    } else {
+      Object.defineProperty(Object.prototype, "toJSON", priorToJSON);
+    }
+  }
 });
 
 test("producer rejects prototype and accessor Reception objects without invoking getters", () => {
