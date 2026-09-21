@@ -70,6 +70,7 @@ The beacon must not:
 - access wallets, signing keys, ENS ownership credentials or asset-transfer surfaces;
 - infer ENS ownership or infer commercial intent beyond explicit bounded interest language;
 - forward raw caller language or enable private handoff from the public-only signal;
+- open a network connection to the private runtime or store private credentials;
 - expose private counterparties, private transaction terms, monetization plans, private intelligence or solicitation strategy;
 - send unsolicited outbound messages, callbacks, notifications or webhooks;
 - crawl arbitrary URLs supplied by callers;
@@ -94,6 +95,8 @@ vortik-receipt-runtime@vortik-registry-production.iam.gserviceaccount.com
 ```
 
 The beacon should require no secrets for normal operation.
+
+Writing a closed sanitized signal event to stdout does not relax this boundary. Cloud Logging capture is platform-managed; the beacon still performs no outbound connection, holds no private credential, signs no private envelope and reports `privateHandoff: false` to callers. Any Logging sink, Pub/Sub topic or private consumer remains outside this deployment and behind a separate Production authorization.
 
 The absence of application-level fetch calls is not a network boundary. Production enforces deny-by-default outbound connectivity independently of handler code.
 

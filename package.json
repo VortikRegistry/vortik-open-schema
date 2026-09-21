@@ -54,9 +54,12 @@
     "validate:ens-research-contracts": "node scripts/validate-ens-research-contracts.mjs"
   },
   "dependencies": {
-    "ajv": "^8.17.1"
+    "ajv": "^8.20.0"
   },
   "devDependencies": {
     "ajv-formats": "^3.0.1"
+  },
+  "overrides": {
+    "fast-uri": "^4.2.1"
   }
 }

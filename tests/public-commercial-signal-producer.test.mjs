@@ -4,6 +4,7 @@ import test from "node:test";
 
 import {
   createAuthenticatedCommercialSignalEnvelope,
+  createSanitizedCommercialSignalLogEvent,
   createSanitizedCommercialSignal,
   SANITIZED_SIGNAL_CONTRACT_VERSION,
   SANITIZED_SIGNAL_PRODUCER,
@@ -66,6 +67,24 @@ test("public producer emits exactly the private Block B wire fields and nothing 
     assert.equal(forbidden in signal, false, forbidden);
   }
   assert.equal(Object.isFrozen(signal), true);
+});
+
+test("platform log event wraps only the exact sanitized signal contract", () => {
+  const signal = createSanitizedCommercialSignal(recognizedCommercialReception(), {
+    clock: () => new Date(FIXED_NOW),
+    randomBytesFactory: fixedBytes(0xab)
+  });
+  const event = createSanitizedCommercialSignalLogEvent(signal);
+
+  assert.deepEqual(Object.keys(event), [
+    "severity", "schema", "event_type", "surface", "signal"
+  ]);
+  assert.equal(event.schema, "vortik_sanitized_commercial_signal_log/1.0.0");
+  assert.equal(event.severity, "WARNING");
+  assert.deepEqual({ ...event.signal }, signal);
+  assert.equal(JSON.stringify(event).includes("999"), false);
+  assert.equal(JSON.stringify(event).includes("confidential-marker"), false);
+  assert.equal(Object.isFrozen(event), true);
 });
 
 test("public producer exactly reproduces the shared cross-repo Block B vector", async () => {
