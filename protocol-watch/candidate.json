@@ -1,0 +1,332 @@
+{
+  "candidate_version": "1.0.0",
+  "observed_at": "2026-09-23T04:41:21.333Z",
+  "baseline_reviewed_through": "2026-09-13",
+  "changes": [
+    {
+      "id": "eip-7773-glamsterdam-meta",
+      "reason": "fingerprint_changed",
+      "previous": {
+        "id": "eip-7773-glamsterdam-meta",
+        "fingerprint": "abdea2079ddee8c8aef4c957c867ce82e547f4b2",
+        "status": "Review"
+      },
+      "current": {
+        "id": "eip-7773-glamsterdam-meta",
+        "kind": "github_file",
+        "repository": "ethereum/EIPs",
+        "path": "EIPS/eip-7773.md",
+        "authority": "eip_meta",
+        "relevance": [
+          "Glamsterdam",
+          "epbs.eth",
+          "BAL",
+          "gas repricing"
+        ],
+        "fingerprint": "c6b80d7f3d36bcb5d041ca30c6026133602900ea",
+        "content_sha256": "sha256:ed3f04e83f941da106f1ea29bcdb73c85bb637b85694e2ad44de386a0153aae6",
+        "frontmatter": {
+          "eip": "7773",
+          "title": "Hardfork Meta - Glamsterdam",
+          "status": "Review",
+          "type": "Meta",
+          "requires": "7607, 7723"
+        },
+        "source_url": "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7773.md"
+      }
+    },
+    {
+      "id": "eip-8081-hegota-meta",
+      "reason": "fingerprint_changed",
+      "previous": {
+        "id": "eip-8081-hegota-meta",
+        "fingerprint": "4b07e6f2fd8799217846735cd04b9b69208376ed",
+        "status": "Draft"
+      },
+      "current": {
+        "id": "eip-8081-hegota-meta",
+        "kind": "github_file",
+        "repository": "ethereum/EIPs",
+        "path": "EIPS/eip-8081.md",
+        "authority": "eip_meta",
+        "relevance": [
+          "inclusionlist.eth",
+          "FOCIL",
+          "Hegota"
+        ],
+        "fingerprint": "9a41cccb77a389cc8184e7c62f72595131afde06",
+        "content_sha256": "sha256:43eeb57009973aca8d8cd4c7d1f5bd9be5aac7959aa78740b63c16b0942fd0e9",
+        "frontmatter": {
+          "eip": "8081",
+          "title": "Hardfork Meta - Hegotá",
+          "status": "Draft",
+          "type": "Meta",
+          "requires": "7723, 7773"
+        },
+        "source_url": "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-8081.md"
+      }
+    },
+    {
+      "id": "consensus-gloas-beacon-chain",
+      "reason": "fingerprint_changed",
+      "previous": {
+        "id": "consensus-gloas-beacon-chain",
+        "fingerprint": "a13fb1b550cb9a1c98468788fa0b4a042af0f9ac"
+      },
+      "current": {
+        "id": "consensus-gloas-beacon-chain",
+        "kind": "github_file",
+        "repository": "ethereum/consensus-specs",
+        "path": "specs/gloas/beacon-chain.md",
+        "authority": "ethereum_spec",
+        "relevance": [
+          "epbs.eth",
+          "Gloas consensus specification"
+        ],
+        "fingerprint": "4f3a4b252d9a836e1b0b3e911a7e96a0c16e01ee",
+        "content_sha256": "sha256:17d78c7cc5769226e88070567e3b96990cc69882085722b6d8b7d3e009030e04",
+        "frontmatter": {},
+        "source_url": "https://github.com/ethereum/consensus-specs/blob/master/specs/gloas/beacon-chain.md"
+      }
+    },
+    {
+      "id": "consensus-gloas-p2p",
+      "reason": "fingerprint_changed",
+      "previous": {
+        "id": "consensus-gloas-p2p",
+        "fingerprint": "0b38f9de1b149485cc304bc71147d56f9a0af437"
+      },
+      "current": {
+        "id": "consensus-gloas-p2p",
+        "kind": "github_file",
+        "repository": "ethereum/consensus-specs",
+        "path": "specs/gloas/p2p-interface.md",
+        "authority": "ethereum_spec",
+        "relevance": [
+          "epbs.eth",
+          "payload and bid propagation"
+        ],
+        "fingerprint": "b5b124e330583ab833d124bb130fa226bec0b0ad",
+        "content_sha256": "sha256:4cb270297f450828f4b592b887a9b59074f1d489aa76b57125c7e4aad36a34cd",
+        "frontmatter": {},
+        "source_url": "https://github.com/ethereum/consensus-specs/blob/master/specs/gloas/p2p-interface.md"
+      }
+    },
+    {
+      "id": "glamsterdam-devnets-head",
+      "reason": "fingerprint_changed",
+      "previous": {
+        "id": "glamsterdam-devnets-head",
+        "fingerprint": "42166f755d6aedca08e4747d2df94e2a6e4199dd"
+      },
+      "current": {
+        "id": "glamsterdam-devnets-head",
+        "kind": "github_repo_head",
+        "repository": "ethpandaops/glamsterdam-devnets",
+        "branch": "master",
+        "authority": "ethereum_devnet_ops",
+        "relevance": [
+          "Glamsterdam devnets",
+          "implementation evidence"
+        ],
+        "fingerprint": "9849d587f20ff3877dcffa90d994b0e227c80b2c",
+        "source_url": "https://github.com/ethpandaops/glamsterdam-devnets/tree/master"
+      }
+    }
+  ],
+  "observed_sources": [
+    {
+      "id": "eip-7732",
+      "kind": "github_file",
+      "repository": "ethereum/EIPs",
+      "path": "EIPS/eip-7732.md",
+      "authority": "eip",
+      "relevance": [
+        "epbs.eth",
+        "Glamsterdam",
+        "builder-proposer coordination"
+      ],
+      "fingerprint": "fec48f74c51e61d966bb6c5e431c54c66ca5c11f",
+      "content_sha256": "sha256:3902ae9befa4d0d382c4aba1357ad8cf8ac25f2f5d52d48fc463fca76469777c",
+      "frontmatter": {
+        "eip": "7732",
+        "title": "Enshrined Proposer-Builder Separation",
+        "status": "Review",
+        "type": "Standards Track",
+        "category": "Core"
+      },
+      "source_url": "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7732.md"
+    },
+    {
+      "id": "eip-7773-glamsterdam-meta",
+      "kind": "github_file",
+      "repository": "ethereum/EIPs",
+      "path": "EIPS/eip-7773.md",
+      "authority": "eip_meta",
+      "relevance": [
+        "Glamsterdam",
+        "epbs.eth",
+        "BAL",
+        "gas repricing"
+      ],
+      "fingerprint": "c6b80d7f3d36bcb5d041ca30c6026133602900ea",
+      "content_sha256": "sha256:ed3f04e83f941da106f1ea29bcdb73c85bb637b85694e2ad44de386a0153aae6",
+      "frontmatter": {
+        "eip": "7773",
+        "title": "Hardfork Meta - Glamsterdam",
+        "status": "Review",
+        "type": "Meta",
+        "requires": "7607, 7723"
+      },
+      "source_url": "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7773.md"
+    },
+    {
+      "id": "eip-7805-focil",
+      "kind": "github_file",
+      "repository": "ethereum/EIPs",
+      "path": "EIPS/eip-7805.md",
+      "authority": "eip",
+      "relevance": [
+        "inclusionlist.eth",
+        "FOCIL"
+      ],
+      "fingerprint": "0a3955d9e8772b7666f560402b2d81ae032a3d06",
+      "content_sha256": "sha256:81096dd37cab86a5007e50d9357f0230f2f3dcbdf4df16b9afd44da6c74098a1",
+      "frontmatter": {
+        "eip": "7805",
+        "title": "Fork-choice enforced Inclusion Lists (FOCIL)",
+        "status": "Draft",
+        "type": "Standards Track",
+        "category": "Core"
+      },
+      "source_url": "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7805.md"
+    },
+    {
+      "id": "eip-7928-bal",
+      "kind": "github_file",
+      "repository": "ethereum/EIPs",
+      "path": "EIPS/eip-7928.md",
+      "authority": "eip",
+      "relevance": [
+        "Glamsterdam",
+        "Block-Level Access Lists"
+      ],
+      "fingerprint": "f834f0004aa5110a5f1ac0d6b80e3dc4b842d040",
+      "content_sha256": "sha256:432c4e608dc73647a5db21156163ff03252786fa6d09f306721e847b1e5fae0b",
+      "frontmatter": {
+        "eip": "7928",
+        "title": "Block-Level Access Lists",
+        "status": "Review",
+        "type": "Standards Track",
+        "category": "Core"
+      },
+      "source_url": "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7928.md"
+    },
+    {
+      "id": "eip-8081-hegota-meta",
+      "kind": "github_file",
+      "repository": "ethereum/EIPs",
+      "path": "EIPS/eip-8081.md",
+      "authority": "eip_meta",
+      "relevance": [
+        "inclusionlist.eth",
+        "FOCIL",
+        "Hegota"
+      ],
+      "fingerprint": "9a41cccb77a389cc8184e7c62f72595131afde06",
+      "content_sha256": "sha256:43eeb57009973aca8d8cd4c7d1f5bd9be5aac7959aa78740b63c16b0942fd0e9",
+      "frontmatter": {
+        "eip": "8081",
+        "title": "Hardfork Meta - Hegotá",
+        "status": "Draft",
+        "type": "Meta",
+        "requires": "7723, 7773"
+      },
+      "source_url": "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-8081.md"
+    },
+    {
+      "id": "eip-8282-builder-requests",
+      "kind": "github_file",
+      "repository": "ethereum/EIPs",
+      "path": "EIPS/eip-8282.md",
+      "authority": "eip",
+      "relevance": [
+        "epbs.eth",
+        "builder lifecycle",
+        "Glamsterdam"
+      ],
+      "fingerprint": "45e570a246207d5b1fb095e259e3f98bb0922639",
+      "content_sha256": "sha256:d518461e4c1eb96254727155a3f8b60e92be29d43512551c4952345ab077a359",
+      "frontmatter": {
+        "eip": "8282",
+        "title": "Builder Execution Requests",
+        "status": "Review",
+        "type": "Standards Track",
+        "category": "Core",
+        "requires": "1559, 7685, 7732"
+      },
+      "source_url": "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-8282.md"
+    },
+    {
+      "id": "ethereum-org-glamsterdam-roadmap",
+      "kind": "github_file",
+      "repository": "ethereum/ethereum-org-website",
+      "path": "public/content/roadmap/glamsterdam/index.md",
+      "authority": "ethereum_org",
+      "relevance": [
+        "Glamsterdam roadmap",
+        "testnet milestones",
+        "public protocol communication"
+      ],
+      "fingerprint": "c4cb88c67359458495d3550212e60bc82808b4fe",
+      "content_sha256": "sha256:2914784b67c1614904d01b033939b053a678f3601d7ed3ed238d87c5872db9ef",
+      "frontmatter": {
+        "title": "Glamsterdam"
+      },
+      "source_url": "https://github.com/ethereum/ethereum-org-website/blob/dev/public/content/roadmap/glamsterdam/index.md"
+    },
+    {
+      "id": "consensus-gloas-beacon-chain",
+      "kind": "github_file",
+      "repository": "ethereum/consensus-specs",
+      "path": "specs/gloas/beacon-chain.md",
+      "authority": "ethereum_spec",
+      "relevance": [
+        "epbs.eth",
+        "Gloas consensus specification"
+      ],
+      "fingerprint": "4f3a4b252d9a836e1b0b3e911a7e96a0c16e01ee",
+      "content_sha256": "sha256:17d78c7cc5769226e88070567e3b96990cc69882085722b6d8b7d3e009030e04",
+      "frontmatter": {},
+      "source_url": "https://github.com/ethereum/consensus-specs/blob/master/specs/gloas/beacon-chain.md"
+    },
+    {
+      "id": "consensus-gloas-p2p",
+      "kind": "github_file",
+      "repository": "ethereum/consensus-specs",
+      "path": "specs/gloas/p2p-interface.md",
+      "authority": "ethereum_spec",
+      "relevance": [
+        "epbs.eth",
+        "payload and bid propagation"
+      ],
+      "fingerprint": "b5b124e330583ab833d124bb130fa226bec0b0ad",
+      "content_sha256": "sha256:4cb270297f450828f4b592b887a9b59074f1d489aa76b57125c7e4aad36a34cd",
+      "frontmatter": {},
+      "source_url": "https://github.com/ethereum/consensus-specs/blob/master/specs/gloas/p2p-interface.md"
+    },
+    {
+      "id": "glamsterdam-devnets-head",
+      "kind": "github_repo_head",
+      "repository": "ethpandaops/glamsterdam-devnets",
+      "branch": "master",
+      "authority": "ethereum_devnet_ops",
+      "relevance": [
+        "Glamsterdam devnets",
+        "implementation evidence"
+      ],
+      "fingerprint": "9849d587f20ff3877dcffa90d994b0e227c80b2c",
+      "source_url": "https://github.com/ethpandaops/glamsterdam-devnets/tree/master"
+    }
+  ]
+}
