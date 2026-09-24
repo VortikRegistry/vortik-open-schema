@@ -66,8 +66,8 @@ test("commercial reception becomes a high-priority sanitized observation", () =>
   assert.equal(observation.business_signal, true);
   assert.equal(observation.intent, "commercial_interest");
   assert.equal(observation.identifier, "epbs.eth");
-  assert.equal(observation.visitor_identity, "unverified");
   assert.equal(JSON.stringify(observation).includes("external-agent-message-123"), false);
+  assert.equal(observation.visitor_identity, "unverified");
   assert.equal(JSON.stringify(observation).includes("context-123"), false);
   assert.equal(JSON.stringify(observation).includes("response-123"), false);
 });
@@ -181,8 +181,8 @@ test("recognized commercial interest receives a voluntary machine-readable human
   const followUp = response.message.parts[0].data.humanFollowUp;
 
   assert.deepEqual(followUp, PUBLIC_HUMAN_FOLLOW_UP);
-  assert.equal(followUp.channel, "email");
-  assert.equal(followUp.address, "vortik.art+registry@gmail.com");
+  assert.equal(followUp.channel, "x");
+  assert.equal(followUp.address, "https://x.com/VortikRegistry");
   assert.equal(followUp.voluntary, true);
   assert.equal(followUp.human_authorization_required, true);
   assert.equal(followUp.beacon_stores_contact, false);
@@ -201,7 +201,7 @@ test("recognized commercial interest receives the same follow-up channel in text
   ));
   const text = response.message.parts[0].text;
 
-  assert.match(text, /Optional human follow-up: vortik\.art\+registry@gmail\.com/u);
+  assert.ok(text.includes("Optional human follow-up: https://x.com/VortikRegistry"));
   assert.match(text, /does not retain your contact details/u);
 });
 
