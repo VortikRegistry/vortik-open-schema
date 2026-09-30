@@ -93,7 +93,7 @@ Curated references and source notes should be placed in the protected section be
 <!-- MANUAL-SOURCES:START -->
 ## Curated References
 
-Primary and implementation-facing sources reviewed on **2026-09-13**:
+Primary and implementation-facing sources reviewed through **2026-09-30**:
 
 - EIP-7732 — Enshrined Proposer-Builder Separation  
   https://eips.ethereum.org/EIPS/eip-7732
@@ -109,6 +109,8 @@ Primary and implementation-facing sources reviewed on **2026-09-13**:
   https://notes.ethereum.org/@ethpandaops/glamsterdam-devnet-9
 - ethereum.org — Glamsterdam roadmap  
   https://ethereum.org/roadmap/glamsterdam/
+- Ethereum Foundation — [Glamsterdam Testnet Announcement (posted 2026-09-28)](https://blog.ethereum.org/2026/09/17/glamsterdam-testnet-announcement)
+- [EIP-8081 — Hardfork Meta: Hegotá](https://eips.ethereum.org/EIPS/eip-8081) (status of EIP-8146)
 
 ## Source Notes
 
@@ -119,7 +121,13 @@ Primary and implementation-facing sources reviewed on **2026-09-13**:
 - Platåberget is an Ethereum Foundation-announced, public early testing ground for Glamsterdam. It provides public implementation evidence for post-Glamsterdam behavior and explicitly exposes breaking assumptions around hard-capped gas limits.
 - Glamsterdam devnet-9 began on 2026-09-01, forked to Gloas on 2026-09-02, and exercises a large pre-fork state plus non-finality recovery. Its EIP list includes EIP-7732 and EIP-7928 and records EIP-7610 as removed.
 - EIP-8282 is a Review Core EIP Scheduled for Inclusion in Glamsterdam. It adds dedicated builder deposit and exit request types and contracts for EIP-7732 builders, making builder lifecycle coordination more explicit.
-- ethereum.org currently describes Glamsterdam as testing on devnets, with a **Sepolia fork target of 2026-10-06** and mainnet expected in Q4 2026 with no confirmed mainnet date.
+- At the September 13 review, ethereum.org described devnet testing and a Sepolia target of 2026-10-06; the September 28 Foundation announcement below supersedes the target wording.
+
+### Source update as of 2026-09-30
+
+- The Ethereum Foundation schedules Glamsterdam on Sepolia for **2026-10-06 13:53:36 UTC**, epoch 353024, slot 11296768. This activation has not yet occurred as of this review.
+- Hoodi and mainnet activation dates are **TBD** in both the Foundation announcement and EIP-7773. Scheduled inclusion of EIP-7732, EIP-7928 and EIP-8282 does not establish mainnet activation.
+- EIP-8081 now marks EIP-8146 BAL Sidecars **Declined for Inclusion** in Hegotá; this does not change the Glamsterdam ePBS/BAL schedule.
 
 ### Interpretation boundary
 

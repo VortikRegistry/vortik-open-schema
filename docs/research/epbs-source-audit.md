@@ -1,6 +1,6 @@
 # ePBS source audit
 
-**Reviewed:** 2026-09-13  
+**Reviewed:** 2026-09-13; updated 2026-09-30
 **Registry anchor:** `epbs.eth` / `epbs`  
 **Purpose:** public primary-source audit for the current implementation-facing ePBS state.
 
@@ -17,6 +17,8 @@ This document records source state. It does not make Vortik an Ethereum protocol
 - Ethereum Foundation — Announcing the Platåberget Testnet: https://blog.ethereum.org/2026/08/17/plataberget-testnet
 - ethPandaOps — Glamsterdam devnet-9: https://notes.ethereum.org/@ethpandaops/glamsterdam-devnet-9
 - ethereum.org — Glamsterdam roadmap: https://ethereum.org/roadmap/glamsterdam/
+- Ethereum Foundation — Glamsterdam Testnet Announcement (posted 2026-09-28): https://blog.ethereum.org/2026/09/17/glamsterdam-testnet-announcement
+- EIP-8081 — Hardfork Meta: Hegotá: https://eips.ethereum.org/EIPS/eip-8081
 
 ## Findings
 
@@ -64,13 +66,13 @@ EIP-8037 and EIP-8038 affect state/gas cost assumptions. They should not be desc
 
 As reviewed on 2026-09-13, ethereum.org describes Glamsterdam as **testing on devnets**, lists the next milestone as **Sepolia fork — 2026-10-06**, and says mainnet is expected in Q4 2026 with the date not yet confirmed.
 
-The Sepolia date is a public roadmap target and must not be described as a guaranteed activation date. No confirmed Glamsterdam mainnet date is asserted by Vortik.
+That September 13 roadmap target was superseded by the Ethereum Foundation's September 28 announcement: Glamsterdam is **scheduled** on Sepolia for **2026-10-06 13:53:36 UTC (epoch 353024, slot 11296768)**. As of this September 30 review, this is a future activation; Hoodi and mainnet dates remain **TBD** in the announcement and EIP-7773.
 
 ## Cross-anchor check
 
-`inclusionlist.eth` remains correctly scoped. EIP-7805 / FOCIL is **Declined for Inclusion** in Glamsterdam and **Scheduled for Inclusion** in Hegotá under EIP-8081. Hegotá activation values remain unset.
+`inclusionlist.eth` remains correctly scoped. EIP-7805 / FOCIL is **not in the current EIP-7773 Glamsterdam Scheduled for Inclusion list** and is **Scheduled for Inclusion** in Hegotá under EIP-8081. Hegotá activation values remain unset.
 
-EIP-8146 — Block Access List Sidecars remains **Proposed for Inclusion** in Hegotá, not Scheduled.
+EIP-8146 — Block Access List Sidecars is now **Declined for Inclusion** in Hegotá under EIP-8081; the September 13 Proposed state is historical.
 
 No semantic classification change is required for the existing v0.6.5 ENS anchor set as part of this freshness pass.
 
