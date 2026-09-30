@@ -14,6 +14,10 @@ It does not define Ethereum protocol standards.
 
 ## Fast path: submit one machine-readable candidate
 
+For a **source correction, broken interface or integration problem**, use the shorter [Source or interface correction template](https://github.com/VortikRegistry/vortik-open-schema/issues/new?template=source-correction.md). Include the affected artifact and primary evidence, or browser reproduction steps. No ENS name or new registry entry is required.
+
+The dated protocol context is maintained independently from canonical registry classification. An EIP status, fork assignment or network schedule correction should update the cited source and review date in `docs/protocol-context.json`, then pass `npm run validate:protocol-context`. Do not change canonical definitions solely to refresh an upstream date.
+
 For a new ENS-style semantic research candidate, the lowest-friction contribution path is the dedicated GitHub Issue template:
 
 https://github.com/VortikRegistry/vortik-open-schema/issues/new?template=ens-candidate-contribution.md

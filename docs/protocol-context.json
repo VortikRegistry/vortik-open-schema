@@ -1,0 +1,467 @@
+{
+  "$schema": "https://vortikregistry.github.io/vortik-open-schema/protocol-context.schema.json",
+  "contract": "vortik.protocol-context/1.0.0",
+  "reviewed_at": "2026-09-30",
+  "scope": "Independent, dated source context for selected Ethereum concepts. EIP references provide related context, not equivalence with an ENS name. Review dates, EIP document status, fork assignment and network activation are distinct. This snapshot does not verify runtime health or ENS resolution.",
+  "registry": {
+    "version": "0.6.5",
+    "last_updated": "2026-09-13",
+    "path": "registry.json"
+  },
+  "review_path": "research/protocol-freshness-2026-09-30.md",
+  "anchors": [
+    {
+      "id": "epbs",
+      "ens": "epbs.eth",
+      "display_term": "ePBS",
+      "context_kind": "protocol",
+      "summary": "EIP-7732 separates proposer and builder duties. EIP-8282 defines builder deposit, top-up and exit requests.",
+      "boundary": "The referenced proposals are scheduled for Glamsterdam; this does not establish mainnet activation.",
+      "anchor_path": "anchors/epbs.md",
+      "sources_path": "schemas/epbs/1.0-draft/sources.md",
+      "source_refs": [
+        "eip-7732",
+        "eip-8282",
+        "glamsterdam-meta",
+        "glamsterdam-activation"
+      ],
+      "eip_refs": [
+        7732,
+        8282
+      ]
+    },
+    {
+      "id": "inclusionlist",
+      "ens": "inclusionlist.eth",
+      "display_term": "FOCIL / inclusion lists",
+      "context_kind": "protocol",
+      "summary": "EIP-7805 specifies fork-choice enforcement of inclusion lists and is scheduled for Hegotá.",
+      "boundary": "An EIP's Draft document status and its scheduled fork assignment are separate facts. Hegotá activation dates are unset.",
+      "anchor_path": "anchors/inclusionlist.md",
+      "sources_path": "schemas/inclusionlist/0.1-draft/sources.md",
+      "source_refs": [
+        "eip-7805",
+        "hegota-meta"
+      ],
+      "eip_refs": [
+        7805
+      ]
+    },
+    {
+      "id": "commitmentlayer",
+      "ens": "commitmentlayer.eth",
+      "display_term": "Commitments",
+      "context_kind": "research",
+      "summary": "ePBS uses a builder's signed commitment before the payload is revealed.",
+      "boundary": "The EIP links provide examples of commitments; they do not standardize a standalone commitment layer.",
+      "anchor_path": "anchors/commitmentlayer.md",
+      "sources_path": "schemas/commitmentlayer/0.1-draft/sources.md",
+      "source_refs": [
+        "eip-7732",
+        "eip-8282",
+        "preconfirmation-research"
+      ],
+      "eip_refs": [
+        7732,
+        8282
+      ]
+    },
+    {
+      "id": "preconflayer",
+      "ens": "preconflayer.eth",
+      "display_term": "Preconfirmations",
+      "context_kind": "research",
+      "summary": "Preconfirmation designs examine assurances about inclusion or execution before later protocol confirmation.",
+      "boundary": "Guarantees and enforcement depend on the design. A preconfirmation is not consensus finality or one standardized L1 service.",
+      "anchor_path": "anchors/preconflayer.md",
+      "sources_path": "schemas/preconflayer/0.1-draft/sources.md",
+      "source_refs": [
+        "preconfirmation-research"
+      ],
+      "eip_refs": []
+    },
+    {
+      "id": "ssf",
+      "ens": "fastfinality.eth",
+      "display_term": "Fast Finality / SSF",
+      "context_kind": "research",
+      "summary": "Fast Finality is an Ethereum research area; single-slot finality is a narrower target within it.",
+      "boundary": "The canonical registry entry remains SSF. The broader name does not identify one scheduled fork feature.",
+      "anchor_path": "anchors/fastfinality.md",
+      "sources_path": "schemas/ssf/0.1-research/sources.md",
+      "source_refs": [
+        "fast-finality-research"
+      ],
+      "eip_refs": []
+    },
+    {
+      "id": "buildermarket",
+      "ens": "buildermarket.eth",
+      "display_term": "Builders",
+      "context_kind": "editorial",
+      "summary": "EIP-7732 describes builder bids, proposer payments and payload reveal duties; EIP-8282 covers builder request paths.",
+      "boundary": "The registry's deprecated label applies to its broad abstraction, not to the existence of builders or builder competition.",
+      "anchor_path": "anchors/buildermarket.md",
+      "sources_path": "schemas/buildermarket/0.1-research/sources.md",
+      "source_refs": [
+        "eip-7732",
+        "eip-8282",
+        "glamsterdam-meta"
+      ],
+      "eip_refs": [
+        7732,
+        8282
+      ]
+    },
+    {
+      "id": "solverlayer",
+      "ens": "solverlayer.eth",
+      "display_term": "Solvers",
+      "context_kind": "application",
+      "summary": "CoW Protocol documents an application surface where solvers compete to execute orders.",
+      "boundary": "An application solver is distinct from an Ethereum consensus duty. The source does not define a native L1 solver layer.",
+      "anchor_path": "anchors/solverlayer.md",
+      "sources_path": "schemas/solverlayer/0.1-research/sources.md",
+      "source_refs": [
+        "cow-protocol-api"
+      ],
+      "eip_refs": []
+    },
+    {
+      "id": "executionmarket",
+      "ens": "executionmarket.eth",
+      "display_term": "Execution",
+      "context_kind": "editorial",
+      "summary": "Payload coordination, block access lists and gas accounting describe distinct execution surfaces.",
+      "boundary": "These related EIPs do not standardize a single execution-market object. BAL sidecars have a separate, declined Hegotá assignment.",
+      "anchor_path": "anchors/executionmarket.md",
+      "sources_path": "schemas/executionmarket/0.1-research/sources.md",
+      "source_refs": [
+        "eip-7732",
+        "eip-7928",
+        "eip-8037",
+        "eip-8038",
+        "eip-8146",
+        "glamsterdam-meta",
+        "hegota-meta"
+      ],
+      "eip_refs": [
+        7732,
+        7928,
+        8037,
+        8038,
+        8146
+      ]
+    },
+    {
+      "id": "orderflowauction",
+      "ens": "orderflowauction.eth",
+      "display_term": "Order flow auctions",
+      "context_kind": "application",
+      "summary": "MEV-Share is a documented order flow auction design operating outside Ethereum consensus.",
+      "boundary": "FOCIL provides separate inclusion constraints. Its scheduling alone establishes no trend in order flow auction adoption.",
+      "anchor_path": "anchors/orderflowauction.md",
+      "sources_path": "schemas/orderflowauction/0.1-research/sources.md",
+      "source_refs": [
+        "mev-share",
+        "eip-7805",
+        "hegota-meta"
+      ],
+      "eip_refs": [
+        7805
+      ]
+    },
+    {
+      "id": "provingmarket",
+      "ens": "provingmarket.eth",
+      "display_term": "Execution proofs / proving",
+      "context_kind": "research",
+      "summary": "EIP-8025 proposes opt-in execution proofs and is Proposed for Inclusion in Hegotá.",
+      "boundary": "The proposal introduces no prover incentives and does not standardize a proving market. Proposed is not scheduled.",
+      "anchor_path": "anchors/provingmarket.md",
+      "sources_path": "schemas/provingmarket/0.1-research/sources.md",
+      "source_refs": [
+        "eip-8025",
+        "hegota-meta"
+      ],
+      "eip_refs": [
+        8025
+      ]
+    },
+    {
+      "id": "sequencingmarket",
+      "ens": "sequencingmarket.eth",
+      "display_term": "Rollup sequencing",
+      "context_kind": "research",
+      "summary": "Based-rollup research describes sequencing using L1 proposers together with builders and searchers.",
+      "boundary": "Sequencing rules depend on the rollup. A broad sequencing-market term does not identify one Ethereum consensus feature.",
+      "anchor_path": "anchors/sequencingmarket.md",
+      "sources_path": "schemas/sequencingmarket/0.1-research/sources.md",
+      "source_refs": [
+        "based-rollup-research"
+      ],
+      "eip_refs": []
+    },
+    {
+      "id": "blockspacemarket",
+      "ens": "blockspacemarket.eth",
+      "display_term": "Blockspace / fees",
+      "context_kind": "editorial",
+      "summary": "EIP-1559 provides a concrete reference for the base fee and transaction fee accounting.",
+      "boundary": "Vortik's deprecated abstraction is not an Ethereum deprecation of the economic concept. The Final EIP status is not a live network check.",
+      "anchor_path": "anchors/blockspacemarket.md",
+      "sources_path": "schemas/blockspacemarket/0.1-research/sources.md",
+      "source_refs": [
+        "eip-1559"
+      ],
+      "eip_refs": [
+        1559
+      ]
+    }
+  ],
+  "eips": [
+    {
+      "number": 1559,
+      "title": "Fee market change for ETH 1.0 chain",
+      "document_status": "Final",
+      "fork": null,
+      "source_ref": "eip-1559"
+    },
+    {
+      "number": 7732,
+      "title": "Enshrined Proposer-Builder Separation",
+      "document_status": "Review",
+      "fork": {
+        "name": "Glamsterdam",
+        "assignment": "scheduled",
+        "source_ref": "glamsterdam-meta"
+      },
+      "source_ref": "eip-7732"
+    },
+    {
+      "number": 7805,
+      "title": "Fork-choice enforced Inclusion Lists (FOCIL)",
+      "document_status": "Draft",
+      "fork": {
+        "name": "Hegotá",
+        "assignment": "scheduled",
+        "source_ref": "hegota-meta"
+      },
+      "source_ref": "eip-7805"
+    },
+    {
+      "number": 7928,
+      "title": "Block-Level Access Lists",
+      "document_status": "Review",
+      "fork": {
+        "name": "Glamsterdam",
+        "assignment": "scheduled",
+        "source_ref": "glamsterdam-meta"
+      },
+      "source_ref": "eip-7928"
+    },
+    {
+      "number": 8025,
+      "title": "Optional Execution Proofs",
+      "document_status": "Draft",
+      "fork": {
+        "name": "Hegotá",
+        "assignment": "proposed",
+        "source_ref": "hegota-meta"
+      },
+      "source_ref": "eip-8025"
+    },
+    {
+      "number": 8037,
+      "title": "State Creation Gas Cost Increase",
+      "document_status": "Review",
+      "fork": {
+        "name": "Glamsterdam",
+        "assignment": "scheduled",
+        "source_ref": "glamsterdam-meta"
+      },
+      "source_ref": "eip-8037"
+    },
+    {
+      "number": 8038,
+      "title": "State-access gas cost update",
+      "document_status": "Review",
+      "fork": {
+        "name": "Glamsterdam",
+        "assignment": "scheduled",
+        "source_ref": "glamsterdam-meta"
+      },
+      "source_ref": "eip-8038"
+    },
+    {
+      "number": 8146,
+      "title": "Block Access List Sidecars",
+      "document_status": "Draft",
+      "fork": {
+        "name": "Hegotá",
+        "assignment": "declined",
+        "source_ref": "hegota-meta"
+      },
+      "source_ref": "eip-8146"
+    },
+    {
+      "number": 8282,
+      "title": "Builder Execution Requests",
+      "document_status": "Review",
+      "fork": {
+        "name": "Glamsterdam",
+        "assignment": "scheduled",
+        "source_ref": "glamsterdam-meta"
+      },
+      "source_ref": "eip-8282"
+    }
+  ],
+  "forks": [
+    {
+      "name": "Glamsterdam",
+      "source_refs": [
+        "glamsterdam-meta",
+        "glamsterdam-activation"
+      ],
+      "activations": [
+        {
+          "network": "Sepolia",
+          "status": "scheduled",
+          "activation_at": "2026-10-06T13:53:36Z",
+          "epoch": 353024,
+          "slot": 11296768
+        },
+        {
+          "network": "Hoodi",
+          "status": "not_scheduled",
+          "activation_at": null,
+          "epoch": null,
+          "slot": null
+        },
+        {
+          "network": "Mainnet",
+          "status": "not_scheduled",
+          "activation_at": null,
+          "epoch": null,
+          "slot": null
+        }
+      ]
+    },
+    {
+      "name": "Hegotá",
+      "source_refs": [
+        "hegota-meta"
+      ],
+      "activations": [
+        {
+          "network": "Sepolia",
+          "status": "not_scheduled",
+          "activation_at": null,
+          "epoch": null,
+          "slot": null
+        },
+        {
+          "network": "Hoodi",
+          "status": "not_scheduled",
+          "activation_at": null,
+          "epoch": null,
+          "slot": null
+        },
+        {
+          "network": "Mainnet",
+          "status": "not_scheduled",
+          "activation_at": null,
+          "epoch": null,
+          "slot": null
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "eip-1559",
+      "title": "EIP-1559: Fee market change for ETH 1.0 chain",
+      "url": "https://eips.ethereum.org/EIPS/eip-1559"
+    },
+    {
+      "id": "eip-7732",
+      "title": "EIP-7732: Enshrined Proposer-Builder Separation",
+      "url": "https://eips.ethereum.org/EIPS/eip-7732"
+    },
+    {
+      "id": "eip-7805",
+      "title": "EIP-7805: Fork-choice enforced Inclusion Lists (FOCIL)",
+      "url": "https://eips.ethereum.org/EIPS/eip-7805"
+    },
+    {
+      "id": "eip-7928",
+      "title": "EIP-7928: Block-Level Access Lists",
+      "url": "https://eips.ethereum.org/EIPS/eip-7928"
+    },
+    {
+      "id": "eip-8025",
+      "title": "EIP-8025: Optional Execution Proofs",
+      "url": "https://eips.ethereum.org/EIPS/eip-8025"
+    },
+    {
+      "id": "eip-8037",
+      "title": "EIP-8037: State Creation Gas Cost Increase",
+      "url": "https://eips.ethereum.org/EIPS/eip-8037"
+    },
+    {
+      "id": "eip-8038",
+      "title": "EIP-8038: State-access gas cost update",
+      "url": "https://eips.ethereum.org/EIPS/eip-8038"
+    },
+    {
+      "id": "eip-8146",
+      "title": "EIP-8146: Block Access List Sidecars",
+      "url": "https://eips.ethereum.org/EIPS/eip-8146"
+    },
+    {
+      "id": "eip-8282",
+      "title": "EIP-8282: Builder Execution Requests",
+      "url": "https://eips.ethereum.org/EIPS/eip-8282"
+    },
+    {
+      "id": "glamsterdam-meta",
+      "title": "EIP-7773: Hardfork Meta - Glamsterdam",
+      "url": "https://eips.ethereum.org/EIPS/eip-7773"
+    },
+    {
+      "id": "hegota-meta",
+      "title": "EIP-8081: Hardfork Meta - Hegotá",
+      "url": "https://eips.ethereum.org/EIPS/eip-8081"
+    },
+    {
+      "id": "glamsterdam-activation",
+      "title": "Ethereum Foundation: Glamsterdam Testnet Announcement",
+      "url": "https://blog.ethereum.org/2026/09/17/glamsterdam-testnet-announcement"
+    },
+    {
+      "id": "fast-finality-research",
+      "title": "Ethereum Foundation Protocol: Fast Finality",
+      "url": "https://consensus.ethereum.foundation/themes/fast-finality"
+    },
+    {
+      "id": "preconfirmation-research",
+      "title": "Future-Proofing Preconfirmations",
+      "url": "https://ethresear.ch/t/future-proofing-preconfirmations/22618"
+    },
+    {
+      "id": "cow-protocol-api",
+      "title": "CoW Protocol: API Integration",
+      "url": "https://docs.cow.fi/cow-protocol/integrate/api"
+    },
+    {
+      "id": "mev-share",
+      "title": "Flashbots: MEV-Share introduction",
+      "url": "https://docs.flashbots.net/flashbots-mev-share/introduction"
+    },
+    {
+      "id": "based-rollup-research",
+      "title": "Based rollups: superpowers from L1 sequencing",
+      "url": "https://ethresear.ch/t/based-rollups-superpowers-from-l1-sequencing/15016"
+    }
+  ]
+}
