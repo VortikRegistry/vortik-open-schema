@@ -93,9 +93,13 @@ Curated references and source notes should be placed in the protected section be
 <!-- MANUAL-SOURCES:START -->
 ## Curated References
 
-No curated references have been added for this anchor yet.
+- [CoW Protocol — API integration](https://docs.cow.fi/cow-protocol/integrate/api): primary implementation documentation for order management, quotes, and competing solver responses.
+- [CoW Protocol documentation](https://docs.cow.fi/): describes an application protocol based on batch auctions and solver competition.
+- [EIP-7732 — Enshrined Proposer-Builder Separation](https://eips.ethereum.org/EIPS/eip-7732): provides the contrasting L1 builder role and payload interface.
 
 ## Source Notes
 
-This section is reserved for curated protocol references, implementation notes, or research context when applicable.
+**Reviewed: 2026-09-30.** The implementation references support solver as an application-level execution actor. They are examples of a documented system, not a universal specification for every solver design or an endorsement.
+
+A solver's application role does not make it an Ethereum consensus duty, and it is not interchangeable with the builder role defined by EIP-7732. Vortik retains `external`; the `layer` suffix in `solverlayer.eth` does not establish a canonical L1 layer.
 <!-- MANUAL-SOURCES:END -->

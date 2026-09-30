@@ -93,9 +93,13 @@ Curated references and source notes should be placed in the protected section be
 <!-- MANUAL-SOURCES:START -->
 ## Curated References
 
-No curated references have been added for this anchor yet.
+- [EIP-7732 — Enshrined Proposer-Builder Separation](https://eips.ethereum.org/EIPS/eip-7732): specifies the builder role, payload bids, proposer payments, and payload reveal duties.
+- [EIP-8282 — Builder Execution Requests](https://eips.ethereum.org/EIPS/eip-8282): specifies builder deposit, top-up, and exit request paths.
+- [EIP-7773 — Glamsterdam](https://eips.ethereum.org/EIPS/eip-7773): records the scheduled fork set, including EIP-7732 and EIP-8282.
 
 ## Source Notes
 
-This section is reserved for curated protocol references, implementation notes, or research context when applicable.
+**Reviewed: 2026-09-30.** EIP-7732 and EIP-8282 are in Review and Scheduled for Inclusion in Glamsterdam. The builder remains a concrete protocol role in these designs; builder bidding and competition are not declared obsolete by ePBS.
+
+Vortik's retained `deprecated` classification concerns its broad market abstraction and ENS-to-canonical naming model. It is an editorial registry classification, not an Ethereum deprecation notice or evidence that builder competition is declining. The sources define specific roles and interfaces; they do not establish an official `buildermarket.eth` namespace.
 <!-- MANUAL-SOURCES:END -->

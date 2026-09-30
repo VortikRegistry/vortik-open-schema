@@ -1,5 +1,7 @@
 # EIP-8146 / Block Access List sidecars source audit
 
+**Source state reviewed: 2026-09-30.**
+
 ## Purpose
 
 This research note records the current primary-source state of EIP-8146 and its relationship to EIP-7732 and EIP-7928. It is an interpretive support document only.
@@ -17,7 +19,9 @@ It does not create a registry anchor, modify `registry.json`, change an existing
 
 EIP-8146 is a Draft Core EIP created on 3 February 2026. It requires EIP-7732 and EIP-7928.
 
-EIP-8081 currently lists EIP-8146 as **Proposed for Inclusion** in Hegotá. Proposed for Inclusion is not the same state as Scheduled for Inclusion, Included, deployed, or activated. EIP-8081 currently provides no Hegotá activation values for Sepolia, Hoodi, or mainnet.
+EIP-8081 now lists EIP-8146 as **Declined for Inclusion** in Hegotá. The earlier Proposed-for-Inclusion state is historical. The EIP remains a Draft design reference, but it must not be presented as a scheduled fork change. EIP-8081 provides no Hegotá activation values for Sepolia, Hoodi, or mainnet.
+
+The technical sections below describe the draft proposal, not activated behavior.
 
 This note must therefore not represent EIP-8146 as scheduled, fork-locked, deployed, or active on Ethereum mainnet.
 
@@ -97,7 +101,7 @@ The following terms are source-backed candidates for repository-only monitoring:
 - payload attestation
 - independent BAL propagation
 
-They remain below registry-anchor level. A later watchlist PR may add them only if it preserves EIP-8146's Draft and Proposed-for-Inclusion boundaries.
+They remain below registry-anchor level. The repository-only watchlist records them as draft-design vocabulary associated with an EIP declined for Hegotá. Their continued research relevance does not restore scheduled inclusion.
 
 ## Non-claims
 

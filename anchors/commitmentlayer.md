@@ -18,6 +18,14 @@ The ENS identifier `commitmentlayer.eth` captures the correct underlying concept
 
 ---
 
+## Current source context
+
+**Reviewed: 2026-09-30.** [EIP-7732](https://eips.ethereum.org/EIPS/eip-7732) gives concrete context for payload commitments, bids, and later reveal. [EIP-7773](https://eips.ethereum.org/EIPS/eip-7773) schedules it and [EIP-8282](https://eips.ethereum.org/EIPS/eip-8282), which defines builder execution requests, for Glamsterdam.
+
+These specifications do not create a standalone commitment layer. A cryptographic commitment to data and an actor's economically enforced promise have different guarantees; each must be interpreted in its specific design. The retained `repairable` label describes the naming scope in Vortik.
+
+---
+
 ## Context
 
 Commitment mechanisms appear across multiple Ethereum coordination surfaces, including:
@@ -122,4 +130,4 @@ The anchor should be monitored closely, especially as ePBS, preconfirmations, en
 
 Primary research references are documented in:
 
-`schemas/commitmentlayer/`
+[Curated references and review notes](../schemas/commitmentlayer/0.1-draft/sources.md).

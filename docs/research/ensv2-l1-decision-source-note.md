@@ -10,6 +10,14 @@ Primary source: [ENS is staying on Ethereum](https://ens.domains/blog/post/ens-s
 
 The ENS post announces that ENSv2 will be deployed exclusively on Ethereum L1 and that ENS will cease development of Namechain. The post also states that ENSv2 is still expected to ship. ENS frames the decision around Ethereum L1 scaling progress, reduced ENS registration gas costs, simpler resolution that avoids querying across two chains, and stronger Ethereum L1 infrastructure guarantees.
 
+## Subsequent source review — 2026-09-30
+
+- [The ENS App and Explorer Are Now in Beta](https://ens.domains/blog/post/ensv2-beta-public-testing), August 12, 2026: ENS announced public ENSv2 Beta on Ethereum Sepolia, including a new test registry and an upgrade flow for eligible testnet names. This is testnet availability, not a mainnet launch announcement.
+- [Exploring Subnames in ENSv2](https://ens.domains/blog/post/exploring-subnames-ensv2), September 24, 2026: subsequent primary architecture documentation for subnames.
+- [ENSv2 overview](https://docs.ens.domains/ensv2/overview/): current ENS documentation describes the Sepolia test deployment.
+
+These updates add implementation context to the February L1 decision. They do not show that any Vortik ENS record has migrated, changed its resolver, or acquired an operational ENSv2 dependency.
+
 ## Registry relevance
 
 This decision is relevant public context for ENS-style naming surfaces because it reinforces the importance of keeping naming, authority, protocol truth, and registry state clearly separated. ENS names can be useful semantic naming surfaces, but naming surfaces do not create source-of-truth authority for Ethereum protocol claims and do not replace primary sources or validated registry artifacts.

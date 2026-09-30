@@ -18,6 +18,14 @@ The ENS identifier `preconflayer.eth` captures a real and important phenomenon ‚
 
 ---
 
+## Current source context
+
+**Reviewed: 2026-09-30.** [Future-Proofing Preconfirmations](https://ethresear.ch/t/future-proofing-preconfirmations/22618) distinguishes inclusion and execution assurances and examines compatibility with ePBS and FOCIL. This is primary research published in 2025, not a new deployment announcement.
+
+[EIP-7773](https://eips.ethereum.org/EIPS/eip-7773) schedules ePBS for Glamsterdam, while [EIP-8081](https://eips.ethereum.org/EIPS/eip-8081) schedules FOCIL for Hegot√°. Those states do not define one native L1 preconfirmation service. Guarantee strength, enforcement, and failure conditions depend on the design; a preconfirmation is not consensus finality.
+
+---
+
 ## Context
 
 Preconfirmations reduce latency by allowing actors to provide early guarantees or signals about transaction inclusion, ordering, or execution outcome before final settlement.
@@ -50,7 +58,7 @@ Preconfirmation / External Latency Guarantee Surface
 
 ## Coordination Role
 
-Preconfirmations do not directly enforce final protocol inclusion.
+Preconfirmation mechanisms offer design-specific inclusion or execution assurances before consensus finality.
 
 They provide early assurances that may influence:
 
@@ -73,7 +81,7 @@ Preconfirmations introduce a separation between:
 
 This creates a dual expectation system where a transaction may be treated as practically accepted before it is finalized on-chain.
 
-That distinction is important: preconfirmation is not the same as finality, and it is not yet a protocol-enforced inclusion constraint.
+A preconfirmation is not consensus finality. Its enforcement, including any economic penalties or inclusion commitments, must be evaluated in the specific design.
 
 ---
 
@@ -176,4 +184,4 @@ The underlying phenomenon is important, but the ENS framing remains premature be
 
 Primary research references are documented in:
 
-`schemas/preconflayer/`
+[Curated references and review notes](../schemas/preconflayer/0.1-draft/sources.md).

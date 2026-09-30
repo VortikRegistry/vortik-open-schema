@@ -1,5 +1,7 @@
 # BAL / block_access_list_hash source notes
 
+**Source state reviewed: 2026-09-30.** EIP-7773 schedules BALs for Glamsterdam. Sepolia is scheduled for October 6, 2026 at 13:53:36 UTC; Hoodi and mainnet dates remain unset. See the [complete source review](protocol-freshness-2026-09-30.md).
+
 ## Purpose
 
 This note records primary-source-backed facts about Block-Level Access Lists (BALs), the `block_access_list_hash` field, and BAL support surfaces. It is a public research note only and does not change registry state.
@@ -87,8 +89,4 @@ Do not read this section as a registry classification, anchor status, or source-
 
 ## Future PR options
 
-Possible future public PRs, if separately justified, include:
-
-- add a BAL glossary entry or documentation reference;
-- add a `docs/index.md` navigation page; or
-- later, only if justified by source state and taxonomy rules, consider a registry change in a separate PR.
+The BAL glossary entry and documentation navigation are now present. Any later registry promotion still requires source-state evidence, taxonomy review, and a separate PR.

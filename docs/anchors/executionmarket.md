@@ -10,140 +10,39 @@
 
 ## Summary
 
-This anchor tracks **execution market** as a broad and increasingly non-canonical abstraction within Ethereum coordination discourse.
+This anchor tracks execution market as a broad abstraction covering several execution-related interactions. It does not map to one bounded protocol role, object, or mechanism in the specifications reviewed here.
 
-The term attempts to describe coordination around transaction routing, solver competition, execution strategy, and downstream block construction. However, it does not map cleanly to a single protocol primitive, role, constraint, or mechanism.
+Vortik retains `deprecated` for this terminology cluster and `execution (ambiguous)` as its canonical term. This is a registry classification, not a prediction that execution-related coordination or economic activity will disappear.
 
-In the current registry, this anchor is preserved as a deprecated semantic surface rather than as a canonical protocol-facing term.
+## Current protocol context
 
----
+**Reviewed: 2026-09-30.** [EIP-7773](https://eips.ethereum.org/EIPS/eip-7773) schedules several distinct execution-related changes for Glamsterdam:
 
-## Context
+| Specification | Defined surface |
+| --- | --- |
+| [EIP-7732](https://eips.ethereum.org/EIPS/eip-7732) | Proposer-builder coordination and execution payload handling |
+| [EIP-7928](https://eips.ethereum.org/EIPS/eip-7928) | Block-Level Access Lists |
+| [EIP-8037](https://eips.ethereum.org/EIPS/eip-8037) | State-creation gas accounting |
+| [EIP-8038](https://eips.ethereum.org/EIPS/eip-8038) | State-access gas costs |
 
-Execution-related coordination can involve multiple distinct surfaces, including:
+These are separate technical objects and rules. BALs are not a synonym for gas repricing, and none of these EIPs defines an execution market as a new L1 layer. Scheduled inclusion does not establish mainnet activation.
 
-- order flow routing  
-- solver participation  
-- execution strategy formation  
-- builder coordination  
-- payload construction  
-- proposer-builder interaction  
-- inclusion constraints  
+## Coordination scope
 
-Historically, broad terms such as **execution market** were useful for describing economic activity around transaction execution and MEV-aware routing.
+The broad phrase can refer to transaction routing, solver competition, execution strategy, payload construction, or proposer-builder interaction. A source-grounded description should identify which interaction it means and cite its actual specification or implementation.
 
-However, Ethereum coordination language is becoming more precise. The system is increasingly described through narrower protocol-facing objects and roles, such as:
+## Semantic and naming alignment
 
-- builders  
-- bids  
-- payloads  
-- commitments  
-- inclusion lists  
-- block access lists  
-- proposer-builder interfaces  
+`executionmarket.eth` remains an ambiguous semantic entry point. Its market suffix groups mechanisms with different trust assumptions and roles; it does not create a shared protocol interface.
 
-This weakens the usefulness of “execution market” as a standalone semantic category.
+The classification records that breadth. Claims that the category will dissolve, lose adoption, or be replaced require separate evidence and are not conclusions of this review.
 
----
+## Registry role
 
-## Structural Interpretation
-
-Execution market is best understood as a descriptive aggregation of interactions, not as a discrete protocol object or stable architectural layer.
-
-It informally compresses several different processes into one broad phrase:
-
-- transaction access  
-- solver routing  
-- execution optimization  
-- builder competition  
-- payload construction  
-- inclusion and ordering effects  
-
-These processes are better represented by more precise primitives, roles, constraints, or external coordination surfaces.
-
----
-
-## Coordination Role
-
-This surface attempts to describe coordination between:
-
-- transaction routing  
-- solver competition  
-- execution strategy formation  
-- builder-side payload construction  
-- MEV-aware execution pathways  
-
-However, these roles are distributed across multiple better-defined surfaces and do not form a single cohesive mechanism.
-
-For that reason, `executionmarket.eth` is tracked mainly as a legacy or ambiguous market abstraction.
-
----
-
-## Protocol Grounding
-
-There is no formal Ethereum protocol specification for an “execution market” as a bounded object.
-
-The concept is derived from:
-
-- Ethereum MEV research discussions  
-- intent-based execution systems  
-- solver and searcher coordination  
-- builder-market discourse  
-- execution-layer optimization narratives  
-
-More recent protocol work increasingly points toward narrower terms such as commitments, builders, payloads, inclusion constraints, and block access lists.
-
----
-
-## Semantic Note
-
-Execution market should not be interpreted as a stable architectural component.
-
-It represents a non-canonical terminology cluster used to describe overlapping execution-related coordination behaviors.
-
-As Ethereum terminology converges, this surface is likely to:
-
-- dissolve into more precise primitives and roles  
-- remain as a broad ecosystem narrative  
-- lose precision relative to protocol-native vocabulary  
-
-This is why the registry treats it as **deprecated** rather than premature.
-
----
-
-## Naming Alignment
-
-- **ENS anchor:** `executionmarket.eth`  
-- **Canonical term:** execution (ambiguous)  
-
-The ENS naming reflects a market-based abstraction that is not semantically stabilized.
-
-The term remains understandable, but it is increasingly misaligned with protocol-native language.
-
-The issue is not that execution coordination is irrelevant. The issue is that **execution market** is too broad and imprecise to act as a canonical semantic anchor.
-
----
-
-## Registry Role
-
-- Track ambiguous execution-market terminology  
-- Preserve historical ecosystem framing  
-- Prevent premature consolidation of an ill-defined category  
-- Identify overlap with order flow, solver coordination, builder roles, payload construction, and inclusion constraints  
-- Monitor whether this surface resolves into narrower protocol-facing objects  
-
----
-
-## Status
-
-Deprecated semantic surface with uncertain long-term viability as a standalone category.
-
-It remains useful for historical and ecosystem interpretation, but should not be treated as a canonical primitive, role, constraint, or mechanism within the current registry.
-
----
+- Track ambiguous execution terminology.
+- Point readers toward specific execution objects and interfaces.
+- Document overlap with order flow, solvers, builders, payloads, and inclusion constraints.
 
 ## Sources
 
-Primary research references are documented in:
-
-`schemas/executionmarket/`
+See the [curated references and review notes](../schemas/executionmarket/0.1-research/sources.md).

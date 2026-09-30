@@ -93,9 +93,12 @@ Curated references and source notes should be placed in the protected section be
 <!-- MANUAL-SOURCES:START -->
 ## Curated References
 
-No curated references have been added for this anchor yet.
+- [Based rollups — superpowers from L1 sequencing](https://ethresear.ch/t/based-rollups-superpowers-from-l1-sequencing/15016): primary research describing rollups whose sequencing uses L1 proposers together with L1 builders and searchers.
+- [EIP-7732 — Enshrined Proposer-Builder Separation](https://eips.ethereum.org/EIPS/eip-7732): specifies the L1 proposer-builder interface, distinct from any particular rollup's sequencing rules.
 
 ## Source Notes
 
-This section is reserved for curated protocol references, implementation notes, or research context when applicable.
+**Reviewed: 2026-09-30.** Sequencing designs differ. Based sequencing can use L1 actors, so it is inaccurate to imply that every rollup sequencer is wholly separate from L1 block production. The cited based-rollup post is a 2023 research proposal, not a new deployment announcement.
+
+Vortik's `external` classification applies to the broad sequencing-market category. The sources do not create a canonical L1 object called a sequencing market, prove adoption of a specific design, or promise latency or fairness guarantees for all rollups.
 <!-- MANUAL-SOURCES:END -->
