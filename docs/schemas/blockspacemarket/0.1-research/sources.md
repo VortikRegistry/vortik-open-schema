@@ -93,9 +93,13 @@ Curated references and source notes should be placed in the protected section be
 <!-- MANUAL-SOURCES:START -->
 ## Curated References
 
-No curated references have been added for this anchor yet.
+- [EIP-1559 — Fee market change for ETH 1.0 chain](https://eips.ethereum.org/EIPS/eip-1559): the Final specification for the congestion-responsive base fee, transaction fee caps, and priority fees.
+- [EIP-7732 — Enshrined Proposer-Builder Separation](https://eips.ethereum.org/EIPS/eip-7732): distinguishes builder bids and proposer payments from transaction fee accounting.
+- [EIP-7773 — Glamsterdam](https://eips.ethereum.org/EIPS/eip-7773): records the fork scope, including execution and gas-accounting changes.
 
 ## Source Notes
 
-This section is reserved for curated protocol references, implementation notes, or research context when applicable.
+**Reviewed: 2026-09-30.** EIP-1559 provides a concrete fee-market reference. Blockspace remains an economic concept for scarce inclusion and execution capacity; protocol role definitions do not make fees or competition obsolete.
+
+Vortik's `deprecated` label is retained for its broad semantic abstraction. It does not mean that Ethereum has deprecated blockspace markets. A transaction fee mechanism, a builder bid, and an inclusion constraint are distinct objects with their own specifications. This source review makes no claim about market size, adoption trends, or mainnet activation of Glamsterdam.
 <!-- MANUAL-SOURCES:END -->

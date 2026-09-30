@@ -42,6 +42,10 @@ Recommended reading path:
 
 ## Research notes
 
+- [Protocol freshness review — 2026-09-30](research/protocol-freshness-2026-09-30.md) — current source context and a reference table for all 12 anchors.
+- [Fast Finality source audit](research/fast-finality-source-audit.md) — reconciles the official umbrella terminology with the existing SSF anchor.
+- [EIP-8146 BAL sidecars source audit](research/eip-8146-bal-sidecars-source-audit.md) — records the Draft design and its current Declined-for-Inclusion Hegotá state.
+
 - [`research/final-repository-health-audit-v0.6.5.md`](research/final-repository-health-audit-v0.6.5.md) — records the final v0.6.5 public repository health posture for validation, public-safety, naming-boundary, source-of-truth, research-note, and maintenance boundaries.
 - [`research/ensv2-l1-decision-source-note.md`](research/ensv2-l1-decision-source-note.md) — records a public ENS source about ENSv2 deployment direction, Namechain status, and naming-boundary implications without changing registry state.
 - [`research/emerging-ethereum-candidate-intake.md`](research/emerging-ethereum-candidate-intake.md) — conservative candidate-intake notes for emerging Ethereum coordination terms that require future primary-source verification.
@@ -50,7 +54,7 @@ Recommended reading path:
 - [`research/candidate-backlog.md`](research/candidate-backlog.md) — conservative monitoring backlog for public technical candidates that are not registry entries.
 - [`research/candidate-promotion-rules.md`](research/candidate-promotion-rules.md) — conservative process for moving a candidate from monitoring to possible future registry consideration.
 - [`research/epbs-source-audit.md`](research/epbs-source-audit.md) — public source-state audit for ePBS, EIP-7732, and Glamsterdam scheduled-inclusion boundaries.
-- [`research/inclusionlist-focil-source-audit.md`](research/inclusionlist-focil-source-audit.md) — public source-state audit for inclusion lists, FOCIL, EIP-7805, and Glamsterdam declined-inclusion boundaries.
+- [`research/inclusionlist-focil-source-audit.md`](research/inclusionlist-focil-source-audit.md) — public source-state audit for inclusion lists, FOCIL, EIP-7805, and Glamsterdam exclusion and Hegotá scheduling boundaries.
 - [`research/multi-agent-verification-2026-06-28.md`](research/multi-agent-verification-2026-06-28.md) — records a conservative verification pass over AI-surfaced Ethereum and ENS candidate terms using primary-source review.
 - [`research/repo-positioning-trust-audit.md`](research/repo-positioning-trust-audit.md) — reviews how the public repository appears to a technical Ethereum or ENS reader and identifies navigation and trust improvements.
 - [`research/bal-block-access-list-source-notes.md`](research/bal-block-access-list-source-notes.md) — records primary-source-backed notes about Block-Level Access Lists, `block_access_list_hash`, and related support surfaces.

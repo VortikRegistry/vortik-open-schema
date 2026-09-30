@@ -1,5 +1,7 @@
 # Multi-Agent Verification Audit — 2026-06-28
 
+**Historical snapshot:** the source states below were reviewed on June 28, 2026. For current fork scheduling and ENS context, use the [September 30 source review](protocol-freshness-2026-09-30.md).
+
 ## Executive summary
 
 This audit records a conservative verification pass over candidate Ethereum and ENS terms surfaced during multi-agent discovery. AI-generated reports from Gemini, Claude, Kimi, or any other model are treated only as secondary discovery inputs: they can suggest terms to check, but they do not establish registry truth.

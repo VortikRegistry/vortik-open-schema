@@ -29,6 +29,12 @@ The ENS identifier `fastfinality.eth` aligns directly with the broader research-
 
 ---
 
+## Current source context
+
+**Reviewed: 2026-09-30.** The [Ethereum Foundation Protocol Consensus Fast Finality area](https://consensus.ethereum.foundation/themes/fast-finality) continues to use Fast Finality as the broader research label. This confirms the umbrella/SSF distinction below without establishing a fork activation date or changing the `ssf` registry entry.
+
+---
+
 ## Context
 
 Fast Finality research addresses how Ethereum can reduce time to finality without abandoning the availability, safety, and decentralization properties expected from its consensus protocol.
@@ -152,4 +158,4 @@ This anchor does not claim that:
 
 Primary research references and technical material are documented in:
 
-`schemas/ssf/0.1-research/sources.md`
+[Curated references and review notes](../schemas/ssf/0.1-research/sources.md).

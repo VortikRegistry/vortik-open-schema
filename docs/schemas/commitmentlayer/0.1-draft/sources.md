@@ -125,6 +125,8 @@ Curated references and source notes should be placed in the protected section be
 
 ## Source Notes
 
+**Reviewed: 2026-09-30.** [EIP-7773](https://eips.ethereum.org/EIPS/eip-7773) schedules EIP-7732 and [EIP-8282](https://eips.ethereum.org/EIPS/eip-8282) for Glamsterdam. These specify concrete builder duties and request paths; they do not standardize a standalone commitment layer. Cryptographic data commitments and economically enforced promises have different guarantees and must be read in their specific designs.
+
 `commitmentlayer.eth` is intentionally classified as `repairable`: the underlying term `commitment` is technically relevant across ePBS, payload reveal, builder accountability, bid-based block production, and preconfirmation research, but the ENS suffix `layer` is not a canonical protocol term.
 
 These references support commitment semantics as an emerging and protocol-adjacent primitive family. They do not imply that `commitmentlayer.eth` is an official Ethereum specification, an official protocol endpoint, or a canonical Ethereum naming surface.

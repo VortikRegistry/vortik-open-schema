@@ -93,9 +93,14 @@ Curated references and source notes should be placed in the protected section be
 <!-- MANUAL-SOURCES:START -->
 ## Curated References
 
-No curated references have been added for this anchor yet.
+- [EIP-7732 — Enshrined Proposer-Builder Separation](https://eips.ethereum.org/EIPS/eip-7732): defines proposer-builder interactions and payload handling.
+- [EIP-7928 — Block-Level Access Lists](https://eips.ethereum.org/EIPS/eip-7928): defines block access data used for execution and state processing.
+- [EIP-8037 — State Creation Gas Cost Increase](https://eips.ethereum.org/EIPS/eip-8037) and [EIP-8038 — State-access gas cost update](https://eips.ethereum.org/EIPS/eip-8038): address distinct gas-accounting changes.
+- [EIP-7773 — Glamsterdam](https://eips.ethereum.org/EIPS/eip-7773): records these proposals as Scheduled for Inclusion.
 
 ## Source Notes
 
-This section is reserved for curated protocol references, implementation notes, or research context when applicable.
+**Reviewed: 2026-09-30.** Glamsterdam brings specific execution, block-production, and resource-accounting changes. BALs, payload bids, state creation, and state access have different meanings and must not be collapsed into one mechanism.
+
+The cited specifications do not define a bounded L1 object called an execution market. Vortik retains `deprecated` for that broad registry abstraction. This is not a claim that execution-related economic activity is disappearing, or that Glamsterdam has activated on mainnet.
 <!-- MANUAL-SOURCES:END -->

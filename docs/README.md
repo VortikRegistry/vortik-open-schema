@@ -10,6 +10,10 @@ They are not Ethereum protocol specifications.
 
 ---
 
+## Current source review
+
+[September 30, 2026 — all 12 anchors, Glamsterdam, Hegotá, and ENSv2](./research/protocol-freshness-2026-09-30.md).
+
 ## Available Models
 
 ### Security Hourglass — Coordination Compression Model

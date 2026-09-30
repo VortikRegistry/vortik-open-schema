@@ -20,6 +20,14 @@ The ENS identifier `solverlayer.eth` captures the relevant concept of **solver**
 
 ---
 
+## Current source context
+
+**Reviewed: 2026-09-30.** [CoW Protocol's API documentation](https://docs.cow.fi/cow-protocol/integrate/api) provides a primary implementation example of order handling, quotes, and competing solver responses. It is a representative application design, not a specification for all solvers.
+
+This role is distinct from the L1 builder role defined by [EIP-7732](https://eips.ethereum.org/EIPS/eip-7732). Application settlement on Ethereum does not make solver an Ethereum consensus duty or establish a canonical solver layer. The registry retains `external`.
+
+---
+
 ## Context
 
 Solver systems have emerged from intent-based execution, routing markets, and off-chain coordination mechanisms.
@@ -136,7 +144,7 @@ However, this importance is external to the core L1 protocol. The registry there
 
 The name has partial alignment.
 
-The word **solver** maps to a real and increasingly important external coordination actor. The word **layer** introduces a broader architectural abstraction that does not currently map cleanly to Ethereum L1 protocol terminology.
+The word **solver** maps to a documented external coordination actor. The word **layer** introduces a broader architectural abstraction that does not currently map cleanly to Ethereum L1 protocol terminology.
 
 This makes the anchor useful for tracking external coordination, but not canonical as a protocol primitive.
 
@@ -174,4 +182,4 @@ Solvers remain relevant to Ethereum-adjacent execution systems, but they should 
 
 Primary research references are documented in:
 
-`schemas/solverlayer/`
+[Curated references and review notes](../schemas/solverlayer/0.1-research/sources.md).

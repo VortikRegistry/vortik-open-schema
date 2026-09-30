@@ -6,6 +6,10 @@ This page is a navigation index for public Vortik Registry research notes. Resea
 
 ## Research notes
 
+- [Protocol freshness review — 2026-09-30](protocol-freshness-2026-09-30.md) — current source context and a reference table for all 12 anchors.
+- [Fast Finality source audit](fast-finality-source-audit.md) — reconciles the official umbrella terminology with the existing SSF anchor.
+- [EIP-8146 BAL sidecars source audit](eip-8146-bal-sidecars-source-audit.md) — records the Draft design and its current Declined-for-Inclusion Hegotá state.
+
 - [`final-repository-health-audit-v0.6.5.md`](final-repository-health-audit-v0.6.5.md) — records the final v0.6.5 public repository health posture for validation, public-safety, naming-boundary, source-of-truth, research-note, and maintenance boundaries.
 - [`ensv2-l1-decision-source-note.md`](ensv2-l1-decision-source-note.md) — records a public ENS source about ENSv2 deployment direction, Namechain status, and Vortik Registry naming-boundary implications without changing registry state.
 - [`emerging-ethereum-candidate-intake.md`](emerging-ethereum-candidate-intake.md) — tracks emerging Ethereum coordination terms for future primary-source verification without changing registry state.

@@ -145,6 +145,8 @@ Curated references and source notes should be placed in the protected section be
 
 ## Source Notes
 
+**Reviewed: 2026-09-30.** The official Fast Finality research area continues to support the umbrella/specific-target distinction documented below. This review confirms research terminology; it does not add a fork activation claim or change the registry's canonical SSF entry.
+
 The registry continues to track `single-slot finality (SSF)` as the canonical term for registry ID `ssf`, with `classification: repairable`, `status: research`, and `type: primitive` unchanged.
 
 Current official terminology distinguishes two related scopes:

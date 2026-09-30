@@ -25,6 +25,14 @@ For a technical reader, the useful property is that Vortik can be **inspected, c
 
 ---
 
+## Protocol sources reviewed — 2026-09-30
+
+All 12 anchor notes and their curated references have been reviewed. Glamsterdam is scheduled on Sepolia for October 6, 2026; Hoodi and mainnet dates remain unset. FOCIL is scheduled for Hegotá, whose activation dates are unset. ENSv2's public Beta is on Sepolia.
+
+See the [complete source review and all-anchor reference table](docs/research/protocol-freshness-2026-09-30.md). Registry classifications remain Vortik's semantic judgments, separate from upstream fork states. Historical releases retain their original dates and context.
+
+---
+
 ## Public surfaces available today
 
 | Surface | State | Purpose |

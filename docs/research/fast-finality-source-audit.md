@@ -20,7 +20,7 @@ The Ethereum Foundation Protocol Consensus research site uses **Fast Finality** 
 
 The same research area groups several designs and lines of work, including single-slot finality, three-slot finality, one-round finality, decoupled consensus, and related protocol research. This makes **fast finality** an umbrella research term rather than merely an imprecise substitute for SSF.
 
-ethereum.org continues to use **single-slot finality (SSF)** for the specific concept in which blocks could be proposed and finalized in the same slot. The page states that SSF remains in the research phase and is not expected to ship for several years.
+ethereum.org continues to use **single-slot finality (SSF)** for the specific concept in which blocks could be proposed and finalized in the same slot. This is a research target; these sources do not establish an activation date.
 
 ## Relationship between Fast Finality and SSF
 
@@ -44,23 +44,13 @@ The EIP discusses reducing the active validator set voting in each round and ref
 
 EIP-8062 is not a finality specification and does not establish a deployment schedule for fast finality or SSF.
 
-## Current Vortik mismatch
+## Repository reconciliation — reviewed 2026-09-30
 
-The existing `fastfinality.eth` anchor states that:
+The current [fastfinality.eth anchor](../../anchors/fastfinality.md) already documents Fast Finality as the official umbrella research area and SSF as a narrower same-slot target. The earlier framing that described Fast Finality as displaced by SSF has been corrected.
 
-- SSF is the more precise canonical term;
-- fast finality is only a descriptive approximation;
-- fast-finality language is increasingly displaced by SSF.
+The registry retains `single-slot finality (SSF)` as the canonical term for `ssf`, with `repairable` classification. That label records an ENS-to-canonical scope difference; it does not invalidate the umbrella term.
 
-That framing is now incomplete. Official Ethereum Foundation research uses **Fast Finality** as a named research area and umbrella term, while still using SSF for a narrower design target.
-
-The evidence does not automatically determine the correct registry change. At least three interpretations remain possible:
-
-1. retain `single-slot finality (SSF)` as the canonical term and add `fast finality` as an official umbrella scope;
-2. change the canonical term to `fast finality` and represent SSF as a narrower related design;
-3. preserve the existing canonical term but revise the naming-mismatch rationale and classification.
-
-Choosing among these options would materially affect anchor semantics and requires a separate registry decision.
+A future canonical-term or classification change remains a separate registry decision. This source review reconciles the audit with the existing anchor and introduces no such change.
 
 ## Candidate semantic model
 

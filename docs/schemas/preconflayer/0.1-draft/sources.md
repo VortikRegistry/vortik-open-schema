@@ -135,6 +135,8 @@ Curated references and source notes should be placed in the protected section be
 
 ## Source Notes
 
+**Reviewed: 2026-09-30.** The cited preconfirmation research distinguishes inclusion and execution assurances and examines compatibility with ePBS and FOCIL. [EIP-7773](https://eips.ethereum.org/EIPS/eip-7773) schedules ePBS for Glamsterdam; [EIP-8081](https://eips.ethereum.org/EIPS/eip-8081) schedules FOCIL for Hegotá. Those fork states do not establish one native L1 preconfirmation service. Guarantees and enforcement remain design-specific and must not be equated with consensus finality.
+
 `preconflayer.eth` is intentionally classified as `premature`: preconfirmations are a real and important research surface, but they do not currently have a single canonical Ethereum protocol specification, stable naming convergence, or one dominant implementation model.
 
 The canonical term tracked by the registry is `preconfirmation (emergent)`, not `preconf layer`. The ENS suffix `layer` introduces naming risk and should be treated as a non-canonical abstraction.

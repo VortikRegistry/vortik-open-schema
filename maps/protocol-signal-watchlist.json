@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-24",
+  "generated_at": "2026-09-30",
   "source": "protocol_signal_watchlist",
   "visibility": "repository_only",
   "description": "Repository-only technical watchlist for Ethereum protocol and implementation-facing semantic signals. It is excluded from generated public docs and is not a registry source of truth, pricing guide, buyer-targeting artifact, or commercial narrative.",
@@ -82,7 +82,7 @@
       "status": "scheduled_for_hegota",
       "evidence_level": "high",
       "public_claim_allowed": "EIP-7805 is Scheduled for Inclusion in Hegotá; do not claim Glamsterdam inclusion, activation, or deployment.",
-      "internal_notes": "Track FOCIL as scheduled for Hegotá after being declined for Glamsterdam. Ethereum Foundation updates report functional early prototypes, with multi-client interoperability and a dedicated FOCIL devnet as next steps.",
+      "internal_notes": "As reviewed on 2026-09-30, EIP-8081 schedules FOCIL for Hegotá and EIP-7773 does not include it in the Glamsterdam scheduled set. Earlier prototype reports are dated implementation history; activation values remain unset.",
       "risk_notes": "Do not collapse Scheduled for Inclusion into activation, deployment, guaranteed final delivery, or a confirmed testnet/mainnet date."
     },
     {
@@ -94,7 +94,7 @@
       "status": "scheduled_for_hegota",
       "evidence_level": "high",
       "public_claim_allowed": "EIP-7805 is Scheduled for Inclusion in Hegotá; do not claim Glamsterdam inclusion, activation, or deployment.",
-      "internal_notes": "Track FOCIL as scheduled for Hegotá after being declined for Glamsterdam. Ethereum Foundation updates report functional early prototypes, with multi-client interoperability and a dedicated FOCIL devnet as next steps.",
+      "internal_notes": "As reviewed on 2026-09-30, EIP-8081 schedules FOCIL for Hegotá and EIP-7773 does not include it in the Glamsterdam scheduled set. Earlier prototype reports are dated implementation history; activation values remain unset.",
       "risk_notes": "Do not collapse Scheduled for Inclusion into activation, deployment, guaranteed final delivery, or a confirmed testnet/mainnet date."
     },
     {
@@ -203,7 +203,7 @@
       "evidence_level": "high",
       "public_claim_allowed": "FOCIL EIP scheduled for inclusion in Hegotá; do not claim Glamsterdam inclusion or network activation.",
       "internal_notes": "Track EIP-7805 as the primary FOCIL specification and as Scheduled for Inclusion in Hegotá under EIP-8081.",
-      "risk_notes": "Preserve fork-scoped context: declined for Glamsterdam, scheduled for Hegotá, and not yet activated."
+      "risk_notes": "Preserve fork-scoped context: absent from the current Glamsterdam scheduled set, scheduled for Hegotá, and no activation date set."
     },
     {
       "term": "EIP-7732",
@@ -333,7 +333,7 @@
       "status": "scheduled",
       "evidence_level": "high",
       "public_claim_allowed": "Roadmap/fork-context signal only; do not claim FOCIL inclusion.",
-      "internal_notes": "Track as fork context for scheduled or implementation-facing signals while keeping FOCIL explicitly out under current operational guidance; FOCIL must not be presented as included in Glamsterdam.",
+      "internal_notes": "EIP-7773 and the September 28 Ethereum Foundation announcement schedule Sepolia for 2026-10-06 13:53:36 UTC (epoch 353024, slot 11296768). Hoodi and mainnet dates remain unset. EIP-7732, EIP-7928, and EIP-8282 are Scheduled; FOCIL is absent from that set.",
       "risk_notes": "Avoid using fork context to imply inclusion of every watched EIP or research proposal."
     },
     {
@@ -347,7 +347,7 @@
       "status": "scheduled",
       "evidence_level": "high",
       "public_claim_allowed": "Roadmap and fork-context signal: EIP-8081 lists EIP-7805 / FOCIL as Scheduled for Inclusion; activation values remain unset.",
-      "internal_notes": "Track Hegotá as the post-Glamsterdam fork context for FOCIL and proposed BAL-sidecar work. EIP-7805 is Scheduled for Inclusion, while EIP-8146 remains Proposed for Inclusion; activation values remain unset.",
+      "internal_notes": "As reviewed on 2026-09-30, EIP-8081 lists EIP-7805 as Scheduled for Inclusion, EIP-8025 as Proposed for Inclusion, and EIP-8146 as Declined for Inclusion. Activation values remain unset.",
       "risk_notes": "Preserve proposal-specific inclusion stages. Do not infer activation dates, deployment, guaranteed delivery, or inclusion of proposals not listed as Scheduled."
     },
     {
@@ -359,11 +359,11 @@
         "EIP-7928",
         "EIP-8081"
       ],
-      "status": "proposed_for_hegota",
+      "status": "declined_for_hegota",
       "evidence_level": "high",
-      "public_claim_allowed": "Draft Core EIP proposed for inclusion in Hegotá; do not describe it as scheduled, included, deployed, or activated.",
+      "public_claim_allowed": "Draft Core EIP for BAL sidecars; EIP-8081 lists it as Declined for Inclusion in Hegotá. Its technical content remains draft-design context.",
       "internal_notes": "Track EIP-8146 as the source for independent Block Access List sidecars, a shared BAL commitment in ExecutionPayloadBid, PTC BAL-availability reporting, dedicated gossip, and early Engine API delivery.",
-      "risk_notes": "Preserve the Proposed for Inclusion boundary and do not infer activation dates, final fork delivery, a new architectural layer, or registry-anchor promotion."
+      "risk_notes": "EIP-8146 is Declined for Inclusion in Hegotá; its draft design must not be presented as scheduled or deployed. Do not infer activation dates, final fork delivery, a new architectural layer, or registry-anchor promotion."
     },
     {
       "term": "Block Access List sidecar",
@@ -373,11 +373,11 @@
         "EIP-7928",
         "EIP-7732"
       ],
-      "status": "proposed_for_hegota",
+      "status": "declined_for_hegota",
       "evidence_level": "high",
-      "public_claim_allowed": "Source-backed EIP-8146 protocol artifact; proposed for Hegotá and not yet scheduled or activated.",
+      "public_claim_allowed": "Source-backed draft EIP-8146 artifact; EIP-8146 is declined for Hegotá and is not scheduled or activated.",
       "internal_notes": "Track the independent BlockAccessListSidecar object and block_access_list_sidecar gossip path separately from the execution payload envelope.",
-      "risk_notes": "Do not describe the sidecar as a new Ethereum layer or as deployed protocol behavior."
+      "risk_notes": "EIP-8146 is Declined for Inclusion in Hegotá; its draft design must not be presented as scheduled or deployed. Do not describe the sidecar as a new Ethereum layer or as deployed protocol behavior."
     },
     {
       "term": "BAL commitment",
@@ -387,11 +387,11 @@
         "EIP-7928",
         "EIP-7732"
       ],
-      "status": "proposed_for_hegota",
+      "status": "declined_for_hegota",
       "evidence_level": "high",
       "public_claim_allowed": "Technical commitment signal tied to block_access_list_hash in the EIP-8146 bid flow.",
       "internal_notes": "Track the reuse of keccak256(rlp(BlockAccessList)) in ExecutionPayloadBid and sidecar verification as a concrete builder commitment.",
-      "risk_notes": "Do not treat BAL commitment as evidence that commitment layer is canonical Ethereum terminology."
+      "risk_notes": "EIP-8146 is Declined for Inclusion in Hegotá; its draft design must not be presented as scheduled or deployed. Do not treat BAL commitment as evidence that commitment layer is canonical Ethereum terminology."
     },
     {
       "term": "BAL availability",
@@ -400,11 +400,11 @@
         "EIP-8146",
         "EIP-7732"
       ],
-      "status": "proposed_for_hegota",
+      "status": "declined_for_hegota",
       "evidence_level": "high",
-      "public_claim_allowed": "Technical availability signal represented by block_access_list_present; proposed rather than activated.",
+      "public_claim_allowed": "Draft-design availability signal represented by block_access_list_present in EIP-8146, which is declined for Hegotá.",
       "internal_notes": "Track BAL availability separately from payload presence, blob-data availability, and execution validity in PTC-facing semantics.",
-      "risk_notes": "Do not collapse availability reporting into execution validity, deployment, or guaranteed final delivery."
+      "risk_notes": "EIP-8146 is Declined for Inclusion in Hegotá; its draft design must not be presented as scheduled or deployed. Do not collapse availability reporting into execution validity, deployment, or guaranteed final delivery."
     },
     {
       "term": "execution-state prefetch",
@@ -413,11 +413,11 @@
         "EIP-8146",
         "EIP-7928"
       ],
-      "status": "proposed_for_hegota",
+      "status": "declined_for_hegota",
       "evidence_level": "medium",
       "public_claim_allowed": "Implementation-facing execution optimization enabled by early BAL delivery; not a complete parallel-execution claim.",
       "internal_notes": "Track the Engine API handoff that lets the execution layer prefetch declared accounts and storage slots before the payload envelope arrives.",
-      "risk_notes": "Do not claim EIP-8146 alone implements a complete parallel-execution or post-state computation architecture."
+      "risk_notes": "EIP-8146 is Declined for Inclusion in Hegotá; its draft design must not be presented as scheduled or deployed. Do not claim EIP-8146 alone implements a complete parallel-execution or post-state computation architecture."
     }
   ]
 }

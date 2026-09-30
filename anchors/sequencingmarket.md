@@ -18,9 +18,17 @@ This surface is relevant to Ethereum-adjacent rollup infrastructure, but it is n
 
 ---
 
+## Current source context
+
+**Reviewed: 2026-09-30.** The primary research post [Based rollups — superpowers from L1 sequencing](https://ethresear.ch/t/based-rollups-superpowers-from-l1-sequencing/15016) describes sequencing that uses L1 proposers together with builders and searchers. This is a 2023 design reference, not evidence of a new deployment.
+
+Sequencing designs therefore need not use actors wholly separate from L1 block production. [EIP-7732](https://eips.ethereum.org/EIPS/eip-7732) defines a proposer-builder interface, but does not create a canonical sequencing-market object or specify every rollup's rules. The `external` label is retained for Vortik's broad category.
+
+---
+
 ## Context
 
-As Ethereum scaling increasingly involves rollups and external execution environments, transaction ordering becomes a major coordination problem outside the base L1 protocol.
+Rollup transaction ordering can use a dedicated sequencer, shared infrastructure, or L1 actors in a based design. The relationship to L1 depends on the system.
 
 Sequencing systems may determine:
 
@@ -145,4 +153,4 @@ It should be monitored as part of Ethereum-adjacent scaling infrastructure, but 
 
 Primary research references are documented in:
 
-`schemas/sequencingmarket/`
+[Curated references and review notes](../schemas/sequencingmarket/0.1-research/sources.md).

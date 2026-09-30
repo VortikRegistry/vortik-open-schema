@@ -93,9 +93,12 @@ Curated references and source notes should be placed in the protected section be
 <!-- MANUAL-SOURCES:START -->
 ## Curated References
 
-No curated references have been added for this anchor yet.
+- [EIP-8025 — Optional Execution Proofs](https://eips.ethereum.org/EIPS/eip-8025): a Draft Core proposal for opt-in execution proofs produced by altruistic nodes; it introduces no prover incentives.
+- [EIP-8081 — Hegotá](https://eips.ethereum.org/EIPS/eip-8081): lists EIP-8025 as Proposed for Inclusion, not Scheduled for Inclusion.
 
 ## Source Notes
 
-This section is reserved for curated protocol references, implementation notes, or research context when applicable.
+**Reviewed: 2026-09-30.** Proof-generation research is relevant to L1 as well as rollup systems. EIP-8025 is concrete L1 context, but it does not specify a proving market, auction, or paid prover role. Its current design keeps execution proofs supplementary to re-execution.
+
+The `external` classification describes Vortik's broad market category, not a claim that all proof research is external to Ethereum. Proposed inclusion and a Draft EIP do not establish deployment, a guaranteed fork date, or an official `provingmarket.eth` namespace.
 <!-- MANUAL-SOURCES:END -->

@@ -93,9 +93,13 @@ Curated references and source notes should be placed in the protected section be
 <!-- MANUAL-SOURCES:START -->
 ## Curated References
 
-No curated references have been added for this anchor yet.
+- [Flashbots — MEV-Share introduction](https://docs.flashbots.net/flashbots-mev-share/introduction): primary implementation documentation identifying MEV-Share as an order flow auction protocol.
+- [EIP-7805 — Fork-choice enforced Inclusion Lists](https://eips.ethereum.org/EIPS/eip-7805): a distinct protocol proposal for inclusion constraints.
+- [EIP-8081 — Hegotá](https://eips.ethereum.org/EIPS/eip-8081): records EIP-7805 as Scheduled for Inclusion, with activation dates unset.
 
 ## Source Notes
 
-This section is reserved for curated protocol references, implementation notes, or research context when applicable.
+**Reviewed: 2026-09-30.** MEV-Share supplies a concrete external OFA reference. Auction rules and transaction visibility depend on the implementation; this source does not establish that all order flow uses auctions.
+
+FOCIL scheduling does not establish the disappearance, replacement, or reduced adoption of OFAs. Inclusion constraints and upstream order-flow allocation have different scopes. Vortik retains the `external` classification and makes no forecast about auction dominance or adoption.
 <!-- MANUAL-SOURCES:END -->
