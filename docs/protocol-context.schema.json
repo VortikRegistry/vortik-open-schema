@@ -1,0 +1,399 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vortikregistry.github.io/vortik-open-schema/protocol-context.schema.json",
+  "title": "Vortik protocol context 1.0.0",
+  "description": "Independent editorial source review. EIP document status, fork assignment, and network activation are distinct; related EIPs do not make an ENS name a protocol object.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "contract",
+    "reviewed_at",
+    "scope",
+    "registry",
+    "review_path",
+    "anchors",
+    "eips",
+    "forks",
+    "sources"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://vortikregistry.github.io/vortik-open-schema/protocol-context.schema.json"
+    },
+    "contract": {
+      "const": "vortik.protocol-context/1.0.0"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "last_updated",
+        "path"
+      ],
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date"
+        },
+        "path": {
+          "const": "registry.json"
+        }
+      }
+    },
+    "review_path": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]+(?:/[a-zA-Z0-9_.-]+)*\\.(?:md|json)$",
+      "maxLength": 200
+    },
+    "anchors": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 200,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "ens",
+          "display_term",
+          "context_kind",
+          "summary",
+          "boundary",
+          "anchor_path",
+          "sources_path",
+          "source_refs",
+          "eip_refs"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "maxLength": 80
+          },
+          "ens": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+\\.eth$",
+            "maxLength": 80
+          },
+          "display_term": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "context_kind": {
+            "enum": [
+              "protocol",
+              "research",
+              "application",
+              "editorial"
+            ]
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "boundary": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "anchor_path": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]+(?:/[a-zA-Z0-9_.-]+)*\\.(?:md|json)$",
+            "maxLength": 200
+          },
+          "sources_path": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]+(?:/[a-zA-Z0-9_.-]+)*\\.(?:md|json)$",
+            "maxLength": 200
+          },
+          "source_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]*$",
+              "maxLength": 80
+            },
+            "minItems": 1,
+            "uniqueItems": true,
+            "maxItems": 30
+          },
+          "eip_refs": {
+            "type": "array",
+            "uniqueItems": true,
+            "maxItems": 30,
+            "items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999999
+            }
+          }
+        }
+      }
+    },
+    "eips": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 200,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "number",
+          "title",
+          "document_status",
+          "fork",
+          "source_ref"
+        ],
+        "properties": {
+          "number": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 999999
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "document_status": {
+            "enum": [
+              "Draft",
+              "Review",
+              "Last Call",
+              "Final",
+              "Stagnant",
+              "Withdrawn",
+              "Living"
+            ]
+          },
+          "fork": {
+            "description": "Null means no fork assignment is reviewed here, not proof of absence or non-deployment.",
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "assignment",
+                  "source_ref"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2000
+                  },
+                  "assignment": {
+                    "enum": [
+                      "proposed",
+                      "considered",
+                      "scheduled",
+                      "declined"
+                    ]
+                  },
+                  "source_ref": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9-]*$",
+                    "maxLength": 80
+                  }
+                }
+              }
+            ]
+          },
+          "source_ref": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "maxLength": 80
+          }
+        }
+      }
+    },
+    "forks": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "source_refs",
+          "activations"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "source_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]*$",
+              "maxLength": 80
+            },
+            "minItems": 1,
+            "uniqueItems": true,
+            "maxItems": 30
+          },
+          "activations": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "network",
+                "status",
+                "activation_at",
+                "epoch",
+                "slot"
+              ],
+              "properties": {
+                "network": {
+                  "enum": [
+                    "Sepolia",
+                    "Hoodi",
+                    "Mainnet"
+                  ]
+                },
+                "status": {
+                  "enum": [
+                    "scheduled",
+                    "not_scheduled",
+                    "unverified",
+                    "active"
+                  ]
+                },
+                "activation_at": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date-time",
+                  "pattern": "Z$"
+                },
+                "epoch": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "slot": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "status": {
+                        "enum": [
+                          "not_scheduled",
+                          "unverified"
+                        ]
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "activation_at": {
+                        "type": "null"
+                      },
+                      "epoch": {
+                        "type": "null"
+                      },
+                      "slot": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "status": {
+                        "enum": [
+                          "scheduled",
+                          "active"
+                        ]
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "activation_at": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 200,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "url"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "maxLength": 80
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://",
+            "maxLength": 2048
+          }
+        }
+      }
+    }
+  }
+}

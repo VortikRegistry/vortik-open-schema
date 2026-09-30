@@ -62,6 +62,12 @@ jobs:
             registry.json \
             market.index.json \
             index.html \
+            app.html \
+            assets/registry.css \
+            assets/registry-explorer.js \
+            assets/vortik-mark.svg \
+            protocol-context.json \
+            protocol-context.schema.json \
             market.html \
             feeds/index.json \
             feeds/epbs.json \

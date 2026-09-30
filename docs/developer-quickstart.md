@@ -8,6 +8,16 @@ Vortik's public feed endpoints are read-only semantic artifacts. They do not gra
 
 ## One-command first value
 
+For the dated protocol context used by the public comparison tool, fetch:
+
+```bash
+curl -fsSL https://vortikregistry.github.io/vortik-open-schema/protocol-context.json
+```
+
+This separate [context contract](protocol-context.md) covers all tracked anchors and related EIPs. It distinguishes source-review freshness, EIP document status, fork assignment and network activation. For example, compare ePBS and FOCIL without interpreting a Vortik classification as a mainnet status.
+
+The existing feed contracts below remain unchanged. Choose the context artifact for dated upstream status; choose the ePBS feed for its canonical semantic definition.
+
 Fetch the implementation-facing ePBS semantic feed directly from GitHub Pages:
 
 ```bash
@@ -90,6 +100,7 @@ For consumers that clone the repository and want stricter local validation, Vort
 npm install
 npm run example:discover-feeds
 npm run example:consume-feed
+npm run example:protocol-context
 ```
 
 The client validates feed/index structure, supported versions, HTTPS origin restrictions, registry metadata, feed metadata, and authority boundaries.
@@ -105,3 +116,7 @@ The public quickstart is intentionally consumption-only.
 - Trusted verification, receipt issuance, candidate admission and registry mutation are separate trust boundaries.
 
 If a consumer needs protocol truth, it must follow the cited Ethereum primary sources rather than treating the Vortik feed as an official specification.
+
+## Website data and service snapshots
+
+The static explorer consumes the published registry and context JSON. The A2A service uses its separately packaged snapshots. A Pages update does not rebuild or refresh a deployed service. See [system status](system-status.md) before interpreting a source review date as runtime deployment evidence.

@@ -14,6 +14,10 @@ They are not Ethereum protocol specifications.
 
 [September 30, 2026 — all 12 anchors, Glamsterdam, Hegotá, and ENSv2](./research/protocol-freshness-2026-09-30.md).
 
+- [Protocol context contract](./protocol-context.md) — dated, machine-readable upstream context.
+- [Review and interface history](./changes.md) — trace the changes.
+- [System status and evidence limits](./system-status.md) — website data, packaged service snapshots and independent activation gates.
+
 ## Available Models
 
 ### Security Hourglass — Coordination Compression Model
