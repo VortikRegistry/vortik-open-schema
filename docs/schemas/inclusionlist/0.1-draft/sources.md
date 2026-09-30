@@ -118,7 +118,7 @@ Curated references and source notes should be placed in the protected section be
 
 Inclusion lists are treated by Vortik as a core protocol-facing constraint because they map directly to transaction inclusion guarantees and fork-choice enforced censorship-resistance mechanisms. EIP-7805 / FOCIL is the primary EIP source for this constraint surface.
 
-Fork inclusion must be read with fork-specific context. EIP-7773 lists EIP-7805 / FOCIL as Declined for Inclusion in Glamsterdam. EIP-8081 lists EIP-7805 / FOCIL as Scheduled for Inclusion in Hegotá. These states are not contradictory: they describe different network upgrades.
+Fork inclusion must be read with fork-specific context. As reviewed on 2026-09-30, EIP-7805 / FOCIL does not appear in EIP-7773's Glamsterdam Scheduled for Inclusion list. EIP-8081 lists EIP-7805 / FOCIL as Scheduled for Inclusion in Hegotá. These states describe different network upgrades.
 
 Ethereum Foundation updates report functional early FOCIL prototypes and identify multi-client interoperability and a dedicated FOCIL devnet as immediate implementation steps. This supports implementation-facing relevance, but it does not establish deployment or activation.
 

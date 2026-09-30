@@ -5,7 +5,7 @@
 **Registry ID:** `epbs`  
 **Status:** implementation-facing  
 **Classification:** core  
-**Protocol freshness reviewed:** 2026-09-13
+**Protocol freshness reviewed:** 2026-09-30
 
 ---
 
@@ -21,7 +21,7 @@ Vortik is an independent semantic registry. This document is not an Ethereum spe
 
 ---
 
-## Current upstream state — 2026-09-13
+## Current upstream state — 2026-09-30
 
 The primary specification is **EIP-7732**.
 
@@ -30,7 +30,7 @@ As of this review:
 - EIP-7732 is a **Review** Standards Track Core EIP.
 - EIP-7773 lists EIP-7732 as **Scheduled for Inclusion** in Glamsterdam.
 - Glamsterdam is in active testing; this does not mean ePBS is deployed on Ethereum mainnet.
-- ethereum.org lists the next Glamsterdam milestone as a **Sepolia fork target on 2026-10-06** and describes mainnet as expected in Q4 2026 with no confirmed mainnet date.
+- The Ethereum Foundation's September 28 announcement schedules Glamsterdam on **Sepolia for 2026-10-06 13:53:36 UTC (epoch 353024, slot 11296768)**. This is a future testnet activation, not evidence that it has happened. **Hoodi and mainnet activation dates remain undecided.**
 - **EIP-8282 — Builder Execution Requests** is also in Review and Scheduled for Inclusion in Glamsterdam. It gives EIP-7732 builders dedicated deposit and exit request paths.
 
 These are source states, not Vortik judgments about activation.
@@ -38,6 +38,10 @@ These are source states, not Vortik judgments about activation.
 ---
 
 ## Public implementation evidence
+
+### Sepolia activation announcement
+
+The Ethereum Foundation's [Glamsterdam Testnet Announcement](https://blog.ethereum.org/2026/09/17/glamsterdam-testnet-announcement), posted 2026-09-28, identifies ePBS and Block-Level Access Lists as the upgrade's headlining changes and provides a concrete Sepolia activation schedule. It directs node operators to update both execution and consensus clients before activation. Vortik records the announced schedule; it does not claim that Sepolia has already upgraded or that mainnet is scheduled.
 
 ### Platåberget
 
@@ -135,7 +139,7 @@ BAL
 
 They interact in the broader Glamsterdam block-production architecture, but Vortik does not collapse them into one concept.
 
-EIP-8146, currently Proposed for Inclusion in Hegotá, further explores BAL sidecars and a BAL commitment inside `ExecutionPayloadBid`. That proposal is post-Glamsterdam context and must not be described as already Scheduled or activated.
+EIP-8146 explores BAL sidecars and a BAL commitment inside `ExecutionPayloadBid`. EIP-8081 now lists it as **Declined for Inclusion** in Hegotá. This remains research context, not a Scheduled or activated fork change.
 
 ---
 
@@ -145,7 +149,7 @@ EIP-8146, currently Proposed for Inclusion in Hegotá, further explores BAL side
 
 The fork states remain distinct:
 
-- EIP-7805 / FOCIL is **Declined for Inclusion** in Glamsterdam.
+- EIP-7805 / FOCIL is **not in the current EIP-7773 Glamsterdam Scheduled for Inclusion list**.
 - EIP-8081 lists EIP-7805 as **Scheduled for Inclusion** in Hegotá.
 - Hegotá activation rows remain unset.
 
@@ -212,7 +216,7 @@ No stronger deployment claim is implied.
 This anchor must not be used to claim that:
 
 - ePBS is already active on Ethereum mainnet;
-- Sepolia's roadmap target is a guaranteed activation date;
+- Sepolia's scheduled activation has already occurred;
 - Glamsterdam's mainnet date is confirmed;
 - `epbs.eth` is controlled by Ethereum Foundation, ENS Labs, or ENS DAO;
 - Vortik defines Ethereum protocol terminology;
@@ -223,8 +227,8 @@ The accurate framing is:
 
 ```text
 ePBS is a protocol-facing proposer-builder coordination primitive,
-Scheduled for Inclusion in Glamsterdam and backed by active public
-testnet/devnet implementation evidence as of 2026-09-13.
+Scheduled for Inclusion in Glamsterdam, with Sepolia activation scheduled
+for 2026-10-06 and public testnet/devnet implementation evidence as of 2026-09-30.
 ```
 
 ---
@@ -241,7 +245,9 @@ Current high-value references include:
 
 - https://eips.ethereum.org/EIPS/eip-7732
 - https://eips.ethereum.org/EIPS/eip-7773
+- https://eips.ethereum.org/EIPS/eip-8081
 - https://eips.ethereum.org/EIPS/eip-8282
+- https://blog.ethereum.org/2026/09/17/glamsterdam-testnet-announcement
 - https://github.com/ethereum/consensus-specs
 - https://blog.ethereum.org/2026/08/17/plataberget-testnet
 - https://notes.ethereum.org/@ethpandaops/glamsterdam-devnet-9

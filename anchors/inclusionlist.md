@@ -6,6 +6,7 @@
 **Status:** eip-active  
 **Classification:** core  
 **Type:** constraint  
+**Protocol freshness reviewed:** 2026-09-30
 
 ---
 
@@ -29,7 +30,7 @@ The relevant semantic object is the inclusion constraint itself: a mechanism by 
 
 FOCIL-style framing is tracked because it gives the broader inclusion-list concept a more precise fork-choice enforcement context.
 
-EIP-7805 remains the primary EIP source for FOCIL. EIP-7773 lists EIP-7805 / FOCIL as **Declined for Inclusion** in Glamsterdam, while EIP-8081 lists it as **Scheduled for Inclusion** in Hegotá. These are fork-scoped source states, not deployment or activation claims. EIP-8081 currently provides no activation values for testnets or mainnet. `inclusionlist.eth` remains a semantic anchor for the inclusion-list / FOCIL constraint surface, not a deployment claim.
+EIP-7805 remains the primary EIP source for FOCIL. As reviewed on 2026-09-30, EIP-7805 is **not in the EIP-7773 Glamsterdam Scheduled for Inclusion list**, while EIP-8081 lists it as **Scheduled for Inclusion** in Hegotá. These are fork-scoped source states, not deployment or activation claims. EIP-8081 currently provides no activation values for testnets or mainnet. `inclusionlist.eth` remains a semantic anchor for the inclusion-list / FOCIL constraint surface, not a deployment claim.
 
 The registry status is **eip-active** because the terminology and mechanism family have active specification relevance. This registry status should not be read as mainnet activation, official Ethereum endorsement, or a guarantee that scheduled fork content will be deployed. Hegotá scheduling is an upstream source fact recorded separately from Vortik's registry status.
 
@@ -113,7 +114,7 @@ This anchor should not be interpreted as saying that:
 The accurate framing is narrower:
 
 ```txt
-FOCIL tracks protocol-facing inclusion constraints and censorship-resistance semantics. EIP-7805 is declined for Glamsterdam and Scheduled for Inclusion in Hegotá, without an activation claim.
+FOCIL tracks protocol-facing inclusion constraints and censorship-resistance semantics. EIP-7805 is not scheduled for Glamsterdam and is Scheduled for Inclusion in Hegotá, without an activation claim.
 ```
 
 ---
