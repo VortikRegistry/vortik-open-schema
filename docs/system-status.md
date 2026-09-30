@@ -6,7 +6,8 @@ Reviewed: **2026-09-30**. This page describes repository capabilities and the li
 
 | Surface | Implementation | Evidence and limit |
 | --- | --- | --- |
-| Website, search and comparison | Static GitHub Pages assets; browser JavaScript reads repository JSON | Local functional checks and Pages artifact verification apply to the published commit. These tools do not invoke Reception. |
+| Ethereum proposal search | Static GitHub Pages interface over metadata from pinned official EIP/ERC repositories | Coverage and source commits are recorded in the catalog. Search is independent of the 12 curated terms; it does not retrieve full specifications or resolve ENS names. |
+| Curated term search and comparison | Static GitHub Pages assets; browser JavaScript reads registry and context JSON | Local functional checks and Pages artifact verification apply to the published commit. These tools do not invoke Reception. |
 | Protocol context | Dated `protocol-context.json` and schema | Separates EIP document status, fork assignment and network timing. Read `reviewed_at` and follow primary sources for later changes. |
 | Canonical registry and ePBS feed | Versioned, validated repository data | Registry last-change date is separate from the date of the upstream source review. |
 | Public A2A Reception | Deterministic Node.js service using immutable packaged snapshots | The discovery manifest records `a2a_live`. Website publication does not deploy the service, check its current health or establish its packaged source revision. |
@@ -21,7 +22,7 @@ Reviewed: **2026-09-30**. This page describes repository capabilities and the li
 2. **When were protocol sources reviewed?** Read `protocol-context.json`'s `reviewed_at` and the linked review document.
 3. **What code and data does a deployed service contain?** Bind its deployed image digest to the reviewed source commit using the deployment evidence. A newer Pages commit alone cannot answer this.
 
-The static explorer reads the current published context artifact. The public beacon loads local snapshots packaged with its image. Its deny-egress boundary prevents it from retrieving newer sources on demand. Changes to those snapshots require a separate reviewed service deployment.
+The curated explorer reads the current published context artifact, and the broader proposal search reads a separate source-pinned metadata catalog. The public beacon loads local snapshots packaged with its image. Its deny-egress boundary prevents it from retrieving newer sources on demand. Changes to those snapshots require a separate reviewed service deployment. Publishing the broader catalog does not expand the deployed beacon's research capability.
 
 ## Operational checks
 

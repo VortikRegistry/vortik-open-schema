@@ -2,6 +2,15 @@
 
 This is an editorial and interface history. Canonical registry versions and historical release notes retain their original meaning.
 
+## 2026-09-30 — proposal search beyond curated names
+
+- Added an independent search surface for official EIP and ERC metadata, with source commits, recorded coverage and reproducible local generation.
+- Kept document discovery independent of ENS-style names and the 12-term curated registry.
+- Added query sharing, status/category filters and direct primary-source references.
+- Preserved the canonical registry, existing feeds and separately deployed Reception interface.
+
+See [proposal search](research.html) and [catalog provenance](ethereum-catalog.md).
+
 ## 2026-09-30 — inspect and compare the evidence
 
 - Added a dated protocol-context JSON contract with separate EIP document, fork-assignment and network-activation fields.

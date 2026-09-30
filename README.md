@@ -3,16 +3,17 @@
 [![Validation](https://github.com/VortikRegistry/vortik-open-schema/actions/workflows/validate.yml/badge.svg)](https://github.com/VortikRegistry/vortik-open-schema/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**Find a term. Compare its meaning. Follow the primary source.**
+**Find an Ethereum proposal. Compare a term. Follow the primary source.**
 
-Vortik is an independent reference for selected Ethereum coordination terminology. It connects 12 semantic anchors to definitions, source notes, versioned JSON contracts and dated protocol context. It is useful when similar terms hide different assumptions, or when a proposal's document status is confused with activation on a network.
+Vortik is an independent Ethereum reference with two connected tools: a searchable snapshot of official EIP and ERC metadata, and an evidence explorer for 12 curated coordination terms. Proposal search is independent of the curated ENS-style names. The explorer adds definitions, source notes, versioned JSON contracts and dated protocol context where that deeper review exists.
 
-[**Open the explorer →**](https://vortikregistry.github.io/vortik-open-schema/app.html) · [Compare ePBS and FOCIL](https://vortikregistry.github.io/vortik-open-schema/app.html?compare=epbs,inclusionlist) · [Read the JSON](https://vortikregistry.github.io/vortik-open-schema/protocol-context.json) · [Report a correction](https://github.com/VortikRegistry/vortik-open-schema/issues/new?template=source-correction.md)
+[**Search Ethereum proposals →**](https://vortikregistry.github.io/vortik-open-schema/research.html) · [Explore curated terms](https://vortikregistry.github.io/vortik-open-schema/app.html) · [Compare ePBS and FOCIL](https://vortikregistry.github.io/vortik-open-schema/app.html?compare=epbs,inclusionlist) · [Report a correction](https://github.com/VortikRegistry/vortik-open-schema/issues/new?template=source-correction.md)
 
 ## What you can do
 
 | Task | Start here |
 | --- | --- |
+| Find an EIP or ERC beyond the curated terms | [Search official proposal metadata](https://vortikregistry.github.io/vortik-open-schema/research.html) |
 | Understand a term or an ENS-style semantic anchor | [Search the explorer](https://vortikregistry.github.io/vortik-open-schema/app.html) |
 | Compare definitions, evidence and protocol context | [ePBS / FOCIL comparison](https://vortikregistry.github.io/vortik-open-schema/app.html?compare=epbs,inclusionlist) |
 | Check EIP status, fork assignment and network timing separately | [Dated protocol context](docs/protocol-context.md) |
@@ -20,7 +21,7 @@ Vortik is an independent reference for selected Ethereum coordination terminolog
 | See what was reviewed and what changed | [Review history](docs/changes.md) |
 | Understand the website and agent capabilities | [System status and evidence limits](docs/system-status.md) |
 
-The website and explorer use static artifacts from this repository. Searching and comparing them requires no wallet, account, model API, or call to the Reception service.
+The website uses static artifacts from this repository. Searching and comparing them requires no wallet, account, model API, or call to the Reception service. The [proposal catalog](docs/ethereum-catalog.md) records its source commits and coverage. It searches document metadata; full specifications remain at the linked primary sources. ENS ownership, availability and live resolution are outside this search.
 
 ## Four different kinds of status
 
@@ -55,6 +56,7 @@ curl -fsSL https://vortikregistry.github.io/vortik-open-schema/feeds/epbs.json
 
 | Artifact | Contract / documentation |
 | --- | --- |
+| [Ethereum proposal catalog](https://vortikregistry.github.io/vortik-open-schema/ethereum-catalog.json) | [Coverage, provenance and reproducible updates](docs/ethereum-catalog.md) |
 | [Protocol context JSON](https://vortikregistry.github.io/vortik-open-schema/protocol-context.json) | [Separate document, fork and network states](docs/protocol-context.md) |
 | [Registry JSON](https://vortikregistry.github.io/vortik-open-schema/registry.json) | [Registry model](REGISTRY.md) |
 | [Feed index](https://vortikregistry.github.io/vortik-open-schema/feeds/index.json) | [Feed discovery](docs/guides/discover-feeds.md) |
@@ -77,7 +79,7 @@ Read the [system status](docs/system-status.md), [beacon implementation](docs/pu
 
 Vortik is maintained independently. It is not an Ethereum Foundation, ENS DAO, ENS Foundation or ENS Labs project. EIPs, specifications and their maintainers remain the authority for protocol behavior.
 
-ENS names here are semantic naming surfaces. They do not establish ownership, availability, protocol authority, institutional endorsement or ENSv2 operational dependency. The tracked set is limited; referenced EIPs and sources also cover related concepts beyond that set.
+ENS names here are semantic naming surfaces. They do not establish ownership, availability, protocol authority, institutional endorsement or ENSv2 operational dependency. The curated term set is limited; the independent proposal catalog has its own broader, explicitly recorded coverage. Inclusion in that catalog does not add a canonical Vortik anchor or imply a separate technical review of the complete proposal.
 
 Registry classifications are Vortik's editorial judgments. In particular, `deprecated` describes reduced naming precision within this registry; it does not declare the underlying infrastructure or activity obsolete.
 

@@ -1,0 +1,312 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vortikregistry.github.io/vortik-open-schema/ethereum-catalog.schema.json",
+  "title": "Vortik Ethereum proposal metadata catalog 1.0.0",
+  "description": "A pinned metadata snapshot from official EIP/ERC sources. Document status does not establish network activation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "contract",
+    "reviewed_at",
+    "scope",
+    "provenance",
+    "coverage",
+    "sources",
+    "proposals"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://vortikregistry.github.io/vortik-open-schema/ethereum-catalog.schema.json"
+    },
+    "contract": {
+      "const": "vortik.ethereum-catalog/1.0.0"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "source_manifest",
+        "generator",
+        "metadata_license",
+        "bodies_indexed",
+        "status_interpretation",
+        "deduplication",
+        "content_sha256"
+      ],
+      "properties": {
+        "method": {
+          "const": "pinned-git-object-frontmatter"
+        },
+        "source_manifest": {
+          "const": "scripts/ethereum-catalog-sources.json"
+        },
+        "generator": {
+          "const": "scripts/generate-ethereum-catalog.mjs"
+        },
+        "metadata_license": {
+          "const": "CC0-1.0"
+        },
+        "bodies_indexed": {
+          "const": false
+        },
+        "status_interpretation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "deduplication": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repositories",
+        "scanned_files",
+        "records",
+        "eips",
+        "ercs",
+        "moved_stubs",
+        "mirrored_documents",
+        "excluded_files",
+        "duplicate_numbers"
+      ],
+      "properties": {
+        "repositories": {
+          "const": 2
+        },
+        "scanned_files": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "records": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "eips": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "ercs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "moved_stubs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "mirrored_documents": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "excluded_files": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "duplicate_numbers": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 10000,
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 999999
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "repository",
+          "commit",
+          "directory",
+          "source_url",
+          "license",
+          "license_url",
+          "files_seen",
+          "canonical_records",
+          "moved_stubs",
+          "mirrored_documents"
+        ],
+        "properties": {
+          "id": {
+            "enum": [
+              "eips",
+              "ercs"
+            ]
+          },
+          "repository": {
+            "enum": [
+              "ethereum/EIPs",
+              "ethereum/ERCs"
+            ]
+          },
+          "commit": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "directory": {
+            "enum": [
+              "EIPS",
+              "ERCS"
+            ]
+          },
+          "source_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "license": {
+            "const": "CC0-1.0"
+          },
+          "license_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "files_seen": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000
+          },
+          "canonical_records": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000
+          },
+          "moved_stubs": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000
+          },
+          "mirrored_documents": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000
+          }
+        }
+      }
+    },
+    "proposals": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "number",
+          "title",
+          "description",
+          "status",
+          "type",
+          "category",
+          "url",
+          "source_ref",
+          "path",
+          "commit"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^(eip|erc)-[1-9]\\d*$"
+          },
+          "number": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 999999
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "status": {
+            "enum": [
+              "Draft",
+              "Review",
+              "Last Call",
+              "Final",
+              "Stagnant",
+              "Withdrawn",
+              "Living"
+            ]
+          },
+          "type": {
+            "enum": [
+              "Standards Track",
+              "Meta",
+              "Informational"
+            ]
+          },
+          "category": {
+            "enum": [
+              "Core",
+              "Networking",
+              "Interface",
+              "ERC",
+              null
+            ]
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "source_ref": {
+            "enum": [
+              "eips",
+              "ercs"
+            ]
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^(EIPS/eip|ERCS/erc)-[1-9]\\d*\\.md$"
+          },
+          "commit": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          }
+        }
+      }
+    }
+  }
+}

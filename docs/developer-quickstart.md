@@ -8,6 +8,14 @@ Vortik's public feed endpoints are read-only semantic artifacts. They do not gra
 
 ## One-command first value
 
+For broader EIP and ERC document discovery, fetch the independent proposal catalog:
+
+```bash
+curl -fsSL https://vortikregistry.github.io/vortik-open-schema/ethereum-catalog.json
+```
+
+The [catalog contract and reproduction guide](ethereum-catalog.md) describe the pinned upstream repositories, metadata fields, coverage and update procedure. Catalog membership is independent of the 12 curated terms. Its document status is not a network-activation claim. The [proposal search](research.html) consumes this same static artifact in the browser.
+
 For the dated protocol context used by the public comparison tool, fetch:
 
 ```bash
@@ -119,4 +127,4 @@ If a consumer needs protocol truth, it must follow the cited Ethereum primary so
 
 ## Website data and service snapshots
 
-The static explorer consumes the published registry and context JSON. The A2A service uses its separately packaged snapshots. A Pages update does not rebuild or refresh a deployed service. See [system status](system-status.md) before interpreting a source review date as runtime deployment evidence.
+The proposal search consumes the published catalog, and the curated explorer consumes the registry and context JSON. The A2A service uses its separately packaged snapshots and does not automatically gain the broader catalog's search capability. A Pages update does not rebuild or refresh a deployed service. See [system status](system-status.md) before interpreting a source review date as runtime deployment evidence.

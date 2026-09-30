@@ -241,12 +241,43 @@ for (const sample of SAFE_REGRESSION_SAMPLES) {
 const files = [...new Set(SCAN_TARGETS.flatMap(collectFiles))].sort();
 const findings = [];
 
+// These two exact, source-pinned metadata fields describe protocol resource
+// costs. They are upstream public text, not private commercial material. Keep
+// the exception bounded to these fields; new upstream wording needs review.
+const CATALOG_PROTOCOL_METADATA = [
+  { number: 7609, field: 'description', text: 'Improve the efficiency of TLOAD/TSTORE by decreasing the base cost and introducing a superlinear pricing model.' },
+  { number: 7915, field: 'title', text: 'Adaptive mean reversion blob pricing' },
+];
+
+function reviewedCatalogLines(relative, text) {
+  const allowed = new Set();
+  if (relative !== 'docs/ethereum-catalog.json') return allowed;
+  const catalog = JSON.parse(text);
+  const commit = '66daa41124581e4e839e89d71eb06b6cd4b1f9b8';
+  if (catalog.contract !== 'vortik.ethereum-catalog/1.0.0'
+    || !catalog.sources?.some((source) => source.id === 'eips'
+      && source.repository === 'ethereum/EIPs' && source.commit === commit)) return allowed;
+  for (const record of CATALOG_PROTOCOL_METADATA) {
+    const proposal = catalog.proposals?.find((entry) => entry.number === record.number);
+    if (proposal?.id === `eip-${record.number}` && proposal.source_ref === 'eips'
+      && proposal.commit === commit && proposal.path === `EIPS/eip-${record.number}.md`
+      && proposal.url === `https://eips.ethereum.org/EIPS/eip-${record.number}`
+      && proposal[record.field] === record.text) {
+      allowed.add(`${JSON.stringify(record.field)}: ${JSON.stringify(record.text)},`);
+    }
+  }
+  return allowed;
+}
+
 for (const file of files) {
   const relative = toPosix(path.relative(repoRoot, file));
   if (isExcluded(relative) || !isTextFile(file)) continue;
-  const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/);
+  const text = fs.readFileSync(file, 'utf8');
+  const allowedProtocolLines = reviewedCatalogLines(relative, text);
+  const lines = text.split(/\r?\n/);
   lines.forEach((line, index) => {
     for (const matcher of unsafeMatches(line)) {
+      if (matcher.concept === 'pricing' && allowedProtocolLines.has(line.trim())) continue;
       findings.push({ file: relative, line: index + 1, concept: matcher.concept, reason: matcher.reason });
     }
   });
