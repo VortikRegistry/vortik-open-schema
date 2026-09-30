@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Vortik Registry — Ethereum terms, connected to their sources</title>
-  <meta name="description" content="Explore Ethereum coordination terms, compare their source context, and reuse documented JSON. Independent registry. Protocol context reviewed 2026-09-30.">
+  <meta name="description" content="Search official Ethereum EIP and ERC proposal metadata, explore curated coordination terms, compare source context, and reuse documented JSON. Independent, open-source reference.">
   <link rel="canonical" href="https://vortikregistry.github.io/vortik-open-schema/">
   <meta property="og:title" content="Vortik Registry — Ethereum terms, connected to their sources">
   <meta property="og:description" content="Find a term. Separate research from upgrade plans. Follow the primary sources. An independent, open-source Ethereum reference.">
@@ -19,7 +19,7 @@
   <header class="site-header">
     <div class="container header-row">
       <a class="brand" href="./" aria-label="Vortik Registry home"><span class="brand-mark" aria-hidden="true">V</span><span>VORTIK<span class="brand-subtitle">Ethereum semantic registry</span></span></a>
-      <nav aria-label="Main navigation"><a href="./app.html">Explore</a><a href="#developers">Build with it</a><a class="nav-source" href="https://github.com/VortikRegistry/vortik-open-schema">GitHub <span aria-hidden="true">↗</span></a></nav>
+      <nav aria-label="Main navigation"><a href="./research.html">Ethereum search</a><a href="./app.html">Registry</a><a href="#developers">Build with it</a><a class="nav-source" href="https://github.com/VortikRegistry/vortik-open-schema">GitHub <span aria-hidden="true">↗</span></a></nav>
     </div>
   </header>
   <main id="main">
@@ -27,14 +27,14 @@
       <div class="hero-copy">
         <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Independent · open source · source grounded</p>
         <h1>Understand the term.<br><span>Check the source.</span></h1>
-        <p class="intro">Ethereum’s vocabulary keeps moving. Find a clear definition, see its protocol context, and follow the evidence behind it.</p>
-        <form class="hero-search" action="./app.html" method="get" role="search">
-          <label class="sr-only" for="home-search">Search terms, ENS handles, EIPs or upgrades</label>
+        <p class="intro">Search Ethereum’s official proposals. Explore coordination concepts in the curated registry. Follow the evidence behind each result.</p>
+        <form class="hero-search" action="./research.html" method="get" role="search">
+          <label class="sr-only" for="home-search">Search Ethereum proposal titles, descriptions or numbers</label>
           <span aria-hidden="true" class="search-symbol">⌕</span>
-          <input id="home-search" name="q" type="search" placeholder="Try ePBS, FOCIL, 7732…" maxlength="160">
-          <button class="button primary" type="submit">Explore <span aria-hidden="true">→</span></button>
+          <input id="home-search" name="q" type="search" placeholder="EIP-4844, account abstraction, ENS…" maxlength="160">
+          <button class="button primary" type="submit">Search <span aria-hidden="true">→</span></button>
         </form>
-        <div class="try-links"><span>Start with</span><a href="./app.html?q=epbs">ePBS</a><a href="./app.html?q=FOCIL">FOCIL</a><a href="./app.html?q=finality">Finality</a><a href="./app.html">All 12 entries <span aria-hidden="true">↗</span></a></div>
+        <div class="try-links"><span>Start with</span><a href="./research.html?q=ERC-20">ERC-20</a><a href="./research.html?q=account+abstraction">Account abstraction</a><a href="./research.html?q=ENS">ENS</a><a href="./app.html">Curated registry <span aria-hidden="true">↗</span></a></div>
       </div>
       <aside class="source-trace" aria-labelledby="trace-title">
         <div class="trace-heading"><span class="eyebrow">A term, in context</span><span class="mono">01 / 12</span></div>
@@ -51,10 +51,10 @@
     </section>
     <div class="context-strip"><div class="container context-strip-inner"><p><strong>A dated reference, with explicit boundaries.</strong> Registry labels, EIP status, upgrade plans and network activation are separate facts.</p><a href="https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-09-30.md">Read the 30 Sep review <span aria-hidden="true">↗</span></a></div></div>
     <section class="container section" id="questions" aria-labelledby="questions-title">
-      <div class="section-heading"><div><p class="eyebrow">Start with a question</p><h2 id="questions-title">Go from a name to an answer.</h2></div><p>Definitions and primary sources for selected coordination concepts. A focused reference you can inspect and reuse.</p></div>
+      <div class="section-heading"><div><p class="eyebrow">Start with a question</p><h2 id="questions-title">Go from a term to its source.</h2></div><p>A broad proposal catalog and a focused coordination registry. Each surface makes its coverage and evidence clear.</p></div>
       <div class="task-grid">
-        <a class="task-card" href="./app.html?compare=epbs,inclusionlist#compare"><span class="task-number">01 / Compare</span><h3>ePBS or FOCIL?</h3><p>Separate block construction from inclusion constraints. Compare upgrade assignments and source trails.</p><span class="task-action">Compare the two <span aria-hidden="true">↗</span></span></a>
-        <a class="task-card" href="./app.html?q=finality"><span class="task-number">02 / Understand</span><h3>Fast finality or SSF?</h3><p>See how a broad research area differs from a specific single-slot target.</p><span class="task-action">Explore the distinction <span aria-hidden="true">↗</span></span></a>
+        <a class="task-card" href="./research.html"><span class="task-number">01 / Search</span><h3>Find an Ethereum proposal.</h3><p>Search the official EIP and ERC metadata snapshot by number, title or description. Filter by document status and category.</p><span class="task-action">Search Ethereum proposals <span aria-hidden="true">↗</span></span></a>
+        <a class="task-card" href="./app.html?compare=epbs,inclusionlist#compare"><span class="task-number">02 / Compare</span><h3>ePBS or FOCIL?</h3><p>Separate block construction from inclusion constraints. Compare upgrade assignments and source trails.</p><span class="task-action">Compare the two <span aria-hidden="true">↗</span></span></a>
         <a class="task-card" href="#developers"><span class="task-number">03 / Build</span><h3>Need structured context?</h3><p>Use the registry, a versioned ePBS feed, or the dated protocol context in your own tools.</p><span class="task-action">Get the JSON <span aria-hidden="true">↓</span></span></a>
       </div>
     </section>
@@ -68,7 +68,7 @@
       <p class="section-note">These are source observations as of the review date. Scheduled activation is not evidence that a network has activated.</p>
     </section>
     <section class="container section" id="anchors" aria-labelledby="collection-title">
-      <div class="section-heading"><div><p class="eyebrow">The collection</p><h2 id="collection-title">Twelve entry points. Clear source trails.</h2></div><p>ENS handles help identify entries. They do not confer protocol authority or imply that a name resolves protocol metadata.</p></div>
+      <div class="section-heading"><div><p class="eyebrow">The curated registry</p><h2 id="collection-title">Twelve entry points. Clear source trails.</h2></div><p>This curated collection is separate from the wider proposal catalog. ENS handles identify entries without conferring protocol authority or resolving protocol metadata.</p></div>
       <div class="term-directory">
         <a href="./app.html?q=epbs#entry-epbs"><strong>ePBS</strong><span>epbs.eth</span><span aria-hidden="true">↗</span></a>
         <a href="./app.html?q=FOCIL#entry-inclusionlist"><strong>Inclusion lists / FOCIL</strong><span>inclusionlist.eth</span><span aria-hidden="true">↗</span></a>

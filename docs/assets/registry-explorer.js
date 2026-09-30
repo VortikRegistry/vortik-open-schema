@@ -179,7 +179,7 @@
         <div class="entry-links">${docLink(entry.anchor_path, "Source note")}${docLink(entry.sources_path, "Curated references")}${link("./" + localPath(entry.canonical.schema), "Schema JSON")}${link(entryPermalink(entry.id), "Entry link")}</div>
         <details class="source-details"><summary>${entry.source_refs.length} primary source${entry.source_refs.length === 1 ? "" : "s"} · reviewed ${escape(state.context.reviewed_at)}</summary><ul>${sourceLinks(entry.source_refs)}</ul></details>
       </article>`;
-    }).join("") : `<div class="empty-state"><h2>No registry entries match.</h2><p>Try a term, an ENS handle or an EIP number. Related EIP results may still appear below.</p><button type="button" class="button" data-reset>Reset filters</button></div>`;
+    }).join("") : `<div class="empty-state"><h2>No registry entries match.</h2><p>Try a term, an ENS handle or an EIP number. Related EIP results may still appear below.</p><div class="empty-actions"><button type="button" class="button" data-reset>Reset filters</button>${link(`./research.html?q=${encodeURIComponent(readFilters().query)}`, "Search the full proposal catalog →")}</div></div>`;
     renderEips(eips);
   }
 

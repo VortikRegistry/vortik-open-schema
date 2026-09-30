@@ -286,3 +286,97 @@ td li+li { margin-top:9px }
   .footer-grid>div:first-child { grid-column:auto }
 }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto } * { transition:none!important } }
+
+/* Broad EIP/ERC metadata search; independent of the twelve-entry registry. */
+.research-page .explorer-intro { padding-bottom:24px }
+.research-query { display:flex; align-items:flex-end; gap:13px; padding-bottom:19px }
+.research-query>.field { flex:1; min-width:0 }
+.research-query .field input { min-height:50px; font-size:16px }
+.research-query>.button { min-height:50px; padding-left:26px; padding-right:26px }
+.research-filters { display:grid; grid-template-columns:1fr 1fr 1fr 1fr 1.3fr auto; gap:12px; align-items:flex-end }
+.research-filters .field { min-width:0 }
+.proposal-toolbar { margin-top:25px; margin-bottom:0 }
+.proposal-result { display:grid; grid-template-columns:132px minmax(0,1fr) 190px; gap:25px; padding:26px 23px; background:white; border:1px solid var(--line); border-bottom:0 }
+.proposal-result:first-child { border-radius:8px 8px 0 0 }
+.proposal-result:last-child { border-bottom:1px solid var(--line); border-radius:0 0 8px 8px }
+.proposal-result:only-child { border-radius:8px }
+.proposal-identity { display:flex; flex-direction:column; align-items:flex-start; gap:8px }
+.proposal-identity>a { color:var(--green); font:600 17px var(--mono); text-decoration:none }
+.proposal-identity>a:hover { text-decoration:underline }
+.proposal-identity .source-label { font-size:9px }
+.proposal-description { min-width:0 }
+.proposal-description h2 { font-size:21px; line-height:1.3; letter-spacing:-.025em; margin:0 0 9px; overflow-wrap:anywhere }
+.proposal-description h2 a { text-decoration:none }
+.proposal-description h2 a:hover { text-decoration:underline }
+.proposal-description>p { font-size:12px; line-height:1.65; margin-bottom:13px; overflow-wrap:anywhere }
+.proposal-links { display:flex; gap:19px; flex-wrap:wrap; font-size:10px; color:var(--green) }
+.proposal-metadata { margin:0; padding-left:20px; border-left:1px solid var(--line); font-size:10px }
+.proposal-metadata>div { display:flex; justify-content:space-between; gap:12px; margin-bottom:10px; line-height:1.55 }
+.proposal-metadata>div:last-child { margin-bottom:0 }
+.proposal-metadata dt { color:var(--soft) }
+.proposal-metadata dd { margin:0; text-align:right; font-weight:600 }
+.proposal-pagination { display:flex; align-items:center; justify-content:space-between; gap:18px; margin:25px 0 10px }
+.proposal-pagination span { color:var(--soft); font:11px var(--mono); text-align:center }
+.proposal-pagination .button { min-width:125px }
+.empty-actions { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:23px }
+.research-fallback { margin:35px 0 }
+.research-fallback h2 { font-size:29px }
+.catalog-provenance { padding:50px 0 0 }
+.catalog-provenance h2 { font-size:29px }
+#catalogProvenance>p { font-size:13px; line-height:1.75; max-width:960px }
+.catalog-source-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:22px 0 15px }
+.catalog-source { min-width:0; border:1px solid var(--line); border-radius:7px; padding:22px; background:#eef3e7 }
+.catalog-source h3 { font-size:20px; margin:0 0 11px }
+.catalog-source p { font-size:12px; margin-bottom:12px }
+.catalog-source p:last-child { margin:0; font-size:10px }
+.catalog-source .source-pin { font:10px/1.65 var(--mono); overflow-wrap:anywhere }
+.ens-context { display:grid; grid-template-columns:1fr 245px; gap:30px; border:1px solid #becfb3; border-radius:8px; background:#eef3e7; padding:23px; margin:22px 0 }
+.ens-context .eyebrow { margin-bottom:11px }
+.ens-context h2 { font-size:24px; margin-bottom:13px }
+.ens-context p { font-size:12px; line-height:1.7; margin-bottom:12px }
+.ens-context .section-note { font-size:10px; margin-bottom:0 }
+#ensRegistryMatches { font-size:12px }
+.ens-spec-link { margin-top:13px }
+.ens-links { align-self:center; display:flex; flex-direction:column; gap:12px; font-size:12px; border-left:1px solid #ccd9c3; padding-left:23px }
+.ens-links span { font-size:10px; color:var(--soft); line-height:1.65 }
+.inline-button { border:0; padding:0; margin:0; color:var(--green); background:none; font:inherit; text-decoration:underline; text-underline-offset:4px }
+.inline-button:hover { color:var(--ink) }
+@media(max-width:1050px) {
+  .research-filters { grid-template-columns:repeat(3,minmax(0,1fr)) }
+  .proposal-result { grid-template-columns:105px minmax(0,1fr) 175px; gap:19px; padding:23px 20px }
+  .proposal-metadata { padding-left:15px }
+}
+@media(max-width:760px) {
+  .proposal-result { grid-template-columns:1fr; gap:12px; padding:21px }
+  .proposal-identity { flex-direction:row; align-items:center; gap:14px }
+  .proposal-identity .source-label { order:1 }
+  .proposal-description h2 { font-size:22px }
+  .proposal-description>p { font-size:14px }
+  .proposal-links { font-size:12px }
+  .proposal-metadata { display:flex; flex-wrap:wrap; gap:10px 20px; padding:13px 0 0; border-left:0; border-top:1px solid var(--line) }
+  .proposal-metadata { font-size:12px }
+  .proposal-metadata>div { justify-content:flex-start; gap:6px; margin:0 }
+  .proposal-pagination { gap:12px; flex-wrap:wrap }
+  .proposal-pagination span { order:-1; flex-basis:100% }
+  .proposal-pagination .button { min-width:135px }
+  .ens-context { grid-template-columns:1fr; gap:20px }
+  .ens-links { border-left:0; border-top:1px solid #ccd9c3; padding:17px 0 0 }
+  .catalog-source-grid { grid-template-columns:1fr }
+}
+@media(max-width:620px) {
+  .header-row { flex-wrap:wrap; padding-top:15px; padding-bottom:10px; gap:9px }
+  .header-row nav { width:100%; justify-content:space-between; gap:12px }
+  .header-row nav a { font-size:11px; padding-top:6px; padding-bottom:6px }
+  .research-filters { grid-template-columns:repeat(2,minmax(0,1fr)) }
+  .research-query { gap:9px }
+  .research-query .field input { font-size:16px }
+  .research-query>.button { padding:14px; font-size:12px; gap:9px }
+  .catalog-provenance { padding-top:38px }
+}
+@media(max-width:380px) {
+  .header-row nav { gap:6px }
+  .header-row nav a { font-size:10px }
+  .research-query { flex-wrap:wrap }
+  .research-query>.field { flex-basis:100% }
+  .research-query>.button { width:100%; min-height:44px }
+}

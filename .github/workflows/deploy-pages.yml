@@ -63,9 +63,13 @@ jobs:
             market.index.json \
             index.html \
             app.html \
+            research.html \
             assets/registry.css \
             assets/registry-explorer.js \
+            assets/ethereum-search.js \
             assets/vortik-mark.svg \
+            ethereum-catalog.json \
+            ethereum-catalog.schema.json \
             protocol-context.json \
             protocol-context.schema.json \
             market.html \
