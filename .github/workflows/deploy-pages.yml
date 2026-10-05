@@ -8,6 +8,10 @@ on:
       - "docs/**"
       - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Validate Vortik Registry"]
+    branches: [main]
+    types: [completed]
 
 permissions:
   contents: read
@@ -20,6 +24,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository)
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment:
@@ -29,15 +34,35 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Identify the source being published
+        id: source
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Validate the checked-out publication source
+        run: |
+          npm ci
+          npm run check:public-safety
+          npm run validate
 
       - name: Read existing GitHub Pages configuration
         uses: actions/configure-pages@v5
 
       - name: Stamp deployment-specific artifact
         shell: bash
+        env:
+          PUBLICATION_SHA: ${{ steps.source.outputs.sha }}
         run: |
           printf '{"commit":"%s","run_id":"%s"}\n' \
-            "${GITHUB_SHA}" "${GITHUB_RUN_ID}" \
+            "${PUBLICATION_SHA}" "${GITHUB_RUN_ID}" \
             > docs/pages-deployment.json
 
       - name: Upload deterministic docs artifact
@@ -53,6 +78,7 @@ jobs:
         shell: bash
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+          PUBLICATION_SHA: ${{ steps.source.outputs.sha }}
         run: |
           set -euo pipefail
           base_url="${PAGE_URL%/}"
@@ -101,7 +127,7 @@ jobs:
                 --connect-timeout 5 \
                 --max-time 15 \
                 -H "Cache-Control: no-cache" \
-                "${base_url}/${relative_path}?deployment=${GITHUB_SHA}" \
+                "${base_url}/${relative_path}?deployment=${PUBLICATION_SHA}" \
                 --output "${output}" \
                 && cmp --silent "docs/${relative_path}" "${output}"; then
                 verified=true

@@ -5,7 +5,7 @@
     "fail_closed": true,
     "canonical_registry_mutation": false,
     "auto_merge": false,
-    "pull_request_mode": "draft_evidence_alert"
+    "alert_mode": "issue_evidence_alert"
   },
   "allowed_repositories": [
     "ethereum/EIPs",

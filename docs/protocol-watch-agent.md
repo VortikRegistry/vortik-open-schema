@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Protocol Watch is a bounded freshness detector for Vortik Registry. It watches a small allowlist of primary or implementation-facing Ethereum sources relevant to the current registry and creates a draft evidence PR when one of those sources changes.
+Protocol Watch is a bounded freshness detector for Vortik Registry. It watches a small allowlist of primary or implementation-facing Ethereum sources relevant to the current registry and delivers an evidence issue when one of those sources changes.
 
 It is intentionally not an autonomous registry editor. It does not change `registry.json`, classifications, schemas, anchor status, feeds, maps, or public claims. It never auto-merges.
 
@@ -24,16 +24,18 @@ The source allowlist is stored in `config/protocol-watch.json`. Callers cannot s
 
 ## Lifecycle
 
-The scheduled GitHub Actions workflow runs every six hours and may also be dispatched manually.
+The scheduled GitHub Actions workflow runs every six hours, may be dispatched manually, and runs after successful main-branch validation. Its delivery job reads only the checked-out main branch. Pull requests run boundary tests without delivery.
 
 1. Fetch only allowlisted GitHub sources through the GitHub API.
 2. Compare current immutable Git blob or commit fingerprints with `protocol-watch/baseline.json`.
 3. If nothing changed, exit without repository writes.
-4. If a source changed, write `protocol-watch/candidate.json` and `protocol-watch/report.md` on a new automation branch.
-5. Open a single draft PR titled `Protocol watch alert — upstream change detected`.
-6. Refuse duplicate alert PRs while one is already open.
+4. If a source changed, write `protocol-watch/candidate.json` and `protocol-watch/report.md` in the runner workspace.
+5. Open a single issue titled `Protocol watch alert — upstream change detected` and retain the current report in the run summary.
+6. Suppress another alert while an issue with that exact title, created by the repository owner or GitHub Actions bot, is open. An issue from another author cannot suppress delivery. A full 1,000-issue inventory fails closed rather than assuming no alert exists.
 
-The alert PR is evidence only. A reviewer must inspect the upstream diff, decide whether Vortik is stale, apply any necessary source-note or public-artifact updates, and only then move the baseline. CI remains the merge gate.
+The issue is evidence only. A reviewer must inspect the upstream diff and decide whether Vortik is stale. Any source-note, public-artifact or baseline changes belong in a separate reviewed PR. The watcher does not advance the baseline or close the issue automatically; CI remains the merge gate for resulting changes.
+
+The delivery job needs only `contents: read` and `issues: write`. It does not need permission to create PRs, repository write access, a personal token, or new automation branches. A delivery error is a failed run, not a successful alert. Inspect the issue inventory before retrying an ambiguous creation failure.
 
 ## Safety properties
 

@@ -122,7 +122,7 @@ export function compareBaseline(baseline, observed) {
 }
 
 export function formatReport({ observedAt, baseline, changes }) {
-  const lines = ["# Protocol Watch Alert", "", `Observed at: \`${observedAt}\``, `Baseline reviewed through: \`${baseline.reviewed_through}\``, "", "This draft PR is an evidence alert only. It MUST NOT be merged until a reviewer determines whether the upstream changes require source-note, anchor, registry, feed, map, or documentation updates. The watcher does not mutate canonical registry state and does not auto-merge.", "", "## Changed primary sources", ""];
+  const lines = ["# Protocol Watch Alert", "", `Observed at: \`${observedAt}\``, `Baseline reviewed through: \`${baseline.reviewed_through}\``, "", "This issue is an evidence alert only. A reviewer must determine whether upstream changes require source-note, anchor, registry, feed, map, or documentation updates. Any resulting changes belong in a separate reviewed PR. The watcher does not mutate canonical registry state, accept its baseline, or auto-merge.", "", "## Changed primary sources", ""];
   for (const change of changes) {
     const current = change.current;
     lines.push(`- **${current.id}** — ${current.repository}${current.path ? ` / \`${current.path}\`` : ""}`);
@@ -132,7 +132,7 @@ export function formatReport({ observedAt, baseline, changes }) {
     lines.push(`  - relevance: ${(current.relevance ?? []).join(", ")}`);
     lines.push(`  - source: ${current.source_url}`);
   }
-  lines.push("", "## Required human gate", "", "1. Inspect the upstream diff and primary-source context.", "2. Decide whether Vortik public claims or semantic state are stale.", "3. If needed, update source notes and affected public artifacts in this PR.", "4. Update `protocol-watch/baseline.json` only after that review.", "5. Require `npm run check:public-safety` and `npm run validate` to pass before merge.", "");
+  lines.push("", "## Required human gate", "", "1. Inspect the upstream diff and primary-source context.", "2. Decide whether Vortik public claims or semantic state are stale.", "3. If needed, update source notes and affected public artifacts in a separate reviewed PR.", "4. Update `protocol-watch/baseline.json` only after that review.", "5. Require `npm run check:public-safety` and `npm run validate` to pass before merge.", "");
   return lines.join("\n");
 }
 
