@@ -22,6 +22,7 @@ test("formatReport keeps the human gate explicit", () => {
     baseline: { reviewed_through: "2026-09-13" },
     changes: [{ id: "eip-7732", previous: { fingerprint: "a".repeat(40) }, current: { id: "eip-7732", repository: "ethereum/EIPs", path: "EIPS/eip-7732.md", fingerprint: "b".repeat(40), relevance: ["epbs.eth"], source_url: "https://github.com/ethereum/EIPs" } }]
   });
-  assert.match(report, /MUST NOT be merged/);
+  assert.match(report, /This issue is an evidence alert only/);
+  assert.match(report, /Any resulting changes belong in a separate reviewed PR/);
   assert.match(report, /Update `protocol-watch\/baseline\.json` only after that review/);
 });
