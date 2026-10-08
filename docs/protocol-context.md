@@ -31,15 +31,17 @@ console.log(result.related_eips); // EIP-8025: Draft; Hegotá assignment: propos
 
 ## Independent facts
 
-| Field | Meaning | Example in the September 30 review |
+| Field | Meaning | Example in the October 8 follow-up |
 | --- | --- | --- |
-| `reviewed_at` | Date of this editorial source review | `2026-09-30` |
+| `reviewed_at` | Date of this editorial source review | `2026-10-08` |
 | `registry.last_updated` | Date of the referenced canonical registry | `2026-09-13` |
 | `anchors[].context_kind` | Vortik's description of the source context | `protocol`, `research`, `application`, or `editorial` |
 | `eips[].document_status` | Status on the EIP document | FOCIL: `Draft` |
 | `eips[].fork.assignment` | Assignment in the cited fork meta EIP | FOCIL: `scheduled` for Hegotá |
-| `forks[].activations[].status` | Network state recorded by the reviewed schedule | Glamsterdam/Sepolia: `scheduled` |
-| `forks[].activations[].activation_at` | Explicit UTC activation time, if recorded | `2026-10-06T13:53:36Z` for Glamsterdam/Sepolia |
+| `forks[].activations[].status` | Network state recorded by the reviewed schedule | Glamsterdam/Sepolia: `unverified` |
+| `forks[].activations[].activation_at` | Explicit UTC activation time, if recorded | `null` for unverified Sepolia; announced time retained in the review |
+
+The October 8 follow-up marks Sepolia `unverified` with null activation fields: the published October 6 time has passed, and its elapsed time is not evidence of successful activation. The announcement time remains in the dated review. The review does not verify live network state.
 
 An EIP being `Draft` does not determine whether it is scheduled. A scheduled fork feature is not automatically active on mainnet. An anchor's `eip_refs` are contextual references: a related EIP does not standardize an entire umbrella term or assign a fork status to an ENS name. `getAnchorContext` preserves the names `related_eips` and `related_forks` for this reason.
 
@@ -69,6 +71,8 @@ The dataset is maintained directly under `docs/`; it is not a generated registry
 2. Update `protocol-context.json` and add a dated review document. Keep earlier review documents as history; set `review_path` to the new review.
 3. Change `reviewed_at` only after the source review. Preserve `registry.last_updated` unless the canonical registry itself changed.
 4. Update the dated regression assertions with the new evidence, then run the protocol-context checks, public-safety checks, and full repository validation.
+
+The current [October 8 follow-up](research/protocol-freshness-2026-10-08.md) rechecks the selected EIP metadata, fork assignments and published schedules. Other research and application source notes retain their September 30 review.
 
 The initial snapshot is backed by the [September 30 source review](research/protocol-freshness-2026-09-30.md). The primary URLs in the JSON were rechecked when this dataset was prepared. A date is a record of that review, not an automatic freshness guarantee.
 

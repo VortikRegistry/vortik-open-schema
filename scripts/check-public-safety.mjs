@@ -253,7 +253,7 @@ function reviewedCatalogLines(relative, text) {
   const allowed = new Set();
   if (relative !== 'docs/ethereum-catalog.json') return allowed;
   const catalog = JSON.parse(text);
-  const commit = '66daa41124581e4e839e89d71eb06b6cd4b1f9b8';
+  const commit = '6dac5e74918b54511298fdbff79650e8f8d27d78';
   if (catalog.contract !== 'vortik.ethereum-catalog/1.0.0'
     || !catalog.sources?.some((source) => source.id === 'eips'
       && source.repository === 'ethereum/EIPs' && source.commit === commit)) return allowed;

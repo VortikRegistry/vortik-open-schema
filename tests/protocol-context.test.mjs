@@ -21,12 +21,12 @@ test("source review covers the canonical registry without replacing its date or 
 test("reviewed EIP status and fork assignment retain distinct meanings", () => {
   const records = new Map(snapshot.eips.map((entry) => [entry.number, entry]));
   for (const [number, status, fork, assignment] of [
-    [7732, "Review", "Glamsterdam", "scheduled"],
+    [7732, "Last Call", "Glamsterdam", "scheduled"],
     [7805, "Draft", "Hegotá", "scheduled"],
-    [7928, "Review", "Glamsterdam", "scheduled"],
+    [7928, "Last Call", "Glamsterdam", "scheduled"],
     [8025, "Draft", "Hegotá", "proposed"],
     [8146, "Draft", "Hegotá", "declined"],
-    [8282, "Review", "Glamsterdam", "scheduled"]
+    [8282, "Last Call", "Glamsterdam", "scheduled"]
   ]) {
     assert.equal(records.get(number).document_status, status);
     assert.equal(records.get(number).fork.name, fork);
@@ -34,10 +34,10 @@ test("reviewed EIP status and fork assignment retain distinct meanings", () => {
   }
 });
 
-test("the dated Sepolia schedule does not imply mainnet activation", () => {
+test("an elapsed Sepolia schedule is unverified without activation evidence", () => {
   const fork = snapshot.forks.find((entry) => entry.name === "Glamsterdam");
   assert.deepEqual(fork.activations.find((entry) => entry.network === "Sepolia"), {
-    network: "Sepolia", status: "scheduled", activation_at: "2026-10-06T13:53:36Z", epoch: 353024, slot: 11296768
+    network: "Sepolia", status: "unverified", activation_at: null, epoch: null, slot: null
   });
   const mainnet = fork.activations.find((entry) => entry.network === "Mainnet");
   assert.equal(mainnet.status, "not_scheduled");
@@ -99,11 +99,19 @@ test("a genuine primary source for the wrong EIP is insufficient", () => {
 });
 
 test("activation requires a date while unknown and unscheduled states require explicit nulls", () => {
-  assert.throws(() => assertProtocolContext(mutate((data) => { data.forks[0].activations[0].activation_at = null; }), registry), /contract/);
+  const scheduled = (change) => mutate((data) => {
+    data.reviewed_at = "2026-09-30";
+    Object.assign(data.forks[0].activations[0], {
+      status: "scheduled", activation_at: "2026-10-06T13:53:36Z", epoch: 353024, slot: 11296768
+    });
+    change(data);
+  });
+  assert.throws(() => assertProtocolContext(scheduled((data) => { data.forks[0].activations[0].activation_at = null; }), registry), /contract/);
   assert.throws(() => assertProtocolContext(mutate((data) => { data.forks[0].activations[1].activation_at = "2026-10-06T13:53:36Z"; }), registry), /contract/);
   assert.throws(() => assertProtocolContext(mutate((data) => { delete data.forks[0].activations[1].activation_at; }), registry), /contract/);
-  assert.throws(() => assertProtocolContext(mutate((data) => { data.forks[0].activations[0].status = "active"; }), registry), /future activation cannot be active/);
-  assert.throws(() => assertProtocolContext(mutate((data) => { data.forks[0].activations[0].slot += 1; }), registry), /epoch and slot/);
+  assert.throws(() => assertProtocolContext(scheduled((data) => { data.forks[0].activations[0].status = "active"; }), registry), /future activation cannot be active/);
+  assert.throws(() => assertProtocolContext(scheduled((data) => { data.reviewed_at = "2026-10-08"; }), registry), /scheduled date predates review/);
+  assert.throws(() => assertProtocolContext(scheduled((data) => { data.forks[0].activations[0].slot += 1; }), registry), /epoch and slot/);
   const unknown = mutate((data) => { data.forks[0].activations[1].status = "unverified"; });
   assert.doesNotThrow(() => assertProtocolContext(unknown, registry));
 });
@@ -112,6 +120,6 @@ test("local query returns an isolated result and rejects unknown anchors", () =>
   const result = getAnchorContext(snapshot, "epbs.eth");
   assert.equal(result.sources.some((entry) => entry.id === "glamsterdam-activation"), true);
   result.related_eips[0].document_status = "Final";
-  assert.equal(snapshot.eips.find((entry) => entry.number === 7732).document_status, "Review");
+  assert.equal(snapshot.eips.find((entry) => entry.number === 7732).document_status, "Last Call");
   assert.throws(() => getAnchorContext(snapshot, "unknown"), /Unknown context anchor/);
 });

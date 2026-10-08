@@ -6,7 +6,9 @@ This page is a navigation index for public Vortik Registry research notes. Resea
 
 ## Research notes
 
-- [Protocol freshness review — 2026-09-30](protocol-freshness-2026-09-30.md) — current source context and a reference table for all 12 anchors.
+- [Protocol follow-up and visitor journey — 2026-10-08](protocol-freshness-2026-10-08.md) — selected lifecycle changes, catalog regeneration, published schedule limits and public navigation checks.
+
+- [Protocol freshness review — 2026-09-30](protocol-freshness-2026-09-30.md) — September 30 source context and a reference table for all 12 anchors.
 - [Fast Finality source audit](fast-finality-source-audit.md) — reconciles the official umbrella terminology with the existing SSF anchor.
 - [EIP-8146 BAL sidecars source audit](eip-8146-bal-sidecars-source-audit.md) — records the Draft design and its current Declined-for-Inclusion Hegotá state.
 

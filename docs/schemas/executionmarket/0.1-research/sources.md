@@ -102,5 +102,7 @@ Curated references and source notes should be placed in the protected section be
 
 **Reviewed: 2026-09-30.** Glamsterdam brings specific execution, block-production, and resource-accounting changes. BALs, payload bids, state creation, and state access have different meanings and must not be collapsed into one mechanism.
 
+**Follow-up: 2026-10-08.** EIP-7732, EIP-7928, EIP-8037 and EIP-8038 now have Last Call document status (deadline 2026-11-01). Their Glamsterdam assignment remains Scheduled for Inclusion. The [dated review](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-08.md) separates these updates from network activation.
+
 The cited specifications do not define a bounded L1 object called an execution market. Vortik retains `deprecated` for that broad registry abstraction. This is not a claim that execution-related economic activity is disappearing, or that Glamsterdam has activated on mainnet.
 <!-- MANUAL-SOURCES:END -->

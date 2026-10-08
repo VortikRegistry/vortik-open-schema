@@ -34,11 +34,11 @@ The website uses static artifacts from this repository. Searching and comparing 
 
 The [protocol context contract](docs/protocol-context.md) keeps these concepts separate. A source review date is also separate from the canonical registry's last-change date.
 
-## Protocol sources reviewed — 2026-09-30
+## Protocol source follow-up — 2026-10-08
 
-All 12 anchor notes and their curated references were reviewed. The review records Glamsterdam's Sepolia schedule for October 6, 2026, with Hoodi and mainnet dates unset; FOCIL's assignment to Hegotá; and the ENSv2 public Beta on Sepolia. These are dated observations, not a live network monitor.
+The October 8 follow-up updates the selected EIP document statuses, fork assignments and published schedules. Five referenced Glamsterdam proposals are now Last Call. The catalog now covers 1,209 EIP/ERC records from pinned official sources. Sepolia's published October 6 time has passed; this review does not confirm activation. Hoodi and mainnet dates remain unset in the cited sources.
 
-See the [all-anchor source review](docs/research/protocol-freshness-2026-09-30.md) and [review history](docs/changes.md). Follow the linked primary sources for later decisions. Historical releases retain their original context.
+See the [October 8 follow-up](docs/research/protocol-freshness-2026-10-08.md), the earlier [all-anchor source review](docs/research/protocol-freshness-2026-09-30.md) and [review history](docs/changes.md). Follow the linked primary sources for later decisions. Historical releases retain their original context.
 
 ## 30-second developer quickstart
 

@@ -5,7 +5,7 @@
 **Registry ID:** `epbs`  
 **Status:** implementation-facing  
 **Classification:** core  
-**Protocol freshness reviewed:** 2026-09-30
+**Protocol freshness reviewed:** 2026-10-08 (targeted follow-up; historical testnet evidence retains its original dates)
 
 ---
 
@@ -21,19 +21,19 @@ Vortik is an independent semantic registry. This document is not an Ethereum spe
 
 ---
 
-## Current upstream state — 2026-09-30
+## Current upstream state — 2026-10-08
 
 The primary specification is **EIP-7732**.
 
 As of this review:
 
-- EIP-7732 is a **Review** Standards Track Core EIP.
+- EIP-7732 is a **Last Call** Standards Track Core EIP, with a 2026-11-01 deadline.
 - EIP-7773 lists EIP-7732 as **Scheduled for Inclusion** in Glamsterdam.
 - Glamsterdam is in active testing; this does not mean ePBS is deployed on Ethereum mainnet.
-- The Ethereum Foundation's September 28 announcement schedules Glamsterdam on **Sepolia for 2026-10-06 13:53:36 UTC (epoch 353024, slot 11296768)**. This is a future testnet activation, not evidence that it has happened. **Hoodi and mainnet activation dates remain undecided.**
-- **EIP-8282 — Builder Execution Requests** is also in Review and Scheduled for Inclusion in Glamsterdam. It gives EIP-7732 builders dedicated deposit and exit request paths.
+- The Ethereum Foundation's September 28 announcement schedules Glamsterdam on **Sepolia for 2026-10-06 13:53:36 UTC (epoch 353024, slot 11296768)**. That published time has passed; the schedule alone does not verify completion, and this review does not check live network state. **Hoodi and mainnet activation dates remain undecided.**
+- **EIP-8282 — Builder Execution Requests** is also in Last Call (deadline 2026-11-01) and Scheduled for Inclusion in Glamsterdam. It gives EIP-7732 builders dedicated deposit and exit request paths.
 
-These are source states, not Vortik judgments about activation.
+These are source states, not Vortik judgments about activation. See the [October 8 follow-up](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-08.md) for source identities and review limits.
 
 ---
 
@@ -227,8 +227,9 @@ The accurate framing is:
 
 ```text
 ePBS is a protocol-facing proposer-builder coordination primitive,
-Scheduled for Inclusion in Glamsterdam, with Sepolia activation scheduled
-for 2026-10-06 and public testnet/devnet implementation evidence as of 2026-09-30.
+in Last Call and Scheduled for Inclusion in Glamsterdam as of 2026-10-08.
+The published Sepolia schedule names 2026-10-06; completion is not verified here.
+Historical public testnet/devnet evidence retains its 2026-09-30 review date.
 ```
 
 ---

@@ -1,25 +1,25 @@
 # Ethereum proposal catalog
 
-The [catalog JSON](ethereum-catalog.json) contains **1,208 unique proposals: 592 EIPs and 616 ERCs**. It copies selected frontmatter fields from every numbered proposal Markdown file in the two official repositories at the commits below. It is independent of Vortik's 12 ENS-style semantic anchors: a proposal does not need a matching naming handle to appear here.
+The [catalog JSON](ethereum-catalog.json) contains **1,209 unique proposals: 593 EIPs and 616 ERCs**. It copies selected frontmatter fields from every numbered proposal Markdown file in the two official repositories at the commits below. It is independent of Vortik's 12 ENS-style semantic anchors: a proposal does not need a matching naming handle to appear here.
 
 Use the [proposal search](research.html) for titles, optional upstream descriptions, proposal numbers, and document filters. The [separate protocol context](protocol-context.md) supplies a smaller, editorially reviewed set of fork assignments and network schedules. The catalog itself makes no activation claim.
 
 ## Snapshot provenance
 
-Metadata snapshot reviewed: **2026-09-30**. This date records source selection and metadata extraction, not a technical review of every specification body.
+Metadata snapshot reviewed: **2026-10-08**. This date records source selection and metadata extraction, not a technical review of every specification body.
 
 | Official repository | Pinned commit | Markdown files | Canonical records |
 | --- | --- | ---: | ---: |
-| [ethereum/EIPs](https://github.com/ethereum/EIPs) | [`66daa41124581e4e839e89d71eb06b6cd4b1f9b8`](https://github.com/ethereum/EIPs/commit/66daa41124581e4e839e89d71eb06b6cd4b1f9b8) | 957 | 592 |
-| [ethereum/ERCs](https://github.com/ethereum/ERCs) | [`5993dff16ae5003b1eb9c450cf71159e5ae89275`](https://github.com/ethereum/ERCs/commit/5993dff16ae5003b1eb9c450cf71159e5ae89275) | 617 | 616 |
+| [ethereum/EIPs](https://github.com/ethereum/EIPs) | [`6dac5e74918b54511298fdbff79650e8f8d27d78`](https://github.com/ethereum/EIPs/commit/6dac5e74918b54511298fdbff79650e8f8d27d78) | 958 | 593 |
+| [ethereum/ERCs](https://github.com/ethereum/ERCs) | [`3da6a0ffd402d7ea11a695dbb1eea9b2e1162238`](https://github.com/ethereum/ERCs/commit/3da6a0ffd402d7ea11a695dbb1eea9b2e1162238) | 617 | 616 |
 
 Both repositories' pinned `LICENSE.md` files specify **CC0 1.0 Universal**. Each catalog source includes its immutable source-tree and license URLs. Each proposal includes its repository reference, path and commit; its `url` points to the official publication site.
 
-All **1,574** Markdown inputs are accounted for:
+All **1,575** Markdown inputs are accounted for:
 
 - 365 EIPs files are `Moved` ERC stubs. Their canonical ERC metadata is used once.
 - ERCs contains a mirror of EIP-1. The indexed metadata matches the canonical EIPs copy, which is used once.
-- The remaining 1,208 records are unique by proposal number. No proposal is excluded because it lacks a Vortik anchor.
+- The remaining 1,209 records are unique by proposal number. No proposal is excluded because it lacks a Vortik anchor.
 - No Markdown file is silently skipped. The generator fails on an unknown filename, unsupported metadata, missing counterpart or conflicting duplicate.
 
 `coverage.duplicate_numbers` lists the 366 numbers represented by a moved stub or mirror. `coverage.excluded_files` is empty. This is coverage of those pinned repository directories, not all Ethereum ideas: unmerged pull requests, research discussions, abandoned unpublished drafts and later commits are outside the snapshot.
@@ -64,11 +64,11 @@ The generator never downloads sources. Prepare local checkouts of the official r
 ```bash
 git clone --filter=blob:none --sparse https://github.com/ethereum/EIPs.git /tmp/vortik-official-EIPs
 git -C /tmp/vortik-official-EIPs sparse-checkout set EIPS
-git -C /tmp/vortik-official-EIPs checkout 66daa41124581e4e839e89d71eb06b6cd4b1f9b8
+git -C /tmp/vortik-official-EIPs checkout 6dac5e74918b54511298fdbff79650e8f8d27d78
 
 git clone --filter=blob:none --sparse https://github.com/ethereum/ERCs.git /tmp/vortik-official-ERCs
 git -C /tmp/vortik-official-ERCs sparse-checkout set ERCS
-git -C /tmp/vortik-official-ERCs checkout 5993dff16ae5003b1eb9c450cf71159e5ae89275
+git -C /tmp/vortik-official-ERCs checkout 3da6a0ffd402d7ea11a695dbb1eea9b2e1162238
 
 node scripts/generate-ethereum-catalog.mjs \
   --eips /tmp/vortik-official-EIPs \
