@@ -1,0 +1,84 @@
+{
+  "observation_version": "1.0.0",
+  "observed_from": "2026-10-08T17:37:15.966Z",
+  "observed_through": "2026-10-08T17:37:16.717Z",
+  "retrieval": "Read-only GitHub file metadata and default-branch metadata; exact source blobs and relevant upstream commit diffs reviewed separately.",
+  "sources": [
+    {
+      "id": "eip-7732",
+      "repository": "ethereum/EIPs",
+      "path": "EIPS/eip-7732.md",
+      "fingerprint": "947683d4fe49da8870026cb69c6d9ff8d7d4d6d8",
+      "status": "Last Call",
+      "source_url": "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7732.md"
+    },
+    {
+      "id": "eip-7773-glamsterdam-meta",
+      "repository": "ethereum/EIPs",
+      "path": "EIPS/eip-7773.md",
+      "fingerprint": "c6b80d7f3d36bcb5d041ca30c6026133602900ea",
+      "status": "Review",
+      "source_url": "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7773.md"
+    },
+    {
+      "id": "eip-7805-focil",
+      "repository": "ethereum/EIPs",
+      "path": "EIPS/eip-7805.md",
+      "fingerprint": "0a3955d9e8772b7666f560402b2d81ae032a3d06",
+      "status": "Draft",
+      "source_url": "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7805.md"
+    },
+    {
+      "id": "eip-7928-bal",
+      "repository": "ethereum/EIPs",
+      "path": "EIPS/eip-7928.md",
+      "fingerprint": "f5828f59cd5073eca7856b62c6d16389d5a2c09d",
+      "status": "Last Call",
+      "source_url": "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7928.md"
+    },
+    {
+      "id": "eip-8081-hegota-meta",
+      "repository": "ethereum/EIPs",
+      "path": "EIPS/eip-8081.md",
+      "fingerprint": "ecef1753737cc9b60b1d9d086380db88f1e3dc3c",
+      "status": "Draft",
+      "source_url": "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-8081.md"
+    },
+    {
+      "id": "eip-8282-builder-requests",
+      "repository": "ethereum/EIPs",
+      "path": "EIPS/eip-8282.md",
+      "fingerprint": "13b923d8effa18ec5eae90c9c5072950539aa0f9",
+      "status": "Last Call",
+      "source_url": "https://github.com/ethereum/EIPs/blob/master/EIPS/eip-8282.md"
+    },
+    {
+      "id": "ethereum-org-glamsterdam-roadmap",
+      "repository": "ethereum/ethereum-org-website",
+      "path": "public/content/roadmap/glamsterdam/index.md",
+      "fingerprint": "d6a26c8d19a6e8370be70b112bd92b17f93eb709",
+      "status": null,
+      "source_url": "https://github.com/ethereum/ethereum-org-website/blob/dev/public/content/roadmap/glamsterdam/index.md"
+    },
+    {
+      "id": "consensus-gloas-beacon-chain",
+      "repository": "ethereum/consensus-specs",
+      "path": "specs/gloas/beacon-chain.md",
+      "fingerprint": "2dbc757d375267746fd8f1ae0090663ef4774176",
+      "status": null,
+      "source_url": "https://github.com/ethereum/consensus-specs/blob/master/specs/gloas/beacon-chain.md"
+    },
+    {
+      "id": "consensus-gloas-p2p",
+      "repository": "ethereum/consensus-specs",
+      "path": "specs/gloas/p2p-interface.md",
+      "fingerprint": "1e0dca6e5ab6a83c3f4536b69bcca4bcd1c5bdcc",
+      "status": null,
+      "source_url": "https://github.com/ethereum/consensus-specs/blob/master/specs/gloas/p2p-interface.md"
+    },
+    {
+      "id": "glamsterdam-devnets-head",
+      "fingerprint": "859bb47b59621384888b64eeb6c1d4cab0724ec7"
+    }
+  ]
+}

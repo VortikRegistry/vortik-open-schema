@@ -1,7 +1,7 @@
 {
   "baseline_version": "1.0.0",
   "reviewed_through": "2026-10-08",
-  "note": "Review evidence and scope: docs/research/protocol-watch-review-2026-10-08.md, followed by docs/research/protocol-watch-alert-150-review-2026-10-08.md for the later devnet changes. This reference must be accepted through a human-approved PR; observations alone do not authorize baseline advancement. Devnet coverage is a complete path inventory and a bounded freshness-impact review, not a deployment or security audit.",
+  "note": "Review evidence and scope: docs/research/protocol-watch-review-2026-10-08.md; docs/research/protocol-watch-alert-150-review-2026-10-08.md for later devnet changes; docs/research/protocol-watch-alert-152-review-2026-10-08.md for Gloas and Hegota changes through 17:37 UTC. This reference must be accepted through a human-approved PR; observations alone do not authorize baseline advancement. These are bounded freshness-impact reviews, not deployment or security audits.",
   "sources": [
     {
       "id": "eip-7732",
@@ -25,7 +25,7 @@
     },
     {
       "id": "eip-8081-hegota-meta",
-      "fingerprint": "2f0d5c497eca41ee9a13f2aef2598e4ed3ec1597",
+      "fingerprint": "ecef1753737cc9b60b1d9d086380db88f1e3dc3c",
       "status": "Draft"
     },
     {
@@ -39,7 +39,7 @@
     },
     {
       "id": "consensus-gloas-beacon-chain",
-      "fingerprint": "68ef6e61d33cdc185cdb5fc17b8dd6e8cb63b699"
+      "fingerprint": "2dbc757d375267746fd8f1ae0090663ef4774176"
     },
     {
       "id": "consensus-gloas-p2p",
