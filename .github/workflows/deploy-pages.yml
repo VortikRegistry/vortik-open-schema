@@ -90,6 +90,7 @@ jobs:
             assets/registry.css \
             assets/registry-explorer.js \
             assets/ethereum-search.js \
+            assets/site-analytics.js \
             assets/vortik-mark.svg \
             ethereum-catalog.json \
             ethereum-catalog.schema.json \
