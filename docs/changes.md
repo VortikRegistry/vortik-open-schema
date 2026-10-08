@@ -2,6 +2,16 @@
 
 This is an editorial and interface history. Canonical registry versions and historical release notes retain their original meaning.
 
+## 2026-10-08 — source follow-up and visitor journey
+
+- Updated five selected Glamsterdam proposals from Review to Last Call and retained their separate fork assignments.
+- Regenerated the broad catalog from pinned official repositories: 1,209 records, including new EIP-8411 and 33 lifecycle changes.
+- Clarified that an elapsed Sepolia schedule is not confirmation of activation.
+- Checked the published home → proposal search → official source and home → comparison → X contact paths, including no-result recovery and comparison reload.
+- Preserved canonical registry classifications and the Protocol Watch baseline; the devnet comparison remains incomplete.
+
+See the [dated follow-up and evidence limits](research/protocol-freshness-2026-10-08.md).
+
 ## 2026-09-30 — proposal search beyond curated names
 
 - Added an independent search surface for official EIP and ERC metadata, with source commits, recorded coverage and reproducible local generation.

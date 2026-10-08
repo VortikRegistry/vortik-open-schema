@@ -1,14 +1,14 @@
 {
   "$schema": "https://vortikregistry.github.io/vortik-open-schema/protocol-context.schema.json",
   "contract": "vortik.protocol-context/1.0.0",
-  "reviewed_at": "2026-09-30",
-  "scope": "Independent, dated source context for selected Ethereum concepts. EIP references provide related context, not equivalence with an ENS name. Review dates, EIP document status, fork assignment and network activation are distinct. This snapshot does not verify runtime health or ENS resolution.",
+  "reviewed_at": "2026-10-08",
+  "scope": "Independent, dated source context for selected Ethereum concepts. The October 8 follow-up rechecks EIP metadata, fork assignments and published schedules; other research and application notes retain their September 30 review. EIP references are related context, not equivalence with an ENS name. A past scheduled time alone does not confirm activation. This snapshot does not verify runtime health or ENS resolution.",
   "registry": {
     "version": "0.6.5",
     "last_updated": "2026-09-13",
     "path": "registry.json"
   },
-  "review_path": "research/protocol-freshness-2026-09-30.md",
+  "review_path": "research/protocol-freshness-2026-10-08.md",
   "anchors": [
     {
       "id": "epbs",
@@ -230,7 +230,7 @@
     {
       "number": 7732,
       "title": "Enshrined Proposer-Builder Separation",
-      "document_status": "Review",
+      "document_status": "Last Call",
       "fork": {
         "name": "Glamsterdam",
         "assignment": "scheduled",
@@ -252,7 +252,7 @@
     {
       "number": 7928,
       "title": "Block-Level Access Lists",
-      "document_status": "Review",
+      "document_status": "Last Call",
       "fork": {
         "name": "Glamsterdam",
         "assignment": "scheduled",
@@ -274,7 +274,7 @@
     {
       "number": 8037,
       "title": "State Creation Gas Cost Increase",
-      "document_status": "Review",
+      "document_status": "Last Call",
       "fork": {
         "name": "Glamsterdam",
         "assignment": "scheduled",
@@ -285,7 +285,7 @@
     {
       "number": 8038,
       "title": "State-access gas cost update",
-      "document_status": "Review",
+      "document_status": "Last Call",
       "fork": {
         "name": "Glamsterdam",
         "assignment": "scheduled",
@@ -307,7 +307,7 @@
     {
       "number": 8282,
       "title": "Builder Execution Requests",
-      "document_status": "Review",
+      "document_status": "Last Call",
       "fork": {
         "name": "Glamsterdam",
         "assignment": "scheduled",
@@ -326,10 +326,10 @@
       "activations": [
         {
           "network": "Sepolia",
-          "status": "scheduled",
-          "activation_at": "2026-10-06T13:53:36Z",
-          "epoch": 353024,
-          "slot": 11296768
+          "status": "unverified",
+          "activation_at": null,
+          "epoch": null,
+          "slot": null
         },
         {
           "network": "Hoodi",

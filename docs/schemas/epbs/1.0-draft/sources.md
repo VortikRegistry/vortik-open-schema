@@ -93,7 +93,7 @@ Curated references and source notes should be placed in the protected section be
 <!-- MANUAL-SOURCES:START -->
 ## Curated References
 
-Primary and implementation-facing sources reviewed through **2026-09-30**:
+Primary and implementation-facing sources reviewed on **2026-09-30**, with the targeted **2026-10-08** follow-up below:
 
 - EIP-7732 — Enshrined Proposer-Builder Separation  
   https://eips.ethereum.org/EIPS/eip-7732
@@ -128,6 +128,12 @@ Primary and implementation-facing sources reviewed through **2026-09-30**:
 - The Ethereum Foundation schedules Glamsterdam on Sepolia for **2026-10-06 13:53:36 UTC**, epoch 353024, slot 11296768. This activation has not yet occurred as of this review.
 - Hoodi and mainnet activation dates are **TBD** in both the Foundation announcement and EIP-7773. Scheduled inclusion of EIP-7732, EIP-7928 and EIP-8282 does not establish mainnet activation.
 - EIP-8081 now marks EIP-8146 BAL Sidecars **Declined for Inclusion** in Hegotá; this does not change the Glamsterdam ePBS/BAL schedule.
+
+### Source update as of 2026-10-08
+
+- EIP-7732 and EIP-8282 are now **Last Call**, each with a 2026-11-01 deadline. Their Glamsterdam assignment is unchanged.
+- The published Sepolia time has passed. This review records that schedule without confirming activation; Hoodi and mainnet dates remain unset in the reviewed sources.
+- The [dated follow-up](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-08.md) records the selected Gloas specification changes and the incomplete devnet comparison. Earlier testing evidence above remains dated evidence.
 
 ### Interpretation boundary
 
