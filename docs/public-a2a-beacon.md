@@ -144,3 +144,11 @@ If the deployed service and machine-readable discovery state cease to be consist
 The A2A beacon is independent from trusted-receipt issuance and candidate admission.
 
 Beacon activation does not alter those separate gates.
+
+## Source freshness and deployment identity
+
+The [2026-10-08 source comparison](research/beacon-source-freshness-2026-10-08.md)
+records unchanged application modules and snapshots relative to the source
+merged in PR #138. It distinguishes web publication from the container's
+capabilities and documents the remaining authenticated image/traffic check.
+That comparison is not a current runtime attestation.
