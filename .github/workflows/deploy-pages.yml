@@ -1,13 +1,9 @@
 name: Deploy GitHub Pages
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "docs/**"
-      - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
+  # The completed validation is the sole automatic publication trigger.
+  # A push trigger here would deploy the same change again after validation.
   workflow_run:
     workflows: ["Validate Vortik Registry"]
     branches: [main]

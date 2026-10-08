@@ -62,6 +62,8 @@ The [ethereum.org roadmap](https://ethereum.org/roadmap/glamsterdam/) removes EI
 
 The devnet head comparison returned **300 changed files**, the API comparison limit. It is not an exhaustive review of that repository. The Protocol Watch baseline is therefore **unchanged**, and this follow-up does not close the watch issue or assert that every pending source diff was accepted. Baseline acceptance still requires the project's human review gate.
 
+A [separate Protocol Watch review](protocol-watch-review-2026-10-08.md) subsequently completes the Git path inventory and proposes a dated baseline for human acceptance. The statement above records the limit of this earlier follow-up; the separate review describes the additional evidence and its boundaries.
+
 ## Published visitor journey
 
 These interactions were checked on the public site before this update, whose source snapshot was September 30:

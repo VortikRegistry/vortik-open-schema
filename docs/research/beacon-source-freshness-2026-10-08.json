@@ -1,0 +1,110 @@
+{
+  "review_date": "2026-10-08",
+  "baseline_commit": "ff114be8c88b52f07552cd5bfd5999edceba7fbb",
+  "compared_commit": "1af02be5af4a3f047f15ec5099203fc5e8bb721d",
+  "source_comparison": "PASS",
+  "current_runtime_identity": "UNVERIFIED",
+  "scope": "Exact source blobs; not deployed-image or full-build-context equivalence",
+  "files": [
+    {
+      "path": "lib/ens-research-client.mjs",
+      "role": "web_module",
+      "git_blob_sha": "74129eed2c2498a9275ca4c40b9a6719320b76a6"
+    },
+    {
+      "path": "lib/ens-research-evaluator.mjs",
+      "role": "web_module",
+      "git_blob_sha": "1e845e2245288e470767d1c038aa2d063058e0bc"
+    },
+    {
+      "path": "lib/immutable-json-snapshot.mjs",
+      "role": "web_module",
+      "git_blob_sha": "2f711080c75d7859b240a816280542527caad540"
+    },
+    {
+      "path": "lib/observed-public-a2a-beacon.mjs",
+      "role": "web_module",
+      "git_blob_sha": "ef74db87c2f10864430ea56645fade98348f4a3f"
+    },
+    {
+      "path": "lib/public-a2a-beacon.mjs",
+      "role": "web_module",
+      "git_blob_sha": "547c6e39a5ceff104a6f12ecd54548ccb2947b49"
+    },
+    {
+      "path": "lib/public-a2a-http.mjs",
+      "role": "web_module",
+      "git_blob_sha": "15266b5d64e702d5ada12893175ecc244159047b"
+    },
+    {
+      "path": "lib/public-commercial-signal-producer.mjs",
+      "role": "web_module",
+      "git_blob_sha": "09f87d34c8aeba95d83acaf9de01fc0a4b12edc2"
+    },
+    {
+      "path": "lib/public-reception-input-classifier.mjs",
+      "role": "web_module",
+      "git_blob_sha": "2ea91cab502100a813ebfb7483b9dda84fee8221"
+    },
+    {
+      "path": "lib/public-reception-router.mjs",
+      "role": "web_module",
+      "git_blob_sha": "67b37effa978b1d8c68a004cf59fb96fec44c318"
+    },
+    {
+      "path": "lib/reception-observability.mjs",
+      "role": "web_module",
+      "git_blob_sha": "dbc2b0c299865b322cdb4913db46412cc0b2bdb6"
+    },
+    {
+      "path": "service/cloud-run-agent-beacon.mjs",
+      "role": "web_module",
+      "git_blob_sha": "816ef73ed9c89ea8ec06906dc407358687e4c801"
+    },
+    {
+      "path": "maps/coordination-surfaces.json",
+      "role": "runtime_snapshot",
+      "git_blob_sha": "e3b850504b9ec3c604c7854ec2b3166c8e3bcba3"
+    },
+    {
+      "path": "registry.json",
+      "role": "runtime_snapshot",
+      "git_blob_sha": "26701766d1071631301713c69cca00ada7826f11"
+    },
+    {
+      "path": "agents/discovery.json",
+      "role": "discovery_manifest",
+      "git_blob_sha": "e77c90db3c20a2b1bb86cc1634c40264729ea4fb"
+    },
+    {
+      "path": "docs/agents/discovery.json",
+      "role": "discovery_manifest",
+      "git_blob_sha": "e77c90db3c20a2b1bb86cc1634c40264729ea4fb"
+    },
+    {
+      "path": "Procfile",
+      "role": "launch_dependency_build_or_probe",
+      "git_blob_sha": "632d40dd8a816768f1ea9b40b716230ee457bb62"
+    },
+    {
+      "path": "package-lock.json",
+      "role": "launch_dependency_build_or_probe",
+      "git_blob_sha": "24d00189311d7e493867b039cb8b8394b44dabd5"
+    },
+    {
+      "path": "service/cloud-run-agent-beacon-egress-probe.mjs",
+      "role": "launch_dependency_build_or_probe",
+      "git_blob_sha": "47ace388fa97cb7e7e4b893be58ba0b9c23d3c46"
+    },
+    {
+      "path": "service/cloudbuild-agent-beacon.json",
+      "role": "launch_dependency_build_or_probe",
+      "git_blob_sha": "dea8b7bfe68b3ea16e5f07be5f1f12ae2e58aec1"
+    },
+    {
+      "path": "service/materialize-reviewed-agent-beacon-source.sh",
+      "role": "launch_dependency_build_or_probe",
+      "git_blob_sha": "4f8fe9f60c22ac7102022e3ce3fd56bf187a5671"
+    }
+  ]
+}
