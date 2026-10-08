@@ -1,7 +1,7 @@
 {
   "baseline_version": "1.0.0",
   "reviewed_through": "2026-10-08",
-  "note": "Review evidence and scope: docs/research/protocol-watch-review-2026-10-08.md. This reference must be accepted through a human-approved PR; observations alone do not authorize baseline advancement. Devnet coverage is a complete path inventory and a bounded freshness-impact review, not a deployment or security audit.",
+  "note": "Review evidence and scope: docs/research/protocol-watch-review-2026-10-08.md, followed by docs/research/protocol-watch-alert-150-review-2026-10-08.md for the later devnet changes. This reference must be accepted through a human-approved PR; observations alone do not authorize baseline advancement. Devnet coverage is a complete path inventory and a bounded freshness-impact review, not a deployment or security audit.",
   "sources": [
     {
       "id": "eip-7732",
@@ -47,7 +47,7 @@
     },
     {
       "id": "glamsterdam-devnets-head",
-      "fingerprint": "788b03c81be76170e87ea382722f778193634997"
+      "fingerprint": "859bb47b59621384888b64eeb6c1d4cab0724ec7"
     }
   ]
 }
