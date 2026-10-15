@@ -87,6 +87,7 @@ jobs:
             index.html \
             app.html \
             research.html \
+            sitemap.xml \
             assets/registry.css \
             assets/registry-explorer.js \
             assets/ethereum-search.js \
