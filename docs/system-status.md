@@ -1,6 +1,6 @@
 # System status and evidence limits
 
-Capabilities reviewed: **2026-09-30**. Measurement preparation reviewed: **2026-10-08**. This page describes repository capabilities and the limits of the recorded evidence. It is not a live health monitor.
+Capabilities reviewed: **2026-09-30**. Measurement configuration reviewed: **2026-10-17 UTC**. This page describes repository capabilities and the limits of the recorded evidence. It is not a live health monitor.
 
 ## What runs where
 
@@ -28,7 +28,7 @@ The curated explorer reads the current published context artifact, and the broad
 
 A service activation or refresh needs evidence for the exact reviewed commit, built image digest, running revision, identity/network boundary and functional behavior. Service requests and deployment actions can consume cloud resources, so they belong to the owner's separately authorized operational workflow.
 
-This website adds no background service polling, wallet connection, model invocation or message sender. The optional website analytics adapter is prepared but disabled (empty site token); it makes no analytics request in that state. Activating it requires a maintainer-controlled provider registration and a reviewed publication. See [traffic measurement and privacy](traffic-measurement.md) for coverage, opt-out and evidence limits. An outbound source or contact link opens only when the visitor chooses it.
+This website adds no background service polling, wallet connection, model invocation or message sender. The website analytics adapter is configured with a maintainer-supplied public Cloudflare Web Analytics site token. Publishing this configuration enables collection on supported production pages while honoring Do Not Track, Global Privacy Control and `analytics=off`. The Pages workflow verifies the published adapter separately; provider dashboard acceptance remains pending and no visitor counts are asserted. See [traffic measurement and privacy](traffic-measurement.md) for coverage, opt-out and evidence limits. An outbound source or contact link opens only when the visitor chooses it.
 
 ## Reproduce the public behavior locally
 
