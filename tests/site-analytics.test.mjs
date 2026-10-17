@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import vm from "node:vm";
 import test from "node:test";
 
@@ -101,7 +102,13 @@ test("search and explorer URL updates preserve opt-out through reload without re
 test("all three user entry pages load the analytics adapter once and explain measurement", () => {
   for (const page of ["index.html", "research.html", "app.html"]) {
     const html = readFileSync(new URL(`../docs/${page}`, import.meta.url), "utf8");
-    assert.equal(html.split('src="./assets/site-analytics.js"').length - 1, 1);
+    const scripts = [...html.matchAll(/<script\s+src="(\.\/assets\/[^"?]+\.js)(?:\?v=([^"&]+))?"/g)];
+    assert.equal(scripts.filter(([, asset]) => asset === "./assets/site-analytics.js").length, 1);
+    for (const [, asset, version] of scripts) {
+      const bytes = readFileSync(new URL(`../docs/${asset}`, import.meta.url));
+      const expected = createHash("sha256").update(bytes).digest("hex").slice(0, 12);
+      assert.equal(version, expected, `${page}: ${asset} must use its current content version`);
+    }
     assert.match(html, /traffic-measurement\.md/);
     assert.match(html, /href="https:\/\/x\.com\/VortikRegistry"/);
     assert.equal(html.includes("static.cloudflareinsights.com"), false);
