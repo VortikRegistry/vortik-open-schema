@@ -1,9 +1,9 @@
 (() => {
   "use strict";
 
-  // Empty until the maintainer supplies the public Web Analytics site token.
+  // Public Web Analytics site token supplied by the maintainer on 2026-10-17.
   // This is an ingestion identifier, never an account API credential.
-  const SITE_TOKEN = "";
+  const SITE_TOKEN = "0916e48adf224378a0ff71db74c85eb2";
   const ORIGIN = "https://vortikregistry.github.io";
   const PATHS = new Set([
     "/vortik-open-schema/",

@@ -17,13 +17,22 @@ function browser({ token, url = "https://vortikregistry.github.io/vortik-open-sc
     head: { appendChild(script) { scripts.push(script); } }
   };
   const context = vm.createContext({ document, location: new URL(url), navigator, window, URLSearchParams });
-  const code = token === undefined ? source : source.replace('const SITE_TOKEN = "";', `const SITE_TOKEN = ${JSON.stringify(token)};`);
+  const code = token === undefined ? source : source.replace(/const SITE_TOKEN = "[^"]*";/, () => `const SITE_TOKEN = ${JSON.stringify(token)};`);
   return { scripts, run: () => vm.runInContext(code, context) };
 }
 
-test("checked-in website analytics is inert; an invalid token cannot load a provider", () => {
-  assert.match(source, /const SITE_TOKEN = "";/);
-  for (const token of [undefined, "", "not-a-token", "a".repeat(31), "a".repeat(33), '<script>bad</script>']) {
+test("checked-in website analytics loads the configured public site token once", () => {
+  const configuredToken = source.match(/const SITE_TOKEN = "([a-f0-9]{32})";/i)?.[1];
+  assert.ok(configuredToken, "a valid public site token must be configured");
+  const instance = browser();
+  instance.run();
+  instance.run();
+  assert.equal(instance.scripts.length, 1);
+  assert.deepEqual(JSON.parse(instance.scripts[0].attributes["data-cf-beacon"]), { token: configuredToken, spa: false });
+});
+
+test("an empty or invalid token cannot load a provider", () => {
+  for (const token of ["", "not-a-token", "a".repeat(31), "a".repeat(33), '<script>bad</script>']) {
     const instance = browser({ token });
     instance.run();
     assert.deepEqual(instance.scripts, []);
@@ -60,7 +69,7 @@ test("browser privacy signals and per-page opt-out prevent provider loading", ()
   }
 });
 
-test("all three user entry pages load the inert adapter once and explain measurement", () => {
+test("all three user entry pages load the analytics adapter once and explain measurement", () => {
   for (const page of ["index.html", "research.html", "app.html"]) {
     const html = readFileSync(new URL(`../docs/${page}`, import.meta.url), "utf8");
     assert.equal(html.split('src="./assets/site-analytics.js"').length - 1, 1);
