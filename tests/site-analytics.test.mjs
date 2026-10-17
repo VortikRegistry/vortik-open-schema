@@ -69,6 +69,35 @@ test("browser privacy signals and per-page opt-out prevent provider loading", ()
   }
 });
 
+test("search and explorer URL updates preserve opt-out through reload without retaining unrelated parameters", () => {
+  for (const [asset, page] of [["ethereum-search.js", "research.html"], ["registry-explorer.js", "app.html"]]) {
+    const uiSource = readFileSync(new URL(`../docs/assets/${asset}`, import.meta.url), "utf8");
+    const writeUrl = uiSource.match(/  function writeUrl\([^]*?\n  }\n/)?.[0];
+    assert.ok(writeUrl, `${asset} must expose its URL update function to this regression fixture`);
+    for (const preference of ["off", "on", null]) {
+      const url = new URL(`https://vortikregistry.github.io/vortik-open-schema/${page}?unrelated=discard-me`);
+      if (preference !== null) url.searchParams.set("analytics", preference);
+      const context = vm.createContext({
+        URL, location: url,
+        readFilters: () => ({ q: "EIP-8247", query: "epbs", kind: "all", classification: "all" }),
+        fields: {}, state: { page: 1, selected: new Set() }, $: () => ({ hidden: false })
+      });
+      const update = (_state, _title, target) => { context.location = new URL(target); };
+      context.history = { pushState: update, replaceState: update };
+      vm.runInContext(writeUrl, context);
+      for (const mode of ["replace", "push"]) {
+        vm.runInContext(`writeUrl(${JSON.stringify(mode)})`, context);
+        assert.equal(context.location.searchParams.get("analytics"), preference === "off" ? "off" : null, asset);
+        assert.equal(context.location.searchParams.has("unrelated"), false);
+        assert.equal(context.location.searchParams.get("q"), page === "research.html" ? "EIP-8247" : "epbs");
+        const reloaded = browser({ url: context.location.href });
+        reloaded.run();
+        assert.equal(reloaded.scripts.length, preference === "off" ? 0 : 1, asset);
+      }
+    }
+  }
+});
+
 test("all three user entry pages load the analytics adapter once and explain measurement", () => {
   for (const page of ["index.html", "research.html", "app.html"]) {
     const html = readFileSync(new URL(`../docs/${page}`, import.meta.url), "utf8");

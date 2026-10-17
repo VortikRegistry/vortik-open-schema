@@ -234,7 +234,9 @@
   function writeUrl() {
     const { query, kind, classification } = readFilters();
     const url = new URL(location.href);
+    const analyticsOptOut = url.searchParams.get("analytics") === "off";
     url.search = "";
+    if (analyticsOptOut) url.searchParams.set("analytics", "off");
     if (query.trim()) url.searchParams.set("q", query.trim());
     if (kind !== "all") url.searchParams.set("kind", kind);
     if (classification !== "all") url.searchParams.set("classification", classification);
