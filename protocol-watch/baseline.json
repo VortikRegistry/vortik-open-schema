@@ -1,7 +1,7 @@
 {
   "baseline_version": "1.0.0",
-  "reviewed_through": "2026-10-08",
-  "note": "Review evidence and scope: docs/research/protocol-watch-review-2026-10-08.md; docs/research/protocol-watch-alert-150-review-2026-10-08.md for later devnet changes; docs/research/protocol-watch-alert-152-review-2026-10-08.md for Gloas and Hegota changes through 17:37 UTC. This reference must be accepted through a human-approved PR; observations alone do not authorize baseline advancement. These are bounded freshness-impact reviews, not deployment or security audits.",
+  "reviewed_through": "2026-10-17",
+  "note": "Review evidence and scope: docs/research/protocol-watch-alert-155-review-2026-10-17.md, with earlier accepted reviews retained in Git history. This reference is accepted through the maintainer-authorized PR process; observations alone do not authorize baseline advancement. The scope is bounded freshness impact on Vortik public claims, not deployment, security or client-performance assurance.",
   "sources": [
     {
       "id": "eip-7732",
@@ -47,7 +47,7 @@
     },
     {
       "id": "glamsterdam-devnets-head",
-      "fingerprint": "859bb47b59621384888b64eeb6c1d4cab0724ec7"
+      "fingerprint": "dcc90b47b58b2fc4e2b3881d3cc2ef93017d0c56"
     }
   ]
 }

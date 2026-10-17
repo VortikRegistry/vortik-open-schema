@@ -1,14 +1,14 @@
 {
   "$schema": "https://vortikregistry.github.io/vortik-open-schema/protocol-context.schema.json",
   "contract": "vortik.protocol-context/1.0.0",
-  "reviewed_at": "2026-10-08",
-  "scope": "Independent, dated source context for selected Ethereum concepts. The October 8 follow-up rechecks EIP metadata, fork assignments and published schedules; other research and application notes retain their September 30 review. EIP references are related context, not equivalence with an ENS name. A past scheduled time alone does not confirm activation. This snapshot does not verify runtime health or ENS resolution.",
+  "reviewed_at": "2026-10-17",
+  "scope": "Independent, dated source context for selected Ethereum concepts. The October 17 follow-up rechecks EIP metadata, fork assignments and network announcements, including reported Sepolia activation and the Hoodi schedule. Other research and application notes retain their September 30 review. EIP references are related context, not equivalence with an ENS name. This snapshot does not verify runtime health or ENS resolution.",
   "registry": {
     "version": "0.6.5",
     "last_updated": "2026-09-13",
     "path": "registry.json"
   },
-  "review_path": "research/protocol-freshness-2026-10-08.md",
+  "review_path": "research/protocol-freshness-2026-10-17.md",
   "anchors": [
     {
       "id": "epbs",
@@ -23,7 +23,8 @@
         "eip-7732",
         "eip-8282",
         "glamsterdam-meta",
-        "glamsterdam-activation"
+        "glamsterdam-activation",
+        "glamsterdam-hoodi-announcement"
       ],
       "eip_refs": [
         7732,
@@ -321,22 +322,23 @@
       "name": "Glamsterdam",
       "source_refs": [
         "glamsterdam-meta",
-        "glamsterdam-activation"
+        "glamsterdam-activation",
+        "glamsterdam-hoodi-announcement"
       ],
       "activations": [
         {
           "network": "Sepolia",
-          "status": "unverified",
-          "activation_at": null,
-          "epoch": null,
-          "slot": null
+          "status": "active",
+          "activation_at": "2026-10-06T13:53:36Z",
+          "epoch": 353024,
+          "slot": 11296768
         },
         {
           "network": "Hoodi",
-          "status": "not_scheduled",
-          "activation_at": null,
-          "epoch": null,
-          "slot": null
+          "status": "scheduled",
+          "activation_at": "2026-10-26T17:42:48Z",
+          "epoch": 132352,
+          "slot": 4235264
         },
         {
           "network": "Mainnet",
@@ -462,6 +464,11 @@
       "id": "based-rollup-research",
       "title": "Based rollups: superpowers from L1 sequencing",
       "url": "https://ethresear.ch/t/based-rollups-superpowers-from-l1-sequencing/15016"
+    },
+    {
+      "id": "glamsterdam-hoodi-announcement",
+      "title": "Ethereum Foundation: Glamsterdam Hoodi Announcement",
+      "url": "https://blog.ethereum.org/2026/10/16/glamsterdam-hoodi-announcement"
     }
   ]
 }

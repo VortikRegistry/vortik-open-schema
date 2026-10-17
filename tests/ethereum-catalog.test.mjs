@@ -129,8 +129,8 @@ test("coverage and digest reveal dropped or altered metadata", () => {
 test("current snapshot accounts for every pinned file and includes ERCs beyond tracked naming anchors", () => {
   assert.equal(validate(snapshot), true, ajv.errorsText(validate.errors));
   assert.doesNotThrow(() => assertCatalogIntegrity(snapshot, manifest));
-  assert.equal(snapshot.coverage.scanned_files, 1575);
-  assert.equal(snapshot.proposals.length, 1209);
+  assert.equal(snapshot.coverage.scanned_files, 1590);
+  assert.equal(snapshot.proposals.length, 1224);
   assert.equal(snapshot.coverage.duplicate_numbers.length, 366);
   assert.equal(snapshot.proposals.find((entry) => entry.number === 20).id, "erc-20");
   assert.equal(snapshot.proposals.find((entry) => entry.number === 721).title, "Non-Fungible Token Standard");
