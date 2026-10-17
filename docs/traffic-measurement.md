@@ -1,12 +1,12 @@
 # Traffic measurement and evidence limits
 
-Prepared 2026-10-08; configuration updated **2026-10-17 UTC**. Website analytics is **configured** with the maintainer-supplied public Web Analytics site token in `assets/site-analytics.js`. Publishing this configuration enables collection on the supported production pages, subject to the opt-outs below. Publication evidence comes from the Pages workflow's deployed-byte verification; **provider dashboard verification remains pending**. No accepted page views or visitor counts are asserted here. Historical page views cannot be reconstructed by adding a collector later.
+Prepared 2026-10-08; configuration updated **2026-10-17 UTC**. Website analytics is **configured** with the maintainer-supplied public Web Analytics site token in `assets/site-analytics.js`. Publishing this configuration enables collection on the supported production pages, subject to the opt-outs below. Publication evidence comes from the Pages workflow's deployed-byte verification. **Provider receipt was confirmed on 2026-10-17 UTC** by a maintainer-supplied dashboard capture for the registered hostname. This confirms that the provider received page-view data; it does not identify the event as the controlled test load, establish traffic from external people, or verify every page and metric. Operational counts are kept outside this public repository. Historical page views cannot be reconstructed by adding a collector later.
 
 ## Three different signals
 
 | Surface | Measurement | Limit |
 | --- | --- | --- |
-| GitHub Pages website | Configured Cloudflare Web Analytics on home, proposal search and curated explorer | Provider dashboard verification pending; measured page loads are not verified people |
+| GitHub Pages website | Configured Cloudflare Web Analytics on home, proposal search and curated explorer | Provider receipt confirmed from maintainer-supplied dashboard evidence; measured page loads are not verified people |
 | A2A Reception | Existing Cloud Run request logs and sanitized Reception events | Includes automation, tests and retries; requests and events must not be added together |
 | Human contact | Voluntary visit to the maintainer's X profile | A link click does not prove a message, response or completed conversation |
 
@@ -25,7 +25,7 @@ Cloudflare states that its beacon does not use cookies or browser storage, and t
 1. **Provider registration:** the maintainer registered `vortikregistry.github.io` under **Web Analytics** for manual installation and supplied its public JavaScript snippet. No DNS migration or account API credential is involved.
 2. **Source configuration:** `SITE_TOKEN` is set in `docs/assets/site-analytics.js`. The loader limits collection to this repository's supported pages, even though the provider is registered for the hostname.
 3. **Publication evidence:** run `npm run check:public-safety` and `npm run validate`, then follow repository review and publication approval. The Pages workflow compares the served adapter with the reviewed artifact. A configured source file alone is not evidence of publication.
-4. **Dashboard acceptance — pending:** check one controlled page load on the published site and confirm it in the account dashboard. Record the UTC time and test page privately. An HTTP success or script tag alone does not prove data acceptance. Check navigation/search with an opted-out or blocked collector as well.
+4. **Dashboard receipt — confirmed, 2026-10-17 UTC:** the maintainer supplied a capture showing page-view data for the registered hostname after publication. The controlled page load and opted-out search/reload checks are recorded separately. The summary capture does not correlate a specific event with that test or establish an external visitor. This closes the initial receipt check; an HTTP success or script tag alone would not have done so. Continue to separate installation evidence from adoption metrics.
 5. For later checks, enable browser Do Not Track or use `analytics=off` on each page. Keep known test intervals separate; do not claim that all remaining activity is human.
 
 Disable by clearing `SITE_TOKEN`, updating the checked-in configuration test and status to expect disabled analytics, publishing the change and checking that a fresh page loads no provider script. The empty-token test already covers the loader's disabled behavior. Already-open pages may retain the script until navigation/reload. Previously collected provider data is separate from disabling new collection.
