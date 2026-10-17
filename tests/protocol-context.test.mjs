@@ -34,11 +34,15 @@ test("reviewed EIP status and fork assignment retain distinct meanings", () => {
   }
 });
 
-test("an elapsed Sepolia schedule is unverified without activation evidence", () => {
+test("reported Sepolia activation and future Hoodi schedule do not imply mainnet activation", () => {
   const fork = snapshot.forks.find((entry) => entry.name === "Glamsterdam");
   assert.deepEqual(fork.activations.find((entry) => entry.network === "Sepolia"), {
-    network: "Sepolia", status: "unverified", activation_at: null, epoch: null, slot: null
+    network: "Sepolia", status: "active", activation_at: "2026-10-06T13:53:36Z", epoch: 353024, slot: 11296768
   });
+  assert.deepEqual(fork.activations.find((entry) => entry.network === "Hoodi"), {
+    network: "Hoodi", status: "scheduled", activation_at: "2026-10-26T17:42:48Z", epoch: 132352, slot: 4235264
+  });
+  assert.ok(fork.source_refs.includes("glamsterdam-hoodi-announcement"));
   const mainnet = fork.activations.find((entry) => entry.network === "Mainnet");
   assert.equal(mainnet.status, "not_scheduled");
   assert.equal(mainnet.activation_at, null);
@@ -107,12 +111,12 @@ test("activation requires a date while unknown and unscheduled states require ex
     change(data);
   });
   assert.throws(() => assertProtocolContext(scheduled((data) => { data.forks[0].activations[0].activation_at = null; }), registry), /contract/);
-  assert.throws(() => assertProtocolContext(mutate((data) => { data.forks[0].activations[1].activation_at = "2026-10-06T13:53:36Z"; }), registry), /contract/);
-  assert.throws(() => assertProtocolContext(mutate((data) => { delete data.forks[0].activations[1].activation_at; }), registry), /contract/);
+  assert.throws(() => assertProtocolContext(mutate((data) => { data.forks[0].activations[2].activation_at = "2026-10-06T13:53:36Z"; }), registry), /contract/);
+  assert.throws(() => assertProtocolContext(mutate((data) => { delete data.forks[0].activations[2].activation_at; }), registry), /contract/);
   assert.throws(() => assertProtocolContext(scheduled((data) => { data.forks[0].activations[0].status = "active"; }), registry), /future activation cannot be active/);
   assert.throws(() => assertProtocolContext(scheduled((data) => { data.reviewed_at = "2026-10-08"; }), registry), /scheduled date predates review/);
   assert.throws(() => assertProtocolContext(scheduled((data) => { data.forks[0].activations[0].slot += 1; }), registry), /epoch and slot/);
-  const unknown = mutate((data) => { data.forks[0].activations[1].status = "unverified"; });
+  const unknown = mutate((data) => { data.forks[0].activations[2].status = "unverified"; });
   assert.doesNotThrow(() => assertProtocolContext(unknown, registry));
 });
 

@@ -2,6 +2,16 @@
 
 This is an editorial and interface history. Canonical registry versions and historical release notes retain their original meaning.
 
+## 2026-10-17 — testnet announcements and catalog refresh
+
+- Record source-reported Glamsterdam activation on Sepolia and the Hoodi schedule for October 26 at 17:42:48 UTC. Mainnet remains undated.
+- Explain the differences between the latest announcement, network configuration and older schedule tables.
+- Regenerate the catalog from pinned official sources: 1,224 records, including 15 additions and three lifecycle changes.
+- Review alert #155 with complete devnet path accounting and advance its dated watch reference through the authorized PR process.
+- Preserve the canonical registry, schema contracts, services and existing SEO configuration.
+
+See the [dated source follow-up](research/protocol-freshness-2026-10-17.md) and [bounded watch review](research/protocol-watch-alert-155-review-2026-10-17.md).
+
 ## 2026-10-08 — source follow-up and visitor journey
 
 - Updated five selected Glamsterdam proposals from Review to Last Call and retained their separate fork assignments.
