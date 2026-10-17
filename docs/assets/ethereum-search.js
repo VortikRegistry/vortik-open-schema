@@ -198,7 +198,9 @@
   function writeUrl(mode, preserveHash = false) {
     const filter = readFilters();
     const url = new URL(location.href);
+    const analyticsOptOut = url.searchParams.get("analytics") === "off";
     url.search = "";
+    if (analyticsOptOut) url.searchParams.set("analytics", "off");
     if (!preserveHash || url.hash !== "#provenance") url.hash = "";
     if (filter.q) url.searchParams.set("q", filter.q);
     for (const name of Object.keys(fields)) if (filter[name] !== (name === "sort" ? "relevance" : "all")) url.searchParams.set(name, filter[name]);
