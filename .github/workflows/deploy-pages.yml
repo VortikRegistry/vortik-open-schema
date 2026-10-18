@@ -93,6 +93,8 @@ jobs:
             assets/ethereum-search.js \
             assets/site-analytics.js \
             assets/vortik-mark.svg \
+            assets/social-preview.svg \
+            assets/social-preview.png \
             ethereum-catalog.json \
             ethereum-catalog.schema.json \
             protocol-context.json \

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <title>Vortik Registry — Understand the term. Check the source.</title>
+  <desc>Independent Ethereum reference. Search proposal metadata, compare curated terms, and follow primary sources.</desc>
+  <rect width="1200" height="630" fill="#f4f1e9"/>
+  <g transform="translate(64 54)">
+    <rect width="64" height="64" rx="14" fill="#183d33"/>
+    <path d="M14 17h10l8 24 8-24h10L36 49h-8Z" fill="#d6ed76"/>
+  </g>
+  <g font-family="DejaVu Sans, sans-serif" fill="#183d33">
+    <text x="150" y="82" font-size="26" font-weight="700" letter-spacing="2">VORTIK REGISTRY</text>
+    <text x="150" y="111" font-size="18">Independent Ethereum reference</text>
+    <text x="64" y="260" font-size="78" font-weight="700" letter-spacing="-3">Understand the term.</text>
+    <text x="64" y="355" font-size="78" font-weight="700" letter-spacing="-3">Check the source.</text>
+    <text x="68" y="424" font-size="25">Proposal metadata. Curated context. Primary sources.</text>
+    <rect x="64" y="473" width="426" height="52" rx="26" fill="#d6ed76"/>
+    <text x="277" y="507" font-size="23" text-anchor="middle">Search · Compare · Reuse</text>
+  </g>
+  <rect y="576" width="1200" height="54" fill="#183d33"/>
+  <text x="64" y="611" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#f4f1e9">vortikregistry.github.io/vortik-open-schema</text>
+</svg>
