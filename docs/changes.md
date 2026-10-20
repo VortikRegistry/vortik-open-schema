@@ -2,6 +2,16 @@
 
 This is an editorial and interface history. Canonical registry versions and historical release notes retain their original meaning.
 
+## 2026-10-20 — protocol follow-up and uncertain Hegotá dates
+
+- Update ePBS source notes for the execution-request commitment and deferred consensus-layer effects, and BAL notes for the 14,299-epoch payload-body availability requirement.
+- Record EIP-8025 as declined for Hegotá inclusion while retaining its separate Draft document status.
+- Mark Hegotá testnet dates as unverified: the EIP-8081 rows repeat announced Glamsterdam dates without corroborating Hegotá evidence.
+- Review alert #165 with a complete 213-path devnet comparison and retain the full ten-source observation alongside the refreshed watch baseline.
+- Preserve registry v0.6.5, schema contracts and the separately dated October 17 catalog of 1,224 proposals.
+
+See the [dated source follow-up](research/protocol-freshness-2026-10-20.md) and [bounded watch review](research/protocol-watch-alert-165-review-2026-10-20.md).
+
 ## 2026-10-17 — testnet announcements and catalog refresh
 
 - Record source-reported Glamsterdam activation on Sepolia and the Hoodi schedule for October 26 at 17:42:48 UTC. Mainnet remains undated.
