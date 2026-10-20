@@ -94,7 +94,7 @@ Curated references and source notes should be placed in the protected section be
 ## Curated References
 
 - [EIP-8025 — Optional Execution Proofs](https://eips.ethereum.org/EIPS/eip-8025): a Draft Core proposal for opt-in execution proofs produced by altruistic nodes; it introduces no prover incentives.
-- [EIP-8081 — Hegotá](https://eips.ethereum.org/EIPS/eip-8081): lists EIP-8025 as Proposed for Inclusion, not Scheduled for Inclusion.
+- [EIP-8081 — Hegotá](https://eips.ethereum.org/EIPS/eip-8081): lists EIP-8025 as Declined for Inclusion as reviewed on 2026-10-20; its Draft document status is unchanged.
 
 ## Source Notes
 

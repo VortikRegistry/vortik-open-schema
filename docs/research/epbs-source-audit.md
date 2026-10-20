@@ -1,5 +1,7 @@
 # ePBS source audit
 
+> Historical review: the dated findings below are preserved. For current selected EIP states, ePBS/BAL changes and the Hegotá calendar discrepancy, read the [October 20 follow-up](protocol-freshness-2026-10-20.md).
+
 **Reviewed:** 2026-09-13; updated 2026-09-30
 **Registry anchor:** `epbs.eth` / `epbs`  
 **Purpose:** public primary-source audit for the current implementation-facing ePBS state.

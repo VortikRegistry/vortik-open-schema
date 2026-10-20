@@ -24,7 +24,7 @@ test("reviewed EIP status and fork assignment retain distinct meanings", () => {
     [7732, "Last Call", "Glamsterdam", "scheduled"],
     [7805, "Draft", "Hegotá", "scheduled"],
     [7928, "Last Call", "Glamsterdam", "scheduled"],
-    [8025, "Draft", "Hegotá", "proposed"],
+    [8025, "Draft", "Hegotá", "declined"],
     [8146, "Draft", "Hegotá", "declined"],
     [8282, "Last Call", "Glamsterdam", "scheduled"]
   ]) {
@@ -46,6 +46,15 @@ test("reported Sepolia activation and future Hoodi schedule do not imply mainnet
   const mainnet = fork.activations.find((entry) => entry.network === "Mainnet");
   assert.equal(mainnet.status, "not_scheduled");
   assert.equal(mainnet.activation_at, null);
+
+  // The meta EIP repeats Glamsterdam dates; do not promote those to a
+  // confirmed Hegotá schedule through the context returned to the explorer.
+  const hegota = getAnchorContext(snapshot, "inclusionlist").related_forks.find((entry) => entry.name === "Hegotá");
+  for (const network of ["Sepolia", "Hoodi"]) {
+    assert.deepEqual(hegota.activations.find((entry) => entry.network === network), {
+      network, status: "unverified", activation_at: null, epoch: null, slot: null
+    });
+  }
 });
 
 test("unreviewed historical fork context stays null instead of becoming not deployed", () => {
@@ -61,7 +70,7 @@ test("research concepts and related EIPs do not acquire an anchor activation sta
   assert.equal(research.anchor.context_kind, "research");
   assert.deepEqual(research.related_eips, []);
   const proof = getAnchorContext(snapshot, "provingmarket");
-  assert.equal(proof.related_eips[0].fork.assignment, "proposed");
+  assert.equal(proof.related_eips[0].fork.assignment, "declined");
   assert.equal("status" in proof.anchor, false);
   assert.equal("activation_at" in proof.anchor, false);
 });

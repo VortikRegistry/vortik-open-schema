@@ -16,7 +16,7 @@ Proof-generation research concerns both rollup systems and Ethereum L1. The regi
 
 ## Current protocol context
 
-**Reviewed: 2026-09-30.** [EIP-8025 — Optional Execution Proofs](https://eips.ethereum.org/EIPS/eip-8025) is a Draft Core proposal. [EIP-8081](https://eips.ethereum.org/EIPS/eip-8081) lists it as Proposed for Inclusion in Hegotá, not Scheduled for Inclusion.
+**Protocol context reviewed: 2026-10-20.** [EIP-8025 — Optional Execution Proofs](https://eips.ethereum.org/EIPS/eip-8025) is a Draft Core proposal. [EIP-8081](https://eips.ethereum.org/EIPS/eip-8081) lists it as Declined for Inclusion in Hegotá. Its document status remains Draft; see the [dated follow-up](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-20.md).
 
 EIP-8025 describes opt-in proofs from altruistic proof-generating nodes and introduces no prover incentives. Its current design keeps proofs supplementary to re-execution. It does not specify a proving auction, a paid market, or a production rollout.
 
@@ -43,7 +43,7 @@ The ENS name identifies a broad infrastructure category. Vortik retains `externa
 - Track proof-generation coordination terminology.
 - Distinguish proof machinery from a market or incentive mechanism.
 - Include L1 proof research as well as rollup context.
-- Keep Draft, Proposed, Scheduled, and activated source states separate.
+- Keep Draft, Proposed, Declined, Scheduled, and activated source states separate.
 
 ## Sources
 
