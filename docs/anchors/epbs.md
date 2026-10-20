@@ -5,7 +5,7 @@
 **Registry ID:** `epbs`  
 **Status:** implementation-facing  
 **Classification:** core  
-**Protocol freshness reviewed:** 2026-10-08 (targeted follow-up; historical testnet evidence retains its original dates)
+**Protocol freshness reviewed:** 2026-10-20 (targeted follow-up; historical testnet evidence retains its original dates)
 
 ---
 
@@ -21,7 +21,7 @@ Vortik is an independent semantic registry. This document is not an Ethereum spe
 
 ---
 
-## Current upstream state — 2026-10-08
+## Current upstream state — 2026-10-20
 
 The primary specification is **EIP-7732**.
 
@@ -30,10 +30,10 @@ As of this review:
 - EIP-7732 is a **Last Call** Standards Track Core EIP, with a 2026-11-01 deadline.
 - EIP-7773 lists EIP-7732 as **Scheduled for Inclusion** in Glamsterdam.
 - Glamsterdam is in active testing; this does not mean ePBS is deployed on Ethereum mainnet.
-- The Ethereum Foundation's September 28 announcement schedules Glamsterdam on **Sepolia for 2026-10-06 13:53:36 UTC (epoch 353024, slot 11296768)**. That published time has passed; the schedule alone does not verify completion, and this review does not check live network state. **Hoodi and mainnet activation dates remain undecided.**
+- The Ethereum Foundation's [October 16 announcement](https://blog.ethereum.org/2026/10/16/glamsterdam-hoodi-announcement) reports Sepolia activation on October 6 and schedules **Hoodi for 2026-10-26 17:42:48 UTC (epoch 132352, slot 4235264)**. Mainnet has no announced date. This is source-reported activation, not a live chain-health check.
 - **EIP-8282 — Builder Execution Requests** is also in Last Call (deadline 2026-11-01) and Scheduled for Inclusion in Glamsterdam. It gives EIP-7732 builders dedicated deposit and exit request paths.
 
-These are source states, not Vortik judgments about activation. See the [October 8 follow-up](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-08.md) for source identities and review limits.
+These are source states, not Vortik judgments about activation. See the [October 20 follow-up](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-20.md) for source identities and review limits.
 
 ---
 
@@ -41,7 +41,7 @@ These are source states, not Vortik judgments about activation. See the [October
 
 ### Sepolia activation announcement
 
-The Ethereum Foundation's [Glamsterdam Testnet Announcement](https://blog.ethereum.org/2026/09/17/glamsterdam-testnet-announcement), posted 2026-09-28, identifies ePBS and Block-Level Access Lists as the upgrade's headlining changes and provides a concrete Sepolia activation schedule. It directs node operators to update both execution and consensus clients before activation. Vortik records the announced schedule; it does not claim that Sepolia has already upgraded or that mainnet is scheduled.
+The [October 16 Foundation announcement](https://blog.ethereum.org/2026/10/16/glamsterdam-hoodi-announcement) reports that Glamsterdam activated on Sepolia on October 6 and schedules Hoodi for October 26. Its headlining changes include ePBS and BALs. Mainnet remains undecided. The earlier September announcement is historical schedule evidence; this review does not independently inspect either network.
 
 ### Platåberget
 
@@ -108,6 +108,8 @@ Current EIP-7732 terminology includes protocol objects and duties such as:
 
 For semantic purposes, this makes **bids, commitments, payload reveal, timeliness, builder lifecycle, and validator/builder coordination** more precise terms than older generic “builder market” framing.
 
+The October 20 source clarifies that bids commit to execution requests and payload envelopes do not commit to a consensus post-state root. Payload consensus effects are deferred to child-block processing; builder payments use pending-payment conditions. Follow the pinned specification in the [dated review](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-20.md) for implementation details.
+
 ---
 
 ## Builder lifecycle and EIP-8282
@@ -151,7 +153,7 @@ The fork states remain distinct:
 
 - EIP-7805 / FOCIL is **not in the current EIP-7773 Glamsterdam Scheduled for Inclusion list**.
 - EIP-8081 lists EIP-7805 as **Scheduled for Inclusion** in Hegotá.
-- Hegotá activation rows remain unset.
+- Hegotá testnet timing is unverified: its meta-EIP rows repeat Glamsterdam dates, which this review cannot reconcile. Mainnet has no recorded date.
 
 ePBS and FOCIL remain semantically complementary:
 
@@ -216,7 +218,7 @@ No stronger deployment claim is implied.
 This anchor must not be used to claim that:
 
 - ePBS is already active on Ethereum mainnet;
-- Sepolia's scheduled activation has already occurred;
+- Vortik independently verified Sepolia activation or present network health;
 - Glamsterdam's mainnet date is confirmed;
 - `epbs.eth` is controlled by Ethereum Foundation, ENS Labs, or ENS DAO;
 - Vortik defines Ethereum protocol terminology;
@@ -227,8 +229,9 @@ The accurate framing is:
 
 ```text
 ePBS is a protocol-facing proposer-builder coordination primitive,
-in Last Call and Scheduled for Inclusion in Glamsterdam as of 2026-10-08.
-The published Sepolia schedule names 2026-10-06; completion is not verified here.
+in Last Call and Scheduled for Inclusion in Glamsterdam as of 2026-10-20.
+The Foundation reports Sepolia activation; Hoodi is scheduled for October 26.
+This review does not independently establish network health or mainnet activation.
 Historical public testnet/devnet evidence retains its 2026-09-30 review date.
 ```
 

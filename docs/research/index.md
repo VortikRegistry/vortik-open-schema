@@ -1,5 +1,8 @@
 # Vortik Registry research notes index
 
+- [Protocol source follow-up — October 20, 2026](protocol-freshness-2026-10-20.md)
+- [Protocol Watch alert #165 review](protocol-watch-alert-165-review-2026-10-20.md)
+
 ## Purpose
 
 This page is a navigation index for public Vortik Registry research notes. Research notes organize source review, repository-positioning observations, and candidate-term monitoring so readers can distinguish interpretive support from registry source-of-truth state.

@@ -18,7 +18,7 @@ The auction, privacy, routing, and settlement rules depend on the implementation
 
 **Reviewed: 2026-09-30.** [Flashbots MEV-Share documentation](https://docs.flashbots.net/flashbots-mev-share/introduction) provides a concrete implementation reference for an order flow auction protocol. It supports this external coordination category without establishing that all order flow uses auctions.
 
-[EIP-7805](https://eips.ethereum.org/EIPS/eip-7805) addresses a different surface: fork-choice enforced inclusion constraints. [EIP-8081](https://eips.ethereum.org/EIPS/eip-8081) schedules FOCIL for Hegotá, with activation dates unset. This scheduling does not demonstrate that OFAs are disappearing or being replaced.
+[EIP-7805](https://eips.ethereum.org/EIPS/eip-7805) addresses a different surface: fork-choice enforced inclusion constraints. [EIP-8081](https://eips.ethereum.org/EIPS/eip-8081) schedules FOCIL for Hegotá. The October 20 review leaves its testnet timing unverified because the meta EIP repeats Glamsterdam dates; mainnet has no recorded date. This scheduling does not demonstrate that OFAs are disappearing or being replaced.
 
 ## Coordination role
 

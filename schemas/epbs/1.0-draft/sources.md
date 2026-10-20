@@ -91,6 +91,11 @@ Curated references and source notes should be placed in the protected section be
 <!-- AUTO-GENERATED:END -->
 
 <!-- MANUAL-SOURCES:START -->
+
+## Current targeted follow-up — 2026-10-20
+
+Read the [October 20 source review](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-20.md) for the selected EIP states and the Hegotá calendar discrepancy. EIP-7732 and EIP-8282 remain Last Call and scheduled for Glamsterdam; FOCIL remains Draft and scheduled for Hegotá. The Foundation reports Glamsterdam activation on Sepolia and schedules Hoodi for October 26. Hegotá testnet dates are unverified because its meta EIP repeats those Glamsterdam dates. Earlier dated findings below are preserved as history.
+
 ## Curated References
 
 Primary and implementation-facing sources reviewed on **2026-09-30**, with the targeted **2026-10-08** follow-up below:

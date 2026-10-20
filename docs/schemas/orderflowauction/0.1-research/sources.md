@@ -95,7 +95,7 @@ Curated references and source notes should be placed in the protected section be
 
 - [Flashbots — MEV-Share introduction](https://docs.flashbots.net/flashbots-mev-share/introduction): primary implementation documentation identifying MEV-Share as an order flow auction protocol.
 - [EIP-7805 — Fork-choice enforced Inclusion Lists](https://eips.ethereum.org/EIPS/eip-7805): a distinct protocol proposal for inclusion constraints.
-- [EIP-8081 — Hegotá](https://eips.ethereum.org/EIPS/eip-8081): records EIP-7805 as Scheduled for Inclusion, with activation dates unset.
+- [EIP-8081 — Hegotá](https://eips.ethereum.org/EIPS/eip-8081): records EIP-7805 as Scheduled for Inclusion. The October 20 review treats its testnet dates as unverified because they repeat Glamsterdam dates; mainnet has no recorded date.
 
 ## Source Notes
 

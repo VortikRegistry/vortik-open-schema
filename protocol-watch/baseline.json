@@ -1,11 +1,11 @@
 {
   "baseline_version": "1.0.0",
-  "reviewed_through": "2026-10-17",
-  "note": "Review evidence and scope: docs/research/protocol-watch-alert-155-review-2026-10-17.md, with earlier accepted reviews retained in Git history. This reference is accepted through the maintainer-authorized PR process; observations alone do not authorize baseline advancement. The scope is bounded freshness impact on Vortik public claims, not deployment, security or client-performance assurance.",
+  "reviewed_through": "2026-10-20",
+  "note": "Review evidence and scope: docs/research/protocol-watch-alert-165-review-2026-10-20.md. Earlier reviews remain in Git history. Acceptance assesses these pinned changes, including an explicitly unverified Hegotá testnet schedule; it does not establish deployment or resolve source discrepancies. Advance only through the maintainer-authorized reviewed PR process.",
   "sources": [
     {
       "id": "eip-7732",
-      "fingerprint": "947683d4fe49da8870026cb69c6d9ff8d7d4d6d8",
+      "fingerprint": "ffb4ba18e44307f58d2a19c33fb7339d5c5fd9c2",
       "status": "Last Call"
     },
     {
@@ -20,12 +20,12 @@
     },
     {
       "id": "eip-7928-bal",
-      "fingerprint": "f5828f59cd5073eca7856b62c6d16389d5a2c09d",
+      "fingerprint": "da3508ff6d73d53c9ffa9fc55f0724fb4c99198b",
       "status": "Last Call"
     },
     {
       "id": "eip-8081-hegota-meta",
-      "fingerprint": "ecef1753737cc9b60b1d9d086380db88f1e3dc3c",
+      "fingerprint": "7386ae919b35a8f69cdba2a0334d595754c8a84a",
       "status": "Draft"
     },
     {
@@ -47,7 +47,7 @@
     },
     {
       "id": "glamsterdam-devnets-head",
-      "fingerprint": "dcc90b47b58b2fc4e2b3881d3cc2ef93017d0c56"
+      "fingerprint": "085b7a135cfa5456b9fb0e689291b815d4a14eb3"
     }
   ]
 }
