@@ -40,7 +40,7 @@
       <div class="hero-copy">
         <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Independent · open source · source grounded</p>
         <h1>Understand the term.<br><span>Check the source.</span></h1>
-        <p class="intro">Search Ethereum’s official proposals. Explore coordination concepts in the curated registry. Follow the evidence behind each result.</p>
+        <p class="intro">Search Ethereum’s EIP and ERC proposal catalog. Compare 12 curated coordination concepts. Follow the primary sources behind each result.</p>
         <form class="hero-search" action="./research.html" method="get" role="search">
           <label class="sr-only" for="home-search">Search Ethereum proposal titles, descriptions or numbers</label>
           <span aria-hidden="true" class="search-symbol">⌕</span>
@@ -48,6 +48,7 @@
           <button class="button primary" type="submit">Search <span aria-hidden="true">→</span></button>
         </form>
         <div class="try-links"><span>Start with</span><a href="./research.html?q=ERC-20">ERC-20</a><a href="./research.html?q=account+abstraction">Account abstraction</a><a href="./research.html?q=ENS">ENS</a><a href="./app.html">Curated registry <span aria-hidden="true">↗</span></a></div>
+        <p class="search-scope">The proposal catalog extends beyond the 12 curated terms. <a href="#reading-guide">New here? Follow one example <span aria-hidden="true">↓</span></a></p>
       </div>
       <aside class="source-trace" aria-labelledby="trace-title">
         <div class="trace-heading"><span class="eyebrow">A term, in context</span><span class="mono">01 / 12</span></div>
@@ -70,6 +71,25 @@
         <a class="task-card" href="./research.html"><span class="task-number">01 / Search</span><h3>Find an Ethereum proposal.</h3><p>Search the official EIP and ERC metadata snapshot by number, title or description. Filter by document status and category.</p><span class="task-action">Search Ethereum proposals <span aria-hidden="true">↗</span></span></a>
         <a class="task-card" href="./app.html?compare=epbs,inclusionlist#compare"><span class="task-number">02 / Compare</span><h3>ePBS or FOCIL?</h3><p>Separate block construction from inclusion constraints. Compare upgrade assignments and source trails.</p><span class="task-action">Compare the two <span aria-hidden="true">↗</span></span></a>
         <a class="task-card" href="#developers"><span class="task-number">03 / Build</span><h3>Need structured context?</h3><p>Use the registry, a versioned ePBS feed, or the dated protocol context in your own tools.</p><span class="task-action">Get the JSON <span aria-hidden="true">↓</span></span></a>
+      </div>
+    </section>
+    <section class="container section" id="reading-guide" aria-labelledby="reading-guide-title">
+      <div class="section-heading"><div><p class="eyebrow">A one-minute guide</p><h2 id="reading-guide-title">From a search to the evidence.</h2></div><p>Choose a proposal to read, or compare concepts when you need more context.</p></div>
+      <div class="reading-guide-grid">
+        <article class="reading-example" aria-labelledby="reading-example-title">
+          <h3 id="reading-example-title">Try it with ERC-20.</h3>
+          <ol>
+            <li><strong>Find the proposal.</strong> <a href="./research.html?q=ERC-20">Search ERC-20</a> to see the Token Standard record.</li>
+            <li><strong>Read the source.</strong> Open the official document from the result. The title, description and document status help you decide what to read.</li>
+            <li><strong>Check the date.</strong> The search shows its metadata snapshot date. Each result links to the source commit used; open the official document for its current wording.</li>
+          </ol>
+          <a class="text-link" href="./research.html?q=ERC-20">Open the example search <span aria-hidden="true">→</span></a>
+        </article>
+        <div class="reading-questions">
+          <details open><summary>What does the search cover?</summary><p>A published metadata snapshot of the official EIP and ERC repositories: proposal numbers, titles, descriptions and document status. Search does not include full proposal text or live ENS ownership lookups.</p><p>The separate <a href="./app.html">12-term curated registry</a> adds comparisons and dated source context for selected coordination concepts.</p></details>
+          <details><summary>Does a document status mean a network is live?</summary><p>No. An EIP’s document status, its assignment to an upgrade and a network’s activation are different facts. “Final” is a document status; “Scheduled for Inclusion” is an upgrade assignment. Neither alone establishes network activation.</p><p><a href="./app.html?compare=epbs,inclusionlist#compare">Compare ePBS and FOCIL</a> to inspect their separate source trails and upgrade context.</p></details>
+          <details><summary>Can I use the data in my own tool?</summary><p>Yes. The <a href="#developers">developer quickstart and public JSON</a> provide documented entry points. The website reads published data; the agent service has a separate deployment and packaged snapshot.</p></details>
+        </div>
       </div>
     </section>
     <section class="container section" id="signals" aria-labelledby="context-title">
