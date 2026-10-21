@@ -31,9 +31,9 @@ console.log(result.related_eips); // EIP-8025: Draft; Hegotá assignment: declin
 
 ## Independent facts
 
-| Field | Meaning | Example in the October 20 follow-up |
+| Field | Meaning | Example in the October 21 follow-up |
 | --- | --- | --- |
-| `reviewed_at` | Date of this editorial source review | `2026-10-20` |
+| `reviewed_at` | Date of this editorial source review | `2026-10-21` |
 | `registry.last_updated` | Date of the referenced canonical registry | `2026-09-13` |
 | `anchors[].context_kind` | Vortik's description of the source context | `protocol`, `research`, `application`, or `editorial` |
 | `eips[].document_status` | Status on the EIP document | FOCIL: `Draft` |
@@ -72,7 +72,7 @@ The dataset is maintained directly under `docs/`; it is not a generated registry
 3. Change `reviewed_at` only after the source review. Preserve `registry.last_updated` unless the canonical registry itself changed.
 4. Update the dated regression assertions with the new evidence, then run the protocol-context checks, public-safety checks, and full repository validation.
 
-The current [October 20 follow-up](research/protocol-freshness-2026-10-20.md) records EIP-8025 as declined for Hegotá and marks Hegotá/Sepolia and Hegotá/Hoodi as `unverified`: their meta-EIP rows now repeat the Glamsterdam dates, which this review cannot reconcile. Their time, epoch and slot remain null. Mainnet remains `not_scheduled`. Other source notes retain their dated reviews; the broad proposal catalog remains the October 17 metadata snapshot.
+The current [October 21 targeted follow-up](research/protocol-freshness-2026-10-21.md) records the corrected meta-EIP calendars: Hegotá/Sepolia, Hegotá/Hoodi and Hegotá/Mainnet are `not_scheduled`, with null time, epoch and slot. Glamsterdam/Hoodi remains scheduled for October 26; its meta EIP now agrees with the announcement. The October 20 review of selected EIP states, including EIP-8025 declined for Hegotá, remains separate. Other source notes retain their dated reviews; the broad proposal catalog remains the October 17 metadata snapshot.
 
 The initial snapshot is backed by the [September 30 source review](research/protocol-freshness-2026-09-30.md). The primary URLs in the JSON were rechecked when this dataset was prepared. A date is a record of that review, not an automatic freshness guarantee.
 

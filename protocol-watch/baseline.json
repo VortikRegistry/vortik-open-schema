@@ -1,7 +1,7 @@
 {
   "baseline_version": "1.0.0",
-  "reviewed_through": "2026-10-20",
-  "note": "Review evidence and scope: docs/research/protocol-watch-alert-165-review-2026-10-20.md. Earlier reviews remain in Git history. Acceptance assesses these pinned changes, including an explicitly unverified Hegotá testnet schedule; it does not establish deployment or resolve source discrepancies. Advance only through the maintainer-authorized reviewed PR process.",
+  "reviewed_through": "2026-10-21",
+  "note": "Review evidence and scope: docs/research/protocol-freshness-2026-10-21.md. The October 21 observation has two meta-EIP calendar changes; the other eight fingerprints and all watched document statuses are unchanged. Earlier reviews remain historical. Acceptance does not establish deployment or live network health. Advance only through the maintainer-authorized reviewed PR process.",
   "sources": [
     {
       "id": "eip-7732",
@@ -10,7 +10,7 @@
     },
     {
       "id": "eip-7773-glamsterdam-meta",
-      "fingerprint": "c6b80d7f3d36bcb5d041ca30c6026133602900ea",
+      "fingerprint": "94b90da54273434f67e263527c0d08f5e4793cfb",
       "status": "Review"
     },
     {
@@ -25,7 +25,7 @@
     },
     {
       "id": "eip-8081-hegota-meta",
-      "fingerprint": "7386ae919b35a8f69cdba2a0334d595754c8a84a",
+      "fingerprint": "3e65690f78221f358d980cbb33ea843e21bc9e7d",
       "status": "Draft"
     },
     {

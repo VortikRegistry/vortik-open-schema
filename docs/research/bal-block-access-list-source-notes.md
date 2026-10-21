@@ -1,6 +1,6 @@
 # BAL / block_access_list_hash source notes
 
-> Historical review: the dated findings below are preserved. For current selected EIP states, ePBS/BAL changes and the Hegotá calendar discrepancy, read the [October 20 follow-up](protocol-freshness-2026-10-20.md).
+> Historical review: the dated findings below are preserved. For selected EIP states and ePBS/BAL changes, read the [October 20 follow-up](protocol-freshness-2026-10-20.md); the [October 21 calendar follow-up](protocol-freshness-2026-10-21.md) records the subsequent meta-EIP correction.
 
 **Source state reviewed: 2026-09-30.** EIP-7773 schedules BALs for Glamsterdam. Sepolia is scheduled for October 6, 2026 at 13:53:36 UTC; Hoodi and mainnet dates remain unset. See the [complete source review](protocol-freshness-2026-09-30.md).
 

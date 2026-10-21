@@ -1,5 +1,7 @@
 # Protocol Watch alert #165 review — 2026-10-20
 
+> Calendar follow-up: the [October 21 review](protocol-freshness-2026-10-21.md) records the subsequent upstream correction. The findings below remain historical evidence for their pinned source.
+
 [Alert #165](https://github.com/VortikRegistry/vortik-open-schema/issues/165) initially observed changes to EIP-7928 and the Glamsterdam devnets repository on October 19. A successful read-only watcher run at **2026-10-20T21:55:31.190Z** observed four differences against the October 17 baseline: EIP-7732, EIP-7928, EIP-8081 and devnets. The other six monitored fingerprints and all six watched EIP document statuses are unchanged.
 
 The [recorded observation](../../protocol-watch/reviews/2026-10-20-alert-165-observation.json) preserves all ten sources. The EIP blobs match EIPs commit `cae82202be652e492ef28d2d03202a270a376dad`. Devnets are reviewed through `085b7a135cfa5456b9fb0e689291b815d4a14eb3`, including the alert's intermediate commit `b64df32d98aac351428eb1283b72a05ea06c143e`. The [content follow-up](protocol-freshness-2026-10-20.md) explains the EIP changes and the unresolved Hegotá calendar discrepancy.
