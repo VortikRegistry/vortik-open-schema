@@ -1,5 +1,7 @@
 # Protocol source follow-up — 2026-10-20
 
+> Calendar follow-up: the [October 21 review](protocol-freshness-2026-10-21.md) records the subsequent upstream correction. The findings below remain historical evidence for their pinned source.
+
 This targeted review supersedes the October 17 snapshot for the nine selected EIP statuses, fork assignments and network schedules. Other research and application sources retain their own dated reviews. The separate proposal catalog remains the October 17 metadata snapshot of 1,224 proposals; it is not a live index.
 
 ## Pinned evidence

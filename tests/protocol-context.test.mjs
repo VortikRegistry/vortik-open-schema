@@ -47,12 +47,12 @@ test("reported Sepolia activation and future Hoodi schedule do not imply mainnet
   assert.equal(mainnet.status, "not_scheduled");
   assert.equal(mainnet.activation_at, null);
 
-  // The meta EIP repeats Glamsterdam dates; do not promote those to a
-  // confirmed Hegotá schedule through the context returned to the explorer.
+  // The corrected Hegotá meta EIP leaves every activation row empty.
+  // Scheduled FOCIL inclusion must not become a network activation date.
   const hegota = getAnchorContext(snapshot, "inclusionlist").related_forks.find((entry) => entry.name === "Hegotá");
-  for (const network of ["Sepolia", "Hoodi"]) {
+  for (const network of ["Sepolia", "Hoodi", "Mainnet"]) {
     assert.deepEqual(hegota.activations.find((entry) => entry.network === network), {
-      network, status: "unverified", activation_at: null, epoch: null, slot: null
+      network, status: "not_scheduled", activation_at: null, epoch: null, slot: null
     });
   }
 });

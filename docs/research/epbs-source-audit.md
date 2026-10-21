@@ -1,6 +1,6 @@
 # ePBS source audit
 
-> Historical review: the dated findings below are preserved. For current selected EIP states, ePBS/BAL changes and the Hegotá calendar discrepancy, read the [October 20 follow-up](protocol-freshness-2026-10-20.md).
+> Historical review: the dated findings below are preserved. For selected EIP states and ePBS/BAL changes, read the [October 20 follow-up](protocol-freshness-2026-10-20.md); the [October 21 calendar follow-up](protocol-freshness-2026-10-21.md) records the subsequent meta-EIP correction.
 
 **Reviewed:** 2026-09-13; updated 2026-09-30
 **Registry anchor:** `epbs.eth` / `epbs`  

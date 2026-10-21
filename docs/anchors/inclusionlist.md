@@ -6,7 +6,7 @@
 **Status:** eip-active  
 **Classification:** core  
 **Type:** constraint  
-**Protocol freshness reviewed:** 2026-10-20
+**Protocol calendar follow-up:** 2026-10-21; selected proposal status reviewed 2026-10-20
 
 ---
 
@@ -30,7 +30,7 @@ The relevant semantic object is the inclusion constraint itself: a mechanism by 
 
 FOCIL-style framing is tracked because it gives the broader inclusion-list concept a more precise fork-choice enforcement context.
 
-EIP-7805 remains the primary EIP source for FOCIL. As reviewed on 2026-10-20, EIP-7805 is **not in the EIP-7773 Glamsterdam Scheduled for Inclusion list**, while EIP-8081 lists it as **Scheduled for Inclusion** in Hegotá. These are fork-scoped source states, not deployment or activation claims. EIP-8081 now repeats the Glamsterdam testnet dates. This review cannot reconcile those dates with Hegotá, so Sepolia and Hoodi activation are unverified; mainnet has no recorded date. See the [source discrepancy](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-20.md). `inclusionlist.eth` remains a semantic anchor for the inclusion-list / FOCIL constraint surface, not a deployment claim.
+EIP-7805 remains the primary EIP source for FOCIL. As reviewed on 2026-10-20, EIP-7805 is **not in the EIP-7773 Glamsterdam Scheduled for Inclusion list**, while EIP-8081 lists it as **Scheduled for Inclusion** in Hegotá. These are fork-scoped source states, not deployment or activation claims. The October 21 meta-EIP correction removes the repeated dates: Sepolia, Hoodi and Mainnet schedules are now unset. See the [calendar follow-up](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-21.md). `inclusionlist.eth` remains a semantic anchor for the inclusion-list / FOCIL constraint surface, not a deployment claim.
 
 The registry status is **eip-active** because the terminology and mechanism family have active specification relevance. This registry status should not be read as mainnet activation, official Ethereum endorsement, or a guarantee that scheduled fork content will be deployed. Hegotá scheduling is an upstream source fact recorded separately from Vortik's registry status.
 

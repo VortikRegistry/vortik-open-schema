@@ -153,7 +153,7 @@ The fork states remain distinct:
 
 - EIP-7805 / FOCIL is **not in the current EIP-7773 Glamsterdam Scheduled for Inclusion list**.
 - EIP-8081 lists EIP-7805 as **Scheduled for Inclusion** in Hegotá.
-- Hegotá testnet timing is unverified: its meta-EIP rows repeat Glamsterdam dates, which this review cannot reconcile. Mainnet has no recorded date.
+- Calendar follow-up on October 21: the corrected Hegotá meta EIP leaves Sepolia, Hoodi and Mainnet schedules unset. See the [targeted review](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-21.md).
 
 ePBS and FOCIL remain semantically complementary:
 

@@ -2,6 +2,15 @@
 
 This is an editorial and interface history. Canonical registry versions and historical release notes retain their original meaning.
 
+## 2026-10-21 — meta-EIP calendar correction
+
+- Review alert #168: EIP-7773 adds the already announced Hoodi epoch/time; EIP-8081 removes its repeated Sepolia/Hoodi dates.
+- Represent the three empty Hegotá activation rows as `not_scheduled`, preserving null timing and the distinction from FOCIL's scheduled inclusion.
+- Update current context and linked notes while preserving the October 20 discrepancy as historical evidence.
+- Preserve registry v0.6.5, the October 17 catalog, runtime code, infrastructure, sitemap and the homepage reading guide.
+
+See the [targeted source review](research/protocol-freshness-2026-10-21.md).
+
 ## 2026-10-20 — protocol follow-up and uncertain Hegotá dates
 
 - Update ePBS source notes for the execution-request commitment and deferred consensus-layer effects, and BAL notes for the 14,299-epoch payload-body availability requirement.
