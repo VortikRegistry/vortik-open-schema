@@ -31,17 +31,17 @@ console.log(result.related_eips); // EIP-8025: Draft; Hegotá assignment: declin
 
 ## Independent facts
 
-| Field | Meaning | Example in the October 21 follow-up |
+| Field | Meaning | Example in the October 30 follow-up |
 | --- | --- | --- |
-| `reviewed_at` | Date of this editorial source review | `2026-10-21` |
+| `reviewed_at` | Date of this editorial source review | `2026-10-30` |
 | `registry.last_updated` | Date of the referenced canonical registry | `2026-09-13` |
 | `anchors[].context_kind` | Vortik's description of the source context | `protocol`, `research`, `application`, or `editorial` |
 | `eips[].document_status` | Status on the EIP document | FOCIL: `Draft` |
 | `eips[].fork.assignment` | Assignment in the cited fork meta EIP | FOCIL: `scheduled` for Hegotá |
-| `forks[].activations[].status` | Network state recorded by the reviewed schedule | Glamsterdam/Sepolia: `active`; Hoodi: `scheduled` |
-| `forks[].activations[].activation_at` | Explicit UTC activation time, if recorded | Hoodi: `2026-10-26T17:42:48Z`; mainnet: `null` |
+| `forks[].activations[].status` | Network state recorded by the reviewed schedule | Glamsterdam/Sepolia: `active`; Hoodi: `not_scheduled` |
+| `forks[].activations[].activation_at` | Explicit UTC activation time, if recorded | Hoodi and mainnet: `null` |
 
-The October 17 follow-up records Sepolia as `active` because the October 16 Foundation announcement explicitly reports its activation. The recorded time, epoch and slot retain the published October 6 schedule; this is source-reported activation, not an independent chain-health check. Hoodi is `scheduled` for October 26 using the announcement and merged network configuration. Mainnet remains `not_scheduled`. The [dated review](research/protocol-freshness-2026-10-17.md) explains the source discrepancies and evidence limits.
+The October 17 follow-up records Sepolia as `active` because the October 16 Foundation announcement explicitly reports its activation. The recorded time, epoch and slot retain the published October 6 schedule; this is source-reported activation, not an independent chain-health check. The October 22 postponement supersedes the old Hoodi schedule. Hoodi is now `not_scheduled`, with null time, epoch and slot, because no replacement is announced. Mainnet remains `not_scheduled`. The [October 30 review](research/protocol-freshness-2026-10-30.md) explains why the stale date still present in EIP-7773 is not used.
 
 An EIP being `Draft` does not determine whether it is scheduled. A scheduled fork feature is not automatically active on mainnet. An anchor's `eip_refs` are contextual references: a related EIP does not standardize an entire umbrella term or assign a fork status to an ENS name. `getAnchorContext` preserves the names `related_eips` and `related_forks` for this reason.
 
@@ -72,7 +72,7 @@ The dataset is maintained directly under `docs/`; it is not a generated registry
 3. Change `reviewed_at` only after the source review. Preserve `registry.last_updated` unless the canonical registry itself changed.
 4. Update the dated regression assertions with the new evidence, then run the protocol-context checks, public-safety checks, and full repository validation.
 
-The current [October 21 targeted follow-up](research/protocol-freshness-2026-10-21.md) records the corrected meta-EIP calendars: Hegotá/Sepolia, Hegotá/Hoodi and Hegotá/Mainnet are `not_scheduled`, with null time, epoch and slot. Glamsterdam/Hoodi remains scheduled for October 26; its meta EIP now agrees with the announcement. The October 20 review of selected EIP states, including EIP-8025 declined for Hegotá, remains separate. Other source notes retain their dated reviews; the broad proposal catalog remains the October 17 metadata snapshot.
+The current [October 30 follow-up](research/protocol-freshness-2026-10-30.md) records the Hoodi postponement, selected proposal states and the BAL encoding clarification. Hegotá activation schedules remain unset, independently of FOCIL’s scheduled inclusion. Other research and application source notes retain their own dated reviews. The separate proposal catalog is the October 30 metadata snapshot.
 
 The initial snapshot is backed by the [September 30 source review](research/protocol-freshness-2026-09-30.md). The primary URLs in the JSON were rechecked when this dataset was prepared. A date is a record of that review, not an automatic freshness guarantee.
 

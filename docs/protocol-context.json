@@ -1,14 +1,14 @@
 {
   "$schema": "https://vortikregistry.github.io/vortik-open-schema/protocol-context.schema.json",
   "contract": "vortik.protocol-context/1.0.0",
-  "reviewed_at": "2026-10-21",
-  "scope": "Independent, dated source context for selected Ethereum concepts. The October 21 targeted follow-up reviews the Glamsterdam and Hegotá meta-EIP calendar corrections. Other selected EIP states, research and application notes retain their previous dated reviews; the proposal catalog remains the October 17 snapshot. This does not verify runtime health or ENS resolution.",
+  "reviewed_at": "2026-10-30",
+  "scope": "Independent, dated source context for selected Ethereum concepts. The October 30 review checks nine selected EIP document states, fork assignments, the Hoodi postponement and changed monitored source files. Other research and application notes retain their previous dated reviews. The separate proposal catalog is an October 30 metadata snapshot, not a technical audit of every proposal. This does not verify runtime health or ENS resolution.",
   "registry": {
     "version": "0.6.5",
     "last_updated": "2026-09-13",
     "path": "registry.json"
   },
-  "review_path": "research/protocol-freshness-2026-10-21.md",
+  "review_path": "research/protocol-freshness-2026-10-30.md",
   "anchors": [
     {
       "id": "epbs",
@@ -16,7 +16,7 @@
       "display_term": "ePBS",
       "context_kind": "protocol",
       "summary": "EIP-7732 separates proposer and builder duties. EIP-8282 defines builder deposit, top-up and exit requests.",
-      "boundary": "The referenced proposals are scheduled for Glamsterdam; this does not establish mainnet activation.",
+      "boundary": "Scheduled proposal inclusion is separate from activation. Hoodi was postponed with no replacement date; Glamsterdam mainnet remains unscheduled in the reviewed sources.",
       "anchor_path": "anchors/epbs.md",
       "sources_path": "schemas/epbs/1.0-draft/sources.md",
       "source_refs": [
@@ -24,7 +24,8 @@
         "eip-8282",
         "glamsterdam-meta",
         "glamsterdam-activation",
-        "glamsterdam-hoodi-announcement"
+        "glamsterdam-hoodi-announcement",
+        "glamsterdam-hoodi-delay"
       ],
       "eip_refs": [
         7732,
@@ -133,7 +134,7 @@
       "ens": "executionmarket.eth",
       "display_term": "Execution",
       "context_kind": "editorial",
-      "summary": "Payload coordination, block access lists and gas accounting describe distinct execution surfaces.",
+      "summary": "Payload coordination, block access lists and gas accounting describe distinct execution surfaces. The Hoodi delay concerns investigation of EIP-8037 contract interactions.",
       "boundary": "These related EIPs do not standardize a single execution-market object. BAL sidecars have a separate, declined Hegotá assignment.",
       "anchor_path": "anchors/executionmarket.md",
       "sources_path": "schemas/executionmarket/0.1-research/sources.md",
@@ -144,7 +145,8 @@
         "eip-8038",
         "eip-8146",
         "glamsterdam-meta",
-        "hegota-meta"
+        "hegota-meta",
+        "glamsterdam-hoodi-delay"
       ],
       "eip_refs": [
         7732,
@@ -285,7 +287,7 @@
     },
     {
       "number": 8038,
-      "title": "State-access gas cost update",
+      "title": "State-Access Gas Cost Update",
       "document_status": "Last Call",
       "fork": {
         "name": "Glamsterdam",
@@ -323,7 +325,8 @@
       "source_refs": [
         "glamsterdam-meta",
         "glamsterdam-activation",
-        "glamsterdam-hoodi-announcement"
+        "glamsterdam-hoodi-announcement",
+        "glamsterdam-hoodi-delay"
       ],
       "activations": [
         {
@@ -335,10 +338,10 @@
         },
         {
           "network": "Hoodi",
-          "status": "scheduled",
-          "activation_at": "2026-10-26T17:42:48Z",
-          "epoch": 132352,
-          "slot": 4235264
+          "status": "not_scheduled",
+          "activation_at": null,
+          "epoch": null,
+          "slot": null
         },
         {
           "network": "Mainnet",
@@ -469,6 +472,11 @@
       "id": "glamsterdam-hoodi-announcement",
       "title": "Ethereum Foundation: Glamsterdam Hoodi Announcement",
       "url": "https://blog.ethereum.org/2026/10/16/glamsterdam-hoodi-announcement"
+    },
+    {
+      "id": "glamsterdam-hoodi-delay",
+      "title": "Ethereum Foundation: Glamsterdam on Hoodi Postponed",
+      "url": "https://blog.ethereum.org/2026/10/22/glamsterdam-hoodi-delay"
     }
   ]
 }

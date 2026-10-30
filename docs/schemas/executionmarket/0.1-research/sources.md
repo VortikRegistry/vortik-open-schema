@@ -91,6 +91,11 @@ Curated references and source notes should be placed in the protected section be
 <!-- AUTO-GENERATED:END -->
 
 <!-- MANUAL-SOURCES:START -->
+
+## Current follow-up — 2026-10-30
+
+The [October 30 review](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-30.md) supersedes earlier Hoodi scheduling notes: the [Foundation postponement](https://blog.ethereum.org/2026/10/22/glamsterdam-hoodi-delay) removes the October 26 activation with no replacement date. Selected EIP document states and fork assignments remain unchanged. EIP-7928 now explicitly requires minimal unsigned-integer RLP encoding for integer fields; addresses remain 20-byte strings. The dated notes below remain historical.
+
 ## Curated References
 
 - [EIP-7732 — Enshrined Proposer-Builder Separation](https://eips.ethereum.org/EIPS/eip-7732): defines proposer-builder interactions and payload handling.

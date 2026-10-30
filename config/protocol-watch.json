@@ -11,7 +11,8 @@
     "ethereum/EIPs",
     "ethereum/ethereum-org-website",
     "ethereum/consensus-specs",
-    "ethpandaops/glamsterdam-devnets"
+    "ethpandaops/glamsterdam-devnets",
+    "eth-clients/hoodi"
   ],
   "sources": [
     {"id":"eip-7732","kind":"github_file","repository":"ethereum/EIPs","path":"EIPS/eip-7732.md","authority":"eip","relevance":["epbs.eth","Glamsterdam","builder-proposer coordination"]},
@@ -23,6 +24,7 @@
     {"id":"ethereum-org-glamsterdam-roadmap","kind":"github_file","repository":"ethereum/ethereum-org-website","path":"public/content/roadmap/glamsterdam/index.md","authority":"ethereum_org","relevance":["Glamsterdam roadmap","testnet milestones","public protocol communication"]},
     {"id":"consensus-gloas-beacon-chain","kind":"github_file","repository":"ethereum/consensus-specs","path":"specs/gloas/beacon-chain.md","authority":"ethereum_spec","relevance":["epbs.eth","Gloas consensus specification"]},
     {"id":"consensus-gloas-p2p","kind":"github_file","repository":"ethereum/consensus-specs","path":"specs/gloas/p2p-interface.md","authority":"ethereum_spec","relevance":["epbs.eth","payload and bid propagation"]},
-    {"id":"glamsterdam-devnets-head","kind":"github_repo_head","repository":"ethpandaops/glamsterdam-devnets","authority":"ethereum_devnet_ops","relevance":["Glamsterdam devnets","implementation evidence"]}
+    {"id":"glamsterdam-devnets-head","kind":"github_repo_head","repository":"ethpandaops/glamsterdam-devnets","authority":"ethereum_devnet_ops","relevance":["Glamsterdam devnets","implementation evidence"]},
+    {"id":"hoodi-consensus-config","kind":"github_file","repository":"eth-clients/hoodi","path":"metadata/config.yaml","authority":"ethereum_network_config","relevance":["Hoodi activation schedule","Glamsterdam postponement"]}
   ]
 }
