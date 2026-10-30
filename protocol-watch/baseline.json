@@ -1,16 +1,16 @@
 {
   "baseline_version": "1.0.0",
-  "reviewed_through": "2026-10-21",
-  "note": "Review evidence and scope: docs/research/protocol-freshness-2026-10-21.md. The October 21 observation has two meta-EIP calendar changes; the other eight fingerprints and all watched document statuses are unchanged. Earlier reviews remain historical. Acceptance does not establish deployment or live network health. Advance only through the maintainer-authorized reviewed PR process.",
+  "reviewed_through": "2026-10-30",
+  "note": "Review evidence and scope: docs/research/protocol-watch-alert-170-review-2026-10-30.md and docs/research/protocol-freshness-2026-10-30.md. Six prior fingerprints changed and the official Hoodi consensus configuration was added. Four prior fingerprints and all six watched EIP document states are unchanged. Acceptance is source review, not runtime or chain-health evidence.",
   "sources": [
     {
       "id": "eip-7732",
-      "fingerprint": "ffb4ba18e44307f58d2a19c33fb7339d5c5fd9c2",
+      "fingerprint": "5baf745271ab7dce5863c1be123ddb783987bd44",
       "status": "Last Call"
     },
     {
       "id": "eip-7773-glamsterdam-meta",
-      "fingerprint": "94b90da54273434f67e263527c0d08f5e4793cfb",
+      "fingerprint": "3b0d9db14e6a1069652045329101d907d0b739c8",
       "status": "Review"
     },
     {
@@ -20,7 +20,7 @@
     },
     {
       "id": "eip-7928-bal",
-      "fingerprint": "da3508ff6d73d53c9ffa9fc55f0724fb4c99198b",
+      "fingerprint": "3c4d4ad300e4946303db45710bba02cfb836f9eb",
       "status": "Last Call"
     },
     {
@@ -35,11 +35,11 @@
     },
     {
       "id": "ethereum-org-glamsterdam-roadmap",
-      "fingerprint": "d6a26c8d19a6e8370be70b112bd92b17f93eb709"
+      "fingerprint": "b229c9a3a238605e10434d8775634c0a40c30121"
     },
     {
       "id": "consensus-gloas-beacon-chain",
-      "fingerprint": "2dbc757d375267746fd8f1ae0090663ef4774176"
+      "fingerprint": "f6d01d30ee8d29a4f30f9024872d389b4d1bb571"
     },
     {
       "id": "consensus-gloas-p2p",
@@ -47,7 +47,11 @@
     },
     {
       "id": "glamsterdam-devnets-head",
-      "fingerprint": "085b7a135cfa5456b9fb0e689291b815d4a14eb3"
+      "fingerprint": "c8c460fcb1c5d3da5619c09a6440727a09bf7f5a"
+    },
+    {
+      "id": "hoodi-consensus-config",
+      "fingerprint": "884ff8091fc767e8c31a93911d95149aed897e0f"
     }
   ]
 }

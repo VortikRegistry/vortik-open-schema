@@ -1,5 +1,8 @@
 # Ethereum source follow-up — 2026-10-17
 
+> Historical review. The [October 30 follow-up](protocol-freshness-2026-10-30.md) records the subsequent Hoodi postponement and current proposal snapshot. Earlier dates below describe the sources at the time.
+
+
 This review updates the public reference from the [October 8 snapshot](protocol-freshness-2026-10-08.md). The review date uses UTC; the principal new announcement was published on October 16. It covers selected proposal metadata, fork assignments, network announcements and catalog extraction. Other research and application notes retain their September 30 review.
 
 ## Network state and schedule

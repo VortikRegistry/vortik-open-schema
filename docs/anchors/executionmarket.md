@@ -1,5 +1,8 @@
 # Execution Market
 
+> October 30 follow-up: [BAL encoding and the Hoodi postponement](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-30.md). The canonical classification and earlier conceptual review below are unchanged.
+
+
 **Associated ENS:** `executionmarket.eth`  
 **Canonical term:** execution (ambiguous)  
 **Registry ID:** `executionmarket`  

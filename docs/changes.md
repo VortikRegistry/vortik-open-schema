@@ -1,5 +1,16 @@
 # Source review and interface history
 
+## 2026-10-30 — Hoodi postponement and proposal refresh
+
+- Replace the superseded Hoodi activation with no current schedule; preserve source-reported Sepolia activation and separate fork assignments.
+- Record the BAL integer-encoding clarification and retain unchanged selected proposal lifecycle states.
+- Refresh the pinned catalog to 1,230 records: 605 EIPs and 625 ERCs, six additions and three lifecycle changes.
+- Review alert #170 with a complete 398-path devnet inventory and add the official Hoodi consensus configuration to the existing watcher.
+- Keep canonical registry v0.6.5, contracts, runtime, infrastructure and existing interface design unchanged.
+
+See the [source review](research/protocol-freshness-2026-10-30.md).
+
+
 This is an editorial and interface history. Canonical registry versions and historical release notes retain their original meaning.
 
 ## 2026-10-21 — meta-EIP calendar correction

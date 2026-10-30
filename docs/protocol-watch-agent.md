@@ -8,7 +8,7 @@ It is intentionally not an autonomous registry editor. It does not change `regis
 
 ## Watched sources
 
-The initial watch set covers:
+The current watch set covers:
 
 - EIP-7732 (ePBS);
 - EIP-7773 (Glamsterdam meta EIP);
@@ -18,7 +18,8 @@ The initial watch set covers:
 - EIP-8282 (Builder Execution Requests);
 - the canonical ethereum.org Glamsterdam roadmap source file;
 - Gloas beacon-chain and P2P consensus-spec files;
-- the ethPandaOps Glamsterdam devnet repository head.
+- the ethPandaOps Glamsterdam devnet repository head;
+- the official Hoodi consensus configuration, added after the October 22 postponement exposed a schedule that the meta EIP still retained.
 
 The source allowlist is stored in `config/protocol-watch.json`. Callers cannot supply arbitrary repositories or URLs.
 

@@ -34,15 +34,15 @@ test("reviewed EIP status and fork assignment retain distinct meanings", () => {
   }
 });
 
-test("reported Sepolia activation and future Hoodi schedule do not imply mainnet activation", () => {
+test("reported Sepolia activation and postponed Hoodi schedule do not imply mainnet activation", () => {
   const fork = snapshot.forks.find((entry) => entry.name === "Glamsterdam");
   assert.deepEqual(fork.activations.find((entry) => entry.network === "Sepolia"), {
     network: "Sepolia", status: "active", activation_at: "2026-10-06T13:53:36Z", epoch: 353024, slot: 11296768
   });
   assert.deepEqual(fork.activations.find((entry) => entry.network === "Hoodi"), {
-    network: "Hoodi", status: "scheduled", activation_at: "2026-10-26T17:42:48Z", epoch: 132352, slot: 4235264
+    network: "Hoodi", status: "not_scheduled", activation_at: null, epoch: null, slot: null
   });
-  assert.ok(fork.source_refs.includes("glamsterdam-hoodi-announcement"));
+  assert.ok(fork.source_refs.includes("glamsterdam-hoodi-delay"));
   const mainnet = fork.activations.find((entry) => entry.network === "Mainnet");
   assert.equal(mainnet.status, "not_scheduled");
   assert.equal(mainnet.activation_at, null);

@@ -1,17 +1,17 @@
 {
   "contract": "vortik.ethereum-catalog-sources/1.0.0",
-  "reviewed_at": "2026-10-17",
+  "reviewed_at": "2026-10-30",
   "sources": [
     {
       "id": "eips",
       "repository": "ethereum/EIPs",
-      "commit": "deb8f0d3ea9167bd30775fb3d45d052fce651d56",
+      "commit": "c1ff0a992ef65c0321b098a890b6d1c44b3fdb93",
       "directory": "EIPS"
     },
     {
       "id": "ercs",
       "repository": "ethereum/ERCs",
-      "commit": "4dec821bcb7dfbd739c843dcb7247e750781dd55",
+      "commit": "3dcfe69f22810eae4ef90fba4f8ac3c3cb227eaf",
       "directory": "ERCS"
     }
   ]

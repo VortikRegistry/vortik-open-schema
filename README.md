@@ -34,11 +34,11 @@ The website uses static artifacts from this repository. Searching and comparing 
 
 The [protocol context contract](docs/protocol-context.md) keeps these concepts separate. A source review date is also separate from the canonical registry's last-change date.
 
-## Protocol source follow-up — 2026-10-17
+## Protocol source follow-up — 2026-10-30
 
-The October 17 follow-up records the Foundation's report that Glamsterdam activated on Sepolia and the Hoodi schedule for October 26 at 17:42:48 UTC. Mainnet still has no announced date. The selected EIP document statuses and fork assignments remain unchanged. The regenerated catalog covers 1,224 EIP/ERC records, including 15 additions, from pinned official sources.
+Hoodi’s planned October 26 Glamsterdam activation was postponed; no replacement date is set. The October 30 review records this correction, EIP-7928’s clarified BAL encoding, and unchanged selected EIP document statuses and fork assignments. The refreshed catalog contains 1,230 EIP/ERC records from pinned official sources. Mainnet remains undated; the Foundation’s report of Sepolia activation is separate from a live chain-health check.
 
-See the [October 17 follow-up](docs/research/protocol-freshness-2026-10-17.md), the earlier [all-anchor source review](docs/research/protocol-freshness-2026-09-30.md) and [review history](docs/changes.md). Follow the linked primary sources for later decisions. Historical releases retain their original context.
+See the [October 30 follow-up](docs/research/protocol-freshness-2026-10-30.md), the earlier [all-anchor source review](docs/research/protocol-freshness-2026-09-30.md) and [review history](docs/changes.md). Follow the linked primary sources for later decisions. Historical releases retain their original context.
 
 ## 30-second developer quickstart
 

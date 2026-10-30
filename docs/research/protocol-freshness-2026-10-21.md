@@ -1,5 +1,8 @@
 # Protocol calendar follow-up — 2026-10-21
 
+> Historical review. The [October 30 follow-up](protocol-freshness-2026-10-30.md) records the subsequent Hoodi postponement and current proposal snapshot. Earlier dates below describe the sources at the time.
+
+
 ## Result
 
 The two changes reported by [alert #168](https://github.com/VortikRegistry/vortik-open-schema/issues/168) clarify the calendar discrepancy recorded in the [October 20 review](protocol-freshness-2026-10-20.md). EIP-7773 adds the already announced Glamsterdam/Hoodi schedule. EIP-8081 removes its repeated Sepolia and Hoodi dates and leaves all three Hegotá activation rows empty.
