@@ -31,9 +31,9 @@ console.log(result.related_eips); // EIP-8025: Draft; Hegotá assignment: declin
 
 ## Independent facts
 
-| Field | Meaning | Example in the October 30 follow-up |
+| Field | Meaning | Example in the November 5 follow-up |
 | --- | --- | --- |
-| `reviewed_at` | Date of this editorial source review | `2026-10-30` |
+| `reviewed_at` | Date of this editorial source review | `2026-11-05` |
 | `registry.last_updated` | Date of the referenced canonical registry | `2026-09-13` |
 | `anchors[].context_kind` | Vortik's description of the source context | `protocol`, `research`, `application`, or `editorial` |
 | `eips[].document_status` | Status on the EIP document | FOCIL: `Draft` |
@@ -72,7 +72,7 @@ The dataset is maintained directly under `docs/`; it is not a generated registry
 3. Change `reviewed_at` only after the source review. Preserve `registry.last_updated` unless the canonical registry itself changed.
 4. Update the dated regression assertions with the new evidence, then run the protocol-context checks, public-safety checks, and full repository validation.
 
-The current [October 30 follow-up](research/protocol-freshness-2026-10-30.md) records the Hoodi postponement, selected proposal states and the BAL encoding clarification. Hegotá activation schedules remain unset, independently of FOCIL’s scheduled inclusion. Other research and application source notes retain their own dated reviews. The separate proposal catalog is the October 30 metadata snapshot.
+The current [November 5 follow-up](research/protocol-freshness-2026-11-05.md) rechecks the Hoodi postponement and selected proposal states, records the PBT-1 archive review, and preserves the earlier BAL encoding clarification. Hegotá activation schedules remain unset, independently of FOCIL’s scheduled inclusion. Other research and application source notes retain their own dated reviews. The separate proposal catalog is the November 5 metadata snapshot.
 
 The initial snapshot is backed by the [September 30 source review](research/protocol-freshness-2026-09-30.md). The primary URLs in the JSON were rechecked when this dataset was prepared. A date is a record of that review, not an automatic freshness guarantee.
 

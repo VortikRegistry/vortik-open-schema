@@ -39,6 +39,7 @@ strong { color:var(--ink) }
 .header-row nav a[aria-current=page] { color:var(--green); border-bottom:2px solid var(--green) }
 .nav-source { border:1px solid var(--line); border-radius:6px; padding:9px 15px!important }
 .hero { display:grid; grid-template-columns:1.4fr 1fr; gap:64px; align-items:center; padding-top:82px; padding-bottom:86px }
+.hero-copy { min-width:0 }
 .hero h1 { margin-bottom:26px }
 .hero h1 span { color:var(--green) }
 .hero .intro { font-size:18px; line-height:1.65; max-width:530px; margin-bottom:28px }
