@@ -1,14 +1,14 @@
 {
   "$schema": "https://vortikregistry.github.io/vortik-open-schema/protocol-context.schema.json",
   "contract": "vortik.protocol-context/1.0.0",
-  "reviewed_at": "2026-10-30",
-  "scope": "Independent, dated source context for selected Ethereum concepts. The October 30 review checks nine selected EIP document states, fork assignments, the Hoodi postponement and changed monitored source files. Other research and application notes retain their previous dated reviews. The separate proposal catalog is an October 30 metadata snapshot, not a technical audit of every proposal. This does not verify runtime health or ENS resolution.",
+  "reviewed_at": "2026-11-05",
+  "scope": "Independent, dated source context for selected Ethereum concepts. The November 5 review rechecks nine selected EIP document states, fork assignments, the unchanged Hoodi postponement and eleven monitored sources. Other research and application notes retain their previous dated reviews. The separate proposal catalog is a November 5 metadata snapshot, not a technical audit of every proposal. This does not verify runtime health or ENS resolution.",
   "registry": {
     "version": "0.6.5",
     "last_updated": "2026-09-13",
     "path": "registry.json"
   },
-  "review_path": "research/protocol-freshness-2026-10-30.md",
+  "review_path": "research/protocol-freshness-2026-11-05.md",
   "anchors": [
     {
       "id": "epbs",

@@ -1,0 +1,795 @@
+{
+  "repository": "ethpandaops/glamsterdam-devnets",
+  "base": "c8c460fcb1c5d3da5619c09a6440727a09bf7f5a",
+  "head": "eda124015e090c1b43d0ccd4025c61795975ed46",
+  "comparison_complete": true,
+  "rename_detection": true,
+  "total_commits": 9,
+  "total_files": 98,
+  "files": [
+    {
+      "path": "README.md",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "ca41e50907da4e6bbfe0028ad83ca5670280a783",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "ansible/ansible.cfg",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "5ac4043d021996c0e0195e53acf8cf21e7300e4b",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "ansible/inventories/pbt-1/group_vars/all/all.yaml",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "6a2a9e63fc521f04c8a8c6cd36c42cb3a32b06f7",
+      "additions": 8,
+      "deletions": 1
+    },
+    {
+      "path": "ansible/inventories/pbt-1/group_vars/all/images.yaml",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "04f9353c5fceda890cf64fcd550cb4fe8e739b96",
+      "additions": 6,
+      "deletions": 3
+    },
+    {
+      "path": "ansible/inventories/pbt-1/group_vars/besu.yaml",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "7029457331038f364e01c167c5b3920f68ea325c",
+      "additions": 12,
+      "deletions": 2
+    },
+    {
+      "path": "ansible/inventories/pbt-1/group_vars/erigon.yaml",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "253cd1ef7a04e01c5fc41d3e536a1500de9f4b5c",
+      "additions": 4,
+      "deletions": 7
+    },
+    {
+      "path": "ansible/inventories/pbt-1/group_vars/geth.yaml",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "c1bd3628f05743a9557cd6b96f3e201649df88d9",
+      "additions": 4,
+      "deletions": 1
+    },
+    {
+      "path": "ansible/inventories/pbt-1/group_vars/nethermind.yaml",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "57026309accaf9650e86461728d45db9eb1e01ca",
+      "additions": 9,
+      "deletions": 1
+    },
+    {
+      "path": "ansible/inventories/pbt-1/host_vars/lighthouse-besu-1.yaml",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "803d1078d621a66c23adbb79371a4d9a00de7cb6",
+      "additions": 12,
+      "deletions": 2
+    },
+    {
+      "path": "ansible/inventories/pbt-1/host_vars/lighthouse-besu-2.yaml",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "5eee14f3914c5714b3698b5a8be0f7555d59b79a",
+      "additions": 8,
+      "deletions": 1
+    },
+    {
+      "path": "ansible/inventories/pbt-1/host_vars/lighthouse-erigon-1.yaml",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "ac92e430f0c22b7450705afff820580079a366b0",
+      "additions": 5,
+      "deletions": 0
+    },
+    {
+      "path": "ansible/inventories/pbt-1/host_vars/lighthouse-erigon-2.yaml",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "1f7295568bd4fb05cd028a1188db3d9b6461748d",
+      "additions": 4,
+      "deletions": 3
+    },
+    {
+      "path": "ansible/inventories/pbt-1/host_vars/lighthouse-nethermind-1.yaml",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "8802783df2c0f1ee4b1a20d35f2f36b19b96578d",
+      "additions": 10,
+      "deletions": 0
+    },
+    {
+      "path": "ansible/inventories/pbt-1/host_vars/lighthouse-nethermind-2.yaml",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "16b1d6601684e456f2a67cc6c543049376002805",
+      "additions": 3,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/assertoor/.helmignore",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/assertoor/.helmignore",
+      "blob": "0e8a0eb36f4ca2c939201c0d54b5d82a1ea34778",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/assertoor/Chart.lock",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/assertoor/Chart.lock",
+      "blob": "334afa61bd5754d41d6b156e1b9c060cb6a1264f",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/assertoor/Chart.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/assertoor/Chart.yaml",
+      "blob": "096e6c973273aeb0e68907488209d5e13303d9b3",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/assertoor/charts/assertoor-1.2.0.tgz",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/assertoor/charts/assertoor-1.2.0.tgz",
+      "blob": "660b07e8626f1a97cb79f7585f05cdd744e8a4e2",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/assertoor/values.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/assertoor/values.yaml",
+      "blob": "62824afb3d48f2b725a2f3ce00accd6d544b8371",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/authenticatoor/.helmignore",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/authenticatoor/.helmignore",
+      "blob": "0e8a0eb36f4ca2c939201c0d54b5d82a1ea34778",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/authenticatoor/Chart.lock",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/authenticatoor/Chart.lock",
+      "blob": "f91b27bdecaf18484c2835ad925f63893f9920f8",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/authenticatoor/Chart.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/authenticatoor/Chart.yaml",
+      "blob": "1f871729aa2716a64720d0c5fa6369486ee30158",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/authenticatoor/charts/authenticatoor-0.1.0.tgz",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/authenticatoor/charts/authenticatoor-0.1.0.tgz",
+      "blob": "fdff8bc359c27cd6a2694fa6cd3e4f97f234a731",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/authenticatoor/values.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/authenticatoor/values.yaml",
+      "blob": "13d09f1d9d69326a53b6e7136f6f91395c903266",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/buildoor/.helmignore",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/buildoor/.helmignore",
+      "blob": "0e8a0eb36f4ca2c939201c0d54b5d82a1ea34778",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/buildoor/Chart.lock",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/buildoor/Chart.lock",
+      "blob": "18595ef3a89a7322807e0e92e1b0b1aa00655558",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/buildoor/Chart.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/buildoor/Chart.yaml",
+      "blob": "e89f8ee9a66a9647beb3c7c01cdd87790a7d4d5e",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/buildoor/charts/buildoor-overview-0.0.1.tgz",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/buildoor/charts/buildoor-overview-0.0.1.tgz",
+      "blob": "5604aa9177ea5c482d045d65d75059fc008a1b3f",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/buildoor/values.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/buildoor/values.yaml",
+      "blob": "249710b203d9ab85ea2ec0bc8f3edd7087d9d3b4",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/checkpointz/.helmignore",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/checkpointz/.helmignore",
+      "blob": "0e8a0eb36f4ca2c939201c0d54b5d82a1ea34778",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/checkpointz/Chart.lock",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/checkpointz/Chart.lock",
+      "blob": "6d2de0461158c76c5edb23553af4a042ce544c5a",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/checkpointz/Chart.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/checkpointz/Chart.yaml",
+      "blob": "c32fc11794bdaefa563574b1a16d0d7c088d83b1",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/checkpointz/charts/checkpointz-0.1.3.tgz",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/checkpointz/charts/checkpointz-0.1.3.tgz",
+      "blob": "9c112a2d5ede9fca84d2a49cb4fdc8963147247a",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/checkpointz/values.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/checkpointz/values.yaml",
+      "blob": "6b561cb71da8ef03160dfbb3b5c3f2a29bc1da37",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/config/.helmignore",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/config/.helmignore",
+      "blob": "0e8a0eb36f4ca2c939201c0d54b5d82a1ea34778",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/config/Chart.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/config/Chart.yaml",
+      "blob": "5ef4f065ad9dd6083fa0293310893b1876910252",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/config/templates/ingress.config.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/config/templates/ingress.config.yaml",
+      "blob": "650787b91f31defdc8c7576642d245424cf5db1a",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/config/values.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/config/values.yaml",
+      "blob": "e28d2c84ac172313aec9c7339996f8f50d4d7f53",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/dora/.helmignore",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/dora/.helmignore",
+      "blob": "0e8a0eb36f4ca2c939201c0d54b5d82a1ea34778",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/dora/Chart.lock",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/dora/Chart.lock",
+      "blob": "4f3f01c2e4d7ef0ff398b7e1509193fd34d4e5fc",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/dora/Chart.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/dora/Chart.yaml",
+      "blob": "580a78d9ab628939d4b934807293529a60e3f52c",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/dora/charts/dora-1.0.12.tgz",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/dora/charts/dora-1.0.12.tgz",
+      "blob": "bf5c9b8a25c46e706a39005300687809a347b50e",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/dora/endpoints-cl.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/dora/endpoints-cl.yaml",
+      "blob": "102438b8e19b0786823c4c1e36daf3fcb507a8a1",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/dora/endpoints-el.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/dora/endpoints-el.yaml",
+      "blob": "c184da1884077b3e98e0f5a34822471f0182f2c7",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/dora/values.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/dora/values.yaml",
+      "blob": "e85ce169a90a2eb445f493752242d247efec10b0",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/dugtrio/.helmignore",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/dugtrio/.helmignore",
+      "blob": "0e8a0eb36f4ca2c939201c0d54b5d82a1ea34778",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/dugtrio/Chart.lock",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/dugtrio/Chart.lock",
+      "blob": "8eb314e69065e0166ae173410a2a742333aa38e7",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/dugtrio/Chart.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/dugtrio/Chart.yaml",
+      "blob": "7561bea3dac313a7202a01d81745f9fa31f7f11d",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/dugtrio/charts/dugtrio-0.0.6.tgz",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/dugtrio/charts/dugtrio-0.0.6.tgz",
+      "blob": "cfe0c43bf809dfce8cbe405dae09afc0a7c8be6b",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/dugtrio/values.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/dugtrio/values.yaml",
+      "blob": "e1f98bf8d2dd23eadd24a335ad80e4aad08009e3",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/erpc/.helmignore",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/erpc/.helmignore",
+      "blob": "0e8a0eb36f4ca2c939201c0d54b5d82a1ea34778",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/erpc/Chart.lock",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/erpc/Chart.lock",
+      "blob": "2a3cb9f412de478c7d9d37d0253b3c697c1ef9af",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/erpc/Chart.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/erpc/Chart.yaml",
+      "blob": "f0509170fa162260b15e5b2295763f4af619f9fd",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/erpc/charts/erpc-0.0.4.tgz",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/erpc/charts/erpc-0.0.4.tgz",
+      "blob": "1abc47a4b7c2c8e1f7912b525d1b4618b18c5952",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/erpc/values.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/erpc/values.yaml",
+      "blob": "e91a3eb43d4048cdcefeb03ea315a1a68727668b",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/faucet-agents/.helmignore",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/faucet-agents/.helmignore",
+      "blob": "0e8a0eb36f4ca2c939201c0d54b5d82a1ea34778",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/faucet-agents/Chart.lock",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/faucet-agents/Chart.lock",
+      "blob": "ff2867ae58f9fb5cdcd19f49234dd9f2494d4fb5",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/faucet-agents/Chart.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/faucet-agents/Chart.yaml",
+      "blob": "edb6dc184accdfef369a3224a8af89a0484d6b2e",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/faucet-agents/charts/powfaucet-1.2.1.tgz",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/faucet-agents/charts/powfaucet-1.2.1.tgz",
+      "blob": "4fa4311a7c4a2a1323fe918b69f6a388a343da37",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/faucet-agents/values.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/faucet-agents/values.yaml",
+      "blob": "882fbde8c11a0a1b3c78b168a686467c670041f8",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/forkmon/.helmignore",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/forkmon/.helmignore",
+      "blob": "0e8a0eb36f4ca2c939201c0d54b5d82a1ea34778",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/forkmon/Chart.lock",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/forkmon/Chart.lock",
+      "blob": "46abefe22f67d0ec0d454eae500f1ea860c156df",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/forkmon/Chart.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/forkmon/Chart.yaml",
+      "blob": "cf8da6624763c7bf205e78581b058e48c1db0a8b",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/forkmon/charts/forkmon-0.1.5.tgz",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/forkmon/charts/forkmon-0.1.5.tgz",
+      "blob": "6527df407278488a8e7b573c5b7383eb26adb407",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/forkmon/values.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/forkmon/values.yaml",
+      "blob": "26deacea803d92bba69a45fed7a6e253efaf2c65",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/forky/.helmignore",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/forky/.helmignore",
+      "blob": "0e8a0eb36f4ca2c939201c0d54b5d82a1ea34778",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/forky/Chart.lock",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/forky/Chart.lock",
+      "blob": "a1da45843f1bd70452a512e3e005e7d1226af892",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/forky/Chart.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/forky/Chart.yaml",
+      "blob": "2d8df6b482ecb47c6c622adb81193d29895a16c5",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/forky/charts/forky-0.2.0.tgz",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/forky/charts/forky-0.2.0.tgz",
+      "blob": "17b6d6ed9a5f5a750237710a2437502335a2bcff",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/forky/values.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/forky/values.yaml",
+      "blob": "9c456a42b4929c3c6270fc5ce751eb053de5374d",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/slashoor/.helmignore",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/slashoor/.helmignore",
+      "blob": "0e8a0eb36f4ca2c939201c0d54b5d82a1ea34778",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/slashoor/Chart.lock",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/slashoor/Chart.lock",
+      "blob": "a76beaff08927664149abcb4885a2c1d6c6cfa91",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/slashoor/Chart.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/slashoor/Chart.yaml",
+      "blob": "f30755bff949134452aa911796d6c12ee16e04f2",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/slashoor/charts/slashoor-0.1.0.tgz",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/slashoor/charts/slashoor-0.1.0.tgz",
+      "blob": "995b8f5940e1892cd53a132b3667a6dd30710240",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/slashoor/values.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/slashoor/values.yaml",
+      "blob": "e8e9ceda4a01c7fb7abecac1906c79abf2bfd592",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/spamoor/.helmignore",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/spamoor/.helmignore",
+      "blob": "0e8a0eb36f4ca2c939201c0d54b5d82a1ea34778",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/spamoor/Chart.lock",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/spamoor/Chart.lock",
+      "blob": "6dd15bdf9110c5b78e0048d612942153b0c6e1e9",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/spamoor/Chart.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/spamoor/Chart.yaml",
+      "blob": "797ffda034850a78287ca67c40ac36918551a9a1",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/spamoor/charts/spamoor-1.0.1.tgz",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/spamoor/charts/spamoor-1.0.1.tgz",
+      "blob": "2ae2e3ae1d370094d5f162648c75882ab81e7e02",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/spamoor/values.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/spamoor/values.yaml",
+      "blob": "7cd168da73b7df85f2a77f25ab6f574fe6aef4d4",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/syncoor-server/.helmignore",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/syncoor-server/.helmignore",
+      "blob": "0e8a0eb36f4ca2c939201c0d54b5d82a1ea34778",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/syncoor-server/Chart.lock",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/syncoor-server/Chart.lock",
+      "blob": "12c8d62bf7a2f6a350028f3002c0b486f858b941",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/syncoor-server/Chart.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/syncoor-server/Chart.yaml",
+      "blob": "b7b002dca4663293cece5284cfc7ed639c947a8b",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/syncoor-server/charts/syncoor-server-0.0.1.tgz",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/syncoor-server/charts/syncoor-server-0.0.1.tgz",
+      "blob": "9048152ec6d3c3d69a808d54c99e49aa02415372",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/syncoor-server/values.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/syncoor-server/values.yaml",
+      "blob": "e74a8a7377e031239d0028c96b0e19bb04cbe8fb",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/syncoor-web/.helmignore",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/syncoor-web/.helmignore",
+      "blob": "0e8a0eb36f4ca2c939201c0d54b5d82a1ea34778",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/syncoor-web/Chart.lock",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/syncoor-web/Chart.lock",
+      "blob": "b6d6152bcef6c913c7c1e5741b68398b78bbb8f8",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/syncoor-web/Chart.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/syncoor-web/Chart.yaml",
+      "blob": "1d2fa3eaf712893dae0f2e7b9efd72fe8aafe58d",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/syncoor-web/charts/syncoor-web-0.0.1.tgz",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/syncoor-web/charts/syncoor-web-0.0.1.tgz",
+      "blob": "1e62b0a4016b687daef63ae0d82293c1c452fde2",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "kubernetes-archive/pbt-1/syncoor-web/values.yaml",
+      "status": "renamed",
+      "previous_path": "kubernetes/pbt-1/syncoor-web/values.yaml",
+      "blob": "2e58f6c91183d3476527fd3a7d315046c313a0ed",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "md/pbt-1-activation-incident-2026-10-29.md",
+      "status": "added",
+      "previous_path": null,
+      "blob": "f66b891c815b5939a907e90818e0ea1175108639",
+      "additions": 456,
+      "deletions": 0
+    },
+    {
+      "path": "md/pbt-1-final-snapshots-2026-10-30.md",
+      "status": "added",
+      "previous_path": null,
+      "blob": "b3c52e4142d8dae1e8cf4f8780596f997e02d6b5",
+      "additions": 128,
+      "deletions": 0
+    },
+    {
+      "path": "md/pbt-1-launch-handoff.md",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "8b8200e0ec1b5e5c7a81c2d0a918a081c42b56e7",
+      "additions": 434,
+      "deletions": 17
+    },
+    {
+      "path": "md/pbt-1-panda-data-guide.md",
+      "status": "added",
+      "previous_path": null,
+      "blob": "f90f149df96f59f1dd35050f73d38e29c3286a60",
+      "additions": 128,
+      "deletions": 0
+    },
+    {
+      "path": "md/pbt-1-self-conversion-trials-2026-10-26.md",
+      "status": "added",
+      "previous_path": null,
+      "blob": "2879fa3022e6b69f591c2cb5cdb88771017eed83",
+      "additions": 418,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/pbt/final-head-snapshot.py",
+      "status": "added",
+      "previous_path": null,
+      "blob": "d246e496d10cc46fd6bf578343f856e680a123b0",
+      "additions": 210,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/shadowfork-ethrex-firewall.sh",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "dc3a58d2e8453b88bcf0163683237e56b9797893",
+      "additions": 7,
+      "deletions": 0
+    },
+    {
+      "path": "terraform/pbt-1/firewall.tf",
+      "status": "modified",
+      "previous_path": null,
+      "blob": "b0151ed4a08ae33f873e18c027b22efcaa538f8c",
+      "additions": 6,
+      "deletions": 1
+    }
+  ]
+}

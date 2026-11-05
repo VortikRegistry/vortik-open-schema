@@ -1,7 +1,7 @@
 {
   "baseline_version": "1.0.0",
-  "reviewed_through": "2026-10-30",
-  "note": "Review evidence and scope: docs/research/protocol-watch-alert-170-review-2026-10-30.md and docs/research/protocol-freshness-2026-10-30.md. Six prior fingerprints changed and the official Hoodi consensus configuration was added. Four prior fingerprints and all six watched EIP document states are unchanged. Acceptance is source review, not runtime or chain-health evidence.",
+  "reviewed_through": "2026-11-05",
+  "note": "Review evidence and scope: docs/research/protocol-watch-alert-173-review-2026-11-05.md and docs/research/protocol-freshness-2026-11-05.md. Only the devnet head fingerprint changed; ten other source fingerprints and all six watched EIP document states are unchanged. Acceptance is bounded source review, not runtime or chain-health evidence.",
   "sources": [
     {
       "id": "eip-7732",
@@ -47,7 +47,7 @@
     },
     {
       "id": "glamsterdam-devnets-head",
-      "fingerprint": "c8c460fcb1c5d3da5619c09a6440727a09bf7f5a"
+      "fingerprint": "eda124015e090c1b43d0ccd4025c61795975ed46"
     },
     {
       "id": "hoodi-consensus-config",
