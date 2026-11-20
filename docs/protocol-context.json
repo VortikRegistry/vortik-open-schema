@@ -1,14 +1,14 @@
 {
   "$schema": "https://vortikregistry.github.io/vortik-open-schema/protocol-context.schema.json",
   "contract": "vortik.protocol-context/1.0.0",
-  "reviewed_at": "2026-11-05",
-  "scope": "Independent, dated source context for selected Ethereum concepts. The November 5 review rechecks nine selected EIP document states, fork assignments, the unchanged Hoodi postponement and eleven monitored sources. Other research and application notes retain their previous dated reviews. The separate proposal catalog is a November 5 metadata snapshot, not a technical audit of every proposal. This does not verify runtime health or ENS resolution.",
+  "reviewed_at": "2026-11-19",
+  "scope": "Source review of Glamsterdam and Hegotá as of November 19, 2026: ten selected EIP documents, fork assignments, network configurations, ACDE #249 and the Gloas networking changes. Other research and application notes retain their own review dates. The proposal catalog has a separate metadata-only import. Neither dataset measures live network or service health.",
   "registry": {
     "version": "0.6.5",
     "last_updated": "2026-09-13",
     "path": "registry.json"
   },
-  "review_path": "research/protocol-freshness-2026-11-05.md",
+  "review_path": "research/protocol-freshness-2026-11-19.md",
   "anchors": [
     {
       "id": "epbs",
@@ -16,7 +16,7 @@
       "display_term": "ePBS",
       "context_kind": "protocol",
       "summary": "EIP-7732 separates proposer and builder duties. EIP-8282 defines builder deposit, top-up and exit requests.",
-      "boundary": "Scheduled proposal inclusion is separate from activation. Hoodi was postponed with no replacement date; Glamsterdam mainnet remains unscheduled in the reviewed sources.",
+      "boundary": "Sepolia activation is source-reported. ACDE #249 discussed the week of December 14 for Hoodi; the decision was deferred. Neither Hoodi nor mainnet has a confirmed activation.",
       "anchor_path": "anchors/epbs.md",
       "sources_path": "schemas/epbs/1.0-draft/sources.md",
       "source_refs": [
@@ -25,7 +25,10 @@
         "glamsterdam-meta",
         "glamsterdam-activation",
         "glamsterdam-hoodi-announcement",
-        "glamsterdam-hoodi-delay"
+        "glamsterdam-hoodi-delay",
+        "ef-repricing-review",
+        "acde-249",
+        "gloas-bid-gossip"
       ],
       "eip_refs": [
         7732,
@@ -38,12 +41,13 @@
       "display_term": "FOCIL / inclusion lists",
       "context_kind": "protocol",
       "summary": "EIP-7805 specifies fork-choice enforcement of inclusion lists and is scheduled for Hegotá.",
-      "boundary": "Draft document status and scheduled fork assignment are separate facts. The reviewed Hegotá meta EIP leaves Sepolia, Hoodi and Mainnet activation schedules unset.",
+      "boundary": "EIP-8081 lists FOCIL and Frame Transaction as separate Hegotá proposals. ACDE #249 discussed fork scope and deferred FOCIL decisions to the consensus call. No network activation is set.",
       "anchor_path": "anchors/inclusionlist.md",
       "sources_path": "schemas/inclusionlist/0.1-draft/sources.md",
       "source_refs": [
         "eip-7805",
-        "hegota-meta"
+        "hegota-meta",
+        "acde-249"
       ],
       "eip_refs": [
         7805
@@ -101,14 +105,15 @@
       "ens": "buildermarket.eth",
       "display_term": "Builders",
       "context_kind": "editorial",
-      "summary": "EIP-7732 describes builder bids, proposer payments and payload reveal duties; EIP-8282 covers builder request paths.",
+      "summary": "EIP-7732 distinguishes builder bids, proposer payments and payload reveal. The Gloas P2P spec distinguishes a proposer considering a higher bid locally from peers forwarding it within a stake-based limit.",
       "boundary": "The registry's deprecated label applies to its broad abstraction, not to the existence of builders or builder competition.",
       "anchor_path": "anchors/buildermarket.md",
       "sources_path": "schemas/buildermarket/0.1-research/sources.md",
       "source_refs": [
         "eip-7732",
         "eip-8282",
-        "glamsterdam-meta"
+        "glamsterdam-meta",
+        "gloas-bid-gossip"
       ],
       "eip_refs": [
         7732,
@@ -134,7 +139,7 @@
       "ens": "executionmarket.eth",
       "display_term": "Execution",
       "context_kind": "editorial",
-      "summary": "Payload coordination, block access lists and gas accounting describe distinct execution surfaces. The Hoodi delay concerns investigation of EIP-8037 contract interactions.",
+      "summary": "Glamsterdam combines Amsterdam (execution) and Gloas (consensus). Its gas changes cover state creation (EIP-8037) and state access (EIP-8038); the November compatibility review informed the Hoodi discussion. Frame Transaction is a separate Hegotá proposal.",
       "boundary": "These related EIPs do not standardize a single execution-market object. BAL sidecars have a separate, declined Hegotá assignment.",
       "anchor_path": "anchors/executionmarket.md",
       "sources_path": "schemas/executionmarket/0.1-research/sources.md",
@@ -146,13 +151,17 @@
         "eip-8146",
         "glamsterdam-meta",
         "hegota-meta",
-        "glamsterdam-hoodi-delay"
+        "glamsterdam-hoodi-delay",
+        "ef-repricing-review",
+        "acde-249",
+        "eip-8141"
       ],
       "eip_refs": [
         7732,
         7928,
         8037,
         8038,
+        8141,
         8146
       ]
     },
@@ -297,6 +306,17 @@
       "source_ref": "eip-8038"
     },
     {
+      "number": 8141,
+      "title": "Frame Transaction",
+      "document_status": "Draft",
+      "fork": {
+        "name": "Hegotá",
+        "assignment": "scheduled",
+        "source_ref": "hegota-meta"
+      },
+      "source_ref": "eip-8141"
+    },
+    {
       "number": 8146,
       "title": "Block Access List Sidecars",
       "document_status": "Draft",
@@ -326,7 +346,9 @@
         "glamsterdam-meta",
         "glamsterdam-activation",
         "glamsterdam-hoodi-announcement",
-        "glamsterdam-hoodi-delay"
+        "glamsterdam-hoodi-delay",
+        "ef-repricing-review",
+        "acde-249"
       ],
       "activations": [
         {
@@ -355,7 +377,8 @@
     {
       "name": "Hegotá",
       "source_refs": [
-        "hegota-meta"
+        "hegota-meta",
+        "acde-249"
       ],
       "activations": [
         {
@@ -477,6 +500,26 @@
       "id": "glamsterdam-hoodi-delay",
       "title": "Ethereum Foundation: Glamsterdam on Hoodi Postponed",
       "url": "https://blog.ethereum.org/2026/10/22/glamsterdam-hoodi-delay"
+    },
+    {
+      "id": "ef-repricing-review",
+      "title": "Ethereum Foundation: EIP-8037 / EIP-8038 compatibility review (November 6; update November 9)",
+      "url": "https://blog.ethereum.org/2026/11/06/glamsterdam-8037-8038"
+    },
+    {
+      "id": "acde-249",
+      "title": "ACDE #249: corrected call transcript (November 19)",
+      "url": "https://github.com/ethereum/pm/blob/27b51c935352cad737c76775f5cea2d3aca539a3/.github/ACDbot/artifacts/acde/2026-11-19_249/transcript_corrected.vtt"
+    },
+    {
+      "id": "gloas-bid-gossip",
+      "title": "Ethereum consensus specification: Gloas P2P, reviewed November 19",
+      "url": "https://github.com/ethereum/consensus-specs/blob/6ea84333433a840fbd534f8ebbe9dd5e1b599115/specs/gloas/p2p-interface.md"
+    },
+    {
+      "id": "eip-8141",
+      "title": "EIP-8141: Frame Transaction",
+      "url": "https://eips.ethereum.org/EIPS/eip-8141"
     }
   ]
 }

@@ -1,5 +1,13 @@
 # Source review and interface history
 
+## 2026-11-19 — proposed Hoodi window and catalog refresh
+
+The [source review](research/protocol-freshness-2026-11-19.md) separates ACDE's proposed Hoodi window and conditional mainnet estimate from confirmed network schedules. It reconciles EIP-7773 and the Gloas P2P changes in [alert #176](research/protocol-watch-alert-176-review-2026-11-19.md). The catalog adds ERC-8501 and updates eight ERC lifecycle states and one description: 1,233 proposals, no removals.
+
+## 2026-11-05 — catalog and narrow-screen search
+
+The [November 5 review](research/protocol-freshness-2026-11-05.md) added EIP-8449 and EIP-8457 (1,232 proposals) and reviewed the PBT-1 archive. The homepage search column was corrected for narrow screens.
+
 ## 2026-10-30 — Hoodi postponement and proposal refresh
 
 - Replace the superseded Hoodi activation with no current schedule; preserve source-reported Sepolia activation and separate fork assignments.

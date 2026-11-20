@@ -1,0 +1,96 @@
+{
+  "repository": "ethpandaops/glamsterdam-devnets",
+  "base": "eda124015e090c1b43d0ccd4025c61795975ed46",
+  "head": "0ff9c3ad592c7dd466907bc82f7778f65c4a23c0",
+  "commits": [
+    "ccab7b91ab55d93a5050bc4f107247c672a226ca",
+    "c586ebeb515c30875ba9e8b7d4618878b71a3b6c",
+    "98ee6ae195301748d7e2922122848faf4f81daad",
+    "eb497705f219093ed7b54a3d9d19903d06729558",
+    "61f11443cdfe1dd624a12d6eeafbdbee5d7c7694",
+    "03ceff7196a8397463c77cd3972985aba44997e5",
+    "0ff9c3ad592c7dd466907bc82f7778f65c4a23c0"
+  ],
+  "files": [
+    {
+      "filename": ".github/workflows/syncoor-devnet-8.yaml",
+      "status": "modified",
+      "sha": "ec230c52aa6a8035611700397e0dbeb18dac131e"
+    },
+    {
+      "filename": "ansible/inventories/devnet-8/group_vars/all/all.sops.yaml",
+      "status": "modified",
+      "sha": "70995b7099d87a388ab9668b382a1f15ca7b2182"
+    },
+    {
+      "filename": "kubernetes/devnet-8/authenticatoor/Chart.lock",
+      "status": "modified",
+      "sha": "c180f26404c6278c3bc340155d9f6a881c6958ca"
+    },
+    {
+      "filename": "kubernetes/devnet-8/authenticatoor/Chart.yaml",
+      "status": "modified",
+      "sha": "1b314aaf3b81fb2a8290b2fc5c4155cff08f718a"
+    },
+    {
+      "filename": "kubernetes/devnet-8/authenticatoor/charts/authenticatoor-0.1.0.tgz",
+      "status": "removed",
+      "sha": "fdff8bc359c27cd6a2694fa6cd3e4f97f234a731"
+    },
+    {
+      "filename": "kubernetes/devnet-8/authenticatoor/charts/authenticatoor-0.2.0.tgz",
+      "status": "added",
+      "sha": "05dc096ae0d7c810ffb526b01de0784d79f67c62"
+    },
+    {
+      "filename": "kubernetes/devnet-8/authenticatoor/values.yaml",
+      "status": "modified",
+      "sha": "a713580b360cdffade655ee48281986d7e1f4941"
+    },
+    {
+      "filename": "kubernetes/devnet-8/faucet-agents/Chart.lock",
+      "status": "modified",
+      "sha": "e5c53709bb064ae4ea9245b07e5d2e3ae184f374"
+    },
+    {
+      "filename": "kubernetes/devnet-8/faucet-agents/Chart.yaml",
+      "status": "modified",
+      "sha": "cfd6a15fc9faf72da527aa752e4529e92f828277"
+    },
+    {
+      "filename": "kubernetes/devnet-8/faucet-agents/charts/powfaucet-1.2.1.tgz",
+      "status": "removed",
+      "sha": "4fa4311a7c4a2a1323fe918b69f6a388a343da37"
+    },
+    {
+      "filename": "kubernetes/devnet-8/faucet-agents/charts/powfaucet-1.3.0.tgz",
+      "status": "added",
+      "sha": "33a8bf0c1d453946a15ada3cda699e8cc95b7311"
+    },
+    {
+      "filename": "kubernetes/devnet-8/faucet/Chart.lock",
+      "status": "modified",
+      "sha": "192c732ec19fbd6a38014eb47152d0a27b7b209e"
+    },
+    {
+      "filename": "kubernetes/devnet-8/faucet/Chart.yaml",
+      "status": "modified",
+      "sha": "1a32907ccd8c52e16d8989a4b680d2a050000e09"
+    },
+    {
+      "filename": "kubernetes/devnet-8/faucet/charts/powfaucet-1.2.1.tgz",
+      "status": "removed",
+      "sha": "4fa4311a7c4a2a1323fe918b69f6a388a343da37"
+    },
+    {
+      "filename": "kubernetes/devnet-8/faucet/charts/powfaucet-1.3.0.tgz",
+      "status": "added",
+      "sha": "33a8bf0c1d453946a15ada3cda699e8cc95b7311"
+    },
+    {
+      "filename": "kubernetes/devnet-8/faucet/values.yaml",
+      "status": "modified",
+      "sha": "46fd8d36b87ed7027fab347ea64bc723464be619"
+    }
+  ]
+}

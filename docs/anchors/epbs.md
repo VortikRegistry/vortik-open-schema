@@ -5,7 +5,7 @@
 **Registry ID:** `epbs`  
 **Status:** implementation-facing  
 **Classification:** core  
-**Protocol freshness reviewed:** 2026-10-30 (selected proposal states and scheduling; historical testnet evidence retains its original dates)
+**Protocol freshness reviewed:** 2026-11-19 (Gloas networking, proposal states and network scheduling)
 
 ---
 
@@ -21,7 +21,7 @@ Vortik is an independent semantic registry. This document is not an Ethereum spe
 
 ---
 
-## Current upstream state — 2026-10-30
+## Current upstream state — 2026-11-19
 
 The primary specification is **EIP-7732**.
 
@@ -31,9 +31,9 @@ As of this review:
 - EIP-7773 lists EIP-7732 as **Scheduled for Inclusion** in Glamsterdam.
 - Glamsterdam is in active testing; this does not mean ePBS is deployed on Ethereum mainnet.
 - The Foundation reports Sepolia activation on October 6. Its [October 22 postponement](https://blog.ethereum.org/2026/10/22/glamsterdam-hoodi-delay) supersedes the old Hoodi schedule; no replacement date is set. Mainnet remains undated. This is source review, not a live chain-health check.
-- **EIP-8282 — Builder Execution Requests** is also in Last Call (deadline 2026-11-01) and Scheduled for Inclusion in Glamsterdam. It gives EIP-7732 builders dedicated deposit and exit request paths.
+- **EIP-8282 — Builder Execution Requests** is also in Last Call (deadline 2026-11-01) and Scheduled for Inclusion in Glamsterdam. The revised text distinguishes deposits accepted before activation from the initially inhibited exit contract. Deployment of a contract by itself does not activate the fork.
 
-These are source states, not Vortik judgments about activation. See the [October 30 follow-up](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-30.md) for source identities and review limits.
+The [Gloas P2P specification](https://github.com/ethereum/consensus-specs/blob/6ea84333433a840fbd534f8ebbe9dd5e1b599115/specs/gloas/p2p-interface.md) distinguishes local proposer choice from gossip: a proposer should consider a higher bid for its block, but peers do not forward a bid past the builder’s stake-based allowance. ACDE discussed a possible December window for Hoodi; it did not schedule it. See the [November 19 follow-up](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-11-19.md) for source identities and review limits.
 
 ---
 
@@ -229,7 +229,7 @@ The accurate framing is:
 
 ```text
 ePBS is a protocol-facing proposer-builder coordination primitive,
-in Last Call and Scheduled for Inclusion in Glamsterdam as of 2026-10-30.
+in Last Call and Scheduled for Inclusion in Glamsterdam as of 2026-11-19.
 The Foundation reports Sepolia activation; Hoodi is postponed with no replacement date.
 This review does not independently establish network health or mainnet activation.
 Historical public testnet/devnet evidence retains its 2026-09-30 review date.
