@@ -1,7 +1,7 @@
 {
   "baseline_version": "1.0.0",
-  "reviewed_through": "2026-11-05",
-  "note": "Review evidence and scope: docs/research/protocol-watch-alert-173-review-2026-11-05.md and docs/research/protocol-freshness-2026-11-05.md. Only the devnet head fingerprint changed; ten other source fingerprints and all six watched EIP document states are unchanged. Acceptance is bounded source review, not runtime or chain-health evidence.",
+  "reviewed_through": "2026-11-19",
+  "note": "Review: docs/research/protocol-watch-alert-176-review-2026-11-19.md and docs/research/protocol-freshness-2026-11-19.md. Four fingerprints changed: Gloas P2P, the Glamsterdam meta EIP, builder requests and the devnet repository. Seven other fingerprints are unchanged. Source review does not verify activation, runtime health or a mainnet date.",
   "sources": [
     {
       "id": "eip-7732",
@@ -10,7 +10,7 @@
     },
     {
       "id": "eip-7773-glamsterdam-meta",
-      "fingerprint": "3b0d9db14e6a1069652045329101d907d0b739c8",
+      "fingerprint": "a78ab57b16c8bcccec0175667f75115a8dc18971",
       "status": "Review"
     },
     {
@@ -30,7 +30,7 @@
     },
     {
       "id": "eip-8282-builder-requests",
-      "fingerprint": "13b923d8effa18ec5eae90c9c5072950539aa0f9",
+      "fingerprint": "0a763f9f61f2fa96dbafb1ecc66059c27e245407",
       "status": "Last Call"
     },
     {
@@ -43,11 +43,11 @@
     },
     {
       "id": "consensus-gloas-p2p",
-      "fingerprint": "1e0dca6e5ab6a83c3f4536b69bcca4bcd1c5bdcc"
+      "fingerprint": "672419f577092cf586388cebcaaefbde27268c8f"
     },
     {
       "id": "glamsterdam-devnets-head",
-      "fingerprint": "eda124015e090c1b43d0ccd4025c61795975ed46"
+      "fingerprint": "0ff9c3ad592c7dd466907bc82f7778f65c4a23c0"
     },
     {
       "id": "hoodi-consensus-config",

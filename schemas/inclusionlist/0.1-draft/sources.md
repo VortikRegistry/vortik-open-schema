@@ -92,7 +92,11 @@ Curated references and source notes should be placed in the protected section be
 
 <!-- MANUAL-SOURCES:START -->
 
-## Current follow-up — 2026-10-30
+## Current follow-up — 2026-11-19
+
+[EIP-8081](https://eips.ethereum.org/EIPS/eip-8081) still lists both FOCIL and Frame Transaction for Hegotá without network dates. FOCIL remains Draft. The [ACDE #249 transcript](https://github.com/ethereum/pm/blob/27b51c935352cad737c76775f5cea2d3aca539a3/.github/ACDbot/artifacts/acde/2026-11-19_249/transcript_corrected.vtt) discusses a narrower scope but does not remove either proposal. See the [source review](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-11-19.md).
+
+## Previous follow-up — 2026-10-30
 
 The [October 30 review](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-30.md) supersedes earlier Hoodi scheduling notes: the [Foundation postponement](https://blog.ethereum.org/2026/10/22/glamsterdam-hoodi-delay) removes the October 26 activation with no replacement date. Selected EIP document states and fork assignments remain unchanged. EIP-7928 now explicitly requires minimal unsigned-integer RLP encoding for integer fields; addresses remain 20-byte strings. The dated notes below remain historical.
 

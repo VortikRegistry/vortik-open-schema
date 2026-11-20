@@ -42,7 +42,8 @@ Recommended reading path:
 
 ## Research notes
 
-- [Protocol freshness review — 2026-09-30](research/protocol-freshness-2026-09-30.md) — current source context and a reference table for all 12 anchors.
+- [Latest protocol and catalog review — 2026-11-19](research/protocol-freshness-2026-11-19.md) — network timing, scope and updated proposal metadata.
+- [Protocol freshness review — 2026-09-30](research/protocol-freshness-2026-09-30.md) — original source context and a reference table for all 12 anchors.
 - [Fast Finality source audit](research/fast-finality-source-audit.md) — reconciles the official umbrella terminology with the existing SSF anchor.
 - [EIP-8146 BAL sidecars source audit](research/eip-8146-bal-sidecars-source-audit.md) — records the Draft design and its current Declined-for-Inclusion Hegotá state.
 

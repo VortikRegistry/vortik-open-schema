@@ -6,7 +6,7 @@
 **Status:** eip-active  
 **Classification:** core  
 **Type:** constraint  
-**Protocol calendar follow-up:** 2026-10-21; selected proposal status reviewed 2026-10-20
+**Protocol scope and calendar reviewed:** 2026-11-19
 
 ---
 
@@ -29,6 +29,8 @@ Inclusion-list research addresses how Ethereum can improve censorship resistance
 The relevant semantic object is the inclusion constraint itself: a mechanism by which validators, proposers, or related consensus-facing roles can require eligible transactions to be surfaced, considered, or enforced during block construction.
 
 FOCIL-style framing is tracked because it gives the broader inclusion-list concept a more precise fork-choice enforcement context.
+
+The [November 19 review](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-11-19.md) confirms that EIP-7805 remains Draft and Scheduled for Inclusion in Hegotá. ACDE discussed fork scope; it left FOCIL decisions to consensus developers. Frame Transaction is a separate scheduled EIP. No Hegotá activation is set.
 
 EIP-7805 remains the primary EIP source for FOCIL. As reviewed on 2026-10-20, EIP-7805 is **not in the EIP-7773 Glamsterdam Scheduled for Inclusion list**, while EIP-8081 lists it as **Scheduled for Inclusion** in Hegotá. These are fork-scoped source states, not deployment or activation claims. The October 21 meta-EIP correction removes the repeated dates: Sepolia, Hoodi and Mainnet schedules are now unset. See the [calendar follow-up](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-21.md). `inclusionlist.eth` remains a semantic anchor for the inclusion-list / FOCIL constraint surface, not a deployment claim.
 

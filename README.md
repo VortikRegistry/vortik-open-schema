@@ -34,11 +34,13 @@ The website uses static artifacts from this repository. Searching and comparing 
 
 The [protocol context contract](docs/protocol-context.md) keeps these concepts separate. A source review date is also separate from the canonical registry's last-change date.
 
-## Protocol source follow-up — 2026-10-30
+## Protocol source follow-up — 2026-11-19
 
-Hoodi’s planned October 26 Glamsterdam activation was postponed; no replacement date is set. The October 30 review records this correction, EIP-7928’s clarified BAL encoding, and unchanged selected EIP document statuses and fork assignments. The refreshed catalog contains 1,230 EIP/ERC records from pinned official sources. Mainnet remains undated; the Foundation’s report of Sepolia activation is separate from a live chain-health check.
+The catalog contains **1,233 proposals (607 EIPs and 626 ERCs)**. ERC-8501 is new; eight ERCs changed document status. Search [the catalog](docs/ethereum-catalog.md) independently of the 12 curated terms.
 
-See the [October 30 follow-up](docs/research/protocol-freshness-2026-10-30.md), the earlier [all-anchor source review](docs/research/protocol-freshness-2026-09-30.md) and [review history](docs/changes.md). Follow the linked primary sources for later decisions. Historical releases retain their original context.
+Sepolia activated Glamsterdam on October 6 according to the Ethereum Foundation. On November 19, ACDE #249 discussed the week of December 14 for Hoodi and mid-January 2027 as the earliest mainnet estimate if the specification stays unchanged. Neither network has a confirmed activation. EIP-7773 now leaves both rows blank. EIP-8081 still lists FOCIL and Frame Transaction for Hegotá; the call did not remove either.
+
+See the [dated evidence and network configurations](docs/research/protocol-freshness-2026-11-19.md), the [Gloas networking review](docs/research/protocol-watch-alert-176-review-2026-11-19.md), and [review history](docs/changes.md). Registry labels and historical releases retain their original meaning.
 
 ## 30-second developer quickstart
 

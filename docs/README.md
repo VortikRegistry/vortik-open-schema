@@ -12,7 +12,9 @@ They are not Ethereum protocol specifications.
 
 ## Current source review
 
-[September 30, 2026 — all 12 anchors, Glamsterdam, Hegotá, and ENSv2](./research/protocol-freshness-2026-09-30.md).
+[November 19, 2026 — Glamsterdam network timing, Hegotá scope and catalog changes](./research/protocol-freshness-2026-11-19.md).
+
+Original [September 30 review of all 12 anchors, Glamsterdam, Hegotá, and ENSv2](./research/protocol-freshness-2026-09-30.md).
 
 - [Ethereum proposal search](./research.html) and [catalog provenance](./ethereum-catalog.md) — a broader metadata snapshot, independent of the curated term set.
 - [Protocol context contract](./protocol-context.md) — dated, machine-readable upstream context.

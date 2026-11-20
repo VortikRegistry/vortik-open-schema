@@ -2,7 +2,7 @@
 
 Use the [protocol context JSON](protocol-context.json) to distinguish a concept's meaning, an EIP's document status, its fork assignment, and a network's activation schedule. The [explorer](app.html) presents the same snapshot for people; the JSON is for dashboards, research tools, and local agents.
 
-The dataset covers all 12 registry anchors and nine related EIPs, including BALs, builder requests, execution proofs, BAL sidecars, and gas-accounting changes. EIPs can be useful references without becoming new ENS anchors. This is selected coverage, not a complete Ethereum roadmap.
+The dataset covers all 12 registry anchors and ten related EIPs, including BALs, builder requests, frame transactions, execution proofs, BAL sidecars, and gas-accounting changes. EIPs can be useful references without becoming new ENS anchors. This is selected coverage, not a complete Ethereum roadmap.
 
 ## Fetch or use locally
 
@@ -31,9 +31,9 @@ console.log(result.related_eips); // EIP-8025: Draft; Hegotá assignment: declin
 
 ## Independent facts
 
-| Field | Meaning | Example in the November 5 follow-up |
+| Field | Meaning | Example in the November 19 follow-up |
 | --- | --- | --- |
-| `reviewed_at` | Date of this editorial source review | `2026-11-05` |
+| `reviewed_at` | Date of this editorial source review | `2026-11-19` |
 | `registry.last_updated` | Date of the referenced canonical registry | `2026-09-13` |
 | `anchors[].context_kind` | Vortik's description of the source context | `protocol`, `research`, `application`, or `editorial` |
 | `eips[].document_status` | Status on the EIP document | FOCIL: `Draft` |
@@ -41,7 +41,7 @@ console.log(result.related_eips); // EIP-8025: Draft; Hegotá assignment: declin
 | `forks[].activations[].status` | Network state recorded by the reviewed schedule | Glamsterdam/Sepolia: `active`; Hoodi: `not_scheduled` |
 | `forks[].activations[].activation_at` | Explicit UTC activation time, if recorded | Hoodi and mainnet: `null` |
 
-The October 17 follow-up records Sepolia as `active` because the October 16 Foundation announcement explicitly reports its activation. The recorded time, epoch and slot retain the published October 6 schedule; this is source-reported activation, not an independent chain-health check. The October 22 postponement supersedes the old Hoodi schedule. Hoodi is now `not_scheduled`, with null time, epoch and slot, because no replacement is announced. Mainnet remains `not_scheduled`. The [October 30 review](research/protocol-freshness-2026-10-30.md) explains why the stale date still present in EIP-7773 is not used.
+The October 17 follow-up records Sepolia as `active` because the October 16 Foundation announcement explicitly reports its activation. The recorded time, epoch and slot retain the published October 6 schedule; this is source-reported activation, not an independent chain-health check. The October 22 postponement supersedes the old Hoodi schedule. Hoodi is now `not_scheduled`, with null time, epoch and slot, because no replacement is announced. Mainnet remains `not_scheduled`. EIP-7773 cleared its obsolete Hoodi row on November 18. On November 19, ACDE discussed the week of December 14 for Hoodi and mid-January at the earliest for mainnet if the specification stays unchanged. These are planning estimates, so neither populates an activation field.
 
 An EIP being `Draft` does not determine whether it is scheduled. A scheduled fork feature is not automatically active on mainnet. An anchor's `eip_refs` are contextual references: a related EIP does not standardize an entire umbrella term or assign a fork status to an ENS name. `getAnchorContext` preserves the names `related_eips` and `related_forks` for this reason.
 
@@ -72,8 +72,4 @@ The dataset is maintained directly under `docs/`; it is not a generated registry
 3. Change `reviewed_at` only after the source review. Preserve `registry.last_updated` unless the canonical registry itself changed.
 4. Update the dated regression assertions with the new evidence, then run the protocol-context checks, public-safety checks, and full repository validation.
 
-The current [November 5 follow-up](research/protocol-freshness-2026-11-05.md) rechecks the Hoodi postponement and selected proposal states, records the PBT-1 archive review, and preserves the earlier BAL encoding clarification. Hegotá activation schedules remain unset, independently of FOCIL’s scheduled inclusion. Other research and application source notes retain their own dated reviews. The separate proposal catalog is the November 5 metadata snapshot.
-
-The initial snapshot is backed by the [September 30 source review](research/protocol-freshness-2026-09-30.md). The primary URLs in the JSON were rechecked when this dataset was prepared. A date is a record of that review, not an automatic freshness guarantee.
-
-Source context does not verify deployed agent health, billing, ENS ownership, resolution, or a software rollout. The service's packaged registry snapshot has its own deployment lifecycle.
+The [November 19 review](research/protocol-freshness-2026-11-19.md) links the corrected ACDE transcript, fork meta EIPs and pinned network configurations. It also covers the Gloas bid rules and the separately imported catalog. Other research and application notes keep their own review dates.

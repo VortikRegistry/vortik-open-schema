@@ -1,5 +1,8 @@
 # Vortik Registry research notes index
 
+- [Protocol and catalog review — November 19, 2026](protocol-freshness-2026-11-19.md) · [alert #176 review](protocol-watch-alert-176-review-2026-11-19.md)
+- [Protocol and catalog review — November 5, 2026](protocol-freshness-2026-11-05.md) · [alert #173 review](protocol-watch-alert-173-review-2026-11-05.md)
+- [Protocol and catalog review — October 30, 2026](protocol-freshness-2026-10-30.md)
 - [Protocol source follow-up — October 20, 2026](protocol-freshness-2026-10-20.md)
 - [Protocol Watch alert #165 review](protocol-watch-alert-165-review-2026-10-20.md)
 

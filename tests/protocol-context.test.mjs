@@ -25,6 +25,9 @@ test("reviewed EIP status and fork assignment retain distinct meanings", () => {
     [7805, "Draft", "Hegotá", "scheduled"],
     [7928, "Last Call", "Glamsterdam", "scheduled"],
     [8025, "Draft", "Hegotá", "declined"],
+    [8037, "Last Call", "Glamsterdam", "scheduled"],
+    [8038, "Last Call", "Glamsterdam", "scheduled"],
+    [8141, "Draft", "Hegotá", "scheduled"],
     [8146, "Draft", "Hegotá", "declined"],
     [8282, "Last Call", "Glamsterdam", "scheduled"]
   ]) {
@@ -43,6 +46,7 @@ test("reported Sepolia activation and postponed Hoodi schedule do not imply main
     network: "Hoodi", status: "not_scheduled", activation_at: null, epoch: null, slot: null
   });
   assert.ok(fork.source_refs.includes("glamsterdam-hoodi-delay"));
+  assert.ok(fork.source_refs.includes("acde-249"));
   const mainnet = fork.activations.find((entry) => entry.network === "Mainnet");
   assert.equal(mainnet.status, "not_scheduled");
   assert.equal(mainnet.activation_at, null);
@@ -127,6 +131,17 @@ test("activation requires a date while unknown and unscheduled states require ex
   assert.throws(() => assertProtocolContext(scheduled((data) => { data.forks[0].activations[0].slot += 1; }), registry), /epoch and slot/);
   const unknown = mutate((data) => { data.forks[0].activations[2].status = "unverified"; });
   assert.doesNotThrow(() => assertProtocolContext(unknown, registry));
+});
+
+test("GitHub evidence accepts only the reviewed immutable primary records", () => {
+  const source = snapshot.sources.find((item) => item.id === "acde-249");
+  assert.ok(source);
+  for (const url of [source.url.replace(/blob\/[a-f0-9]{40}/, "blob/main"),
+    source.url.replace("/ethereum/pm/", "/unrelated/pm/"), source.url + "?raw=1"]) {
+    assert.throws(() => assertProtocolContext(mutate((data) => {
+      data.sources.find((item) => item.id === source.id).url = url;
+    }), registry), /allowed HTTPS primary source/);
+  }
 });
 
 test("local query returns an isolated result and rejects unknown anchors", () => {

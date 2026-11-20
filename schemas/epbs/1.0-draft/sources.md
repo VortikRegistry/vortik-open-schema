@@ -92,7 +92,11 @@ Curated references and source notes should be placed in the protected section be
 
 <!-- MANUAL-SOURCES:START -->
 
-## Current follow-up — 2026-10-30
+## Current follow-up — 2026-11-19
+
+The [Gloas P2P specification](https://github.com/ethereum/consensus-specs/blob/6ea84333433a840fbd534f8ebbe9dd5e1b599115/specs/gloas/p2p-interface.md) distinguishes local proposer selection from the forwarding limit, which excludes pending builder withdrawals. EIP-8282 clarifies pre-fork deposits and exit initialization. The [November 19 source review](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-11-19.md) links the separate network configurations and ACDE discussion; Hoodi and mainnet remain unscheduled.
+
+## Previous follow-up — 2026-10-30
 
 The [October 30 review](https://github.com/VortikRegistry/vortik-open-schema/blob/main/docs/research/protocol-freshness-2026-10-30.md) supersedes earlier Hoodi scheduling notes: the [Foundation postponement](https://blog.ethereum.org/2026/10/22/glamsterdam-hoodi-delay) removes the October 26 activation with no replacement date. Selected EIP document states and fork assignments remain unchanged. EIP-7928 now explicitly requires minimal unsigned-integer RLP encoding for integer fields; addresses remain 20-byte strings. The dated notes below remain historical.
 

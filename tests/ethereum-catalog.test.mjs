@@ -126,12 +126,22 @@ test("coverage and digest reveal dropped or altered metadata", () => {
   assert.throws(() => assertCatalogIntegrity(altered, manifest), /content digest mismatch/);
 });
 
+test("README and homepage advertise the count from the shipped catalog", async () => {
+  const readText = (file) => readFile(new URL(file, import.meta.url), "utf8");
+  const [readme, home] = await Promise.all([readText("../README.md"), readText("../docs/index.html")]);
+  const count = snapshot.coverage.records.toLocaleString("en");
+  const current = readme.match(/## Protocol source follow-up[^\n]*\n([\s\S]*?)(?=\n## )/);
+  assert.ok(current?.[1].includes(count + " proposals"), "README current review disagrees with catalog");
+  assert.ok(home.includes("Search " + count + " proposals"), "homepage count disagrees with catalog");
+});
+
 test("current snapshot accounts for every pinned file and includes ERCs beyond tracked naming anchors", () => {
   assert.equal(validate(snapshot), true, ajv.errorsText(validate.errors));
   assert.doesNotThrow(() => assertCatalogIntegrity(snapshot, manifest));
-  assert.equal(snapshot.coverage.scanned_files, 1598);
-  assert.equal(snapshot.proposals.length, 1232);
+  assert.equal(snapshot.coverage.scanned_files, 1599);
+  assert.equal(snapshot.proposals.length, 1233);
   assert.equal(snapshot.coverage.duplicate_numbers.length, 366);
+  assert.equal(snapshot.proposals.find((entry) => entry.id === "erc-8501").status, "Draft");
   assert.equal(snapshot.proposals.find((entry) => entry.number === 20).id, "erc-20");
   assert.equal(snapshot.proposals.find((entry) => entry.number === 721).title, "Non-Fungible Token Standard");
   assert.equal(snapshot.proposals.find((entry) => entry.number === 7732).status, "Last Call");
