@@ -2,7 +2,11 @@
 
 The website is published by [Deploy GitHub Pages](../.github/workflows/deploy-pages.yml). Its sole automatic trigger is completion of **Validate Vortik Registry** on `main`. The deployment job proceeds only after successful validation from this repository. The validation workflow already runs on every push to `main`, including documentation-only and workflow-only changes.
 
-An authorized maintainer can still request a publication with `workflow_dispatch`. The publication job checks out `main`, validates the checked-out source again, publishes the `docs` artifact and compares the served files byte for byte. Its concurrency group serializes publication jobs; serialization alone does not deduplicate triggers.
+An authorized maintainer can still request a publication with `workflow_dispatch`. The build job checks out `main`, validates it, and uploads the stamped `docs` artifact. A dependent deployment job publishes that artifact, checks out the exact source SHA from the build and compares the served files byte for byte. Its concurrency group serializes publication jobs; serialization alone does not deduplicate triggers.
+
+## Pages artifact handoff — 2026-11-25
+
+In [run 45723795368](https://github.com/VortikRegistry/vortik-open-schema/actions/runs/45723795368) and [run 45724389164](https://github.com/VortikRegistry/vortik-open-schema/actions/runs/45724389164), upload returned a finalized artifact ID, but deployment in the same job reported that it could not find the named artifact. The workflow now uses [GitHub’s documented build/deploy dependency](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages). Only the deployment job receives Pages and identity-token permissions. A failed deployment can be retried without rebuilding; the public stamp must still match the build source SHA and run ID.
 
 ## Incident and correction
 

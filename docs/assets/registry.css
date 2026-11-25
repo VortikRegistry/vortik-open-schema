@@ -297,8 +297,12 @@ td li+li { margin-top:9px }
 }
 @media(max-width:420px) {
   .header-row { flex-wrap:wrap; padding:15px 0 11px; gap:10px } .header-row nav { width:100%; justify-content:space-between; gap:12px }
-  .header-row nav a { padding:6px 0 } .nav-source { padding:6px 0!important } .hero { padding-top:31px }
-  .hero h1 { font-size:42px } .hero .eyebrow { font-size:9px } .hero-search { gap:3px }
+  .header-row nav a { padding:6px 0 } .nav-source { padding:6px 0!important }
+  .hero { padding-top:22px; row-gap:20px }
+  .hero h1 { font-size:clamp(1.875rem,8.4vw,2.15rem); margin-bottom:14px }
+  .hero .intro { margin-bottom:16px; line-height:1.45 }
+  .hero-copy>.eyebrow { margin-bottom:10px }
+  .hero-search { gap:3px }
   .hero-search .button { font-size:12px; padding:12px } .hero-search input { font-size:16px }
   .search-symbol { font-size:24px; margin-left:5px }
   .term-directory { grid-template-columns:1fr }
