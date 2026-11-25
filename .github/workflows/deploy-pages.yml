@@ -11,21 +11,18 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: github-pages
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository)
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      source_sha: ${{ steps.source.outputs.sha }}
 
     steps:
       - name: Checkout
@@ -51,9 +48,6 @@ jobs:
           npm run check:public-safety
           npm run validate
 
-      - name: Read existing GitHub Pages configuration
-        uses: actions/configure-pages@v5
-
       - name: Stamp deployment-specific artifact
         shell: bash
         env:
@@ -68,6 +62,27 @@ jobs:
         with:
           path: docs
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout the exact source used for the artifact
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.build.outputs.source_sha }}
+          persist-credentials: false
+
+      - name: Read existing GitHub Pages configuration
+        uses: actions/configure-pages@v5
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
@@ -76,14 +91,19 @@ jobs:
         shell: bash
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
-          PUBLICATION_SHA: ${{ steps.source.outputs.sha }}
+          PUBLICATION_SHA: ${{ needs.build.outputs.source_sha }}
         run: |
           set -euo pipefail
+          # The stamp is generated for each run and is not present in Git.
+          printf '{"commit":"%s","run_id":"%s"}\n' \
+            "${PUBLICATION_SHA}" "${GITHUB_RUN_ID}" > docs/pages-deployment.json
           base_url="${PAGE_URL%/}"
 
           for relative_path in \
             pages-deployment.json \
             registry.json \
+            registry.schema.json \
+            schemas/index.html \
             market.index.json \
             index.html \
             app.html \
