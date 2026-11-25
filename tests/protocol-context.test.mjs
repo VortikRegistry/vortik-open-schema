@@ -68,6 +68,26 @@ test("unreviewed historical fork context stays null instead of becoming not depl
   assert.deepEqual(getAnchorContext(snapshot, "blockspacemarket").related_forks, []);
 });
 
+test("homepage FOCIL example still reflects the cited review and empty activation table", async () => {
+  const home = await readFile(new URL("../docs/index.html", import.meta.url), "utf8");
+  const card = home.match(/<aside\b[^>]*\bid="focil-example"[^>]*>([\s\S]*?)<\/aside>/)?.[1];
+  assert.ok(card, "FOCIL evidence must be available without JavaScript");
+  const { related_eips, related_forks } = getAnchorContext(snapshot, "inclusionlist");
+  const proposal = related_eips.find(e => e.number === 7805);
+  const source = id => snapshot.sources.find(s => s.id === id).url;
+  assert.ok(card.includes(`href="${source(proposal.source_ref)}">EIP-7805 · ${proposal.document_status}</a>`));
+  assert.equal(proposal.fork.assignment, "scheduled");
+  assert.ok(card.includes(`href="${source(proposal.fork.source_ref)}#eips-scheduled-for-inclusion">Scheduled for inclusion in ${proposal.fork.name}</a>`));
+  assert.ok(card.includes(`href="${source(proposal.fork.source_ref)}#activation"`));
+  const networks = related_forks.find(f => f.name === proposal.fork.name).activations;
+  for (const name of ["Sepolia", "Hoodi", "Mainnet"]) {
+    const network = networks.find(n => n.network === name);
+    assert.equal(network?.status, "not_scheduled", `Revisit the homepage activation claim for ${name}`);
+    assert.equal(network.activation_at, null);
+  }
+  assert.ok(card.includes(`datetime="${snapshot.reviewed_at}"`), "source review date is stale");
+});
+
 test("research concepts and related EIPs do not acquire an anchor activation state", () => {
   const research = getAnchorContext(snapshot, "fastfinality.eth");
   assert.equal(research.anchor.id, "ssf");
