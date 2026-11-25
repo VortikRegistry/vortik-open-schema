@@ -70,25 +70,21 @@ input::placeholder { color:#6b796e }
 .button.small { font-size:12px; padding:10px 13px; min-height:40px }
 .button.outline-light { border-color:#547264; color:#f5f8ef }
 .button.outline-light:hover { background:#315848 }
-.try-links { display:flex; align-items:center; flex-wrap:wrap; gap:10px 15px; font-size:11px; margin-top:15px; color:var(--soft) }
-.try-links a { color:var(--green) }
-.search-scope { font-size:12px; line-height:1.7; margin:16px 0 0; max-width:530px }
-.search-scope a { color:var(--green); font-weight:600 }
-.source-trace { position:relative; border:1px solid #bdccba; border-radius:12px; background:#edf2e7; padding:24px 26px; box-shadow:10px 10px 0 #e3e9dd }
-.trace-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; border-bottom:1px solid #d3ddce; padding-bottom:19px; margin-bottom:26px }
-.trace-heading .eyebrow { margin:0 }
-.trace-heading .mono { font-size:10px; color:var(--soft) }
-.source-trace h2 { font-size:48px; letter-spacing:-.055em; margin-bottom:6px }
-.source-trace>p { font-size:13px; margin-bottom:22px }
+.search-scope { font-size:.875rem; line-height:1.6; margin:12px 0 0; max-width:530px }
+.search-scope a,.selection-note a { color:var(--green); font-weight:600 }
+.selection-note { max-width:76ch; font-size:1rem; line-height:1.65 }
+.source-trace { min-width:0; padding:clamp(18px,2.5vw,30px); border:1px solid #bdccba; border-radius:12px; background:#edf2e7; box-shadow:7px 7px 0 #e3e9dd }
+.source-trace .eyebrow { margin-bottom:10px; font-size:.875rem }
+.source-trace h2 { font-size:clamp(1.65rem,2.8vw,2.4rem); letter-spacing:-.035em; margin:0 0 10px }
+.trace-answer { font-size:1rem; line-height:1.5; margin:0 0 17px }
 .trace-list { margin:0 }
-.trace-list>div { display:grid; grid-template-columns:1fr 1.2fr; gap:12px; border-top:1px solid #d3ddce; padding:13px 0; font-size:11px }
-.trace-list dt { color:var(--soft) }
-.trace-list dd { margin:0; font-weight:600; text-align:right }
-.trace-list dd a { text-decoration:none }
-.trace-list dd a:hover { text-decoration:underline }
-.trace-list .muted { display:block; color:var(--soft); font-size:10px; font-weight:400; margin-top:2px }
-.trace-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:10px; margin-top:16px; padding-top:18px; border-top:1px solid #c9d4c2; color:var(--soft) }
-.trace-footer a { font-weight:650; color:var(--green); text-decoration:none }
+.trace-list>div { display:grid; grid-template-columns:5.1rem minmax(0,1fr); gap:10px; border-top:1px solid #cbd7c6; padding:10px 0 }
+.trace-list dt { color:var(--soft); font-weight:600; font-size:.875rem }
+.trace-list dd { margin:0; font-size:.9375rem; line-height:1.5 }
+.source-trace a { color:var(--green) }
+.trace-footer { display:flex; flex-wrap:wrap; gap:4px 15px; align-items:center; margin-top:4px; padding-top:10px; border-top:1px solid #cbd7c6; color:var(--soft); font-size:.875rem }
+.trace-footer a,.trace-compare { display:inline-flex; align-items:center; min-height:44px; font-weight:600 }
+.trace-compare { font-size:.9375rem }
 .context-strip { border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:#eef2e9 }
 .context-strip-inner { display:flex; align-items:center; justify-content:space-between; gap:45px; padding-top:20px; padding-bottom:20px; font-size:12px }
 .context-strip p { margin:0; max-width:745px }
@@ -260,8 +256,7 @@ td li+li { margin-top:9px }
 @media(min-width:1400px) { .hero { gap:82px } }
 @media(max-width:1050px) {
   .container { width:calc(100% - 48px) } .hero { gap:34px; padding-top:60px; padding-bottom:60px; grid-template-columns:1.25fr 1fr }
-  .hero h1 { font-size:56px } .hero .intro { font-size:16px } .source-trace { padding:20px }
-  .trace-list>div { grid-template-columns:1fr 1.3fr; gap:9px } .trace-footer { align-items:flex-start; flex-direction:column; gap:8px }
+  .hero h1 { font-size:56px } .hero .intro { font-size:16px }
   .header-row nav { gap:22px } .section-heading { gap:30px } .section-heading>p { max-width:310px }
   .developer-grid { gap:40px } .footer-grid { gap:45px } .filter-fields { grid-template-columns:1.5fr 1fr 1fr }
   .filter-fields>.button { grid-column:1/-1; justify-self:start; min-height:36px; padding:8px 15px }
@@ -275,8 +270,7 @@ td li+li { margin-top:9px }
   .header-row nav { gap:15px; font-size:11px } .nav-source { border:0; padding:10px 0!important }
   .hero { grid-template-columns:1fr; gap:38px; padding-top:45px; padding-bottom:50px }
   .hero h1 { font-size:clamp(43px,8.7vw,66px) } .hero .intro { max-width:580px }
-  .source-trace { max-width:580px; width:100%; box-shadow:7px 7px 0 #e3e9dd } .source-trace h2 { font-size:40px }
-  .trace-heading { margin-bottom:20px } .trace-list>div { font-size:12px } .trace-footer { flex-direction:row; font-size:10px }
+  .source-trace { max-width:580px; width:100% }
   .context-strip-inner { gap:15px; align-items:flex-start; flex-direction:column } .context-strip p { font-size:12px }
   .section { padding-top:45px } .section-heading { align-items:flex-start; flex-direction:column; gap:13px }
   .reading-guide-grid { grid-template-columns:1fr; gap:20px } .reading-example { padding:23px }
@@ -305,9 +299,9 @@ td li+li { margin-top:9px }
   .header-row { flex-wrap:wrap; padding:15px 0 11px; gap:10px } .header-row nav { width:100%; justify-content:space-between; gap:12px }
   .header-row nav a { padding:6px 0 } .nav-source { padding:6px 0!important } .hero { padding-top:31px }
   .hero h1 { font-size:42px } .hero .eyebrow { font-size:9px } .hero-search { gap:3px }
-  .hero-search .button { font-size:12px; padding:12px } .hero-search input { font-size:13px }
-  .search-symbol { font-size:24px; margin-left:5px } .try-links { gap:9px 13px; font-size:10px }
-  .trace-footer { flex-direction:column } .term-directory { grid-template-columns:1fr }
+  .hero-search .button { font-size:12px; padding:12px } .hero-search input { font-size:16px }
+  .search-symbol { font-size:24px; margin-left:5px }
+  .term-directory { grid-template-columns:1fr }
   .term-directory>a { grid-template-columns:1fr 1fr 16px; gap:8px }
   .term-directory>a>span:not(:last-child) { grid-column:2; grid-row:1 } .term-directory>a>span:last-child { grid-column:3; grid-row:1 }
   .artifact-list>div { flex-direction:column; gap:4px } .artifact-list dd { text-align:left }
