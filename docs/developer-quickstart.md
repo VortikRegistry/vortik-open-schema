@@ -8,6 +8,8 @@ Vortik's public feed endpoints are read-only semantic artifacts. They do not gra
 
 ## One-command first value
 
+Browse the [public schema directory](https://vortikregistry.github.io/vortik-open-schema/schemas/) for each term’s note and versioned schema. To validate the whole [registry](https://vortikregistry.github.io/vortik-open-schema/registry.json), use its [JSON Schema](https://vortikregistry.github.io/vortik-open-schema/registry.schema.json).
+
 For broader EIP and ERC document discovery, fetch the independent proposal catalog:
 
 ```bash

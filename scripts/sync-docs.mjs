@@ -1,10 +1,12 @@
 import fs from "fs";
 import path from "path";
+import { renderSchemaDirectory } from "./schema-directory.mjs";
 
 const ROOT = process.cwd();
 
 const FILES = [
   "registry.json",
+  "registry.schema.json",
   "anchors.index.json",
   "market.index.json"
 ];
@@ -79,4 +81,6 @@ for (const dir of DIRS) {
   copyDir(srcDir, destDir);
 }
 
+const registry = JSON.parse(fs.readFileSync(path.join(ROOT, "registry.json"), "utf8"));
+fs.writeFileSync(path.join(ROOT, "docs/schemas/index.html"), renderSchemaDirectory(registry));
 console.log("\n✅ Sync complete.");

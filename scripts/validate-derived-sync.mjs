@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { renderSchemaDirectory } from "./schema-directory.mjs";
 
 const ROOT = process.cwd();
 
@@ -139,6 +140,11 @@ function main() {
   console.log("🔍 Validating derived file synchronization...");
 
   validateExactSync("registry.json", "docs/registry.json");
+  validateExactSync("registry.schema.json", "docs/registry.schema.json");
+  const registry = readJSON("registry.json");
+  if (registry && (!exists("docs/schemas/index.html") || read("docs/schemas/index.html") !== renderSchemaDirectory(registry))) {
+    fail("Public schema directory is missing or out of date. Run npm run sync:docs.");
+  }
   validateExactSync("anchors.index.json", "docs/anchors.index.json");
   validateExactSync("market.index.json", "docs/market.index.json");
   validateExactSync("maps/anchors-map.json", "docs/maps/anchors-map.json");

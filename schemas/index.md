@@ -31,15 +31,17 @@ The registry uses schemas to preserve semantic discipline while terminology evol
 
 ## Available Schemas
 
+[Browse the public HTML directory](https://vortikregistry.github.io/vortik-open-schema/schemas/) or open the [schema for the whole registry](../registry.schema.json).
+
 ### Core
 
 Protocol-aligned anchors with strong semantic grounding.
 
 - **epbs** — enshrined proposer-builder separation (ePBS)  
-  `schemas/epbs/1.0-draft/schema.json`
+  [JSON schema](./epbs/1.0-draft/schema.json)
 
 - **inclusionlist** — fork-choice enforced inclusion lists (FOCIL)  
-  `schemas/inclusionlist/0.1-draft/schema.json`
+  [JSON schema](./inclusionlist/0.1-draft/schema.json)
 
 ---
 
@@ -48,10 +50,10 @@ Protocol-aligned anchors with strong semantic grounding.
 Valid underlying concepts with imperfect ENS alignment or terminology mismatch.
 
 - **commitmentlayer** — commitment  
-  `schemas/commitmentlayer/0.1-draft/schema.json`
+  [JSON schema](./commitmentlayer/0.1-draft/schema.json)
 
 - **ssf** — single-slot finality (SSF)  
-  `schemas/ssf/0.1-research/schema.json`
+  [JSON schema](./ssf/0.1-research/schema.json)
 
 ---
 
@@ -60,7 +62,7 @@ Valid underlying concepts with imperfect ENS alignment or terminology mismatch.
 Real or emerging concepts that are not yet stable enough to treat as canonical.
 
 - **preconflayer** — preconfirmation (emergent)  
-  `schemas/preconflayer/0.1-draft/schema.json`
+  [JSON schema](./preconflayer/0.1-draft/schema.json)
 
 ---
 
@@ -69,16 +71,16 @@ Real or emerging concepts that are not yet stable enough to treat as canonical.
 Ethereum-adjacent or external coordination surfaces outside the current Ethereum L1 protocol core.
 
 - **solverlayer** — solver (external)  
-  `schemas/solverlayer/0.1-research/schema.json`
+  [JSON schema](./solverlayer/0.1-research/schema.json)
 
 - **orderflowauction** — order flow auctions (OFA)  
-  `schemas/orderflowauction/0.1-research/schema.json`
+  [JSON schema](./orderflowauction/0.1-research/schema.json)
 
 - **provingmarket** — proving markets  
-  `schemas/provingmarket/0.1-research/schema.json`
+  [JSON schema](./provingmarket/0.1-research/schema.json)
 
 - **sequencingmarket** — sequencing markets  
-  `schemas/sequencingmarket/0.1-research/schema.json`
+  [JSON schema](./sequencingmarket/0.1-research/schema.json)
 
 ---
 
@@ -87,13 +89,13 @@ Ethereum-adjacent or external coordination surfaces outside the current Ethereum
 Legacy, broad, or market-oriented abstractions with reduced precision relative to protocol-native terminology.
 
 - **buildermarket** — builder  
-  `schemas/buildermarket/0.1-research/schema.json`
+  [JSON schema](./buildermarket/0.1-research/schema.json)
 
 - **executionmarket** — execution (ambiguous)  
-  `schemas/executionmarket/0.1-research/schema.json`
+  [JSON schema](./executionmarket/0.1-research/schema.json)
 
 - **blockspacemarket** — blockspace markets  
-  `schemas/blockspacemarket/0.1-research/schema.json`
+  [JSON schema](./blockspacemarket/0.1-research/schema.json)
 
 ---
 
